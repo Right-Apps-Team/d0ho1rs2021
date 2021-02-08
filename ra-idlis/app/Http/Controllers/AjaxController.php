@@ -2394,6 +2394,7 @@
 					/*'director' => $request->director, */
 					'office' => $request->office,
 					'address' => $request->address,
+					'iso_desc' => $request->iso_desc,
 					'sort' => $request->director
 				);
 				$test = DB::table('region')->where('rgnid',$request->id)->update($updateData);

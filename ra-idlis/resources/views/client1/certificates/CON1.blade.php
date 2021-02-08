@@ -22,7 +22,13 @@
 					<div class="col-md-6">
 						<h6 class="card-title text-center font-weight-bold">Republic of the Philippines</h6>
 						<h5 class="card-title text-center font-weight-bold">Department of Health</h5>
-						<h5 class="card-title text-center font-weight-bold">{{((isset($director->certificateName)) ? $director->certificateName : 'REGION')}}</h5>
+						<!-- <h5 class="card-title text-center font-weight-bold">{{((isset($director->certificateName)) ? $director->certificateName : 'REGION')}}</h5> -->
+						<h5 class="card-title text-center font-weight-bold" >
+							<?=(isset($retTable[0]->office) && !empty($retTable[0]->office)? $retTable[0]->office : '')?><br />
+							<?=(isset($retTable[0]->address) && !empty($retTable[0]->address)? $retTable[0]->address : '')?><br />
+							<?=(isset($retTable[0]->iso_desc) && !empty($retTable[0]->iso_desc)? $retTable[0]->iso_desc : '')?>
+						</h5>
+					
 						{{-- <h6 class="card-subtitle mb-2 text-center text-muted text-small">doholrs@gmail.com</h6> --}}
 					</div>
 					<div class="col-md-3 hide-div">
