@@ -1763,7 +1763,7 @@ namespace App\Http\Controllers;
 				try 
 				{
 					$last = DB::table('region')->max('sort') + 1;
-					DB::table('region')->insert(['rgnid' => $request->id, 'rgn_desc' => $request->name, 'director' => $request->director, 'directorDesc' => $request->directorDesc, 'sort' => $last]);
+					DB::table('region')->insert(['rgnid' => $request->id, 'rgn_desc' => $request->name, 'office' => $request->office, 'director' => $request->director, 'directorDesc' => $request->directorDesc, 'sort' => $last]);
 					return 'DONE';
 				} 
 				catch (Exception $e) 
