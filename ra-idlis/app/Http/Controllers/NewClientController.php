@@ -809,6 +809,7 @@ class NewClientController extends Controller {
 				'servCap' => $arrayFaci,
 				'otherDetails' => $otherDetails
 			];
+			// dd($arrData['retTable'][0]->office);
 			return view('client1.certificates.certView', $arrData);
 		} catch(Exception $e) {
 			dd($e);
