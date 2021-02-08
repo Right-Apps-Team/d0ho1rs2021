@@ -2389,7 +2389,12 @@
 		{
 			try 
 			{
-				$updateData = array('rgn_desc' => $request->name/*, 'director' => $request->director*/, 'sort' => $request->director);
+				$updateData = array(
+					'rgn_desc' => $request->name,
+					/*'director' => $request->director, */
+					'office' => $request->office,
+					'sort' => $request->director
+				);
 				$test = DB::table('region')->where('rgnid',$request->id)->update($updateData);
 				if ($test) { return 'DONE'; } 
 				else {

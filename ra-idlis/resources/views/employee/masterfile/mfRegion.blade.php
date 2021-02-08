@@ -22,6 +22,7 @@
                   <tr>
                      <th>ID</th>
                       <th>Name</th>
+                      <th>Office</th>
                       <th>Sort</th>
                     <th><center>Options</center></th>
                   </tr>
@@ -32,11 +33,12 @@
   	                  <tr>
   	                  	<td>{{$regions->rgnid}}</td>
   	                    <td>{{$regions->rgn_desc}}</td>
+  	                    <td>{{$regions->office}}</td>
                         <td>{{$regions->sort}}</td>
   	                    <td>
   	                      <center>
                           <span class="PL001_update">
-  	                        <button type="button" class="btn btn-outline-warning" onclick="showData('{{$regions->rgnid}}', '{{$regions->rgn_desc}}', /*'{{$regions->director}}','{{$regions->directorDesc}}'*/'{{$regions->sort}}');" data-toggle="modal" data-target="#GodModal"><i class="fa fa-fw fa-edit"></i></button>&nbsp;
+  	                        <button type="button" class="btn btn-outline-warning" onclick="showData('{{$regions->rgnid}}', '{{$regions->rgn_desc}}', '{{$regions->office}}', '{{$regions->sort}}');" data-toggle="modal" data-target="#GodModal"><i class="fa fa-fw fa-edit"></i></button>&nbsp;
                           </span>
                           <span class="PL001_cancel">
   	                        <button type="button" class="btn btn-outline-danger" onclick="showDelete('{{$regions->rgnid}}', '{{$regions->rgn_desc}}');" data-toggle="modal" data-target="#DelGodModal"><i class="fa fa-fw fa-trash"></i></button>
@@ -74,7 +76,11 @@
               </div>
               <div class="col-sm-4 req">Name:</div>
               <div class="col-sm-8" style="margin:0 0 .8em 0;">
-              <input type="text" id="new_rgn_desc" class="form-control" data-parsley-required-message="*<strong>Description</strong> required" required>
+                <input type="text" id="new_rgn_desc" class="form-control" data-parsley-required-message="*<strong>Description</strong> required" required>
+              </div>
+              <div class="col-sm-4 req">Office:</div>
+              <div class="col-sm-8" style="margin:0 0 .8em 0;">
+                <input type="text" id="new_office" class="form-control" data-parsley-required-message="*<strong>Office</strong> required" required>
               </div>
               <div class="col-sm-4">Director:</div>
               <div class="col-sm-8" style="margin:0 0 .8em 0;">
@@ -107,16 +113,16 @@
                       <button type="button" class="close" onclick="$('#EditErrorAlert').hide(1000);" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                       </button>
-                  </div> 
-                  <span id="EditBody"></span>
-                  <div class="row">
+                    </div> 
+                    <span id="EditBody"></span>
+                    <div class="row">
+                      <div class="col-sm-6">
+                      <button type="submit" class="btn btn-outline-success form-control" style="border-radius:0;"><span class="fa fa-sign-up"></span>Save</button>
+                    </div> 
                     <div class="col-sm-6">
-                    <button type="submit" class="btn btn-outline-success form-control" style="border-radius:0;"><span class="fa fa-sign-up"></span>Save</button>
-                  </div> 
-                  <div class="col-sm-6">
-                    <button type="button" data-dismiss="modal" class="btn btn-outline-danger form-control" style="border-radius:0;"><span class="fa fa-sign-up"></span>Cancel</button>
-                  </div>
-                  </div>
+                      <button type="button" data-dismiss="modal" class="btn btn-outline-danger form-control" style="border-radius:0;"><span class="fa fa-sign-up"></span>Cancel</button>
+                    </div>
+                    </div>
                 </form>
             </div>
           </div>
@@ -154,7 +160,8 @@
   </div>
   <script type="text/javascript">
   	$(document).ready(function() { $('#example').DataTable();});
-  	function showData(id,desc,sort){
+  	function showData(id,desc,ofc, sort){
+        console.log(ofc);
         $('#EditBody').empty();
         $('#EditBody').append(
             '<div class="col-sm-4">ID:</div>' +
@@ -163,11 +170,17 @@
             '</div>' +
             '<div class="col-sm-4">Description:</div>' +
             '<div class="col-sm-12" style="margin:0 0 .8em 0;">' +
-              '<input type="text" id="edit_desc" value="'+desc+'" data-parsley-required-message="<strong>*</strong>Zip Code <strong>Required</strong>" placeholder="'+desc+'" class="form-control" required>' +
+              '<input type="text" id="edit_desc" value="'+desc+'" data-parsley-required-message="<strong>*</strong>Description <strong>Required</strong>" placeholder="'+desc+'" class="form-control" required>' +
+            '</div>' +
+            '<div class="col-sm-4">Office:</div>' +
+            '<div class="col-sm-12" style="margin:0 0 .8em 0;">' +
+              '<input type="text" id="edit_office" value="' + ofc + 
+              '" data-parsley-required-message="<strong>*</strong>Office<strong>Required</strong>" placeholder="' + ofc +
+              '" class="form-control" required>' +
             '</div>' +
             '<div class="col-sm-4">Sorting:</div>' +
             '<div class="col-sm-12" style="margin:0 0 .8em 0;">' +
-              '<input type="text" id="edit_director" value="'+sort+'" data-parsley-required-message="<strong>*</strong>Zip Code <strong>Required</strong>" placeholder="'+sort+'" class="form-control" required>' +
+              '<input type="text" id="edit_director" value="'+sort+'" data-parsley-required-message="<strong>*</strong>Sort <strong>Required</strong>" placeholder="'+sort+'" class="form-control" required>' +
             '</div>'
           );
       }
@@ -217,6 +230,7 @@
                           _token : $('#token').val(),
                           id: $('#new_rgnid').val(),
                           name : $('#new_rgn_desc').val(),
+                          office: $('#new_office').val(),
                           director : $('#director').val(),
                           directorDesc : $('#directorDesc').val(),
                           mod_id : $('#CurrentPage').val(),
@@ -246,11 +260,19 @@
                if (form.parsley().isValid()) {
                  var x = $('#edit_name').val();
                  var y = $('#edit_desc').val();
+                 var y1 = $('#edit_office').val();
                  var z = $('#edit_director').val();
                  $.ajax({
                     url: "{{ asset('employee/mf/save_region') }}",
                     method: 'POST',
-                    data : {_token:$('#token').val(),id:x,name:y,director:z,mod_id : $('#CurrentPage').val()},
+                    data : {
+                      _token:$('#token').val(),
+                      id:x,
+                      name:y,
+                      office: y1,
+                      director:z,
+                      mod_id : $('#CurrentPage').val()
+                    },
                     success: function(data){
                         if (data == "DONE") {
                             alert('Successfully Edited Region');
