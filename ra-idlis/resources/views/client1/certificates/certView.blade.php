@@ -25,6 +25,7 @@
 						<span class="card-title text-center" style="font-family: Arial;font-size: 12pt"><center><strong>Republic of the Philippines</strong></center></span>
 						<span class="card-title text-center" style="font-family: Arial;font-size: 13pt"><center><strong>DEPARTMENT OF HEALTH</strong></center></span>
 						<span class="card-title text-center" style="font-family: Arial;font-size: 14pt"><center><strong><?=(isset($retTable[0]->office) && !empty($retTable[0]->office)? $retTable[0]->office : '')?></strong></center></span>
+						<span class="card-title text-center" style="font-family: Arial;font-size: 13pt"><center><strong><?=(isset($retTable[0]->address) && !empty($retTable[0]->address)? $retTable[0]->address : '')?></strong></center></span>
 					</div>
 					<div class="col-md-3 hide-div">
 					</div>
