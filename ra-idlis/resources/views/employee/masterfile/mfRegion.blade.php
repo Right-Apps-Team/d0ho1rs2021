@@ -23,6 +23,7 @@
                      <th>ID</th>
                       <th>Name</th>
                       <th>Office</th>
+                      <th>Address</th>
                       <th>Sort</th>
                     <th><center>Options</center></th>
                   </tr>
@@ -34,11 +35,12 @@
   	                  	<td>{{$regions->rgnid}}</td>
   	                    <td>{{$regions->rgn_desc}}</td>
   	                    <td>{{$regions->office}}</td>
+  	                    <td>{{$regions->address}}</td>
                         <td>{{$regions->sort}}</td>
   	                    <td>
   	                      <center>
                           <span class="PL001_update">
-  	                        <button type="button" class="btn btn-outline-warning" onclick="showData('{{$regions->rgnid}}', '{{$regions->rgn_desc}}', '{{$regions->office}}', '{{$regions->sort}}');" data-toggle="modal" data-target="#GodModal"><i class="fa fa-fw fa-edit"></i></button>&nbsp;
+  	                        <button type="button" class="btn btn-outline-warning" onclick="showData('{{$regions->rgnid}}', '{{$regions->rgn_desc}}', '{{$regions->office}}', '{{$regions->address}}','{{$regions->sort}}');" data-toggle="modal" data-target="#GodModal"><i class="fa fa-fw fa-edit"></i></button>&nbsp;
                           </span>
                           <span class="PL001_cancel">
   	                        <button type="button" class="btn btn-outline-danger" onclick="showDelete('{{$regions->rgnid}}', '{{$regions->rgn_desc}}');" data-toggle="modal" data-target="#DelGodModal"><i class="fa fa-fw fa-trash"></i></button>
@@ -81,6 +83,10 @@
               <div class="col-sm-4 req">Office:</div>
               <div class="col-sm-8" style="margin:0 0 .8em 0;">
                 <input type="text" id="new_office" class="form-control" data-parsley-required-message="*<strong>Office</strong> required" required>
+              </div>
+              <div class="col-sm-4 req">Address:</div>
+              <div class="col-sm-8" style="margin:0 0 .8em 0;">
+                <input type="text" id="new_address" class="form-control" data-parsley-required-message="*<strong>Address</strong> required" required>
               </div>
               <div class="col-sm-4">Director:</div>
               <div class="col-sm-8" style="margin:0 0 .8em 0;">
@@ -160,7 +166,7 @@
   </div>
   <script type="text/javascript">
   	$(document).ready(function() { $('#example').DataTable();});
-  	function showData(id,desc,ofc, sort){
+  	function showData(id,desc,ofc,address, sort){
         console.log(ofc);
         $('#EditBody').empty();
         $('#EditBody').append(
@@ -176,6 +182,12 @@
             '<div class="col-sm-12" style="margin:0 0 .8em 0;">' +
               '<input type="text" id="edit_office" value="' + ofc + 
               '" data-parsley-required-message="<strong>*</strong>Office<strong>Required</strong>" placeholder="' + ofc +
+              '" class="form-control" required>' +
+            '</div>' +
+            '<div class="col-sm-4">Address:</div>' +
+            '<div class="col-sm-12" style="margin:0 0 .8em 0;">' +
+              '<input type="text" id="edit_address" value="' + address + 
+              '" data-parsley-required-message="<strong>*</strong>Address<strong>Required</strong>" placeholder="' + address +
               '" class="form-control" required>' +
             '</div>' +
             '<div class="col-sm-4">Sorting:</div>' +
@@ -231,6 +243,7 @@
                           id: $('#new_rgnid').val(),
                           name : $('#new_rgn_desc').val(),
                           office: $('#new_office').val(),
+                          address: $('#new_address').val(),
                           director : $('#director').val(),
                           directorDesc : $('#directorDesc').val(),
                           mod_id : $('#CurrentPage').val(),
@@ -261,6 +274,7 @@
                  var x = $('#edit_name').val();
                  var y = $('#edit_desc').val();
                  var y1 = $('#edit_office').val();
+                 var y2 = $('#edit_address').val();
                  var z = $('#edit_director').val();
                  $.ajax({
                     url: "{{ asset('employee/mf/save_region') }}",
@@ -270,6 +284,7 @@
                       id:x,
                       name:y,
                       office: y1,
+                      address: y2,
                       director:z,
                       mod_id : $('#CurrentPage').val()
                     },
