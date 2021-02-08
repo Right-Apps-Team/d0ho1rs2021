@@ -24,6 +24,7 @@
                       <th>Name</th>
                       <th>Office</th>
                       <th>Address</th>
+                      <th>ISO Description</th>
                       <th>Sort</th>
                     <th><center>Options</center></th>
                   </tr>
@@ -36,11 +37,12 @@
   	                    <td>{{$regions->rgn_desc}}</td>
   	                    <td>{{$regions->office}}</td>
   	                    <td>{{$regions->address}}</td>
+  	                    <td>{{$regions->iso_desc}}</td>
                         <td>{{$regions->sort}}</td>
   	                    <td>
   	                      <center>
                           <span class="PL001_update">
-  	                        <button type="button" class="btn btn-outline-warning" onclick="showData('{{$regions->rgnid}}', '{{$regions->rgn_desc}}', '{{$regions->office}}', '{{$regions->address}}','{{$regions->sort}}');" data-toggle="modal" data-target="#GodModal"><i class="fa fa-fw fa-edit"></i></button>&nbsp;
+  	                        <button type="button" class="btn btn-outline-warning" onclick="showData('{{$regions->rgnid}}', '{{$regions->rgn_desc}}', '{{$regions->office}}', '{{$regions->address}}','{{$regions->iso_desc}}','{{$regions->sort}}');" data-toggle="modal" data-target="#GodModal"><i class="fa fa-fw fa-edit"></i></button>&nbsp;
                           </span>
                           <span class="PL001_cancel">
   	                        <button type="button" class="btn btn-outline-danger" onclick="showDelete('{{$regions->rgnid}}', '{{$regions->rgn_desc}}');" data-toggle="modal" data-target="#DelGodModal"><i class="fa fa-fw fa-trash"></i></button>
@@ -87,6 +89,10 @@
               <div class="col-sm-4 req">Address:</div>
               <div class="col-sm-8" style="margin:0 0 .8em 0;">
                 <input type="text" id="new_address" class="form-control" data-parsley-required-message="*<strong>Address</strong> required" required>
+              </div>
+              <div class="col-sm-4 req">ISO Description:</div>
+              <div class="col-sm-8" style="margin:0 0 .8em 0;">
+                <input type="text" id="new_iso_desc" class="form-control" data-parsley-required-message="*<strong>Address</strong> required" required>
               </div>
               <div class="col-sm-4">Director:</div>
               <div class="col-sm-8" style="margin:0 0 .8em 0;">
@@ -166,7 +172,7 @@
   </div>
   <script type="text/javascript">
   	$(document).ready(function() { $('#example').DataTable();});
-  	function showData(id,desc,ofc,address, sort){
+  	function showData(id,desc,ofc,address,iso_desc, sort){
         console.log(ofc);
         $('#EditBody').empty();
         $('#EditBody').append(
@@ -188,6 +194,12 @@
             '<div class="col-sm-12" style="margin:0 0 .8em 0;">' +
               '<input type="text" id="edit_address" value="' + address + 
               '" data-parsley-required-message="<strong>*</strong>Address<strong>Required</strong>" placeholder="' + address +
+              '" class="form-control" required>' +
+            '</div>' +
+            '<div class="col-sm-4">ISO Description:</div>' +
+            '<div class="col-sm-12" style="margin:0 0 .8em 0;">' +
+              '<input type="text" id="edit_iso_desc" value="' + iso_desc + 
+              '" data-parsley-required-message="<strong>*</strong>Address<strong>Required</strong>" placeholder="' + iso_desc +
               '" class="form-control" required>' +
             '</div>' +
             '<div class="col-sm-4">Sorting:</div>' +
@@ -244,6 +256,7 @@
                           name : $('#new_rgn_desc').val(),
                           office: $('#new_office').val(),
                           address: $('#new_address').val(),
+                          iso_desc: $('#new_iso_desc').val(),
                           director : $('#director').val(),
                           directorDesc : $('#directorDesc').val(),
                           mod_id : $('#CurrentPage').val(),
@@ -275,6 +288,7 @@
                  var y = $('#edit_desc').val();
                  var y1 = $('#edit_office').val();
                  var y2 = $('#edit_address').val();
+                 var y3 = $('#edit_iso_desc').val();
                  var z = $('#edit_director').val();
                  $.ajax({
                     url: "{{ asset('employee/mf/save_region') }}",
@@ -285,6 +299,7 @@
                       name:y,
                       office: y1,
                       address: y2,
+                      iso_desc: y3,
                       director:z,
                       mod_id : $('#CurrentPage').val()
                     },
