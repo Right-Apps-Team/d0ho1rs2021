@@ -2393,6 +2393,7 @@
 					'rgn_desc' => $request->name,
 					/*'director' => $request->director, */
 					'office' => $request->office,
+					'address' => $request->address,
 					'sort' => $request->director
 				);
 				$test = DB::table('region')->where('rgnid',$request->id)->update($updateData);
