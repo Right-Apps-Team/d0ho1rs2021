@@ -9,6 +9,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+/* ---- 
+Proper Routing
+
+---- */
+Route::prefix('client')->group(__DIR__ . '/clients/dashboard.php');
 // OLD CLIENT-SIDE
 Route::match(['get', 'post'], '/qrcode/{appid}', 'NewClientController@generateForCertificate');
 Route::match(['get', 'post'], '/sampleprint', 'AjaxController@tryprint');
