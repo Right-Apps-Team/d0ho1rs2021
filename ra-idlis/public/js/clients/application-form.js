@@ -2,7 +2,14 @@ $(function() {
     console.log("BASE: ", base_url);
 
 });
-
+const fetchFetchMonicipality = async (e) => {
+    const rgnid = $("#region").val();
+    const provid = $("#province").val()
+    if( e.value ) {
+        const data = { 'rgnid' : rgnid, 'provid' : provid }
+        // callApi('/api/province/fetch', data, 'POST').then(provinces => {});
+    }
+}
 const fetchProvince = async (e) => {
     const rgnid = $("#" + e.id).val() //.text()
     console.log('EYYY, ', rgnid);
