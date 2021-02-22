@@ -21,7 +21,15 @@
             <div class="form-group col-md-6">
                 <label for="facility_name">Facility Name <span class="text-danger">*</span></label>
                 <div class="input-group">
-                    <input type="text" name="facilityname" class="form-control" placeholder="FACILITY NAME" id="facility_name" onChange="checkFacilityName(this)" required>
+                    <input 
+                        type="text" 
+                        name="facilityname" 
+                        class="form-control" 
+                        placeholder="FACILITY NAME" 
+                        id="facility_name" 
+                        onChange="checkFacilityName(this)" 
+                        required
+                    >
                     <div class="input-group-append" data-toggle="tooltip" data-placement="top" title="" data-original-title="Manually search existing Facility">
                         <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-info"></i></button>
                     </div>
@@ -35,28 +43,47 @@
             <div class="col-md-12"><b class="text-primary">FACILTY ADDRESS</b></div>
             <div class="col-md-3">
                 <label for="region">Region <span class="text-danger">*</span></label>
-                <select class="form-control selectpicker show-menu-arrow" id="region" name="rgnid" required data-live-search="true" data-style="text-dark" data-size="5">
+                <select 
+                    class="form-control selectpicker show-menu-arrow" 
+                    id="region" 
+                    name="rgnid" 
+                    required 
+                    data-live-search="true" 
+                    data-style="text-dark" 
+                    data-size="5"
+                    onChange="fetchProvince(this)" 
+                >
                     <option>Please select</option>
                     @foreach( $regions as $region)
-                        <option value="{{$region->id}}" >{{$region->rgn_desc}}</option>
+                        <option value="{{$region->rgnid}}" >{{$region->rgn_desc}}</option>
                     @endforeach
                 </select>
             </div>
             <div class="col-md-3">
                 <label for="province">Province/District <span class="text-danger">*</span></label>
-                <select class="form-control" id="province">
+                <select 
+                    class="form-control" 
+                    id="province"
+                    disabled 
+                    name="provid"
+                    required 
+                    data-live-search="true" 
+                    data-style="text-dark" 
+                    data-size="5"
+                    onChange="fetchFetchMonicipality(this)" 
+                    >
                     <option>Please select</option>
                 </select>
             </div>
             <div class="col-md-3">
                 <label for="city_monicipality">City/Municipality <span class="text-danger">*</span></label>
-                <select class="form-control" id="city_monicipality">
+                <select class="form-control" id="city_monicipality" disabled>
                     <option>Please select</option>
                 </select>
             </div>
             <div class="col-md-3">
                 <label for="brgy">Baranggay <span class="text-danger">*</span></label>
-                <select class="form-control" id="brgy">
+                <select class="form-control" id="brgy" disabled>
                     <option>Please select</option>
                 </select>
             </div>

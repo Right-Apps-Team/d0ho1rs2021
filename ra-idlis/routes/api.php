@@ -21,14 +21,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get(
     '/clients', 
     'Client\Api\ClientApiController@index'
-)->middleware([APIMiddleware::class]);
+); //->middleware([APIMiddleware::class]);
 
 Route::post(
     '/application/validate-name/',
     'Client\Api\ApplicationApiController@check'
-)->middleware([APIMiddleware::class]);
+); //->middleware([APIMiddleware::class]);
 
-Route::get(
-    '/regions/get-all/',
-    'Client\Api\RegionApiControlller@fetchAll'
-)->middleware([APIMiddleware::class]);
+Route::post(
+    '/province/fetch/',
+    'Client\Api\ProvinceApiController@fetch'
+); //->middleware([APIMiddleware::class]);
