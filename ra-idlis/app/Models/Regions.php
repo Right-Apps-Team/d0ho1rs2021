@@ -4,6 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ApplicationForm extends Model {
-    protected $table = 'appform';
+class Regions extends Model {
+    protected $table = 'region';
 }

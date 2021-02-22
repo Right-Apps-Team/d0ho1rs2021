@@ -109,14 +109,13 @@
 				return 'ERROR';
 			}
 		}
-
-		public static function getHeaderSettings(){
+		public static function getHeaderSettings()
+		{
 			if(!session()->has('directorSettings')){
 				$systemSettings = DB::table('m99')->select('dohiso')->where('id',1)->first();	
 				session()->put('directorSettings',$systemSettings);
 			}
 		}
-
 		public static function OpenFile($id)
 		{
 			try 
@@ -140,7 +139,6 @@
 				return 'ERROR';
 			}
 		}
-
 		public static function isExist($id)
 		{
 			try 
@@ -234,16 +232,12 @@
 				}
 			}
 		}
-
 		public static function getAllFrom($table,$select = '*'){
 			return DB::table($table)->select($select)->get();
 		}
-
 		public static function getAllFromWhere($table,$cond = array()){
 			return DB::table($table)->where($cond)->get();
 		}
-
-
 		public static function checkTokenforChangePassword($token)
 		{
 			try 
@@ -257,8 +251,8 @@
 				return null;
 			}
 		}
-
-		public static function getNotificationIDfromCases($hferid,$case,$actionTaken){
+		public static function getNotificationIDfromCases($hferid,$case,$actionTaken)
+		{
 			$id = null;
 			switch ($hferid) {
 				case 'CON':
@@ -432,7 +426,6 @@
 			}
 			return $id;
 		}
-
 		public static function getNotification(Request $request)
 		{
 			try 
@@ -475,12 +468,10 @@
 				return 'ERROR';
 			}
 		}
-
 		public static function updateNotification(Request $request){
 			$returnToSender = DB::table('notificiationlog')->where('uid',$request->uid)->update(['status' => 1]);
 			return ($returnToSender ? 'done' : 'error');
 		}
-
 		public static function notifyClient($appid,$uid, $selected)
 		{
 			try 
@@ -588,7 +579,6 @@
 				return null;
 			}
 		}
-
 		public static function isPreviousPassword($pwd,$uid)
 		{
 			try 
@@ -773,8 +763,8 @@
 				return 'ERROR';
 			}
 		}
-
-		public static function getConCatchFormatted($appid,$displayDone = null){
+		public static function getConCatchFormatted($appid,$displayDone = null)
+		{
 			$pop = 0;
 			$where = [['appid',$appid],['isfrombackend',$displayDone]];
 			$brp = DB::table('con_catch')->where($where)->get();
@@ -790,7 +780,6 @@
 
 			return [$brp,$loc,$hosLevel];
 		}
-
 		/////// Applicants
 		/////// Teams
 		public static function getAllTeams() // Get all Teams
@@ -808,8 +797,8 @@
 				return 'ERROR';	
 			}
 		}
-
-		public static function isExistonDB($table, $fieldToExclude, $idToExclude, $fields = array(), $data = array(),$stat = true){
+		public static function isExistonDB($table, $fieldToExclude, $idToExclude, $fields = array(), $data = array(),$stat = true)
+		{
 			if(count($fields) == count($data)){
 				$toDB = array_combine($fields, $data);
 				if($stat){
@@ -819,8 +808,6 @@
 			}
 			return 'unEqualData';
 		}
-
-
 		public static function saveTeam(Request $request) // Update Team
 		{
 			try 

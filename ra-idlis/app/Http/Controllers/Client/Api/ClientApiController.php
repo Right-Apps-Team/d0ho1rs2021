@@ -9,9 +9,9 @@ use App\Models\Users;
 
 class ClientApiController extends Controller {
     public function index() {
+        // Client Fetching
         $user = Users::where('grpid', 'C')->paginate(20);
         return $user;
-        // return response()->json( ['data' => ['message' => "HELLO"]], 200 );
     }
     public function store(Request $request) {}
     public function show(String $slug) {}
