@@ -77,7 +77,16 @@
             </div>
             <div class="col-md-3">
                 <label for="city_monicipality">City/Municipality <span class="text-danger">*</span></label>
-                <select class="form-control" id="city_monicipality" disabled>
+                <select 
+                    class="form-control" 
+                    id="city_monicipality" 
+                    disabled
+                    name="cmid"
+                    required 
+                    data-live-search="true" 
+                    data-style="text-dark" 
+                    data-size="5"
+                >
                     <option>Please select</option>
                 </select>
             </div>

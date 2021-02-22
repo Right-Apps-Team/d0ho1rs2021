@@ -3,11 +3,24 @@ $(function() {
 
 });
 const fetchFetchMonicipality = async (e) => {
-    const rgnid = $("#region").val();
-    const provid = $("#province").val()
+    const provid = $("#province").val();
+    console.log('EYYY, ', provid);
     if( e.value ) {
-        const data = { 'rgnid' : rgnid, 'provid' : provid }
-        // callApi('/api/province/fetch', data, 'POST').then(provinces => {});
+        const data = { 'provid' : provid }
+        callApi('/api/municipality/fetch', data, 'POST').then(city => {
+            $("#city_monicipality").empty();
+            $("#city_monicipality").append(`<option value=''>Please select</option>`);
+            $("#city_monicipality").removeAttr('disabled');
+            city.data.map(c => {
+                $("#city_monicipality").append(`<option value='${c.cmid}'>${c.cmname}</option>`);
+            })
+            $("#city_monicipality").selectpicker('refresh')
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+    else {
+        $("#city_monicipality").addAttr('disabled')
     }
 }
 const fetchProvince = async (e) => {
@@ -19,7 +32,7 @@ const fetchProvince = async (e) => {
             console.log(provinces.data);
             $("#province").empty();
             $("#province").append(`<option value=''>Please select</option>`);
-            $("#province").removeAttr('disabled')
+            $("#province").removeAttr('disabled');
             provinces.data.map(province => {
                 $("#province").append(`<option value='${province.provid}'>${province.provname}</option>`);
             })

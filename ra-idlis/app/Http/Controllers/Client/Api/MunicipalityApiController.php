@@ -8,9 +8,8 @@ use Illuminate\Http\Request;
 
 class MunicipalityApiController extends Controller {
     public function fetch(Request $request) {
-        $rgnid = $request->rgnid;
         $provid = $request->provid;
-        $municipality = Municipality::where('rgnid', $rgnid)->where('provid', $provid)->get();
+        $municipality = Municipality::where('provid', $provid)->get();
         return response()->json($municipality, 200);
     }
 }
