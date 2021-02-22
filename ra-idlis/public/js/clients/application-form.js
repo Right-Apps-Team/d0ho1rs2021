@@ -16,6 +16,7 @@ const fetchProvince = async (e) => {
             provinces.data.map(province => {
                 $("#province").append(`<option value='${province.provid}'>${province.provname}</option>`);
             })
+            $("#province").selectpicker('refresh')
 
         }).catch(err => {
             console.log(err);

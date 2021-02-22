@@ -62,7 +62,7 @@
             <div class="col-md-3">
                 <label for="province">Province/District <span class="text-danger">*</span></label>
                 <select 
-                    class="form-control" 
+                    class="form-control selectpicker show-menu-arrow" 
                     id="province"
                     disabled 
                     name="provid"
