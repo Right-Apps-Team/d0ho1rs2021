@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 use Session;
 use App\Http\Controllers\Controller;
 use FunctionsClientController;
+use App\Models\Regions;
 
 class ClientDashboardController extends Controller {
     public function index() {
@@ -25,7 +26,8 @@ class ClientDashboardController extends Controller {
         $user_data = session()->get('uData');
         $data = [
             'user' => $user_data,
-            'appFacName'=>FunctionsClientController::getDistinctByFacilityName()
+            'appFacName'=> FunctionsClientController::getDistinctByFacilityName(),
+            'regions' => Regions::orderBy('sort')->get()
         ];
         return view('dashboard.client.newapplication', $data);
     }

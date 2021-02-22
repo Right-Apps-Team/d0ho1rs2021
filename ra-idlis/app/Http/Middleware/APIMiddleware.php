@@ -6,9 +6,9 @@ use Session;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class CustomAuthChecker
+class APIMiddleware
 {
-    /**
+   /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -19,8 +19,11 @@ class CustomAuthChecker
     public function handle($request, Closure $next, $guard = null) {
         $user_data = session()->get('uData');
         if (!$user_data) {
-            return redirect('/client1');
+            return response()->json('Unauthorized', 401);
         }
-        return $next($request);
+        else {
+            return $next($request);
+        }
+        
     }
 }
