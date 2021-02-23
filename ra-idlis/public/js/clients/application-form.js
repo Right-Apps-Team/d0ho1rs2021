@@ -18,11 +18,11 @@ const setOfficialMailAddress = async (e) => {
         region = $("#region option:selected" ).text();
         let errMessage = 'Please fill up the following fields: ';
         let isError = false;
-        if(street_number) {
+        if(!street_number) {
             isError = true;
             errMessage = errMessage + 'Street Number';
         }
-        if(street_name) {
+        if(!street_name) {
             if(isError) {
                 errMessage = errMessage + ', Street Name';
             }
@@ -31,7 +31,7 @@ const setOfficialMailAddress = async (e) => {
                 errMessage = errMessage + ' Street Name';
             }
         }
-        if(brgy) {
+        if(!brgy) {
             if(isError) {
                 errMessage = errMessage + ', Barangay';
             }
@@ -40,7 +40,7 @@ const setOfficialMailAddress = async (e) => {
                 errMessage = errMessage + ' Barangay';
             }
         }
-        if(city) {
+        if(!city) {
             if(isError) {
                 errMessage = errMessage + ', City/Municipality';
             }
@@ -49,7 +49,7 @@ const setOfficialMailAddress = async (e) => {
                 errMessage = errMessage + ' City/Municipality';
             }
         } 
-        if(prov) {
+        if(!prov) {
             if(isError) {
                 errMessage = errMessage + ', Province';
             }
@@ -58,7 +58,7 @@ const setOfficialMailAddress = async (e) => {
                 errMessage = errMessage + ' Province';
             }
         }
-        if(region) {
+        if(!region) {
             if(isError) {
                 errMessage = errMessage + ', Region';
             }
