@@ -457,21 +457,31 @@
                 </select>
             </div>
 
-            <div class="form-group col-md-12  mt-4 text-right">
-                <ul id="submitFormBtns">
-                    <li><a class="btn btn-danger" href="{{URL::to('/client1/apply')}}">Cancel</a></li>
-                    <li><button class="btn btn-info" type="submit" value="submit" name="submit">Submit Form</button></li>
-                    <li><button class="btn btn-success" type="button" onClick="savePartial(this)">Save as Draft</button></li>
-                </ul>
+            <div class="form-group row col-md-12 mt-5">
+                <div class="col-lg-3 col-md-3 col-xs-12"></div>
+                <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
+                    <a class="btn btn-danger btn-block" href="{{URL::to('/client1/apply')}}">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
+                    <button class="btn btn-info btn-block" type="submit" value="submit" name="submit">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                        Submit Form
+                    </button>
+                </div>
+                <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
+                    <button class="btn btn-success btn-block" type="button" onClick="savePartial(this)">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                        Save as Draft
+                    </button>
+                </div>
             </div>
         </form>
     </div>
 </div>
 </section>
 <style>
-    #submitFormBtns li {
-        display: inline;
-    }
     .feedback {
         width: 100%;
         display: block;
