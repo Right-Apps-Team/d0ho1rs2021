@@ -271,7 +271,7 @@
                 
                 <label for="facmode">Institutional Character <span class="text-danger">*</span></label>
                 <div class="row">
-                    <div class="col-md-10">
+                    <div class="col-lg-10 col-md-10 col-xs-10">
                         <select 
                             class="form-control selectpicker show-menu-arrow" 
                             id="facmode" 
@@ -287,7 +287,7 @@
                             <option value="5">Institution Based (Non-Hospital)</option>
                         </select>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-lg-2 col-md-2 col-xs-2">
                         <i  class="fa fa-question-circle" 
                             id="institution_helper"
                             aria-hidden="true" 
@@ -452,9 +452,7 @@
             </div>
             <div class="col-md-6">
                 <label for="approving_authority_name">Approving Authority Full Name <span class="text-danger">*</span></label>
-                <select class="form-control" id="approving_authority_name" name="approvingauthority">
-                    <option>Please select</option>
-                </select>
+                <input type="text" class="form-control" id="approving_authority_name" name="approvingauthority" placeholder="Approving Authority Full name"/>
             </div>
 
             <div class="form-group row col-md-12 mt-5">
