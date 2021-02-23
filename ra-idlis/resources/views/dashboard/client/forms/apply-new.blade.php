@@ -337,7 +337,13 @@
             <div class="col-md-12"><b class="text-primary">OWNER DETAILS</b></div>
             <div class="col-md-12">
                 <label for="owner">OWNER <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="owner" placeholder="OWNER (Name/Company/Organization)">
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    id="owner" 
+                    name="owner"
+                    placeholder="OWNER (Name/Company/Organization)"
+                >
             </div>
             <div class="col-md-12">
                 <div class="mb-3 mt-3 alert alert-warning">
@@ -373,15 +379,43 @@
             <div class="col-md-12"><b class="text-primary">Proponent/Owner Contact Details</b></div>
             <div class="col-md-4">
                 <label for="prop_mobile">Proponent/Owner Mobile No. <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="prop_mobile" placeholder="Proponent/Owner Mobile No."/>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    id="prop_mobile" 
+                    name="ownerMobile"
+                    placeholder="Proponent/Owner Mobile No."/>
             </div>
             <div class="col-md-4">
                 <label for="prop_landline">Proponent/Owner Landline <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="prop_landline" placeholder="Proponent/Owner Landline"/>
+                <div class="row">
+                    <div class="col-xs-12 col-md-5 col-xs-5">
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="prop_landline_areacode" 
+                            name="ownerLandlienAreacode"
+                            placeholder="Proponent/Owner Landline"/>
+                    </div>
+                    <div class="col-xs-12 col-md-7 col-xs-7">
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="prop_landline" 
+                            name="ownerLandline"
+                            placeholder="Proponent/Owner Landline"/>
+                    </div>
+                </div>
+                
             </div>
             <div class="col-md-4">
                 <label for="prop_email">Proponent/Owner Email Address <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="prop_email" placeholder="Proponent/Owner Email Address"/>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    id="prop_email" 
+                    name="ownerEmail"
+                    placeholder="Proponent/Owner Email Address"/>
             </div>
 
             <p>&nbsp;</p>
@@ -389,9 +423,19 @@
             <div class="col-md-12">
                 <label for="official_mail_address">Official Mailing Address <span class="text-danger">*</span></label>
                 <p>
-                    <label><input type="checkbox" id="isSameAsFacilityAddress"> Official Mailing address same as Facility Address? If no, please specify complete address</label>
+                    <label>
+                        <input 
+                            type="checkbox" 
+                            id="isSameAsFacilityAddress" 
+                            value="1" 
+                            onChange="setOfficialMailAddress(this)"
+                        > Official Mailing address same as Facility Address? If no, please specify complete address</label>
                 </p>
-                <input type="text" class="form-control" id="official_mail_address" placeholder="Official Mailing Address"/>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    id="official_mail_address"
+                    placeholder="Official Mailing Address"/>
             </div>
 
             
@@ -399,22 +443,25 @@
             <div class="col-md-12"><b class="text-primary">Approving Authority Details</b></div>
             <div class="col-md-6">
                 <label for="approving_authority_pos">Approving Authority Position/Designation <span class="text-danger">*</span></label>
-                <select class="form-control" id="approving_authority_pos" >
-                    <option>Please select</option>
+                <select class="form-control" id="approving_authority_pos" name="approvingauthoritypos">
+                    <option value="">Please select</option>
+                    <option value="President">President</option>
+                    <option value="Owner">Owner</option>
+                    <option value="Head of Facility">Head of Facility</option>
                 </select>
             </div>
             <div class="col-md-6">
                 <label for="approving_authority_name">Approving Authority Full Name <span class="text-danger">*</span></label>
-                <select class="form-control" id="approving_authority_name" >
+                <select class="form-control" id="approving_authority_name" name="approvingauthority">
                     <option>Please select</option>
                 </select>
             </div>
 
             <div class="form-group col-md-12  mt-4 text-right">
                 <ul id="submitFormBtns">
-                    <li><button class="btn btn-danger" type="button">Cancel</button></li>
-                    <li><button class="btn btn-info" type="button">Submit Form</button></li>
-                    <li><button class="btn btn-success" type="button">Save as Draft</button></li>
+                    <li><a class="btn btn-danger" href="{{URL::to('/client1/apply')}}">Cancel</a></li>
+                    <li><button class="btn btn-info" type="submit" value="submit" name="submit">Submit Form</button></li>
+                    <li><button class="btn btn-success" type="button" onClick="savePartial(this)">Save as Draft</button></li>
                 </ul>
             </div>
         </form>
