@@ -37,3 +37,8 @@ Route::post(
     '/municipality/fetch/',
     'Client\Api\MunicipalityApiController@fetch'
 ); //->middleware([APIMiddleware::class]);
+
+Route::post(
+    '/barangay/fetch/',
+    'Client\Api\BarangayApiController@fetch'
+); //->middleware([APIMiddleware::class]);

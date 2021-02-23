@@ -2,7 +2,28 @@ $(function() {
     console.log("BASE: ", base_url);
 
 });
-const fetchFetchMonicipality = async (e) => {
+const fetchBaranggay = async (e) => {
+    const cmid = $("#city_monicipality").val();
+    console.log('EYYY, ', cmid);
+    if( e.value ) {
+        const data = { 'cmid' : cmid }
+        callApi('/api/barangay/fetch', data, 'POST').then(barangay => {
+            $("#brgy").empty();
+            $("#brgy").append(`<option value=''>Please select</option>`);
+            $("#brgy").removeAttr('disabled');
+            barangay.data.map(c => {
+                $("#brgy").append(`<option value='${barangay.brgyid}'>${c.brgyname}</option>`);
+            })
+            $("#brgy").selectpicker('refresh')
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+    else {
+        $("#brgy").addAttr('disabled')
+    }
+}
+const fetchMonicipality = async (e) => {
     const provid = $("#province").val();
     console.log('EYYY, ', provid);
     if( e.value ) {
