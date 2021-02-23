@@ -219,19 +219,50 @@
             <div class="col-md-12"><b class="text-primary">CLASSIFICATION ACCORDING TO</b></div>
             <div class="col-md-4">
                 <label for="ownership">Ownership <span class="text-danger">*</span></label>
-                <select class="form-control" id="ownership">
+                
+                <select 
+                    class="form-control selectpicker show-menu-arrow" 
+                    id="ocid" 
+                    name="ocid"
+                    data-live-search="true" 
+                    data-style="text-dark form-control custom-selectpicker"
+                    data-size="5"
+                    required
+                    onChange="fetchClassification(this)"
+                >
                     <option>Please select</option>
+                    <option value="G">Government</option>
+                    <option value="P">Private</option>
                 </select>
             </div>
             <div class="col-md-4">
                 <label for="classification">Classification <span class="text-danger">*</span></label>
-                <select class="form-control" id="classification">
+                <select 
+                    class="form-control selectpicker show-menu-arrow" 
+                    id="classification"
+                    disabled
+                    name="classid"
+                    data-live-search="true" 
+                    data-style="text-dark form-control custom-selectpicker"
+                    data-size="5"
+                    required
+                    onChange="fetchSubClass(this)"
+                    >
                     <option>Please select</option>
                 </select>
             </div>
             <div class="col-md-4">
                 <label for="subclass">Sub Classification <span class="text-danger">*</span></label>
-                <select class="form-control" id="subclass">
+                <select 
+                    class="form-control selectpicker show-menu-arrow" 
+                    id="subclass"
+                    disabled
+                    name="subClassid"
+                    data-live-search="true" 
+                    data-style="text-dark form-control custom-selectpicker"
+                    data-size="5"
+                    required
+                    >
                     <option>Please select</option>
                 </select>
             </div>

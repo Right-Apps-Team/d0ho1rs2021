@@ -42,3 +42,8 @@ Route::post(
     '/barangay/fetch/',
     'Client\Api\BarangayApiController@fetch'
 ); //->middleware([APIMiddleware::class]);
+
+Route::post(
+    '/classification/fetch/',
+    'Client\Api\ClassificationApiController@fetch'
+); //->middleware([APIMiddleware::class]);

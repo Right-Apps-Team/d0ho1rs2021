@@ -2,6 +2,44 @@ $(function() {
     console.log("BASE: ", base_url);
 
 });
+const fetchSubClass = async (e) => {
+    const ocid = $("#ocid").val();
+    const classid = $("#classid").val();
+    if( e.value ) {
+        const data = { 'ocid' : ocid, 'classid' : classid }
+        callApi('/api/classification/fetch', data, 'POST').then(classification => {
+            $("#subclass").empty();
+            $("#subclass").append(`<option value=''>Please select</option>`);
+            $("#subclass").removeAttr('disabled');
+            classification.data.map(c => {
+                $("#subclass").append(`<option value='${c.classid}'>${c.classname}</option>`);
+            })
+            $("#subclass").selectpicker('refresh')
+        })
+    }
+    else {
+        $("#subclass").addAttr('disabled')
+    }
+}
+const fetchClassification = async (e) => {
+    const ocid = $("#ocid").val();
+    console.log('EYYY, ', ocid);
+    if( e.value ) {
+        const data = { 'ocid' : ocid }
+        callApi('/api/classification/fetch', data, 'POST').then(classification => {
+            $("#classification").empty();
+            $("#classification").append(`<option value=''>Please select</option>`);
+            $("#classification").removeAttr('disabled');
+            classification.data.map(c => {
+                $("#classification").append(`<option value='${c.classid}'>${c.classname}</option>`);
+            })
+            $("#classification").selectpicker('refresh')
+        })
+    }
+    else {
+        $("#classification").addAttr('disabled')
+    }
+}
 const fetchBaranggay = async (e) => {
     const cmid = $("#city_monicipality").val();
     console.log('EYYY, ', cmid);
