@@ -48,7 +48,7 @@ const setOfficialMailAddress = async (e) => {
                 isError = true;
                 errMessage = errMessage + ' City/Municipality';
             }
-        }
+        } 
         if(prov) {
             if(isError) {
                 errMessage = errMessage + ', Province';
