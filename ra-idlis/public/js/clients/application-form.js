@@ -1,6 +1,6 @@
 $(function() {
     console.log("BASE: ", base_url);
-
+    $("#institution_helper").tooltip()
 });
 const fetchSubClass = async (e) => {
     const ocid = $("#ocid").val();
