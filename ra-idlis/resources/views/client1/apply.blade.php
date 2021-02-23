@@ -37,6 +37,7 @@
 			<div class="row mb-5">
 				<div class="col-sm-4">
 					<a class="btn btn-success btn-block" href="{{asset('client1/apply/new')}}" style="text-decoration: none;color:#fff; margin-top: 20%">Add new Application</a>
+					<a class="btn btn-info btn-block" href="{{asset('client/dashboard/new-application')}}" style="text-decoration: none;color:#fff; margin-top: 20%">Add new Application (New Form)</a>
 				</div>
 				<div class="col-sm-4">
 					<!-- <div style="background: #fff; border-radius: 10px; box-shadow: none;    border: 1px solid rgba(97, 125, 255, 0.2);padding: 25px 25px 15px 8%;">
