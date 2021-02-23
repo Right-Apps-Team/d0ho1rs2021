@@ -8,7 +8,14 @@
             <div class="col-md-12"><b class="text-primary">APPLICATION</b></div>
             <div class="form-group col-md-6">
                 <label for="typeOfApplication">Type of Application <span class="text-danger">*</span></label>
-                <select class="form-control selectpicker show-menu-arrow" id="typeOfApplication" name="hfser_id" required data-live-search="true" data-style="text-dark" data-size="5">
+                <select 
+                    class="form-control selectpicker show-menu-arrow" 
+                    id="typeOfApplication" 
+                    name="hfser_id" 
+                    required 
+                    data-live-search="true" 
+                    data-style="text-dark form-control custom-selectpicker" 
+                    data-size="5">
                     <option>Please select</option>
                     <option value="CON">Certificate of Need</option>
                     <option value="PTC">Permit to Construct</option>
@@ -49,7 +56,7 @@
                     name="rgnid" 
                     required 
                     data-live-search="true" 
-                    data-style="text-dark" 
+                    data-style="text-dark form-control custom-selectpicker"
                     data-size="5"
                     onChange="fetchProvince(this)" 
                 >
@@ -68,7 +75,7 @@
                     name="provid"
                     required 
                     data-live-search="true" 
-                    data-style="text-dark" 
+                    data-style="text-dark form-control custom-selectpicker"
                     data-size="5"
                     onChange="fetchMonicipality(this)" 
                     >
@@ -84,7 +91,7 @@
                     name="cmid"
                     required 
                     data-live-search="true" 
-                    data-style="text-dark" 
+                    data-style="text-dark form-control custom-selectpicker"
                     data-size="5"
                     onChange="fetchBaranggay(this)" 
                 >
@@ -99,7 +106,7 @@
                     disabled
                     name="brgyid"
                     data-live-search="true" 
-                    data-style="text-dark" 
+                    data-style="text-dark form-control custom-selectpicker"
                     data-size="5"
                     required
                     >
@@ -326,6 +333,9 @@
     .feedback {
         width: 100%;
         display: block;
+    }
+    .custom-selectpicker {
+        border: 1px solid #ced4da;
     }
 </style>
 
