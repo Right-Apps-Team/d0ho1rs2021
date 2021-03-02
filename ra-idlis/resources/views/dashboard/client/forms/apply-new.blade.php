@@ -1,10 +1,11 @@
-<section class="container">
+<section class="container-fluid">
 <div class="card">
     <div class="card-header">
         <p class="lead text-center text-danger">Please note: Red asterisk (*) is a required field and may be encountered throughout the system </p>
     </div>
     <div class="card-body">
         <form class="row">
+            <input type="hidden" name="uid" id="uid" value="{{$user->uid}}"/>
             <div class="col-md-12"><b class="text-primary">APPLICATION</b></div>
             <div class="form-group col-md-6">
                 <label for="typeOfApplication">Type of Application <span class="text-danger">*</span></label>
@@ -60,7 +61,7 @@
                     data-size="5"
                     onChange="fetchProvince(this)" 
                 >
-                    <option>Please select</option>
+                    <option value="" >Please select</option>
                     @foreach( $regions as $region)
                         <option value="{{$region->rgnid}}" >{{$region->rgn_desc}}</option>
                     @endforeach
@@ -79,7 +80,7 @@
                     data-size="5"
                     onChange="fetchMonicipality(this)" 
                     >
-                    <option>Please select</option>
+                    <option value="">Please select</option>
                 </select>
             </div>
             <div class="col-md-3">
@@ -93,9 +94,9 @@
                     data-live-search="true" 
                     data-style="text-dark form-control custom-selectpicker"
                     data-size="5"
-                    onChange="fetchBaranggay(this)" 
+                    onChange="fetchBaranggay(this)"
                 >
-                    <option>Please select</option>
+                    <option value="">Please select</option>
                 </select>
             </div>
             <div class="col-md-3">
@@ -110,7 +111,7 @@
                     data-size="5"
                     required
                     >
-                    <option>Please select</option>
+                    <option value="">Please select</option>
                 </select>
             </div>
             <div class="mb-2 col-md-12">&nbsp;</div>
@@ -216,7 +217,14 @@
 
 
             <p>&nbsp;</p>
-            <div class="col-md-12"><b class="text-primary">CLASSIFICATION ACCORDING TO</b></div>
+            <div class="row col-md-12">
+                <div class="col-md-7"><b class="text-primary">CLASSIFICATION ACCORDING TO</b></div>
+                <div class="col-md-5">
+                    <label class="text-primary">
+                        <input type="checkbox" name="hfep_funded"  id="hfep_funded"/> HFEP Funded
+                    </label>
+                </div>
+            </div>
             <div class="col-md-4">
                 <label for="ownership">Ownership <span class="text-danger">*</span></label>
                 
@@ -331,7 +339,125 @@
                     <option value="3">Not Applicable</option>
                 </select>
             </div>
+            <div class="mb-2 col-md-12">&nbsp;</div>
+            <div class="col-md-12"><b class="text-primary">SERVICE CAPABILITIES <span class="text-danger">*</span></b></div>
+            <div class="col-md-4">
+                <label>
+                    <input type="radio" name="facid" id="facid_h" value="H" required/> Level 1 Hospital
+                </label>
+            </div>
+            <div class="col-md-4">
+                <label>
+                    <input type="radio" name="facid" id="facid_h2" value="H2" required/> Level 2 Hospital
+                </label>
+            </div>
+            <div class="col-md-4">
+                <label>
+                    <input type="radio" name="facid" id="facid_h3" value="H3" required/> Level 2 Hospital
+                </label>
+            </div>
+            
+            <div class="mb-2 col-md-12">&nbsp;</div>
+            <div class="col-md-12"><b class="text-primary">OTHER DETAILS</b></div>
+            <div class="col-md-4">
+                <label for="cap_inv">Capital Investment <span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <div class="input-group-addon p-2">₱</div>
+                    <input type="number" class="form-control" id="cap_inv" placeholder="Capital Investment" name="cap_inv" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="cap_inv">Lot Area (by square meters) <span class="text-danger">*</span></label>
+                <input type="number" class="form-control" id="lot_area" name="lot_area" placeholder="Lot Area" required>
+            </div>
+            <div class="col-md-4">
+                <label for="cap_inv">Proposed Bed Capacity <span class="text-danger">*</span></label>
+                <input type="number" class="form-control" id="noofbed" name="noofbed" placeholder="Proposed Bed Capacity">
+            </div>
 
+            <div class="mb-2 col-md-12">&nbsp;</div>
+            <div class="col-md-12"><b class="text-primary">Projected Primary and Secondary Catchment Population (P) of the Proposed Hospital: <span class="text-danger">*</span></b></div>
+            <div class="col-md-12">
+                <div class="alert alert-info">
+                    <ul>
+                        <li><b class="text-danger">Primary Catchment/Area</b> refers to the municipality/urban district for Level 1 Hospitals, rural district/city for Level 2 Hospitals, provice and region for Level 3 Hospitals</li>
+                        <li><b class="text-danger">Secondary Catchment Area</b> refers to other geographic areas that have access or contigous to the Primary Catchment Area</li>
+                        <li><b class="text-danger">Note:</b> Source of Projected Population (5th year) of Catchment Area should be from PSA/NEDA. Refer to this link <a href="https://www.doh.gov.ph/sites/default/files/publications/Philippines%20projected%20pop%20by%20Prov%2CCity%2CBarangay%202018-2022.pdf" target="_blank">here</a></li>
+                        <li><b class="text-danger">Note:</b> Please Refer to Regional DOH websites on encoding Population Projection</li>
+                    </ul>
+                </div>
+                <table class="table table-bordered">
+                    <thead class=" p-3">
+                        <tr class="bg-dark text-white">
+                            <th class="text-center">
+                                <button 
+                                    class="btn btn-success" 
+                                    type="button"
+                                    onClick="addProjectedPopulation()"    
+                                >
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </th>
+                            <th>Type</th>
+                            <th>Location</th>
+                            <th>Projected Population (5th year) of Catchment Area</th>
+                        </tr>
+                    </thead>
+                    <tbody id="projected_populations">
+                        <tr>
+                            <td colspan="2" class="text-right">Total</td>
+                            <td colspan="2" id="total">
+                                <span id="projectedPopulationCost">0</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mb-2 col-md-12">&nbsp;</div>
+            <div class="col-md-12"><b class="text-primary">List of Existing Hospital(s) currently managed/operated by the Proponent, if any</b></div>
+            <div class="col-md-12" style="overflow-x: scroll">
+                <table class="table table-bordered">
+                    <thead class=" p-3">
+                        <tr class="bg-dark text-white">
+                            <th class="text-center">
+                                <button 
+                                    class="btn btn-success" 
+                                    type="button"
+                                    onClick="addListOfExistingHospitals()"    
+                                >
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </th>
+                            <th>
+                                Facility Name
+                            </th>
+                            <th>
+                                Location
+                            </th>
+                            <th>
+                                Bed Capacity
+                            </th>
+                            <th>
+                                Category of Hospital
+                            </th>
+                            <th>
+                                License Number
+                            </th>
+                            <th>
+                                Validity Period
+                            </th>
+                            <th>
+                                Due of Operations
+                            </th>
+                            <th>
+                                Remarks
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="existing_hospitals">
+                    </tbody>
+                </table>
+            </div>
 
             <p>&nbsp;</p>
             <div class="col-md-12"><b class="text-primary">OWNER DETAILS</b></div>
@@ -486,6 +612,12 @@
     }
     .custom-selectpicker {
         border: 1px solid #ced4da;
+    }
+    .region {
+        display: none;
+    }
+    .province {
+        display: none;
     }
 </style>
 

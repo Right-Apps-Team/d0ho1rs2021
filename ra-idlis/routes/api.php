@@ -29,6 +29,11 @@ Route::post(
 ); //->middleware([APIMiddleware::class]);
 
 Route::post(
+    '/application/save',
+    'Client\Api\ApplicationApiController@save'
+); //->middleware([APIMiddleware::class]);
+
+Route::post(
     '/province/fetch/',
     'Client\Api\ProvinceApiController@fetch'
 ); //->middleware([APIMiddleware::class]);

@@ -1,9 +1,62 @@
 $(function() {
     console.log("BASE: ", base_url);
-    $("#institution_helper").tooltip()
+    $("#institution_helper").tooltip();
 });
+
 const savePartial = async (e) => {
     console.log("Saving Partial Form");
+    const data = {
+        hfser_id: $('#typeOfApplication').val(),
+        facilityname: $('#facility_name').val(),
+        rgnid: $('#region').val(),
+        provid: $('#province').val(),
+        cmid: $('#city_monicipality').val(),
+        brgyid: $('#brgy').val(),
+        street_number: $('#street_num').val(),
+        street_name: $('#street_name').val(),
+        zipcode: $('#zip').val(),
+        contact: $('#fac_mobile_number').val(),
+        areacode: [$('#areacode').val(), $('#faxareacode').val(), $('#prop_landline_areacode').val()],
+        landline: $('#landline').val(),
+        faxNumber: $('#faxNumber').val(),
+        email: $('#fac_email_address').val(),
+        uid: $("#uid").val(),
+        ocid: $('#ocid').val(),
+        classid: $('#classid').val(),
+        subClassid: $('#subClassid').val(),
+        facmode: $('#facmode').val(),
+        funcid: $('#funcid').val(),
+        owner: $('#owner').val(),
+        ownerMobile: $('#prop_mobile').val(),
+        ownerLandline: $('#prop_landline').val(),
+        ownerEmail: $('#prop_email').val(),
+        mailingAddress: $('#official_mail_address').val(),
+        approvingauthoritypos: $('#approving_authority_pos').val(),
+        approvingauthority: $('#approving_authority_name').val(),
+        hfep_funded: ($("#hfep_funded").is(":checked") ? 0 : ''),
+        draft: 1
+    }
+
+    const types = $("input[name='type[]']");
+    const locations = $("input[name='location[]'");
+    const population = $("input[name='population[]'");
+
+    const con_catch = []
+
+    for(let i  = 0; i < types.length; i++ ) {
+        const con_catch_data = {
+            appid: '',
+            type: types[i].value,
+            location: locations[i].value,
+            population: population[i].value,
+            isfrombackend: null
+        }
+        con_catch.push(con_catch_data)
+    }
+    console.log(con_catch);
+
+    
+
 }
 const setOfficialMailAddress = async (e) => {
     
@@ -103,7 +156,7 @@ const fetchSubClass = async (e) => {
 const fetchClassification = async (e) => {
     const ocid = $("#ocid").val();
     console.log('EYYY, ', ocid);
-    if( e.value ) {
+    if( ocid ) {
         const data = { 'ocid' : ocid }
         callApi('/api/classification/fetch', data, 'POST').then(classification => {
             $("#classification").empty();
@@ -122,7 +175,7 @@ const fetchClassification = async (e) => {
 const fetchBaranggay = async (e) => {
     const cmid = $("#city_monicipality").val();
     console.log('EYYY, ', cmid);
-    if( e.value ) {
+    if( cmid ) {
         const data = { 'cmid' : cmid }
         callApi('/api/barangay/fetch', data, 'POST').then(barangay => {
             $("#brgy").empty();
@@ -143,9 +196,11 @@ const fetchBaranggay = async (e) => {
 const fetchMonicipality = async (e) => {
     const provid = $("#province").val();
     console.log('EYYY, ', provid);
-    if( e.value ) {
+    if( provid ) {
         const data = { 'provid' : provid }
         callApi('/api/municipality/fetch', data, 'POST').then(city => {
+            localStorage.setItem('provid', provid);
+            console.log(localStorage)
             $("#city_monicipality").empty();
             $("#city_monicipality").append(`<option value=''>Please select</option>`);
             $("#city_monicipality").removeAttr('disabled');
@@ -162,20 +217,28 @@ const fetchMonicipality = async (e) => {
     }
 }
 const fetchProvince = async (e) => {
-    const rgnid = $("#" + e.id).val() //.text()
+    const rgnid = $("#region").val() //.text()
     console.log('EYYY, ', rgnid);
-    if( e.value ) {
-        const data = { 'rgnid' : e.value }
+    if( rgnid ) {
+        const data = { 'rgnid' : rgnid }
         callApi('/api/province/fetch', data, 'POST').then(provinces => {
-            console.log(provinces.data);
+            localStorage.setItem('rgnid', rgnid)
+            const localProvID = parseInt(localStorage.getItem('provid'))
+            // console.log(localRgnID);
             $("#province").empty();
             $("#province").append(`<option value=''>Please select</option>`);
             $("#province").removeAttr('disabled');
             provinces.data.map(province => {
-                $("#province").append(`<option value='${province.provid}'>${province.provname}</option>`);
+               
+                $("#province").append(`<option value='${province.provid}' selected="selected">${province.provname}</option>`);
             })
+            console.log(localProvID)
+            $("#province").val(localProvID)
+            return localProvID;
+        }).then(prov => {
+            
             $("#province").selectpicker('refresh')
-
+            
         }).catch(err => {
             console.log(err);
         })
@@ -185,29 +248,31 @@ const fetchProvince = async (e) => {
     }
 }
 const checkFacilityName = async (e) => {
-    console.log('EYYY, ', e.value);
-    if( e.value ) {
+    const facilityname = $('#facility_name').val()
+    console.log('EYYY, ', facilityname);
+    if( facilityname ) {
         callApi('/api/application/validate-name', {
-            name: e.value
+            name: facilityname
         }, 'POST').then(ok => {
             console.log(ok.data.message)
-            $("#" + e.id).css('border', '1px solid green');
-            $("#" + e.id + "_feedback").removeClass('text-danger');
-            $("#" + e.id + "_feedback").addClass('text-success');
-            $("#" + e.id + "_feedback").html(ok.data.message);
+            localStorage.setItem('facilityname', facilityname)
+            $("#facility_name").css('border', '1px solid green');
+            $("#facility_name_feedback").removeClass('text-danger');
+            $("#facility_name_feedback").addClass('text-success');
+            $("#facility_name_feedback").html(ok.data.message);
         }).catch(err => {
             // alert(err.response.data.message)
-            $("#" + e.id).css('border', '1px solid red');
-            $("#" + e.id + "_feedback").removeClass('text-success');
-            $("#" + e.id + "_feedback").addClass('text-danger');
-            $("#" + e.id + "_feedback").html(err.response.data.message);
+            $("#facility_name").css('border', '1px solid red');
+            $("#facility_name_feedback").removeClass('text-success');
+            $("#facility_name_feedback").addClass('text-danger');
+            $("#facility_name_feedback").html(err.response.data.message);
         })
     }
     else {
-        $("#" + e.id).css('border', '1px solid red');
-        $("#" + e.id + "_feedback").removeClass('text-success');
-        $("#" + e.id + "_feedback").addClass('text-danger');
-        $("#" + e.id + "_feedback").html('Facility name is required');
+        $("#facility_name").css('border', '1px solid red');
+        $("#facility_name_feedback").removeClass('text-success');
+        $("#facility_name_feedback").addClass('text-danger');
+        $("#facility_name_feedback").html('Facility name is required');
     }
     
 }
@@ -222,3 +287,109 @@ function callApi(url, data, method) {
     };
     return axios(config)
 };
+const removeProjectedPopulationRow = (rowId) => {
+    $(`#rowEntry${rowId}`).remove();
+}
+const removeExistingHospitalRow = (rowId) => {
+    $(`#rowEntryHospital${rowId}`).remove();
+}
+function thousands_separators(num) {
+    var num_parts = num.toString().split(".");
+    num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return num_parts.join(".");
+}
+const calculateProjectedPopulationCost = (e) => {
+
+    const items = $('#projected_populations tr.itemRow')
+    let total = 0;
+    for(let i = 0;i < items.length; i++ ) {
+        // console.log(items[i].id)
+        // const popValue = $(`#rowEntry${items[i].id} td input.population`).val()
+        // console.log(items[i].children[3].children[0].value)
+        const value = items[i].children[3].children[0].value;
+        // console.log(Number.isInteger(parseInt(value)))
+        if( Number.isInteger(parseInt(value)) ) {
+            console.log(value)
+            total += parseFloat(value);
+        }
+    }
+    $("#projectedPopulationCost").html(thousands_separators(total))
+}
+const addProjectedPopulation = () => {
+    const entry = $('#projected_populations tr').length;
+    const primary = $('#projected_populations tr.PRIMARY').length;
+    let type = '1';
+    let typeWords = 'SECONDARY';
+    if(primary === 0) {
+        // Primary
+        type = '0';
+        typeWords = 'PRIMARY';
+    }
+    const row = `
+        <tr id="rowEntry${entry}" class="${typeWords} itemRow" >
+            <td>
+                <button class="btn btn-danger btn-xs" onClick="removeProjectedPopulationRow(${entry})">
+                    <i class="fa fa-times"></i>
+                </button>
+            </td>
+            <td>
+                ${typeWords}
+                <input type="hidden" name="type[]" value="${type}">
+            </td>
+            <td><input type="text" class="form-control" name="location[]" /></td>
+            <td class="population_field">
+                <input 
+                    type="number" 
+                    class="form-control" 
+                    name="population[]" 
+                    class="population populationCount"
+                    data-id="${entry}"
+                    onkeyup="calculateProjectedPopulationCost(this)"
+                />
+            </td>
+        </tr>
+    `;
+    $('#projected_populations').prepend(row);
+}
+const addListOfExistingHospitals = () => {
+    const entry = $('#existing_hospitals tr').length;
+    const row = `
+        <tr id="rowEntryHospital${entry}" class="itemRow" >
+            <td>
+                <button class="btn btn-danger btn-xs" onClick="removeExistingHospitalRow(${entry})">
+                    <i class="fa fa-times"></i>
+                </button>
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="facilitynames[]"/>
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="locations[]"/>
+            </td>
+            <td>
+                <input type="text"  class="form-control" name="bedcapacities[]"/>
+            </td>
+            <td>
+                <select class="form-control" name="cat_hos[]">
+                    <option value="">Please select</option>
+                    <option value="H">Level 1 Hospital</option>  
+                    <option value="H2">Level 2 Hospital</option>  
+                    <option value="H3">Level 3 Hospital</option> 
+                </select>
+            </td>
+            <td>
+                <input type="text" class="form-control" name="license[]" />
+            </td>
+            <td>
+                <input type="date" class="form-control" name="validity[]">
+            </td>
+            <td>
+                <input type="date" class="form-control" name="date_operation[]">
+            </td>
+            <td>
+                <textarea cols="4" class="form-control" name="remarks[]"></textarea>
+            </td>
+        </tr>
+    `;
+    $('#existing_hospitals').prepend(row);
+}

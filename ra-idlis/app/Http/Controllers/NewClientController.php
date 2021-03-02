@@ -2759,7 +2759,36 @@ class NewClientController extends Controller {
 							break;
 						case 'fPTCApp':
 							session()->forget('ambcharge');
-							$arrData = [['ocid', 'classid', 'subClassid', 'facmode', 'funcid', 'hfep_funded', 'assignedRgn'], ['appid', 'propbedcap', 'conCode', 'propstation', 'incbedcapfrom', 'incbedcapto', 'incstationfrom', 'incstationto', 'construction_description', /*'others',*/ 'type', 'renoOption'], ['uid', 'appid', 'facid']];
+							$arrData = [
+								[
+									'ocid', 
+									'classid', 
+									'subClassid', 
+									'facmode', 
+									'funcid', 
+									'hfep_funded', 
+									'assignedRgn'
+								], 
+								[
+									'appid', 
+									'propbedcap', 
+									'conCode', 
+									'propstation', 
+									'incbedcapfrom', 
+									'incbedcapto', 
+									'incstationfrom', 
+									'incstationto', 
+									'construction_description', 
+									/*'others',*/ 
+									'type', 
+									'renoOption'
+								], 
+								[
+									'uid', 
+									'appid', 
+									'facid'
+								]
+							];
 							$arrCheck = [[], [], []];
 							$makeHash = [[], [], []];
 							$haveAdd = [['ipaddress'=>request()->ip(), 't_date'=>Carbon::now()->toDateString(), 't_time'=>Carbon::now()->toTimeString()], [], []];
@@ -2911,7 +2940,17 @@ class NewClientController extends Controller {
 						case 'fCONApp':
 							session()->forget('ambcharge');
 							$arrData = [
-								['ocid', 'classid', 'subClassid', /*'funcid',*/ 'cap_inv', 'lot_area', 'noofbed', 'hfep_funded', 'assignedRgn'], 
+								[
+									'ocid', 
+									'classid', 
+									'subClassid', 
+									/*'funcid',*/ 
+									'cap_inv', 
+									'lot_area', 
+									'noofbed', 
+									'hfep_funded', 
+									'assignedRgn'
+								], 
 								['uid', 'appid', 'facid'], 
 								['appid', 'type', 'location', 'population'], 
 								['appid', 'facilityname', 'location1', 'cat_hos', 'noofbed1', 'license', 'validity', 'date_operation', 'remarks']
@@ -2976,7 +3015,26 @@ class NewClientController extends Controller {
 											$notify = $appid[$i];
 											DB::table('chgfil')->where([['appform_id', $appid[$i]]])->delete();
 										}
-										$stat = ((isset($appid[$i])) ? FunctionsClientController::fUpdData($rData[$i], $arrData[$i], $arrCheck[$i], $makeHash[$i], $haveAdd[$i], $fMail[$i], $validate[$i], $tbl[$i], $where[$i], true) : FunctionsClientController::fInsData($rData[$i], $arrData[$i], $arrCheck[$i], $makeHash[$i], $haveAdd[$i], $fMail[$i], $validate[$i], $tbl[$i]));
+										$stat = ((isset($appid[$i])) ? 
+											FunctionsClientController::fUpdData(
+													$rData[$i], 
+													$arrData[$i], 
+													$arrCheck[$i], 
+													$makeHash[$i], 
+													$haveAdd[$i], 
+													$fMail[$i], 
+													$validate[$i], 
+													$tbl[$i], 
+													$where[$i], true) : 
+											FunctionsClientController::fInsData(
+												$rData[$i], 
+												$arrData[$i], 
+												$arrCheck[$i], 
+												$makeHash[$i], 
+												$haveAdd[$i], 
+												$fMail[$i], 
+												$validate[$i], 
+												$tbl[$i]));
 										if(! in_array($stat, $msgRet)) {
 											array_push($msgRet, $stat);
 										}

@@ -5,6 +5,9 @@ use Session;
 use App\Http\Controllers\Controller;
 use FunctionsClientController;
 use App\Models\Regions;
+use App\Models\Province;
+use App\Models\Municipality;
+use App\Models\Barangay;
 
 class ClientDashboardController extends Controller {
     public function index() {
@@ -22,7 +25,7 @@ class ClientDashboardController extends Controller {
         return view('dashboard.client.apply', $data);
     }
     
-    public function newApplication() {
+    public function newApplication(String $appid = null) {
         $user_data = session()->get('uData');
         $data = [
             'user' => $user_data,
@@ -31,4 +34,5 @@ class ClientDashboardController extends Controller {
         ];
         return view('dashboard.client.newapplication', $data);
     }
+
 }
