@@ -5,6 +5,13 @@ use Session;
 use App\Http\Controllers\Controller;
 use App\Models\ApplicationForm;
 use Illuminate\Http\Request;
+use App\Models\Regions;
+use App\Models\Province;
+use App\Models\Municipality;
+use App\Models\Barangay;
+use App\Models\CONCatchment;
+use App\Models\CONHospital;
+use App\Models\Classification;
 
 class ApplicationApiController extends Controller {
     public function check(Request $request) {
@@ -18,42 +25,143 @@ class ApplicationApiController extends Controller {
         }
         
     }
+    public function fetch(Request $request) {
+        $app = [];
+        $cities = [];
+        $provinces = [];
+        $brgy = [];
+        $classification = [];
+        $subclass = [];
+        if($id = $request->appid) {
+            $app = ApplicationForm::where('appid', $id)->first();
+        }
+        if(isset($app->rgnid)) {
+            $provinces = Province::where('rgnid', $app->rgnid)->get();
+        }
+        if(isset($app->provid)) {
+            $cities = Municipality::where('provid', $app->provid)->get();
+        }
+        if(isset($app->cmid)) {
+            $brgy = Barangay::where('cmid', $app->cmid)->get();
+        }
+        if(isset($app->ocid)) {
+            $classification = Classification::where('ocid',  $app->ocid)->where('isSub', null)->get();
+        }
+        if(isset($app->ocid) && isset($app->classid)) {
+            $subclass = Classification::where('ocid', $app->ocid)->where('isSub',  $app->classid)->get();
+        }
+        $con_catchment = CONCatchment::where('appid', $id)->get();
+        $con_hospital = CONHospital::where('appid', $id)->get();
+
+        return  response()->json(
+                                    [
+                                        'application'   => $app,
+                                        'provinces'     => $provinces,
+                                        'cities'        => $cities,
+                                        'brgy'          => $brgy,
+                                        'classification'=> $classification,
+                                        'subclass'      => $subclass,
+                                        'con_catchment' => $con_catchment,
+                                        'con_hospital'  => $con_hospital
+                                    ], 200
+                                );
+    }
     public function save(Request $request) {
+        if(isset($request->appid)) {
+            $appform = ApplicationForm::where('appid', $request->appid)->first();
+        }
+        else {
+            $appform = new ApplicationForm;
+        }
         
-        $appform = new ApplicationForm;
 
-        $appform->hfser_id = array_key_exists($request->hfser_id) ? $request->hfser_id : null;
-        $appform->facilityname = array_key_exists($request->facilityname) ? $request->facilityname : null;
-        $appform->rgnid = array_key_exists($request->rgnid) ? $request->rgnid : null;
-        $appform->provid = array_key_exists($request->provid) ? $request->provid : null;
-        $appform->cmid = array_key_exists($request->cmid) ? $request->cmid : null;
-        $appform->brgyid = array_key_exists($request->brgyid) ? $request->brgyid : null;
-        $appform->street_number = array_key_exists($request->street_number) ? $request->street_number : null;
-        $appform->street_name = array_key_exists($request->street_name) ? $request->street_name : null;
-        $appform->zipcode = array_key_exists($request->zipcode) ? $request->zipcode : null;
-        $appform->contact = array_key_exists($request->contact) ? $request->contact : null;
-        $appform->areacode = array_key_exists($request->areacode) ? $request->areacode : null;
-        $appform->landline = array_key_exists($request->landline) ? $request->landline : null;
-        $appform->faxNumber = array_key_exists($request->faxNumber) ? $request->faxNumber : null;
-        $appform->email = array_key_exists($request->email) ? $request->email : null;
-        $appform->uid = array_key_exists($request->uid) ? $request->uid : null;
-        $appform->ocid = array_key_exists($request->ocid) ? $request->ocid : null;
-        $appform->classid = array_key_exists($request->classid) ? $request->classid : null;
-        $appform->subClassid = array_key_exists($request->subClassid) ? $request->subClassid : null;
-        $appform->facmode = array_key_exists($request->facmode) ? $request->facmode : null;
-        $appform->funcid = array_key_exists($request->funcid) ? $request->funcid : null;
-        $appform->owner = array_key_exists($request->owner) ? $request->owner : null;
-        $appform->ownerMobile = array_key_exists($request->ownerMobile) ? $request->ownerMobile : null;
-        $appform->ownerLandline = array_key_exists($request->ownerLandline) ? $request->ownerLandline : null;
-        $appform->ownerEmail = array_key_exists($request->ownerEmail) ? $request->ownerEmail : null;
+        $appform->hfser_id              = $request->hfser_id;
+        $appform->facilityname          = $request->facilityname;
+        $appform->rgnid                 = $request->rgnid;
+        $appform->provid                = $request->provid;
+        $appform->cmid                  = $request->cmid;
+        $appform->brgyid                = $request->brgyid;
+        $appform->street_number         = $request->street_number;
+        $appform->street_name           = $request->street_name;
+        $appform->zipcode               = $request->zipcode;
+        $appform->contact               = $request->contact;
+        $appform->areacode              = $request->areacode;
+        $appform->landline              = $request->landline;
+        $appform->faxnumber             = $request->faxnumber;
+        $appform->email                 = $request->email;
+        $appform->facid                 = $request->facid;
+        $appform->cap_inv               = $request->cap_inv;
+        $appform->lot_area              = $request->lot_area;
+        $appform->noofbed               = $request->noofbed;
+        $appform->uid                   = $request->uid;
+        $appform->ocid                  = $request->ocid;
+        $appform->classid               = $request->classid;
+        $appform->subClassid            = $request->subClassid;
+        $appform->facmode               = $request->facmode;
+        $appform->funcid                = $request->funcid;
+        $appform->owner                 = $request->owner;
+        $appform->ownerMobile           = $request->ownerMobile;
+        $appform->ownerLandline         = $request->ownerLandline;
+        $appform->ownerEmail            = $request->ownerEmail;
+        $appform->mailingAddress        = $request->mailingAddress;
+        $appform->approvingauthoritypos = $request->approvingauthoritypos;
+        $appform->approvingauthority    = $request->approvingauthority;
+        $appform->hfep_funded           = $request->hfep_funded;
+        $appform->draft                 = $request->draft;
+        
+        // if($request->con_catch) {
 
+        // }
 
-        $appform->mailingAddress = array_key_exists($request->mailingAddress) ? $request->mailingAddress : null;
-        $appform->zipcode = array_key_exists($request->zipcode) ? $request->zipcode : null;
-        $appform->zipcode = array_key_exists($request->zipcode) ? $request->zipcode : null;
-        $appform->zipcode = array_key_exists($request->zipcode) ? $request->zipcode : null;
-        $appform->zipcode = array_key_exists($request->zipcode) ? $request->zipcode : null;
+        $appform->save();
 
-        return response()->json($request);
+        $con_catch = [];
+        $con_hospital = [];
+        
+        foreach($request->con_catch  as $cc) {
+            // dd($cc['type']);
+            $arr = [
+                'appid'         => $appform->appid,
+                'type'          => $cc['type'],
+                'location'      => $cc['location'],
+                'population'    => $cc['population'],
+                'isfrombackend' => null
+            ];
+            array_push($con_catch, $arr);
+        }
+        foreach($request->con_hospital  as $ch) {
+            // dd($cc['type']);
+            $arr = [
+                'appid'         => $appform->appid,
+                'facilityname'  => $ch['facilityname'],
+                'location1'     => $ch['location1'],
+                'cat_hos'       => $ch['cat_hos'],
+                'noofbed1'      => $ch['noofbed1'],
+                'license'       => $ch['license'],
+                'validity'      => $ch['validity'],
+                'date_operation'=> $ch['date_operation'],
+                'remarks'       => $ch['remarks']
+            ];
+            array_push($con_hospital, $arr);
+        }
+        $conhospital = CONHospital::where('appid', $request->appid)->delete();
+        $concatch = CONCatchment::where('appid', $request->appid)->delete();
+        CONHospital::insert($con_hospital);
+        CONCatchment::insert($con_catch);
+        // $appform->save();
+        // dd($request);
+        // exit;
+        return response()->json(
+            [
+                'applicaiton' => $appform,
+                'con_catchment' => $concatch,
+                'provinces'     => Province::where('rgnid', $appform->rgnid)->get(),
+                'cities'        => Municipality::where('provid', $appform->provid)->get(),
+                'brgy'          => Barangay::where('cmid', $appform->cmid)->get(),
+                'classification'=> Classification::where('ocid',  $appform->ocid)->where('isSub', null)->get(),
+                'subclass'      => Classification::where('ocid', $appform->ocid)->where('isSub',  $appform->classid)->get(),
+            ],
+            200
+        );
     }
 }

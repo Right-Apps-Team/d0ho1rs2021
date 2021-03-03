@@ -6,9 +6,13 @@
     <div class="card-body">
         <form class="row">
             <input type="hidden" name="uid" id="uid" value="{{$user->uid}}"/>
+            <input type="hidden" name="appid" id="appid" value="{{ isset($appdata->appid) ? $appdata->appid : '' }}" />
             <div class="col-md-12"><b class="text-primary">APPLICATION</b></div>
             <div class="form-group col-md-6">
                 <label for="typeOfApplication">Type of Application <span class="text-danger">*</span></label>
+                <?php
+                    $hfser_id = isset($appdata->hfser_id) ? $appdata->hfser_id : '';
+                ?>
                 <select 
                     class="form-control selectpicker show-menu-arrow" 
                     id="typeOfApplication" 
@@ -343,17 +347,17 @@
             <div class="col-md-12"><b class="text-primary">SERVICE CAPABILITIES <span class="text-danger">*</span></b></div>
             <div class="col-md-4">
                 <label>
-                    <input type="radio" name="facid" id="facid_h" value="H" required/> Level 1 Hospital
+                    <input type="radio" name="facid" id="facid_H" value="H" required/> Level 1 Hospital
                 </label>
             </div>
             <div class="col-md-4">
                 <label>
-                    <input type="radio" name="facid" id="facid_h2" value="H2" required/> Level 2 Hospital
+                    <input type="radio" name="facid" id="facid_H2" value="H2" required/> Level 2 Hospital
                 </label>
             </div>
             <div class="col-md-4">
                 <label>
-                    <input type="radio" name="facid" id="facid_h3" value="H3" required/> Level 2 Hospital
+                    <input type="radio" name="facid" id="facid_H3" value="H3" required/> Level 2 Hospital
                 </label>
             </div>
             
