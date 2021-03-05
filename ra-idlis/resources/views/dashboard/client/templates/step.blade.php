@@ -1,4 +1,4 @@
-<div class="container" id="wiz_container">
+<div class="container-fluid" id="wiz_container">
     <nav class="navbar navbar-light" >
         <div class="row" >
             <div class="col-lg-4 text-center bg-primary"><a href="javascript: void(0)" class="text-white">

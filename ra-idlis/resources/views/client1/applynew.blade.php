@@ -746,8 +746,39 @@
 				}
 			});
 			document.getElementById('subForm').addEventListener('click', function(e) {
-				let hfser_id = document.getElementById('hfser_id'), facilityname = document.getElementById('facilityname'), owner = document.getElementById('owner'), rgnid = document.getElementById('rgnid'), provid = document.getElementById('provid'), cmid = document.getElementById('cmid'), brgyid = document.getElementById('brgyid'), contact = document.getElementById('contact'), email = document.getElementById('email'), uid = document.getElementById('uid'), street_name = document.getElementById('street_name'), street_number = document.getElementById('street_number'), zipcode = document.getElementById('zipcode'), landline = document.getElementById('landline'), mailingAddress = document.getElementById('mailingAddress'), faxNumber = document.getElementById('faxNumber'), ownerMobile = document.getElementById('ownerMobile'),ownerLandline = document.getElementById('ownerLandline'),ownerEmail = document.getElementById('ownerEmail'), areacode = document.getElementsByName('areacode'),ocid = document.getElementById('ocid'), classid = document.getElementById('classid'), subClassid = document.getElementById('subClassid'), facmode = document.getElementById('facmode'), funcid = document.getElementById('funcid'), approvingauthority = document.getElementById('approvingauthority'), approvingauthoritypos = document.getElementById('approvingauthoritypos'), mareacode = [];
-				if(areacode != undefined || areacode != null) { for(let i = 0; i < areacode.length; i++) { mareacode.push(areacode[i].value) } }
+				let hfser_id = document.getElementById('hfser_id'), 
+					facilityname = document.getElementById('facilityname'), 
+					owner = document.getElementById('owner'), 
+					rgnid = document.getElementById('rgnid'), 
+					provid = document.getElementById('provid'), 
+					cmid = document.getElementById('cmid'), 
+					brgyid = document.getElementById('brgyid'), 
+					contact = document.getElementById('contact'), 
+					email = document.getElementById('email'), 
+					uid = document.getElementById('uid'), 
+					street_name = document.getElementById('street_name'), 
+					street_number = document.getElementById('street_number'), 
+					zipcode = document.getElementById('zipcode'), 
+					landline = document.getElementById('landline'), 
+					mailingAddress = document.getElementById('mailingAddress'), 
+					faxNumber = document.getElementById('faxNumber'),
+					ownerMobile = document.getElementById('ownerMobile'),
+					ownerLandline = document.getElementById('ownerLandline'),
+					ownerEmail = document.getElementById('ownerEmail'), 
+					areacode = document.getElementsByName('areacode'),
+					ocid = document.getElementById('ocid'), 
+					classid = document.getElementById('classid'), 
+					subClassid = document.getElementById('subClassid'), 
+					facmode = document.getElementById('facmode'), 
+					funcid = document.getElementById('funcid'), 
+					approvingauthority = document.getElementById('approvingauthority'), 
+					approvingauthoritypos = document.getElementById('approvingauthoritypos'), 
+					mareacode = [];
+				if(areacode != undefined || areacode != null) { 
+					for(let i = 0; i < areacode.length; i++) { 
+						mareacode.push(areacode[i].value) 
+					} 
+				}
 				if((hfser_id != null || hfser_id != undefined) && (facilityname != null || facilityname != undefined) && (owner != null || owner != undefined) && (rgnid != null || rgnid != undefined) && (provid != null || provid != undefined) && (cmid != null || cmid != undefined) && (brgyid != null || brgyid != undefined) && (contact != null || contact != undefined) && (/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/g.test(contact.value)) && (email != null || email != undefined) && /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email.value) && (uid != null || uid != undefined) && (street_name != null || street_name != undefined) && (street_number != null || street_number != undefined) && (zipcode != null || zipcode != undefined) && (mailingAddress != null || mailingAddress != undefined) && (ownerMobile != null || ownerMobile != undefined) && (/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/g.test(contact.value)) && (ownerEmail != null || ownerEmail != undefined) && /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(ownerEmail.value)) {
 					insErrMsg('warning', 'Sending request.');
 					sendRequestRetArr(["_token="+document.getElementsByName('_token')[0].value, 'hfser_id='+hfser_id.value, 'facilityname='+facilityname.value.toUpperCase(), 'owner='+owner.value, 'rgnid='+rgnid.value, 'provid='+provid.value, 'cmid='+cmid.value, 'brgyid='+brgyid.value, 'contact='+contact.value, 'email='+email.value, 'uid='+uid.value, 'street_name='+street_name.value, 'street_number='+street_number.value, 'faxNumber='+faxNumber.value, 'zipcode='+zipcode.value, 'landline='+landline.value, 'mailingAddress='+mailingAddress.value.toUpperCase(), 'ownerMobile='+ownerMobile.value, 'ownerLandline='+ownerLandline.value, 'ownerEmail='+ownerEmail.value, 'appid='+appid, 'areacode='+JSON.stringify(mareacode), 'ocid='+ocid.value, 'classid='+classid.value, 'subClassid='+subClassid.value, 'facmode='+facmode.value, 'funcid='+funcid.value, 'approvingauthority='+approvingauthority.value,'approvingauthoritypos='+approvingauthoritypos.value,'draft='], "{{asset('client1/request/customQuery/fApply')}}", "POST", true, {
@@ -789,7 +820,34 @@
 
 			//draft
 			document.getElementById('saveDraft').addEventListener('click', function(e) {
-				let hfser_id = document.getElementById('hfser_id'), facilityname = document.getElementById('facilityname'), owner = document.getElementById('owner'), rgnid = document.getElementById('rgnid'), provid = document.getElementById('provid'), cmid = document.getElementById('cmid'), brgyid = document.getElementById('brgyid'), contact = document.getElementById('contact'), email = document.getElementById('email'), uid = document.getElementById('uid'), street_name = document.getElementById('street_name'), street_number = document.getElementById('street_number'), zipcode = document.getElementById('zipcode'), landline = document.getElementById('landline'), mailingAddress = document.getElementById('mailingAddress'), faxNumber = document.getElementById('faxNumber'), ownerMobile = document.getElementById('ownerMobile'),ownerLandline = document.getElementById('ownerLandline'),ownerEmail = document.getElementById('ownerEmail'), areacode = document.getElementsByName('areacode'),ocid = document.getElementById('ocid'), classid = document.getElementById('classid'), subClassid = document.getElementById('subClassid'), facmode = document.getElementById('facmode'), funcid = document.getElementById('funcid'), approvingauthority = document.getElementById('approvingauthority'), approvingauthoritypos = document.getElementById('approvingauthoritypos'), mareacode = [];
+				let hfser_id = document.getElementById('hfser_id'), 
+					facilityname = document.getElementById('facilityname'), 
+					owner = document.getElementById('owner'), 
+					rgnid = document.getElementById('rgnid'), 
+					provid = document.getElementById('provid'), 
+					cmid = document.getElementById('cmid'), 
+					brgyid = document.getElementById('brgyid'), 
+					contact = document.getElementById('contact'), 
+					email = document.getElementById('email'), 
+					uid = document.getElementById('uid'), 
+					street_name = document.getElementById('street_name'), 
+					street_number = document.getElementById('street_number'), 
+					zipcode = document.getElementById('zipcode'), 
+					landline = document.getElementById('landline'), 
+					mailingAddress = document.getElementById('mailingAddress'), 
+					faxNumber = document.getElementById('faxNumber'), 
+					ownerMobile = document.getElementById('ownerMobile'),
+					ownerLandline = document.getElementById('ownerLandline'),
+					ownerEmail = document.getElementById('ownerEmail'), 
+					areacode = document.getElementsByName('areacode'),
+					ocid = document.getElementById('ocid'), 
+					classid = document.getElementById('classid'), 
+					subClassid = document.getElementById('subClassid'), 
+					facmode = document.getElementById('facmode'), 
+					funcid = document.getElementById('funcid'), 
+					approvingauthority = document.getElementById('approvingauthority'), 
+					approvingauthoritypos = document.getElementById('approvingauthoritypos'), 
+					mareacode = [];
 				if(areacode != undefined || areacode != null) { for(let i = 0; i < areacode.length; i++) { mareacode.push(areacode[i].value) } }
 				if((hfser_id != null || hfser_id != undefined) && (facilityname != null || facilityname != undefined) && (owner != null || owner != undefined) && (rgnid != null || rgnid != undefined) && (provid != null || provid != undefined) && (cmid != null || cmid != undefined) && (brgyid != null || brgyid != undefined) && (contact != null || contact != undefined) && (/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/g.test(contact.value)) && (email != null || email != undefined) && /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email.value) && (uid != null || uid != undefined) && (street_name != null || street_name != undefined) && (street_number != null || street_number != undefined) && (zipcode != null || zipcode != undefined) && (mailingAddress != null || mailingAddress != undefined) && (ownerMobile != null || ownerMobile != undefined) && (/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/g.test(contact.value)) && (ownerEmail != null || ownerEmail != undefined) && /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(ownerEmail.value)) {
 					insErrMsg('warning', 'Sending request.');

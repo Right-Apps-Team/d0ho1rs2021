@@ -12,6 +12,6 @@ Route::get(
 )->middleware([CustomAuthChecker::class]);
 
 Route::get(
-    'dashboard/new-application', 
+    'dashboard/new-application/', 
     'Client\ClientDashboardController@newApplication'
 )->middleware([CustomAuthChecker::class]);

@@ -584,70 +584,147 @@
 				}
 			}
 			function fPTCApp() {
-				let token = document.getElementsByName('_token')[0], ocid = document.getElementById('ocid'),  classid = document.getElementById('classid'), subClassid = document.getElementById('subClassid'), gfacid = document.getElementsByName('facid'), /*funcid = document.getElementById('funcid'),*/ uid = document.getElementById('uid'), gtype = document.getElementsByName('type[]'), glocation = document.getElementsByName('location[]'), gpopulation = document.getElementsByName('population[]'), facilityname = document.getElementsByName('facilityname[]'), location1 = document.getElementsByName('location1[]'), noofbed1 = document.getElementsByName('noofbed1[]'), cat_hos = document.getElementsByName('cat_hos[]'), license = document.getElementsByName('license[]'), validity = document.getElementsByName('validity[]'), date_operation = document.getElementsByName('date_operation[]'), remarks = document.getElementsByName('remarks[]'), cap_inv = document.getElementById('cap_inv'), lot_area = document.getElementById('lot_area'), noofbed = document.getElementById('noofbed'), hfep_funded = document.getElementById('hfep_funded'), mhfep_funded = '0', massignedRgn = assignedRgn;
-				if(hfep_funded != undefined || hfep_funded != null) { if(hfep_funded.checked) { mhfep_funded = '1'; massignedRgn = mappform[0]['rgnid']; } else { mhfep_funded = '0'; massignedRgn = assignedRgn; } }
-				if(massignedRgn == "rgn") { massignedRgn = mappform[0]['rgnid']; }
-				let sArr = ['_token='+token.value, 'uid='+uid.value, 'appid='+curAppid, 'ocid='+ocid.value, 'classid='+classid.value, 'subClassid='+subClassid.value, /*'funcid='+funcid.value, */'cap_inv='+cap_inv.value, 'lot_area='+lot_area.value, 'noofbed='+noofbed.value, 'hfep_funded='+mhfep_funded, 'assignedRgn='+massignedRgn];
-				if(gfacid != null || gfacid != undefined) {  for(let i = 0; i < gfacid.length; i++) { if(gfacid[i].checked) {
-					sArr.push('facid[]='+gfacid[i].value);
-				} } }
-				if(gtype != null || gtype != undefined) { for(let i = 0; i < gtype.length; i++) {
-					sArr.push('type[]='+gtype[i].value);
-				} }
-				if(glocation != null || glocation != undefined) { for(let i = 0; i < glocation.length; i++) {
-					sArr.push('location[]='+glocation[i].value);
-				} }
-				if(gpopulation != null || gpopulation != undefined) { for(let i = 0; i < gpopulation.length; i++) {
+				let token = document.getElementsByName('_token')[0], 
+					ocid = document.getElementById('ocid'),  
+					classid = document.getElementById('classid'), 
+					subClassid = document.getElementById('subClassid'), 
+					gfacid = document.getElementsByName('facid'), 
+					/*funcid = document.getElementById('funcid'),*/ 
+					uid = document.getElementById('uid'), 
+					gtype = document.getElementsByName('type[]'), 
+					glocation = document.getElementsByName('location[]'), 
+					gpopulation = document.getElementsByName('population[]'), 
+					facilityname = document.getElementsByName('facilityname[]'), 
+					location1 = document.getElementsByName('location1[]'), 
+					noofbed1 = document.getElementsByName('noofbed1[]'),
+					cat_hos = document.getElementsByName('cat_hos[]'), 
+					license = document.getElementsByName('license[]'), 
+					validity = document.getElementsByName('validity[]'), 
+					date_operation = document.getElementsByName('date_operation[]'), 
+					remarks = document.getElementsByName('remarks[]'), 
+					cap_inv = document.getElementById('cap_inv'), 
+					lot_area = document.getElementById('lot_area'), 
+					noofbed = document.getElementById('noofbed'), 
+					hfep_funded = document.getElementById('hfep_funded'), 
+					mhfep_funded = '0', 
+					massignedRgn = assignedRgn;
+				if(hfep_funded != undefined || hfep_funded != null) { 
+					if(hfep_funded.checked) {
+						mhfep_funded = '1'; 
+						massignedRgn = mappform[0]['rgnid']; 
+					} 
+					else { 
+						mhfep_funded = '0'; 
+						massignedRgn = assignedRgn; 
+					} 
+				}
+				if(massignedRgn == "rgn") { 
+					massignedRgn = mappform[0]['rgnid']; 
+				}
+				let sArr = [
+					'_token='+token.value,
+					'uid='+uid.value, 
+					'appid='+curAppid, 
+					'ocid='+ocid.value, 
+					'classid='+classid.value, 
+					'subClassid='+subClassid.value, 
+					/*'funcid='+funcid.value, */
+					'cap_inv='+cap_inv.value, 
+					'lot_area='+lot_area.value, 
+					'noofbed='+noofbed.value, 
+					'hfep_funded='+mhfep_funded, 
+					'assignedRgn='+massignedRgn
+				];
+				if(gfacid != null || gfacid != undefined) {  
+					for(let i = 0; i < gfacid.length; i++) { 
+						if(gfacid[i].checked) {
+							sArr.push('facid[]='+gfacid[i].value);
+						} 
+					} 
+				}
+				if(gtype != null || gtype != undefined) { 
+					for(let i = 0; i < gtype.length; i++) {
+						sArr.push('type[]='+gtype[i].value);
+					} 
+				}
+				if(glocation != null || glocation != undefined) { 	
+					for(let i = 0; i < glocation.length; i++) {
+						sArr.push('location[]='+glocation[i].value);
+					} 
+				}
+				if(gpopulation != null || gpopulation != undefined) { 
+					for(let i = 0; i < gpopulation.length; i++) {
 					sArr.push('population[]='+gpopulation[i].value);
 				} }
-				if(facilityname != null || facilityname != undefined) { for(let i = 0; i < facilityname.length; i++) {
-					sArr.push('facilityname[]='+facilityname[i].value);
-				} }
-				if(location1 != null || location1 != undefined) { for(let i = 0; i < location1.length; i++) {
-					sArr.push('location1[]='+location1[i].value);
-				} }
-				if(noofbed1 != null || noofbed1 != undefined) { for(let i = 0; i < noofbed1.length; i++) {
-					sArr.push('noofbed1[]='+noofbed1[i].value);
-				} }
-				if(cat_hos != null || cat_hos != undefined) { for(let i = 0; i < cat_hos.length; i++) {
-					sArr.push('cat_hos[]='+cat_hos[i].value);
-				} }
-				if(license != null || license != undefined) { for(let i = 0; i < license.length; i++) {
-					sArr.push('license[]='+license[i].value);
-				} }
-				if(validity != null || validity != undefined) { for(let i = 0; i < validity.length; i++) {
-					sArr.push('validity[]='+validity[i].value);
-				} }
-				if(date_operation != null || date_operation != undefined) { for(let i = 0; i < date_operation.length; i++) {
-					sArr.push('date_operation[]='+date_operation[i].value);
-				} }
-				if(remarks != null || remarks != undefined) { for(let i = 0; i < remarks.length; i++) {
-					sArr.push('remarks[]='+remarks[i].value);
-				} }
+				if(facilityname != null || facilityname != undefined) { 
+					for(let i = 0; i < facilityname.length; i++) {
+						sArr.push('facilityname[]='+facilityname[i].value);
+					} 
+				}
+				if(location1 != null || location1 != undefined) { 
+					for(let i = 0; i < location1.length; i++) {
+						sArr.push('location1[]='+location1[i].value);
+					} 
+				}
+				if(noofbed1 != null || noofbed1 != undefined) { 
+					for(let i = 0; i < noofbed1.length; i++) {
+						sArr.push('noofbed1[]='+noofbed1[i].value);
+					} 
+				}
+				if(cat_hos != null || cat_hos != undefined) { 
+					for(let i = 0; i < cat_hos.length; i++) {
+						sArr.push('cat_hos[]='+cat_hos[i].value);
+					} 
+				}
+				if(license != null || license != undefined) { 
+					for(let i = 0; i < license.length; i++) {
+						sArr.push('license[]='+license[i].value);
+					} 
+				}
+				if(validity != null || validity != undefined) { 
+					for(let i = 0; i < validity.length; i++) {
+						sArr.push('validity[]='+validity[i].value);
+					} 
+				}
+				if(date_operation != null || date_operation != undefined) { 
+					for(let i = 0; i < date_operation.length; i++) {
+						sArr.push('date_operation[]='+date_operation[i].value);
+					} 
+				}
+				if(remarks != null || remarks != undefined) { 
+					for(let i = 0; i < remarks.length; i++) {
+						sArr.push('remarks[]='+remarks[i].value);
+					} 
+				}
 				insErrMsg('warning', 'Sending request.');
-				sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/fCONApp')}}", "POST", true, {
-					functionProcess: function(arr) {
-						let aBol = true;
-						arr.forEach(function(a, b, c) {
-							if(a != true) {
-								aBol = false;
-								insErrMsg('danger', a);
-								setTimeout(function() { window.scroll({top: 0, left: 0, behavior: 'smooth'}) }, 500)
+				sendRequestRetArr(
+						sArr, 
+						"{{asset('client1/request/customQuery/fCONApp')}}", 
+						"POST", 
+						true, {
+							functionProcess: function(arr) {
+								let aBol = true;
+								arr.forEach(function(a, b, c) {
+									if(a != true) {
+										aBol = false;
+										insErrMsg('danger', a);
+										setTimeout(function() { window.scroll({top: 0, left: 0, behavior: 'smooth'}) }, 500)
+									}
+								});
+								if(aBol) {
+									@if(! isset($hideExtensions))
+									var r = confirm('Application submitted. Proceed to submission of requirements?');
+									if (r == true) { window.location.href = "{{asset('client1/apply/attachment')}}/{{$fAddress[0]->hfser_id}}/"+curAppid;} else { window.location.href = "{{asset('client1/apply')}}"; }
+									// var r = confirm('Application submitted. Proceed to payment?');
+									// if (r == true) { window.location.href = "{{asset('client1/payment')}}/{{$cToken}}/"+curAppid;} else { window.location.href = "{{asset('client1/apply')}}"; }
+									@else
+									alert('Application Updated');
+									location.reload();
+									@endif
+								}
 							}
-						});
-						if(aBol) {
-							@if(! isset($hideExtensions))
-							var r = confirm('Application submitted. Proceed to submission of requirements?');
-							if (r == true) { window.location.href = "{{asset('client1/apply/attachment')}}/{{$fAddress[0]->hfser_id}}/"+curAppid;} else { window.location.href = "{{asset('client1/apply')}}"; }
-							// var r = confirm('Application submitted. Proceed to payment?');
-							// if (r == true) { window.location.href = "{{asset('client1/payment')}}/{{$cToken}}/"+curAppid;} else { window.location.href = "{{asset('client1/apply')}}"; }
-							@else
-							alert('Application Updated');
-							location.reload();
-							@endif
 						}
-					}
-				});
+				);
 			}
 			function chkApOop() {
 				let sArr = ['_token='+document.getElementsByName('_token')[0].value, 'rTbl=appid', 'rId='+curAppid];
