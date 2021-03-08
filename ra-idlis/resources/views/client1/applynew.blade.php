@@ -551,7 +551,7 @@
 
 		msubclass = JSON.parse('{!!$subclass!!}'), 
 
-		mappform = JSON.parse('{!!($fAddress ?? json_encode(['']))!!}'),
+		// mappform = JSON.parse('{!!($fAddress ?? json_encode(['']))!!}'),
 
 		mservfac = JSON.parse('{!!($servfac ?? json_encode(['']))!!}'),
 
@@ -779,7 +779,39 @@
 						mareacode.push(areacode[i].value) 
 					} 
 				}
-				if((hfser_id != null || hfser_id != undefined) && (facilityname != null || facilityname != undefined) && (owner != null || owner != undefined) && (rgnid != null || rgnid != undefined) && (provid != null || provid != undefined) && (cmid != null || cmid != undefined) && (brgyid != null || brgyid != undefined) && (contact != null || contact != undefined) && (/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/g.test(contact.value)) && (email != null || email != undefined) && /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email.value) && (uid != null || uid != undefined) && (street_name != null || street_name != undefined) && (street_number != null || street_number != undefined) && (zipcode != null || zipcode != undefined) && (mailingAddress != null || mailingAddress != undefined) && (ownerMobile != null || ownerMobile != undefined) && (/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/g.test(contact.value)) && (ownerEmail != null || ownerEmail != undefined) && /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(ownerEmail.value)) {
+				if((
+					hfser_id != null || 
+					hfser_id != undefined
+				) && (
+					facilityname != null || 
+					facilityname != undefined
+				) && (
+					owner != null || 
+					owner != undefined
+				) && (
+					rgnid != null || 
+					rgnid != undefined
+				) && (
+					provid != null || 
+					provid != undefined
+				) && (
+					cmid != null || 
+					cmid != undefined
+				) && (
+					brgyid != null || 
+					brgyid != undefined
+				) && (
+					contact != null || 
+					contact != undefined
+				) && 
+				(/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/g.test(contact.value)) && 
+				(email != null || email != undefined) && /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email.value) && 
+				(uid != null || uid != undefined) && 
+				(street_name != null || street_name != undefined) && 
+				(street_number != null || street_number != undefined) && 
+				(zipcode != null || zipcode != undefined) && 
+				(mailingAddress != null || mailingAddress != undefined) && 
+				(ownerMobile != null || ownerMobile != undefined) && (/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/g.test(contact.value)) && (ownerEmail != null || ownerEmail != undefined) && /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(ownerEmail.value)) {
 					insErrMsg('warning', 'Sending request.');
 					sendRequestRetArr(["_token="+document.getElementsByName('_token')[0].value, 'hfser_id='+hfser_id.value, 'facilityname='+facilityname.value.toUpperCase(), 'owner='+owner.value, 'rgnid='+rgnid.value, 'provid='+provid.value, 'cmid='+cmid.value, 'brgyid='+brgyid.value, 'contact='+contact.value, 'email='+email.value, 'uid='+uid.value, 'street_name='+street_name.value, 'street_number='+street_number.value, 'faxNumber='+faxNumber.value, 'zipcode='+zipcode.value, 'landline='+landline.value, 'mailingAddress='+mailingAddress.value.toUpperCase(), 'ownerMobile='+ownerMobile.value, 'ownerLandline='+ownerLandline.value, 'ownerEmail='+ownerEmail.value, 'appid='+appid, 'areacode='+JSON.stringify(mareacode), 'ocid='+ocid.value, 'classid='+classid.value, 'subClassid='+subClassid.value, 'facmode='+facmode.value, 'funcid='+funcid.value, 'approvingauthority='+approvingauthority.value,'approvingauthoritypos='+approvingauthoritypos.value,'draft='], "{{asset('client1/request/customQuery/fApply')}}", "POST", true, {
 						functionProcess: function(arr) {
@@ -912,37 +944,37 @@
 			element.empty().prepend(text);
 		}
 
-		function procChkSelData() {
-			if(mappform.length > 0) {
-				alert('Drafted inputs will now be re-inputted');
-				let mappformArr = ['ocid', 'classid', 'subClassid', 'facmode', 'funcid'], chReq = [['ocid', 'mclass', 'classid', ['classid', 'classname'], ['subClassid']], ['isSub', 'msubclass', 'subClassid', ['classid', 'classname'], []], [], [], []], premThis = true;
-				curAppid = mappform[0]['appid'];
-				if(Array.isArray(mservfac)) {
-					let mservfacArr = ['hgpid', 'facid'], chReq = [['hgpid', 'mserv_cap', 'serv_cap', ['facid', 'facname'], [], ['facilitytyp', 'hgpid']]];
-					for(let i = 0; i < mservfacArr.length; i++) { for(let j = 0; j < mservfac[i].length; j++) {
-						let idom = document.getElementById(mservfac[i][j][mservfacArr[i]]);
-						if(idom != undefined || idom != null) { idom.checked = true; if(chReq[i] != null || chReq[i] != undefined) { findSelName(idom.name, chReq[i][0], chReq[i][1], chReq[i][2], chReq[i][3], chReq[i][4]); } }
-					} if(i == 1) { fSelServ(mservfacArr[i]); } }
-				}
-				if(mptcdet.length > 0) {
-					curPtcId = mptcdet[0]['id'];
-					let mptcdetArr = ['propbedcap', 'propstation', 'incbedcapfrom', 'incbedcapto', 'incstationfrom', 'incstationto', 'construction_description'/*, 'others'*/];
-					for(let i = 0; i < mptcdetArr.length; i++) { let idom = document.getElementById(mptcdetArr[i]); if(idom != null || idom != undefined) { idom.value = mptcdet[0][mptcdetArr[i]]; } }
-					let idom = document.getElementById('type' + mptcdet[0]['type']);
-					if(idom != null || idom != undefined) { idom.checked = true; changeNrs(parseInt(mptcdet[0]['type'])); }
-				}
-				for(let i = 0; i < mappformArr.length; i++) {
-					let idom = document.getElementById(mappformArr[i]);
-					if(idom != undefined || idom != null) {
-						if(mappform[0][mappformArr[i]] != null) { idom.value = mappform[0][mappformArr[i]]; }
-						if(chReq.length == mappformArr.length) { if(chReq[i].length > 0) { findSelName(idom.name, chReq[i][0], chReq[i][1], chReq[i][2], chReq[i][3], chReq[i][4], []); } }
-					}
-				}
-				if(mappform[0]['canapply'] == 1) {
-					premThis = false;
-				}
-			}
-		}
+		// function procChkSelData() {
+		// 	if(mappform.length > 0) {
+		// 		alert('Drafted inputs will now be re-inputted');
+		// 		let mappformArr = ['ocid', 'classid', 'subClassid', 'facmode', 'funcid'], chReq = [['ocid', 'mclass', 'classid', ['classid', 'classname'], ['subClassid']], ['isSub', 'msubclass', 'subClassid', ['classid', 'classname'], []], [], [], []], premThis = true;
+		// 		curAppid = mappform[0]['appid'];
+		// 		if(Array.isArray(mservfac)) {
+		// 			let mservfacArr = ['hgpid', 'facid'], chReq = [['hgpid', 'mserv_cap', 'serv_cap', ['facid', 'facname'], [], ['facilitytyp', 'hgpid']]];
+		// 			for(let i = 0; i < mservfacArr.length; i++) { for(let j = 0; j < mservfac[i].length; j++) {
+		// 				let idom = document.getElementById(mservfac[i][j][mservfacArr[i]]);
+		// 				if(idom != undefined || idom != null) { idom.checked = true; if(chReq[i] != null || chReq[i] != undefined) { findSelName(idom.name, chReq[i][0], chReq[i][1], chReq[i][2], chReq[i][3], chReq[i][4]); } }
+		// 			} if(i == 1) { fSelServ(mservfacArr[i]); } }
+		// 		}
+		// 		if(mptcdet.length > 0) {
+		// 			curPtcId = mptcdet[0]['id'];
+		// 			let mptcdetArr = ['propbedcap', 'propstation', 'incbedcapfrom', 'incbedcapto', 'incstationfrom', 'incstationto', 'construction_description'/*, 'others'*/];
+		// 			for(let i = 0; i < mptcdetArr.length; i++) { let idom = document.getElementById(mptcdetArr[i]); if(idom != null || idom != undefined) { idom.value = mptcdet[0][mptcdetArr[i]]; } }
+		// 			let idom = document.getElementById('type' + mptcdet[0]['type']);
+		// 			if(idom != null || idom != undefined) { idom.checked = true; changeNrs(parseInt(mptcdet[0]['type'])); }
+		// 		}
+		// 		// for(let i = 0; i < mappformArr.length; i++) {
+		// 		// 	let idom = document.getElementById(mappformArr[i]);
+		// 		// 	if(idom != undefined || idom != null) {
+		// 		// 		if(mappform[0][mappformArr[i]] != null) { idom.value = mappform[0][mappformArr[i]]; }
+		// 		// 		if(chReq.length == mappformArr.length) { if(chReq[i].length > 0) { findSelName(idom.name, chReq[i][0], chReq[i][1], chReq[i][2], chReq[i][3], chReq[i][4], []); } }
+		// 		// 	}
+		// 		// }
+		// 		// if(mappform[0]['canapply'] == 1) {
+		// 		// 	premThis = false;
+		// 		// }
+		// 	}
+		// }
 		function retArrReqChk(elName, isCheck) {
 			let idom = document.getElementsByName(elName), retArr = [], defAssigned = "";
 			if(idom != undefined || idom != null) { for(let i = 0; i < idom.length; i++) { if(typeof isCheck == "boolean") { if(idom[i].checked == isCheck) {
@@ -955,7 +987,7 @@
 			let retArr = retArrReqChk(elName, true);
 			// findChkName(retArr);
 		}
-		procChkSelData();
+		// procChkSelData();
 		document.getElementById('ocid').addEventListener('change', function() {
 				findSelName(this.name, 'ocid', 'mclass', 'classid', ['classid', 'classname'], ['subClassid'], []);
 			});

@@ -360,9 +360,18 @@ class NewClientController extends Controller {
 	}
 	public function __applyApp(Request $request, $hfser, $appid, $hideExtensions = NULL, $aptid = NULL) {
 		try {
-			$hfLocs = ['client1/apply/app/LTO/'.$appid, 'client1/apply/app/LTO/'.$appid.'/hfsrb', 'client1/apply/app/LTO/'.$appid.'/fda'];
+			$hfLocs = 
+				[
+					'client1/apply/app/LTO/'.$appid, 
+					'client1/apply/app/LTO/'.$appid.'/hfsrb', 
+					'client1/apply/app/LTO/'.$appid.'/fda'
+				];
 			if(isset($hideExtensions)) {
-				$hfLocs = ['client1/apply/employeeOverride/app/LTO/'.$appid, 'client1/apply/employeeOverride/app/LTO/'.$appid.'/hfsrb', 'client1/apply/employeeOverride/app/LTO/'.$appid.'/fda'];
+				$hfLocs = [
+					'client1/apply/employeeOverride/app/LTO/'.$appid, 
+					'client1/apply/employeeOverride/app/LTO/'.$appid.'/hfsrb', 
+					'client1/apply/employeeOverride/app/LTO/'.$appid.'/fda'
+				];
 			}
 			if(! isset($hideExtensions)) {
 				$cSes = FunctionsClientController::checkSession(true);

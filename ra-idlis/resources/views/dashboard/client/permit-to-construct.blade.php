@@ -39,7 +39,7 @@
             <div class="col-md-12 mb-2">
                 <h2 class=" text-center pt-2"> <img src="{{asset('ra-idlis/public/img/doh2.png')}}" style="width:50px;"/> APPLICATION FORM</h2>
             </div>
-            @include('dashboard.client.forms.apply-new')
+            @include('dashboard.client.forms.apply-pto')
         </div>
     </div>
     <!-- Modals -->
@@ -54,7 +54,7 @@
     <script>
         const base_url = '{{URL::to('/')}}';
     </script>
-    <script src="{{asset('ra-idlis/public/js/clients/pto-form.js')}}"></script>
+    <script src="{{asset('ra-idlis/public/js/clients/application-form.js')}}"></script>
     @include('client1.cmp.footer')
 </body>
 @endsection

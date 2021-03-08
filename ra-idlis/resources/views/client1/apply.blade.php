@@ -37,7 +37,21 @@
 			<div class="row mb-5">
 				<div class="col-sm-4">
 					<a class="btn btn-success btn-block" href="{{asset('client1/apply/new')}}" style="text-decoration: none;color:#fff; margin-top: 20%">Add new Application</a>
-					<a class="btn btn-info btn-block" href="{{asset('client/dashboard/new-application')}}" style="text-decoration: none;color:#fff; margin-top: 20%">Add new Application (New Form)</a>
+					<!-- <a 
+						class="btn btn-info btn-block" 
+						href="{{asset('client/dashboard/new-application')}}" 
+						style="text-decoration: none;color:#fff; margin-top: 20%"
+					>
+						Add new Application (New Form)
+					</a> -->
+					<button
+						class="btn btn-info btn-block"
+						style="text-decoration: none;color:#fff; margin-top: 20%"
+						data-toggle="modal" 
+						data-target="#applicationTypeModal"
+					>
+						Add new Application (New Form)
+					</button>
 				</div>
 				<div class="col-sm-4">
 					<!-- <div style="background: #fff; border-radius: 10px; box-shadow: none;    border: 1px solid rgba(97, 125, 255, 0.2);padding: 25px 25px 15px 8%;">
@@ -63,9 +77,10 @@
 				</div>
 				<div class="col-md-8"></div>
 			</div>
+			@include('dashboard.client.modal.type-of-application')
 	</div>
-				<div  style="background: #fff;padding: 25px;">
-					<div style="overflow-x: scroll">
+	<div  style="background: #fff;padding: 25px;">
+		<div style="overflow-x: scroll">
 			<table class="table table-bordered" id="tApp" style="border-bottom: none;border-collapse: collapse;">
 				<thead class="thead-dark">
 					<tr>
