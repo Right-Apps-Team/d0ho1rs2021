@@ -15,3 +15,15 @@ Route::get(
     'dashboard/new-application/', 
     'Client\ClientDashboardController@newApplication'
 )->middleware([CustomAuthChecker::class]);
+
+
+Route::get(
+    'dashboard/application/certificate-of-need/', 
+    'Client\ClientDashboardController@newApplication'
+)->middleware([CustomAuthChecker::class]);
+
+
+Route::get(
+    'dashboard/application/permit-to-construct/', 
+    'Client\ClientDashboardController@permitToConstruct'
+)->middleware([CustomAuthChecker::class]);

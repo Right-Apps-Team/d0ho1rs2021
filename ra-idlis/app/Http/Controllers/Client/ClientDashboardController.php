@@ -9,6 +9,8 @@ use App\Models\Regions;
 use App\Models\Province;
 use App\Models\Municipality;
 use App\Models\Barangay;
+use App\Models\HFACIGroup;
+use App\Models\FACLGroup;
 
 class ClientDashboardController extends Controller {
     public function index() {
@@ -28,19 +30,31 @@ class ClientDashboardController extends Controller {
     
     public function newApplication() {
         $user_data = session()->get('uData');
-        // $application = [];
-        // if($appid) {
-        //     $application = ApplicationForm::where('appid', $appid)->first();
-        // }
+
         $data = [
             'user' => $user_data,
             'appFacName'=> FunctionsClientController::getDistinctByFacilityName(),
             'regions'   => Regions::orderBy('sort')->get()
         ];
-        // dd($application);
-        // return response()->json($application->appid);
-        // exit;
         return view('dashboard.client.newapplication', $data);
     }
+    public function permitToConstruct() {
+        $user_data = session()->get('uData');
+        $hfser_id = 'PTC';
 
+        $faclArr = [];
+        $facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();
+        foreach($facl_grp as $f) {
+            array_push($faclArr, $f->hgpid);
+        }
+
+        $data = [
+            'user'                  => $user_data,
+            'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
+            'regions'               => Regions::orderBy('sort')->get(),
+            'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get()
+        ];
+        // dd($hfaci_service_type);
+        return view('dashboard.client.permit-to-construct', $data);
+    }
 }

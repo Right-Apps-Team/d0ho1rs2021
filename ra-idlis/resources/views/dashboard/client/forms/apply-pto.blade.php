@@ -35,16 +35,15 @@
             <!-- Approving Authority Details -->
             @include('dashboard.client.forms.parts.approving-authority-details')
 
-            
-            <!-- CON Other Details -->
-            @include('dashboard.client.forms.parts.certificate-of-need.other-details')
-            
-            <!-- CON Catchment -->
-            @include('dashboard.client.forms.parts.certificate-of-need.catchment')
+            <!-- PTC Type of Consturction -->
+            @include('dashboard.client.forms.parts.permit-to-construct.type-of-construction')
 
-            <!-- CON Hospitals -->
-            @include('dashboard.client.forms.parts.certificate-of-need.hospitals')
-            
+            <!-- PTC Type of Health Facility -->
+            @include('dashboard.client.forms.parts.permit-to-construct.type-of-health-facility')
+
+            <!-- PTC Type of Service Capabilities -->
+            @include('dashboard.client.forms.parts.permit-to-construct.service-capabilities')
+
             <div class="form-group row col-md-12 mt-5">
                 <div class="col-lg-3 col-md-3 col-xs-12"></div>
                 <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
