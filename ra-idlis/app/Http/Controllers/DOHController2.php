@@ -43,7 +43,7 @@ namespace App\Http\Controllers;
 							{
 								// $lastTried = Carbon::parse($data->lastTry);
 								$now = Carbon::now();
-								$tempBanned = ((isset($_checkUser->isTempBanned)) ? Carbon::parse($_checkUser->isTempBanned) : ((isset($_checkUser->lastTry)) ? Carbon::parse($_checkUser->lastTry)->addMinutes($m99->pass_min) : Carbon::now()))
+								$tempBanned = ((isset($_checkUser->isTempBanned)) ? Carbon::parse($_checkUser->isTempBanned) : ((isset($_checkUser->lastTry)) ? Carbon::parse($_checkUser->lastTry)->addMinutes($m99->pass_min) : Carbon::now()));
 								$CheckTempBanned = $now->greaterThanOrEqualTo($tempBanned);
 								// return dd($CheckTempBanned); // !isset($data->isTempBanned) && (
 								if ($CheckTempBanned == true)  // CHECK if TEMPORARILY BANNED FROM THE SYSTEM

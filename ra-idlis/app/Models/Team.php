@@ -9,4 +9,5 @@ class Team extends Model
     protected $table = 'team';
     protected $primaryKey = 'teamid';
     public $incrementing = false;
+    protected $keyType = 'string';
 }

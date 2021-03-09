@@ -9,4 +9,5 @@ class Department extends Model
     protected $table = 'department';
     protected $primaryKey = 'depid';
     public $incrementing = false;
+    protected $keyType = 'string';
 }

@@ -9,4 +9,5 @@ class Category extends Model
     protected $table = 'category';
     protected $primaryKey   = 'cat_id';
     public $incrementing = false;
+    protected $keyType = 'string';
 }

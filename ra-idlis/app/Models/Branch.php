@@ -9,4 +9,5 @@ class Branch extends Model
     protected $table = 'branch';
     protected $primaryKey   = 'regionid';
     public $incrementing = false;
+    protected $keyType = 'string';
 }
