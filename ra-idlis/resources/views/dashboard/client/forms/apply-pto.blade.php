@@ -44,6 +44,22 @@
             <!-- PTC Type of Service Capabilities -->
             @include('dashboard.client.forms.parts.permit-to-construct.service-capabilities')
 
+            {{-- PTC Available Add-Ons --}}
+            @include('dashboard.client.forms.parts.permit-to-construct.available-add-ons')
+
+            {{-- PTC Option --}}
+            @include('dashboard.client.forms.parts.permit-to-construct.options')
+
+            {{-- PTC CON Code --}}
+            @include('dashboard.client.forms.parts.permit-to-construct.con-code')
+
+            {{-- PTC Proposed Health Facility Address --}}
+            @include('dashboard.client.forms.parts.permit-to-construct.proposed-health-facility-address')
+
+            {{-- PTC Classification According To --}}
+            @include('dashboard.client.forms.parts.permit-to-construct.classification-according-to')
+
+
             <div class="form-group row col-md-12 mt-5">
                 <div class="col-lg-3 col-md-3 col-xs-12"></div>
                 <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
