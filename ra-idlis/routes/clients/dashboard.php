@@ -27,3 +27,8 @@ Route::get(
     'dashboard/application/permit-to-construct/', 
     'Client\ClientDashboardController@permitToConstruct'
 )->middleware([CustomAuthChecker::class]);
+
+Route::get(
+    'dashboard/application/authority-to-operate/', 
+    'Client\ClientDashboardController@authorityToOperate'
+)->middleware([CustomAuthChecker::class]);
