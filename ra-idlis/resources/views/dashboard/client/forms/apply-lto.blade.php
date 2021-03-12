@@ -34,22 +34,46 @@
     
                 <!-- Approving Authority Details -->
                 @include('dashboard.client.forms.parts.approving-authority-details')
-                
-                {{-- COA Type of Facility--}}
-                @include('dashboard.client.forms.parts.certificate-of-accreditaion.type-of-facility')
-
-                {{-- COA Service Capabilities --}}
-                @include('dashboard.client.forms.parts.certificate-of-accreditaion.service-capabilities')
-
-                {{-- COA Health Facility Address--}}
-                @include('dashboard.client.forms.parts.certificate-of-accreditaion.health-facility-address')
-
-                {{-- COA Classification According to --}}
-                @include('dashboard.client.forms.parts.certificate-of-accreditaion.classification-according-to')
-
-
-                
     
+                {{-- LTO Health Facility Address --}}
+                @include('dashboard.client.forms.parts.license-to-operate.health-facility-address')
+    
+                {{-- LTO PTC Code --}}
+                @include('dashboard.client.forms.parts.license-to-operate.ptc-code')
+
+                {{-- LTO Type of Facility --}}
+                @include('dashboard.client.forms.parts.license-to-operate.type-of-facility')
+
+                {{-- LTO For Hospital --}}
+                @include('dashboard.client.forms.parts.license-to-operate.for-hospital')
+
+                {{-- LTO For Ambulatory Surgical Clinic --}}
+                @include('dashboard.client.forms.parts.license-to-operate.for-ambulatory-surgical-clinic')
+
+                {{-- LTO For Dialysis Clinic --}}
+                @include('dashboard.client.forms.parts.license-to-operate.for-dialysis-clinic')
+
+                {{-- LTO Ancillary/Clinical Services --}}
+                @include('dashboard.client.forms.parts.license-to-operate.ancillary-clinical-services')
+
+                {{-- LTO Add-On Services --}}
+                @include('dashboard.client.forms.parts.license-to-operate.add-on-services')
+
+                {{-- LTO Classification According To --}}
+                @include('dashboard.client.forms.parts.license-to-operate.classification-according-to')
+
+                {{-- LTO Authorized Bed Capacity --}}
+                @include('dashboard.client.forms.parts.license-to-operate.authorized-bed-capacity')
+
+                {{-- LTO Other Clinical Service(s) --}}
+                @include('dashboard.client.forms.parts.license-to-operate.other-clinical-services')
+
+                {{-- LTO For Pharmacy --}}
+                @include('dashboard.client.forms.parts.license-to-operate.for-pharmacy')
+
+                {{-- LTO For Clinical Laboratory --}}
+                @include('dashboard.client.forms.parts.license-to-operate.for-clinical-laboratory')
+
                 <div class="form-group row col-md-12 mt-5">
                     <div class="col-lg-3 col-md-3 col-xs-12"></div>
                     <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
