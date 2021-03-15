@@ -8,7 +8,7 @@
 
     {{-- Ownership --}}
         <div class="col-md-4">
-            <label for="approving_authority_pos">Ownership
+            <label>Ownership
                 <span class="text-danger">*</span>
             </label>
 
@@ -20,7 +20,7 @@
 
     {{-- Classification --}}
         <div class="col-md-4">
-            <label for="approving_authority_pos">Classification
+            <label>Classification
                 <span class="text-danger">*</span>
             </label>
 
@@ -32,7 +32,7 @@
 
     {{-- Sub Classification --}}
         <div class="col-md-4">
-            <label for="approving_authority_pos">Sub Classification
+            <label>Sub Classification
                 <span class="text-danger">*</span>
             </label>
 
@@ -44,7 +44,7 @@
 
     {{-- Institutional Character --}}
         <div class="col-md-6">
-            <label for="approving_authority_pos">Institutional Character
+            <label>Institutional Character
                 <span class="text-danger">*</span>
             </label>
 
@@ -56,7 +56,7 @@
 
     {{-- Function --}}
     <div class="col-md-6">
-        <label for="approving_authority_pos">Function
+        <label>Function
             <span class="text-danger">*</span>
         </label>
 
