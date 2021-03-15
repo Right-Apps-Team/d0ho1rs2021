@@ -13,7 +13,7 @@
             </label>
         </div>
         <div class="col-md-3">
-            <label for="DATRC-R-AO-CL">
+            <label for="DATRC-R-AO-DTL">
                 <input type="checkbox" class="custom-control-input" name="addon" id="DATRC-R-AO-DTL" value="DATRC-R-AO-DTL">
                 Drug test Laboratory
             </label>
@@ -21,7 +21,7 @@
 
     {{-- MFOWS-Special Seafarer's Medical Facility --}}
         <div class="col-md-3">
-            <label for="DATRC-R-AO-CL">
+            <label for="SSMF-AO-ASCGS">
                 <input type="checkbox" class="custom-control-input" name="addon" id="SSMF-AO-ASCGS" value="SSMF-AO-ASCGS">
                 General Surgery
             </label>

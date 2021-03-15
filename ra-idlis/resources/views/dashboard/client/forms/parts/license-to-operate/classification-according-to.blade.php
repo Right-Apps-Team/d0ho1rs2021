@@ -1,14 +1,17 @@
 <div class="mb-2 col-md-12">&nbsp;</div>
 
-<div class="col-md-12">
+<div class="col-md-6">
     <b class="text-primary">Classfication According to:
-        <span class="text-danger">*</span>
     </b>
+</div>
+<div class="col-md-6">
+    <label class="text-danger">
+        <input type="checkbox" name="hfep" id="hfep" value="1"> HFEP Funded</label>
 </div>
 
     {{-- Ownership --}}
         <div class="col-md-4">
-            <label for="approving_authority_pos">Ownership
+            <label>Ownership
                 <span class="text-danger">*</span>
             </label>
 
@@ -20,7 +23,7 @@
 
     {{-- Classification --}}
         <div class="col-md-4">
-            <label for="approving_authority_pos">Classification
+            <label>Classification
                 <span class="text-danger">*</span>
             </label>
 
@@ -32,7 +35,7 @@
 
     {{-- Sub Classification --}}
         <div class="col-md-4">
-            <label for="approving_authority_pos">Sub Classification
+            <label>Sub Classification
                 <span class="text-danger">*</span>
             </label>
 
@@ -44,7 +47,7 @@
 
     {{-- Institutional Character --}}
         <div class="col-md-6">
-            <label for="approving_authority_pos">Institutional Character
+            <label>Institutional Character
                 <span class="text-danger">*</span>
             </label>
 

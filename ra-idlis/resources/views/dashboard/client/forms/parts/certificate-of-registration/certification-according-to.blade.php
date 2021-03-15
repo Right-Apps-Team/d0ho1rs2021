@@ -2,7 +2,6 @@
 
 <div class="col-md-12">
     <b class="text-primary">Classfication According to:
-        <span class="text-danger">*</span>
     </b>
 </div>
 
@@ -65,4 +64,3 @@
             </select>
         </div>
     </div>
-
