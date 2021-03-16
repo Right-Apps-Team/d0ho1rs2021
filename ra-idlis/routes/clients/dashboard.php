@@ -16,7 +16,6 @@ Route::get(
     'Client\ClientDashboardController@newApplication'
 )->middleware([CustomAuthChecker::class]);
 
-
 Route::get(
     'dashboard/application/certificate-of-need/', 
     'Client\ClientDashboardController@newApplication'
@@ -31,4 +30,23 @@ Route::get(
 //my changes
 Route::get('dashboard/application/authority-to-operate/', 
     'Client\ClientDashboardController@authorityToOperate'
+)->middleware([CustomAuthChecker::class]);
+
+Route::get('dashboard/application/certificate-of-accreditation/', 
+    'Client\ClientDashboardController@certificateOfAccreditation'
+)->middleware([CustomAuthChecker::class]);
+
+
+Route::get('dashboard/application/license-to-operate/', 
+    'Client\ClientDashboardController@licenseToOperate'
+)->middleware([CustomAuthChecker::class]);
+
+
+Route::get('dashboard/application/certificate-of-registration/', 
+    'Client\ClientDashboardController@certificateOfRegistration'
+)->middleware([CustomAuthChecker::class]);
+
+//attachment
+Route::get('dashboard/application/requirements/', 
+    'Client\ClientDashboardController@requirement'
 )->middleware([CustomAuthChecker::class]);

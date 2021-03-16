@@ -27,4 +27,5 @@
             <th>Ambulance Type(Owned, Outsoured)</th>
             <th>Details</th>
         </tr>
-</thead>
+    </thead>
+</table>
