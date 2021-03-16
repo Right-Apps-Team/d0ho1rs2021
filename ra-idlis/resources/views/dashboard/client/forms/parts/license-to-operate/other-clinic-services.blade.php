@@ -1,4 +1,4 @@
-<p>&nbsp;</p>
+<div class="mb-2 col-md-12">&nbsp;</div>
 <div class="col-md-6"><b class="text-primary">
     Other Clinical Service(s)</b>
 </div>

@@ -36,16 +36,16 @@
                 @include('dashboard.client.forms.parts.approving-authority-details')
 
                 {{-- ATO Type of Facility --}}
-                @include('dashoard.client.forms.parts.authority-to-operate.type-of-facility')
+                @include('dashboard.client.forms.parts.authority-to-operate.type-of-facility')
 
                 {{-- ATO Service Capabilities --}}
-                @include('dashoard.client.forms.parts.authority-to-operate.service-capabilities')
+                @include('dashboard.client.forms.parts.authority-to-operate.service-capabilities')
 
                 {{-- ATO Health Facility Address --}}
-                @include('dashoard.client.forms.parts.authority-to-operate.health-facility-address')
+                @include('dashboard.client.forms.parts.authority-to-operate.health-facility-address')
 
                 {{-- ATO Classification According To --}}
-                @include('dashoard.client.forms.parts.authority-to-operate.classification-according-to')
+                @include('dashboard.client.forms.parts.authority-to-operate.classification-according-to')
     
                 <div class="form-group row col-md-12 mt-5">
                     <div class="col-lg-3 col-md-3 col-xs-12"></div>

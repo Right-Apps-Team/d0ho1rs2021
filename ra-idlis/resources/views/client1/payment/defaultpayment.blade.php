@@ -29,7 +29,7 @@
 				<div class="container">
 					Name of Health Facility or Service Provider: <span class="font-weight-bold text-uppercase">{{$neededData[0]->facilityname}}</span> 
 				</div>
-				<div class="container">
+				<div class="container">/
 					Application Code: <span class="font-weight-bold text-uppercase">{{$neededData[0]->hfser_id}}R{{$neededData[0]->rgnid}}-{{$neededData[0]->appid}}</span> 
 				</div>
 				<div class="container pt-1">

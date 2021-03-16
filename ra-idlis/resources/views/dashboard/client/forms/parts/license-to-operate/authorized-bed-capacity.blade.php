@@ -4,5 +4,6 @@
 </div>
 
 <div class="col-md-12">
-    <input type="number" name="noofbed" id="noofbed" placeholder="Bed Capacity" min="0" autocomplete="off">
+    <input class="form-control" type="number" name="noofbed" id="noofbed" placeholder="Bed Capacity" min="0" autocomplete="off">
 </div>
+<br>

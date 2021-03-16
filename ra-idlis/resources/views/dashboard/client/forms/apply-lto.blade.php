@@ -50,6 +50,9 @@
                 {{-- LTO For Ambulatory Surgical Clinic --}}
                 @include('dashboard.client.forms.parts.license-to-operate.for-ambulatory-surgical-clinic')
 
+                {{-- LTO For Ambulance Details --}}
+                @include('dashboard.client.forms.parts.license-to-operate.for-ambulance-details')
+
                 {{-- LTO For Dialysis Clinic --}}
                 @include('dashboard.client.forms.parts.license-to-operate.for-dialysis-clinic')
 
@@ -66,7 +69,7 @@
                 @include('dashboard.client.forms.parts.license-to-operate.authorized-bed-capacity')
 
                 {{-- LTO Other Clinical Service(s) --}}
-                @include('dashboard.client.forms.parts.license-to-operate.other-clinical-services')
+                @include('dashboard.client.forms.parts.license-to-operate.other-clinic-services')
 
                 {{-- LTO For Pharmacy --}}
                 @include('dashboard.client.forms.parts.license-to-operate.for-pharmacy')

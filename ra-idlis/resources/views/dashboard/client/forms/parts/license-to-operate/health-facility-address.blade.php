@@ -1,10 +1,13 @@
-<p>&nbsp;</p>
-<div class="col-md-6"><b class="text-primary">
-    Health Facility Address</b>
-</div>
-<div class="col-md-6"><b class="text-primary">
-    Application Type: <span>Initial New</span></b>
-</div>
+<div class="mb-2 col-md-12">&nbsp;</div>
+
+    <div class="col-md-6">
+        <b class="text-primary"> Health Facility Address</b>
+    </div>
+    <div class="col-md-6">
+        Application Type: <b>Initial New</b> 
+    </div>
+
+<div class="mb-2 col-md-12">&nbsp;</div>
 
    {{-- Region --}}
         <div class="col-md-3">

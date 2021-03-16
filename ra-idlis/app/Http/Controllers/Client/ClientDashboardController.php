@@ -76,4 +76,69 @@ class ClientDashboardController extends Controller {
         // dd($hfaci_service_type);
         return view('dashboard.client.authority-to-operate', $data);
     }
+
+    public function certificateOfAccreditation() {
+        $user_data = session()->get('uData');
+        $hfser_id = 'ATO';
+
+        $faclArr = [];
+        $facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();
+        foreach($facl_grp as $f) {
+            array_push($faclArr, $f->hgpid);
+        }
+
+        $data = [
+            'user'                  => $user_data,
+            'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
+            'regions'               => Regions::orderBy('sort')->get(),
+            'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get()
+        ];
+        // dd($hfaci_service_type);
+        return view('dashboard.client.certificate-of-accreditation', $data);
+    }
+
+    public function certificateOfRegistration() {
+        $user_data = session()->get('uData');
+        $hfser_id = 'ATO';
+
+        $faclArr = [];
+        $facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();
+        foreach($facl_grp as $f) {
+            array_push($faclArr, $f->hgpid);
+        }
+
+        $data = [
+            'user'                  => $user_data,
+            'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
+            'regions'               => Regions::orderBy('sort')->get(),
+            'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get()
+        ];
+        // dd($hfaci_service_type);
+        return view('dashboard.client.certificate-of-registration', $data);
+    }
+
+    public function licenseToOperate() {
+        $user_data = session()->get('uData');
+        $hfser_id = 'ATO';
+
+        $faclArr = [];
+        $facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();
+        foreach($facl_grp as $f) {
+            array_push($faclArr, $f->hgpid);
+        }
+
+        $data = [
+            'user'                  => $user_data,
+            'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
+            'regions'               => Regions::orderBy('sort')->get(),
+            'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get()
+        ];
+        // dd($hfaci_service_type);
+        return view('dashboard.client.license-to-operate', $data);
+    }
+
+    public function requirement() {
+        return view('dashboard.client.requirement.submission-of-requirement');
+    }
 }
+

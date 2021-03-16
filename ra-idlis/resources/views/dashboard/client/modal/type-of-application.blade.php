@@ -42,7 +42,7 @@
                             <p class="lead">Certificate of Accreditation</p>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>                
                             <p class="text-right">
-                                <button class="btn btn-warning">Proceed</button>
+                                <button class="btn btn-warning" href="{{asset('client/dashboard/application/certificate-of-accreditation')}}">Proceed</button>
                             </p>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                             <p class="lead">License to Operate</p>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>                
                             <p class="text-right">
-                                <button class="btn btn-danger">Proceed</button>
+                                <button class="btn btn-danger" href="{{asset('client/dashboard/application/license-to-operate')}}">Proceed</button>
                             </p>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                             <p class="lead">Certificate of Registration</p>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>                
                             <p class="text-right">
-                                <button class="btn btn-dark">Proceed</button>
+                                <button class="btn btn-dark" href="{{asset('client/dashboard/application/certificate-of-registration')}}">Proceed</button>
                             </p>
                         </div>
                     </div>

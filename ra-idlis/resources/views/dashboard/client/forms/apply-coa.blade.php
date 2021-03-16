@@ -36,16 +36,16 @@
                 @include('dashboard.client.forms.parts.approving-authority-details')
                 
                 {{-- COA Type of Facility--}}
-                @include('dashboard.client.forms.parts.certificate-of-accreditaion.type-of-facility')
+                @include('dashboard.client.forms.parts.certificate-of-accreditation.type-of-facility')
 
                 {{-- COA Service Capabilities --}}
-                @include('dashboard.client.forms.parts.certificate-of-accreditaion.service-capabilities')
+                @include('dashboard.client.forms.parts.certificate-of-accreditation.service-capabilities')
 
                 {{-- COA Health Facility Address--}}
-                @include('dashboard.client.forms.parts.certificate-of-accreditaion.health-facility-address')
+                @include('dashboard.client.forms.parts.certificate-of-accreditation.health-facility-address')
 
                 {{-- COA Classification According to --}}
-                @include('dashboard.client.forms.parts.certificate-of-accreditaion.classification-according-to')
+                @include('dashboard.client.forms.parts.certificate-of-accreditation.certification-according-to')
 
 
                 

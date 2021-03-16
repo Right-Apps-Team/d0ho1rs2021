@@ -5,7 +5,7 @@
     @include('client1.cmp.nav')
 	@include('client1.cmp.breadcrumb')
 	@include('client1.cmp.msg')
-    @include('dashboard.client.templates.step')
+    @include('dashboard.client.templates.step-requirement')
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <style type="text/css">
@@ -36,15 +36,12 @@
 	</style>
     <div class="container-fluid mb-5">
         <div class="row">
-            <div class="col-md-12 mb-2">
-                <h2 class=" text-center pt-2"> <img src="{{asset('ra-idlis/public/img/doh2.png')}}" style="width:50px;"/> APPLICATION FORM</h2>
-            </div>
-            @include('dashboard.client.forms.apply-ptc')
+            @include('dashboard.client.requirement.requirement-form')
         </div>
     </div>
+
     <!-- Modals -->
-    
-    @include('dashboard.client.modal.confirm-submit')
+        @include('dashboard.client.modal.confirm-submit')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
