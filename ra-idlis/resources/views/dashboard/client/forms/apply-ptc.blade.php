@@ -35,7 +35,6 @@
             <!-- Approving Authority Details -->
             @include('dashboard.client.forms.parts.approving-authority-details')
 
-            <div class="row">
                 <div class="col-md-8">
                     <!-- PTC Type of Consturction -->
                     @include('dashboard.client.forms.parts.permit-to-construct.type-of-construction')
@@ -43,6 +42,10 @@
                     <!-- PTC Type of Health Facility -->
                     @include('dashboard.client.forms.parts.permit-to-construct.type-of-health-facility')
 
+                    <div class="col-md-4">
+                        @include('dashboard.client.forms.parts.payment.payment-form')
+                    </div>
+                </div>
                     <!-- PTC Type of Service Capabilities -->
                     @include('dashboard.client.forms.parts.permit-to-construct.service-capabilities')
 
@@ -60,11 +63,7 @@
 
                     {{-- PTC Classification According To --}}
                     @include('dashboard.client.forms.parts.permit-to-construct.classification-according-to')
-                </div>
-                <div class="col-md-4">
-                    @include('client1.payment')
-                </div>
-            </div>
+           
 
             <div class="form-group row col-md-12 mt-5">
                 <div class="col-lg-3 col-md-3 col-xs-12"></div>
