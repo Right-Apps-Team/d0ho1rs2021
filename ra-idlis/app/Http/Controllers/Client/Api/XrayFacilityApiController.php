@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Cliet\Api;
+namespace App\Http\Controllers\Client\Api;
 use Session;
 use App\Models\XrayFacility;
 use Illuminate\Http\Request;

@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Peligibility extends Model
 {
-    protected $table = 'plegibility';
+    protected $table = 'peligibility';
     protected $primaryKey = 'peid';
 }

@@ -10,7 +10,7 @@ class XrayFacilityLevelApiController extends Controller
 {
     public function fetch(Request $request) {
         $codelevel = $request->codelevel;
-        $arayfacilitylevel = XrayFacilityLevel::where('cmid', $codelevel)->get();
+        $arayfacilitylevel = XrayFacilityLevel::where('codelevel', $codelevel)->get();
         return response()->json($arayfacilitylevel, 200);
     }
 }

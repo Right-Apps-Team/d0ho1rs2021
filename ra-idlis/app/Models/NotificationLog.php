@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class NotificationLog extends Model
 {
-    protected $table = 'notificationlog';
+    protected $table = 'notificiationlog';
     protected $primaryKey = 'notifid';
 }

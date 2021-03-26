@@ -13,4 +13,4 @@ class PositionApiController extends Controller
         $positions = Position::where('posid', $posid)->get();
         return response()->json($positions, 200);
     }
-}
+} 

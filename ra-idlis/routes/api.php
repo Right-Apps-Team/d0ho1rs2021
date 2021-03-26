@@ -435,3 +435,383 @@ Route::get(
     '/funCapF/fetch/',
     'Client\Api\FunCapFApiController@fetch'
 );
+
+Route::get(
+    '/hfaci_customOne/fetch/',
+    'Client\Api\HFACICustomOneApiController@fetch'
+);
+
+Route::get(
+    '/hfaci_group/fetch/',
+    'Client\Api\HFACIGroupApiController@fetch'
+);
+
+Route::get(
+    '/hfaci_servType/fetch/',
+    'Client\Api\HFACIServTypeApiController@fetch'
+);
+
+Route::get(
+    '/hferceEval/fetch/',
+    'Client\Api\HFERCEvaluationApiController@fetch'
+);
+
+Route::get(
+    '/hferceTeam/fetch/',
+    'Client\Api\HFERCTeamApiController@fetch'
+);
+
+Route::get(
+    '/hfsrbannedxa/fetch/',
+    'Client\Api\HFSRBannexaApiController@fetch'
+);
+
+Route::get(
+    '/hfsrbannedxb/fetch/',
+    'Client\Api\HFSRBannexbApiController@fetch'
+);
+
+Route::get(
+    '/hfsrbannedxc/fetch/',
+    'Client\Api\HFSRBannexcApiController@fetch'
+);
+
+Route::get(
+    '/hfsrbannedxd/fetch/',
+    'Client\Api\HFSRBannexdApiController@fetch'
+);
+
+Route::get(
+    '/hfsrbannedxf/fetch/',
+    'Client\Api\HFSRBannexfApiController@fetch'
+);
+
+Route::get(
+    '/hfsrbannedxh/fetch/',
+    'Client\Api\HFSRBannexhApiController@fetch'
+);
+
+Route::get(
+    '/hfsrbannedxi/fetch/',
+    'Client\Api\HFSRBannexiApiController@fetch'
+);
+
+Route::get(
+    '/holiday/fetch/',
+    'Client\Api\HolidayApiController@fetch'
+);
+
+Route::get(
+    '/licensed/fetch/',
+    'Client\Api\LicensedApiController@fetch'
+);
+
+Route::get(
+    '/leo/fetch/',
+    'Client\Api\LoeApiController@fetch'
+);
+
+Route::get(
+    '/lto/fetch/',
+    'Client\Api\LtoApiController@fetch'
+);
+
+Route::get(
+    '/m04/fetch/',
+    'Client\Api\M04ApiController@fetch'
+);
+
+Route::get(
+    '/M99/fetch/',
+    'Client\Api\M99ApiController@fetch'
+);
+
+Route::get(
+    '/modeofpayment/fetch/',
+    'Client\Api\ModeOfPaymentApiController@fetch'
+);
+
+Route::get(
+    '/monForm/fetch/',
+    'Client\Api\MonFormApiController@fetch'
+);
+
+Route::get(
+    '/monTeam/fetch/',
+    'Client\Api\MonTeamApiController@fetch'
+);
+
+Route::get(
+    '/monTeamMembers/fetch/',
+    'Client\Api\MonTeamMembersApiController@fetch'
+);
+
+Route::get(
+    '/notificationlog/fetch/',
+    'Client\Api\NotificationLogApiController@fetch'
+);
+
+Route::get(
+    '/notification_msg/fetch/',
+    'Client\Api\NotificationMsgApiController@fetch'
+);
+
+Route::get(
+    '/nov/fetch/',
+    'Client\Api\NovApiController@fetch'
+);
+
+Route::get(
+    '/novissued/fetch/',
+    'Client\Api\NovIssuedApiController@fetch'
+);
+
+Route::get(
+    '/novissued_s/fetch/',
+    'Client\Api\NovIssuedSApiController@fetch'
+);
+
+Route::get(
+    '/orderofpayment/fetch/',
+    'Client\Api\OrderOfPaymentApiController@fetch'
+);
+
+Route::get(
+    '/ownership/fetch/',
+    'Client\Api\OwnershipApiController@fetch'
+);
+
+Route::get(
+    '/part/fetch/',
+    'Client\Api\PartApiController@fetch'
+);
+
+Route::get(
+    '/peligibility/fetch/',
+    'Client\Api\PeligibilityApiController@fetch'
+);
+
+Route::get(
+    '/personnel/fetch/',
+    'Client\Api\PersonnelApiController@fetch'
+);
+
+Route::get(
+    '/personnel_work/fetch/',
+    'Client\Api\PersonnelWorkApiController@fetch'
+);
+
+Route::get(
+    '/plicensedType/fetch/',
+    'Client\Api\PLicenseTypeApiController@fetch'
+);
+
+Route::get(
+    '/position/fetch/',
+    'Client\Api\PositionApiController@fetch'
+);
+
+Route::get(
+    '/prepart/fetch/',
+    'Client\Api\PrepartApiController@fetch'
+);
+
+Route::get(
+    '/province/fetch/',
+    'Client\Api\ProvinceApiController@fetch'
+);
+
+Route::get(
+    '/ptc/fetch/',
+    'Client\Api\PTCApiController@fetch'
+);
+
+Route::get(
+    '/ptcEvaluation/fetch/',
+    'Client\Api\PTCEvaluationApiController@fetch'
+);
+
+Route::get(
+    '/p_training/fetch/',
+    'Client\Api\PTrainingApiController@fetch'
+);
+
+Route::get(
+    '/p_training_trainings/fetch/',
+    'Client\Api\PTrainingsTrainingTypeApiController@fetch'
+);
+
+Route::get(
+    '/pwdHistory/fetch/',
+    'Client\Api\PWDHistoryApiController@fetch'
+);
+
+Route::get(
+    '/p_work/fetch/',
+    'Client\Api\PWorkApiController@fetch'
+);
+
+Route::get(
+    '/p_workStatus/fetch/',
+    'Client\Api\PWorkStatusApiController@fetch'
+);
+
+Route::get(
+    '/radoholrstblCtnt/fetch/',
+    'Client\Api\RadoholrstblCtntApiController@fetch'
+);
+
+Route::get(
+    '/radoholrstblHdr/fetch/',
+    'Client\Api\RadoholrstblHdrApiController@fetch'
+);
+
+Route::get(
+    '/radoholrstblHf/fetch/',
+    'Client\Api\RadoholrstblHfApiController@fetch'
+);
+
+Route::get(
+    '/reAssessHist/fetch/',
+    'Client\Api\ReAssessHistApiController@fetch'
+);
+
+Route::get(
+    '/regions/fetch/',
+    'Client\Api\RegionApiController@fetchAll'
+);
+
+Route::get(
+    '/regionTransfer/fetch/',
+    'Client\Api\RegionTransferApiController@fetch'
+);
+
+Route::get(
+    '/reqAst/fetch/',
+    'Client\Api\ReqAstApiController@fetch'
+);
+
+Route::get(
+    '/reqAstForm/fetch/',
+    'Client\Api\ReqAstFormApiController@fetch'
+);
+
+Route::get(
+    '/roa_ComplaintAction/fetch/',
+    'Client\Api\ROAComplaintActionApiController@fetch'
+);
+
+Route::get(
+    '/roa_ComplaintActionLog/fetch/',
+    'Client\Api\ROAComplaintLogApiController@fetch'
+);
+
+Route::get(
+    '/section/fetch/',
+    'Client\Api\SectionApiController@fetch'
+);
+
+Route::get(
+    '/servAsmt/fetch/',
+    'Client\Api\ServAsmtApiController@fetch'
+);
+
+Route::get(
+    '/servChg/fetch/',
+    'Client\Api\ServChgApiController@fetch'
+);
+
+Route::get(
+    '/servType/fetch/',
+    'Client\Api\ServTypeApiController@fetch'
+);
+
+Route::get(
+    '/survRec/fetch/',
+    'Client\Api\SurvRecApiController@fetch'
+);
+
+Route::get(
+    '/survTeam/fetch/',
+    'Client\Api\SurvTeamApiController@fetch'
+);
+
+Route::get(
+    '/survTeamMember/fetch/',
+    'Client\Api\SurvTeamMemberApiController@fetch'
+);
+
+Route::get(
+    '/tableHistory/fetch/',
+    'Client\Api\TableHistoryApiController@fetch'
+);
+
+Route::get(
+    '/team/fetch/',
+    'Client\Api\TeamApiController@fetch'
+);
+
+Route::get(
+    '/technicalFindingsHist/fetch/',
+    'Client\Api\TechnicalFindingsHistApiController@fetch'
+);
+
+Route::get(
+    '/transStatus/fetch/',
+    'Client\Api\TransStatusApiController@fetch'
+);
+
+Route::get(
+    '/typeFacility/fetch/',
+    'Client\Api\TypeFacilityApiController@fetch'
+);
+
+Route::get(
+    '/upload/fetch/',
+    'Client\Api\UploadApiController@fetch'
+);
+
+Route::get(
+    '/verdict/fetch/',
+    'Client\Api\VerdictApiController@fetch'
+);
+
+Route::get(
+    '/x05/fetch/',
+    'Client\Api\x05ApiController@fetch'
+);
+
+Route::get(
+    '/x06/fetch/',
+    'Client\Api\x06ApiController@fetch'
+);
+
+Route::get(
+    '/x07/fetch/',
+    'Client\Api\x07ApiController@fetch'
+);
+
+Route::get(
+    '/x08/fetch/',
+    'Client\Api\x08ApiController@fetch'
+);
+
+Route::get(
+    '/x08Ft/fetch/',
+    'Client\Api\x08FtApiController@fetch'
+);
+
+Route::get(
+    '/x08Pass/fetch/',
+    'Client\Api\x08PassApiController@fetch'
+);
+
+Route::get(
+    '/xrayFacility/fetch/',
+    'Client\Api\XrayFacilityApiController@fetch'
+);
+
+Route::get(
+    '/xrayFacilityLevel/fetch/',
+    'Client\Api\XrayFacilityLevelApiController@fetch'
+);

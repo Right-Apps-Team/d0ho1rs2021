@@ -8,9 +8,8 @@ use App\Http\Controllers\Controller;
 
 class PTCApiController extends Controller
 {
-    public function fetch(Request $request) {
-        $id = $request->id;
-        $ptc = PTC::where('id', $id)->get();
+    public function fetch() {
+        $ptc = PTC::get();
         return response()->json($ptc, 200);
     }
 }

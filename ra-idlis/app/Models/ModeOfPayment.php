@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ModeOfPayment extends Model
 {
-    protected $table = 'madeofpayment';
+    protected $table = 'modeofpayment';
     protected $primaryKey = 'mop_code';
     public $incrementing = false;
     protected $keyType = 'string';
