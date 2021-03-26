@@ -8,9 +8,8 @@ use App\Http\Controllers\Controller;
 
 class AppFormOrderOfPaymentApiController extends Controller
 {
-    public function fetch(Request $request) {
-        $appop_id = $request->appop_id;
-        $appform_orderofpayment = AppFormOrderOfPayment::where('appop_id', $appop_id)->get();
+    public function fetch() {
+        $appform_orderofpayment = AppFormOrderOfPayment::get();
         return response()->json($appform_orderofpayment, 200);
     }
 }

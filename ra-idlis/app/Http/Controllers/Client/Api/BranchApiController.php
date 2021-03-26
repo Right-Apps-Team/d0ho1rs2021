@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Client\Api;
 use Session;
 use App\Models\Branch;
 use Illuminate\Http\Request;

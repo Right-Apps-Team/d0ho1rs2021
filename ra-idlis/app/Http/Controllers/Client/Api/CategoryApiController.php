@@ -8,9 +8,8 @@ use App\Http\Controllers\Controller;
 
 class CategoryApiController extends Controller
 {
-    public function fetch(Request $request) {
-        $cat_id = $request->cat_id;
-        $category = Category::where('cat_id', $cat_id)->get();
+    public function fetch() {
+        $category = Category::get();
         return response()->json($category, 200);
     }
 }

@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class FacilityRequirement extends Model
 {
-    protected $table = 'facility_requirement';
+    protected $table = 'facility_requirements';
     protected $primaryKey = 'fr_id';
 }

@@ -8,9 +8,8 @@ use App\Http\Controllers\Controller;
 
 class AppTypeApiController extends Controller
 {
-    public function fetch(Request $request) {
-        $aptid = $request->aptid;
-        $apptype = AppType::where('aptid', $aptid)->get();
+    public function fetch() {
+        $apptype = AppType::get();
         return response()->json($apptype, 200);
     }
 }

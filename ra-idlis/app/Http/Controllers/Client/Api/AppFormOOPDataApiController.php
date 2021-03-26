@@ -8,9 +8,8 @@ use App\Http\Controllers\Controller;
 
 class AppFormOOPDataApiController extends Controller
 {
-    public function fetch(Request $request) {
-        $appfoop_id = $request->appfoop_id;
-        $appform_oopdata = AppFormOOPData::where('appfoop_id', $appfoop_id)->get();
+    public function fetch() {
+        $appform_oopdata = AppFormOOPData::get();
         return response()->json($appform_oopdata, 200);
     }
 }

@@ -10,7 +10,7 @@ class AssessedPtcApiController extends Controller
 {
     public function fetch(Request $request) {
         $assessedID = $request->assessedID;
-        $assessed_ptc = AssessedPtc::where('assessedID', $cmassessedIDid)->get();
+        $assessed_ptc = AssessedPtc::where('assessedID', $assessedID)->get();
         return response()->json($assessed_ptc, 200);
     }
 }

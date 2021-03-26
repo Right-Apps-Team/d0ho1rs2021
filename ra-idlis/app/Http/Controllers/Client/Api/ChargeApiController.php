@@ -8,9 +8,8 @@ use App\Http\Controllers\Controller;
 
 class ChargeApiController extends Controller
 {
-    public function fetch(Request $request) {
-        $chg_code = $request->chg_code;
-        $charge = Charge::where('chg_code', $chg_code)->get();
+    public function fetch() {
+        $charge = Charge::get();
         return response()->json($charge, 200);
     }
 }

@@ -8,9 +8,8 @@ use App\Http\Controllers\Controller;
 
 class FacilityTypeApiController extends Controller
 {
-    public function fetch(Request $request) {
-        $facid = $request->facid;
-        $facilitytyp = FacilityType::where('facid', $facid)->get();
+    public function fetch() {
+        $facilitytyp = FacilityType::get();
         return response()->json($facilitytyp, 200);
     }
 }

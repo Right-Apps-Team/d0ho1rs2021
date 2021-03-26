@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Client\Api;
 use Session;
-use App\Models\CONEnvaluate;
+use App\Models\CONEvaluate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class CONEnvaluateApiController extends Controller
+class CONEvaluateApiController extends Controller
 {
     public function fetch(Request $request) {
         $id = $request->id;
-        $con_evaluate = CONEnvaluate::where('id', $id)->get();
+        $con_evaluate = CONEvaluate::where('id', $id)->get();
         return response()->json($con_evaluate, 200);
     }
 }
