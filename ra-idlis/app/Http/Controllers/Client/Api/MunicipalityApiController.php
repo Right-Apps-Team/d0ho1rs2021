@@ -7,6 +7,7 @@ use App\Models\Municipality;
 use Illuminate\Http\Request;
 
 class MunicipalityApiController extends Controller {
+    
     public function fetch(Request $request) {
         $provid = $request->provid;
         $municipality = Municipality::where('provid', $provid)->get();

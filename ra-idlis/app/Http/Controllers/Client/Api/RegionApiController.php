@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class RegionApiController extends Controller {
     public function fetchAll() {
-        $name = $request->name;
+        // $name = $request->name;
         $regions = Regions::get();
         return  response()->json($regions, 200);
     }

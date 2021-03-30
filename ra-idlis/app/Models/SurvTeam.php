@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ServTeam extends Model
+class SurvTeam extends Model
 {
-    protected $table = 'serv_team';
+    protected $table = 'surv_team';
     protected $primaryKey = 'montid';
 }

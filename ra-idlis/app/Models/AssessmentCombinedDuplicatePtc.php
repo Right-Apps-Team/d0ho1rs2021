@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class AssessmentCombinedDuplicatePtc extends Model
 {
-    protected $table = 'assessementcombinedduplicateptc';
+    protected $table = 'assessmentcombinedduplicateptc';
     protected $primaryKey = 'dupID';
 }

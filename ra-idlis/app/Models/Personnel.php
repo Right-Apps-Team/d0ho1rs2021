@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Personnel extends Model
 {
-    protected $table = 'personnels';
+    protected $table = 'personnel';
     protected $primaryKey = 'pid';
 }

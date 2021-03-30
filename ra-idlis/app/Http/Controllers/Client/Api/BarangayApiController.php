@@ -7,6 +7,7 @@ use App\Models\Barangay;
 use Illuminate\Http\Request;
 
 class BarangayApiController extends Controller {
+    
     public function fetch(Request $request) {
         $cmid = $request->cmid;
         $barangay = Barangay::where('cmid', $cmid)->get();
