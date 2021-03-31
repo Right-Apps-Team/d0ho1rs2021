@@ -12,6 +12,7 @@ use App\Models\HFACIGroup;
 use App\Models\FACLGroup;
 
 class ClientDashboardController extends Controller {
+
     public function index() {
         $user_data = session()->get('uData');
         $data = [
@@ -19,6 +20,7 @@ class ClientDashboardController extends Controller {
         ];
         return view('dashboard.client.home', $data);
     }
+
     public function apply() {
         $user_data = session()->get('uData');
         $data = [
@@ -29,14 +31,17 @@ class ClientDashboardController extends Controller {
     
     public function newApplication() {
         $user_data = session()->get('uData');
+        $hfser_id = 'CON';
 
         $data = [
             'user' => $user_data,
             'appFacName'=> FunctionsClientController::getDistinctByFacilityName(),
-            'regions'   => Regions::orderBy('sort')->get()
+            'regions'   => Regions::orderBy('sort')->get(),
+            'hfser' =>  $hfser_id
         ];
         return view('dashboard.client.newapplication', $data);
     }
+    
     public function permitToConstruct() {
         $user_data = session()->get('uData');
         $hfser_id = 'PTC';
@@ -51,9 +56,13 @@ class ClientDashboardController extends Controller {
             'user'                  => $user_data,
             'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
             'regions'               => Regions::orderBy('sort')->get(),
-            'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get()
+            'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),
+
+            //mychanges
+            'hfser' =>  $hfser_id
         ];
         // dd($hfaci_service_type);
+        // dd($data);
         return view('dashboard.client.permit-to-construct', $data);
     }
 
@@ -79,7 +88,7 @@ class ClientDashboardController extends Controller {
 
     public function certificateOfAccreditation() {
         $user_data = session()->get('uData');
-        $hfser_id = 'ATO';
+        $hfser_id = 'COA';
 
         $faclArr = [];
         $facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();
@@ -99,7 +108,7 @@ class ClientDashboardController extends Controller {
 
     public function certificateOfRegistration() {
         $user_data = session()->get('uData');
-        $hfser_id = 'ATO';
+        $hfser_id = 'COR';
 
         $faclArr = [];
         $facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();
@@ -119,7 +128,7 @@ class ClientDashboardController extends Controller {
 
     public function licenseToOperate() {
         $user_data = session()->get('uData');
-        $hfser_id = 'ATO';
+        $hfser_id = 'LTO';
 
         $faclArr = [];
         $facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();

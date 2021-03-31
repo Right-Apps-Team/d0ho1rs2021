@@ -41,8 +41,15 @@
                 {{-- LTO PTC Code --}}
                 @include('dashboard.client.forms.parts.license-to-operate.ptc-code')
 
-                {{-- LTO Type of Facility --}}
-                @include('dashboard.client.forms.parts.license-to-operate.type-of-facility')
+                <div class="col-md-8">
+                    {{-- LTO Type of Facility --}}
+                    @include('dashboard.client.forms.parts.license-to-operate.type-of-facility')
+                </div>
+                
+                <div class="col-md-4">
+                    {{-- Payment --}}
+                    @include('dashboard.client.forms.parts.payment.payment-form')
+                </div>
 
                 {{-- LTO For Hospital --}}
                 @include('dashboard.client.forms.parts.license-to-operate.for-hospital')

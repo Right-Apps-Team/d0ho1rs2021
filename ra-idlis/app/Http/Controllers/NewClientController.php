@@ -257,20 +257,23 @@ class NewClientController extends Controller {
 			$submitted = false;
 			$lookFor = array(null,3);
 			$cSes = FunctionsClientController::checkSession(true);
+
 			if(count($cSes) > 0) {
 				return redirect($cSes[0])->with($cSes[1], $cSes[2]);
 			}
+
 			$curForm = FunctionsClientController::getUserDetailsByAppform($appid);
+			// dd($curForm);
 			if(count($curForm) < 1) {
 				return redirect('client1/apply')->with('errRet', ['errAlt'=>'warning', 'errMsg'=>'No application selected.']);
 			}
+
 			if($request->isMethod("post")) {
 				if($request->has('action') && $request->action == 'trigger'){
 					if(DB::table('appform')->where('appid',$appid)->update(['isReadyForInspec' => 1])){
 						return 'DONE';
 					}
 				} else {
-
 				$curRecord = []; $msgRet = []; $isApproved = [1, null]; $isAllUpload = [];
 				foreach(FunctionsClientController::getReqUploads($hfser, $appid, $office) AS $each) {
 					if(! isset($each->filepath)) {
@@ -289,6 +292,7 @@ class NewClientController extends Controller {
 						}
 					}
 				}
+
 				if($request->has('upload')){
 					if($curForm[0]->isReadyForInspec == 0){
 						DB::table('appform')->where('appid',$appid)->update(['isReadyForInspec' => 1]);
@@ -332,11 +336,13 @@ class NewClientController extends Controller {
 
 			}
 			$facilities = DB::table('x08_ft')->where('appid',$appid)->select('facid')->get();
+			// dd($facilities);
 			foreach ($facilities as $key => $value) {
 				if(!in_array(trim($value->facid), $arrFaci)){
 					array_push($arrFaci, trim($value->facid));
 				}
 			}
+			// dd($arrFaci);
 			$reqChecklist = DB::table('x08_ft')->join('facilitytypupload','x08_ft.facid','facilitytypupload.facid')->where([['facilitytypupload.hfser_id',$hfser],['x08_ft.appid',$appid]])->get();
 			$req = FunctionsClientController::getReqUploads($hfser, $appid, $office);
 			$arrRet = [
@@ -353,11 +359,15 @@ class NewClientController extends Controller {
 				'isReadyToInspect' => DB::table('appform')->where([['appid',$appid],['isReadyForInspec',1]])->exists(),
 				'office' => $office
 			];
+
+			// dd($arrRet);
 			return view('client1.applyattach', $arrRet);
 		// } catch(Exception $e) {
 		// 	return redirect('client1/home')->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Error on page Add new Application. Contact the admin']);
 		// }
 	}
+
+	//find me
 	public function __applyApp(Request $request, $hfser, $appid, $hideExtensions = NULL, $aptid = NULL) {
 		try {
 			$hfLocs = 
@@ -380,9 +390,11 @@ class NewClientController extends Controller {
 				}
 			}
 			$appGet = FunctionsClientController::getUserDetailsByAppform($appid, $hideExtensions);
+			// dd($appGet);
 			if(count($appGet) < 1) {
 				return redirect('client1/apply')->with('errRet', ['errAlt'=>'warning', 'errMsg'=>'No application selected.']);
 			}
+			// dd($hfer);
 			if($hfser != $appGet[0]->hfser_id) {
 				return redirect('client1/apply/app/'.$appGet[0]->hfser_id.'/'.$appid.'');
 			}

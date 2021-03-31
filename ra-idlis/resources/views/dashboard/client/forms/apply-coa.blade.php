@@ -35,8 +35,15 @@
                 <!-- Approving Authority Details -->
                 @include('dashboard.client.forms.parts.approving-authority-details')
                 
-                {{-- COA Type of Facility--}}
-                @include('dashboard.client.forms.parts.certificate-of-accreditation.type-of-facility')
+                <div class="col-md-8">
+                    {{-- COA Type of Facility--}}
+                    @include('dashboard.client.forms.parts.certificate-of-accreditation.type-of-facility')
+                </div>
+
+                <div class="col-md-4">
+                    {{-- Payment --}}
+                    @include('dashboard.client.forms.parts.payment.payment-form')
+                </div>
 
                 {{-- COA Service Capabilities --}}
                 @include('dashboard.client.forms.parts.certificate-of-accreditation.service-capabilities')
