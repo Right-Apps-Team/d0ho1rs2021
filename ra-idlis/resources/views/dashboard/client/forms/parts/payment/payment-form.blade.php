@@ -1,3 +1,5 @@
+<div class="mb-2 col-md-12">&nbsp;</div>
+<div>
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
@@ -15,3 +17,9 @@
             </td>
         </tr>
     </table>
+</div>
+
+
+{{-- <div class="col-4">
+    @include('dashboard.client.forms.parts.payment.payment-form')
+</div> --}}

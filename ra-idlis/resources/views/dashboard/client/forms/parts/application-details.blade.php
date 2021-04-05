@@ -3,13 +3,15 @@
     <label for="typeOfApplication">Type of Application <span class="text-danger">*</span></label>
     <?php
         $hfser_id = isset($appdata->hfser_id) ? $appdata->hfser_id : '';
+        
     ?>
     <select 
-        class="form-control selectpicker show-menu-arrow" 
-        id="typeOfApplication" 
-        name="hfser_id" 
-        required 
-        data-live-search="true" 
+        class="form-control selectpicker show-menu-arrow"
+        id="typeOfApplication"
+        name="hfser_id"
+        required
+        disabled
+        data-live-search="true"
         data-style="text-dark form-control custom-selectpicker" 
         data-size="5">
         <option>Please select</option>

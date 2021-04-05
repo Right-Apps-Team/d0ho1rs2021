@@ -34,6 +34,26 @@
     
                 <!-- Approving Authority Details -->
                 @include('dashboard.client.forms.parts.approving-authority-details')
+
+                <div class="col-md-8">
+                    {{-- COR Type of Facility --}}
+                    @include('dashboard.client.forms.parts.certificate-of-registration.type-of-facility')
+
+                    {{-- COR Service Capabilities--}}
+                    @include('dashboard.client.forms.parts.certificate-of-registration.service-capabilities')
+                </div>
+                
+                <div class="col-md-4">
+                    {{-- Payment --}}
+                    @include('dashboard.client.forms.parts.payment.payment-form')
+                </div>
+
+                {{-- COR Health Facility Address --}}
+                @include('dashboard.client.forms.parts.certificate-of-registration.health-facility-address')
+
+                {{-- COR Certification According To --}}
+                @include('dashboard.client.forms.parts.certificate-of-registration.certification-according-to')
+                
     
     
                 <div class="form-group row col-md-12 mt-5">

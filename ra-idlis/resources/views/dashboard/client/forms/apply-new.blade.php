@@ -35,12 +35,18 @@
             <!-- Approving Authority Details -->
             @include('dashboard.client.forms.parts.approving-authority-details')
 
-            
-            <!-- CON Other Details -->
+             <!-- CON Other Details -->
             @include('dashboard.client.forms.parts.certificate-of-need.other-details')
-            
-            <!-- CON Catchment -->
-            @include('dashboard.client.forms.parts.certificate-of-need.catchment')
+
+            <div class="col-md-8">
+                <!-- CON Catchment -->
+                @include('dashboard.client.forms.parts.certificate-of-need.catchment')
+            </div>
+        
+            <div class="col-md-4">
+                {{-- Payment --}}
+                @include('dashboard.client.forms.parts.payment.payment-form')
+            </div>
 
             <!-- CON Hospitals -->
             @include('dashboard.client.forms.parts.certificate-of-need.hospitals')

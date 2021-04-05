@@ -3,6 +3,6 @@
 
 <div class="col-md-12">
     <label for="16">
-        <input type="radio" name="hgpid" id="16" value="16">Special Clinical Lab
+        <input type="radio" name="hgpid" id="16" value="16"> Special Clinical Lab
     </label>
 </div>

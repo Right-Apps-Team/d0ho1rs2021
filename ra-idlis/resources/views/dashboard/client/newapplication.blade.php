@@ -53,7 +53,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <script>
         const base_url = '{{URL::to('/')}}';
-    </script>
+    </script>77777
     <script src="{{asset('ra-idlis/public/js/clients/pto-form.js')}}"></script>
     @include('client1.cmp.footer')
 </body>
