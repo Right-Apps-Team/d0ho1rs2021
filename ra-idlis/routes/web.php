@@ -842,3 +842,8 @@ Route::prefix('employee/reports')->group(function() {
 	
 });
 
+
+
+// temporary upload
+Route::get('/', 'UploadController@index');
+Route::post('/store', 'UploadController@store')->name('file.store');

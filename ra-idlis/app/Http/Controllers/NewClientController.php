@@ -263,7 +263,7 @@ class NewClientController extends Controller {
 			}
 
 			$curForm = FunctionsClientController::getUserDetailsByAppform($appid);
-			// dd($curForm);
+			// dd($request);
 			if(count($curForm) < 1) {
 				return redirect('client1/apply')->with('errRet', ['errAlt'=>'warning', 'errMsg'=>'No application selected.']);
 			}
@@ -300,6 +300,7 @@ class NewClientController extends Controller {
 					foreach($request->upload AS $uKey => $uValue) {
 						if(in_array($uKey, $curRecord)) {
 							$arrFind = DB::table('app_upload')->where([['app_id', $appid], ['upid', $uKey]])->get(); $_file = $request->upload[$uKey];
+							// dd($arrFind);
 							if(isset($_file) || ! empty($_file)) {
 				                $reData = FunctionsClientController::uploadFile($_file);
 								$arrData = ['app_id', 'upid', 'filepath', 'fileExten', 'fileSize', 't_date', 't_time', 'ipaddress'];
@@ -342,7 +343,6 @@ class NewClientController extends Controller {
 					array_push($arrFaci, trim($value->facid));
 				}
 			}
-			// dd($arrFaci);
 			$reqChecklist = DB::table('x08_ft')->join('facilitytypupload','x08_ft.facid','facilitytypupload.facid')->where([['facilitytypupload.hfser_id',$hfser],['x08_ft.appid',$appid]])->get();
 			$req = FunctionsClientController::getReqUploads($hfser, $appid, $office);
 			$arrRet = [
@@ -359,7 +359,6 @@ class NewClientController extends Controller {
 				'isReadyToInspect' => DB::table('appform')->where([['appid',$appid],['isReadyForInspec',1]])->exists(),
 				'office' => $office
 			];
-
 			// dd($arrRet);
 			return view('client1.applyattach', $arrRet);
 		// } catch(Exception $e) {
