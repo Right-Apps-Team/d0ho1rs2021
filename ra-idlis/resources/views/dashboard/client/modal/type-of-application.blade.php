@@ -12,8 +12,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-5 alert alert-info">
-                            <p class="lead">Certificate of Need</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>                
+                            <p class="lead">Certificate of Need</p>              
                             <p class="text-right">
                                 <a class="btn btn-info" href="{{asset('client/dashboard/application/certificate-of-need')}}">Proceed</a>
                             </p>
@@ -21,8 +20,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-5 alert alert-primary">
-                            <p class="lead">Permit to Construct</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>                
+                            <p class="lead">Permit to Construct</p>              
                             <p class="text-right">
                             <a class="btn btn-primary" href="{{asset('client/dashboard/application/permit-to-construct')}}">Proceed</a>
                             </p>
@@ -30,8 +28,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-5 alert alert-success">
-                            <p class="lead">Authority to Operate</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>                
+                            <p class="lead">Authority to Operate</p>             
                             <p class="text-right">
                                 <a class="btn btn-success" href="{{asset('client/dashboard/application/authority-to-operate')}}">Proceed</a>
                             </p>
@@ -39,8 +36,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-5 alert alert-warning">
-                            <p class="lead">Certificate of Accreditation</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>                
+                            <p class="lead">Certificate of Accreditation</p>               
                             <p class="text-right">
                                 <a class="btn btn-warning" href="{{asset('client/dashboard/application/certificate-of-accreditation')}}">Proceed</a>
                             </p>
@@ -48,8 +44,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-5 alert alert-danger">
-                            <p class="lead">License to Operate</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>                
+                            <p class="lead">License to Operate</p>             
                             <p class="text-right">
                                 <a class="btn btn-danger" href="{{asset('client/dashboard/application/license-to-operate')}}">Proceed</a>
                             </p>
@@ -57,8 +52,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-5 alert alert-dark">
-                            <p class="lead">Certificate of Registration</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>                
+                            <p class="lead">Certificate of Registration</p>           
                             <p class="text-right">
                                 <a class="btn btn-dark" href="{{asset('client/dashboard/application/certificate-of-registration')}}">Proceed</a>
                             </p>

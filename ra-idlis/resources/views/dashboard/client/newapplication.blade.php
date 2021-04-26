@@ -34,7 +34,7 @@
                             color-stop(.6,#54DE5D))
         }
 	</style>
-    <div class="container-fluid mb-5">
+    <div class="container mt-5 mb-5">
         <div class="row">
             <div class="col-md-12 mb-2">
                 <h2 class=" text-center pt-2"> <img src="{{asset('ra-idlis/public/img/doh2.png')}}" style="width:50px;"/> APPLICATION FORM</h2>
