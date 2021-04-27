@@ -1,3 +1,4 @@
+<div class="col-md-8">
 <section class="container-fluid">
 <div class="card">
     <div class="card-header">
@@ -38,15 +39,8 @@
              <!-- CON Other Details -->
             @include('dashboard.client.forms.parts.certificate-of-need.other-details')
 
-            <div class="col-md-8">
-                <!-- CON Catchment -->
-                @include('dashboard.client.forms.parts.certificate-of-need.catchment')
-            </div>
-        
-            <div class="col-md-4">
-                {{-- Payment --}}
-                @include('dashboard.client.forms.parts.payment.payment-form')
-            </div>
+            <!-- CON Catchment -->
+            @include('dashboard.client.forms.parts.certificate-of-need.catchment')
 
             <!-- CON Hospitals -->
             @include('dashboard.client.forms.parts.certificate-of-need.hospitals')
@@ -83,6 +77,14 @@
 </div>
 @include('dashboard.client.modal.facilityname-helper')
 </section>
+</div>
+
+{{-- payment --}}
+<div class="col-md-4">
+    @include('dashboard.client.forms.parts.payment.payment-form')
+</div>
+
+
 <style>
     .feedback {
         width: 100%;

@@ -2548,7 +2548,7 @@ class NewClientController extends Controller {
 		try {
 			if($request->isMethod('get')) {
 				$chkQry = DB::table('x08')->where('token', $token)->select('*')->first();
-				// dd($chkQry);
+				dd($chkQry);
 				if($chkQry != null) {
 					DB::table('x08')->where('token', $token)->update(['token'=>NULL]);
 					return redirect('client1')->with('errRet', ['errAlt'=>'success', 'errMsg'=>'Successfully verified account.']);
@@ -2568,7 +2568,7 @@ class NewClientController extends Controller {
 				$nToken = Str::random(40);
 				$chkQry = DB::table('x08')->where('uid', $uid)->select('*')->first();
 				if($chkQry != null) {
-					$dRequest = new \stdClass();
+					$dRequest = new stdClass();
 					$dRequest->text2 = $chkQry->facilityname; 
 					$dRequest->text6 = $chkQry->email;
 					$sData = ['name'=>$chkQry->facilityname, 'authorizedsignature'=>$chkQry->authorizedsignature, 'assign'=>$chkQry->assign, 'password'=>NULL, 'token'=>$nToken];
