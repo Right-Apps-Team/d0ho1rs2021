@@ -261,6 +261,8 @@
             </div>
           </div>
       </div>
+      
+      {{-- Log in Details --}}
       <div id="form_Append" class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card card-signin" style="margin-top: -20px;">
           <div class="card-body">

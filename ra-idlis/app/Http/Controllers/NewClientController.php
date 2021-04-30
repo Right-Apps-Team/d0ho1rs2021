@@ -2562,6 +2562,7 @@ class NewClientController extends Controller {
 			return redirect('client1')->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'An error has occured in verifying token.']);
 		}
 	}
+	
 	public static function __rMail(Request $request, $uid) {
 		try {
 			if($request->isMethod('get')) {
@@ -2590,6 +2591,7 @@ class NewClientController extends Controller {
 			return redirect('client1')->with(['errAlt'=>'danger', 'errMsg'=>'An error has occured.']);
 		}
 	}
+
 	public function __rTbl(Request $request, $tbl) {
 		try {
 			if($request->isMethod('get')) {

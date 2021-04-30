@@ -39,6 +39,7 @@ class ClientDashboardController extends Controller {
             'regions'   => Regions::orderBy('sort')->get(),
             'hfser' =>  $hfser_id
         ];
+        // dd($data);
         return view('dashboard.client.newapplication', $data);
     }
     
@@ -62,7 +63,7 @@ class ClientDashboardController extends Controller {
             'hfser' =>  $hfser_id
         ];
         // dd($hfaci_service_type);
-        // dd($data);
+        // dd($faclArr);
         return view('dashboard.client.permit-to-construct', $data);
     }
 
@@ -80,7 +81,8 @@ class ClientDashboardController extends Controller {
             'user'                  => $user_data,
             'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
             'regions'               => Regions::orderBy('sort')->get(),
-            'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get()
+            'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),
+            'hfser' =>  $hfser_id
         ];
         // dd($hfaci_service_type);
         return view('dashboard.client.authority-to-operate', $data);
@@ -100,7 +102,8 @@ class ClientDashboardController extends Controller {
             'user'                  => $user_data,
             'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
             'regions'               => Regions::orderBy('sort')->get(),
-            'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get()
+            'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),
+            'hfser' =>  $hfser_id
         ];
         // dd($hfaci_service_type);
         return view('dashboard.client.certificate-of-accreditation', $data);
@@ -120,7 +123,8 @@ class ClientDashboardController extends Controller {
             'user'                  => $user_data,
             'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
             'regions'               => Regions::orderBy('sort')->get(),
-            'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get()
+            'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),
+            'hfser' =>  $hfser_id
         ];
         // dd($hfaci_service_type);
         return view('dashboard.client.certificate-of-registration', $data);
@@ -140,7 +144,8 @@ class ClientDashboardController extends Controller {
             'user'                  => $user_data,
             'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
             'regions'               => Regions::orderBy('sort')->get(),
-            'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get()
+            'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),
+            'hfser' =>  $hfser_id
         ];
         // dd($hfaci_service_type);
         return view('dashboard.client.license-to-operate', $data);

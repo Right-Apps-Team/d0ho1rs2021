@@ -40,7 +40,6 @@
                 <h2 class=" text-center pt-2"> <img src="{{asset('ra-idlis/public/img/doh2.png')}}" style="width:50px;"/> APPLICATION FORM</h2>
             </div>
             @include('dashboard.client.forms.apply-new')
-
         </div>
         
     </div>

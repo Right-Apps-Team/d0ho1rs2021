@@ -3,25 +3,28 @@
     <label for="typeOfApplication">Type of Application <span class="text-danger">*</span></label>
     <?php
         $hfser_id = isset($appdata->hfser_id) ? $appdata->hfser_id : '';
-        
     ?>
+
     <select 
         class="form-control selectpicker show-menu-arrow"
         id="typeOfApplication"
         name="hfser_id"
         required
-        disabled
         data-live-search="true"
         data-style="text-dark form-control custom-selectpicker" 
         data-size="5">
         <option>Please select</option>
-        <option value="CON">Certificate of Need</option>
-        <option value="PTC">Permit to Construct</option>
-        <option value="ATO">Authority to Operate</option>
-        <option value="COA">Certificate of Accreditation</option>
-        <option value="LTO">License to Operate</option>
-        <option value="COR">Certificate of Registration</option>
+        <option value="CON" {{ 'CON' == $hfser ? 'selected' : '' }}>Certificate of Need</option>
+        <option value="PTC" {{ 'PTC' == $hfser ? 'selected' : '' }}>Permit to Construct</option>
+        <option value="ATO" {{ 'ATO' == $hfser ? 'selected' : '' }}>Authority to Operate</option>
+        <option value="COA" {{ 'COA' == $hfser ? 'selected' : '' }}>Certificate of Accreditation</option>
+        <option value="LTO" {{ 'LTO' == $hfser ? 'selected' : '' }}>License to Operate</option>
+        <option value="COR" {{ 'COR' == $hfser ? 'selected' : '' }}>Certificate of Registration</option>
     </select>
+    
+    {{-- <div class="input-group">
+        <input type="text" name="hfser_id" class="form-control" id='hfser_id' value="{{ $value }}"readonly>
+    </div> --}}
 </div>
 <div class="form-group col-md-6">
     <label for="facility_name">Facility Name <span class="text-danger">*</span></label>

@@ -1,3 +1,4 @@
+<div class="col-md-8">
 <section class="container-fluid">
     <div class="card">
         <div class="card-header">
@@ -41,15 +42,8 @@
                 {{-- LTO PTC Code --}}
                 @include('dashboard.client.forms.parts.license-to-operate.ptc-code')
 
-                <div class="col-md-8">
-                    {{-- LTO Type of Facility --}}
-                    @include('dashboard.client.forms.parts.license-to-operate.type-of-facility')
-                </div>
-                
-                <div class="col-md-4">
-                    {{-- Payment --}}
-                    @include('dashboard.client.forms.parts.payment.payment-form')
-                </div>
+                {{-- LTO Type of Facility --}}
+                @include('dashboard.client.forms.parts.license-to-operate.type-of-facility')
 
                 {{-- LTO For Hospital --}}
                 @include('dashboard.client.forms.parts.license-to-operate.for-hospital')
@@ -116,6 +110,14 @@
     </div>
     @include('dashboard.client.modal.facilityname-helper')
     </section>
+</div>
+
+{{-- payment --}}
+<div class="col-md-4">
+    @include('dashboard.client.forms.parts.payment.payment-form')
+</div>
+
+
     <style>
         .feedback {
             width: 100%;

@@ -1,3 +1,4 @@
+<div class="col-md-8">
 <section class="container-fluid">
     <div class="card">
         <div class="card-header">
@@ -35,17 +36,12 @@
                 <!-- Approving Authority Details -->
                 @include('dashboard.client.forms.parts.approving-authority-details')
 
-                        <div class="col-md-8">
-                            {{-- ATO Type of Facility --}}
-                            @include('dashboard.client.forms.parts.authority-to-operate.type-of-facility') 
+                {{-- ATO Type of Facility --}}
+                @include('dashboard.client.forms.parts.authority-to-operate.type-of-facility') 
                             
-                            {{-- ATO Service Capabilities --}}
-                            @include('dashboard.client.forms.parts.authority-to-operate.service-capabilities')
-                        </div>
+                {{-- ATO Service Capabilities --}}
+                @include('dashboard.client.forms.parts.authority-to-operate.service-capabilities')
 
-                        <div class="col-md-4">
-                            @include('dashboard.client.forms.parts.payment.payment-form')
-                        </div>
 
                
 
@@ -87,6 +83,13 @@
     </div>
     @include('dashboard.client.modal.facilityname-helper')
     </section>
+    </div>
+
+{{-- payment --}}
+<div class="col-md-4">
+    @include('dashboard.client.forms.parts.payment.payment-form')
+</div>
+
     <style>
         .feedback {
             width: 100%;
