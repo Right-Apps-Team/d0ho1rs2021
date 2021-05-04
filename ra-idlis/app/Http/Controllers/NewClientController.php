@@ -2568,6 +2568,7 @@ class NewClientController extends Controller {
 			if($request->isMethod('get')) {
 				$nToken = Str::random(40);
 				$chkQry = DB::table('x08')->where('uid', $uid)->select('*')->first();
+				dd($chkQry);
 				if($chkQry != null) {
 					$dRequest = new stdClass();
 					$dRequest->text2 = $chkQry->facilityname; 

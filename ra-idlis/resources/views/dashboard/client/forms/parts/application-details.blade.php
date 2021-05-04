@@ -5,6 +5,8 @@
         $hfser_id = isset($appdata->hfser_id) ? $appdata->hfser_id : '';
     ?>
 
+
+    <div style="display: none;">
     <select 
         class="form-control selectpicker show-menu-arrow"
         id="typeOfApplication"
@@ -21,10 +23,28 @@
         <option value="LTO" {{ 'LTO' == $hfser ? 'selected' : '' }}>License to Operate</option>
         <option value="COR" {{ 'COR' == $hfser ? 'selected' : '' }}>Certificate of Registration</option>
     </select>
-    
-    {{-- <div class="input-group">
-        <input type="text" name="hfser_id" class="form-control" id='hfser_id' value="{{ $value }}"readonly>
-    </div> --}}
+    </div>
+
+    @if ($hfser == 'CON')
+        <?php $value = 'Certificate of Need' ?>
+    @elseif ($hfser == 'PTC') {
+        <?php $value = 'Permit to Construct' ?>
+    } 
+    @elseif ($hfser == 'ATO') {
+        <?php $value = 'Authority to Operate' ?>
+    } 
+    @elseif ($hfser == 'COA') {
+        <?php $value = 'Certificate of Accreditation' ?>
+    } 
+    @elseif ($hfser == 'LTO') {
+        <?php $value = 'License to Operate' ?>
+    } 
+    @else 
+        <?php $value = 'Certificate of Registration' ?>
+    @endif
+    <div class="input-group">
+        <input class="form-control"  type="text" value="{{ $value }}"readonly>
+    </div>
 </div>
 <div class="form-group col-md-6">
     <label for="facility_name">Facility Name <span class="text-danger">*</span></label>

@@ -571,6 +571,7 @@
       let dispTabs = [1, 2, 0, 0], curDispTabs = 0, theNewLet = [['onEnter', 'onEnter1', 'onEnter2'], ['signIn', 'forgotpassword', 'register']];
       let fortabs = document.getElementsByClassName('fortabs');
       let _obj = {rgnid: "province", provid: "city_muni", cmid: "barangay"}, _arrName = {rgnid: "provid", provid: "cmid", cmid: "brgyid"}, _arrCol = {rgnid: ["provid", "provname"], provid: ["cmid", "cmname"], cmid: ["brgyid", "brgyname"]}, _arrQCol = {rgnid: "rgnid", provid: "provid", cmid: "cmid"}, _allObj = ["rgnid", "provid", "cmid", "brgyid"];
+     
       function getCurInd(cInd, cName) {
         let tabs = document.getElementsByClassName(cName);
         for(let i = 0; i < tabs.length; i++) {
@@ -578,6 +579,7 @@
         }
         tabs[cInd].removeAttribute('hidden');
       }
+
       function getIndCurTabs(inAdd, cnName) {
         let curCnName = document.getElementsByClassName(cnName), regproc = document.getElementsByClassName('regproc'), fnTotal = [curCnName.length - 1]; curDispTabs = (((curDispTabs + inAdd) > (curCnName.length - 1)) ? curDispTabs : (((curDispTabs + inAdd) < 0) ? curDispTabs : (curDispTabs + inAdd))); let arFind = fnTotal.indexOf(curDispTabs);
         if(cnName == 'register') {
@@ -681,8 +683,10 @@
                 if(document.getElementById(_target.id).checked) {
                   $("#TOC").modal('toggle');
                   sendMessage('info', 'Sending Registration Request. Please wait');
-                  let /*rgnid = document.getElementById('rgnid'), provid = document.getElementById('provid'), cmid = document.getElementById('cmid'), brgyid = document.getElementById('brgyid'), streetname = document.getElementById('streetname'),street_number = document.getElementById('street_number'), zipcode = document.getElementById('zipcode'),*/ authorizedsignature = document.getElementById('authorizedsignature'), assign = document.getElementById('assign'), email = document.getElementById('email'), contact = document.getElementById('contact'), uid = document.getElementById('uid'), pwd = document.getElementById('pwd'), retypepwd = document.getElementById('retypepwd'), nameofcomapny = document.getElementById('nameofcompany') ,unNull = {null: null, undefined: undefined};
-                  if(!(/*rgnid in unNull && provid in unNull && cmid in unNull && brgyid in unNull && streetname in unNull && zipcode in unNull && */authorizedsignature in unNull && assign in unNull && email in unNull && contact in unNull && uid in unNull && pwd in unNull && retypepwd in unNull)) { 
+                  let /*rgnid = document.getElementById('rgnid'), provid = document.getElementById('provid'), cmid = document.getElementById('cmid'), brgyid = document.getElementById('brgyid'), streetname = document.getElementById('streetname'),street_number = document.getElementById('street_number'), zipcode = document.getElementById('zipcode'),*/ 
+                  authorizedsignature = document.getElementById('authorizedsignature'), assign = document.getElementById('assign'), email = document.getElementById('email'), contact = document.getElementById('contact'), uid = document.getElementById('uid'), pwd = document.getElementById('pwd'), retypepwd = document.getElementById('retypepwd'), nameofcomapny = document.getElementById('nameofcompany') ,unNull = {null: null, undefined: undefined};
+                  if(!(/*rgnid in unNull && provid in unNull && cmid in unNull && brgyid in unNull && streetname in unNull && zipcode in unNull && */
+                  authorizedsignature in unNull && assign in unNull && email in unNull && contact in unNull && uid in unNull && pwd in unNull && retypepwd in unNull)) { 
                     if(retypepwd.value == pwd.value) {
                     document.getElementById('inputEmailEmail').classList.add('loading');
                     sendRequestRetArr(["_token="+document.getElementsByName('_token')[0].value,/* 'rgnid='+rgnid.value, 'province='+provid.value, 'city_muni='+cmid.value, 'barangay='+brgyid.value, 'streetname='+streetname.value, 'street_number='+street_number.value, 'zipcode='+zipcode.value, */'authorizedsignature='+authorizedsignature.value, 'assign='+assign.value, 'email='+email.value, 'contact='+contact.value, 'uid='+uid.value, 'pwd='+pwd.value ,'nameofcompany='+nameofcomapny.value], "{{asset('client1/request/customQuery/fRegister')}}", 'POST', true, {
@@ -719,27 +723,27 @@
             break;
         }
       });
-      document.getElementById('email').addEventListener('blur', function() {
-        if(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.value)){
-          this.classList.add('loading'); this.classList.remove('check'); this.classList.remove('times'); this.style.borderColor = 'gold';
-          sendRequestRetArr(["_token="+document.getElementsByName('_token')[0].value, '_cEmail='+this.value], "{{asset('client1/request/customQuery/fEmail')}}", 'POST', true, {
-            functionProcess: function(arr) {
-              document.getElementById('email').classList.remove('loading');
-              if(arr == true) {
-                document.getElementById('email').style.borderColor = 'green';
-                document.getElementById('email').classList.add('check');
-              } else {
-                document.getElementById('email').style.borderColor = 'red';
-                document.getElementById('email').classList.add('times');
-              }
-            }
-          });
-          $("#errMsg").empty();
-        } else {
-          sendMessage('danger', 'Please input email in proper format!');
-          this.style.borderColor = 'red';
-        }
-      });
+      // document.getElementById('email').addEventListener('blur', function() {
+      //   if(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.value)){
+      //     this.classList.add('loading'); this.classList.remove('check'); this.classList.remove('times'); this.style.borderColor = 'gold';
+      //     sendRequestRetArr(["_token="+document.getElementsByName('_token')[0].value, '_cEmail='+this.value], "{{asset('client1/request/customQuery/fEmail')}}", 'POST', true, {
+      //       functionProcess: function(arr) {
+      //         document.getElementById('email').classList.remove('loading');
+      //         if(arr == true) {
+      //           document.getElementById('email').style.borderColor = 'green';
+      //           document.getElementById('email').classList.add('check');
+      //         } else {
+      //           document.getElementById('email').style.borderColor = 'red';
+      //           document.getElementById('email').classList.add('times');
+      //         }
+      //       }
+      //     });
+      //     $("#errMsg").empty();
+      //   } else {
+      //     sendMessage('danger', 'Please input email in proper format!');
+      //     this.style.borderColor = 'red';
+      //   }
+      // });
       document.getElementById('contact').addEventListener('blur', function() {
         if((/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/g.test(this.value))){
           this.style.borderColor = 'green';

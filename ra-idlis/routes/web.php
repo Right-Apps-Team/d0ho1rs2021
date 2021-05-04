@@ -44,6 +44,10 @@ Route::prefix('client')->group(function() {
 	});
 });
 // NEW CLIENT-SIDE
+
+Route::get('/user/verify/{token}', 'Auth\RegisterController@verifyUser'); // MY CHANGES
+
+// ------------------------------------------------------------------------
 Route::get('samplereport',function(){
 	return view('client1.FDA.cdrrhrCOC');
 });
