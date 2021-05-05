@@ -25,6 +25,7 @@
 				</tr>
 			</thead>
 			<tbody>
+				
 				@if(count($appDet) > 0)
 				<form id="upId" method="POST" enctype="multipart/form-data">
 					{{csrf_field()}}

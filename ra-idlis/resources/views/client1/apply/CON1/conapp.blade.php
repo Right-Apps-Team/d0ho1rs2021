@@ -30,7 +30,7 @@
 		<div class="row">
 			<div class="col-md-8">
 				<div class="card">
-{{-- 					<div class="card-header">
+				{{-- 					<div class="card-header">
 						<div class="row">
 							<div class="col-md-3 hide-div">
 								<img src="{{asset('ra-idlis/public/img/doh2.png')}}" style="float: right; max-height: 60px; padding-left: 20px;">

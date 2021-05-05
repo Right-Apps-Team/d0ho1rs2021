@@ -1,3 +1,4 @@
+<div class="col-md-8">
 <section class="container-fluid">
 <div class="card">
     <div class="card-header">
@@ -54,10 +55,10 @@
                 @include('dashboard.client.forms.parts.permit-to-construct.con-code')
 
                 {{-- PTC Proposed Health Facility Address --}}
-                @include('dashboard.client.forms.parts.permit-to-construct.proposed-health-facility-address')
+                {{-- @include('dashboard.client.forms.parts.permit-to-construct.proposed-health-facility-address') --}}
 
                 {{-- PTC Classification According To --}}
-                @include('dashboard.client.forms.parts.permit-to-construct.classification-according-to')
+                {{-- @include('dashboard.client.forms.parts.permit-to-construct.classification-according-to') --}}
            
 
             <div class="form-group row col-md-12 mt-5">
@@ -92,6 +93,13 @@
 </div>
 @include('dashboard.client.modal.facilityname-helper')
 </section>
+</div>
+
+{{-- payment --}}
+<div class="col-md-4">
+    @include('dashboard.client.forms.parts.payment.payment-form')
+</div>
+
 <style>
     .feedback {
         width: 100%;

@@ -1,4 +1,5 @@
-<section class="container-fluid">
+<div class="col-md-8">
+    <section class="container-fluid">
     <div class="card">
         <div class="card-header">
             <p class="lead text-center text-danger">Please note: Red asterisk (*) is a required field and may be encountered throughout the system </p>
@@ -35,18 +36,12 @@
                 <!-- Approving Authority Details -->
                 @include('dashboard.client.forms.parts.approving-authority-details')
 
-                <div class="col-md-8">
-                    {{-- COR Type of Facility --}}
-                    @include('dashboard.client.forms.parts.certificate-of-registration.type-of-facility')
+                {{-- COR Type of Facility --}}
+                @include('dashboard.client.forms.parts.certificate-of-registration.type-of-facility')
 
-                    {{-- COR Service Capabilities--}}
-                    @include('dashboard.client.forms.parts.certificate-of-registration.service-capabilities')
-                </div>
-                
-                <div class="col-md-4">
-                    {{-- Payment --}}
-                    @include('dashboard.client.forms.parts.payment.payment-form')
-                </div>
+                {{-- COR Service Capabilities--}}
+                @include('dashboard.client.forms.parts.certificate-of-registration.service-capabilities')
+
 
                 {{-- COR Health Facility Address --}}
                 @include('dashboard.client.forms.parts.certificate-of-registration.health-facility-address')
@@ -88,6 +83,13 @@
     </div>
     @include('dashboard.client.modal.facilityname-helper')
     </section>
+</div>
+
+{{-- payment --}}
+<div class="col-md-4">
+    @include('dashboard.client.forms.parts.payment.payment-form')
+</div>
+
     <style>
         .feedback {
             width: 100%;

@@ -13,4 +13,5 @@ class AppUploadApiController extends Controller
         $app_upload = AppUpload::where('apup_id', $apup_id)->get();
         return response()->json($app_upload, 200);
     }
+
 }
