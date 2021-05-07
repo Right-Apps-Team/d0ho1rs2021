@@ -1,6 +1,9 @@
-<div class="mb-2 col-md-12">&nbsp;</div>
+<div class="mb-2 col-md-12">
+<hr/>
+&nbsp;</div>
 
 <div class="col-md-6">
+    
     <b class="text-primary">Classfication According to:
     </b>
 </div>

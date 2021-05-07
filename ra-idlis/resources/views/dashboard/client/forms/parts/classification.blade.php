@@ -1,6 +1,9 @@
 <p>&nbsp;</p>
 <div class="row col-md-12">
-    <div class="col-md-7"><b class="text-primary">CLASSIFICATION ACCORDING TO</b></div>
+    
+    <div class="col-md-7">
+    <hr/>
+    <b class="text-primary">CLASSIFICATION ACCORDING TO</b></div>
 </div>
 <div class="col-md-4">
     <label for="ownership">Ownership <span class="text-danger">*</span></label>

@@ -449,7 +449,7 @@ class NewClientController extends Controller {
 						'cToken'=>FunctionsClientController::getToken(),
 						'hfer' => $apptype,
 						'hideExtensions'=>$hideExtensions,
-						'aptid'=>$aptid
+						'aptid'=>$aptid,
 					]; 
 					// dd($arrRet);
 					$locRet = "client1.apply.PTC1.ptcapp";
@@ -479,7 +479,7 @@ class NewClientController extends Controller {
 						'ambcharges'=>DB::table('chg_app')->whereIn('chgapp_id', ['284', '472'])->get(),
 						'aptid'=>$aptid,
 						'group' => json_encode(DB::table('facilitytyp')->where('servtype_id','>',1)->whereNotNull('grphrz_name')->get()),
-						'forAmbulance' => json_encode($proceesedAmb)
+						'forAmbulance' => json_encode($proceesedAmb),
 					]; $locRet = "client1.apply.LTO1.ltoapp";
 					break;
 

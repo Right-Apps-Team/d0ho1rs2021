@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Client;
+
 use Session;
 use App\Http\Controllers\Controller;
 use FunctionsClientController;
@@ -10,10 +12,24 @@ use App\Models\Municipality;
 use App\Models\Barangay;
 use App\Models\HFACIGroup;
 use App\Models\FACLGroup;
+use AjaxController;
 
-class ClientDashboardController extends Controller {
 
-    public function index() {
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Schema;
+
+class ClientDashboardController extends Controller
+{
+
+    public function index()
+    {
         $user_data = session()->get('uData');
         $data = [
             'user' => $user_data
@@ -21,35 +37,38 @@ class ClientDashboardController extends Controller {
         return view('dashboard.client.home', $data);
     }
 
-    public function apply() {
+    public function apply()
+    {
         $user_data = session()->get('uData');
         $data = [
             'user' => $user_data
         ];
         return view('dashboard.client.apply', $data);
     }
-    
-    public function newApplication() {
+
+    public function newApplication()
+    {
         $user_data = session()->get('uData');
         $hfser_id = 'CON';
 
         $data = [
             'user' => $user_data,
-            'appFacName'=> FunctionsClientController::getDistinctByFacilityName(),
+            'appFacName' => FunctionsClientController::getDistinctByFacilityName(),
             'regions'   => Regions::orderBy('sort')->get(),
             'hfser' =>  $hfser_id
         ];
         // dd($data);
         return view('dashboard.client.newapplication', $data);
     }
-    
-    public function permitToConstruct() {
+
+    public function permitToConstruct()
+    {
         $user_data = session()->get('uData');
         $hfser_id = 'PTC';
 
         $faclArr = [];
         $facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();
-        foreach($facl_grp as $f) {
+        foreach ($facl_grp as $f) {
             array_push($faclArr, $f->hgpid);
         }
 
@@ -67,13 +86,14 @@ class ClientDashboardController extends Controller {
         return view('dashboard.client.permit-to-construct', $data);
     }
 
-    public function authorityToOperate() {
+    public function authorityToOperate()
+    {
         $user_data = session()->get('uData');
         $hfser_id = 'ATO';
 
         $faclArr = [];
         $facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();
-        foreach($facl_grp as $f) {
+        foreach ($facl_grp as $f) {
             array_push($faclArr, $f->hgpid);
         }
 
@@ -88,13 +108,14 @@ class ClientDashboardController extends Controller {
         return view('dashboard.client.authority-to-operate', $data);
     }
 
-    public function certificateOfAccreditation() {
+    public function certificateOfAccreditation()
+    {
         $user_data = session()->get('uData');
         $hfser_id = 'COA';
 
         $faclArr = [];
         $facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();
-        foreach($facl_grp as $f) {
+        foreach ($facl_grp as $f) {
             array_push($faclArr, $f->hgpid);
         }
 
@@ -109,13 +130,14 @@ class ClientDashboardController extends Controller {
         return view('dashboard.client.certificate-of-accreditation', $data);
     }
 
-    public function certificateOfRegistration() {
+    public function certificateOfRegistration()
+    {
         $user_data = session()->get('uData');
         $hfser_id = 'COR';
 
         $faclArr = [];
         $facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();
-        foreach($facl_grp as $f) {
+        foreach ($facl_grp as $f) {
             array_push($faclArr, $f->hgpid);
         }
 
@@ -130,14 +152,40 @@ class ClientDashboardController extends Controller {
         return view('dashboard.client.certificate-of-registration', $data);
     }
 
-    public function licenseToOperate() {
+    public function licenseToOperate()
+    {
+        $appid = null;
+        $hideExtensions = null;
+        $aptid = null;
+
+        $hfLocs =
+            [
+                'client1/apply/app/LTO/' . $appid,
+                'client1/apply/app/LTO/' . $appid . '/hfsrb',
+                'client1/apply/app/LTO/' . $appid . '/fda'
+            ];
+
+        // $hfaci_sql = "SELECT * FROM hfaci_grp WHERE hgpid IN (SELECT hgpid FROM `facl_grp` WHERE hfser_id = '$hfser')"; 
+
         $user_data = session()->get('uData');
         $hfser_id = 'LTO';
 
         $faclArr = [];
         $facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();
-        foreach($facl_grp as $f) {
+        foreach ($facl_grp as $f) {
             array_push($faclArr, $f->hgpid);
+        }
+
+        // $proceesedAmb = [];
+        // foreach (AjaxController::getForAmbulanceList(false, 'forAmbulance.hgpid') as $key => $value) {
+        //     array_push($proceesedAmb, $value->hgpid);
+        // }
+        // $appGet = FunctionsClientController::getUserDetailsByAppform($appid, $hideExtensions);
+        // $apptype = $appGet ? $appGet[0]->hfser_id : null;
+
+        $proceesedAmb = [];
+        foreach (AjaxController::getForAmbulanceList(false, 'forAmbulance.hgpid') as $key => $value) {
+            array_push($proceesedAmb, $value->hgpid);
         }
 
         $data = [
@@ -145,14 +193,55 @@ class ClientDashboardController extends Controller {
             'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
             'regions'               => Regions::orderBy('sort')->get(),
             'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),
-            'hfser' =>  $hfser_id
+            'hfser' =>  $hfser_id,
+
+            // 'userInf' => FunctionsClientController::getUserDetails(),
+            // 'hfaci_serv_type' => DB::select($hfaci_sql),
+            // 'serv_cap' => json_encode(DB::table('facilitytyp')->where('servtype_id', 1)->get()),
+            // 'apptype' => DB::table('apptype')->get(),
+            // 'ownership' => DB::table('ownership')->get(),
+            // 'class' => json_encode(DB::select("SELECT * FROM class WHERE (isSub IS NULL OR isSub = '')")),
+            // 'subclass' => json_encode(DB::select("SELECT * FROM class WHERE (isSub IS NOT NULL OR isSub != '')")),
+            // 'function' => DB::table('funcapf')->get(),
+            // 'facmode' => DB::table('facmode')->get(),
+            // 'fAddress' => $appGet,
+            // 'servfac' => json_encode(FunctionsClientController::getServFaclDetails($appid)),
+            // 'ptcdet' => json_encode(FunctionsClientController::getPTCDetails($appid)),
+            // 'cToken' => FunctionsClientController::getToken(),
+            // 'addresses' => $hfLocs,
+            // 'hfer' => $apptype,
+            // 'hideExtensions' => $hideExtensions,
+            // 'ambcharges' => DB::table('chg_app')->whereIn('chgapp_id', ['284', '472'])->get(),
+            // 'aptid' => $aptid,
+            // 'group' => json_encode(DB::table('facilitytyp')->where('servtype_id', '>', 1)->whereNotNull('grphrz_name')->get()),
+            // 'forAmbulance' => json_encode($proceesedAmb)
+
+            'userInf' => FunctionsClientController::getUserDetails(),
+            'serv_cap' => json_encode(DB::table('facilitytyp')->where('servtype_id', 1)->get()),
+            'apptype' => DB::table('apptype')->get(),
+            'ownership' => DB::table('ownership')->get(),
+            'class' => json_encode(DB::select("SELECT * FROM class WHERE (isSub IS NULL OR isSub = '')")),
+            'subclass' => json_encode(DB::select("SELECT * FROM class WHERE (isSub IS NOT NULL OR isSub != '')")),
+            'function' => DB::table('funcapf')->get(),
+            'facmode' => DB::table('facmode')->get(),
+            'fAddress' => [],
+            'servfac' => json_encode([]),
+            'ptcdet' => json_encode([]),
+            'cToken' => FunctionsClientController::getToken(),
+            'addresses' => [],
+            'hfer' => null,
+            'hideExtensions' => $hideExtensions,
+            'ambcharges' => DB::table('chg_app')->whereIn('chgapp_id', ['284', '472'])->get(),
+            'aptid' => null,
+            'group' => json_encode(DB::table('facilitytyp')->where('servtype_id', '>', 1)->whereNotNull('grphrz_name')->get()),
+            'forAmbulance' => json_encode($proceesedAmb)
         ];
         // dd($hfaci_service_type);
         return view('dashboard.client.license-to-operate', $data);
     }
 
-    public function requirement() {
+    public function requirement()
+    {
         return view('dashboard.client.requirement.submission-of-requirement');
     }
 }
-
