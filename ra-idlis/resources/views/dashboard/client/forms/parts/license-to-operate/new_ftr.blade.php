@@ -3,32 +3,95 @@
     console.log(mserv_cap);
 
     function type_of_fac(selected) {
+        const data = ["hospClassif", "forHosp", "ambuDetails",  "ancillary", "addOnServe", "ambulSurgCli", "clinicLab", "dialysisClinic","otherClinicService"];
+        data.map((h) => {
+                document.getElementsByClassName(h)[0].setAttribute("hidden", "hidden")
+            });
 
-        if (selected == '6') {
-            ifHospital("show", selected)
-        } else {
-            ifHospital("hide", selected)
-        }
+        selected == '6' ? ifHospital("show") : " ";
+        selected == '2' || selected == '7'|| selected == '4'|| selected == '28' ? clinicServAndLab("show", selected) : " ";
+        selected == '17' ? clinicServAndLabAmbu("show", selected) : " ";
+        selected == '18' ? clinicServAndLabAmbu("show", selected) : " ";
+        selected == '1' ? ifAmbuSurg("show") : " ";
+        selected == '5' ? ifHemoClinic("show") : " ";
+
     }
 
-    function ifHospital(specs, hgpid) {
-
+    function ifHospital(specs) {
 
         if (specs == "show") {
-            document.getElementsByClassName("hospClassif")[0].removeAttribute("hidden")
-            document.getElementsByClassName("forHosp")[0].removeAttribute("hidden")
-            document.getElementsByClassName("ambuDetails")[0].removeAttribute("hidden")
-
+            const show = ["hospClassif", "forHosp", "ambuDetails"];
+            show.map((h) => {
+                console.log(h)
+                document.getElementsByClassName(h)[0].removeAttribute("hidden")
+            });
         } else {
-            document.getElementsByClassName("hospClassif")[0].setAttribute("hidden", "hidden")
-            document.getElementsByClassName("forHosp")[0].setAttribute("hidden", "hidden")
-            document.getElementsByClassName("ambuDetails")[0].setAttribute("hidden", "hidden")
-            document.getElementsByClassName("Ancillary")[0].setAttribute("hidden", "hidden")
-            document.getElementsByClassName("addOnServe")[0].setAttribute("hidden", "hidden")
+            const hide = ["hospClassif", "forHosp", "ambuDetails", "ancillary", "addOnServe"];
+            hide.map((h) => {
+                document.getElementsByClassName(h)[0].setAttribute("hidden", "hidden")
+            });
         }
 
+    }
+
+    function ifAmbuSurg(specs) {
+        const data = ["ambulSurgCli", "ambuDetails", "clinicLab"];
+        if (specs == "show") {
+            data.map((h) => {
+                document.getElementsByClassName(h)[0].removeAttribute("hidden")
+            });
+        } else {
+            data.map((h) => {
+                document.getElementsByClassName(h)[0].setAttribute("hidden", "hidden")
+            });
+        }
 
     }
+
+    function ifHemoClinic(specs) {
+        const data = ["dialysisClinic", "addOnServe", "clinicLab"];
+        if (specs == "show") {
+            data.map((h) => {
+                document.getElementsByClassName(h)[0].removeAttribute("hidden")
+            });
+        } else {
+            data.map((h) => {
+                document.getElementsByClassName(h)[0].setAttribute("hidden", "hidden")
+            });
+        }
+
+    }
+
+    function clinicServAndLab(specs, selected) {
+        const data = ["otherClinicService", "clinicLab"];
+        console.log(data)
+        if (specs == "show") {
+            data.map((h) => {
+                    document.getElementsByClassName(h)[0].removeAttribute("hidden")
+                
+            });
+        } else {
+            data.map((h) => {
+                document.getElementsByClassName(h)[0].setAttribute("hidden", "hidden")
+            });
+        }
+    }
+
+    function clinicServAndLabAmbu(specs, selected) {
+        const data = ["otherClinicService", "clinicLab", "ambuDetails"];
+        if (specs == "show") {
+            data.map((h) => {
+
+                    document.getElementsByClassName(h)[0].removeAttribute("hidden")
+               
+            });
+        } else {
+            data.map((h) => {
+                document.getElementsByClassName(h)[0].setAttribute("hidden", "hidden")
+            });
+        }
+    }
+
 
     function insertAfter(referenceNode, newNode) {
         referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);

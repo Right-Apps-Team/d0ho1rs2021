@@ -7,7 +7,7 @@
 
     <div class="col-md-4">
         <label>
-            <input type="radio" name="facid" value="HDS" /> Hemodialysis
+            <input type="radio" name="facid" value="HDS" checked/> Hemodialysis
         </label>
     </div>
 </div>

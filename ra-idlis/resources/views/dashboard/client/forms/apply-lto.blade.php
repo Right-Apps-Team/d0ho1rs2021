@@ -25,7 +25,7 @@
                 <p class="lead text-center text-danger">Please note: Red asterisk (*) is a required field and may be encountered throughout the system </p>
             </div>
             <div class="card-body">
-                <form class="row">
+                <form class="row" id="ltoForm">
                     <input type="hidden" name="uid" id="uid" value="{{$user->uid}}" />
                     <input type="hidden" name="appid" id="appid" value="{{ isset($appdata->appid) ? $appdata->appid : '' }}" />
 
@@ -70,9 +70,15 @@
 
                     {{-- LTO For Hospital --}}
                     @include('dashboard.client.forms.parts.license-to-operate.for-hospital')
+
                     {{-- LTO Ancillary/Clinical Services --}}
                     @include('dashboard.client.forms.parts.license-to-operate.ancillary-clinical-services')
 
+                    {{-- LTO For Dialysis Clinic --}}
+                    @include('dashboard.client.forms.parts.license-to-operate.for-dialysis-clinic')
+                    
+                    {{-- LTO Add-On Services --}}
+                    @include('dashboard.client.forms.parts.license-to-operate.add-on-services')
 
                     {{-- LTO For Ambulatory Surgical Clinic --}}
                     @include('dashboard.client.forms.parts.license-to-operate.for-ambulatory-surgical-clinic')
@@ -80,12 +86,11 @@
                     {{-- LTO For Ambulance Details --}}
                     @include('dashboard.client.forms.parts.license-to-operate.for-ambulance-details')
 
-                    {{-- LTO For Dialysis Clinic --}}
-                    @include('dashboard.client.forms.parts.license-to-operate.for-dialysis-clinic')
+                  
 
-
-                    {{-- LTO Add-On Services --}}
-                    @include('dashboard.client.forms.parts.license-to-operate.add-on-services')
+                    {{-- LTO Other Clinical Service(s) --}}
+                    @include('dashboard.client.forms.parts.license-to-operate.other-clinic-services')
+                   
 
                     {{-- LTO For Clinical Laboratory --}}
                     @include('dashboard.client.forms.parts.license-to-operate.for-clinical-laboratory')
@@ -95,9 +100,6 @@
 
                     {{-- LTO Authorized Bed Capacity --}}
                     @include('dashboard.client.forms.parts.license-to-operate.authorized-bed-capacity')
-
-                    {{-- LTO Other Clinical Service(s) --}}
-                    @include('dashboard.client.forms.parts.license-to-operate.other-clinic-services')
 
                     {{-- LTO For Pharmacy --}}
                     @include('dashboard.client.forms.parts.license-to-operate.for-pharmacy')
@@ -117,7 +119,8 @@
                             </button>
                         </div>
                         <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
-                            <button class="btn btn-success btn-block" type="button" onClick="savePartial(this)">
+                            <button class="btn btn-success btn-block" type="button" onClick="savePartialLto(this)">
+                            <!-- onClick="savePartial(this)" -->
                                 <i class="fa fa-floppy-o" aria-hidden="true"></i>
                                 Save as Draft
                             </button>
@@ -161,3 +164,4 @@
 <script src="{{asset('ra-idlis/public/js/forall.js')}}"></script>
 
 @include('dashboard.client.forms.parts.license-to-operate.new_ftr')
+@include('dashboard.client.forms.parts.license-to-operate.lto-form-submission')

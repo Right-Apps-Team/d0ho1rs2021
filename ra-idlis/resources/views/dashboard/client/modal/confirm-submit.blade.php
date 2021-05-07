@@ -26,7 +26,10 @@
             <i class="fa fa-times" aria-hidden="true"></i> 
             No, Recheck details
         </button>
-        <button type="button" class="btn btn-success" data-dismiss="modal" href={{ asset('client/dashboard/application/requirements/') }}>
+        <button onclick="getAllInputs()" type="button" class="btn btn-success" data-dismiss="modal"
+        
+         >
+         <!-- href={{ asset('client/dashboard/application/requirements/') }} -->
             <i class="fa fa-paper-plane" aria-hidden="true"></i> 
             Proceed
         </button>
