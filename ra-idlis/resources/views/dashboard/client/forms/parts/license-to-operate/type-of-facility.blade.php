@@ -18,7 +18,7 @@
                     <div class="custom-control custom-radio mr-sm-2">
                         <input onclick="type_of_fac(this.id)"  type="radio" class="custom-control-input" id="{{$hfaci_service_type[$j]->hgpid}}" name="hgpid" value="{{$hfaci_service_type[$j]->hgpid}}">
                         <!-- <input onclick="type_of_fac(this.id)" type="radio" class="custom-control-input" id="{{$hfaci_service_type[$j]->hgpid}}" name="hgpid" value="{{$hfaci_service_type[$j]->hgpid}}"> -->
-                        <label class="custom-control-label" for="{{$hfaci_service_type[$j]->hgpid}}">{{$hfaci_service_type[$j]->hgpdesc}}</label>
+                        <label class="custom-control-label" for="{{$hfaci_service_type[$j]->hgpid}}">{{$hfaci_service_type[$j]->hgpdesc}}-{{$hfaci_service_type[$j]->hgpid}}</label>
                     </div>
         </div>
         @endfor

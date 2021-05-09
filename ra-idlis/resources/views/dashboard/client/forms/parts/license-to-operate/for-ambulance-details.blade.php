@@ -1,14 +1,18 @@
+<div class=" ambuDetails" style="width: 100%; " hidden>
+	<div class="col-md-12 ">
+		<b class="text-primary "> Ambulance Details:
+		</b>
+	</div>
+	<!-- <div class="showifHospital ambuDetails" style="width: 100%;" hidden> -->
 
-
-<div style="width:95%; padding-left: 35px">
-	<div class=" ambuDetails" style="width: 100%; " hidden>
-		<!-- <div class="showifHospital ambuDetails" style="width: 100%;" hidden> -->
+	<div class="col-md-12">
+		<span class="text-danger">NOTE: For Owned ambulance, Payments are as follows:</span> <br>
+		Ambulance Service Provider = ₱ 5,000
+		Ambulance Unit (Per Unit) = ₱ 1,000
+	</div>
+	<div style="width:95%; padding-left: 35px">
 		<div class="mb-2 col-md-12">&nbsp;</div>
-		<div class="col-md-12">
-			<span class="text-danger">NOTE: For Owned ambulance, Payments are as follows:</span> <br>
-			Ambulance Service Provider = ₱ 5,000
-			Ambulance Unit (Per Unit) = ₱ 1,000
-		</div>
+
 
 		<!-- <table class="table table-bordered">
     <thead class=" p-3">
@@ -74,7 +78,10 @@
 				</thead>
 				<tbody id="body_amb">
 					<tr id="tr_amb">
-						<td> <button class="btn btn-danger" onclick="if(! this.parentNode.parentNode.hasAttribute('id')) { this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); }"><i class="fa fa-minus-circle"></i></button> </td>
+						<!-- preventDef -->
+						<!-- onclick="if(! this.parentNode.parentNode.hasAttribute('id')) { this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); }" -->
+						<!-- onClick="$(this).closest('tr').remove();" -->
+						<td onclick="preventDef()"> <button class="btn btn-danger " onclick="if(! this.parentNode.parentNode.hasAttribute('id')) { this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); }"><i class="fa fa-minus-circle"></i></button> </td>
 						<td>
 							<div class="input-group">
 								<div class="input-group-prepend">
