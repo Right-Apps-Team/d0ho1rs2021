@@ -520,17 +520,17 @@
 				      				<th>Description</th>
 				      				<th>Amount</th>
 				      			</tr>
-				      		</thead>
+				      		</thead>							 
 				      		<tbody id="not_serv_chg">
 				      			<tr>
 				      				<td colspan="2">No Facility Type selected.</td>
 				      			</tr>
-				      		</tbody>
+				      		</tbody>					
 				      		<tbody id="serv_chg">
 				      			<tr>
 				      				<td colspan="2">No Services selected.</td>
 				      			</tr>
-				      		</tbody>
+				      		</tbody>						
 				      		<tbody id="serv_chg_not">
 				      		</tbody>
 				      	</table>
@@ -842,7 +842,7 @@
 				let serv_chg = document.getElementById('serv_chg');
 				if(arrTemp.length <= 0){
 					let thisFacid = [], appendToPayment = ['groupThis'], hospitalFaci = ['H','H2','H3'];
-					let sArr = ['_token='+document.getElementsByName('_token')[0].value, 'appid='+curAppid, 'hfser_id='+curHfserid];
+					let sArr = ['_token='+document.getElementsByName('_token')[0].value, 'appid='+curAppid, 'hfser_id='+curHfserid, 'aptid='+document.getElementById('aptid').value];
 					if(Array.isArray(arrCol)) {
 						for(let i = 0; i < arrCol.length; i++) {
 					  		sArr.push('facid[]='+arrCol[i]); 
@@ -861,9 +861,13 @@
 							}
 						} 
 					}
+
+				
 					
 					sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getServiceCharge')}}", "POST", true, {
 						functionProcess: function(arr) {
+
+							
 							if(serv_chg != undefined || serv_chg != null) {
 								if(arr.length > 0) {
 									serv_chg.innerHTML = '';

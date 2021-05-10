@@ -1,5 +1,3 @@
-
-
 <div class=" ancillary" style="width: 100%;" hidden>
     <div class="mb-2 col-md-12">&nbsp;</div>
     <div class="col-md-12"><b class="text-primary">Ancillary/Clinical Services</b></div>
@@ -25,7 +23,7 @@
     <div class="col-md-12">
         <div class="mb-3">
             <div class="row">
-                <div style="width: 100%; " class="hl1 col-md-4" hidden>
+                <!-- <div style="width: 100%; " class="hl1 col-md-4" hidden>
                     <div class="col-md-12">
                         <strong>Level 1</strong>
                     </div>
@@ -222,7 +220,7 @@
                     </div>
 
                     <hr />
-                    <!-- <b>For Level 3 only</b> -->
+                   
                     <div class="row">
                         <label>
                             <input type="checkbox" name="H3AmbulatorySurgicalClinic" id="H3AmbulatorySurgicalClinic" value="H3AmbulatorySurgicalClinic" /> Ambulatory Surgical Clinic
@@ -241,8 +239,47 @@
                     </div>
 
 
+                </div> -->
+
+                <!-- <div class="row" id="Anc"></div> -->
+
+
+
+
+                <div style="width: 100%; " class="hl1 col-md-4 mainasc" hidden>
+                    <div class="ascCont">
+                        <div class="col-md-12">
+                            <strong>Level 1</strong>
+                        </div>
+                        <div id="anxservcontH">
+
+                        </div>
+                    </div>
                 </div>
+                <div style="width: 100%; " class="hl2 col-md-4 mainasc" hidden>
+                    <div class="ascCont">
+                        <div class="col-md-12">
+                            <strong>Level 2</strong>
+                        </div>
+                        <div id="anxservcontH2">
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 100%; " class="hl3 col-md-4 mainasc" hidden>
+                    <div class="ascCont">
+                        <div class="col-md-12">
+                            <strong>Level 3</strong>
+                        </div>
+                        <div id="anxservcontH3">
+                        </div>
+                    </div>
+                </div>
+
             </div>
+
+
+
         </div>
     </div>
+</div>
 </div>

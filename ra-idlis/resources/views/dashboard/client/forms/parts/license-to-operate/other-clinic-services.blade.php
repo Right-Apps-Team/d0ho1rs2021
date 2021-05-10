@@ -1,3 +1,4 @@
+<input type="hidden" value="{{$_aptid}}" id="aptid" name="aptid">
 <div class="otherClinicService" style="width: 100%;" hidden>
     <div class="mb-2 col-md-12">&nbsp;</div>
     <div class="col-md-6"><b class="text-primary">

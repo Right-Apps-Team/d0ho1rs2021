@@ -3086,11 +3086,15 @@ class NewClientController extends Controller {
 							// return $request->all();
 							if(isset($request->facid) && isset($request->appid)) {
 								// session()->forget('ambcharge');
-								$retArr = FunctionsClientController::getServiceCharge($request->facid, $request->hfser_id, $request->facmode, $request->extrahgpid); 
+								$retArr = FunctionsClientController::getServiceCharge($request->facid, $request->hfser_id, $request->facmode, $request->extrahgpid, $request->aptid); 
+								// $retArr = FunctionsClientController::getServiceCharge($request->facid, $request->hfser_id, $request->facmode, $request->extrahgpid, $request->aptid); 
 								$sql = "SELECT 'Application Payment' AS facname, appform_orderofpayment.oop_paid AS amt, '297' AS chgapp_id FROM appform_orderofpayment WHERE appid = '$request->appid'"; 
 								$chkOop = DB::select($sql);
 								$sessSave = ((count($chkOop) > 0) ? $chkOop : $retArr);
 								session()->put('payment', [FunctionsClientController::getSessionParamObj("uData", "uid") => [$retArr, $request->appid]]);
+							}else{
+								// $retArr = FunctionsClientController::getServiceCharge($request->facid, $request->hfser_id, $request->facmode, $request->extrahgpid); 
+								$retArr = FunctionsClientController::getServiceCharge($request->facid, $request->hfser_id, $request->facmode, $request->extrahgpid, $request->aptid); 
 							}
 							return json_encode($retArr);
 							break;

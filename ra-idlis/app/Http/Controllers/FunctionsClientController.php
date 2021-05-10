@@ -651,7 +651,7 @@ class FunctionsClientController extends Controller {
 			return $e;
 		}
 	}
-	public static function getServiceCharge($arrVal = [], $hfser = "", $facmode = "", $extraHgpid = "") {
+	public static function getServiceCharge($arrVal = [], $hfser = "", $facmode = "", $extraHgpid = "", $aptid = "") {
 		try {
 			$retArr = [];
 			if(count($arrVal) > 0) {
@@ -662,10 +662,18 @@ class FunctionsClientController extends Controller {
 				// 	}
 				// }
 				if(isset($facmode) && isset($extraHgpid)){
-					$retArr = DB::table('serv_chg')->leftJoin('facilitytyp', 'facilitytyp.facid', '=', 'serv_chg.facid')->leftJoin('chg_app', 'chg_app.chgapp_id', '=', 'serv_chg.chgapp_id')->whereIn('serv_chg.facid', $arrVal)->where([['serv_chg.hfser_id', $hfser],['serv_chg.facmid',$facmode], ['extrahgpid', $extraHgpid]])->select('facilitytyp.facname', 'chg_app.amt', 'chg_app.chgapp_id')->get();
+					$retArr = DB::table('serv_chg')->leftJoin('facilitytyp', 'facilitytyp.facid', '=', 'serv_chg.facid')->leftJoin('chg_app', 'chg_app.chgapp_id', '=', 'serv_chg.chgapp_id')->whereIn('serv_chg.facid', $arrVal)->where([['serv_chg.hfser_id', $hfser],['serv_chg.facmid',$facmode], ['extrahgpid', $extraHgpid]])
+					->where('serv_chg.aptid', $aptid)
+					->select('facilitytyp.facname', 'chg_app.amt', 'chg_app.chgapp_id')
+					->get();
+					// $retArr = DB::table('serv_chg')->leftJoin('facilitytyp', 'facilitytyp.facid', '=', 'serv_chg.facid')->leftJoin('chg_app', 'chg_app.chgapp_id', '=', 'serv_chg.chgapp_id')->whereIn('serv_chg.facid', $arrVal)->where([['serv_chg.hfser_id', $hfser],['serv_chg.facmid',$facmode], ['extrahgpid', $extraHgpid]])->select('facilitytyp.facname', 'chg_app.amt', 'chg_app.chgapp_id')->get();
 				}
 				if(count($retArr) <= 0){
-					$retArr = DB::table('serv_chg')->leftJoin('facilitytyp', 'facilitytyp.facid', '=', 'serv_chg.facid')->leftJoin('chg_app', 'chg_app.chgapp_id', '=', 'serv_chg.chgapp_id')->whereIn('serv_chg.facid', $arrVal)->where([['serv_chg.hfser_id', $hfser], ['serv_chg.facmid',null], ['extrahgpid', null]])->select('facilitytyp.facname', 'chg_app.amt', 'chg_app.chgapp_id')->get();
+					// $retArr = DB::table('serv_chg')->leftJoin('facilitytyp', 'facilitytyp.facid', '=', 'serv_chg.facid')->leftJoin('chg_app', 'chg_app.chgapp_id', '=', 'serv_chg.chgapp_id')->whereIn('serv_chg.facid', $arrVal)->where([['serv_chg.hfser_id', $hfser], ['serv_chg.facmid',null], ['extrahgpid', null]])->select('facilitytyp.facname', 'chg_app.amt', 'chg_app.chgapp_id')->get();
+					$retArr = DB::table('serv_chg')->leftJoin('facilitytyp', 'facilitytyp.facid', '=', 'serv_chg.facid')->leftJoin('chg_app', 'chg_app.chgapp_id', '=', 'serv_chg.chgapp_id')->whereIn('serv_chg.facid', $arrVal)->where([['serv_chg.hfser_id', $hfser], ['serv_chg.facmid',null], ['extrahgpid', null]])
+					->where('serv_chg.aptid', $aptid)
+					->select('facilitytyp.facname', 'chg_app.amt', 'chg_app.chgapp_id')
+					->get();
 				}
 
 			}
@@ -773,6 +781,9 @@ class FunctionsClientController extends Controller {
 
 			$retArr = DB::select(DB::raw("SELECT chg_app.chgapp_id, charges.chg_desc, chg_app.amt FROM chg_app INNER JOIN charges ON chg_app.chg_code = charges.chg_code WHERE chg_app.chg_code IN (SELECT chg_code FROM charges WHERE hgpid IN ($hgpidIn)) AND chg_app.aptid = '$aptid' AND chg_app.hfser_id = '$hfser_id'"));
 		}
+		// else{
+		// 	 $retArr = DB::select(DB::raw("SELECT chg_app.chgapp_id, charges.chg_desc, chg_app.amt FROM chg_app INNER JOIN charges ON chg_app.chg_code = charges.chg_code WHERE chg_app.chg_code IN (SELECT chg_code FROM charges WHERE hgpid IN ($hgpidIn))  AND chg_app.hfser_id = '$hfser_id'"));
+		// }
 		return $retArr;
 	}
 	public static function checkExpiryDate($dateCheck = NULL, $dateFrom = NULL, $addDaysNow = 0) {

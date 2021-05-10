@@ -1,3 +1,4 @@
+<div class="row">
 <div class="col-md-8">
     <?php $_aptid = "IN";
     $_aptdesc = "Initial New";
@@ -131,13 +132,15 @@
         </div>
         @include('dashboard.client.modal.facilityname-helper')
     </section>
+
+    {{-- payment --}}
+    <div class="col-md-4">
+        @include('dashboard.client.forms.parts.payment.payment-form')
+    </div>
 </div>
 
-{{-- payment --}}
-<div class="col-md-4">
-    @include('dashboard.client.forms.parts.payment.payment-form')
-</div>
 
+</div>
 
 <style>
     .feedback {
