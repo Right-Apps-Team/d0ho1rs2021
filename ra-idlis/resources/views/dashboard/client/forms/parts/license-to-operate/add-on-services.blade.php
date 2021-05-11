@@ -76,7 +76,7 @@
                             </div>
                         </td>
                         <td>
-                            <select class="form-control" id="aoservtyp" name="aoservtyp">
+                            <select class="form-control" id="aoservtyp" name="aoservtyp" onclick="getFacServCharge(this.value)">
                                 <option selected value hidden disabled>Please Select</option>
                                 <option value="1">Outsource</option>
                                 <option value="2">Owned</option>

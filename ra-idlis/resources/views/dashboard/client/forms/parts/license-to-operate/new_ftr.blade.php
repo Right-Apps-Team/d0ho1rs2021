@@ -1,13 +1,83 @@
 <script>
     mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
-    
+    // console.log(mserv_cap)
     var ghgpid = document.getElementsByName('hgpid')
     var curAppid = ""
     var mhfser_id = "LTO"
     var aptid = "IN"
     
       var  ghgpid = document.getElementsByName('hgpid');
-   
+
+      $(document).on('change','#same', function(event){
+				if($(this).prop('checked') == true){
+					if($("#street_name").val() != null && 
+                    $("#cmid option:selected").val() != "" && 
+                    $("#provid option:selected").val() != "" && 
+                    $("#brgyid option:selected").val() != "" &&
+                     $("#rgnid option:selected").val() != ""){
+
+					$('#mailingAddress').val(($('#street_number').val() != "" ? 
+                    $('#street_number').val() : "") + " " + 
+                    $("#street_name").val() + " " +
+                    $("#brgyid option:selected").text().toUpperCase() + " " + 
+                    $("#cmid option:selected").text().toUpperCase() + " " +
+                    $("#provid option:selected").text().toUpperCase() + " " + 
+                     $("#rgnid option:selected").text().toUpperCase());
+				
+                } else {
+						this.checked = false;
+    					event.preventDefault();
+						alert('Please select facility address first!');
+					}
+				} else {
+					$('#mailingAddress').val('');
+				}
+			});
+    function offMailDup (){
+      var box =  document.getElementById('same');
+      var street_name =  document.getElementById('street_name');
+      var cmid =  document.getElementById('city_monicipality');
+      var provid =  document.getElementById('province');
+      var brgyid =  document.getElementById('brgy');
+      var rgnid =  document.getElementById('region');
+      var mailingAddress =  document.getElementById('official_mail_address');
+
+
+
+            if(box.checked){
+                if( street_name.value == "" && 
+                cmid.value == "" && 
+                provid.value == "" && 
+                brgyid.value == "" && 
+                rgnid.value == "" ){
+                
+
+                    box.checked = false;
+                                event.preventDefault();
+                                alert('Please select facility address first!');
+
+                }else{
+                    // console.log(street_name.value)
+                    // console.log(cmid.value)
+                    // console.log(provid.value)
+                    // console.log(brgyid.value)
+                    // console.log(rgnid.value) 
+
+                    mailingAddress.value = street_name.value + " " +
+                    cmid.options[cmid.selectedIndex].text + " " +
+                    provid.options[provid.selectedIndex].text + " " +
+                    brgyid.options[brgyid.selectedIndex].text + " " +
+                    rgnid.options[rgnid.selectedIndex].text + " " ;
+
+                }
+            
+            }else{
+                mailingAddress.value = " "
+            
+            }
+
+
+    }
    
     function type_of_fac(selected) {
         const data = ["hospClassif", "forHosp", "ambuDetails", "ancillary", "addOnServe", "ambulSurgCli", "clinicLab", "dialysisClinic", "otherClinicService"];
@@ -15,6 +85,10 @@
             document.getElementsByClassName(h)[0].setAttribute("hidden", "hidden")
         });
         
+        removeAmbuRows()
+        deselectOpts('anxsel')
+        deselectOpts('facid')
+
         document.getElementById('serv_chg').innerHTML = '<tr><td colspan="2">No Services Selected.</td></tr>';
         removeOtherServCont();
 
@@ -60,15 +134,61 @@
     
 
     }
+    function getaddonsValues(){
+     var addons =   document.getElementsByName('addOnServ');
+     var getAdd = [];
 
-    function getFacServCharge (){
-       
+        for(var i = 0 ; i < addons.length; i++){
+            getAdd.push(addons[i].value);
+        }
+        // console.log("getAdd")
+        // console.log(getAdd)
+       return getAdd
+
+    }
+
+    function deselectOpts (name){
+        
+                var ele;
+        
+                if(name == 'anxsel'){
+                 ele=document.getElementsByClassName(name);  
+                }else if(name == 'facid'){
+                    ele=document.getElementsByName(name);
+                }
+
+                // console.log("checked")
+                for(var i=0; i<ele.length; i++){  
+                    if(ele[i].type=='radio') { 
+                        ele[i].checked=false;
+                    }
+                    if(ele[i].checked){
+                        // console.log(ele[i].value)
+                        ele[i].checked=false;
+                    }
+                   
+                      
+                }  
+    }
+
+    function getFacServCharge (val = null){
+        var addons= [];
+        // console.log("val")
+        // console.log(val)
+        if(val == 2){
+            // console.log("Received Add ons")
+             addons = getaddonsValues();
+            // console.log(addons)
+        }
+
      var facids = getCheckedValue('facid') 
      var anxsel = getCheckedValue('anxsel') 
-
+    
    
+        
         var arrCol = facids;
         var arrCol2 = anxsel;
+
         let serv_chg = document.getElementById('serv_chg');
 				if(arrCol.length > 0){
 					let thisFacid = [], appendToPayment = ['groupThis'], hospitalFaci = ['H','H2','H3'];
@@ -81,14 +201,24 @@
 					}
 
                     if(arrCol2.length > 0){
-                        if(Array.isArray(arrCol2)) {
-						for(let i = 0; i < arrCol2.length; i++) {
-					  		sArr.push('facid[]='+arrCol2[i]); 
-					  		thisFacid.push(arrCol2[i]);
-						} 
-					}
+                            if(Array.isArray(arrCol2)) {
+                                for(let i = 0; i < arrCol2.length; i++) {
+                                    sArr.push('facid[]='+arrCol2[i]); 
+                                    thisFacid.push(arrCol2[i]);
+                                } 
+                            }
                     }
 
+                    if(addons.length > 0){
+                        if(Array.isArray(addons)) {
+                                for(let i = 0; i < addons.length; i++) {
+                                    sArr.push('facid[]='+addons[i]); 
+                                    thisFacid.push(addons[i]);
+                                } 
+                            }
+                    }
+
+                   
                 
 
 					if(!document.getElementById('6').checked){
@@ -104,12 +234,16 @@
 					}
 
                   
-					
+                    // console.log("thisFacid")
+                    // console.log(thisFacid)
 					sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getServiceCharge')}}", "POST", true, {
 						functionProcess: function(arr) {
 
                            
                             // const distinctArr = [...new Set(arr.map(x => x.facname))];
+
+                            // console.log("fees")
+                            // console.log(arr)
 
                             const distinctArr = Array.from(new Set(arr.map(s => s.facname))).map(facname => {
                                 return {
@@ -714,6 +848,19 @@
 
     }
 
+    function removeAmbuRows() {
+        
+        let serv_chg_not = document.getElementById('serv_chg_not');
+            serv_chg_not.innerHTML = "";
+
+        var amObject = document.getElementsByClassName("tr_amb");
+        if (amObject) {
+            $('.tr_amb').remove();
+        }
+
+    }
+
+
     function getAddonServices(theId) {
         let arrAddon = [];
         if (typeof(theId) !== 'undefined' && theId.length) {
@@ -726,14 +873,19 @@
 						data: {_token:$("input[name=_token]").val(),id: theId, selected : theId, from: 1},
 						success: function(a){
 							arrAddon.push(JSON.parse(a));
+                            
 						}
 					});
         }
+
+        // console.log("arrAddon")
+        // console.log(arrAddon)
         return arrAddon[0];
     }
 
     function getChargesPerAmb() {
-
+        var ambT1Ch = parseFloat(('{!!$ambcharges[0]->amt!!}'));
+        var ambT2Ch = parseFloat(('{!!$ambcharges[1]->amt!!}'));
         // let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid],
         theuseless = [],
             ambtyp = document.getElementsByName('ambtyp'),
@@ -748,22 +900,24 @@
                     ambOwner[i].parentElement.removeAttribute('hidden');
                 }
                 if (ambtyp[i].value == '2') {
-                    // amount = amount + ((amount < 1) ? {
-                    //     {
-                    //         ($ambcharges[0] - > amt + $ambcharges[1] - > amt)
-                    //     }
-                    // } : {
-                    //     {
-                    //         $ambcharges[0] - > amt
-                    //     }
-                    // });
+                    amount = amount + ((amount < 1) ? ambT1Ch + ambT2Ch :ambT1Ch );
                     plate_number[i].placeholder = "Plate Number/Conduction Sticker";
                     ambOwner[i].parentElement.setAttribute('hidden', true);
-                    ambOwner[i].value = "";
+                    ambOwner[i].value = "";           
                 }
             }
+            if(amount > 0 ){
+            let serv_chg_not = document.getElementById('serv_chg_not');
+            serv_chg_not.innerHTML = "";
+                   
+            serv_chg_not.innerHTML += '<tr><td>' + "Ambulance Charge" + '</td><td>&#8369;&nbsp;<span>' + (parseInt(amount)).toFixed(2) + '</span></td></tr>'
+        }
             // sArr.push('ambamt=' + amount);
         }
+
+        
+
+
         // sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getChargesPerAmb')}}", "POST", true, {
         //     functionProcess: function(arr) {
         //         let serv_chg_not = document.getElementById('serv_chg_not');
@@ -776,4 +930,8 @@
         //     }
         // });
     }
+
+  
+    
+
 </script>
