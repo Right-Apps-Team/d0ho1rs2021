@@ -3021,7 +3021,12 @@ class NewClientController extends Controller {
 									['appid', $request->appid]
 								]
 							]; 
-							$numLoop = [1, count(($request->facid ?? ['no'])), count($request->type), (isset($request->facilityname) ? count($request->facilityname) : [])];
+							$numLoop = [
+								1, 
+								count(($request->facid ?? ['no'])), 
+								count($request->type), 
+								(isset($request->facilityname) ? count($request->facilityname) : [])
+							];
 							// return $numLoop;
 							$msgRet = [];
 							for($i = 0; $i < count($tbl); $i++) { 

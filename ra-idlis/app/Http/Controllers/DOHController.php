@@ -7661,6 +7661,13 @@ namespace App\Http\Controllers;
 				}
 			}
 		}
+		public function verifyData($data) {
+			$return = $data;
+			if(!isset($data) && empty($data)) {
+				$return  = '';
+			}
+			return $return;
+		}
 		////// MODULE
 		////// SYSTEM USERS
 		public function SystemUsersManage(Request $request)
@@ -7692,20 +7699,21 @@ namespace App\Http\Controllers;
 					$dt = Carbon::now();
 		          	$dateNow = $dt->toDateString();
 		          	$timeNow = $dt->toTimeString();
-		          	$data['pre'] = $request->pre;
-					$data['fname'] = $request->fname;
-					$data['mname'] = $request->mname;
-					$data['lname'] = $request->lname;
-					$data['suf'] = $request->suf;
-					$data['rgnid'] = $request->rgn;
-					$data['email'] = $request->email;
-					$data['cntno'] = $request->cntno;
-					$data['posti'] = $request->posti;
-					$data['type'] = $request->typ;
-					$data['uname'] = strtoupper($request->uname);
-					$data['pass'] = Hash::make($request->pass);
-					$data['ip'] = request()->ip();
-					$data['token'] = Str::random(40);
+		          	$data['pre'] = ($request->pre);
+					$data['fname'] 	= ($request->fname);
+					$data['mname'] 	= ($request->mname);
+					$data['lname'] 	= ($request->lname);
+					$data['suf'] 	= ($request->suf);
+					$data['rgnid'] 	= ($request->rgn);
+					$data['email'] 	= ($request->email);
+					$data['cntno'] 	= ($request->cntno);
+					$data['posti'] 	= ($request->posti);
+					$data['type'] 	= ($request->typ);
+					$data['uname'] 	= strtoupper(($request->uname));
+					$data['pass'] 	= Hash::make(($request->pass));
+					$data['ip'] 	= request()->ip();
+					$data['token'] 	= ''; //Str::random(40);
+					$data['isActive'] = '1';
 					$checkUser = DB::table('x08')
 	                    ->where([ ['uid', '=', $data['uname']], ['pwd', '=', $data['pass']] ])
 	                    ->select('*')
@@ -7736,11 +7744,20 @@ namespace App\Http\Controllers;
 		                    }
 							$name = $request->fname.' '.$mid.''.$request->lname;
 	                    	$dataToBeSend = array('name'=>$name, 'token'=>$data['token']);
-				            Mail::send('mail4SystemUsers', $dataToBeSend, function($message) use ($request) {
-				               $message->to($request->email, $request->facility_name)->subject
-				                  ('Verify Email Account');
-				               $message->from('doholrs@gmail.com','DOH Support');
-				            });
+
+							// Mail::send('mail4SystemUsers', $dataToBeSend, function($message) use ($request) {
+								
+							// 	try {
+							// 		$message->to($request->email, $request->facility_name)->subject
+							// 			('Verify Email Account');
+							// 		$message->from('doholrs@gmail.com','DOH Support');
+							// 	}
+							// 	catch (Exception $error) {
+							// 		AjaxController::SystemLogs($error);
+							// 		return $error;
+							// 	}
+							// });
+
 							DB::table('x08')->insert(
 				                [
 				                    'uid' => $data['uname'],
@@ -7768,11 +7785,11 @@ namespace App\Http\Controllers;
 							return 'DONE';
 						}
 	                }
-				} 
+				}
 				catch (Exception $e) 
 				{
 					AjaxController::SystemLogs($e);
-					return 'ERROR';
+					return $e;
 				}
 			}
 		}

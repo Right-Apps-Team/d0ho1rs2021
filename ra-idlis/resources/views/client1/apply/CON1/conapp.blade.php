@@ -243,7 +243,16 @@
 										<thead class="thead-dark">
 											<tr>
 												<th>
-													<button class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Add" onclick="addNewRowA('addNewRow', 0);"><i class="fa fa-plus"></i></button>
+													<button 
+														class="btn btn-success" 
+														data-toggle="tooltip" 
+														data-placement="top" 
+														title="Add" 
+														onclick="addNewRowA('addNewRow', 0, 'projectedPrimary');"
+														id="projectedPrimary"
+													>
+														<i class="fa fa-plus"></i>
+													</button>
 												</th>
 												<th>Type</th>
 												<th>Location</th>
@@ -261,7 +270,8 @@
 														<option value="1">Secondary</option>
 													</select>
 													<script type="text/javascript">
-														document.getElementsByName('type[]')[document.getElementsByName('type[]').length - 1].value = "{{$each->type}}";
+														document.getElementsByName('type[]')
+														[document.getElementsByName('type[]').length - 1].value = "{{$each->type}}";
 													</script>
 												</td>
 												<td>
@@ -293,7 +303,15 @@
 										<thead class="thead-dark">
 											<tr>
 												<th>
-													<button class="btn btn-success" data-toggle="tooltip" data-placement="top" onclick="addNewRowA('addNewRow1', 1);"><i class="fa fa-plus"></i></button>
+													<button 
+														class="btn btn-success" 
+														data-toggle="tooltip" 
+														data-placement="top" 
+														onclick="addNewRowA('addNewRow1', 1, 'existingHospitals');"
+														id="existingHospitals"
+													>
+													<i class="fa fa-plus"></i>
+												</button>
 												</th>
 												<th>Facility Name</th>
 												<th>Location</th>
@@ -541,35 +559,58 @@
 				idom.parentNode.removeChild(idom);
 			}
 		}
-		function addNewRowA(elName, ind) {
+		function addNewRowA(elName, ind, sourceId) {
 			let idom = document.getElementById(elName);
-			if(idom != undefined || idom != null) {
-				let tTr = idom.getElementsByTagName('tr'), 
-				tInt = ((tTr[tTr.length - 1] != undefined || tTr[tTr.length - 1] != null) ? parseInt((tTr[tTr.length - 1].id).replace('tr', '')) : 0), 
-				whatToInsert = [
-				'<tr id="trd'+(tInt + 1001)+'">'+
-					'<td><button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Remove" onclick="deleteRow(\'trd'+(tInt + 1001)+'\');"><i class="fa fa-times"></i></button></td>'+
-					'<td><select class="form-control" name="type[]"><option value hidden disabled selected></option><option value="0">Primary</option><option value="1">Secondary</option></select></td>'+
-					'<td><input type="text" class="form-control" name="location[]"></td>'+
-					'<td><input type="number" class="form-control" name="population[]"></td>'+
-				'</tr>', 
-				'<tr id="tr'+(tInt + 1001)+'">'+
-				'<td><button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Add" onclick="deleteRow(\'tr'+(tInt + 1001)+'\');"><i class="fa fa-times"></i></button></td>'+
-				'<td><input type="text" style="width:200px;" class="form-control" name="facilityname[]"></td>'+
-				'<td><input type="text" style="width:200px;" class="form-control" name="location1[]"></td>'+
-				'<td><input type="number" class="form-control" name="noofbed1[]"></td>'+
-				'<td><select class="form-control" name="cat_hos[]" style="width:200px;"> <option value disabled hidden selected>Select Please</option> @if(count($serv_cap) > 0) @foreach($serv_cap AS $each) <option value="{{$each->facid}}">{{$each->facname}}</option> @endforeach @endif </select></td>'+
-				'<td><input type="text" class="form-control" style="width:150px;" name="license[]"></td>'+
-				'<td><input type="date" class="form-control" name="validity[]"></td>'+
-				'<td><input type="date" class="form-control" name="date_operation[]"></td>'+
-				'<td><textarea cols="4" class="form-control" name="remarks[]"></textarea></td>'+
-				'</tr>'
-				];
-				if(whatToInsert.indexOf(ind) < 0) {
-					// $(idom).append(whatToInsert[ind]);
-					$(whatToInsert[ind]).insertBefore(idom); 
-					// idom.outerHTML += whatToInsert[ind];
+			const childCount = $("#" + elName).children().length
+			console.log(childCount)
+			if(childCount < 3) {
+				if(idom != undefined || idom != null) {
+					let tTr = idom.getElementsByTagName('tr'), 
+					tInt = ((tTr[tTr.length - 1] != undefined || tTr[tTr.length - 1] != null) ? parseInt((tTr[tTr.length - 1].id).replace('tr', '')) : 0), 
+					whatToInsert = [
+					'<tr id="trd'+(tInt + 1001)+'">'+
+						`<td>
+							<button 
+								class="btn btn-danger" 
+								data-toggle="tooltip" 
+								data-placement="top" 
+								title="Remove" 
+								onclick="deleteRow(\'trd'+(tInt + 1001)+'\');">
+								<i class="fa fa-times"></i>
+							</button>
+						</td>`+
+						`<td>
+							${
+								childCount === 1 ? ("PRIMARY") : (childCount === 2 ? "SECONDARY" : "")
+							}
+							<input type="hidden" name="type[]" value="${
+								childCount === 1 ? ("0") : (childCount === 2 ? "1" : "")
+							}">
+						</td>`+
+						'<td><input type="text" class="form-control" name="location[]"></td>'+
+						'<td><input type="number" class="form-control" name="population[]"></td>'+
+					'</tr>', 
+					'<tr id="tr'+(tInt + 1001)+'">'+
+					'<td><button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Add" onclick="deleteRow(\'tr'+(tInt + 1001)+'\');"><i class="fa fa-times"></i></button></td>'+
+					'<td><input type="text" style="width:200px;" class="form-control" name="facilityname[]"></td>'+
+					'<td><input type="text" style="width:200px;" class="form-control" name="location1[]"></td>'+
+					'<td><input type="number" class="form-control" name="noofbed1[]"></td>'+
+					'<td><select class="form-control" name="cat_hos[]" style="width:200px;"> <option value disabled hidden selected>Select Please</option> @if(count($serv_cap) > 0) @foreach($serv_cap AS $each) <option value="{{$each->facid}}">{{$each->facname}}</option> @endforeach @endif </select></td>'+
+					'<td><input type="text" class="form-control" style="width:150px;" name="license[]"></td>'+
+					'<td><input type="date" class="form-control" name="validity[]"></td>'+
+					'<td><input type="date" class="form-control" name="date_operation[]"></td>'+
+					'<td><textarea cols="4" class="form-control" name="remarks[]"></textarea></td>'+
+					'</tr>'
+					];
+					if(whatToInsert.indexOf(ind) < 0) {
+						// $(idom).append(whatToInsert[ind]);
+						$("#" + elName).prepend(whatToInsert[ind]); 
+						// idom.outerHTML += whatToInsert[ind];
+					}
 				}
+			}
+			else {
+				alert("Primary and Secondary already added")
 			}
 		}
 		(function() {
