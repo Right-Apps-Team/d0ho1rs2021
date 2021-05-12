@@ -765,6 +765,8 @@
 				if(NgroupThis != null || NgroupThis != undefined) { for(let i = 0; i < NgroupThis.length; i++) { if(NgroupThis[i].checked) {
 					sArr.push('facid[]='+NgroupThis[i].value);
 				} } }
+				console.log("sArr")
+				console.log(sArr)
 				insErrMsg('warning', 'Sending request.');
 				sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/fLTOApp')}}", "POST", true, {
 					functionProcess: function(arr) {

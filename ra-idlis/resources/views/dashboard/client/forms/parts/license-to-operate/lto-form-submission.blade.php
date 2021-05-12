@@ -55,7 +55,8 @@
 
     const facid = $('input[name="facid"]:checked').val();    
     const data = {
-        appid:                  appid,
+        // appid:                  appid,
+        appid:                  $('#appid').val(),
         hfser_id:               $('#typeOfApplication').val(),
         facilityname:           $('#facility_name').val(),
         rgnid:                  $('#region').val(),
@@ -74,6 +75,8 @@
         cap_inv:                $('#cap_inv').val(),
         lot_area:               $('#lot_area').val(),
         noofbed:                $('#noofbed').val(),
+        noofmain:               $('#noofmain').val(),
+        noofsatellite:          $('#noofsatellite').val(),
         ocid:                   $('#ocid').val(),
         classid:                $('#classification').val(),
         subClassid:             $('#subclass').val(),
@@ -81,26 +84,30 @@
         funcid:                 $('#funcid').val(),
         facid:                  facid,
         owner:                  $('#owner').val(),
+        ptcCode:                $('#ptcCode').val(),
         ownerMobile:            $('#prop_mobile').val(),
         ownerLandline:          $('#prop_landline').val(),
         ownerEmail:             $('#prop_email').val(),
         mailingAddress:         $('#official_mail_address').val(),
         approvingauthoritypos:  $('#approving_authority_pos').val(),
         approvingauthority:     $('#approving_authority_name').val(),
-        hfep_funded:            ($("#hfep_funded").is(":checked") ? 0 : null),
+        // hfep_funded:            ($("#hfep_funded").is(":checked") ? 0 : null),
+        hfep_funded:            ($('#hfep').prop('checked') ? 0 : null),
         draft:                  1,
         con_catch:              con_catch,
         con_hospital:           con_hospital,
         hgpid:                  $('input[name="hgpid"]:checked').val(),
     }
     console.log(data)
-    // callApi('/api/application/save', data, 'POST').then(d => {
-        // const id = d.data.id;
-        // alert('Information now saved');
-       // // window.location.replace(`${base_url}/client/dashboard/new-application?appid=${id}`);
-    // }
-    // ).then(error => {
-        // console.log(error);
-    // })
+    if(confirm("Are you sure you want to porceed?")){
+        callApi('/api/application/save', data, 'POST').then(d => {
+            const id = d.data.id;
+            alert('Information now saved');
+        // window.location.replace(`${base_url}/client/dashboard/new-application?appid=${id}`);
+        }
+        ).then(error => {
+            console.log(error);
+        })
+}
 }
 </script>

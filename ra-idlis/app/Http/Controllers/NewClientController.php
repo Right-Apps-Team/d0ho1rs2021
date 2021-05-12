@@ -18,6 +18,9 @@ use App\Http\Controllers\EvaluationController;
 use FunctionsClientController;
 use DOHController;
 use AjaxController;
+use App\Models\FACLGroup;
+use App\Models\HFACIGroup;
+use App\Models\Regions;
 use QrCode;
 class NewClientController extends Controller {
 	protected static $curUser;
@@ -369,6 +372,7 @@ class NewClientController extends Controller {
 	//find me
 	public function __applyApp(Request $request, $hfser, $appid, $hideExtensions = NULL, $aptid = NULL) {
 		try {
+			$user_data = session()->get('uData');
 			$hfLocs = 
 				[
 					'client1/apply/app/LTO/'.$appid, 
@@ -406,7 +410,7 @@ class NewClientController extends Controller {
 			$hfaci_sql = "SELECT * FROM hfaci_grp WHERE hgpid IN (SELECT hgpid FROM `facl_grp` WHERE hfser_id = '$hfser')"; 
 			$arrCon = [6];
 			$apptype = $appGet[0]->hfser_id;
-			unset($appGet[0]->areacode);  //temporary fix
+			// unset($appGet[0]->areacode);  //temporary fix
 			switch($hfser) {
 				case 'CON':
 					session()->forget('ambcharge');
@@ -459,7 +463,22 @@ class NewClientController extends Controller {
 					foreach (AjaxController::getForAmbulanceList(false,'forAmbulance.hgpid') as $key => $value) {
 						array_push($proceesedAmb, $value->hgpid);
 					}
+
+					// 5-12-2021
+					$hfser_id = 'LTO';
+					$faclArr = [];
+							$facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();
+							foreach ($facl_grp as $f) {
+								array_push($faclArr, $f->hgpid);
+							}
+
 					$arrRet = [
+						'hfser' =>  $hfser_id,
+						'user'=> $user_data,
+						'regions' => Regions::orderBy('sort')->get(),
+						'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),
+						'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
+
 						'userInf'=>FunctionsClientController::getUserDetails(),
 						'hfaci_serv_type'=>DB::select($hfaci_sql),
 						'serv_cap'=>json_encode(DB::table('facilitytyp')->where('servtype_id',1)->get()),
@@ -480,7 +499,9 @@ class NewClientController extends Controller {
 						'aptid'=>$aptid,
 						'group' => json_encode(DB::table('facilitytyp')->where('servtype_id','>',1)->whereNotNull('grphrz_name')->get()),
 						'forAmbulance' => json_encode($proceesedAmb),
-					]; $locRet = "client1.apply.LTO1.ltoapp";
+					];
+					 $locRet = "dashboard.client.license-to-operate";
+					//  $locRet = "client1.apply.LTO1.ltoapp";
 					break;
 
 				case 'COA':

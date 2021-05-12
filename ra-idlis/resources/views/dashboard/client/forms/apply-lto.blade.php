@@ -28,7 +28,8 @@
             <div class="card-body">
                 <form class="row" id="ltoForm">
                     <input type="hidden" name="uid" id="uid" value="{{$user->uid}}" />
-                    <input type="hidden" name="appid" id="appid" value="{{ isset($appdata->appid) ? $appdata->appid : '' }}" />
+                    <input type="hidden" name="appid" id="appid"  />
+                    <!-- <input type="hidden" name="appid" id="appid" value="{{ isset($appdata->appid) ? $appdata->appid : '' }}" /> -->
 
                     <!-- Application Details -->
                     @include('dashboard.client.forms.parts.application-details')

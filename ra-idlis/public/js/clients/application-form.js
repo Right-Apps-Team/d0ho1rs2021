@@ -395,8 +395,10 @@ const fetchClassification = async (e) => {
         $("#classification").addAttr('disabled')
     }
 }
+
 const fetchBaranggay = async (e) => {
     const cmid = $("#city_monicipality").val();
+    console.log("Received brgy")
     console.log('EYYY, ', cmid);
     if( cmid ) {
         const data = { 'cmid' : cmid }
@@ -405,7 +407,8 @@ const fetchBaranggay = async (e) => {
             $("#brgy").append(`<option value=''>Please select</option>`);
             $("#brgy").removeAttr('disabled');
             barangay.data.map(c => {
-                $("#brgy").append(`<option value='${barangay.brgyid}'>${c.brgyname}</option>`);
+                
+                $("#brgy").append(`<option value='${c.brgyid}'>${c.brgyname}</option>`);
             })
             $("#brgy").selectpicker('refresh')
         }).catch(err => {
@@ -416,6 +419,7 @@ const fetchBaranggay = async (e) => {
         $("#brgy").addAttr('disabled')
     }
 }
+
 const fetchMonicipality = async (e) => {
     const provid = $("#province").val();
     console.log('EYYY, ', provid);

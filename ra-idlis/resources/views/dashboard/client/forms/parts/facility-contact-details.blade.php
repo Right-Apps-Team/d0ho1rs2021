@@ -1,3 +1,4 @@
+
 <p>&nbsp;</p>
 <div class="col-md-12"><b class="text-primary">FACILTY CONTACT DETAILS</b></div>
 <div class="col-md-3">
@@ -7,7 +8,9 @@
         class="form-control" 
         id="fac_mobile_number" 
         name="contact"
-        placeholder="FACILITY MOBILE #">
+        placeholder="FACILITY MOBILE #"
+        value='{{((isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->contact: null)}}'
+        >
 
 </div>
 <div class="col-md-3">
@@ -15,12 +18,14 @@
     <div class='form-group row'>
         <div class="col-xs-12 col-md-6 col-lg-5">
             <input 
-                type="number"
+            type="number"
                 placeholder="Area code"
                 name="areacode"
                 id="areacode"
                 required
-                class="form-control" />
+                class="form-control" 
+           
+                />
         </div>
         <div class="col-xs-12 col-md-6 col-lg-7">
             <input 
@@ -29,7 +34,9 @@
                 id="landline"
                 placeholder="FACILITY LANDLINE"
                 required
-                class="form-control" />
+                class="form-control" 
+                value='{{(isset($fAddress) && (count($fAddress) > 0) ? $fAddress[0]->landline: null)}}'
+                />
         </div>
     </div>
 </div>
@@ -52,12 +59,18 @@
                 id="faxNumber"
                 placeholder="FACILITY FAX #"
                 required
-                class="form-control" />
+                class="form-control" 
+                value='{{(isset($fAddress) && (count($fAddress) > 0) ? $fAddress[0]->faxNumber: null)}}'
+                />
         </div>
     </div>
 </div>
 <div class="col-md-3">
     <label for="fac_email_address">Facility Email Address <span class="text-danger">*</span></label>
-    <input type="text" class="form-control" id="fac_email_address" name="email" placeholder="EMAIL">
+    <input type="text" class="form-control" id="fac_email_address" name="email" placeholder="EMAIL"  value='{{(isset($fAddress) && (count($fAddress) > 0) ? $fAddress[0]->email: null)}}' >
 </div>
         
+<script>
+
+
+</script>

@@ -108,6 +108,11 @@ class ApplicationApiController extends Controller {
         $appform->approvingauthority    = $request->approvingauthority;
         $appform->hfep_funded           = $request->hfep_funded;
         $appform->draft                 = $request->draft;
+
+        // LTO update 5-12-2021
+        $appform->ptcCode               = $request->ptcCode;
+        $appform->noofmain              = $request->noofmain;
+        $appform->noofsatellite         = $request->noofsatellite;
         
         // if($request->con_catch) {
 

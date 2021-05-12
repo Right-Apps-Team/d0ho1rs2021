@@ -1,23 +1,19 @@
 <p>&nbsp;</p>
 <div class="row col-md-12">
-    
-    <div class="col-md-7">
-    <hr/>
-    <b class="text-primary">CLASSIFICATION ACCORDING TO</b></div>
+    <hr />
+    <div class="col-md-6">
+
+        <b class="text-primary">CLASSIFICATION ACCORDING TO</b>
+    </div>
+    <div class="col-md-6">
+        <label class="text-danger">
+            <input type="checkbox" name="hfep" id="hfep" value="1"> HFEP Funded</label>
+    </div>
 </div>
 <div class="col-md-4">
     <label for="ownership">Ownership <span class="text-danger">*</span></label>
-    
-    <select 
-        class="form-control selectpicker show-menu-arrow" 
-        id="ocid" 
-        name="ocid"
-        data-live-search="true" 
-        data-style="text-dark form-control custom-selectpicker"
-        data-size="5"
-        required
-        onChange="fetchClassification(this)"
-    >
+
+    <select class="form-control selectpicker show-menu-arrow" id="ocid" name="ocid" data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" required onChange="fetchClassification(this)">
         <option>Please select</option>
         <option value="G">Government</option>
         <option value="P">Private</option>
@@ -25,50 +21,31 @@
 </div>
 <div class="col-md-4">
     <label for="classification">Classification <span class="text-danger">*</span></label>
-    <select 
-        class="form-control selectpicker show-menu-arrow" 
-        id="classification"
-        disabled
-        name="classid"
-        data-live-search="true" 
-        data-style="text-dark form-control custom-selectpicker"
-        data-size="5"
-        required
-        onChange="fetchSubClass(this)"
-        >
+    @if(isset($fAddress) && count($fAddress) > 0)
+    <input class="form-control " name="classid" id="classification" value="{{$fAddress[0]->classname}}" disabled />
+    @else
+    <select class="form-control selectpicker show-menu-arrow" id="classification" disabled name="classid" data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" required onChange="fetchSubClass(this)">
         <option>Please select</option>
     </select>
+    @endif
 </div>
 <div class="col-md-4">
     <label for="subclass">Sub Classification <span class="text-danger">*</span></label>
-    <select 
-        class="form-control selectpicker show-menu-arrow" 
-        id="subclass"
-        disabled
-        name="subClassid"
-        data-live-search="true" 
-        data-style="text-dark form-control custom-selectpicker"
-        data-size="5"
-        required
-        >
+    @if(isset($fAddress) && count($fAddress) > 0)
+    <input class="form-control " name="subClassid" id="subclass"  disabled />
+    @else
+    <select class="form-control selectpicker show-menu-arrow" id="subclass" disabled name="subClassid" data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" required>
         <option>Please select</option>
     </select>
+    @endif
 </div>
 <div class="mb-2 col-md-12">&nbsp;</div>
 <div class="col-md-6">
-    
+
     <label for="facmode">Institutional Character <span class="text-danger">*</span></label>
     <div class="row">
         <div class="col-lg-10 col-md-10 col-xs-10">
-            <select 
-                class="form-control selectpicker show-menu-arrow" 
-                id="facmode" 
-                name="facmode"
-                data-live-search="true" 
-                data-style="text-dark form-control custom-selectpicker"
-                data-size="5"
-                required
-            >
+            <select class="form-control selectpicker show-menu-arrow" id="facmode" name="facmode" data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" required>
                 <option>Please select</option>
                 <option value="2">Free Standing</option>
                 <option value="4">Institution Based (Hospital)</option>
@@ -76,13 +53,7 @@
             </select>
         </div>
         <div class="col-lg-2 col-md-2 col-xs-2">
-            <i  class="fa fa-question-circle" 
-                id="institution_helper"
-                aria-hidden="true" 
-                style="font-size: 34px; cursor: pointer"
-                data-toggle="tooltip" 
-                data-html="true" 
-                title="
+            <i class="fa fa-question-circle" id="institution_helper" aria-hidden="true" style="font-size: 34px; cursor: pointer" data-toggle="tooltip" data-html="true" title="
                 <div class='text-left'>
                     <h3>Institution based</h3>
                     <ul>
@@ -97,22 +68,13 @@
                         <li>A health Facility that is located in a Hospital</li>
                     </ul>
                 </div>
-                "
-                ></i>
+                "></i>
         </div>
     </div>
 </div>
 <div class="col-md-6">
     <label for="funcid">Function <span class="text-danger">*</span></label>
-    <select 
-        class="form-control selectpicker show-menu-arrow" 
-        id="funcid" 
-        name="funcid"
-        data-live-search="true" 
-        data-style="text-dark form-control custom-selectpicker"
-        data-size="5"
-        required
-        >
+    <select class="form-control selectpicker show-menu-arrow" id="funcid" name="funcid" data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" required>
         <option>Please select</option>
         <option value="1">General</option>
         <option value="2">Specialty</option>

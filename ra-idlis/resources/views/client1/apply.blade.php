@@ -208,10 +208,14 @@
 									    </div>								
 							    	@break
 								@endswitch
+								<div class="dropdown-divider"></div>
+									    <div style="margin-left: 10px;margin-right: 10px;">
+									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" onclick="remAppHiddenId('chgfil{{$each[0]->appid}}')" href="#">View Order of Payment on DOH</a>
+								</div>
 							  </div>
 							</div>
-							<button style="color: #fff;" class="btn btn-sm {{$_payment}} mb-1" data-toggle="tooltip" data-placement="top" title="View Order of Payment" onclick="remAppHiddenId('chgfil{{$each[0]->appid}}')">{{-- <i class="fa fa-money" aria-hidden="true"></i> --}}<small>View Order of Payment on DOH</small>
-							</button>
+							<!-- <button style="color: #fff;" class="btn btn-sm {{$_payment}} mb-1" data-toggle="tooltip" data-placement="top" title="View Order of Payment" onclick="remAppHiddenId('chgfil{{$each[0]->appid}}')">{{-- <i class="fa fa-money" aria-hidden="true"></i> --}}<small>View Order of Payment on DOH</small>
+							</button> -->
 							
 							
 						</td>

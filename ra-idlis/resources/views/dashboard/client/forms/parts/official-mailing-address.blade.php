@@ -5,6 +5,7 @@
     <p>
         <label>
             <input 
+            name="mailingAddress"
                 type="checkbox" 
                 id="isSameAsFacilityAddress" 
                 value="1" 
@@ -12,6 +13,7 @@
             > Official Mailing address same as Facility Address? If no, please specify complete address</label>
     </p>
     <input 
+    name="official_mail_address"
         type="text" 
         class="form-control" 
         id="official_mail_address"

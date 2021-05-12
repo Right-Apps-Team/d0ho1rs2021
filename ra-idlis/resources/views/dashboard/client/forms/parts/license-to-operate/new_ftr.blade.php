@@ -1,4 +1,89 @@
 <script>
+if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
+    
+   
+    var areacode = JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->areacode: "")!!}');
+    
+    if(areacode.length > 0){
+        
+          var arc = areacode[0];
+          var farc = areacode[1];
+          var proparc = areacode[2];
+          var arcode = document.getElementById('areacode');
+          arcode.value = arc  
+        
+          var farcode = document.getElementById('faxareacode');
+          farcode.value = farc   
+          
+          var propcode = document.getElementById('prop_landline_areacode');
+          propcode.value = proparc 
+    }
+
+   
+        var appid ='{!!((count($fAddress) > 0) ? $fAddress[0]->appid: "")!!}';
+        var ocid ='{!!((count($fAddress) > 0) ? $fAddress[0]->ocid: "")!!}';
+        var classid ='{!!((count($fAddress) > 0) ? $fAddress[0]->classid: "")!!}';
+        var subclassid ='{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}';
+        var facmode ='{!!((count($fAddress) > 0) ? $fAddress[0]->facmode: "")!!}';
+        var funcid ='{!!((count($fAddress) > 0) ? $fAddress[0]->funcid: "")!!}';
+        var owner ='{!!((count($fAddress) > 0) ? $fAddress[0]->owner: "")!!}';
+        var ownerMobile ='{!!((count($fAddress) > 0) ? $fAddress[0]->ownerMobile: "")!!}';
+        var ownerLandline ='{!!((count($fAddress) > 0) ? $fAddress[0]->ownerLandline: "")!!}';
+        var ownerEmail ='{!!((count($fAddress) > 0) ? $fAddress[0]->ownerEmail: "")!!}';
+        var mailingAddress ='{!!((count($fAddress) > 0) ? $fAddress[0]->mailingAddress: "")!!}';
+        var approvingauthoritypos ='{!!((count($fAddress) > 0) ? $fAddress[0]->approvingauthoritypos: "")!!}';
+        var approvingauthority ='{!!((count($fAddress) > 0) ? $fAddress[0]->approvingauthority: "")!!}';
+        var ptcCode ='{!!((count($fAddress) > 0) ? $fAddress[0]->ptcCode: "")!!}';
+        var noofbed ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofbed: "")!!}';
+        var noofmain ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofmain: "")!!}';
+        var noofsatellite ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofsatellite: "")!!}';
+   console.log("noofsatellite")
+   console.log(noofsatellite)
+        if(hfep === '0'){
+        document.getElementById("hfep").checked = true;
+        }
+
+        
+        var ocidInpt = document.getElementById("ocid");
+        ocidInpt.value = ocid;
+        ocidInpt.setAttribute("disabled", "disabled")
+
+        const data = { 'ocid' : ocid, 'classid' : classid }
+        $.ajax({
+						url: '{{asset('api/classification/fetch')}}',
+						dataType: "json", 
+	    				async: false,
+						method: 'POST',
+						data: data,
+						success: function(a){
+                            var result = a.filter(function(v) {
+                                    return v.classid == subclassid;
+                            })
+                            document.getElementById("subclass").value = result[0].classname;
+                            
+						}
+					});
+
+      document.getElementById("appid").value = appid;
+      document.getElementById("facmode").value = facmode;
+      document.getElementById("funcid").value = funcid;
+      document.getElementById("owner").value = owner;
+      document.getElementById("prop_mobile").value = ownerMobile;
+      document.getElementById("prop_landline").value = ownerLandline;
+      document.getElementById("prop_email").value = ownerEmail;
+      document.getElementById("official_mail_address").value = mailingAddress;
+      document.getElementById("approving_authority_pos").value = approvingauthoritypos;
+      document.getElementById("approving_authority_name").value = approvingauthority;
+      document.getElementById("ptcCode").value = ptcCode;
+      document.getElementById("noofbed").value = noofbed;
+      document.getElementById("noofmain").value = noofmain;
+      document.getElementById("noofsatellite").value = noofsatellite;
+        
+}
+
+
+   
+document.getElementsByName('areacode').value = 3;
     mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
     // console.log(mserv_cap)
     var ghgpid = document.getElementsByName('hgpid')
