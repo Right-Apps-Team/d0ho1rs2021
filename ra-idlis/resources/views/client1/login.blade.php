@@ -604,6 +604,7 @@
               document.getElementsByName(_allObj[i])[0].innerHTML = '<option value hidden selected disabled>Please select</option>';
             }
           }
+          // console.log(["_token="+document.getElementsByName('_token')[0].value, "rTbl="+_arrQCol[tName], "rId="+document.getElementsByName(tName)[0].value], "{{asset('client/request')}}/"+_obj[tName])
           sendRequestRetArr(["_token="+document.getElementsByName('_token')[0].value, "rTbl="+_arrQCol[tName], "rId="+document.getElementsByName(tName)[0].value], "{{asset('client/request')}}/"+_obj[tName], "POST", true, {
             functionProcess: function(arr) {            
               if(curDom != undefined || curDom != null) {

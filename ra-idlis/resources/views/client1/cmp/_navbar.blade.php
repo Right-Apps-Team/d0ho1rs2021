@@ -39,7 +39,7 @@
                   {{-- <a href="{{ asset('employee/dashboard/act_logs') }}" class="dropdown-item S03_allow">Activity Logs</a> --}}
                   <a href="#" data-toggle="modal" data-target="#ChgPass" class="dropdown-item S03_allow">Change Password</a>
 
-                  <a href="#" onclick="event.preventDefault();document.getElementById('employeeLogout').submit();" class="dropdown-item">Logout</a>
+                  <a href="#" onclick="event.preventDefault();document.getElementById('employeeLogout').submit();" class="dropdown-item">Logoutss</a>
                   <form id="employeeLogout" action="{{asset('employee/logout')}}" method="GET" hidden>
                   {{csrf_field()}}
                 </form>

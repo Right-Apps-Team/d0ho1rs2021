@@ -69,7 +69,8 @@
           <a class="dropdown-item" href="{{url('client1/changePass/')}}">Change Password</a>
           @endif
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" onclick="logoutUser(['{{asset('client1/request/customQuery/logoutUser')}}', 'GET', '{{asset('client1/')}}'])" href="javascript:void(0);" id="logoutUser">Logout</a>
+          <a class="dropdown-item" onclick="logoutUser(['{{asset('client1/request/customQuery/logoutUser')}}', 'GET', '{{asset('logout')}}'])" href="javascript:void(0);" id="logoutUser">Logout</a>
+          <!-- <a class="dropdown-item" onclick="logoutUser(['{{asset('client1/request/customQuery/logoutUser')}}', 'GET', '{{asset('client1/')}}'])" href="javascript:void(0);" id="logoutUser">Logout</a> -->
         </div>
       </li>
     </ul>

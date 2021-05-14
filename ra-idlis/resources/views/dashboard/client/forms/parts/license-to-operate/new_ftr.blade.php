@@ -1,4 +1,7 @@
 <script>
+var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
+
+// START OF DATA INITIALIZATION FOR VIEWING EXISTING APPLICATION
 if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
     
    
@@ -19,7 +22,7 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
           propcode.value = proparc 
     }
 
-   
+    
         var appid ='{!!((count($fAddress) > 0) ? $fAddress[0]->appid: "")!!}';
         var ocid ='{!!((count($fAddress) > 0) ? $fAddress[0]->ocid: "")!!}';
         var classid ='{!!((count($fAddress) > 0) ? $fAddress[0]->classid: "")!!}';
@@ -37,8 +40,104 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
         var noofbed ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofbed: "")!!}';
         var noofmain ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofmain: "")!!}';
         var noofsatellite ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofsatellite: "")!!}';
-   console.log("noofsatellite")
-   console.log(noofsatellite)
+        var hfep ='{!!((count($fAddress) > 0) ? $fAddress[0]->hfep_funded: "")!!}';
+
+        var rgnid ='{!!((count($fAddress) > 0) ? $fAddress[0]->rgnid: "")!!}';
+        var provid ='{!!((count($fAddress) > 0) ? $fAddress[0]->provid: "")!!}';
+        var cmid ='{!!((count($fAddress) > 0) ? $fAddress[0]->cmid: "")!!}';
+        var brgyid ='{!!((count($fAddress) > 0) ? $fAddress[0]->brgyid: "")!!}';
+
+        var addonDesc ='{!!((count($fAddress) > 0) ? $fAddress[0]->addonDesc: "")!!}';
+        var addonDescArr = JSON.parse(addonDesc);
+        // console.log("addonDesc")
+        // console.log(JSON.parse(addonDesc))
+
+        var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "")!!}');
+
+    //   console.log("servFac")
+    //   console.log(servFacArray)
+    
+      if(servFacArray[0].length > 0){
+      var getHGPID = servFacArray[0];
+      var dbhgpid = getHGPID[0].hgpid;
+     
+      type_of_fac(dbhgpid) //display facilities
+
+          
+                var funcid ='{!!((count($fAddress) > 0) ? $fAddress[0]->funcid: "")!!}';
+                var fniInpt = document.getElementsByName('funcid')
+
+                // set value for hosp classif and function
+                for(var i =0; i < fniInpt.length ; i ++){
+                    fniInpt[i].value = funcid
+                }
+
+                var getFACID = servFacArray[1];
+                var theFACID = getFACID[0].facid;
+                // Get the add on
+                renewAddOnSelect(theFACID)
+                initialAddOns(addonDescArr)
+                 // check initial facids
+                var getFacidField = document.getElementById(theFACID);
+                if(getFacidField){
+                     document.getElementById(theFACID).checked= true
+                }
+                    // console.log("funcid")
+                    // console.log(funcid)
+                    // console.log("facid")
+                    // console.log(theFACID)
+                    // console.log("getFACID")
+                    // console.log(getFACID)
+
+                if(dbhgpid == 6){
+                    // display selected hosp class
+                    sel_hosp_class(funcid)
+
+                   
+
+                    if(funcid != 2){
+                    getAncillary(theFACID, 6)
+                  
+                   
+                    
+                    }
+                    setTimeout(function(){  
+                    if(getFACID.length > 0){
+                        getFACID.map((h) => {
+                            // console.log(h.facid)
+                            var getFacidField = document.getElementById(h.facid);
+                            if(getFacidField){
+                                document.getElementById(h.facid).checked= true
+                            }
+                            
+                        });
+                    }
+                }, 1000);
+
+                }else if(dbhgpid == 1){
+                    // console.log("getFACID")
+                    // console.log(getFACID)
+
+                    if(getFACID.length > 0){
+                        getFACID.map((h) => {
+                            var getFacidField = document.getElementById(h.facid);
+                            if(getFacidField){
+                                document.getElementById(h.facid).checked= true
+                            }
+                            
+                        });
+                    }
+                }
+
+                
+
+
+    }
+
+
+               
+         
+  
         if(hfep === '0'){
         document.getElementById("hfep").checked = true;
         }
@@ -59,7 +158,7 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
                             var result = a.filter(function(v) {
                                     return v.classid == subclassid;
                             })
-                            document.getElementById("subclass").value = result[0].classname;
+                            document.getElementById("subclass").placeholder = result[0].classname;
                             
 						}
 					});
@@ -78,13 +177,63 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
       document.getElementById("noofbed").value = noofbed;
       document.getElementById("noofmain").value = noofmain;
       document.getElementById("noofsatellite").value = noofsatellite;
-        
-}
 
+    
+
+      function initialAddOns(addonDesc){
+        
+
+         var elemTr =   tr_addOn.getElementsByTagName('input');
+    //      console.log("elemTr")
+    //      console.log(elemTr)
+        
+    //    console.log("addonDesc.length")  
+    //    console.log(addonDesc.length)  
+
+    //    First array
+        var nln0 =  document.getElementById("tr_addOn").querySelectorAll('#addOnServ');
+        nln0[0].value = addonDesc[0].facid;
+
+        var nlntyp0 =  document.getElementById("tr_addOn").querySelectorAll('#aoservtyp');
+           nlntyp0[0].value = addonDesc[0].servtyp;
+
+        var nlnowner0 =  document.getElementById("tr_addOn").querySelectorAll('#aoservOwner');
+           nlnowner0[0].value = addonDesc[0].servowner;
+
+        // Rest Array
+         for(var i = 1; i < addonDesc.length ; i++){
+            var trAdon =   document.getElementById("tr_addOn");
+            var cln = trAdon.cloneNode(true);
+            cln.removeAttribute("id");
+            cln.setAttribute("id","addon"+addonDesc[i].facid );
+            cln.setAttribute("class", "tr_addOn");
+            document.getElementById("body_addOn").appendChild(cln);
+
+            
+           var nlnsr =  document.getElementById("addon"+addonDesc[i].facid).querySelectorAll('#addOnServ');
+               nlnsr[0].value = addonDesc[i].facid; 
+               
+           var nlntyp =  document.getElementById("addon"+addonDesc[i].facid).querySelectorAll('#aoservtyp');
+           nlntyp[0].value = addonDesc[i].servtyp;
+
+           var nlnowner =  document.getElementById("addon"+addonDesc[i].facid).querySelectorAll('#aoservOwner');
+           nlnowner[0].value = addonDesc[i].servowner;
+
+
+            // console.log(nln)
+          }
+      }
+
+      //   Get Fees
+ setTimeout(function(){   getFacServCharge()}, 2000);
+        
+} 
+
+// END OF DATA INITIALIZATION FOR VIEWING EXISTING APPLICATION
 
    
 document.getElementsByName('areacode').value = 3;
-    mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
+  
     // console.log(mserv_cap)
     var ghgpid = document.getElementsByName('hgpid')
     var curAppid = ""
@@ -169,6 +318,8 @@ document.getElementsByName('areacode').value = 3;
         data.map((h) => {
             document.getElementsByClassName(h)[0].setAttribute("hidden", "hidden")
         });
+        // initila selection from db
+        document.getElementById(selected).checked = true;
         
         removeAmbuRows()
         deselectOpts('anxsel')
@@ -257,14 +408,16 @@ document.getElementsByName('areacode').value = 3;
     }
 
     function getFacServCharge (val = null){
+        console.log("received fees")
         var addons= [];
         // console.log("val")
         // console.log(val)
-        if(val == 2){
+
+        // if(val == 2){
             // console.log("Received Add ons")
              addons = getaddonsValues();
             // console.log(addons)
-        }
+        // }
 
      var facids = getCheckedValue('facid') 
      var anxsel = getCheckedValue('anxsel') 
@@ -382,11 +535,14 @@ document.getElementsByName('areacode').value = 3;
     function ifHospital(specs) {
 
         if (specs == "show") {
+            
             const show = ["hospClassif", "forHosp", "ambuDetails"];
             show.map((h) => {
                 
                 document.getElementsByClassName(h)[0].removeAttribute("hidden")
             });
+            
+            
         } else {
             const hide = ["hospClassif", "forHosp", "ambuDetails", "ancillary", "addOnServe"];
             hide.map((h) => {
@@ -520,7 +676,7 @@ document.getElementsByName('areacode').value = 3;
 
 
         if (selected == 2) {
-
+            document.getElementsByClassName("ancillary")[0].setAttribute("hidden","hidden")
             var newDiv = document.createElement("div");
             newDiv.setAttribute("class", "custom-control custom-radio mr-sm-2");
             newDiv.setAttribute("id", "hgpid6-new");
@@ -591,6 +747,8 @@ document.getElementsByName('areacode').value = 3;
             })
 
         }
+
+       
 
 
     }
@@ -895,7 +1053,8 @@ document.getElementsByName('areacode').value = 3;
             if (e.target.value == 'HDS') {
                 document.getElementsByClassName("addOnServe")[0].removeAttribute("hidden")
             }
-
+           
+           
             renewAddOnSelect(e.target.value)
         }
     });

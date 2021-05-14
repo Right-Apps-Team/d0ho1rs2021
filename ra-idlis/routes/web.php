@@ -52,10 +52,12 @@ Route::get('samplereport',function(){
 	return view('client1.FDA.cdrrhrCOC');
 });
 
+// Route::get('/', 'NewClientController@__index')->name('client1.login');
+
 Route::get('samplefix','DOHController@samplefix');
 Route::prefix('client1')->group(function() {
 	Route::match(['get', 'post'], '/FAQ', 'NewClientController@faq');
-	Route::match(['get', 'post'], '/', 'NewClientController@__index')->name('client1.login');
+	// Route::match(['get', 'post'], '/', 'NewClientController@__index')->name('client1.login');
 	Route::match(['get', 'post'], '/register/verify/{token}', 'NewClientController@__rToken')->name('client1.rtoken');
 	Route::match(['get', 'post'], '/forgot/{uid}/a/{token}', 'NewClientController@__forgot');
 	Route::match(['get', 'post'], '/reset/{uid}', 'NewClientController@__reset');
@@ -849,5 +851,7 @@ Route::prefix('employee/reports')->group(function() {
 
 
 // temporary upload
-Route::get('/', 'UploadController@index');
+Route::get('/', 'NewClientController@__index');
+Route::get('/logout', 'NewClientController@__newlogout');
+// Route::get('/', 'UploadController@index');
 Route::post('/store', 'UploadController@store')->name('file.store');

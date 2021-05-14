@@ -40,6 +40,21 @@ class NewClientController extends Controller {
 			// return redirect('client1')->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Error on page Login. Contact the admin']);
 		}
 	}
+	
+	public function __newlogout(Request $request) {
+		try {
+			session()->forget('uData'); 
+			session()->forget('payment');
+			session()->forget('appcharge');
+			session()->forget('ambcharge');
+			session()->forget('directorSettings');
+			
+			return view('client1.login');
+		} catch(Exception $e) {
+			dd($e);
+			// return redirect('client1')->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Error on page Login. Contact the admin']);
+		}
+	}
 
 	public function faq(){
 		return view('client1.faq');

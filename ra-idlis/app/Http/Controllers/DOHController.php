@@ -249,6 +249,8 @@ namespace App\Http\Controllers;
 					session()->forget('directorSettings');
 					Session::forget('employee_login');
 		      		session()->flash('dohUser_logout','Successfully Logout');
+					
+					//   return view('client1.login');
 					return redirect()->route('employee');
 				} 
 				catch (Exception $e) {
