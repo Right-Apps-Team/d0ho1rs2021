@@ -219,17 +219,18 @@ function getAddonDesc(){
    var aso = document.getElementsByName('aoservOwner');
 
     var alladdondesc =[];
-   for(var i = 0 ; i < ao.length ; i++){
-        const subs = {
-            facid: ao[i].value,
-            facid_name: ao[i].options[ao[i].selectedIndex].text,
-            servtyp: as[i].value,
-            servowner: aso[i].value
-        }
+    if(ao[0].options.length > 0){
+    for(var i = 0 ; i < ao.length ; i++){
+            const subs = {
+                facid: ao[i].value,
+                facid_name: ao[i].options[ao[i].selectedIndex].text,
+                servtyp: as[i].value,
+                servowner: aso[i].value
+            }
 
-        alladdondesc.push(subs);
-   }
-
+            alladdondesc.push(subs);
+    }
+    }
    return alladdondesc
 }
 </script>

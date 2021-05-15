@@ -106,7 +106,7 @@
 								<div class="col-md">
 									<input type="text" class="form-control" id="plate_number" name="plate_number" placeholder="Plate Number/Conduction Sticker">
 								</div>
-								<div class="col-md" hidden>
+								<div class="col-md" id="ambownerdiv" hidden>
 									<input type="text" class="form-control" id="ambOwner" name="ambOwner" placeholder="Owner">
 								</div>
 							</div>

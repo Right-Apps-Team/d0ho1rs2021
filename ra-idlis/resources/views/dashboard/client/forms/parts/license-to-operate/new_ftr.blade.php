@@ -47,92 +47,115 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
         var cmid ='{!!((count($fAddress) > 0) ? $fAddress[0]->cmid: "")!!}';
         var brgyid ='{!!((count($fAddress) > 0) ? $fAddress[0]->brgyid: "")!!}';
 
+        var typeamb =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->typeamb: "")!!}');
+        var ambtyp =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->ambtyp: "")!!}');
+        var plate_number =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->plate_number: "")!!}');
+        var ambOwner =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->ambOwner: "")!!}');
+
+        // console.log("typeamb")
+        // console.log(typeamb)
+        // console.log("ambtyp")
+        // console.log(ambtyp)
+        // console.log("plate_number")
+        // console.log(plate_number)
+        // console.log("ambOwner")
+        // console.log(ambOwner)
+
         var addonDesc ='{!!((count($fAddress) > 0) ? $fAddress[0]->addonDesc: "")!!}';
         var addonDescArr = JSON.parse(addonDesc);
+
         // console.log("addonDesc")
+        // console.log(addonDesc)
+        // console.log("subclassid")
+        // console.log(subclassid)
         // console.log(JSON.parse(addonDesc))
 
         var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "")!!}');
 
-    //   console.log("servFac")
-    //   console.log(servFacArray)
-    
-      if(servFacArray[0].length > 0){
-      var getHGPID = servFacArray[0];
-      var dbhgpid = getHGPID[0].hgpid;
-     
-      type_of_fac(dbhgpid) //display facilities
-
-          
-                var funcid ='{!!((count($fAddress) > 0) ? $fAddress[0]->funcid: "")!!}';
-                var fniInpt = document.getElementsByName('funcid')
-
-                // set value for hosp classif and function
-                for(var i =0; i < fniInpt.length ; i ++){
-                    fniInpt[i].value = funcid
-                }
-
-                var getFACID = servFacArray[1];
-                var theFACID = getFACID[0].facid;
-                // Get the add on
-                renewAddOnSelect(theFACID)
-                initialAddOns(addonDescArr)
-                 // check initial facids
-                var getFacidField = document.getElementById(theFACID);
-                if(getFacidField){
-                     document.getElementById(theFACID).checked= true
-                }
-                    // console.log("funcid")
-                    // console.log(funcid)
-                    // console.log("facid")
-                    // console.log(theFACID)
-                    // console.log("getFACID")
-                    // console.log(getFACID)
-
-                if(dbhgpid == 6){
-                    // display selected hosp class
-                    sel_hosp_class(funcid)
-
-                   
-
-                    if(funcid != 2){
-                    getAncillary(theFACID, 6)
-                  
-                   
-                    
-                    }
-                    setTimeout(function(){  
-                    if(getFACID.length > 0){
-                        getFACID.map((h) => {
-                            // console.log(h.facid)
-                            var getFacidField = document.getElementById(h.facid);
-                            if(getFacidField){
-                                document.getElementById(h.facid).checked= true
-                            }
-                            
-                        });
-                    }
-                }, 1000);
-
-                }else if(dbhgpid == 1){
-                    // console.log("getFACID")
-                    // console.log(getFACID)
-
-                    if(getFACID.length > 0){
-                        getFACID.map((h) => {
-                            var getFacidField = document.getElementById(h.facid);
-                            if(getFacidField){
-                                document.getElementById(h.facid).checked= true
-                            }
-                            
-                        });
-                    }
-                }
-
+                // console.log("servFac")
+                // console.log(servFacArray)
                 
+                if(servFacArray[0].length > 0){
+
+                                        var getHGPID = servFacArray[0];
+                                        var dbhgpid = getHGPID[0].hgpid;
+                                        
+                                type_of_fac(dbhgpid) //display facilities
+
+                                
+                                var funcid ='{!!((count($fAddress) > 0) ? $fAddress[0]->funcid: "")!!}';
+                                var fniInpt = document.getElementsByName('funcid')
+
+                                        // set value for hosp classif and function
+                                        for(var i =0; i < fniInpt.length ; i ++){
+                                            fniInpt[i].value = funcid
+                                        }
+
+                                        var getFACID = servFacArray[1];
+                                        var theFACID = getFACID[0].facid;
+                                        // Get the add on
+                                        // if(addonDescArr.length > 0 ){
+                                        renewAddOnSelect(theFACID)
+                                        initialAddOns(addonDescArr)
+                                      
+                                    // }
+                                        // Initial ambulance
+                                        initialAmbulDetails(typeamb, ambtyp, plate_number, ambOwner)
 
 
-    }
+                                        // check initial facids
+                                        var getFacidField = document.getElementById(theFACID);
+                                        if(getFacidField){
+                                            document.getElementById(theFACID).checked= true
+                                        }
+                                            // console.log("funcid")
+                                            // console.log(funcid)
+                                            // console.log("facid")
+                                            // console.log(theFACID)
+                                            // console.log("getFACID")
+                                            // console.log(getFACID)
+
+                                        if(dbhgpid == 6){
+                                            // display selected hosp class
+                                            sel_hosp_class(funcid)
+
+                                        
+
+                                            if(funcid != 2){
+                                            getAncillary(theFACID, 6)
+                                        
+                                        
+                                            
+                                            }
+                                            setTimeout(function(){  
+                                            if(getFACID.length > 0){
+                                                getFACID.map((h) => {
+                                                    // console.log(h.facid)
+                                                    var getFacidField = document.getElementById(h.facid);
+                                                    if(getFacidField){
+                                                        document.getElementById(h.facid).checked= true
+                                                    }
+                                                    
+                                                });
+                                            }
+                                        }, 1000);
+
+                                        }else if(dbhgpid == 1){
+                                            // console.log("getFACID")
+                                            // console.log(getFACID)
+
+                                            if(getFACID.length > 0){
+                                                getFACID.map((h) => {
+                                                    var getFacidField = document.getElementById(h.facid);
+                                                    if(getFacidField){
+                                                        document.getElementById(h.facid).checked= true
+                                                    }
+                                                    
+                                                });
+                                            }
+                                        }
+
+                      }
 
 
                
@@ -148,6 +171,7 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
         ocidInpt.setAttribute("disabled", "disabled")
 
         const data = { 'ocid' : ocid, 'classid' : classid }
+        if(subclassid != ""){
         $.ajax({
 						url: '{{asset('api/classification/fetch')}}',
 						dataType: "json", 
@@ -162,7 +186,7 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
                             
 						}
 					});
-
+        }
       document.getElementById("appid").value = appid;
       document.getElementById("facmode").value = facmode;
       document.getElementById("funcid").value = funcid;
@@ -181,51 +205,123 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
     
 
       function initialAddOns(addonDesc){
-        
+                //      console.log("elemTr")
+                //      console.log(elemTr)
+                    
+                // console.log("addonDesc.length")  
+                // console.log(addonDesc  )
 
-         var elemTr =   tr_addOn.getElementsByTagName('input');
-    //      console.log("elemTr")
-    //      console.log(elemTr)
-        
-    //    console.log("addonDesc.length")  
-    //    console.log(addonDesc.length)  
+                //    First array
+            if(addonDesc.length > 0){
+                var elemTr =   tr_addOn.getElementsByTagName('input');
+                var nln0 =  document.getElementById("tr_addOn").querySelectorAll('#addOnServ');
+                nln0[0].value = addonDesc[0].facid;
 
-    //    First array
-        var nln0 =  document.getElementById("tr_addOn").querySelectorAll('#addOnServ');
-        nln0[0].value = addonDesc[0].facid;
+                var nlntyp0 =  document.getElementById("tr_addOn").querySelectorAll('#aoservtyp');
+                nlntyp0[0].value = addonDesc[0].servtyp;
 
-        var nlntyp0 =  document.getElementById("tr_addOn").querySelectorAll('#aoservtyp');
-           nlntyp0[0].value = addonDesc[0].servtyp;
+                var nlnowner0 =  document.getElementById("tr_addOn").querySelectorAll('#aoservOwner');
+                nlnowner0[0].value = addonDesc[0].servowner;
 
-        var nlnowner0 =  document.getElementById("tr_addOn").querySelectorAll('#aoservOwner');
-           nlnowner0[0].value = addonDesc[0].servowner;
+                // Rest Array
+                    for(var i = 1; i < addonDesc.length ; i++){
+                        var trAdon =   document.getElementById("tr_addOn");
+                        var cln = trAdon.cloneNode(true);
+                        cln.removeAttribute("id");
+                        cln.setAttribute("id","addon"+addonDesc[i].facid );
+                        cln.setAttribute("class", "tr_addOn");
+                        document.getElementById("body_addOn").appendChild(cln);
 
-        // Rest Array
-         for(var i = 1; i < addonDesc.length ; i++){
-            var trAdon =   document.getElementById("tr_addOn");
-            var cln = trAdon.cloneNode(true);
-            cln.removeAttribute("id");
-            cln.setAttribute("id","addon"+addonDesc[i].facid );
-            cln.setAttribute("class", "tr_addOn");
-            document.getElementById("body_addOn").appendChild(cln);
+                        
+                        var nlnsr =  document.getElementById("addon"+addonDesc[i].facid).querySelectorAll('#addOnServ');
+                            nlnsr[0].value = addonDesc[i].facid; 
+                            
+                        var nlntyp =  document.getElementById("addon"+addonDesc[i].facid).querySelectorAll('#aoservtyp');
+                        nlntyp[0].value = addonDesc[i].servtyp;
 
-            
-           var nlnsr =  document.getElementById("addon"+addonDesc[i].facid).querySelectorAll('#addOnServ');
-               nlnsr[0].value = addonDesc[i].facid; 
-               
-           var nlntyp =  document.getElementById("addon"+addonDesc[i].facid).querySelectorAll('#aoservtyp');
-           nlntyp[0].value = addonDesc[i].servtyp;
-
-           var nlnowner =  document.getElementById("addon"+addonDesc[i].facid).querySelectorAll('#aoservOwner');
-           nlnowner[0].value = addonDesc[i].servowner;
-
-
-            // console.log(nln)
-          }
+                        var nlnowner =  document.getElementById("addon"+addonDesc[i].facid).querySelectorAll('#aoservOwner');
+                        nlnowner[0].value = addonDesc[i].servowner;
+                        // console.log(nln)
+                    }
+            }
       }
 
+     function initialAmbulDetails(typeamb, ambtyp, plate_number, ambOwner){
+        if(typeamb.length > 0){
+            var nltypa =  document.getElementById("tr_amb" ).querySelectorAll('#typeamb');
+            nltypa[0].value = typeamb[0];  
+            
+            var nlamntyp =  document.getElementById("tr_amb" ).querySelectorAll('#ambtyp');
+            nlamntyp[0].value = ambtyp[0]; 
+
+            var nlpn =  document.getElementById("tr_amb" ).querySelectorAll('#plate_number');
+            nlpn[0].value = plate_number[0]; 
+
+            // var nlao =  document.getElementById("tr_amb" ).querySelectorAll('#ambOwner');
+            // nlao[0].value = ambOwner[0]; 
+
+                                // setTimeout(function(){  
+                                    var nlao =  document.getElementById("tr_amb" ).querySelectorAll('#ambOwner');
+                                    var nlaodiv =  document.getElementById("tr_amb" ).querySelectorAll('#ambownerdiv');
+                                    
+                                    if(ambtyp[0] == 1){
+                                        nlaodiv[0].removeAttribute('hidden')
+                                        nlao[0].value = ambOwner[0]; 
+                                    }
+                                    
+                                    // if(ambtyp[0] == 2){
+                                    //     nlaodiv[0].setAttribute('hidden', true)
+                                      
+                                    // }
+                                //  }, 2000);
+
+        
+            for(var ta = 1; ta < typeamb.length ; ta++){
+            
+                                var trAdon =   document.getElementById("tr_amb");
+                                var cln = trAdon.cloneNode(true);
+                                cln.removeAttribute("id");
+                                cln.setAttribute("class", "tr_amb");
+                                cln.className += cln.className ? " "+"amb"+ta : "amb"+ta
+                                // cln.setAttribute("id","amb"+ta );
+                                document.getElementById("body_amb").appendChild(cln);
+
+                                // var nltypa =  document.getElementById("amb"+ta ).querySelectorAll('#typeamb');
+                                var nltypa =  document.getElementsByClassName("amb"+ta )[0].querySelectorAll('#typeamb');
+                                nltypa[0].value = typeamb[ta]; 
+
+                                var nlamntyp =  document.getElementsByClassName("amb"+ta )[0].querySelectorAll('#ambtyp');
+                                nlamntyp[0].value = ambtyp[ta]; 
+
+                                var nlpn =  document.getElementsByClassName("amb"+ta )[0].querySelectorAll('#plate_number');
+                                nlpn[0].value = plate_number[ta];  
+                                
+                                // setTimeout(function(){  
+                                    var nlao =  document.getElementsByClassName("amb"+ta )[0].querySelectorAll('#ambOwner');
+                                    var nlaodiv =  document.getElementsByClassName("amb"+ta )[0].querySelectorAll('#ambownerdiv');
+                                    if(ambtyp[ta] == 1){
+                                        nlaodiv[0].removeAttribute('hidden')
+                                        nlao[0].value = ambOwner[ta]; 
+                                    }
+                                    
+                                    // if(ambtyp[ta] == 2){
+                                    //     nlaodiv[0].setAttribute('hidden', true)
+                                      
+                                    // }
+                                //  }, 2000);
+               
+            }
+        }
+
+     }
+
       //   Get Fees
- setTimeout(function(){   getFacServCharge()}, 2000);
+ setTimeout(function(){  
+      getFacServCharge(addonDesc.length > 0? 2 : null) ;
+      getChargesPerApplication();
+        // get amubulance charge
+      getChargesPerAmb()
+    }, 2000);
         
 } 
 
@@ -413,11 +509,11 @@ document.getElementsByName('areacode').value = 3;
         // console.log("val")
         // console.log(val)
 
-        // if(val == 2){
+        if(val == 2){
             // console.log("Received Add ons")
              addons = getaddonsValues();
             // console.log(addons)
-        // }
+        }
 
      var facids = getCheckedValue('facid') 
      var anxsel = getCheckedValue('anxsel') 
@@ -798,12 +894,9 @@ document.getElementsByName('areacode').value = 3;
 
     function show_hosplevel_anx(selected, ancData, hgpid) {
        
-  
         getFacServCharge()
-    //  var ancData = getAncillary();
+        //  var ancData = getAncillary();
   
-   
-     
         document.getElementsByClassName("addOnServe")[0].removeAttribute("hidden")
         document.getElementsByClassName("ancillary")[0].removeAttribute("hidden")
         if (selected == "H") {
@@ -1058,6 +1151,8 @@ document.getElementsByName('areacode').value = 3;
             renewAddOnSelect(e.target.value)
         }
     });
+
+ 
 
     function renewAddOnSelect(id) {
         removeAddOnRows()
