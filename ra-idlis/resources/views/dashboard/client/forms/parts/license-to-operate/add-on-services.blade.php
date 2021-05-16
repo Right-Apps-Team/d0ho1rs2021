@@ -59,7 +59,7 @@
                         <!-- preventDef -->
                         <!-- onclick="if(! this.parentNode.parentNode.hasAttribute('id')) { this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); }" -->
                         <!-- onClick="$(this).closest('tr').remove();" -->
-                        <td onclick="return preventDef()"> <button class="btn btn-danger "  onclick="return  if(! this.parentNode.parentNode.hasAttribute('id')) { this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); }"><i class="fa fa-minus-circle" onclick="return preventDef()"></i></button> </td>
+                        <td onclick="return preventDef()"> <button class="btn btn-danger "  onclick="if(! this.parentNode.parentNode.hasAttribute('id')) { this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); }"><i class="fa fa-minus-circle" onclick="return preventDef()"></i></button> </td>
                         <td>
                             <div class="input-group">
                                 <!-- <div class="input-group-prepend">

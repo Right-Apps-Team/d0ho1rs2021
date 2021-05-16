@@ -3,6 +3,8 @@ namespace App\Http\Controllers\Client\Api;
 
 use Session;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\DOHController;
+use App\Http\Controllers\FunctionsClientController;
 use App\Models\ActivityLog;
 use App\Models\ApplicationForm;
 use Illuminate\Http\Request;
@@ -17,6 +19,7 @@ use App\Models\FacIds;
 use App\Models\x08Ft;
 use DB;
 use Illuminate\Support\Facades\DB as FacadesDB;
+use Illuminate\Support\Facades\Redirect;
 
 class LtoAppController extends Controller
 {
@@ -128,11 +131,7 @@ class LtoAppController extends Controller
         $appform->plate_number          = $request->plate_number;
         $appform->ambOwner              = $request->ambOwner;
         $appform->addonDesc             = $request->addonDesc;
-
-        // if($request->con_catch) {
-
-        // }
-        
+  
 
         $appform->save();
 
@@ -142,57 +141,42 @@ class LtoAppController extends Controller
            $this->ltoAppDetSave($request->facid, $appform->appid, $request->uid);
         }
 
-        // $con_catch = [];
-        // $con_hospital = [];
-
-        // foreach ($request->con_catch  as $cc) {
-        //     // dd($cc['type']);
-        //     $arr = [
-        //         'appid'         => $appform->appid,
-        //         'type'          => $cc['type'],
-        //         'location'      => $cc['location'],
-        //         'population'    => $cc['population'],
-        //         'isfrombackend' => null
-        //     ];
-        //     array_push($con_catch, $arr);
-        // }
-        // foreach ($request->con_hospital  as $ch) {
-        //     // dd($cc['type']);
-        //     $arr = [
-        //         'appid'         => $appform->appid,
-        //         'facilityname'  => $ch['facilityname'],
-        //         'location1'     => $ch['location1'],
-        //         'cat_hos'       => $ch['cat_hos'],
-        //         'noofbed1'      => $ch['noofbed1'],
-        //         'license'       => $ch['license'],
-        //         'validity'      => $ch['validity'],
-        //         'date_operation' => $ch['date_operation'],
-        //         'remarks'       => $ch['remarks']
-        //     ];
-        //     array_push($con_hospital, $arr);
-        // }
-        // $conhospital = CONHospital::where('appid', $request->appid)->delete();
-        // $concatch = CONCatchment::where('appid', $request->appid)->delete();
-        // CONHospital::insert($con_hospital);
-        // CONCatchment::insert($con_catch);
+        
+            return response()->json(
+                [
+                    'applicaiton' => $appform,
+                    // 'con_catchment' => $concatch,
+                    'provinces'     => Province::where('rgnid', $appform->rgnid)->get(),
+                    'cities'        => Municipality::where('provid', $appform->provid)->get(),
+                    'brgy'          => Barangay::where('cmid', $appform->cmid)->get(),
+                    'classification' => Classification::where('ocid',  $appform->ocid)->where('isSub', null)->get(),
+                    'subclass'      => Classification::where('ocid', $appform->ocid)->where('isSub',  $appform->classid)->get(),
+                ],
+                200
+            );
+       
+      
+       
+        
 
 
-        // $appform->save();
-        // dd($request);
-        // exit;
-        return response()->json(
-            [
-                'applicaiton' => $appform,
-                // 'con_catchment' => $concatch,
-                'provinces'     => Province::where('rgnid', $appform->rgnid)->get(),
-                'cities'        => Municipality::where('provid', $appform->provid)->get(),
-                'brgy'          => Barangay::where('cmid', $appform->cmid)->get(),
-                'classification' => Classification::where('ocid',  $appform->ocid)->where('isSub', null)->get(),
-                'subclass'      => Classification::where('ocid', $appform->ocid)->where('isSub',  $appform->classid)->get(),
-            ],
-            200
-        );
+
     }
+    public function assessmentReady(Request $request, $appid)
+	{
+		$curForm = FunctionsClientController::getUserDetailsByAppform($appid);
+		if(count($curForm) < 1) {
+			return redirect('client1/apply')->with('errRet', ['errAlt'=>'warning', 'errMsg'=>'No application selected.']);
+		}
+		try {
+			$dohC = new DOHController();
+			$toViewArr = $dohC->AssessmentShowPart($request,$appid,false,true);
+			$toViewArr['appform'] = $curForm[0];
+			return view('client1.assessment.assessmentView',$toViewArr);
+		} catch (Exception $e) {
+			return $e;
+		}
+	}
 
      function ltoAppDetSave($reqfacid, $appid, $uid)
     {

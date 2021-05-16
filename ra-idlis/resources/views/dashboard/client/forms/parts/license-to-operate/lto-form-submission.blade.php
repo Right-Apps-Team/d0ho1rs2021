@@ -8,7 +8,67 @@
     }
 
     const savePartialLto = async (e) => {
-    console.log("Saving Partial Form LTO");
+
+        var errors = 0;
+        var ermsg = " ";
+        if($('#facility_name').val() == ""){errors +=1; ermsg += "Facility Name, "}
+
+        // Disregard if update
+        if($('#region').val() == ""){errors +=1; ermsg += "Region, "}
+        if($('#province').val() == ""){errors +=1; ermsg += "Province, "}
+        if($('#city_monicipality').val() == ""){errors +=1; ermsg += "Municipality, "}
+        if($('#brgy').val() == ""){errors +=1; ermsg += "Baranggay, "}
+         // Disregard if update
+
+        if($('#street_name').val() == ""){errors +=1; ermsg += "Street Name, "}
+        if($('#zip').val() == ""){errors +=1; ermsg += "Zip Code, "}
+
+        if($('#fac_mobile_number').val() == ""){errors +=1; ermsg += "Facility Mobile No., "}
+        if($('#areacode').val() == ""){errors +=1; ermsg += "Facility Landline Area code, "}
+        if($('#landline').val() == ""){errors +=1; ermsg += "Facility Landline, "}
+        if($('#faxareacode').val() == ""){errors +=1; ermsg += "Fax Area code, "}
+        if($('#faxNumber').val() == ""){errors +=1; ermsg += "Fax Number, "}
+        if($('#fac_email_address').val() == ""){errors +=1; ermsg += "Facility Email, "}
+        if($('#ocid').val() == "Please select"){errors +=1; ermsg += "Ownership, "}
+
+        // Disregard if update
+        if($('#classification').val() == "Please select"){errors +=1; ermsg += "Classification, "}
+        if($('#subclass').val() == "Please select"){errors +=1; ermsg += "Sub Classification, "}
+        // Disregard if update
+
+        if($('#facmode').val() == "Please select"){errors +=1; ermsg += "Institutional Character, "}
+        if($('#funcid').val() == "Please select"){errors +=1; ermsg += "Function, "}
+      
+        if($('#owner').val() == ""){errors +=1; ermsg += "Owner, "}
+        if($('#prop_mobile').val() == ""){errors +=1; ermsg += "Proponent Mobile, "}
+        if($('#prop_landline_areacode').val() == ""){errors +=1; ermsg += "Proponent Landline Areacode, "}
+        if($('#prop_landline').val() == ""){errors +=1; ermsg += "Proponent Landline, "}
+        if($('#prop_email').val() == ""){errors +=1; ermsg += "Proponent Email, "}
+        if($('#official_mail_address').val() == ""){errors +=1; ermsg += "Official Mailing Address, "}
+        if($('#approving_authority_pos').val() == ""){errors +=1; ermsg += "Approving Authority Position, "}
+        if($('#approving_authority_name').val() == ""){errors +=1; ermsg += "Approving Authority Name, "}
+        
+      
+        if($('input[name="hgpid"]:checked').val() == undefined){errors +=1; ermsg += "Facilities/Type, "}
+        
+        
+        if(errors > 0){
+            alert("Please fill the following fields properly: " + ermsg)
+        }else{
+            console.log("errors")
+            console.log(errors)
+            submitProper(e)
+        }
+
+        
+
+
+   
+    }
+
+
+function submitProper(e){
+    console.log("Saving Partial Form LTO ");
     const appid         = searchParams.get("appid");
     const types         = $("input[name='type[]']");
     const locations     = $("input[name='location[]'");
@@ -66,6 +126,8 @@
     const facid = $('input[name="facid"]:checked').val();    
     const data = {
         // appid:                  appid,
+        saveas:                  e,
+        // saveas:                  $('#saveasn').val(),
         appid:                  $('#appid').val(),
         hfser_id:               $('#typeOfApplication').val(),
         facilityname:           $('#facility_name').val(),
@@ -120,14 +182,19 @@
 
         callApi('/api/application/lto/save', data, 'POST').then(d => {
             const id = d.data.id;
-            alert('Information now saved');
+          
         // window.location.replace(`${base_url}/client/dashboard/new-application?appid=${id}`);
+            if(e == "final"){
+                window.location.href="{{asset('client1/apply/assessmentReady')}}/{{$fAddress[0]->appid}}"
+            }else{
+                alert('Information now saved');
+            }
         }
         ).then(error => {
             console.log(error);
         })
 
-}
+    }
 }
 
 

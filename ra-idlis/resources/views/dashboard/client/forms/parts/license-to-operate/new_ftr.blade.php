@@ -1112,7 +1112,11 @@ document.getElementsByName('areacode').value = 3;
                 // return resp[0];
        
     }
-
+    function saveas(val){
+        console.log("received save")
+        var itm = document.getElementById(val);
+        itm.value = "final";
+    }
     document.getElementById("buttonId").addEventListener("click", function(event) {
         event.preventDefault()
         var itm = document.getElementById("tr_amb");

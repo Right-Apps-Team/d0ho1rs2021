@@ -14,6 +14,13 @@
 Proper Routing
 
 ---- */
+
+// New
+
+
+
+
+
 Route::prefix('client')->group(__DIR__ . '/clients/dashboard.php');
 // OLD CLIENT-SIDE
 Route::match(['get', 'post'], '/qrcode/{appid}', 'NewClientController@generateForCertificate');

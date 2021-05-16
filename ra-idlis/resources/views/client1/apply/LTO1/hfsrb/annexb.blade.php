@@ -125,6 +125,7 @@
 		                   				Date of Purchase:
 		                   			</div>
 		                   			<div class="col-sm-11">
+		                   				<!-- <input type="date" class="form-control w-100" name="dop" required=""> -->
 		                   				<input type="date" class="form-control w-100" name="dop" required="">
 		                   			</div>
 		                   		</div>

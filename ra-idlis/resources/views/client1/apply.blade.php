@@ -29,6 +29,7 @@
 		color: #fff;
 	}
 </style>
+
 <body>
 	@include('client1.cmp.nav')
 	@include('client1.cmp.breadcrumb')
@@ -84,17 +85,17 @@
 			<table class="table table-bordered" id="tApp" style="border-bottom: none;border-collapse: collapse;">
 				<thead class="thead-dark">
 					<tr>
-						<th style="white-space: nowrap;">Application Code</th>
-						<th style="white-space: nowrap;">Facility Name</th>
-						<th style="white-space: nowrap;">Type of Application</th>
-						<th >Owner</th>
-						<th style="white-space: nowrap;">Date applied</th>
-						<th style="white-space: nowrap;">DOH Status</th>
-						<th style="white-space: nowrap;">FDA Status</th>
+						<th style="white-space: nowrap;" class="text-center">Application <br/> Code</th>
+						<th style="white-space: nowrap;" class="text-center">Facility Name</th>
+						<th style="white-space: nowrap;" class="text-center">Type of <br/> Application</th>
+						<th style="white-space: nowrap;" class="text-center">Owner</th>
+						<th style="white-space: nowrap;" class="text-center">Date <br/> applied</th>
+						<th style="white-space: nowrap;" class="text-center">DOH Status</th>
+						<th style="white-space: nowrap;" class="text-center">FDA Status</th>
 						{{-- <th>Self-Assement Complied (%)</th> --}}
-						<th style="white-space: nowrap;">Document Received On</th>
-						<th style="white-space: nowrap;">HFSRB/FDA Requirements</th>
-						<th>Options</th>
+						<th style="white-space: nowrap;" class="text-center">Document <br/> Received On</th>
+						<th style="white-space: nowrap;" class="text-center">HFSRB/FDA <br/>Requirements</th>
+						<th style="white-space: nowrap;" class="text-center">Options</th>
 					</tr>
 				</thead>
 				<tbody id="homeTbl">
@@ -156,7 +157,8 @@
 								<span class="font-weight-bold">Not Applicable</span>
 							@endif
 						</td>
-						<td class="text-center" style="width: 15%; height: auto;">
+						<td class="text-center" style="height: auto;">
+						<!-- <td class="text-center" style="width: 15%; height: auto;"> -->
 							{{-- <a href="{{asset('client1/certificates')}}/{{strtoupper($each->hfser_id)}}/{{$each->appid}}"><button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Print"><i class="fa fa-print"></i></button></a> --}}
 							{{-- <a href="{{asset('client1/apply/edit')}}/{{$each->appid}}"><button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil-square-o"></i></button></a> --}}
 							{{-- @if($each[0]->isPayEval == 1) --}}
@@ -285,6 +287,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 	<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
 	<script src="{{asset('ra-idlis/public/js/forall.js')}}"></script>
 	<script type="text/javascript">
 		"use strict";
