@@ -115,7 +115,24 @@
 						<td>{{$each[0]->documentSent}}</td>
 						<td class="text-center">
 							@if(in_array(strtolower($each[0]->hfser_id), ['lto','coa']))
-							<div class="container">
+							<div class="btn-group mb-1">
+							  <button class="btn btn-block btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    Requirements
+							  </button>
+							  <div class="dropdown-menu">
+							  @if($each[0]->noofmain > 0)
+							 			<div style="margin-left: 10px;margin-right: 10px;">
+									    <a class="dropdown-item " style="border-radius: 3px;" href="{{asset('client1/apply/app/'.$each[0]->hfser_id.'/')}}/{{$each[0]->appid}}/fda">FDA Requirements</a>
+									    </div>									    
+									    <div class="dropdown-divider"></div>
+									
+							  @endif
+									    <div style="margin-left: 10px;margin-right: 10px;">
+									    <a class="dropdown-item  " style="border-radius: 3px;"  href="{{asset('client1/apply/app/'.$each[0]->hfser_id.'/')}}/{{$each[0]->appid}}/hfsrb">HFSRB Requirements</a>
+									    </div>	
+							  </div>
+							</div>
+							<!-- <div class="container">
 								<div class="row">
 									@if($each[0]->noofmain > 0)
 									<div class="col">
@@ -134,7 +151,7 @@
 										</a>
 									</div>
 								</div>
-							</div>
+							</div> -->
 							@else
 								<span class="font-weight-bold">Not Applicable</span>
 							@endif

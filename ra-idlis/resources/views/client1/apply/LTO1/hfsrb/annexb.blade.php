@@ -105,11 +105,11 @@
 		                   			</div>
 		                   		</div>
 		                   		<div class="row mb-2">
-		                   			<div class="col-sm">
+		                   			<div class="col-sm required">
 		                   				Serial:
 		                   			</div>
 		                   			<div class="col-sm-11">
-		                   				<input class="form-control w-100" name="serial">
+		                   				<input class="form-control w-100" required name="serial">
 		                   			</div>
 		                   		</div>
 		                   		<div class="row mb-2">
