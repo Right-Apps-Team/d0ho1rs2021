@@ -506,6 +506,18 @@ document.getElementsByName('areacode').value = 3;
     function getFacServCharge (val = null){
         console.log("received fees")
         var addons= [];
+
+        var asc = document.getElementById("H3AmbulatorySurgicalClinic");
+        if(asc){
+        if (asc.checked == true){
+            console.log("received ASC")
+          
+            document.getElementsByClassName('ambulSurgCli')[0].removeAttribute("hidden")
+        }else{
+            document.getElementsByClassName('ambulSurgCli')[0].setAttribute("hidden", "hidden")
+        }
+    }
+        // H3AmbulatorySurgicalClinic
         // console.log("val")
         // console.log(val)
 
@@ -1125,6 +1137,8 @@ document.getElementsByName('areacode').value = 3;
         cln.setAttribute("class", "tr_amb");
         document.getElementById("body_amb").appendChild(cln);
     });
+
+    
 
     document.getElementById("buttonIdAos").addEventListener("click", function(event) {
         event.preventDefault()
