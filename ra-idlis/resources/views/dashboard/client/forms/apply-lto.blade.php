@@ -18,9 +18,11 @@
                 $_dispData = "Update Details";
             }
         } ?>
+        
         {{-- {{dd([$_aptdesc,$_dispSubmit,$_dispData,$aptid,$_aptdesc])}} --}}
         {{csrf_field()}}
         <section class="container-fluid">
+        
             <div class="card">
                 <div class="card-header">
                     <p class="lead text-center text-danger">Please note: Red asterisk (*) is a required field and may be encountered throughout the system </p>
@@ -106,7 +108,10 @@
                         {{-- LTO For Pharmacy --}}
                         @include('dashboard.client.forms.parts.license-to-operate.for-pharmacy')
 
-
+                        @if(isset($fAddress)&&(count($fAddress) > 0))
+                        <br/>
+                        @else
+                       
                         <div class="form-group row col-md-12 mt-5">
                             <div class="col-lg-3 col-md-3 col-xs-12"></div>
                             <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
@@ -130,6 +135,7 @@
                                 </button>
                             </div>
                         </div>
+                        @endif
                     </form>
                 </div>
             </div>

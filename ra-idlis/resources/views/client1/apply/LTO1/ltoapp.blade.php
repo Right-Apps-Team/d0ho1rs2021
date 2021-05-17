@@ -19,7 +19,25 @@
 	}
 </style>
 <body>
-	<?php $_aptid = "IN"; $_aptdesc = "Initial New"; $_dispSubmit = false; $_dispData = "Submit Details"; if(isset($aptid)) { if($aptid == "IC") { $_aptid = $aptid; $_aptdesc = "Change Request"; $_dispSubmit = true; $_dispData = "Update Details"; } if($aptid == "R") { $_aptid = $aptid; $_aptdesc = "Renewal"; $_dispSubmit = true; $_dispData = "Update Details"; }  } ?>
+	<?php 
+	$_aptid = "IN"; 
+	$_aptdesc = "Initial New"; 
+	$_dispSubmit = false; 
+	$_dispData = "Submit Details"; 
+	if(isset($aptid)) { 
+		if($aptid == "IC") { 
+			$_aptid = $aptid; 
+			$_aptdesc = "Change Request"; 
+			$_dispSubmit = true; 
+			$_dispData = "Update Details"; 
+		} 
+		if($aptid == "R") { 
+			$_aptid = $aptid; 
+			$_aptdesc = "Renewal"; 
+			$_dispSubmit = true; 
+			$_dispData = "Update Details"; 
+		}  
+	} ?>
 	{{-- {{dd([$_aptdesc,$_dispSubmit,$_dispData,$aptid,$_aptdesc])}} --}}
 	@if(! isset($hideExtensions))
 		@include('client1.cmp.nav')

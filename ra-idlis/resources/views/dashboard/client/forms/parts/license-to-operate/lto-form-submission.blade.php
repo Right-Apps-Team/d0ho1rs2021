@@ -60,6 +60,7 @@
             submitProper(e)
         }
 
+      
         
 
 
@@ -182,10 +183,12 @@ function submitProper(e){
 
         callApi('/api/application/lto/save', data, 'POST').then(d => {
             const id = d.data.id;
-          
+          console.log("id")
+          console.log(id)
         // window.location.replace(`${base_url}/client/dashboard/new-application?appid=${id}`);
             if(e == "final"){
-                window.location.href="{{asset('client1/apply/assessmentReady')}}/{{$fAddress[0]->appid}}"
+                window.location.href="{{asset('client1/apply/assessmentReady/')}}/"+ id
+            
             }else{
                 alert('Information now saved');
             }

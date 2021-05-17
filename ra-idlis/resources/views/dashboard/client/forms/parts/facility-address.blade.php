@@ -6,7 +6,7 @@
     <input class="form-control " value="{{$fAddress[0]->rgn_desc}}" disabled />
     @else
 
-    <select class="form-control selectpicker show-menu-arrow toRemove"  value='{{((isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->rgnid: null)}}' id="region" name="rgnid" required data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" onChange="fetchProvince(this)">
+    <select class="form-control selectpicker show-menu-arrow toRemove"  id="region" name="rgnid" required data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" onChange="fetchProvince(this)">
         <option value="">Please select</option>
         @foreach( $regions as $region)
         <option value="{{$region->rgnid}}">{{$region->rgn_desc}}</option>

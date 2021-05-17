@@ -144,6 +144,7 @@ class LtoAppController extends Controller
         
             return response()->json(
                 [
+                    'id' => $appform->appid,
                     'applicaiton' => $appform,
                     // 'con_catchment' => $concatch,
                     'provinces'     => Province::where('rgnid', $appform->rgnid)->get(),
