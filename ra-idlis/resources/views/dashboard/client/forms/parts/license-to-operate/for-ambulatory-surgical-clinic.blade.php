@@ -6,7 +6,13 @@
         </b>
     </div>
 
-    {{-- Colorectal Surgery --}}
+    <div id="forAmb">
+        <div id="hgpid1">
+        
+        </div>
+
+    </div>
+    <!-- {{-- Colorectal Surgery --}}
     <div class="col-md-4">
         <label for="CS">
             <input type="checkbox" value="CS" id="CS" name="facid">
@@ -92,5 +98,5 @@
             <input type="checkbox" value="US" id="US" name="facid">
             Urologic Surgery
         </label>
-    </div>
+    </div> -->
 </div>

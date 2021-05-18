@@ -1,6 +1,7 @@
 <script>
 var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
-
+// console.log("mserv_cap")
+// console.log(mserv_cap)
 // START OF DATA INITIALIZATION FOR VIEWING EXISTING APPLICATION
 if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
     
@@ -138,6 +139,7 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
                                                     
                                                 });
                                             }
+                                           
                                         }, 1000);
 
                                         }else if(dbhgpid == 1){
@@ -321,7 +323,19 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
       getChargesPerApplication();
         // get amubulance charge
       getChargesPerAmb()
+
+        if(getFACID.length > 0){
+            getFACID.map((h) => {
+                var getFacidField = document.getElementById(h.facid);
+                if(getFacidField){
+                    document.getElementById(h.facid).checked= true
+                }
+                
+            });
+        }
     }, 2000);
+
+    
         
 } 
 
@@ -408,6 +422,48 @@ document.getElementsByName('areacode').value = 3;
 
 
     }
+
+    function ASCfacilities (){
+        // $('#hgpid1').remove()
+
+            var newDiv = document.createElement("div");
+            newDiv.setAttribute("id", "hgpid1");
+            newDiv.setAttribute("class", "custom-control");
+            document.getElementById("forAmb").appendChild(newDiv);
+
+            var result = mserv_cap.filter(function(v) {
+                return v.hgpid == 1;
+            })
+
+            result.map((it) => {
+                var newDiv = document.createElement("div");
+                newDiv.setAttribute("class", "row custom-control  mr-sm-2");
+                // newDiv.setAttribute("class", "col-md-4");
+                newDiv.setAttribute("id", "hgpid1-" + it.facid);
+                document.getElementById("hgpid1").appendChild(newDiv);
+
+                var x = document.createElement("INPUT");
+                x.setAttribute("id", it.facid);
+                x.setAttribute("type", "checkbox");
+                x.setAttribute("value", it.facid);
+                x.setAttribute("name", "facid");
+                x.setAttribute("onclick", "getFacServCharge()");
+                x.setAttribute("class", "custom-control-input exAddRenew");
+                document.getElementById("hgpid1-" + it.facid).appendChild(x);
+
+                var label = document.createElement("Label");
+                label.setAttribute("for", it.facid);
+                label.setAttribute("class", "custom-control-label");
+                label.innerHTML = it.facname;
+
+                var newInput = document.getElementById(it.facid)
+                insertAfter(newInput, label);
+
+            
+        })
+
+
+    }
    
     function type_of_fac(selected) {
         const data = ["hospClassif", "forHosp", "ambuDetails", "ancillary", "addOnServe", "ambulSurgCli", "clinicLab", "dialysisClinic", "otherClinicService"];
@@ -416,7 +472,8 @@ document.getElementsByName('areacode').value = 3;
         });
         // initila selection from db
         document.getElementById(selected).checked = true;
-        
+
+        $('#hgpid1').remove()
         removeAmbuRows()
         deselectOpts('anxsel')
         deselectOpts('facid')
@@ -503,20 +560,29 @@ document.getElementsByName('areacode').value = 3;
                 }  
     }
 
-    function getFacServCharge (val = null){
-        console.log("received fees")
+function getFacServCharge (val = null){
+   
+        // console.log("received fees")
         var addons= [];
 
         var asc = document.getElementById("H3AmbulatorySurgicalClinic");
-        if(asc){
-        if (asc.checked == true){
-            console.log("received ASC")
-          
-            document.getElementsByClassName('ambulSurgCli')[0].removeAttribute("hidden")
-        }else{
-            document.getElementsByClassName('ambulSurgCli')[0].setAttribute("hidden", "hidden")
+        var ascType = document.getElementById("1");
+        if(asc ||  ascType.checked == true){
+            if (asc.checked == true || ascType.checked == true){
+                // console.log("received ASC")
+            
+                document.getElementsByClassName('ambulSurgCli')[0].removeAttribute("hidden")
+                var hgp1 = document.getElementById("hgpid1")
+                // console.log(hgp1)
+                // console.log("hgp1")
+                if(hgp1 == null){
+                ASCfacilities ()
+                }
+            }else{
+                $('#hgpid1').remove()
+                document.getElementsByClassName('ambulSurgCli')[0].setAttribute("hidden", "hidden")
+            }
         }
-    }
         // H3AmbulatorySurgicalClinic
         // console.log("val")
         // console.log(val)
@@ -524,6 +590,7 @@ document.getElementsByName('areacode').value = 3;
         if(val == 2){
             // console.log("Received Add ons")
              addons = getaddonsValues();
+            // console.log("addons")
             // console.log(addons)
         }
 
@@ -582,6 +649,8 @@ document.getElementsByName('areacode').value = 3;
                   
                     // console.log("thisFacid")
                     // console.log(thisFacid)
+
+                setTimeout(function(){ 
 					sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getServiceCharge')}}", "POST", true, {
 						functionProcess: function(arr) {
 
@@ -615,11 +684,14 @@ document.getElementsByName('areacode').value = 3;
 							}
 						}
 					});
+            }, 1000);
 
 				} else {
 					serv_chg.innerHTML = '<tr><td colspan="2">No Payment Necessary.</td></tr>';
 				}
-    }
+   
+
+}
 
     function getCheckedValue( groupName ) {
         var radios;
@@ -663,6 +735,7 @@ document.getElementsByName('areacode').value = 3;
     function ifAmbuSurg(specs) {
         const data = ["ambulSurgCli", "ambuDetails", "clinicLab"];
         if (specs == "show") {
+            ASCfacilities ()
             data.map((h) => {
                 document.getElementsByClassName(h)[0].removeAttribute("hidden")
             });
@@ -1125,7 +1198,7 @@ document.getElementsByName('areacode').value = 3;
        
     }
     function saveas(val){
-        console.log("received save")
+        // console.log("received save")
         var itm = document.getElementById(val);
         itm.value = "final";
     }
@@ -1165,8 +1238,13 @@ document.getElementsByName('areacode').value = 3;
                 document.getElementsByClassName("addOnServe")[0].removeAttribute("hidden")
             }
            
-           
+
+            // console.log("e.target.class")
+            // console.log(e.target.className)
+
+            if(e.target.className != "custom-control-input exAddRenew"){
             renewAddOnSelect(e.target.value)
+            }
         }
     });
 

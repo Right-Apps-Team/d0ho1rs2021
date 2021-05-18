@@ -81,11 +81,13 @@
                         {{-- LTO For Dialysis Clinic --}}
                         @include('dashboard.client.forms.parts.license-to-operate.for-dialysis-clinic')
 
+                        {{-- LTO For Ambulatory Surgical Clinic --}}
+                        @include('dashboard.client.forms.parts.license-to-operate.for-ambulatory-surgical-clinic')
+                        
                         {{-- LTO Add-On Services --}}
                         @include('dashboard.client.forms.parts.license-to-operate.add-on-services')
 
-                        {{-- LTO For Ambulatory Surgical Clinic --}}
-                        @include('dashboard.client.forms.parts.license-to-operate.for-ambulatory-surgical-clinic')
+                       
 
                         {{-- LTO For Ambulance Details --}}
                         @include('dashboard.client.forms.parts.license-to-operate.for-ambulance-details')
@@ -135,7 +137,9 @@
                                 </button>
                             </div>
                         </div>
+
                         @endif
+                       
                     </form>
                 </div>
             </div>
