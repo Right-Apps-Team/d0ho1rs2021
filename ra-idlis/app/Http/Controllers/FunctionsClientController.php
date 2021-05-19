@@ -1059,19 +1059,42 @@ class FunctionsClientController extends Controller {
 	}
 
 	public static function hasEmptyDBFields($table = null, $where = [], $fields = []){
+		$haslist = false;
 		$arrEmpty = array();
 		if(isset($table) && isset($fields) && isset($where)){
-			$test = DB::table($table)->where($where)->get();
-			foreach ($test as $key) {
-				foreach ($fields as $field) {
-					if(empty($key->$field)){
-						if(!in_array($field, $arrEmpty)){
-							array_push($arrEmpty, $field);
+			// $test = DB::table($table)->where($where)->get();
+			// foreach ($test as $key) {
+			// 	foreach ($fields as $field) {
+			// 		if(empty($key->$field)){
+			// 			if(!in_array($field, $arrEmpty)){
+			// 				array_push($arrEmpty, $field);
+			// 			}
+			// 		}
+			// 	}
+			// }
+			// return [(empty($arrEmpty) ? false : true),$arrEmpty];
+			$res = DB::table($table)->where($where);
+			
+			if($res->first()){
+				$test = DB::table($table)->where($where)->get();
+				foreach ($test as $key) {
+					foreach ($fields as $field) {
+						if(empty($key->$field)){
+							if(!in_array($field, $arrEmpty)){
+								array_push($arrEmpty, $field);
+							}
 						}
 					}
 				}
+
+				$haslist = true;
+				
+			}else{
+				$arrEmpty = array();
+				$haslist = false;
 			}
-			return [(empty($arrEmpty) ? false : true),$arrEmpty];
+			return [(empty($arrEmpty) ? false : true),$arrEmpty, $haslist];
+			// return [(empty($arrEmpty) ? false : true),$arrEmpty, $haslist];
 		}
 	}
 

@@ -27,6 +27,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-5 alert alert-warning text-center">
+                                <!-- <a style="color: #ffc107" href="{{asset('client1/apply/app')}}/COR}}">Certificate of Accreditation</a> -->
                                 <a style="color: #ffc107" href="{{asset('client/dashboard/application/certificate-of-accreditation')}}">Certificate of Accreditation</a>
                         </div>
                     </div>
@@ -37,6 +38,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-5 alert alert-dark text-center">
+                                <!-- <a style="color: #343a40" href="{{asset('client1/apply/app')}}/COR}}">Certificate of Registration</a> -->
                                 <a style="color: #343a40" href="{{asset('client/dashboard/application/certificate-of-registration')}}">Certificate of Registration</a>
                         </div>
                     </div>

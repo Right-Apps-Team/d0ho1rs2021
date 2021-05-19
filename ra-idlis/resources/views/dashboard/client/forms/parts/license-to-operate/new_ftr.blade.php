@@ -647,8 +647,8 @@ function getFacServCharge (val = null){
 					}
 
                   
-                    // console.log("thisFacid")
-                    // console.log(thisFacid)
+                    console.log("thisFacid")
+                    console.log(thisFacid)
 
                 setTimeout(function(){ 
 					sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getServiceCharge')}}", "POST", true, {

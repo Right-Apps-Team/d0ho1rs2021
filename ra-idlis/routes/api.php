@@ -35,6 +35,11 @@ Route::post(
 
 Route::post(
     '/application/lto/save',
+    'Client\Api\CorAppController@save'
+); //->middleware([APIMiddleware::class]);
+
+Route::post(
+    '/application/cor/save',
     'Client\Api\LtoAppController@save'
 ); //->middleware([APIMiddleware::class]);
 

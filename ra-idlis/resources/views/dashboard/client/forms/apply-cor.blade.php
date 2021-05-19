@@ -22,7 +22,7 @@
                 @include('dashboard.client.forms.parts.classification')
     
                 <!-- Service Capabilities -->
-                @include('dashboard.client.forms.parts.service-capabilities')
+                <!-- @include('dashboard.client.forms.parts.service-capabilities') -->
     
                 <!-- Owner Details -->
                 @include('dashboard.client.forms.parts.owner-details')
@@ -36,6 +36,7 @@
                 <!-- Approving Authority Details -->
                 @include('dashboard.client.forms.parts.approving-authority-details')
 
+               
                 {{-- COR Type of Facility --}}
                 @include('dashboard.client.forms.parts.certificate-of-registration.type-of-facility')
 
@@ -44,10 +45,10 @@
 
 
                 {{-- COR Health Facility Address --}}
-                @include('dashboard.client.forms.parts.certificate-of-registration.health-facility-address')
+                <!-- @include('dashboard.client.forms.parts.certificate-of-registration.health-facility-address') -->
 
                 {{-- COR Certification According To --}}
-                @include('dashboard.client.forms.parts.certificate-of-registration.certification-according-to')
+                <!-- @include('dashboard.client.forms.parts.certificate-of-registration.certification-according-to') -->
                 
     
     
@@ -65,14 +66,15 @@
                             value="submit" 
                             name="submit"
                             data-toggle="modal" 
-                            data-target="#confirmSubmitModal"
+                            data-target="#confirmSubmitModalCor"
+                            
                         >
                             <i class="fa fa-paper-plane" aria-hidden="true"></i>
                             Submit Form
                         </button>
                     </div>
                     <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
-                        <button class="btn btn-success btn-block" type="button" onClick="savePartial(this)">
+                        <button class="btn btn-success btn-block" type="button" onClick="savePartialCor('partial')">
                             <i class="fa fa-floppy-o" aria-hidden="true"></i>
                             Save as Draft
                         </button>
@@ -81,7 +83,48 @@
             </form>
         </div>
     </div>
+    <!-- Modal -->
+<div class="modal fade" id="confirmSubmitModalCor" tabindex="-1" aria-labelledby="confirmSubmitModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmSubmitModalLabel">Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-info">
+            <p class="lead"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> <b>Are you sure you want to submit form?</b></p>
+            <p >Please check and review your application form before submitting.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button 
+            type="button" 
+            class="btn btn-primary" 
+            onclick="setTimeout(function() {window.print()}, 10); "
+        >
+            <i class="fa fa-eye" aria-hidden="true"></i> Preview
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+            <i class="fa fa-times" aria-hidden="true"></i> 
+            No, Recheck details
+        </button>
+        <button onClick="savePartialCor('final')" type="button" class="btn btn-success" data-dismiss="modal"
+        
+         >
+         <!-- href={{ asset('client/dashboard/application/requirements/') }} -->
+            <i class="fa fa-paper-plane" aria-hidden="true"></i> 
+            Proceed
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
     @include('dashboard.client.modal.facilityname-helper')
+    @include('dashboard.client.forms.parts.certificate-of-registration.cor-submission')
+    @include('dashboard.client.forms.parts.certificate-of-registration.cor_scripts')
     </section>
 </div>
 

@@ -56,5 +56,6 @@
     </script>
     <script src="{{asset('ra-idlis/public/js/clients/application-form.js')}}"></script>
     @include('client1.cmp.footer')
+    @include('dashboard.client.gen_initial_data')
 </body>
 @endsection

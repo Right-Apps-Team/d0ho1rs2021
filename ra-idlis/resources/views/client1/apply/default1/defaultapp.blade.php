@@ -49,7 +49,7 @@
 						<div id="_errMsg"></div>
 						<div class="row col-border-right" style="border-top: 1px solid; border-right: 1px solid; border-left: 1px solid; background-color: #bfcddc;">
 							<div class="col">
-								<p class="req">Type of Facility</p>
+								<p class="req">Type of Facilityghjdk</p>
 							</div>
 						</div>
 						<div class="row col-border-right" style="border-top: 1px solid; border-right: 1px solid; border-left: 1px solid;">
@@ -315,6 +315,8 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 	<script src="{{asset('ra-idlis/public/js/forall.js')}}"></script>
 	<script type="text/javascript">
+		// console.log("rECEIVED")
+
 		"use strict";
 		// var ___div = document.getElementById('__applyBread'), ___wizardcount = document.getElementsByClassName('wizardcount');
 		// if(___wizardcount != null || ___wizardcount != undefined) {
@@ -327,8 +329,24 @@
 		// 		}
 		// 	}
 		// }
-		var mclass = JSON.parse('{!!$class!!}'), msubclass = JSON.parse('{!!$subclass!!}'), mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}'), mappform = JSON.parse('{!!json_encode($fAddress)!!}'), mservfac = JSON.parse('{!!$servfac!!}');
-		var curAppid = "", curPtcId = "", curHfserid ="{{((count($fAddress) > 0) ? $fAddress[0]->hfser_id : "")}}", assignedRgn = "", assignedGroup = {};
+		// console.log("mserv_cap")
+		var m = JSON.parse('{!!addslashes($serv_cap)!!}');
+		// console.log(m)
+
+		var mclass = JSON.parse('{!!$class!!}'), 
+		msubclass = JSON.parse('{!!$subclass!!}'), 
+		mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}'), 
+		mappform = JSON.parse('{!!addslashes(json_encode($fAddress))!!}'), 
+		// mappform = JSON.parse('{!!json_encode($fAddress)!!}'),
+		 mservfac = JSON.parse('{!!$servfac!!}');
+		var curAppid = "", curPtcId = "", 
+		curHfserid ='{!!((count($fAddress) > 0) ? $fAddress[0]->hfser_id : "")!!}', 
+		// curHfserid ="{{((count($fAddress) > 0) ? $fAddress[0]->hfser_id : "")}}", 
+		assignedRgn = "", assignedGroup = {};
+	
+		// console.log("mserv_cfdsfgdap")
+		// console.log(mserv_cap)
+		
 		// if(___div != null || ___div != undefined) {
 		// 	___div.classList.remove('active');
 		// 	___div.classList.add('text-primary');
@@ -393,7 +411,7 @@
 						if(appopp != null || appopp != undefined) { if(cModalBtn != undefined || cModalBtn != null) {
 							if(arr.length > 0) {
 								let tpaid = arr[0]['oop_total'] - arr[0]['oop_paid'];
-								console.log(tpaid);
+								// console.log(tpaid);
 								if(tpaid == 0) {
 									cModalBtn.removeAttribute('data-target'); cModalBtn.setAttribute('hidden', true); cModalBtn.innerHTML = "Proceed payment.";
 								} else {

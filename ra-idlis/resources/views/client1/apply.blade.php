@@ -217,6 +217,15 @@
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/assessmentReady/')}}/{{$each[0]->appid}}/">Self Assessment</a>
 									    </div>							
 							    	@break
+									@case('COR')
+										<div style="margin-left: 10px;margin-right: 10px;">
+									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Continue Application</a>
+									    </div>									    
+									    <div class="dropdown-divider"></div>
+									    <div style="margin-left: 10px;margin-right: 10px;">
+									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/attachment')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Attachments</a>
+									    </div>								
+							    	@break
 									@default
 										<div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Continue Application</a>

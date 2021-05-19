@@ -518,6 +518,38 @@ class NewClientController extends Controller {
 					 $locRet = "dashboard.client.license-to-operate";
 					//  $locRet = "client1.apply.LTO1.ltoapp";
 					break;
+				case 'COR':
+						session()->forget('ambcharge');
+						$hfser_id = 'COR';
+						$faclArr = [];
+							$facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();
+							foreach ($facl_grp as $f) {
+								array_push($faclArr, $f->hgpid);
+							}
+						$arrRet = [
+							'hfser' =>  "COR",
+							'user'=> $user_data,
+							'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
+							'userInf'=>FunctionsClientController::getUserDetails(),
+							'hfaci_serv_type'=>DB::select($hfaci_sql),
+							'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),
+							'serv_cap'=>json_encode(DB::table('facilitytyp')->where([['servtype_id',1],['forSpecialty',0]])->get()),
+							'ownership'=>DB::table('ownership')->get(),
+							'class'=>json_encode(DB::select("SELECT * FROM class WHERE (isSub IS NULL OR isSub = '')")),
+							'subclass'=>json_encode(DB::select("SELECT * FROM class WHERE (isSub IS NOT NULL OR isSub != '')")),
+							'function'=>DB::table('funcapf')->get(),
+							'facmode'=>DB::table('facmode')->get(),
+							'apptype'=>DB::table('apptype')->get(),
+							'fAddress'=>$appGet,
+							'servfac'=>json_encode(FunctionsClientController::getServFaclDetails($appid)),
+							'cToken'=>FunctionsClientController::getToken(),
+							'hfer' => $apptype,
+							'hideExtensions'=>$hideExtensions,
+							'aptid'=>$aptid
+						]; 
+						$locRet = "dashboard.client.certificate-of-registration";
+						// $locRet = "client1.apply.default1.defaultapp";
+						break;
 
 				case 'COA':
 					session()->forget('ambcharge');
@@ -540,7 +572,7 @@ class NewClientController extends Controller {
 					]; 
 					$locRet = "client1.apply.COA1.coaapp";
 					break;
-
+				
 				default:
 					session()->forget('ambcharge');
 					$arrRet = [
@@ -1059,79 +1091,102 @@ class NewClientController extends Controller {
 					$toAppform = [];
 					$pharma = FunctionsClientController::hasEmptyDBFields('cdrrpersonnel',['appid' => $appid],['prc','coe']);
 					$mach = FunctionsClientController::hasEmptyDBFields('cdrrhrpersonnel',['appid' => $appid],['prc','bc','coe']);
-					if(!$pharma[0] && !$mach[0]){
-						$ret = DB::table('appform')->where('appid',$appid)->update(['isReadyForInspecFDA' => 1]);
-						if($ret){
-							$lrf = $lrfForPharma = 0;
-							$dataMach = DB::table('cdrrhrxraylist')->select('id','maxma')->where('appid',$appid)->get();
-							$appform = FunctionsClientController::getUserDetailsByAppform($appid)[0];
-							$cdrr = FunctionsClientController::getDetailsFDACDRR($appid);
-							$findIn = 'initial_amnt';
-							if(isset($appform->aptid)){
-								switch (true) {
-									case ($appform->aptid == 'IN'):
-										$findIn = 'initial_amnt';
-										break;
-									case ($appform->aptid == 'R'):
-										$findIn = 'renewal_amnt';
-										break;
-								}
-							}
-
-							foreach($dataMach as $mach){
-								$price = DB::table('fdarange')->select($findIn, 'id')->where('rangeFrom','<=',$mach->maxma)->where('rangeTo','>=',$mach->maxma)->first();
-								$lrf += ($price->$findIn <= 1000 ? 10 : ($price->$findIn /100));
-								$toChgfil = DB::table('fda_chgfil')->insert(['appid' => $appid, 'fchg_code' => $price->id, 'xray_listID' => $mach->id ,'MAvalue' => $mach->maxma, 'amount' => $price->$findIn, 't_date' => Carbon::now()->toDateString(), 't_time' => Carbon::now()->toTimeString(), 'uid' => session()->get('uData')->uid, 'ipaddress' => request()->ip()]);
-							}
-
-							if(isset($cdrr[3])){
-								$prices = DB::table('fda_pharmacycharges')->get();
-								// main
-								if(isset($cdrr[3][0]) && isset($prices)){
-									for ($i=0; $i < $cdrr[3][0]; $i++) { 
-										$lrfForPharma += ($prices[0]->price <= 1000 ? 10 : ($prices[0]->price /100));
+					
+					if($pharma[2] == true && $mach[2] == true){
+						if(!$pharma[0] && !$mach[0]){
+							$ret = DB::table('appform')->where('appid',$appid)->update(['isReadyForInspecFDA' => 1]);
+							if($ret){
+								$lrf = $lrfForPharma = 0;
+								$dataMach = DB::table('cdrrhrxraylist')->select('id','maxma')->where('appid',$appid)->get();
+								$appform = FunctionsClientController::getUserDetailsByAppform($appid)[0];
+								$cdrr = FunctionsClientController::getDetailsFDACDRR($appid);
+								$findIn = 'initial_amnt';
+								if(isset($appform->aptid)){
+									switch (true) {
+										case ($appform->aptid == 'IN'):
+											$findIn = 'initial_amnt';
+											break;
+										case ($appform->aptid == 'R'):
+											$findIn = 'renewal_amnt';
+											break;
 									}
 								}
-								// sattelite
-								if(isset($cdrr[3][1]) && isset($prices)){
-									for ($j=0; $j < $cdrr[3][1]; $j++) { 
-										$lrfForPharma += ($prices[1]->price <= 1000 ? 10 : ($prices[1]->price /100));
+
+								foreach($dataMach as $mach){
+									$price = DB::table('fdarange')->select($findIn, 'id')->where('rangeFrom','<=',$mach->maxma)->where('rangeTo','>=',$mach->maxma)->first();
+									$lrf += ($price->$findIn <= 1000 ? 10 : ($price->$findIn /100));
+									$toChgfil = DB::table('fda_chgfil')->insert(['appid' => $appid, 'fchg_code' => $price->id, 'xray_listID' => $mach->id ,'MAvalue' => $mach->maxma, 'amount' => $price->$findIn, 't_date' => Carbon::now()->toDateString(), 't_time' => Carbon::now()->toTimeString(), 'uid' => session()->get('uData')->uid, 'ipaddress' => request()->ip()]);
+								}
+
+								if(isset($cdrr[3])){
+									$prices = DB::table('fda_pharmacycharges')->get();
+									// main
+									if(isset($cdrr[3][0]) && isset($prices)){
+										for ($i=0; $i < $cdrr[3][0]; $i++) { 
+											$lrfForPharma += ($prices[0]->price <= 1000 ? 10 : ($prices[0]->price /100));
+										}
+									}
+									// sattelite
+									if(isset($cdrr[3][1]) && isset($prices)){
+										for ($j=0; $j < $cdrr[3][1]; $j++) { 
+											$lrfForPharma += ($prices[1]->price <= 1000 ? 10 : ($prices[1]->price /100));
+										}
 									}
 								}
-							}
-							DB::table('fda_chgfil')->insert(['appid' => $appid, 'fchg_code' => null, 'xray_listID' => null ,'MAvalue' => null, 'amount' => isset($cdrr[2]) ? $cdrr[2] : null, 't_date' => Carbon::now()->toDateString(), 't_time' => Carbon::now()->toTimeString(), 'uid' => session()->get('uData')->uid, 'ipaddress' => request()->ip()]);
-							DB::table('fda_chgfil')->insert(['appid' => $appid, 'fchg_code' => null, 'xray_listID' => null ,'MAvalue' => null, 'amount' => $lrfForPharma, 't_date' => Carbon::now()->toDateString(), 't_time' => Carbon::now()->toTimeString(), 'uid' => 'SYSTEM', 'lrfFor' => 'cdrr', 'ipaddress' => request()->ip()]);
+								DB::table('fda_chgfil')->insert(['appid' => $appid, 'fchg_code' => null, 'xray_listID' => null ,'MAvalue' => null, 'amount' => isset($cdrr[2]) ? $cdrr[2] : null, 't_date' => Carbon::now()->toDateString(), 't_time' => Carbon::now()->toTimeString(), 'uid' => session()->get('uData')->uid, 'ipaddress' => request()->ip()]);
+								DB::table('fda_chgfil')->insert(['appid' => $appid, 'fchg_code' => null, 'xray_listID' => null ,'MAvalue' => null, 'amount' => $lrfForPharma, 't_date' => Carbon::now()->toDateString(), 't_time' => Carbon::now()->toTimeString(), 'uid' => 'SYSTEM', 'lrfFor' => 'cdrr', 'ipaddress' => request()->ip()]);
 
-							$sum = DB::table('fda_chgfil')->where([['appid',$appid],['amount', '>', 0]])->sum('amount');
-							DB::table('fda_chgfil')->insert(['appid' => $appid, 'amount' => $lrf, 't_date' => Carbon::now()->toDateString(), 't_time' => Carbon::now()->toTimeString(), 'lrfFor' => 'cdrrhr', 'uid' => 'SYSTEM', 'ipaddress' => request()->ip()]);
+								$sum = DB::table('fda_chgfil')->where([['appid',$appid],['amount', '>', 0]])->sum('amount');
+								DB::table('fda_chgfil')->insert(['appid' => $appid, 'amount' => $lrf, 't_date' => Carbon::now()->toDateString(), 't_time' => Carbon::now()->toTimeString(), 'lrfFor' => 'cdrrhr', 'uid' => 'SYSTEM', 'ipaddress' => request()->ip()]);
 
-							// pharmacy
-							if(FunctionsClientController::hasRequirementsFor('cdrr',$appid)){
-								$toAppform['isPayEvalFDAPharma'] = 1;
-								$toAppform['payEvalbyFDAPharma'] = 'SYSTEM';
-								$toAppform['payEvaldateFDAPharma'] = Carbon::now()->toDateString();
-								$toAppform['payEvaltimeFDAPharma'] = Carbon::now()->toTimeString();
-								$toAppform['payEvalipFDAPharma'] = request()->ip();
+								// pharmacy
+								if(FunctionsClientController::hasRequirementsFor('cdrr',$appid)){
+									$toAppform['isPayEvalFDAPharma'] = 1;
+									$toAppform['payEvalbyFDAPharma'] = 'SYSTEM';
+									$toAppform['payEvaldateFDAPharma'] = Carbon::now()->toDateString();
+									$toAppform['payEvaltimeFDAPharma'] = Carbon::now()->toTimeString();
+									$toAppform['payEvalipFDAPharma'] = request()->ip();
+								}
+								
+								// machines
+								if(FunctionsClientController::hasRequirementsFor('cdrrhr',$appid)){
+									$toAppform['isPayEvalFDA'] = 1;
+									$toAppform['payEvalbyFDA'] = 'SYSTEM';
+									$toAppform['payEvaldateFDA'] = Carbon::now()->toDateString();
+									$toAppform['payEvaltimeFDA'] = Carbon::now()->toTimeString();
+									$toAppform['payEvalipFDA'] = request()->ip();
+								}
+
+								isset($toAppform) ? DB::table('appform')->where('appid',$appid)->update($toAppform) : '';
+								
+								
 							}
-							
-							// machines
-							if(FunctionsClientController::hasRequirementsFor('cdrrhr',$appid)){
-								$toAppform['isPayEvalFDA'] = 1;
-								$toAppform['payEvalbyFDA'] = 'SYSTEM';
-								$toAppform['payEvaldateFDA'] = Carbon::now()->toDateString();
-								$toAppform['payEvaltimeFDA'] = Carbon::now()->toTimeString();
-								$toAppform['payEvalipFDA'] = request()->ip();
+							return 'succ';
+						} else {
+
+							$initial = 'Please provide Personnel on Pharmacy and Radiology and make sure to submit all requirements. Following are lacking requirements. ';
+							if($pharma[2] == true){
+								$pharMsg = $pharma[0] ? "For Pharmacy: " . implode(",",$pharma[1]). ". ": "";
+							}else{
+								$pharMsg = "No personnel yet on Pharmacy. ";
 							}
 
-							isset($toAppform) ? DB::table('appform')->where('appid',$appid)->update($toAppform) : '';
-							
-							
+							if($mach[2] == true){
+								$radMsg = $mach[0] ? "For Radiology: " . implode(",",$mach[1]). ". ": "";
+							}else{
+								$radMsg = "No personnel yet on Radiology. ";
+							}
+
+							$message = $initial.$pharMsg.$radMsg;
+
+							return $message ;
+							return back()->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Please provide Personnel on Pharmacy and Radiology.']);
 						}
-						return 'succ';
-					} else {
-						return 'Please provide Personnel on Pharmacy and Radiology and make sure to submit all requirements.';
-						return back()->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Please provide Personnel on Pharmacy and Radiology.']);
+					}else{
+						return "Please provide Personnel on Pharmacy and Radiology and make sure to submit all requirements" ;
+
 					}
+
 
 					return redirect('client1/home')->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Error on FDA Module. Contact the admin.']);
 
