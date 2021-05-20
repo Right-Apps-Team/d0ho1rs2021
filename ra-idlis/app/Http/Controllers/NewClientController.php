@@ -553,7 +553,17 @@ class NewClientController extends Controller {
 
 				case 'COA':
 					session()->forget('ambcharge');
+					$hfser_id = 'COA';
+						$faclArr = [];
+							$facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();
+							foreach ($facl_grp as $f) {
+								array_push($faclArr, $f->hgpid);
+							}
 					$arrRet = [
+						'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
+						'hfser' =>  "COA",
+						'user'=> $user_data,
+						'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),
 						'userInf'=>FunctionsClientController::getUserDetails(),
 						'hfaci_serv_type'=>DB::select($hfaci_sql),
 						'serv_cap'=>json_encode(DB::table('facilitytyp')->where([['servtype_id',1],['forSpecialty',0]])->get()),
@@ -570,7 +580,9 @@ class NewClientController extends Controller {
 						'hideExtensions'=>$hideExtensions,
 						'aptid'=>$aptid
 					]; 
-					$locRet = "client1.apply.COA1.coaapp";
+					
+					$locRet = "dashboard.client.certificate-of-accreditation";
+					// $locRet = "client1.apply.COA1.coaapp";
 					break;
 				
 				default:

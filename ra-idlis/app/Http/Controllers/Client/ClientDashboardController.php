@@ -124,7 +124,8 @@ class ClientDashboardController extends Controller
             'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
             'regions'               => Regions::orderBy('sort')->get(),
             'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),
-            'hfser' =>  $hfser_id
+            'hfser' =>  $hfser_id,
+            'serv_cap' => json_encode(DB::table('facilitytyp')->where('servtype_id', 1)->get()),
         ];
         // dd($hfaci_service_type);
         return view('dashboard.client.certificate-of-accreditation', $data);

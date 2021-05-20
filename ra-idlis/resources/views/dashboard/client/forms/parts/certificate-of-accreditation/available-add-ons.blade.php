@@ -1,11 +1,22 @@
-<div class="mb-2 col-md-12">&nbsp;</div>
+<div id="coaAddon" hidden>
 
-<div class="col-md-12">
-    <b class="text-primary">Available Add-Ons
-    </b>
+
+    <div class="mb-2 col-md-12">&nbsp;</div>
+
+    <div class="col-md-12">
+        <b class="text-primary">Available Add-Ons
+        </b>
+    </div>
+
+    <div id="maincapAdd" class="mb-3">
+        <div class="col-md-3">
+            <div id="otherServContAdd">
+
+            </div>
+        </div>
+    </div>
 </div>
-
-    {{-- DATRC-Residential --}}
+<!-- {{-- DATRC-Residential --}}
         <div class="col-md-3">
             <label for="DATRC-R-AO-CL">
                 <input type="checkbox" class="custom-control-input" name="addon" id="DATRC-R-AO-CL" value="DATRC-R-AO-CL">
@@ -45,4 +56,4 @@
                 <input type="checkbox" class="custom-control-input" name="addon" id="NBS-AO-G6PD" value="NBS-AO-G6PD">
                 G6PD
             </label>
-        </div>
+        </div> -->

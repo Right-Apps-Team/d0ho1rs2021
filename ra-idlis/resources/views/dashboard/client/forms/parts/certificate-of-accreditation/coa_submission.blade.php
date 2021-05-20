@@ -1,6 +1,6 @@
 <script>
 
-const savePartialCor = async (e) => {
+const savePartialCoa = async (e) => {
     var errors = 0;
         var ermsg = " ";
         if($('#facility_name').val() == ""){errors +=1; ermsg += "Facility Name, "}
@@ -145,8 +145,8 @@ function submitProper (e){
     console.log(data)
     callApi('/api/application/cor/save', data, 'POST').then(d => {
         const id = d.data.id;
-        const hello = d.data.hello;
-        alert('Information now saved ' + hello);
+      
+        alert('Information now saved ' );
         // window.location.replace(`${base_url}/client/dashboard/new-application?appid=${id}`);
     }).then(error => {
         console.log(error);
@@ -174,5 +174,23 @@ function getAllFacids (){
     return thisFacid
    
 }
+function getCheckedValue(groupName) {
+              var radios;
+              if (groupName == "anxsel") {
+                     radios = document.getElementsByClassName(groupName);
+              } else {
+                     radios = document.getElementsByName(groupName);
+              }
+
+
+              var rad = []
+              for (i = 0; i < radios.length; i++) {
+                     if (radios[i].checked) {
+                            rad.push(radios[i].value);
+
+                     }
+              }
+              return rad;
+       }
 
 </script>

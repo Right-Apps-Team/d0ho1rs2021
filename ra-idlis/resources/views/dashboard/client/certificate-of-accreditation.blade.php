@@ -45,6 +45,9 @@
     <!-- Modals -->
     
     @include('dashboard.client.modal.confirm-submit')
+    @include('dashboard.client.forms.parts.certificate-of-accreditation.coa_scripts')
+    @include('dashboard.client.forms.parts.certificate-of-accreditation.coa_submission')
+   
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
@@ -56,5 +59,6 @@
     </script>
     <script src="{{asset('ra-idlis/public/js/clients/application-form.js')}}"></script>
     @include('client1.cmp.footer')
+    @include('dashboard.client.gen_initial_data')
 </body>
 @endsection

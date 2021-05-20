@@ -85,7 +85,7 @@
 						</div>
 						<div class="row col-border-right" style="border-top: 1px solid; border-right: 1px solid; border-left: 1px solid; background-color: #bfcddc;">
 							<div class="col">
-								<p>Available Add-Ons</p>
+								<p>Available Add-On</p>
 							</div>
 						</div>
 						<div class="row col-border-right" style="border-top: 1px solid; border-right: 1px solid; border-left: 1px solid;">
@@ -363,8 +363,18 @@
 		// 		}
 		// 	}
 		// }
-		var mclass = JSON.parse('{!!$class!!}'), msubclass = JSON.parse('{!!$subclass!!}'), mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}'), mappform = JSON.parse('{!!json_encode($fAddress)!!}'), mservfac = JSON.parse('{!!$servfac!!}');
-		var curAppid = "", curPtcId = "", curHfserid ="{{((count($fAddress) > 0) ? $fAddress[0]->hfser_id : "")}}", assignedRgn = "", assignedGroup = {};
+	
+		var mclass = JSON.parse('{!!$class!!}'), 
+		msubclass = JSON.parse('{!!$subclass!!}'),
+		 mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}'), 
+		 mappform = JSON.parse('{!!addslashes(json_encode($fAddress))!!}'), 
+		// mappform = JSON.parse('{!!json_encode($fAddress)!!}'),
+		 mservfac = JSON.parse('{!!addslashes($serv_cap)!!}');
+		//  mservfac = JSON.parse('{!!$servfac!!}');
+		var curAppid = "", curPtcId = "", 
+		curHfserid ='{!!((count($fAddress) > 0) ? $fAddress[0]->hfser_id : "")!!}',
+		 assignedRgn = "", assignedGroup = {};
+		
 		// if(___div != null || ___div != undefined) {
 		// 	___div.classList.remove('active');
 		// 	___div.classList.add('text-primary');
