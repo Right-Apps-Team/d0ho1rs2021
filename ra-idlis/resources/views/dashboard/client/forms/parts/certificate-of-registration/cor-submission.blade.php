@@ -148,6 +148,7 @@ function submitProper (e){
         const hello = d.data.hello;
         alert('Information now saved ' + hello);
         // window.location.replace(`${base_url}/client/dashboard/new-application?appid=${id}`);
+       
     }).then(error => {
         console.log(error);
     })

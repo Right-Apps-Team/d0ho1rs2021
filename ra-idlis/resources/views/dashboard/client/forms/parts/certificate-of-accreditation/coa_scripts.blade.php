@@ -27,6 +27,11 @@
                }, 1000);
  }
 
+                 setTimeout(function(){ 
+                         
+                         getFacServCharge()
+                    }, 1000);
+
  function getFCID(arr){
     arr.map((h) => {
                             // console.log(h.facid)
@@ -178,7 +183,7 @@ function removeOtherServContAdd() {
 
                                     var x = document.createElement("INPUT");
                                     x.setAttribute("id", it.facid);
-                                    // x.setAttribute("onclick", "getFacServCharge()");
+                                    x.setAttribute("onclick", "getFacServCharge()");
                                     // x.setAttribute("onclick", "getGoAncillary()");
                                     x.setAttribute("type", "checkbox");
                                     x.setAttribute("value", it.facid);
@@ -202,6 +207,73 @@ function removeOtherServContAdd() {
 					}
 				});
 			}
+
+
+
+function getFacServCharge(val = null) {
+    var curAppid = "";
+    var mhfser_id = "COA";
+    var aptid = "IN";
+        var facids = getCheckedValue('facid')
+
+        var arrCol = facids;
+
+        let serv_chg = document.getElementById('serv_chg');
+        if (arrCol.length > 0) {
+            let thisFacid = [],
+                    appendToPayment = ['groupThis'],
+                    hospitalFaci = ['H', 'H2', 'H3'];
+            let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'hfser_id=' + mhfser_id, 'aptid=' + aptid];
+            if (Array.isArray(arrCol)) {
+                    for (let i = 0; i < arrCol.length; i++) {
+                            sArr.push('facid[]=' + arrCol[i]);
+                            thisFacid.push(arrCol[i]);
+                    }
+            }
+            // console.log("thisFacid")
+            // console.log(thisFacid)
+
+            setTimeout(function() {
+                    sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getServiceCharge')}}", "POST", true, {
+                            functionProcess: function(arr) {
+
+
+                                    // const distinctArr = [...new Set(arr.map(x => x.facname))];
+
+                                    // console.log("fees")
+                                    // console.log(arr)
+
+                                    const distinctArr = Array.from(new Set(arr.map(s => s.facname))).map(facname => {
+                                        return {
+                                                facname: facname,
+                                                amt: arr.find(s =>
+                                                        s.facname === facname).amt
+                                        }
+                                    })
+
+
+
+                                    if (serv_chg != undefined || serv_chg != null) {
+                                        if (distinctArr.length > 0) {
+                                                serv_chg.innerHTML = '';
+                                                for (let i = 0; i < distinctArr.length; i++) {
+
+                                                        serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['facname'] + '</td><td>&#8369;&nbsp;<span>' + (parseInt(distinctArr[i]['amt'])).toFixed(2) + '</span></td></tr>';
+
+                                                }
+                                        } else {
+                                                serv_chg.innerHTML = '<tr><td colspan="2">No Services selected.</td></tr>';
+                                        }
+                                    }
+                            }
+                    });
+            }, 1000);
+
+        } else {
+            serv_chg.innerHTML = '<tr><td colspan="2">No Payment Necessary.</td></tr>';
+        }
+}
+
     function sendRequestRetArr(arr_data, loc, type, bolRet, objFunction) {
 			try {
 				type = type.toUpperCase();

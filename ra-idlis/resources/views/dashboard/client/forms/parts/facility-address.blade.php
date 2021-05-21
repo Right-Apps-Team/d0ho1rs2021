@@ -3,7 +3,7 @@
 <div class="col-md-3">
     <label for="region">Region <span class="text-danger">*</span></label>
     @if(isset($fAddress) && count($fAddress) > 0)
-    <input class="form-control " value="{{$fAddress[0]->rgn_desc}}" disabled />
+    <input class="form-control "  id="regionU" name="rgnidU" value="{{$fAddress[0]->rgn_desc}}" disabled />
     @else
 
     <select class="form-control selectpicker show-menu-arrow toRemove"  id="region" name="rgnid" required data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" onChange="fetchProvince(this)">
@@ -17,7 +17,7 @@
 <div class="col-md-3">
     <label for="province">Province/District <span class="text-danger">*</span></label>
     @if(isset($fAddress) && count($fAddress) > 0)
-    <input class="form-control "  value="{{$fAddress[0]->provname}}" disabled />
+    <input class="form-control "  id="provinceU" name="providU" value="{{$fAddress[0]->provname}}" disabled />
     @else
 
     <select class="form-control selectpicker show-menu-arrow toRemove" value='{{((isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->provid: null)}}' id="province"  disabled name="provid" required data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" onChange="fetchMonicipality(this)">
@@ -28,7 +28,7 @@
 <div class="col-md-3">
     <label for="city_monicipality">City/Municipality <span class="text-danger">*</span></label>
     @if(isset($fAddress) && count($fAddress) > 0)
-    <input class="form-control "  value="{{$fAddress[0]->cmname}}" disabled />
+    <input class="form-control " id="city_monicipalityU" name="cmidU"  value="{{$fAddress[0]->cmname}}" disabled />
     @else
     <select class="form-control  selectpicker show-menu-arrow toRemove" value='{{((isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->cmid: null)}}' id="city_monicipality" disabled name="cmid" required data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" onChange="fetchBaranggay(this)">
         <option value="">Please select</option>
@@ -38,7 +38,7 @@
 <div class="col-md-3">
     <label for="brgy">Baranggay <span class="text-danger">*</span></label>
     @if(isset($fAddress) && count($fAddress) > 0)
-    <input class="form-control " value="{{$fAddress[0]->brgyname}}" disabled />
+    <input class="form-control "  id="brgyU" name="brgyidU" value="{{$fAddress[0]->brgyname}}" disabled />
     @else
     <select class="form-control selectpicker show-menu-arrow toRemove" value='{{((isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->brgyid: null)}}' id="brgy" disabled name="brgyid" data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" required>
         <option value="">Please select</option>

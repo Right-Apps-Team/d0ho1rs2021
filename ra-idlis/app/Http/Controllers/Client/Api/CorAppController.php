@@ -62,6 +62,8 @@ class CorAppController extends Controller
         $appform->ptcCode               = $request->ptcCode;
         $appform->noofmain              = $request->noofmain;
         $appform->noofsatellite         = $request->noofsatellite;
+        $appform->savingStat            = $request->saveas;
+        // $appform->savingStat            = $request->saveas;
 
        
       
@@ -77,8 +79,8 @@ class CorAppController extends Controller
       
         return response()->json(
             [
+                'id' => $appform->appid,
                 'applicaiton' => $appform,
-                 'hello'=> 'hello',
                 'provinces'     => Province::where('rgnid', $appform->rgnid)->get(),
                 'cities'        => Municipality::where('provid', $appform->provid)->get(),
                 'brgy'          => Barangay::where('cmid', $appform->cmid)->get(),

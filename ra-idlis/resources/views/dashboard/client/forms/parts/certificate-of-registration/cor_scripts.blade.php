@@ -39,7 +39,8 @@
                  }
                }, 1000);
        }
-
+       var appid ='{!!((count($fAddress) > 0) ? $fAddress[0]->appid: "")!!}';
+       document.getElementById("appid").value = appid;
        // INITIAL ONLY FOR COR
 
        function type_of_fac(selected) {

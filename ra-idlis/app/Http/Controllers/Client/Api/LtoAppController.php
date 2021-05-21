@@ -131,6 +131,7 @@ class LtoAppController extends Controller
         $appform->plate_number          = $request->plate_number;
         $appform->ambOwner              = $request->ambOwner;
         $appform->addonDesc             = $request->addonDesc;
+        $appform->savingStat            = $request->saveas;
   
 
         $appform->save();

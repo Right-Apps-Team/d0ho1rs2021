@@ -110,9 +110,7 @@
                         {{-- LTO For Pharmacy --}}
                         @include('dashboard.client.forms.parts.license-to-operate.for-pharmacy')
 
-                        @if(isset($fAddress)&&(count($fAddress) > 0))
-                        <br/>
-                        @else
+                     
                        
                         <div class="form-group row col-md-12 mt-5">
                             <div class="col-lg-3 col-md-3 col-xs-12"></div>
@@ -122,14 +120,14 @@
                                 </a>
                             </div>
                             <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
-                                <button  class="btn btn-info btn-block" type="button" value="submit" name="submit" data-toggle="modal" data-target="#confirmSubmitModalLto">
+                                <button id="submit"  class="btn btn-info btn-block" type="button" value="submit" name="submit" data-toggle="modal" data-target="#confirmSubmitModalLto">
                                     <i class="fa fa-paper-plane" aria-hidden="true"></i>
                                     Submit Form
                                 </button>
                                 <input id="saveasn"  name="saveasn" value="partial" type="hidden" />
                             </div>
                             <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
-                                <button class="btn btn-success btn-block" type="button" onClick="savePartialLto('partial')">
+                                <button  id="save" class="btn btn-success btn-block" type="button" onClick="savePartialLto('partial')">
                                 <!-- <button class="btn btn-success btn-block" type="button" onClick="savePartialLto(this)"> -->
                                     <!-- onClick="savePartial(this)" -->
                                     <i class="fa fa-floppy-o" aria-hidden="true"></i>
@@ -138,7 +136,7 @@
                             </div>
                         </div>
 
-                        @endif
+                        
                        
                     </form>
                 </div>
@@ -205,7 +203,18 @@
         display: none;
     }
 </style>
+<script>
+ var savStat = "partial";
+ savStat ='{!!((count($fAddress) > 0) ? $fAddress[0]->savingStat: "")!!}';
 
+ if(savStat == "final"){
+    document.getElementById('submit').setAttribute("hidden", "hidden");
+    document.getElementById('save').setAttribute("hidden", "hidden");
+ }
+
+
+
+</script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>

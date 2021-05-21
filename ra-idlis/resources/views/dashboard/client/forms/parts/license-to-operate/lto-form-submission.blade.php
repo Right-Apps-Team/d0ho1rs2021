@@ -11,14 +11,16 @@
 
         var errors = 0;
         var ermsg = " ";
-        if($('#facility_name').val() == ""){errors +=1; ermsg += "Facility Name, "}
+        var errorPar = 0;
+        var ermsgP = " ";
+        if($('#facility_name').val() == ""){errorPar +=1;  errors +=1; ermsgP+= "Facility Name, "; ermsg += "Facility Name, "}
 
         // Disregard if update
-        if($('#region').val() == ""){errors +=1; ermsg += "Region, "}
-        if($('#province').val() == ""){errors +=1; ermsg += "Province, "}
-        if($('#city_monicipality').val() == ""){errors +=1; ermsg += "Municipality, "}
-        if($('#brgy').val() == ""){errors +=1; ermsg += "Baranggay, "}
-         // Disregard if update
+        if($('#region').val() == ""){errorPar +=1; errors +=1; ermsgP += "Region, "; ermsg += "Region, "}
+        if($('#province').val() == ""){errorPar +=1; errors +=1; ermsgP+= "Province, "; ermsg += "Province, "}
+        if($('#city_monicipality').val() == ""){errorPar +=1; errors +=1; ermsgP+= "Municipality, "; ermsg += "Municipality, "}
+        if($('#brgy').val() == ""){errorPar +=1; errors +=1; ermsgP+= "Baranggay, "; ermsg += "Baranggay, "}
+        // Disregard if update
 
         if($('#street_name').val() == ""){errors +=1; ermsg += "Street Name, "}
         if($('#zip').val() == ""){errors +=1; ermsg += "Zip Code, "}
@@ -29,11 +31,11 @@
         if($('#faxareacode').val() == ""){errors +=1; ermsg += "Fax Area code, "}
         if($('#faxNumber').val() == ""){errors +=1; ermsg += "Fax Number, "}
         if($('#fac_email_address').val() == ""){errors +=1; ermsg += "Facility Email, "}
-        if($('#ocid').val() == "Please select"){errors +=1; ermsg += "Ownership, "}
+        if($('#ocid').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "Ownership, "; ermsg += "Ownership, "}
 
         // Disregard if update
-        if($('#classification').val() == "Please select"){errors +=1; ermsg += "Classification, "}
-        if($('#subclass').val() == "Please select"){errors +=1; ermsg += "Sub Classification, "}
+        if($('#classification').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "Classification, "; ermsg += "Classification, "}
+        if($('#subclass').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "Sub Classification, "; ermsg += "Sub Classification, "}
         // Disregard if update
 
         if($('#facmode').val() == "Please select"){errors +=1; ermsg += "Institutional Character, "}
@@ -52,13 +54,31 @@
         if($('input[name="hgpid"]:checked').val() == undefined){errors +=1; ermsg += "Facilities/Type, "}
         
         
-        if(errors > 0){
-            alert("Please fill the following fields properly: " + ermsg)
-        }else{
-            console.log("errors")
-            console.log(errors)
-            submitProper(e)
-        }
+        // if(errors > 0){
+        //     alert("Please fill the following fields properly: " + ermsg)
+        // }else{
+        //     console.log("errors")
+        //     console.log(errors)
+        //     submitProper(e)
+        // }
+
+        if(e == 'final'){
+            if(errors > 0){
+                alert("Please fill the following fields properly: " + ermsg)
+            }else{
+                // console.log("errors")
+                // console.log(errors)
+                submitProper(e)
+            }
+         }else{
+            if(errorPar > 0){
+                alert("Please fill the following required initial fields properly: " + ermsgP)
+            }else{
+                // console.log("errors")
+                // console.log(errors)
+                submitProper(e)
+            }
+         }
 
       
         
