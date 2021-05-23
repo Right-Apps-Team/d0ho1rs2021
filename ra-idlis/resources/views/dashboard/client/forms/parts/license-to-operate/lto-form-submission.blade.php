@@ -13,6 +13,10 @@
         var ermsg = " ";
         var errorPar = 0;
         var ermsgP = " ";
+
+        var invalids = 0;
+        var invmssg = " ";
+
         if($('#facility_name').val() == ""){errorPar +=1;  errors +=1; ermsgP+= "Facility Name, "; ermsg += "Facility Name, "}
 
         // Disregard if update
@@ -30,7 +34,35 @@
         if($('#landline').val() == ""){errors +=1; ermsg += "Facility Landline, "}
         if($('#faxareacode').val() == ""){errors +=1; ermsg += "Fax Area code, "}
         if($('#faxNumber').val() == ""){errors +=1; ermsg += "Fax Number, "}
-        if($('#fac_email_address').val() == ""){errors +=1; ermsg += "Facility Email, "}
+        if($('#fac_email_address').val() == ""){errors +=1; ermsg += "Facility Email, " }
+
+        if($('#fac_email_address').val() != ""){
+            var check = checkEmailValidity($('#fac_email_address').val()) 
+           if(check == false){
+             invalids +=1;   invmssg += "Invalid Facility Email Address, "
+           } 
+        }
+        if($('#prop_email').val() != ""){
+            var check = checkEmailValidity($('#prop_email').val()) 
+           if(check == false){
+             invalids +=1;   invmssg += "Invalid Proponent Email Address, "
+           } 
+        }
+        
+        if($('#fac_mobile_number').val() != ""){
+            var check = checkNumberlValidity($('#fac_mobile_number').val()) 
+           if(check == false){
+             invalids +=1;   invmssg += "Invalid Facility Mobile Number, "
+           } 
+        }
+
+        if($('#prop_mobile').val() != ""){
+            var check = checkNumberlValidity($('#prop_mobile').val()) 
+           if(check == false){
+             invalids +=1;   invmssg += "Invalid Proponent Mobile Number, "
+           } 
+        }
+
         if($('#ocid').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "Ownership, "; ermsg += "Ownership, "}
 
         // Disregard if update
@@ -68,15 +100,21 @@
             }else{
                 // console.log("errors")
                 // console.log(errors)
-                submitProper(e)
+                if(invalids > 0){
+                    alert(invmssg)
+                }else{
+                    submitProper(e)
+                }
             }
          }else{
             if(errorPar > 0){
                 alert("Please fill the following required initial fields properly: " + ermsgP)
             }else{
-                // console.log("errors")
-                // console.log(errors)
-                submitProper(e)
+                if(invalids > 0){
+                    alert(invmssg)
+                }else{
+                    submitProper(e)
+                }
             }
          }
 
@@ -324,5 +362,22 @@ function getAddonDesc(){
     }
     }
    return alladdondesc
+}
+function checkEmailValidity(email) 
+{
+ if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+  {
+    return (true)
+  }
+    return (false)
+}
+
+function checkNumberlValidity(number) 
+{
+ if (/^(09|\+639)\d{9}$/.test(number))
+  {
+    return (true)
+  }
+    return (false)
 }
 </script>

@@ -62,6 +62,7 @@
                     </div>
                     <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
                         <button 
+                            id="submit"
                             class="btn btn-info btn-block" 
                             type="button" 
                             value="submit" 
@@ -75,7 +76,7 @@
                         </button>
                     </div>
                     <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
-                        <button class="btn btn-success btn-block" type="button" onClick="savePartialCor('partial')">
+                        <button  id="save" class="btn btn-success btn-block" type="button" onClick="savePartialCor('partial')">
                             <i class="fa fa-floppy-o" aria-hidden="true"></i>
                             Save as Draft
                         </button>
@@ -149,3 +150,16 @@
             display: none;
         }
     </style>
+
+<script>
+ var savStat = "partial";
+ savStat ='{!!((count($fAddress) > 0) ? $fAddress[0]->savingStat: "")!!}';
+
+ if(savStat == "final"){
+    document.getElementById('submit').setAttribute("hidden", "hidden");
+    document.getElementById('save').setAttribute("hidden", "hidden");
+ }
+
+
+
+</script>

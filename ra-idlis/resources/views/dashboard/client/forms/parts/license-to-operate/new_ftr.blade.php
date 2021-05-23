@@ -991,6 +991,11 @@ function getFacServCharge (val = null){
             getJospLevelServices(ancData, "H2", hgpid);
             document.getElementsByClassName("hl3")[0].removeAttribute("hidden")
             getJospLevelServices(ancData, "H3", hgpid);
+
+           const inpt =  document.getElementById("anxservcontH").querySelectorAll('input[type="radio"]');
+            for(var i = 0; i < inpt.length; i++){
+               inpt[i].checked = true;
+            }
            
             // getJospLevelServices(ancData);
         } else if (selected == "H2") {
@@ -1000,12 +1005,25 @@ function getFacServCharge (val = null){
             document.getElementsByClassName("hl3")[0].removeAttribute("hidden")
             getJospLevelServices(ancData, "H3", hgpid);
             // getJospLevelServices(ancData);
+            const inpt =  document.getElementById("anxservcontH2").querySelectorAll('input[type="radio"]');
+            for(var i = 0; i < inpt.length; i++){
+               inpt[i].checked = true;
+            }
         } else if (selected == "H3") {
             document.getElementsByClassName("hl1")[0].setAttribute("hidden", "hidden")
             document.getElementsByClassName("hl2")[0].setAttribute("hidden", "hidden")
             document.getElementsByClassName("hl3")[0].removeAttribute("hidden")
             getJospLevelServices(ancData, "H3", hgpid);
             // getJospLevelServices(ancData);
+
+            const inpt =  document.getElementById("anxservcontH3").querySelectorAll('input[type="radio"]');
+            const chk =  document.getElementById("anxservcontH3").querySelectorAll('input[type="checkbox"]');
+            for(var i = 0; i < inpt.length; i++){
+               inpt[i].checked = true;
+            }
+            for(var i = 0; i < chk.length; i++){
+                chk[i].checked = true;
+            }
         }
     }
 

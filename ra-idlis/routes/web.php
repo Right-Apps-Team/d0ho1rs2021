@@ -59,6 +59,12 @@ Route::get('samplereport',function(){
 	return view('client1.FDA.cdrrhrCOC');
 });
 
+// Checking 
+Route::prefix('check')->group(function() {
+	Route::match(['get', 'post'], 'ltoannexs/{appid}', 'CheckingController@checkLtoAnnexs');
+});
+// Checking
+
 // Route::get('/', 'NewClientController@__index')->name('client1.login');
 
 Route::get('samplefix','DOHController@samplefix');

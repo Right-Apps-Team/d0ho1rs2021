@@ -11,7 +11,7 @@
 
 	<body>
 		{{-- @include('client1.cmp.__wizard') --}}
-		<div class="container text-center font-weight-bold mt-5">List of Personnel Annex A</div>
+		<div class="container text-center font-weight-bold mt-5">List of Personnel Annex A gfd</div>
 		<div class="container table-responsive pb-3">
 
 			{{-- counting part --}}

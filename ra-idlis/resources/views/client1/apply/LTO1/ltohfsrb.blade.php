@@ -367,15 +367,37 @@
             let r = confirm('Are you sure you want to submit this requirements?');
             if(r){
                 $.ajax({
-                    method:"POST",
-                    data:{_token:$("input[name=_token]").val(),readyNow:true},
-                    success:function(a){
-                        if(a == 'succ'){
-                            var r = confirm('Requirements submitted. Proceed to Payment Method?');
-                            if (r == true) { window.location.href = "{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$appid)}}" };
-                        }
-                    }
-                })
+						// url: "{{asset('check/ltoannexs/')}}",
+						url: '{{asset('check/ltoannexs/'.$appid)}}',
+						dataType: "json", 
+	    				async: false,
+						method: 'POST',
+						data: {},
+						data: {_token:$("input[name=_token]").val()},
+						success: function(a){
+                            if(a.filled == "succ"){
+                                $.ajax({
+                                    method:"POST",
+                                    data:{_token:$("input[name=_token]").val(),readyNow:true},
+                                    success:function(a){
+                                        if(a == 'succ'){
+                                            var r = confirm('Requirements submitted. Proceed to Payment Method?');
+                                            if (r == true) { window.location.href = "{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$appid)}}" };
+                                        }
+                                    }
+                                })
+                            }else{
+                                alert(a.filled)
+                            }
+                            
+							
+						}
+					});
+
+
+
+
+                
             }
         }
 

@@ -47,6 +47,9 @@
         ocidInpt.value = ocid;
         ocidInpt.setAttribute("disabled", "disabled")
 
+        console.log("subclassid")
+        console.log(subclassid)
+
         const data = { 'ocid' : ocid, 'classid' : classid }
         if(subclassid != ""){
         $.ajax({
@@ -66,4 +69,23 @@
 					});
         }
     }
+    function checkEmailValidity(email) 
+{
+ if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+  {
+    return (true)
+  }
+    return (false)
+}
+
+function checkNumberlValidity(number) 
+{
+ if (/^(09|\+639)\d{9}$/.test(number))
+  {
+    return (true)
+  }
+    return (false)
+}
+
+    
 </script>

@@ -1,15 +1,21 @@
 <script>
 
 const savePartialCor = async (e) => {
-    var errors = 0;
+        var errors = 0;
         var ermsg = " ";
-        if($('#facility_name').val() == ""){errors +=1; ermsg += "Facility Name, "}
+        var errorPar = 0;
+        var ermsgP = " ";
+
+        var invalids = 0;
+        var invmssg = " ";
+
+       if($('#facility_name').val() == ""){errorPar +=1;  errors +=1; ermsgP+= "Facility Name, "; ermsg += "Facility Name, "}
 
         // Disregard if update
-        if($('#region').val() == ""){errors +=1; ermsg += "Region, "}
-        if($('#province').val() == ""){errors +=1; ermsg += "Province, "}
-        if($('#city_monicipality').val() == ""){errors +=1; ermsg += "Municipality, "}
-        if($('#brgy').val() == ""){errors +=1; ermsg += "Baranggay, "}
+        if($('#region').val() == ""){errorPar +=1; errors +=1; ermsgP += "Region, "; ermsg += "Region, "}
+        if($('#province').val() == ""){errorPar +=1; errors +=1; ermsgP+= "Province, "; ermsg += "Province, "}
+        if($('#city_monicipality').val() == ""){errorPar +=1; errors +=1; ermsgP+= "Municipality, "; ermsg += "Municipality, "}
+        if($('#brgy').val() == ""){errorPar +=1; errors +=1; ermsgP+= "Baranggay, "; ermsg += "Baranggay, "}
          // Disregard if update
 
         if($('#street_name').val() == ""){errors +=1; ermsg += "Street Name, "}
@@ -24,8 +30,8 @@ const savePartialCor = async (e) => {
         if($('#ocid').val() == "Please select"){errors +=1; ermsg += "Ownership, "}
 
         // Disregard if update
-        if($('#classification').val() == "Please select"){errors +=1; ermsg += "Classification, "}
-        if($('#subclass').val() == "Please select"){errors +=1; ermsg += "Sub Classification, "}
+        if($('#classification').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "Classification, "; ermsg += "Classification, "}
+        if($('#subclass').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "Sub Classification, "; ermsg += "Sub Classification, "}
         // Disregard if update
 
         if($('#facmode').val() == "Please select"){errors +=1; ermsg += "Institutional Character, "}
@@ -43,14 +49,63 @@ const savePartialCor = async (e) => {
       
         if($('input[name="hgpid"]:checked').val() == undefined){errors +=1; ermsg += "Facilities/Type, "}
         
-        
-        if(errors > 0){
-            alert("Please fill the following fields properly: " + ermsg)
-        }else{
-            console.log("errors")
-            console.log(errors)
-            submitProper(e)
+        if($('#fac_email_address').val() != ""){
+            var check = checkEmailValidity($('#fac_email_address').val()) 
+           if(check == false){
+             invalids +=1;   invmssg += "Invalid Facility Email Address, "
+           } 
         }
+        if($('#prop_email').val() != ""){
+            var check = checkEmailValidity($('#prop_email').val()) 
+           if(check == false){
+             invalids +=1;   invmssg += "Invalid Proponent Email Address, "
+           } 
+        }
+        
+        if($('#fac_mobile_number').val() != ""){
+            var check = checkNumberlValidity($('#fac_mobile_number').val()) 
+           if(check == false){
+             invalids +=1;   invmssg += "Invalid Facility Mobile Number, "
+           } 
+        }
+
+        if($('#prop_mobile').val() != ""){
+            var check = checkNumberlValidity($('#prop_mobile').val()) 
+           if(check == false){
+             invalids +=1;   invmssg += "Invalid Proponent Mobile Number, "
+           } 
+        }
+
+        // if(errors > 0){
+        //     alert("Please fill the following fields properly: " + ermsg)
+        // }else{
+        //     console.log("errors")
+        //     console.log(errors)
+        //     submitProper(e)
+        // }
+        if(e == 'final'){
+            if(errors > 0){
+                alert("Please fill the following fields properly: " + ermsg)
+            }else{
+                // console.log("errors")
+                // console.log(errors)
+                if(invalids > 0){
+                    alert(invmssg)
+                }else{
+                    submitProper(e)
+                }
+            }
+         }else{
+            if(errorPar > 0){
+                alert("Please fill the following required initial fields properly: " + ermsgP)
+            }else{
+                if(invalids > 0){
+                    alert(invmssg)
+                }else{
+                    submitProper(e)
+                }
+            }
+         }
 }
 
 function submitProper (e){
@@ -106,10 +161,10 @@ function submitProper (e){
         appid:                  $('#appid').val(),
         hfser_id:               $('#typeOfApplication').val(),
         facilityname:           $('#facility_name').val(),
-        rgnid:                  $('#region').val(),
-        provid:                 $('#province').val(),
-        cmid:                   $('#city_monicipality').val(),
-        brgyid:                 $('#brgy').val(),
+        rgnid:                  $('#region').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->rgnid: "")!!}' : $('#region').val(),
+        provid:                 $('#province').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->provid: "")!!}' : $('#province').val(),
+        cmid:                   $('#city_monicipality').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->cmid: "")!!}' : $('#city_monicipality').val(),
+        brgyid:                 $('#brgy').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->brgyid: "")!!}' : $('#brgy').val(),
         street_number:          $('#street_num').val(),
         street_name:            $('#street_name').val(),
         zipcode:                $('#zip').val(),
@@ -123,8 +178,8 @@ function submitProper (e){
         lot_area:               $('#lot_area').val(),
         noofbed:                $('#noofbed').val(),
         ocid:                   $('#ocid').val(),
-        classid:                $('#classification').val(),
-        subClassid:             $('#subclass').val(),
+        classid:                $('#classification').val()  == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->classid: "")!!}' : $('#classification').val() ,
+        subClassid:             $('#subclass').val()  == "" ||  $('#subclass').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}' : $('#subclass').val(),
         facmode:                $('#facmode').val(),
         funcid:                 $('#funcid').val(),
         facid:                  facid,
@@ -145,8 +200,8 @@ function submitProper (e){
     console.log(data)
     callApi('/api/application/cor/save', data, 'POST').then(d => {
         const id = d.data.id;
-        const hello = d.data.hello;
-        alert('Information now saved ' + hello);
+        
+        alert('Information now saved ');
         // window.location.replace(`${base_url}/client/dashboard/new-application?appid=${id}`);
        
     }).then(error => {
@@ -174,6 +229,24 @@ function getAllFacids (){
    
     return thisFacid
    
+}
+
+function checkEmailValidity(email) 
+{
+ if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+  {
+    return (true)
+  }
+    return (false)
+}
+
+function checkNumberlValidity(number) 
+{
+ if (/^(09|\+639)\d{9}$/.test(number))
+  {
+    return (true)
+  }
+    return (false)
 }
 
 </script>
