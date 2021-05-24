@@ -44,6 +44,11 @@ Route::post(
 ); //->middleware([APIMiddleware::class]);
 
 Route::post(
+    '/application/con/save',
+    'Client\Api\ConAppController@save'
+); //->middleware([APIMiddleware::class]);
+
+Route::post(
     '/application/fetch',
     'Client\Api\ApplicationApiController@fetch'
 ); //->middleware([APIMiddleware::class]);

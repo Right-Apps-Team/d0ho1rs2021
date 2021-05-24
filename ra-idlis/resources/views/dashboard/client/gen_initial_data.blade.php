@@ -1,5 +1,5 @@
 <script>
-  
+ 
     if ('{!!isset($fAddress)&&(count($fAddress) > 0)!!}') {
         var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
         var areacode = JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->areacode: "")!!}');
@@ -30,7 +30,15 @@
         var ownerEmail ='{!!((count($fAddress) > 0) ? $fAddress[0]->ownerEmail: "")!!}';
         var mailingAddress ='{!!((count($fAddress) > 0) ? $fAddress[0]->mailingAddress: "")!!}';
         var approvingauthoritypos ='{!!((count($fAddress) > 0) ? $fAddress[0]->approvingauthoritypos: "")!!}';
-        var approvingauthority ='{!!((count($fAddress) > 0) ? $fAddress[0]->approvingauthority: "")!!}';
+        var approvingauthority ='{!!((count($fAddress) > 0) ? $fAddress[0]->approvingauthority: "")!!}'; 
+        var hfep ='{!!((count($fAddress) > 0) ? $fAddress[0]->hfep_funded: "")!!}';
+        console.log("hfep")
+        console.log(hfep)
+        setTimeout(function(){
+          if(hfep === '0'){
+          document.getElementById("hfep").checked = true;
+          }
+        }, 2000);
 
         document.getElementsByName('funcid')[0].value = funcid;
         document.getElementById("facmode").value = facmode;

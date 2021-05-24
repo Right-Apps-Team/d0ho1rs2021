@@ -190,7 +190,7 @@ function submitProper (e){
         mailingAddress:         $('#official_mail_address').val(),
         approvingauthoritypos:  $('#approving_authority_pos').val(),
         approvingauthority:     $('#approving_authority_name').val(),
-        hfep_funded:            ($("#hfep_funded").is(":checked") ? 0 : null),
+        hfep_funded:            ($('#hfep').prop('checked') ? 0 : null),
         draft:                  1,
         con_catch:              con_catch,
         con_hospital:           con_hospital,

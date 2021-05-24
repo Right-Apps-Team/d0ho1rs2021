@@ -1,8 +1,9 @@
 <script>
 
-const savePartialCoa = async (e) => {
+const savePartialCon = async (e) => {
     console.log("brgy")
     console.log($('#brgy').val())
+
 
         var errors = 0;
         var ermsg = " ";
@@ -12,7 +13,7 @@ const savePartialCoa = async (e) => {
         var invalids = 0;
         var invmssg = " ";
 
-        if($('#facility_name').val() == ""){errorPar +=1;  errors +=1; ermsgP+= "Facility Name, "; ermsg += "Facility Name, "}
+       if($('#facility_name').val() == ""){errorPar +=1;  errors +=1; ermsgP+= "Facility Name, "; ermsg += "Facility Name, "}
 
         // Disregard if update
         if($('#region').val() == ""){errorPar +=1; errors +=1; ermsgP += "Region, "; ermsg += "Region, "}
@@ -30,8 +31,7 @@ const savePartialCoa = async (e) => {
         if($('#faxareacode').val() == ""){errors +=1; ermsg += "Fax Area code, "}
         if($('#faxNumber').val() == ""){errors +=1; ermsg += "Fax Number, "}
         if($('#fac_email_address').val() == ""){errors +=1; ermsg += "Facility Email, "}
-
-        if($('#ocid').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "Ownership, "; ermsg += "Ownership, "}
+        if($('#ocid').val() == "Please select"){errors +=1; ermsg += "Ownership, "}
 
         // Disregard if update
         if($('#classification').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "Classification, "; ermsg += "Classification, "}
@@ -51,8 +51,8 @@ const savePartialCoa = async (e) => {
         if($('#approving_authority_name').val() == ""){errors +=1; ermsg += "Approving Authority Name, "}
         
       
-        if($('input[name="hgpid"]:checked').val() == undefined){errors +=1; ermsg += "Facilities/Type, "}
-
+        if($('input[name="facid"]:checked').val() == undefined){errors +=1; ermsg += "Facilities/Type, "}
+        
         if($('#fac_email_address').val() != ""){
             var check = checkEmailValidity($('#fac_email_address').val()) 
            if(check == false){
@@ -79,7 +79,14 @@ const savePartialCoa = async (e) => {
              invalids +=1;   invmssg += "Invalid Proponent Mobile Number, "
            } 
         }
-        
+
+        // if(errors > 0){
+        //     alert("Please fill the following fields properly: " + ermsg)
+        // }else{
+        //     console.log("errors")
+        //     console.log(errors)
+        //     submitProper(e)
+        // }
         if(e == 'final'){
             if(errors > 0){
                 alert("Please fill the following fields properly: " + ermsg)
@@ -103,7 +110,6 @@ const savePartialCoa = async (e) => {
                 }
             }
          }
-         
 }
 
 function submitProper (e){
@@ -153,6 +159,8 @@ function submitProper (e){
 
     var allFacids = getAllFacids();
 
+    
+
     const facid = $('input[name="facid"]:checked').val();    
     const data = {
         saveas:                  e,
@@ -180,7 +188,7 @@ function submitProper (e){
         subClassid:             $('#subclass').val()  == "" ||  $('#subclass').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}' : $('#subclass').val(),
         facmode:                $('#facmode').val(),
         funcid:                 $('#funcid').val(),
-        facid:                  facid,
+        // facid:                  facid,
         owner:                  $('#owner').val(),
         ownerMobile:            $('#prop_mobile').val(),
         ownerLandline:          $('#prop_landline').val(),
@@ -196,20 +204,12 @@ function submitProper (e){
         hgpid:                  $('input[name="hgpid"]:checked').val(),
     }
     console.log(data)
-    callApi('/api/application/cor/save', data, 'POST').then(d => {
+    callApi('/api/application/con/save', data, 'POST').then(d => {
         const id = d.data.id;
-      
-        // alert('Information now saved ');
+        
+        alert('Information now saved');
         // window.location.replace(`${base_url}/client/dashboard/new-application?appid=${id}`);
-
-        if(e == "final"){
-                if(id){
-                window.location.href="{{asset('client1/apply/assessmentReady/')}}/"+ id
-                }
-            
-            }else{
-                alert('Information now saved');
-            }
+       
     }).then(error => {
         console.log(error);
     })
@@ -236,6 +236,7 @@ function getAllFacids (){
     return thisFacid
    
 }
+
 function getCheckedValue(groupName) {
               var radios;
               if (groupName == "anxsel") {
@@ -254,5 +255,6 @@ function getCheckedValue(groupName) {
               }
               return rad;
        }
+
 
 </script>

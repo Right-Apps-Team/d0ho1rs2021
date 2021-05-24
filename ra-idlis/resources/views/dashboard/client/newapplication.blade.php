@@ -47,6 +47,9 @@
     <!-- Modals -->
     
     @include('dashboard.client.modal.confirm-submit')
+    @include('dashboard.client.forms.parts.certificate-of-need.con_scripts')
+    @include('dashboard.client.forms.parts.certificate-of-need.con_submission')
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
@@ -55,8 +58,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <script>
         const base_url = '{{URL::to('/')}}';
-    </script>77777
-    <script src="{{asset('ra-idlis/public/js/clients/pto-form.js')}}"></script>
+    </script>
+    <script src="{{asset('ra-idlis/public/js/clients/application-form.js')}}"></script>
+    
     @include('client1.cmp.footer')
+    @include('dashboard.client.gen_initial_data')
 </body>
 @endsection

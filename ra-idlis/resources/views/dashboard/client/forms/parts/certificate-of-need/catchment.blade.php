@@ -9,15 +9,11 @@
             <li><b class="text-danger">Note:</b> Please Refer to Regional DOH websites on encoding Population Projection</li>
         </ul>
     </div>
-    <table class="table table-bordered">
+    <table class="table table-bordered" >
         <thead class=" p-3">
             <tr class="bg-dark text-white">
                 <th class="text-center">
-                    <button 
-                        class="btn btn-success" 
-                        type="button"
-                        onClick="addProjectedPopulation()"    
-                    >
+                    <button class="btn btn-success" type="button" onClick="addProjectedPopulation()">
                         <i class="fa fa-plus"></i>
                     </button>
                 </th>
@@ -26,13 +22,21 @@
                 <th>Projected Population (5th year) of Catchment Area</th>
             </tr>
         </thead>
+
         <tbody id="projected_populations">
-            <tr>
+            
+           
+            <tr class="border"  >
+                <td colspan="3" class="border text-right">Total</td>
+                <td colspan="2" class="border font-weight-bold" id="total">  <span id="projectedPopulationCostN">0</span></td>
+                <!-- <td colspan="2" class="border font-weight-bold" id="total">  <span id="projectedPopulationCost">0</span></td> -->
+            </tr>
+            <!-- <tr>
                 <td colspan="2" class="text-right">Total</td>
                 <td colspan="2" id="total">
                     <span id="projectedPopulationCost">0</span>
                 </td>
-            </tr>
+            </tr> -->
         </tbody>
     </table>
 </div>

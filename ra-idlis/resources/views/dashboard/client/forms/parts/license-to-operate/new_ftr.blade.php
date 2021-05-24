@@ -1288,8 +1288,6 @@ function getFacServCharge (val = null){
             opt.value = h.facid;
             opt.textContent = h.facname;
             document.getElementById("addOnServ").appendChild(opt);
-
-
         });
     }
 

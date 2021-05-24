@@ -566,11 +566,12 @@ const addProjectedPopulation = () => {
                     name="population[]" 
                     class="population populationCount"
                     data-id="${entry}"
-                    onkeyup="calculateProjectedPopulationCost(this)"
+                    onkeyup="calculatepop()"
                 />
             </td>
         </tr>
     `;
+    //  onkeyup="calculateProjectedPopulationCost(this)"
     $('#projected_populations').prepend(row);
 }
 const addListOfExistingHospitals = () => {

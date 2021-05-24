@@ -52,10 +52,13 @@ class ClientDashboardController extends Controller
         $hfser_id = 'CON';
 
         $data = [
+            'fAddress'              => [],
+            'serv_cap' => json_encode(DB::table('facilitytyp')->where('servtype_id', 1)->get()),
             'user' => $user_data,
             'appFacName' => FunctionsClientController::getDistinctByFacilityName(),
             'regions'   => Regions::orderBy('sort')->get(),
-            'hfser' =>  $hfser_id
+            'hfser' =>  $hfser_id,
+            'condet' =>  [[], []]
         ];
         // dd($data);
         return view('dashboard.client.newapplication', $data);

@@ -429,7 +429,17 @@ class NewClientController extends Controller {
 			switch($hfser) {
 				case 'CON':
 					session()->forget('ambcharge');
+	
+					$hfser_id = 'CON';
+					$faclArr = [];
+							$facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();
+							foreach ($facl_grp as $f) {
+								array_push($faclArr, $f->hgpid);
+							}
 					$arrRet = [
+						'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
+						'hfser' =>  $hfser_id,
+						'user'=> $user_data,
 						'userInf'=>FunctionsClientController::getUserDetails(),
 						'serv_cap'=>DB::table('facilitytyp')->where([['servtype_id',1],['forSpecialty',0]])->whereIn('hgpid', $arrCon)->get(),
 						'ownership'=>DB::table('ownership')->get(),
@@ -449,7 +459,9 @@ class NewClientController extends Controller {
 					]; 
 					// unset($arrRet['fAddress'][0]->areacode);
 					// dd($arrRet);
-					$locRet = "client1.apply.CON1.conapp";
+					
+					$locRet = "dashboard.client.newapplication";
+					// $locRet = "client1.apply.CON1.conapp";
 					break;
 				case 'PTC':
 					session()->forget('ambcharge');
