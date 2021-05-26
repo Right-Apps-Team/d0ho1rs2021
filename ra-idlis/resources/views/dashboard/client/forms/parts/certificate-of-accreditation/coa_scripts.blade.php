@@ -1,13 +1,20 @@
 <script>
+var ghgpid = document.getElementsByName('hgpid')
+var curAppid = ""
+var mhfser_id = "COA"
+var aptid = "IN"
+
     var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
-    console.log('mserv_cap')
-    console.log(mserv_cap)
+    // console.log('mserv_cap')
+    // console.log(mserv_cap)
+
+
 
 
  // INITIAL ONLY FOR COA
  var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "")!!}');
- console.log("servFacArray")
-       console.log(servFacArray)
+//  console.log("servFacArray")
+//        console.log(servFacArray)
  if(servFacArray[0].length > 0){
     var getHGPID = servFacArray[0];
               var dbhgpid = getHGPID[0].hgpid;
@@ -46,8 +53,8 @@
  var appid ='{!!((count($fAddress) > 0) ? $fAddress[0]->appid: "")!!}';
  document.getElementById("appid").value = appid;
 
- console.log("appid")
- console.log(appid)
+//  console.log("appid")
+//  console.log(appid)
  // INITIAL ONLY FOR COA
 
 
@@ -72,11 +79,12 @@
         // selected == '16' ? ifSCL("show") : " ";
         getGoAncillary()
         getCapabilities(selected)
-        // getChargesPerApplication()
+        getChargesPerApplication()
 
     }
 
     function getCapabilities(id) {
+        getFacServCharge()
         const data = ["servCap", "coaAddon"];
         data.map((h) => {
             document.getElementById(h).removeAttribute("hidden")
@@ -150,8 +158,8 @@ function removeOtherServContAdd() {
 					method: 'POST',
 					data: {_token:$("input[name=_token]").val(),id: $('[name=facid]:checked').val(), selected: $('[name=facid]:checked').val(), from: 6},
 					success: function(arr){
-                        console.log("arr")
-                        console.log(arr)
+                        // console.log("arr")
+                        // console.log(arr)
 						// let Anc = document.getElementById('oAnc'), theuseless = {  };
 						// let apString = '<div class="row">'
 						// if(arr.length > 0) { 
@@ -211,6 +219,7 @@ function removeOtherServContAdd() {
 
 
 function getFacServCharge(val = null) {
+    // console.log("rec ff")
     var curAppid = "";
     var mhfser_id = "COA";
     var aptid = "IN";
@@ -273,6 +282,39 @@ function getFacServCharge(val = null) {
             serv_chg.innerHTML = '<tr><td colspan="2">No Payment Necessary.</td></tr>';
         }
 }
+
+function getChargesPerApplication() {
+        let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'aptid=' + aptid, 'hfser_id=' + mhfser_id],
+            ghgpid = document.getElementsByName('hgpid');
+
+            // console.log(ghgpid)
+        if (ghgpid != null || ghgpid != undefined) {
+            for (let i = 0; i < ghgpid.length; i++) {
+                if (ghgpid[i].checked) {
+                    sArr.push('hgpid[]=' + ghgpid[i].value);
+                }
+            }
+        }
+        sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getChargesPerApplication')}}", "POST", true, {
+            functionProcess: function(arr) {
+                
+                let not_serv_chg = document.getElementById('not_serv_chg');
+                if (not_serv_chg != undefined || not_serv_chg != null) {
+                    if (arr.length > 0) {
+                        not_serv_chg.innerHTML = '';
+                        for (let i = 0; i < arr.length; i++) {
+                            not_serv_chg.innerHTML += '<tr><td>' + arr[i]['chg_desc'] + '</td><td>&#8369;&nbsp;<span>' + (parseInt(arr[i]['amt'])).toFixed(2) + '</span></td></tr>';
+                        }
+                    } else {
+                        not_serv_chg.innerHTML = '<tr><td colspan="2">Chosen facility has no Registration fee Required.</td></tr>';
+                    }
+                }
+            }
+        });
+
+    
+
+    }
 
     function sendRequestRetArr(arr_data, loc, type, bolRet, objFunction) {
 			try {

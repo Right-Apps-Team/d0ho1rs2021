@@ -611,6 +611,37 @@ class NewClientController extends Controller {
 					$locRet = "dashboard.client.certificate-of-accreditation";
 					// $locRet = "client1.apply.COA1.coaapp";
 					break;
+				case 'ATO':
+					session()->forget('ambcharge');
+						$hfser_id = 'ATO';
+						$faclArr = [];
+							$facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();
+							foreach ($facl_grp as $f) {
+								array_push($faclArr, $f->hgpid);
+							}
+						$arrRet = [
+							'hfser' =>  "ATO",
+							'user'=> $user_data,
+							'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
+							'userInf'=>FunctionsClientController::getUserDetails(),
+							'hfaci_serv_type'=>DB::select($hfaci_sql),
+							'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),
+							'serv_cap'=>json_encode(DB::table('facilitytyp')->where([['servtype_id',1],['forSpecialty',0]])->get()),
+							'ownership'=>DB::table('ownership')->get(),
+							'class'=>json_encode(DB::select("SELECT * FROM class WHERE (isSub IS NULL OR isSub = '')")),
+							'subclass'=>json_encode(DB::select("SELECT * FROM class WHERE (isSub IS NOT NULL OR isSub != '')")),
+							'function'=>DB::table('funcapf')->get(),
+							'facmode'=>DB::table('facmode')->get(),
+							'apptype'=>DB::table('apptype')->get(),
+							'fAddress'=>$appGet,
+							'servfac'=>json_encode(FunctionsClientController::getServFaclDetails($appid)),
+							'cToken'=>FunctionsClientController::getToken(),
+							'hfer' => $apptype,
+							'hideExtensions'=>$hideExtensions,
+							'aptid'=>$aptid
+						]; 
+						$locRet = "dashboard.client.authority-to-operate";
+					break;
 				
 				default:
 					session()->forget('ambcharge');

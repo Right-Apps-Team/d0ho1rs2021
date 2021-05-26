@@ -103,6 +103,8 @@ class ClientDashboardController extends Controller
         }
 
         $data = [
+            'fAddress'              => [],
+            'serv_cap' => json_encode(DB::table('facilitytyp')->where('servtype_id', 1)->get()),
             'user'                  => $user_data,
             'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
             'regions'               => Regions::orderBy('sort')->get(),

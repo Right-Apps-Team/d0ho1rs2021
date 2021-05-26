@@ -1,5 +1,5 @@
 <script>
-    console.log("received")
+    // console.log("received")
 
     var ghgpid = document.getElementsByName('hgpid')
     var curAppid = ""
@@ -7,7 +7,7 @@
     var aptid = "IN"
 
     var mservfac = JSON.parse('{!!addslashes($serv_cap)!!}')
-    console.log(mservfac)
+    // console.log(mservfac)
 
     createDefaultsNew()
 
@@ -20,18 +20,18 @@
        
     }
     function inputtedDataInitial(){
-        console.log("data from db")
+        // console.log("data from db")
 
         var ptcorg =JSON.parse('{!!((count($ptc) > 0) ? addslashes($ptc): "")!!}');
         ptc = ptcorg[0]
-        console.log("ptc")
-        console.log(ptc)
+        // console.log("ptc")
+        // console.log(ptc)
 
         var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "")!!}');
     
 
-        console.log("servFacArray")
-        console.log(servFacArray)
+        // console.log("servFacArray")
+        // console.log(servFacArray)
 
         if(servFacArray[0].length > 0){
               var getHGPID = servFacArray[0];
@@ -40,8 +40,8 @@
               var getFACID = servFacArray[1];
               var theFACID = getFACID[0].facid;
 
-              console.log("getHGPID")
-              console.log(getHGPID)
+            //   console.log("getHGPID")
+            //   console.log(getHGPID)
 
               typeofFacs(dbhgpid)
 
@@ -170,7 +170,7 @@
         let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'aptid=' + aptid, 'hfser_id=' + mhfser_id],
             ghgpid = document.getElementsByName('hgpid');
 
-            console.log(ghgpid)
+            // console.log(ghgpid)
         if (ghgpid != null || ghgpid != undefined) {
             for (let i = 0; i < ghgpid.length; i++) {
                 if (ghgpid[i].checked) {
@@ -200,7 +200,7 @@
     }
 
     function getPTCtype(selected){
-        console.log("receive type " + selected)
+        // console.log("receive type " + selected)
 
         document.getElementById(selected == 0 ? "type0" : "type1").checked = true
 

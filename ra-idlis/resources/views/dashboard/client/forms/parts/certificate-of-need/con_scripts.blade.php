@@ -5,11 +5,11 @@ var mhfser_id = "CON"
 var aptid = "IN"
 
 var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
-console.log(mserv_cap)
+// console.log(mserv_cap)
 if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
     var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "")!!}');
-    console.log("servFacArray")
-    console.log(servFacArray)
+//     console.log("servFacArray")
+//     console.log(servFacArray)
 
     var appid ='{!!((count($fAddress) > 0) ? $fAddress[0]->appid: "")!!}';
     var cap_inv ='{!!((count($fAddress) > 0) ? $fAddress[0]->cap_inv: "")!!}';
@@ -18,10 +18,10 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
 
     var condet =JSON.parse('{!!((count($condet[0]) > 0) ? $condet[0]: "")!!}');
     var exHosp =JSON.parse('{!!((count($condet[1]) > 0) ? $condet[1]: "")!!}');
-    console.log("condet")
-    console.log(condet)
-    console.log("exHosp")
-    console.log(exHosp)
+//     console.log("condet")
+//     console.log(condet)
+//     console.log("exHosp")
+//     console.log(exHosp)
     initialProPo()
     listHosps()
 
@@ -90,7 +90,7 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
 
         if(condet.length > 0 ){
             for(var i = 0; i < condet.length ; i++){
-                console.log(i)
+                // console.log(i)
                 var newTr = document.createElement("tr");
                 newTr.setAttribute("id", "rowEntry" + i);
                 document.getElementById("projected_populations").appendChild(newTr);
@@ -265,8 +265,8 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
 function getFacServCharge(val = null) {
 
 var facids = getCheckedValue('facid')
-console.log("facids")
-console.log(facids)
+// console.log("facids")
+// console.log(facids)
 var arrCol = facids;
 
 let serv_chg = document.getElementById('serv_chg');
@@ -287,8 +287,8 @@ if (arrCol.length > 0) {
         setTimeout(function() {
                 sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getServiceCharge')}}", "POST", true, {
                         functionProcess: function(arr) {
-                        console.log("arr")
-                        console.log(arr)
+                        // console.log("arr")
+                        // console.log(arr)
                                 const distinctArr = Array.from(new Set(arr.map(s => s.facname))).map(facname => {
                                 return {
                                         facname: facname,
@@ -325,8 +325,8 @@ function calculatepop(){
                 }
                 
         }
-        console.log("calcs")
-        console.log(calc)
+        // console.log("calcs")
+        // console.log(calc)
 
         document.getElementById("projectedPopulationCostN").innerHTML = calc.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 

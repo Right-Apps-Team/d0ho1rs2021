@@ -49,6 +49,11 @@ Route::post(
 ); //->middleware([APIMiddleware::class]);
 
 Route::post(
+    '/application/ato/save',
+    'Client\Api\AtoAppController@save'
+); //->middleware([APIMiddleware::class]);
+
+Route::post(
     '/application/ptc/save',
     'Client\Api\PtcAppController@save'
 ); //->middleware([APIMiddleware::class]);
