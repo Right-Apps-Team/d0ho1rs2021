@@ -1,10 +1,6 @@
 <script>
 
-const savePartialCon = async (e) => {
-    console.log("brgy")
-    console.log($('#brgy').val())
-
-
+const savePartialPtc = async (e) => {
         var errors = 0;
         var ermsg = " ";
         var errorPar = 0;
@@ -51,7 +47,7 @@ const savePartialCon = async (e) => {
         if($('#approving_authority_name').val() == ""){errors +=1; ermsg += "Approving Authority Name, "}
         
       
-        if($('input[name="facid"]:checked').val() == undefined){errors +=1; ermsg += "Facilities/Type, "}
+        if($('input[name="hgpid"]:checked').val() == undefined){errors +=1; ermsg += "Facilities/Type, "}
         
         if($('#fac_email_address').val() != ""){
             var check = checkEmailValidity($('#fac_email_address').val()) 
@@ -159,9 +155,21 @@ function submitProper (e){
 
     var allFacids = getAllFacids();
 
+    const facid = $('input[name="facid"]:checked').val();   
     
+    const ptcDet = {
+        type:                   $('input[name="type"]:checked').val(),
+        construction_description:$('#construction_description').val(),
+        propbedcap:             $('#propbedcap').val(),
+        renoOption:             $('#renoOption').val(),
+        incbedcapfrom:          $('#incbedcapfrom').val(),
+        incbedcapto:            $('#incbedcapto').val(),
+        ltonum:                 $('#ltonum').val(),
+        connum:                 $('#connum').val(),
+        incstationfrom:           $('#incstationfrom').val(),
+        incstationto:           $('#incstationto').val()
+    }
 
-    const facid = $('input[name="facid"]:checked').val();    
     const data = {
         saveas:                  e,
         appid:                  $('#appid').val(),
@@ -188,7 +196,7 @@ function submitProper (e){
         subClassid:             $('#subclass').val()  == "" ||  $('#subclass').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}' : $('#subclass').val(),
         facmode:                $('#facmode').val(),
         funcid:                 $('#funcid').val(),
-        // facid:                  facid,
+        facid:                  facid,
         owner:                  $('#owner').val(),
         ownerMobile:            $('#prop_mobile').val(),
         ownerLandline:          $('#prop_landline').val(),
@@ -202,25 +210,33 @@ function submitProper (e){
         con_hospital:           con_hospital,
         facid:                  JSON.stringify(allFacids),
         hgpid:                  $('input[name="hgpid"]:checked').val(),
+        noofdialysis:           $('#noofdialysis').val(),
+        ptcdet:                JSON.stringify([ptcDet]) 
     }
     console.log(data)
-    callApi('/api/application/con/save', data, 'POST').then(d => {
-        const id = d.data.id;
-             if(e == "final"){
+    console.log("submit")
+    if(confirm("Are you sure you want to proceed?")){
+        callApi('/api/application/ptc/save', data, 'POST').then(d => {
+            const id = d.data.id;
+            // console.log("error")
+            // console.log(d.data.error)
+            // alert('Information now saved ');
+
+            // window.location.replace(`${base_url}/client/dashboard/new-application?appid=${id}`);
+            if(e == "final"){
                 if(id){
                     
-                window.location.href="{{asset('client1/apply/attachment/CON')}}/"+ id
+                window.location.href="{{asset('client1/apply/attachment/PTC')}}/"+ id
                 }
             
             }else{
                 alert('Information now saved');
             }
-        alert('Information now saved');
-        // window.location.replace(`${base_url}/client/dashboard/new-application?appid=${id}`);
-       
-    }).then(error => {
-        console.log(error);
-    })
+        
+        }).then(error => {
+            console.log(error);
+        })
+    }
 }
 
 function getAllFacids (){
@@ -245,24 +261,22 @@ function getAllFacids (){
    
 }
 
-function getCheckedValue(groupName) {
-              var radios;
-              if (groupName == "anxsel") {
-                     radios = document.getElementsByClassName(groupName);
-              } else {
-                     radios = document.getElementsByName(groupName);
-              }
+function checkEmailValidity(email) 
+{
+ if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+  {
+    return (true)
+  }
+    return (false)
+}
 
-
-              var rad = []
-              for (i = 0; i < radios.length; i++) {
-                     if (radios[i].checked) {
-                            rad.push(radios[i].value);
-
-                     }
-              }
-              return rad;
-       }
-
+function checkNumberlValidity(number) 
+{
+ if (/^(09|\+639)\d{9}$/.test(number))
+  {
+    return (true)
+  }
+    return (false)
+}
 
 </script>

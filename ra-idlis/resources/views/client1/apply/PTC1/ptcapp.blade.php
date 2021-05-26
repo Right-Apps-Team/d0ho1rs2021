@@ -525,8 +525,10 @@
 		var mclass = JSON.parse('{!!$class!!}'), 
 		msubclass = JSON.parse('{!!$subclass!!}'), 
 		mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}'), 
-		mappform = JSON.parse('{!!json_encode($fAddress)!!}'), 
-		mservfac = JSON.parse('{!!$servfac!!}'), 
+		// mappform = JSON.parse('{!!json_encode($fAddress)!!}'), 
+		mappform = JSON.parse('{!!addslashes(json_encode($fAddress))!!}'), 
+		mservfac = JSON.parse('{!!addslashes($serv_cap)!!}'),
+		// mservfac = JSON.parse('{!!$servfac!!}'), 
 		mptcdet = JSON.parse('{!!$ptcdet!!}'), 
 		assignedRgn = "", 
 		assignedGroup = {};
@@ -535,6 +537,10 @@
 		// 	___div.classList.remove('active');
 		// 	___div.classList.add('text-primary');
 		// }
+		// console.log("mservfac")
+		// console.log(mservfac)
+
+
 		(function() {
 			$("#type0").prop('checked',true);
 			changeNrs(0);
@@ -580,12 +586,15 @@
 				if(gfacid != null || gfacid != undefined) { for(let i = 0; i < gfacid.length; i++) { if(gfacid[i].checked) {
 					sArr.push('facid[]='+gfacid[i].value);
 				} } }
+				console.log("sArr")
+				console.log(sArr)
 				$('#confirmModal').on('hidden.bs.modal', function (e) {
 					if($('#propbedcap').val() < 100 && $('#propbedcap').val() != "" && $('input[name=hgpid]:checked').val() == 6 && $.trim($("#conCode").val()) == ""){
 							alert('Please specify your CON Code first!');
 							$("#conCode").focus();
 					} else {
 						insErrMsg('warning', 'Sending request.');
+					
 						sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/fPTCApp')}}", "POST", true, {
 							functionProcess: function(arr) {
 								let aBol = true;

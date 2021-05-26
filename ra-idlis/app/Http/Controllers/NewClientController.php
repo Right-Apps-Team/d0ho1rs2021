@@ -465,7 +465,20 @@ class NewClientController extends Controller {
 					break;
 				case 'PTC':
 					session()->forget('ambcharge');
+					$hfser_id = 'PTC';
+					$faclArr = [];
+							$facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();
+							foreach ($facl_grp as $f) {
+								array_push($faclArr, $f->hgpid);
+							}
+
+					$ptc =  DB::table('ptc')->where('appid', $appid)->get();
+
 					$arrRet = [
+						'user'=> $user_data,
+						'hfser' =>  $hfser_id,
+						'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
+						'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),
 						'userInf'=>FunctionsClientController::getUserDetails(),
 						'hfaci_serv_type'=>DB::select($hfaci_sql),
 						'serv_cap'=>json_encode(DB::table('facilitytyp')->where([['servtype_id',1]/*,['forSpecialty',0]*/])->get()),
@@ -481,9 +494,11 @@ class NewClientController extends Controller {
 						'hfer' => $apptype,
 						'hideExtensions'=>$hideExtensions,
 						'aptid'=>$aptid,
+						'ptc'=>$ptc,
 					]; 
 					// dd($arrRet);
-					$locRet = "client1.apply.PTC1.ptcapp";
+					$locRet = "dashboard.client.permit-to-construct";
+					// $locRet = "client1.apply.PTC1.ptcapp";
 					break;
 				case 'LTO':
 					$proceesedAmb = [];

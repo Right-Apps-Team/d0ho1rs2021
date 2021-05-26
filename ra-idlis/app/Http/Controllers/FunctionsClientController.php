@@ -213,7 +213,8 @@ class FunctionsClientController extends Controller {
 							approvingauthority, 
 							approvingauthoritypos ,
 							addonDesc,
-							savingStat
+							savingStat,
+							noofdialysis
 						FROM appform 
 						LEFT JOIN region ON region.rgnid = appform.rgnid 
 						LEFT JOIN class ON class.classid = appform.classid 
@@ -329,7 +330,8 @@ class FunctionsClientController extends Controller {
 							approvingauthority, 
 							approvingauthoritypos ,
 							addonDesc,
-							savingStat
+							savingStat,
+							noofdialysis
 						FROM appform 
 						LEFT JOIN region ON region.rgnid = appform.rgnid 
 						LEFT JOIN class ON class.classid = appform.classid 

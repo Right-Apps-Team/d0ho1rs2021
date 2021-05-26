@@ -374,6 +374,8 @@
 		var curAppid = "", curPtcId = "", 
 		curHfserid ='{!!((count($fAddress) > 0) ? $fAddress[0]->hfser_id : "")!!}',
 		 assignedRgn = "", assignedGroup = {};
+
+		
 		
 		// if(___div != null || ___div != undefined) {
 		// 	___div.classList.remove('active');

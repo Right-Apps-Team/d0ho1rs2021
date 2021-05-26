@@ -23,7 +23,8 @@
                     @include('dashboard.client.forms.parts.classification')
 
                     <!-- Service Capabilities -->
-                    @include('dashboard.client.forms.parts.service-capabilities')
+                    @include('dashboard.client.forms.parts.certificate-of-need.serv-cap')
+                    <!-- @include('dashboard.client.forms.parts.service-capabilities') -->
 
                     <!-- Owner Details -->
                     @include('dashboard.client.forms.parts.owner-details')

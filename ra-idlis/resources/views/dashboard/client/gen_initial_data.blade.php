@@ -1,6 +1,8 @@
 <script>
  
     if ('{!!isset($fAddress)&&(count($fAddress) > 0)!!}') {
+      var appid ='{!!((count($fAddress) > 0) ? $fAddress[0]->appid: "")!!}';
+      document.getElementById("appid").value = appid;
         var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
         var areacode = JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->areacode: "")!!}');
 

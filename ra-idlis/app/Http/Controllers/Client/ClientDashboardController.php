@@ -76,7 +76,9 @@ class ClientDashboardController extends Controller
         }
 
         $data = [
+            'fAddress'              => [],
             'user'                  => $user_data,
+            'serv_cap' => json_encode(DB::table('facilitytyp')->where('servtype_id', 1)->get()),
             'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
             'regions'               => Regions::orderBy('sort')->get(),
             'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),

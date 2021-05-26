@@ -1,6 +1,6 @@
 <div class="mb-2 col-md-12">&nbsp;</div>
 <div class="col-md-12"><b class="text-primary">Service Capabilities: <span class="text-danger">*</span></b></div>
-
+<!-- 
     {{-- Hemodialysis Clinic --}}
         <div class="col-md-4">
             <label>
@@ -152,6 +152,14 @@
             <label>
                 <input type="radio" name="facid" value="US"/> Urologic Surgery
             </label>
+        </div> -->
+
+
+<div class="col-md-4">
+    <div id="mainServCap">
+
+        <div id="ServCapCont" class="mb-3">
+
         </div>
-
-
+    </div>
+</div>
