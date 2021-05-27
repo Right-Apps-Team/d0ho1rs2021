@@ -76,6 +76,7 @@ class ClientDashboardController extends Controller
         }
 
         $data = [
+            'ptc'              => [],
             'fAddress'              => [],
             'user'                  => $user_data,
             'serv_cap' => json_encode(DB::table('facilitytyp')->where('servtype_id', 1)->get()),
