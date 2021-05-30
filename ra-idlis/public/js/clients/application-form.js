@@ -616,3 +616,4 @@ const addListOfExistingHospitals = () => {
     `;
     $('#existing_hospitals').prepend(row);
 }
+

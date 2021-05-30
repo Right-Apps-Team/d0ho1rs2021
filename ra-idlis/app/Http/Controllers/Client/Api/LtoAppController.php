@@ -142,11 +142,26 @@ class LtoAppController extends Controller
            $this->ltoAppDetSave($request->facid, $appform->appid, $request->uid);
         }
 
-        
+        $payment = session()->get('payment');
+        $appcharge =  session()->get('appcharge');
+        $ambcharge   =  session()->get('ambcharge');
+
+        $chg = DB::table('chgfil')->where([['appform_id', $appform->appid]])->first();
+        if (!is_null($chg)) {
+            DB::table('chgfil')->where([['appform_id', $appform->appid]])->delete();
+        }
+
+        NewGeneralController::appCharge($request->appcharge, $appform->appid, $request->uid);
+        NewGeneralController::appCharge($request->appchargeHgp, $appform->appid, $request->uid);
+        NewGeneralController::appChargeAmb($request->appChargeAmb, $appform->appid, $request->uid);
+
             return response()->json(
                 [
                     'id' => $appform->appid,
                     'applicaiton' => $appform,
+                    'payment' => $payment,
+                    'appcharge' => $appcharge,
+                    'ambcharge' => $ambcharge,
                     // 'con_catchment' => $concatch,
                     'provinces'     => Province::where('rgnid', $appform->rgnid)->get(),
                     'cities'        => Municipality::where('provid', $appform->provid)->get(),

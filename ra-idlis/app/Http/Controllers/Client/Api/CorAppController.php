@@ -73,6 +73,17 @@ class CorAppController extends Controller
         $facid = json_decode($request->facid, true);
         $this->ltoAppDetSave($request->facid, $appform->appid, $request->uid);
 
+        $chg = DB::table('chgfil')->where([['appform_id', $appform->appid]])->first();
+        if (!is_null($chg)) {
+            DB::table('chgfil')->where([['appform_id', $appform->appid]])->delete();
+        }
+
+        if($request->appcharge){
+             NewGeneralController::appCharge($request->appcharge, $appform->appid, $request->uid);
+        }
+        if($request->appchargeHgp){
+             NewGeneralController::appCharge($request->appchargeHgp, $appform->appid, $request->uid);
+        }
         // if(count($facid) > 0){
         //    $this->ltoAppDetSave($request->facid, $appform->appid, $request->uid);
         // }

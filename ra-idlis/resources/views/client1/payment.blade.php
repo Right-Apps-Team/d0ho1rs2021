@@ -2,6 +2,10 @@
 {{-- 219 AND 319 --}}
 @section('content')
 @include('client1.cmp.__payment')
+
+<script>
+
+</script>
 <body>
 	@include('client1.cmp.nav')
 	@include('client1.cmp.breadcrumb')

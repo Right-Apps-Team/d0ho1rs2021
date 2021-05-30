@@ -1107,6 +1107,7 @@ class FunctionsClientController extends Controller {
 		$payment = self::getSessionParamObj("payment"); 
 		$appcharge = self::getSessionParamObj("appcharge"); 
 		$ambcharge = self::getSessionParamObj("ambcharge");
+		
 		if(isset($payment) || isset($appcharge) || isset($ambcharge)) {
 			if(isset($payment)) { 
 				$pArr = $payment[self::getSessionParamObj("uData", "uid")]; 

@@ -196,6 +196,11 @@ function submitProper (e){
         con_hospital:           con_hospital,
         facid:                  JSON.stringify(allFacids),
         hgpid:                  $('input[name="hgpid"]:checked').val(),
+
+        appcharge:             $('#tempAppCharge').val(),//appchargetemp
+        appchargeHgp:             $('#tempAppChargeHgpid').val(),//appchargetemp
+        hfser: "ATO",
+        aptid: "IN"
     }
     console.log(data)
     callApi('/api/application/ato/save', data, 'POST').then(d => {

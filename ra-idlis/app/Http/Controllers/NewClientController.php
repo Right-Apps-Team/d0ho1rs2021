@@ -812,6 +812,8 @@ class NewClientController extends Controller {
 					if(isset($payment)) { if(isset($payment)) {
 						$arrRet = [
 							'userInf'=>FunctionsClientController::getUserDetails(),
+							// 'npayment'=>"payment",
+							// 'npayment'=>$appid,
 							'npayment'=>$payment,
 							'cToken'=>FunctionsClientController::getToken(),
 							'appid'=>$appid
@@ -3315,6 +3317,8 @@ class NewClientController extends Controller {
 							if(isset($request->ambamt) && isset($request->appid)) {
 								if(floatval($request->ambamt) > 0) { $retArr2 = DB::select(DB::raw("SELECT NULL AS chgapp_id, 'Ambulance charge' AS chg_desc, '$request->ambamt' AS amt")); }
 								session()->put('ambcharge', [FunctionsClientController::getSessionParamObj("uData", "uid") => [$retArr2, $request->appid]]);
+							}else{
+								if(floatval($request->ambamt) > 0) { $retArr2 = DB::select(DB::raw("SELECT NULL AS chgapp_id, 'Ambulance charge' AS chg_desc, '$request->ambamt' AS amt")); }
 							}
 							return $retArr2;
 							break;

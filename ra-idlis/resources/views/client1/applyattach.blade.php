@@ -115,7 +115,7 @@
 		<div class="container mt-5 text-danger">
 			{{-- <p class="text-danger">Note:</p> --}}
 			<ul class = "list-unstyled">
-				<li><span class="text-danger">REFERENCE AND GUIDANCE:</span><br> Incomplete Attachment shall be a ground for the denial of this application</li>
+				<li><span class="text-danger">REFERENCE AND GUIDANCE: </span><br> Incomplete Attachment shall be a ground for the denial of this application</li>
 				{{-- @if(strtolower($appform->hfser_id) == 'ptc')
 				<li>
 					<span class="text-danger">Please submit Floor Plan / Blue Print on HFSRB Office .</span>

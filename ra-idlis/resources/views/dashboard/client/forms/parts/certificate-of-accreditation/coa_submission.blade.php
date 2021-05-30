@@ -194,6 +194,9 @@ function submitProper (e){
         con_hospital:           con_hospital,
         facid:                  JSON.stringify(allFacids),
         hgpid:                  $('input[name="hgpid"]:checked').val(),
+
+        appcharge:             $('#tempAppCharge').val(),//appchargetemp
+        appchargeHgp:             $('#tempAppChargeHgpid').val(),//appchargetemp
     }
     console.log(data)
     callApi('/api/application/cor/save', data, 'POST').then(d => {

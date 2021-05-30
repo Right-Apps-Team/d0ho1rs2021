@@ -98,6 +98,15 @@ class PtcAppController extends Controller
         //    $this->ltoAppDetSave($request->facid, $appform->appid, $request->uid);
         // }
 
+        $chg = DB::table('chgfil')->where([['appform_id', $appform->appid]])->first();
+        if (!is_null($chg)) {
+            DB::table('chgfil')->where([['appform_id', $appform->appid]])->delete();
+        }
+
+        NewGeneralController::appCharge($request->appcharge, $appform->appid, $request->uid);
+        NewGeneralController::appCharge($request->appchargeHgp, $appform->appid, $request->uid);
+        // $this->appCharge($request->appcharge, $appform->appid, $request->uid);
+
     
 
       
@@ -185,4 +194,6 @@ class PtcAppController extends Controller
             }
         }
     }
+
+    
 }

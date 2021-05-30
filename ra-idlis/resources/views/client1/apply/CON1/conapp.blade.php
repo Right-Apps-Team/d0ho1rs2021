@@ -803,6 +803,7 @@
 				});
 			}
 			function findChkName(arrCol) {
+				
 				let sArr = ['_token='+document.getElementsByName('_token')[0].value, 'appid='+curAppid, 'hfser_id='+curHfserid];
 				if(Array.isArray(arrCol)) { for(let i = 0; i < arrCol.length; i++) { sArr.push('facid[]='+arrCol[i]); } }
 				sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getServiceCharge')}}", "POST", true, {

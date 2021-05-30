@@ -202,10 +202,15 @@ function submitProper (e){
         con_hospital:           con_hospital,
         facid:                  JSON.stringify(allFacids),
         hgpid:                  $('input[name="hgpid"]:checked').val(),
+
+        appcharge:             $('#tempAppCharge').val(),//appchargetemp
+        hfser: "CON",
+        aptid: "IN"
     }
     console.log(data)
     callApi('/api/application/con/save', data, 'POST').then(d => {
         const id = d.data.id;
+        
              if(e == "final"){
                 if(id){
                     

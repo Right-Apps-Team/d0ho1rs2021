@@ -33,9 +33,9 @@
 <div class="col-md-4">
     <label for="subclass">Sub Classification <span class="text-danger">*</span></label>
     @if(isset($fAddress) && count($fAddress) > 0)
-    <input class="form-control " name="subClassid" id="subclass"  disabled />
+    <input class="form-control " name="subClassid" id="subclass"  disabled  />
     @else
-    <select class="form-control selectpicker show-menu-arrow toRemove" id="subclass" disabled value='{{((isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->subClassid: null)}}'name="subClassid" data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" required>
+    <select class="form-control selectpicker show-menu-arrow toRemove" onchange="getFacServCharge()" id="subclass" disabled value='{{((isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->subClassid: null)}}'name="subClassid" data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" required>
         <option>Please select</option>
     </select>
     @endif

@@ -235,6 +235,12 @@ function submitProper(e){
         con_catch:              con_catch,
         con_hospital:           con_hospital,
         hgpid:                  $('input[name="hgpid"]:checked').val(),
+
+        appcharge:             $('#tempAppCharge').val(),//appchargetemp
+        appchargeHgp:             $('#tempAppChargeHgpid').val(),//appchargetemp
+        appChargeAmb:             $('#tempAppChargeAmb').val(),//appchargetemp
+
+        // tempAppChargeAmb
     }
     console.log(data)
     if(confirm("Are you sure you want to porceed ?")){
@@ -243,6 +249,16 @@ function submitProper(e){
             const id = d.data.id;
           console.log("id")
           console.log(id)
+          const payment = d.data.payment;
+        const appcharge = d.data.appcharge;
+        const ambcharge = d.data.ambcharge;
+
+        console.log("payment")
+        console.log(payment)
+        console.log("appcharge")
+        console.log(appcharge)
+        console.log("ambcharge")
+        console.log(ambcharge)
         // window.location.replace(`${base_url}/client/dashboard/new-application?appid=${id}`);
             if(e == "final"){
                 if(id){

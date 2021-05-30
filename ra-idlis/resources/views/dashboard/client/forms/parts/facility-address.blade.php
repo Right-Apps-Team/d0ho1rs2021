@@ -1,6 +1,9 @@
 <p>&nbsp;</p>
 <div class="col-md-12"><b class="text-primary">FACILTY ADDRESS</b></div>
 <div class="col-md-3">
+    <input type="hidden" name="tempAppCharge" id="tempAppCharge" >
+    <input type="hidden" name="tempAppChargeHgpid" id="tempAppChargeHgpid" >
+    <input type="hidden" name="tempAppChargeAmb" id="tempAppChargeAmb" >
     <label for="region">Region <span class="text-danger">*</span></label>
     @if(isset($fAddress) && count($fAddress) > 0)
     <input class="form-control "  id="regionU" name="rgnidU" value="{{$fAddress[0]->rgn_desc}}" disabled />

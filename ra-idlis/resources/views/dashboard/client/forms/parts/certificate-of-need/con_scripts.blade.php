@@ -5,7 +5,9 @@ var mhfser_id = "CON"
 var aptid = "IN"
 
 var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
-// console.log(mserv_cap)
+
+
+console.log(mserv_cap)
 if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
     var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "")!!}');
 //     console.log("servFacArray")
@@ -287,25 +289,46 @@ if (arrCol.length > 0) {
         setTimeout(function() {
                 sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getServiceCharge')}}", "POST", true, {
                         functionProcess: function(arr) {
-                        // console.log("arr")
-                        // console.log(arr)
+                        console.log("arr")
+                        console.log(arr)
+                        // tempAppCharge
+
+                        const subclass = $('#subclass').val()  == "" ||  $('#subclass').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}' : $('#subclass').val();//appchargetemp
+                        console.log("subclass")//appchargetemp
+                        console.log(subclass)//appchargetemp
+
+                        var ta=[]; //appchargetemp
+
+                        //appchargetemp
                                 const distinctArr = Array.from(new Set(arr.map(s => s.facname))).map(facname => {
-                                return {
+                               
+                                        return {
                                         facname: facname,
-                                        amt: arr.find(s =>
-                                                s.facname === facname).amt
+                                        amt: subclass == "ND" ? 0 :  arr.find(s =>
+                                                s.facname === facname).amt,
+                                        chgapp_id: arr.find(s =>
+                                                s.facname === facname).chgapp_id
                                 }
                                 })
+
+                                
                                 if (serv_chg != undefined || serv_chg != null) {
-                                if (distinctArr.length > 0) {
-                                        serv_chg.innerHTML = '';
-                                        for (let i = 0; i < distinctArr.length; i++) {
-                                                serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['facname'] + '</td><td>&#8369;&nbsp;<span>' + (parseInt(distinctArr[i]['amt'])).toFixed(2) + '</span></td></tr>';
+                                        if (distinctArr.length > 0) {
+                                                serv_chg.innerHTML = '';
+                                                for (let i = 0; i < distinctArr.length; i++) {
+                                                        ta.push({reference : distinctArr[i]['facname'],amount: distinctArr[i]['amt'], chgapp_id:  distinctArr[i]['chgapp_id'] }) //appcharge
+                                                        serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['facname'] + '</td><td>&#8369;&nbsp;<span>' + numberWithCommas(subclass == "ND" ? 0 : (parseInt(distinctArr[i]['amt'])).toFixed(2)) + '</span></td></tr>';
+                                                        // serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['facname'] + '</td><td>&#8369;&nbsp;<span>' + numberWithCommas((parseInt(distinctArr[i]['amt'])).toFixed(2)) + '</span></td></tr>';
+                                                }
+
+                                        } else {
+                                                serv_chg.innerHTML = '<tr><td colspan="2">No Services selected.</td></tr>';
                                         }
-                                } else {
-                                        serv_chg.innerHTML = '<tr><td colspan="2">No Services selected.</td></tr>';
                                 }
-                                }
+
+                                console.log("tadss")//appchargetemp
+                                console.log(JSON.stringify(ta))//appchargetemp
+                                document.getElementById('tempAppCharge').value = JSON.stringify(ta)//appchargetemp
                         }
                 });
         }, 1000);
@@ -313,6 +336,10 @@ if (arrCol.length > 0) {
 } else {
         serv_chg.innerHTML = '<tr><td colspan="2">No Payment Necessary.</td></tr>';
 }
+}
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function calculatepop(){

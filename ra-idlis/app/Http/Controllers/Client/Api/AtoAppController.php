@@ -87,6 +87,21 @@ class AtoAppController extends Controller
         // if(count($facid) > 0){
         //    $this->ltoAppDetSave($request->facid, $appform->appid, $request->uid);
         // }
+
+        $chg = DB::table('chgfil')->where([['appform_id', $appform->appid]])->first();
+        if (!is_null($chg)) {
+            DB::table('chgfil')->where([['appform_id', $appform->appid]])->delete();
+        }
+
+        $ac = json_decode($request->appcharge, true);
+        $ach = json_decode($request->appchargeHgp, true);
+
+
+        if(count($ac) > 0 && count($ach)){
+            NewGeneralController::appCharge($request->appcharge, $appform->appid, $request->uid);
+            NewGeneralController::appCharge($request->appchargeHgp, $appform->appid, $request->uid);
+            // $this->appCharge($request->appcharge, $appform->appid, $request->uid);
+        }
       
         return response()->json(
             [

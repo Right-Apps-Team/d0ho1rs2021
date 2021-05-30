@@ -211,7 +211,12 @@ function submitProper (e){
         facid:                  JSON.stringify(allFacids),
         hgpid:                  $('input[name="hgpid"]:checked').val(),
         noofdialysis:           $('#noofdialysis').val(),
-        ptcdet:                JSON.stringify([ptcDet]) 
+        ptcdet:                JSON.stringify([ptcDet]) ,
+
+        appcharge:             $('#tempAppCharge').val(),//appchargetemp
+        appchargeHgp:             $('#tempAppChargeHgpid').val(),//appchargetemp
+        hfser: "CON",
+        aptid: "IN"
     }
     console.log(data)
     console.log("submit")
