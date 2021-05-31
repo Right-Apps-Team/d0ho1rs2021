@@ -220,7 +220,7 @@ function submitProper (e){
             }else{
                 alert('Information now saved');
             }
-        // alert('Information now saved');
+        alert('Information now saved');
         // window.location.replace(`${base_url}/client/dashboard/new-application?appid=${id}`);
        
     }).then(error => {

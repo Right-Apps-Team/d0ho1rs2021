@@ -76,7 +76,9 @@ class AtoAppController extends Controller
         $appform->savingStat            = $request->saveas;
         // $appform->savingStat            = $request->saveas;
 
-       
+        if($request->saveas == 'final'){
+            $appform->draft = null;
+        }
       
 
         $appform->save();
@@ -93,15 +95,20 @@ class AtoAppController extends Controller
             DB::table('chgfil')->where([['appform_id', $appform->appid]])->delete();
         }
 
-        $ac = json_decode($request->appcharge, true);
-        $ach = json_decode($request->appchargeHgp, true);
+       
+        // $ac = json_decode($request->appcharge, true);
+        // $ach = json_decode($request->appchargeHgp, true);
 
 
-        if(count($ac) > 0 && count($ach)){
+        // if(count($ac) > 0 && count($ach)){
+            if($request->appcharge !=""){
+
             NewGeneralController::appCharge($request->appcharge, $appform->appid, $request->uid);
-            NewGeneralController::appCharge($request->appchargeHgp, $appform->appid, $request->uid);
-            // $this->appCharge($request->appcharge, $appform->appid, $request->uid);
         }
+            if($request->appchargeHgp != ""){
+            NewGeneralController::appCharge($request->appchargeHgp, $appform->appid, $request->uid);}
+            // $this->appCharge($request->appcharge, $appform->appid, $request->uid);
+        // }
       
         return response()->json(
             [

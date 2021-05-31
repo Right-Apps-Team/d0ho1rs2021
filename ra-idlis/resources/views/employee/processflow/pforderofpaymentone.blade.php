@@ -319,6 +319,7 @@
           AprvRejVar = ApOrRe;
           $('#ApprRejRmk').submit();
         }
+        
     $('#addRgn').on('submit', function(event){
             event.preventDefault();
             var form = $(this);

@@ -4034,22 +4034,26 @@
 							->get();
 							break;
 					default:		
-						$anotherData = DB::table('appform')
-							->leftJoin('hfaci_serv_type', 'appform.hfser_id', '=', 'hfaci_serv_type.hfser_id')
-							->leftJoin('hfaci_grp', 'appform.facid', '=', 'hfaci_grp.hgpid')
-							->leftJoin('x08', 'appform.uid', '=', 'x08.uid')
-							->leftJoin('region', 'appform.rgnid', '=', 'region.rgnid')
-							->leftJoin('city_muni', 'appform.cmid', '=', 'city_muni.cmid')
-							->leftJoin('province', 'appform.provid', '=', 'province.provid')
-							->leftJoin('apptype', 'appform.aptid', '=', 'apptype.aptid')
-							->leftJoin('barangay', 'appform.brgyid', '=' , 'barangay.brgyid')
-							->leftJoin('ownership', 'appform.ocid', '=', 'ownership.ocid')
-							->leftJoin('class', 'appform.classid', '=', 'class.classid')
-							->leftJoin('trans_status', 'appform.status', '=', 'trans_status.trns_id')
-							->select('appform.*', 'hfaci_serv_type.*','region.rgn_desc', 'x08.authorizedsignature', 'x08.email', 'x08.streetname', 'x08.barangay', 'x08.city_muni', 'x08.province', 'x08.zipcode', 'x08.rgnid as aprgnid', 'appform.rgnid', 'hfaci_grp.hgpdesc', 'city_muni.cmname', 'apptype.aptdesc', 'province.provname', 'barangay.brgyname', 'ownership.ocdesc', 'class.classname', 'trans_status.trns_desc', 'x08.uid')
-							->where('appform.assignedRgn', '=', $Cur_useData['rgnid']) //bring back after
-							->orderBy('appform.appid','desc')
-							->get();
+						$anotherData = DB::table('appform');
+							$anotherData->leftJoin('hfaci_serv_type', 'appform.hfser_id', '=', 'hfaci_serv_type.hfser_id');
+							$anotherData->leftJoin('hfaci_grp', 'appform.facid', '=', 'hfaci_grp.hgpid');
+							$anotherData->leftJoin('x08', 'appform.uid', '=', 'x08.uid');
+							$anotherData->leftJoin('region', 'appform.rgnid', '=', 'region.rgnid');
+							$anotherData->leftJoin('city_muni', 'appform.cmid', '=', 'city_muni.cmid');
+							$anotherData->leftJoin('province', 'appform.provid', '=', 'province.provid');
+							$anotherData->leftJoin('apptype', 'appform.aptid', '=', 'apptype.aptid');
+							$anotherData->leftJoin('barangay', 'appform.brgyid', '=' , 'barangay.brgyid');
+							$anotherData->leftJoin('ownership', 'appform.ocid', '=', 'ownership.ocid');
+							$anotherData->leftJoin('class', 'appform.classid', '=', 'class.classid');
+							$anotherData->leftJoin('trans_status', 'appform.status', '=', 'trans_status.trns_id');
+							$anotherData->select('appform.*', 'hfaci_serv_type.*','region.rgn_desc', 'x08.authorizedsignature', 'x08.email', 'x08.streetname', 'x08.barangay', 'x08.city_muni', 'x08.province', 'x08.zipcode', 'x08.rgnid as aprgnid', 'appform.rgnid', 'hfaci_grp.hgpdesc', 'city_muni.cmname', 'apptype.aptdesc', 'province.provname', 'barangay.brgyname', 'ownership.ocdesc', 'class.classname', 'trans_status.trns_desc', 'x08.uid');
+							
+							if($Cur_useData['rgnid']){
+								$anotherData->where('appform.assignedRgn', '=', $Cur_useData['rgnid']); //bring back after
+							}
+
+							$anotherData->orderBy('appform.appid','desc');
+							$anotherData = $anotherData->get();
 						break;
 				}
 				for ($i=0; $i < count($anotherData); $i++) {
@@ -4339,15 +4343,26 @@
 
 						}
 						// (strtolower($clienthfser_id) == 'lto' ? 'FI' : 'FPE')
+						$hfser = DB::table('appform')->where('appid',$request->apid)->select('hfser_id')->first()->hfser_id;
 						$updateData = array(
+											// 'isPayEval'=>1,// updated 5-31-2021
 											'isrecommended'=>1,
 											'recommendedby' => $Cur_useData['cur_user'],
 											'recommendedtime' => $Cur_useData['time'],
 											'recommendeddate' =>  $Cur_useData['date'],
 											'recommendedippaddr' =>$Cur_useData['ip'],
-											// 'proposedInspectiontime' => $request->proptime,
-											// 'proposedInspectiondate' =>  $request->propdate,
-											'status'=> $stat,
+										//	// 'proposedInspectiontime' => $request->proptime,
+										//	// 'proposedInspectiondate' =>  $request->propdate,
+											'status'=> $stat,// updated 5-31-2021
+									// updated 5-31-2021
+										'isPayEval' => 1,
+										'payEvalby' => $Cur_useData['cur_user'],
+										'payEvaldate' => $Cur_useData['date'],
+										'payEvaltime' => $Cur_useData['time'],
+										'payEvalip'=> $Cur_useData['ip'],
+										'status' => (strtolower($hfser) == 'ptc' ? 'FPPR' : 'CE')
+
+
 										);
 					}
 					else if ($request->selected == 2)  // Revised

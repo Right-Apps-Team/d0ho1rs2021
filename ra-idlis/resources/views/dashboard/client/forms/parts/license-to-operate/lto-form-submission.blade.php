@@ -238,12 +238,14 @@ function submitProper(e){
 
         appcharge:             $('#tempAppCharge').val(),//appchargetemp
         appchargeHgp:             $('#tempAppChargeHgpid').val(),//appchargetemp
-        appChargeAmb:             $('#tempAppChargeAmb').val(),//appchargetemp
+        appChargeAmb:             $('#tempAppChargeAmb').val(),//appchargetemp,
+
+        noofdialysis:           $('#noofdialysis').val(),
 
         // tempAppChargeAmb
     }
     console.log(data)
-    if(confirm("Are you sure you want to porceed ?")){
+    if(confirm("Are you sure you want to proceed ?")){
 
         callApi('/api/application/lto/save', data, 'POST').then(d => {
             const id = d.data.id;

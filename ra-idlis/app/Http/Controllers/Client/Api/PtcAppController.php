@@ -74,6 +74,10 @@ class PtcAppController extends Controller
         $appform->savingStat            = $request->saveas;
         // $appform->savingStat            = $request->saveas;
 
+        if($request->saveas == 'final'){
+            $appform->draft = null;
+        }
+
         // $ptcform->type                      = $request->type;
         // $ptcform->construction_description  = $request->construction_description;
         // $ptcform->propbedcap                = $request->propbedcap;

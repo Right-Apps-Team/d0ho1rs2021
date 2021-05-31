@@ -393,9 +393,11 @@
                     <div class="row">
                       <div class="col-6 pt-2">OR Number:</div>
                       <div class="col-6">
-                        <input type="number" required="" name="orRef" class="form-control">
+                        <input type="number" required=""  name="orRef" class="form-control">
                       </div>
                     </div>
+                    
+
                   {{--   <div class="row">
                       <div class="col-6 pt-2">Deposit Slip Number:</div>
                       <div class="col-6">
@@ -411,7 +413,7 @@
                     <div class="row">
                       <div class="col-6 pt-2">Amount Paid:</div>
                       <div class="col-6">
-                        <input type="number" required="" name="aPaid" class="form-control">
+                        <input type="number" value="{{$Sum}}" required="" name="aPaid" class="form-control">
                       </div>
                     </div>
                     <div class="row">

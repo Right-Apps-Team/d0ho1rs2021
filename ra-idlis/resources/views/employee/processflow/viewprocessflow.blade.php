@@ -1,3 +1,7 @@
+
+<script src="//cdn.datatables.net/plug-ins/1.10.24/filtering/row-based/range_dates.js"></script>
+<script src="https://cdn.datatables.net/datetime/1.0.3/js/dataTables.dateTime.min.js"></script>
+
 @if (session()->exists('employee_login'))   
   @extends('mainEmployee')
   @section('title', 'View Process Flow')
@@ -6,27 +10,51 @@
   <div class="content p-4">
   	<div class="card">
   		<div class="card-header bg-white font-weight-bold">
-             Application Status
+             Application Status 
           </div>
           <div class="card-body table-responsive">
+          <!-- <table border="0" cellspacing="5" cellpadding="5">
+        <tbody><tr>
+            <td>Minimum date:</td>
+            <td><input type="date" id="min" name="min"></td>
+        </tr>
+        <tr>
+            <td>Maximum date:</td>
+            <td><input type="date" id="max" name="max"></td>
+        </tr>
+    </tbody></table> -->
           	<table class="table table-hover" style="font-size:13px;" id="example">
                   <thead>
                   <tr>
-                      <th scope="col" style="text-align: center; width:auto">Type</th>
-                      <th scope="col" style="text-align: center; width:auto">Code</th>
-                      <th scope="col" style="text-align: center; width:auto">Name of the Facility</th>
-                      <th scope="col" style="text-align: center; width:auto">Type of Facility</th>
-                      <th scope="col" style="text-align: center; width:auto">Type</th>
-                      <th scope="col" style="text-align: center; width:auto">Date Applied</th>
-                      {{-- <th scope="col" style="">Paid</th> --}}
-                      <th scope="col" style="text-align:center">Evaluated</th>
-                      {{-- <th scope="col" style="">Evaluated by</th> --}}
-                      {{-- <th scope="col" style="">Region Evaluated</th> --}}
-                      <th scope="col" style="text-align: center; width:auto">Inspected</th>
-                      <th scope="col" style="text-align: center; width:auto">Approved</th>
-                      <th scope="col" style="text-align: center; width:auto">Status</th>
-                      {{-- <th scope="col" style="">Current Status</th> --}}
-                      <th scope="col" style="text-align: center; width:auto">Options</th>
+                      <th class="select-filter"></th>
+                      <th></th>
+                      <th ></th>
+                      <th class="select-filter"></th>
+                      <th class="select-filter"></th>
+                      <th ></th>
+                      <th ></th>
+                      <th></th>
+                      <th ></th>
+                      <th ></th>
+                      <th ></th>
+                     
+                  </tr>
+                  <tr>
+                      <td scope="col" style="text-align: center; width:auto">Type</td>
+                      <td scope="col" style="text-align: center; width:auto">Code</td>
+                      <td scope="col" style="text-align: center; width:auto">Name of the Facility</td>
+                      <td scope="col" style="text-align: center; width:auto">Type of Facility</td>
+                      <td scope="col" style="text-align: center; width:auto">Type</td>
+                      <td scope="col" style="text-align: center; width:auto">Date Applied</td>
+                      {{-- <td scope="col" style="">Paid</td> --}}
+                      <td scope="col" style="text-align:center">Evaluated</td>
+                      {{-- <td scope="col" style="">Evaluated by</td> --}}
+                      {{-- <td scope="col" style="">Region Evaluated</td> --}}
+                      <td scope="col" style="text-align: center; width:auto">Inspected</td>
+                      <td scope="col" style="text-align: center; width:auto">Approved</td>
+                      <td scope="col" style="text-align: center; width:auto">Status</td>
+                      {{-- <td scope="col" style="">Current Status</td> --}}
+                      <td scope="col" style="text-align: center; width:auto">Options</td>
                   </tr>
                   </thead>
                   <tbody id="FilterdBody">
@@ -83,6 +111,7 @@
                     @endforeach
                   @endif 
                   </tbody>
+                 
               </table>
           </div>
   	</div>
@@ -139,7 +168,112 @@
       </div>
   </div>
   <script type="text/javascript">
-  	$(document).ready(function() {$('#example').DataTable();});
+/* Custom filtering function which will search data in column four between two values */
+
+var minDate, maxDate;
+ 
+ // Custom filtering function which will search data in column four between two values
+//  $.fn.dataTable.ext.search.push(
+//      function( settings, data, dataIndex ) {
+//        console.log("neww")
+     
+//      if(isNaN($("#min").val())  && isNaN($("#max").val())) {  
+//         var min =new Date( $("#min").val() );
+      
+
+//       var max = new Date( $("#max").val() );
+//          var date = new Date( data[5] );
+         
+//          if (
+//              ( min === null && max === null ) ||
+//              ( min === null && date <= max ) ||
+//              ( min <= date   && max === null ) ||
+//              ( min <= date   && date <= max )
+//          ) {
+//           console.log(data)
+//              return true;
+//          }
+//         }
+//           return false;
+        
+
+        
+//      }
+//  );
+// var minDate, maxDate;
+ 
+ // Custom filtering function which will search data in column four between two values
+//  $.fn.dataTable.ext.search.push(
+//      function( settings, data, dataIndex ) {
+//          var min = minDate.val();
+//          var max = maxDate.val();
+//          var date = new Date( data[5] );
+  
+//          if (
+//              ( min === null && max === null ) ||
+//              ( min === null && date <= max ) ||
+//              ( min <= date   && max === null ) ||
+//              ( min <= date   && date <= max )
+//          ) {
+//              return true;
+//          }
+//          return false;
+//      }
+//  );
+  
+  
+  
+  	$(document).ready(function() {
+
+    //   minDate = new Date($('#min'), {
+    //     format: 'MMMM Do YYYY'
+    // });
+    // maxDate = new Date($('#max'), {
+    //     format: 'MMMM Do YYYY'
+    // });
+ 
+    
+ // Create date inputs
+//  minDate = new DateTime($('#min'), {
+//         format: 'MMMM Do YYYY'
+//     });
+//     maxDate = new DateTime($('#max'), {
+//         format: 'MMMM Do YYYY'
+//     });
+
+ 
+
+
+
+
+      var table = $('#example').DataTable();
+      $("#example thead .select-filter").each( function ( i ) {
+      var e = i == 0 ? 0 : i == 1 ? 3 : 4;
+        var select = $('<select><option value=""></option></select>')
+            .appendTo( $(this).empty() )
+            // .appendTo( $(this).empty() )
+            .on( 'change', function () {
+                table.column( e )
+                    .search( $(this).val() )
+                    .draw();
+            } );
+ 
+        table.column(e).data().unique().sort().each( function ( d, j ) {
+            select.append( '<option value="'+d+'">'+d+'</option>' )
+        } );
+
+
+    } );
+     // Event listener to the two range filtering inputs to redraw on input
+    //  $('#min, #max').on('change', function () {
+    //     table.draw();
+    // });
+
+
+    });
+
+
+    
   	function showData(appid, aptdesc, authorizedsignature, brgyname, classname, cmname, email, facilityname, facname, formattedDate, formattedTime, hfser_desc, ocdesc, provname, rgn_desc, streetname, zipcode, isrecommended, hfser_id, statusX, uid, trns_status){
           var status = '';
           // var paid = appid_payment;
@@ -223,3 +357,9 @@
 @else
   <script type="text/javascript">window.location.href= "{{ asset('employee') }}";</script>
 @endif
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.0.3/css/dataTables.dateTime.min.css" />
+
+
+<!-- https://cdn.datatables.net/datetime/1.0.3/js/dataTables.dateTime.min.js -->

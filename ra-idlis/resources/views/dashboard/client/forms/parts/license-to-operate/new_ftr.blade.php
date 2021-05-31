@@ -52,6 +52,7 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
         var ambtyp =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->ambtyp: "")!!}');
         var plate_number =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->plate_number: "")!!}');
         var ambOwner =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->ambOwner: "")!!}');
+        var noofdialysis ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofdialysis: "")!!}';
 
         // console.log("typeamb")
         // console.log(typeamb)
@@ -203,6 +204,7 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
       document.getElementById("noofbed").value = noofbed;
       document.getElementById("noofmain").value = noofmain;
       document.getElementById("noofsatellite").value = noofsatellite;
+      document.getElementById("noofdialysis").value = noofdialysis;
 
     
 
@@ -323,6 +325,7 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
       getChargesPerApplication();
         // get amubulance charge
       getChargesPerAmb()
+    //   getNoDialysis()
 
         if(getFACID.length > 0){
             getFACID.map((h) => {
@@ -491,6 +494,13 @@ document.getElementsByName('areacode').value = 3;
         selected == '1' ? ifAmbuSurg("show") : " ";
         selected == '5' ? ifHemoClinic("show") : " ";
 
+        if(selected == 5){
+            document.getElementById("noDal").removeAttribute("hidden")
+        }else{
+            document.getElementById("noDal").setAttribute("hidden", "hidden")
+            document.getElementById("noofdialysis").value = null;
+        }
+
         getChargesPerApplication()
       
     }
@@ -613,7 +623,22 @@ document.getElementsByName('areacode').value = 3;
 function getFacServCharge (val = null){
     getChargesPerApplication()
     getChargesPerAmb()
-   
+
+    setTimeout(function(){  
+    var l3 = document.getElementById("H3ADC");
+        if(l3){
+            if(l3.checked == true ){
+            document.getElementById("noDal").removeAttribute("hidden")
+            }else{
+                document.getElementById("noDal").setAttribute("hidden", "hidden")
+                document.getElementById("noofdialysis").value = null;
+            }
+        }else{
+                document.getElementById("noDal").setAttribute("hidden", "hidden")
+                document.getElementById("noofdialysis").value = null;
+        }
+   }, 2000);
+
         // console.log("received fees")
         var addons= [];
 
@@ -830,6 +855,9 @@ function getFacServCharge (val = null){
     }
 
     function ifHemoClinic(specs) {
+
+        
+
         // const data = ["dialysisClinic", "clinicLab"];
         const data = ["dialysisClinic", "addOnServe", "clinicLab"];
         //place also getting add on service data here
@@ -1347,6 +1375,33 @@ function getFacServCharge (val = null){
             }
         }
     });
+    
+    window.addEventListener('click', function(e) {
+        setTimeout(function(){  
+            // getNoDialysis()
+         }, 1000);
+    });
+
+    function getNoDialysis(){
+        var l3 = document.getElementById("H3ADC");
+
+        if(document.getElementById("5").checked == true ){
+            document.getElementById("noDal").removeAttribute("hidden")
+        }else{
+
+            document.getElementById("noDal").setAttribute("hidden", "hidden")
+            document.getElementById("noofdialysis").value = null;
+        }
+
+        if(l3){
+            if(l3.checked == true ){
+            document.getElementById("noDal").removeAttribute("hidden")
+            }else{
+                document.getElementById("noDal").setAttribute("hidden", "hidden")
+                document.getElementById("noofdialysis").value = null;
+            }
+        }
+    }
 
  
 

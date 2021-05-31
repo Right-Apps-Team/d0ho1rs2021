@@ -82,7 +82,7 @@
 	</div>
 	<div  style="background: #fff;padding: 25px;">
 		<div style="overflow-x: scroll">
-			<table class="table table-bordered" id="tApp" style="border-bottom: none;border-collapse: collapse;">
+			<table class="table table-bordered" id="tAppCl" style="border-bottom: none;border-collapse: collapse;">
 				<thead class="thead-dark">
 					<tr>
 						<th style="white-space: nowrap;" class="text-center">Application <br/> Code</th>
@@ -246,60 +246,102 @@
 							    	@break
 								@endswitch
 								<div class="dropdown-divider"></div>
+								
 									    <div style="margin-left: 10px;margin-right: 10px;">
-									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" onclick="remAppHiddenId('chgfil{{$each[0]->appid}}')" href="#">View Order of Payment on DOH</a>
+									    <a  data-toggle="modal" data-target="#chgfil-{{$each[0]->appid}}" class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" onclick="remAppHiddenId('chgfil{{$each[0]->appid}}')" href="#">View Order of Payment on DOH</a>
+								
+								
+			<!-- Modal -->
+									
+								
+								
 								</div>
+
+
+								
 							  </div>
 							</div>
 							<!-- <button style="color: #fff;" class="btn btn-sm {{$_payment}} mb-1" data-toggle="tooltip" data-placement="top" title="View Order of Payment" onclick="remAppHiddenId('chgfil{{$each[0]->appid}}')">{{-- <i class="fa fa-money" aria-hidden="true"></i> --}}<small>View Order of Payment on DOH</small>
 							</button> -->
 							
+							<div class="modal fade" id="chgfil-{{$each[0]->appid}}" role="dialog"  tabindex="-1">
+										<div class="modal-dialog modal-lg ">
+										
+										<!-- Modal content-->
+										<div class="modal-content">
+											<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+											
+											</div>
+											<div class="modal-body">
+											<center>
+												<table>
+												<tr id="chgfil{{$each[0]->appid}}" hidden>
+													<td colspan="11">
+													@if(count($each[1]) > 0) <?php $isDone = false; ?>
+														<table class="table">
+															<thead class="thead-dark">
+																<tr>
+																	<th>Date</th>
+																	<th>Reference</th>
+																	<th>Amount</th>
+																	<th>Options</th>
+																</tr>
+															</thead>
+															<tbody>
+																@foreach($each[1] AS $anEach)
+																@if(strtolower($anEach->reference) != 'payment')
+																<tr>
+																	<td>{{date("F j, Y", strtotime($anEach->t_date))}}</td>
+																	<td>{{$anEach->reference}}</td>
+																	<td>&#8369;&nbsp;{{number_format($anEach->amount, 2)}}</td>
+																	@if(! $isDone)
+																		<td class="text-center" rowspan="{{count($each[1])}}" style="vertical-align: middle;">
+																			<a href="{{asset('client1/payment')}}/{{FunctionsClientController::getToken()}}/{{$each[0]->appid}}"><button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Select Payment Method"><i class="fas fa-money-check-alt"></i></button></a>
+																			<a href="{{asset('client1/printPayment')}}/{{FunctionsClientController::getToken()}}/{{$each[0]->appid}}"><button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Print"><i class="fa fa-print"></i></button></a>
+																		</td>
+																		<?php $isDone = true; ?>
+																	@endif
+																</tr>
+																@endif
+
+																@endforeach
+															</tbody>
+														</table>
+													@else
+														<center class="text-primary">Order of Payment has not been finalized by the Process Owner. We will notify you as soon as we finish the verification. Thank you for your patience.</center>
+													@endif
+													</td> <td hidden></td><td hidden></td><td hidden></td><td hidden></td><td hidden></td><td hidden></td><td hidden></td><td hidden></td><td hidden></td><td hidden></td> </tr> 
+											
+												</table>
+											</center>
+
+
+
+
+											</div>
+											<div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+											</div>
+										</div>
+										
+										</div>
+									</div>
 							
 						</td>
 					</tr>
-					<tr id="chgfil{{$each[0]->appid}}" hidden><td colspan="11">
-					@if(count($each[1]) > 0) <?php $isDone = false; ?>
-						<table class="table">
-							<thead class="thead-dark">
-								<tr>
-									<th>Date</th>
-									<th>Reference</th>
-									<th>Amount</th>
-									<th>Options</th>
-								</tr>
-							</thead>
-							<tbody>
-								@foreach($each[1] AS $anEach)
-								@if(strtolower($anEach->reference) != 'payment')
-								<tr>
-									<td>{{date("F j, Y", strtotime($anEach->t_date))}}</td>
-									<td>{{$anEach->reference}}</td>
-									<td>&#8369;&nbsp;{{number_format($anEach->amount, 2)}}</td>
-									@if(! $isDone)
-										<td class="text-center" rowspan="{{count($each[1])}}" style="vertical-align: middle;">
-											<a href="{{asset('client1/payment')}}/{{FunctionsClientController::getToken()}}/{{$each[0]->appid}}"><button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Select Payment Method"><i class="fas fa-money-check-alt"></i></button></a>
-											<a href="{{asset('client1/printPayment')}}/{{FunctionsClientController::getToken()}}/{{$each[0]->appid}}"><button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Print"><i class="fa fa-print"></i></button></a>
-										</td>
-										<?php $isDone = true; ?>
-									@endif
-								</tr>
-								@endif
-
-								@endforeach
-							</tbody>
-						</table>
-					@else
-						<center class="text-primary">Order of Payment has not been finalized by the Process Owner. We will notify you as soon as we finish the verification. Thank you for your patience.</center>
-					@endif
-					</td> <td hidden></td><td hidden></td><td hidden></td><td hidden></td><td hidden></td><td hidden></td><td hidden></td><td hidden></td><td hidden></td><td hidden></td> </tr> 
+					
+					
 					@endif @endforeach @else
 					<tr>
 						<td colspan="6">No application applied yet.</td>
 					</tr>
 					@endif
+					
 				</tbody>
 			</table>
 			</div>
+
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -336,6 +378,39 @@
 			}
 		}
 	</script>
+
+<script type="text/javascript">
+		"use strict";
+		var ___div = document.getElementById('__applyBread');
+		if(___div != null || ___div != undefined) {
+			___div.classList.remove('active');
+			___div.classList.add('text-primary');
+		}
+		(function() {
+		})();
+		$(function () {
+		  	$('[data-toggle="tooltip"]').tooltip()
+		});
+		$(document).ready( function () {
+		    $('#tAppCl').DataTable({
+		    	"ordering": false,
+		    	"lengthMenu": [10, 20, 50, 100]
+		    });
+		});
+		function remAppHiddenId(elId) {
+			let idom = document.getElementById(elId);
+			if(idom != undefined || idom != null) {
+				if(idom.hasAttribute('hidden')) {
+					idom.removeAttribute('hidden');
+				} else {
+					idom.setAttribute('hidden', true);
+				}
+			}
+		}
+	</script>
 	@include('client1.cmp.footer')
 </body>
 @endsection
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.0.3/css/dataTables.dateTime.min.css" />

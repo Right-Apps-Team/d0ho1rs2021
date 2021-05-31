@@ -65,7 +65,9 @@ class CorAppController extends Controller
         $appform->savingStat            = $request->saveas;
         // $appform->savingStat            = $request->saveas;
 
-       
+        if($request->saveas == 'final'){
+            $appform->draft = null;
+        }
       
 
         $appform->save();

@@ -617,11 +617,11 @@
 
                             {{-- @if($employeeData->grpid == 'NA' || $employeeData->grpid == 'CS' || $employeeData->grpid == 'FDA' || $employeeData->grpid == 'PO') --}}
 
-                            <span class="PF003_allow">
+                            <!-- <span class="PF003_allow">
 
                                 <li><a href="{{ asset('employee/dashboard/processflow/orderofpayment') }}">&nbsp;&nbsp;&nbsp;&nbsp;Order of Payment</a></li>
 
-                            </span>
+                            </span> -->
 
                             {{-- @endif --}}
 

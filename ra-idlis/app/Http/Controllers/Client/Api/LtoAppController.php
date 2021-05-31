@@ -132,7 +132,11 @@ class LtoAppController extends Controller
         $appform->ambOwner              = $request->ambOwner;
         $appform->addonDesc             = $request->addonDesc;
         $appform->savingStat            = $request->saveas;
+        $appform->noofdialysis          = $request->noofdialysis;
   
+        if($request->saveas == 'final'){
+            $appform->draft = null;
+        }
 
         $appform->save();
 
@@ -151,9 +155,14 @@ class LtoAppController extends Controller
             DB::table('chgfil')->where([['appform_id', $appform->appid]])->delete();
         }
 
-        NewGeneralController::appCharge($request->appcharge, $appform->appid, $request->uid);
-        NewGeneralController::appCharge($request->appchargeHgp, $appform->appid, $request->uid);
-        NewGeneralController::appChargeAmb($request->appChargeAmb, $appform->appid, $request->uid);
+        if($request->appcharge != ""){
+        NewGeneralController::appCharge($request->appcharge, $appform->appid, $request->uid);}
+
+        if($request->appchargeHgp != ""){
+        NewGeneralController::appCharge($request->appchargeHgp, $appform->appid, $request->uid);}
+
+        if($request->appChargeAmb != ""){
+        NewGeneralController::appChargeAmb($request->appChargeAmb, $appform->appid, $request->uid);}
 
             return response()->json(
                 [

@@ -70,7 +70,9 @@ class ConAppController extends Controller
         $appform->savingStat            = $request->saveas;
         // $appform->savingStat            = $request->saveas;
 
-
+        if($request->saveas == 'final'){
+            $appform->draft = null;
+        }
 
 
         $appform->save();
@@ -123,8 +125,9 @@ class ConAppController extends Controller
         }
 
         // $this->appCharge($request->appcharge, $appform->appid, $request->uid);
-       NewGeneralController::appCharge($request->appcharge, $appform->appid, $request->uid);
-
+        if($request->appcharge != ""){
+          NewGeneralController::appCharge($request->appcharge, $appform->appid, $request->uid);
+        }
 
         return response()->json(
             [

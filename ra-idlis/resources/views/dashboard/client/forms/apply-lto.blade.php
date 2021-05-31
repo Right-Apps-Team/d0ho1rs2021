@@ -83,6 +83,9 @@
 
                         {{-- LTO For Ambulatory Surgical Clinic --}}
                         @include('dashboard.client.forms.parts.license-to-operate.for-ambulatory-surgical-clinic')
+
+                        {{-- no. of dialysis station --}}
+                          @include('dashboard.client.forms.parts.num-dialysis')
                         
                         {{-- LTO Add-On Services --}}
                         @include('dashboard.client.forms.parts.license-to-operate.add-on-services')

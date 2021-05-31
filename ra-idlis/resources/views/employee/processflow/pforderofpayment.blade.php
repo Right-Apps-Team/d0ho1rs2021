@@ -2,6 +2,12 @@
   @extends('mainEmployee')
   @section('title', 'Order of Payment Process Flow')
   @section('content')
+
+  <script>
+ var data = JSON.parse('{!!addslashes($BigData)!!}')
+ console.log("data")
+ console.log(data)
+  </script>
   <input type="text" id="CurrentPage" hidden="" value="PF003">
   <div class="content p-4">
       <div class="card">
