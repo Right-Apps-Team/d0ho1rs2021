@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Client\Api;
 use Session;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\FunctionsClientController;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use DB;
-
+use Illuminate\Support\Str;
 
 class NewGeneralController extends Controller
 {
@@ -97,6 +99,42 @@ class NewGeneralController extends Controller
         } else {
             DB::table('appform_orderofpayment')->insert(['appid' => $appid, 'oop_total' => $tPayment, 'oop_time' => Carbon::now()->toTimeString(), 'oop_date' => Carbon::now()->toDateString(), 'oop_ip' => request()->ip(), 'uid' => $uid]);
         }
+    }
+
+    public function uploadProofofPay(Request $request) {
+
+        // $reData = FunctionsClientController::uploadFile($request->upproof);
+
+        $data = $request->input('upproof');
+        $fname = $request->file('upproof')->getClientOriginalName();
+
+
+        $fileExtension = $request->file('upproof')->getClientOriginalExtension();
+        $fileNameToStore = (session()->has('employee_login') ? FunctionsClientController::getSessionParamObj("employee_login", "uid") : FunctionsClientController::getSessionParamObj("uData", "uid")).'_'.Str::random(10).'_'.date('Y_m_d_i_s').'.'.$fileExtension;
+       
+
+
+
+        $request->file('upproof')->storeAs('public/uploaded', $fileNameToStore);
+
+
+        // $request->file('upproof')->storeAs('public/uploaded', $fname);
+        // $destination = base_path() . '/public/uploads';
+        // $request->file('upproof')->move($destination, $fname);
+
+        $msg = 'success';
+        
+
+        DB::table('appform')->where('appid',$request->appid)->update(['payProofFilen' => $fileNameToStore,'isPayProofFilen' => 1 ]);
+        // if(DB::table('appform')->where('appid',$request->appid)->update(['payProofFilen' => "new",'isPayProofFilen' => 1 ])){
+        // if(DB::table('appform')->where('appid',$request->appid)->update(['payProofFilen' => $reData,'isPayProofFilen' => 1 ])){
+        //     $msg = 'success';
+        // }
+        return  response()->json([
+            'msg' => $msg,
+            'id' => $request->appid
+          
+        ]);
     }
   
 }

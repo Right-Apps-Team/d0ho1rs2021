@@ -220,10 +220,18 @@
 	            				<div class="col-md d-flex justify-content-center">
 	            					<select name="recommendation" class="form-control" required style="width: 30%;">
 	            						<option disabled hidden selected>Please Select</option>
-	            						<option value="COC">COC</option>
+	            						<option value="Certificate of Compliance  ">Certificate of Compliance  </option>
+	            						<option value="License to Operate for LINAC, Transporatable  X-Ray Facility">License to Operate for LINAC, Transporatable  X-Ray Facility</option>
+	            						<option value="Certificate of Facility Registration (MRI)">Certificate of Facility Registration (MRI)</option>
+                          <option value="Notice of Deficiency (30 Days compliance)">Notice of Deficiency (30 Days compliance)</option>
+                          <option value="Recommendation for Disapproval including forfeiture of payment">Recommendation for Disapproval including forfeiture of payment</option>
+                          <option value="Recommendation Letter">Recommendation Letter </option>
+                          
+                          <!-- <option value="COC">COC</option>
 	            						<option value="RL">RL</option>
                           <option value="RFD">RFD</option>
-                          <option value="RFC">RFC</option>
+                          <option value="RFC">RFC</option> -->
+
 	            					</select>
 	            				</div>
 	            			</div>
@@ -240,7 +248,7 @@
 	            		</div>
 	            		<div class="row pt-3">
 	            			<div class="col-md d-flex justify-content-center">
-	            				<button class="btn btn-primary" type="submit">Submit</button>
+	            				<button class="btn btn-primary" type="submit">Submit </button>
 	            			</div>
 	            		</div>
 					</form>

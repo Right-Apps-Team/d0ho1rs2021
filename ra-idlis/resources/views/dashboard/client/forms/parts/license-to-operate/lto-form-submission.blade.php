@@ -235,7 +235,8 @@ function submitProper(e){
         con_catch:              con_catch,
         con_hospital:           con_hospital,
         hgpid:                  $('input[name="hgpid"]:checked').val(),
-
+        assignedRgn:             $('#assignedRgn').val(),//6-3-2021
+        
         appcharge:             $('#tempAppCharge').val(),//appchargetemp
         appchargeHgp:             $('#tempAppChargeHgpid').val(),//appchargetemp
         appChargeAmb:             $('#tempAppChargeAmb').val(),//appchargetemp,

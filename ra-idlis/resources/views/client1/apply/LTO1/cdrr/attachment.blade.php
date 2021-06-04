@@ -74,7 +74,7 @@
 							<div class="container pl-5">
 		                   		<div class="row mb-2">
 		                   			<div class="col-sm required">
-		                   				Attachment Details:
+		                   				Attachment Details: 
 		                   			</div>
 		                   			<div class="col-sm-11">
 		                   				<textarea name="add_details" class="form-control" id="add_details" cols="40" rows="10" required></textarea>
@@ -187,6 +187,7 @@
 			$(document).on('submit','#receiptEdit',function(event){
 				event.preventDefault();
 				let data = new FormData(this);
+				
 				data.append('action','edit');
 				$.ajax({
 					type: 'POST',
@@ -224,7 +225,10 @@
 			$(document).on('submit','#receiptAdd',function(event){
 				event.preventDefault();
 				let data = new FormData(this);
+				// console.log("data")
+				// console.log(new FormData(this))
 				data.append('action','add');
+				
 				$.ajax({
 					type: 'POST',
 					data:data,

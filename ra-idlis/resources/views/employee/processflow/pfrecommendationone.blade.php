@@ -7,7 +7,7 @@
         <div class="card-header bg-white font-weight-bold">
           @isset($APPID)<input type="text" id="APPID" value="{{$APPID}}" hidden>@endisset
           <input type="" id="token" value="{{ Session::token() }}" hidden>
-           Recommendation of Application
+           Recommendation of Application 
            <button class="btn btn-primary" onclick="window.history.back();">Back</button>
         </div>
         <div class="card-body">

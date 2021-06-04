@@ -65,6 +65,7 @@ class PtcAppController extends Controller
         $appform->approvingauthority    = $request->approvingauthority;
         $appform->hfep_funded           = $request->hfep_funded;
         $appform->draft                 = $request->draft;
+        $appform->assignedRgn           = $request->assignedRgn;
 
         // LTO update 5-12-2021
         $appform->ptcCode               = $request->ptcCode;
@@ -107,8 +108,11 @@ class PtcAppController extends Controller
             DB::table('chgfil')->where([['appform_id', $appform->appid]])->delete();
         }
 
-        NewGeneralController::appCharge($request->appcharge, $appform->appid, $request->uid);
-        NewGeneralController::appCharge($request->appchargeHgp, $appform->appid, $request->uid);
+        if($request->appcharge != ""){
+        NewGeneralController::appCharge($request->appcharge, $appform->appid, $request->uid);}
+
+        if($request->appchargeHgp != ""){
+        NewGeneralController::appCharge($request->appchargeHgp, $appform->appid, $request->uid);}
         // $this->appCharge($request->appcharge, $appform->appid, $request->uid);
 
     

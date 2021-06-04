@@ -55,7 +55,7 @@
 	        <div class="modal-content" style="border-radius: 0px;border: none;">
 	          <div class="modal-body" style=" background-color: #272b30;
 	        color: white;">
-	            <h5 class="modal-title text-center"><strong>Add New Member</strong></h5>
+	            <h5 class="modal-title text-center"><strong>Add New Member </strong></h5>
 	            <hr>
 	            <div class="container">
 	              <form id="addRgn" class="row"  data-parsley-validate>

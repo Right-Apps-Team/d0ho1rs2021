@@ -30,7 +30,8 @@
                           $status = 1;
                         @endphp
                         @foreach ($BigData as $data)
-                          @if($data->isPayEval == 1 && $data->isrecommended == 1)
+                          @if($data->isPayEval == 1 )
+                          <!-- if($data->isPayEval == 1 && $data->isrecommended == 1) -->
                             
                             @if(strtolower($data->hfser_id) == 'ptc' && $data->isAcceptedFP != 1)
                             <?php continue; ?>

@@ -39,6 +39,11 @@ Route::post(
 ); //->middleware([APIMiddleware::class]);
 
 Route::post(
+    '/upload/proofpayment',
+    'Client\Api\NewGeneralController@uploadProofofPay'
+); //->middleware([APIMiddleware::class]);
+
+Route::post(
     '/application/lto/save',
     'Client\Api\LtoAppController@save'
 ); //->middleware([APIMiddleware::class]);

@@ -283,16 +283,19 @@ class EvaluationController extends Controller
 					$data = AjaxController::getAllDataEvaluateOne($request->appid);
 					$filteredAssessment = $request->except($arrOfUnneeded);
 					$uData = AjaxController::getCurrentUserAllData();
+// suggest to place if count $filteredAssessment
 					foreach ($filteredAssessment as $key => $value) {
 						if(is_numeric($key) && !in_array($key, $getOnDBID)){
 							$res = DB::table('assessmentcombined')->whereIn('asmtComb',[$key])->select('asmtComb','assessmentName','assessmentSeq','headingText','subFor','isAlign')->first();
 							$dataFromDB = AjaxController::forAssessmentHeaders(array(['asmt_title.title_code',$value['part']],['asmt_h1.asmtH1ID',$value['lvl1']],['asmt_h2.asmtH2ID',$value['lvl2']],['asmt_h3.asmtH3ID',$value['lvl3']]),array('asmt_h1.*','asmt_h2.*','asmt_h3.*','asmt_title.title_code','asmt_title.title_name', 'asmt_h2.isdisplay'))[0];
+		//6-4-2021 original_state					// $dataFromDB = AjaxController::forAssessmentHeaders(array(['asmt_title.title_code',$value['part']],['asmt_h1.asmtH1ID',$value['lvl1']],['asmt_h2.asmtH2ID',$value['lvl2']],['asmt_h3.asmtH3ID',$value['lvl3']]),array('asmt_h1.*','asmt_h2.*','asmt_h3.*','asmt_title.title_code','asmt_title.title_name', 'asmt_h2.isdisplay'))[0];
 							$forInsertArray = array('asmtComb_FK' => $res->asmtComb, 'assessmentName' => $res->assessmentName, 'asmtH3ID_FK' => $request->part, 'h3name' => $dataFromDB->h3name, 'asmtH2ID_FK' => $dataFromDB->asmtH2ID, 'isdisplay' => $dataFromDB->isdisplay, 'h2name' => $dataFromDB->h2name, 'asmtH1ID_FK' => $dataFromDB->asmtH1ID, 'h1name' => $dataFromDB->h1name, 'sub' => $res->subFor, 'isAlign' => $res->isAlign, 'revision' => $revision, 'partID' => $dataFromDB->title_code, 'parttitle' => $dataFromDB->title_name, 'evaluation' => ($value['comp'] == 'false' ? 0 : ($value['comp'] == 'NA' ? 'NA' : 1)), 'remarks' => ($value['remarks'] ?? null), 'assessmentSeq' => $res->assessmentSeq, 'evaluatedBy'=> ($uData['cur_user'] != 'ERROR' ? $uData['cur_user'] : (session()->has('uData') ? session()->get('uData')->uid :'UNKOWN, '.$request->ip())), 'assessmentHead' => $res->headingText, 'appid' => $request->appid);
 							// (isset($request->monid) && $request->monid > 0 ? $forInsertArray['monid'] = $request->monid : '');
 							DB::table('assessmentcombinedduplicateptc')->insert($forInsertArray);
 							array_push($getOnDBID, $key);
 						}
 					}
+
 					if(DB::table('assessmentrecommendation')->where([['choice' , 'comment'], ['evaluatedby', session()->get('employee_login')->uid], ['appid' , $request->appid], ['revision',$revision]])->exists()){
 						DB::table('assessmentrecommendation')->where([['choice' , 'comment'], ['evaluatedby', session()->get('employee_login')->uid], ['appid' , $request->appid], ['revision',$revision]])->delete();
 					}

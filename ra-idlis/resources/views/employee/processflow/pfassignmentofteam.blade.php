@@ -34,6 +34,9 @@
                   <tbody id="FilterdBody">
                   @if (isset($BigData))
                     @foreach ($BigData as $data)
+                    <script>
+						console.log("{!! $data->hasAssessors.'---'. $data->facilityname.'---' . AjaxController::canProcessNextStepFDA($data->appid,'isCashierApproveFDA','isCashierApprovePharma') !!}")
+						</script>
                       @if($data->isPayEval == 1 && $data->isCashierApprove == 1 && in_array($data->hfser_id, ['LTO','COA']) && AjaxController::canProcessNextStepFDA($data->appid,'isCashierApproveFDA','isCashierApprovePharma'))
                     @php
                       $status = ''; $color = '';
@@ -54,6 +57,9 @@
                             //     $color = 'red';
                             // }
                     @endphp
+                    <script>
+						console.log("{!! $data->hasAssessors.'---'. $data->facilityname.'---' . AjaxController::canProcessNextStepFDA($data->appid,'isCashierApproveFDA','isCashierApprovePharma') !!}")
+						</script>
                       <tr>
                         <td style="text-align:center">{{$data->hfser_id}}</td>
                         <td style="text-align:center">{{$data->hfser_id}}R{{$data->assignedRgn}}-{{$data->appid}}</td>
@@ -124,7 +130,7 @@
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content" style="border-radius: 0px;border: none;">
               <div class="modal-body" style=" background-color: #272b30;color: white;">
-                <h5 class="modal-title text-center"><strong>Assign Assessors{{-- Changed Assigned Region @if ($employeeData->grpid != 'RA') and LO  @endif --}}</strong></h5>
+                <h5 class="modal-title text-center"><strong>Assign Assessors {{-- Changed Assigned Region @if ($employeeData->grpid != 'RA') and LO  @endif --}}</strong></h5>
                 <hr>
                 <div class="container">
                       <form id="ChangeRegLO" data-parsley-validate>

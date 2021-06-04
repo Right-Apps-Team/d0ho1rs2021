@@ -12,6 +12,6 @@
 </div>
 <div class="col-md-4">
     <label>
-        <input type="radio" name="facid" id="facid_H3" value="H3" onclick="getFacServCharge()"  required/> Level 2 Hospital
+        <input type="radio" name="facid" id="facid_H3" value="H3" onclick="getFacServCharge()"  required/> Level 3 Hospital
     </label>
 </div>

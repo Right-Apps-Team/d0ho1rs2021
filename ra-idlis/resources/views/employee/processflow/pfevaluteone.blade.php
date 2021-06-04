@@ -157,7 +157,7 @@
             <div class="card-header bg-white font-weight-bold">
               <input type="text" id="NumberOfRejected" value="@isset ($numOfX) {{$numOfX}} @endisset" hidden>
               <input type="" id="token" value="{{ Session::token() }}" hidden>
-               Evaluation
+               Evaluation 
                <button class="btn btn-primary" onclick="window.history.back();">Back</button>
             </div>
             <div class="card-body">

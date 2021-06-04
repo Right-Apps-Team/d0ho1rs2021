@@ -349,12 +349,16 @@
 			$(document).on('submit','#personnelEdit',function(event){
 				event.preventDefault();
 				let data = new FormData(this);
+				console.log("data")
+				console.log(data)
 				$.ajax({
 					type: 'POST',
 					contentType: false,
     				processData: false,
 					data:data,
 					success: function(a){
+						console.log("a")
+						console.log(a)
 						if(a == 'DONE'){
 							alert('Successfully Edited Personnel');
 							location.reload();

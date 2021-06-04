@@ -2,6 +2,8 @@
   @extends('mainEmployee')
   @section('title', 'HFERC Assignment')
   @section('content')
+
+  
   <input type="text" id="CurrentPage" hidden="" value="PF012">
   <div class="content p-4">
       <div class="card">
@@ -23,7 +25,9 @@
 			  </tr>
 			  </thead>
 			  <tbody id="FilterdBody">
+       
 				@if (isset($BigData))
+       
             @foreach ($BigData as $data)
               @if(strtolower($data->hfser_id) == 'ptc' && $data->isCashierApprove == 1 && $data->isrecommended == 1 && $data->isPayEval == 1 && $data->isInspected == null)
 					  	<tr>

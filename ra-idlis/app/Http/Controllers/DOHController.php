@@ -4293,6 +4293,7 @@ namespace App\Http\Controllers;
 									}
 								}
 							}
+							// $canEvaluate = true;
 							$canEvaluate = ($count >=1 ? true : false);
 							$membersDoneEv = (DB::table('x08')->whereIn('uid',$membersDoneEv)->get() ?? []);
 							$currentLoggedIn = (session()->has('employee_login') ? session()->get('employee_login') :null);
@@ -4314,6 +4315,7 @@ namespace App\Http\Controllers;
 								'canProcessAction' => (isset($currentLoggedIn->uid) && $currentLoggedIn->uid == 'ADMIN' ? true : DB::table("hferc_team")->where([['appid',$appid],['uid',$currentLoggedIn->uid]])->whereIn('pos',['C','VC','NA','E'])->exists()),
 								'isHead' => (isset($currentLoggedIn->uid) && $currentLoggedIn->uid == 'ADMIN' ? true : DB::table("hferc_team")->where([['appid',$appid],['uid',$currentLoggedIn->uid]])->whereIn('pos',['C','VC', 'NA'])->exists()),
 								'customRights' => (isset($currentLoggedIn->uid) && $currentLoggedIn->uid == 'ADMIN' ? true :  DB::table("hferc_team")->where([['appid',$appid],['uid',$currentLoggedIn->uid]])->whereIn('pos',['NA','PO'])->exists())
+						,'count'=>$count
 							];
 							return view('employee.processflow.pfassignmentofhfercaction', $arrRet);
 						} 
@@ -4328,8 +4330,21 @@ namespace App\Http\Controllers;
 						if($request->isMethod('post')){
 
 							if($request->action == 'add'){
-								$ret = DB::table('hferc_team')->insert(['appid' => $appid, 'uid' => $request->uid, 'pos' => $request->pos, 'revision' => (isset($evaluationResult->revision) ? $evaluationResult->revision : AjaxController::maxRevisionFor($appid) + 1), 'permittedtoInspect' => 1]);
-								AjaxController::notifyClient($appid,$request->uid,41);
+
+									if($request->type == "PTC" ){
+										$mem = json_decode($request->members, true);
+										foreach($mem as $m){
+											$ret = DB::table('hferc_team')->insert(['appid' => $appid, 'uid' => $m['uid'], 'pos' => $m['pos'], 'revision' => (isset($evaluationResult->revision) ? $evaluationResult->revision : AjaxController::maxRevisionFor($appid) + 1), 'permittedtoInspect' => 1]);
+											AjaxController::notifyClient($appid,$m['uid'],41);
+										}
+									}else{
+										$ret = DB::table('hferc_team')->insert(['appid' => $appid, 'uid' => $request->uid, 'pos' => $request->pos, 'revision' => (isset($evaluationResult->revision) ? $evaluationResult->revision : AjaxController::maxRevisionFor($appid) + 1), 'permittedtoInspect' => 1]);
+										AjaxController::notifyClient($appid,$request->uid,41);
+									}
+																
+																
+						
+							
 							} else if($request->action == 'edit'){
 								$ret = DB::table('hferc_team')->where('hfercid',$request->id)->update(['pos' => $request->pos]);
 							} else if($request->action == 'delete'){
@@ -4436,8 +4451,19 @@ namespace App\Http\Controllers;
 			} else {
 				if($request->isMethod('post')){
 					if($request->action == 'add'){
-						$ret = DB::table('committee_team')->insert(['appid' => $appid, 'uid' => $request->uid, 'pos' => $request->pos]);
-						AjaxController::notifyClient($appid,$request->uid,39);
+						if($request->type == "CON" ){
+							$mem = json_decode($request->members, true);
+
+							foreach($mem as $m){
+								$ret = DB::table('committee_team')->insert(['appid' => $appid, 'uid' => $m['uid'], 'pos' => $m['pos']]);
+								AjaxController::notifyClient($appid,$m['uid'],39);
+							}
+									
+						}else{
+							$ret = DB::table('committee_team')->insert(['appid' => $appid, 'uid' => $request->uid, 'pos' => $request->pos]);
+							AjaxController::notifyClient($appid,$request->uid,39);
+						}
+						
 					} else if($request->action == 'edit'){
 						$ret = DB::table('committee_team')->where('committee',$request->id)->update(['pos' => $request->pos]);
 					} else if($request->action == 'delete'){
@@ -7901,10 +7927,10 @@ namespace App\Http\Controllers;
 		/////////////////////////////////////////////////PROCESS FLOW
 		public function cashierActions(Request $request, $appid, $facid = false)
 		{
-			if(DB::table('appform')->where([['appid', $appid],['isrecommended',1], /*['isCashierApprove',null],*/['isPayEval',1]])->count() <= 0){
-				return redirect('employee/dashboard/processflow/cashier');
-				// return redirect()->back();
-			}
+			// if(DB::table('appform')->where([['appid', $appid],['isrecommended',1], /*['isCashierApprove',null],*/['isPayEval',1]])->count() <= 0){
+			// 	return redirect('employee/dashboard/processflow/cashier');
+			// 	// return redirect()->back();
+			// }//6-2-2021
 			$cur_user = AjaxController::getCurrentUserAllData();
 			if ($request->isMethod('get')) 
 			{

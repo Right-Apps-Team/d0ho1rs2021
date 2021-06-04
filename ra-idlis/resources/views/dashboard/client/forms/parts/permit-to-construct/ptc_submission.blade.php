@@ -212,7 +212,8 @@ function submitProper (e){
         hgpid:                  $('input[name="hgpid"]:checked').val(),
         noofdialysis:           $('#noofdialysis').val(),
         ptcdet:                JSON.stringify([ptcDet]) ,
-
+        assignedRgn:             $('#assignedRgn').val(),//6-3-2021
+        
         appcharge:             $('#tempAppCharge').val(),//appchargetemp
         appchargeHgp:             $('#tempAppChargeHgpid').val(),//appchargetemp
         hfser: "CON",

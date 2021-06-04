@@ -29,7 +29,10 @@
 		color: #fff;
 	}
 </style>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <body>
 	@include('client1.cmp.nav')
 	@include('client1.cmp.breadcrumb')
@@ -246,9 +249,11 @@
 							    	@break
 								@endswitch
 								<div class="dropdown-divider"></div>
-								
 									    <div style="margin-left: 10px;margin-right: 10px;">
 									    <a  data-toggle="modal" data-target="#chgfil-{{$each[0]->appid}}" class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" onclick="remAppHiddenId('chgfil{{$each[0]->appid}}')" href="#">View Order of Payment on DOH</a>
+								<div class="dropdown-divider"></div>
+									    <div >
+									    <a  data-toggle="modal" data-target="#chgfilupload-{{$each[0]->appid}}" class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;"  href="#">Upload Proof of payment here</a>
 								
 								
 			<!-- Modal -->
@@ -327,6 +332,69 @@
 										
 										</div>
 									</div>
+
+									<div class="modal fade" id="chgfilupload-{{$each[0]->appid}}" role="dialog"  tabindex="-1">
+										<div class="modal-dialog modal-lg ">
+										
+										<!-- Modal content-->
+										<div class="modal-content">
+											<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+											
+											</div>
+											<div class="modal-body">
+											<form id="uppp-{{$each[0]->appid}}" method="post" enctype="multipart/form-data">
+											Upload proof of payment here
+											<input id="file-{{$each[0]->appid}}" class="form-control" type="file" name="upproof">
+											<input id="appi-{{$each[0]->appid}}" class="form-control" type="hidden" name="appid">
+											<button type="submit"  >Submit</button>
+											<!-- <button type="submit" onclick="subProofPay('{{$each[0]->appid}}')"  >Submit</button> -->
+											</form>
+										
+											</div>
+											<div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+											</div>
+										</div>
+										
+										</div>
+									</div>
+<script>
+	$(document).on('submit','#uppp-{{$each[0]->appid}}',function(event){
+if(confirm('Are you sure you want to upload proof of payment?')){
+						event.preventDefault();
+						let data = new FormData(this);
+						// data.append('upproof', document.getElementById("file-{{$each[0]->appid}}").value);
+						data.append('appid', '{{$each[0]->appid}}');
+						console.log("data")
+						console.log(data.values())
+						console.log('{{$each[0]->appid}}')
+						$.ajax({
+							url: '{{asset('/api/upload/proofpayment')}}',
+							type: 'POST',
+							contentType: false,
+							processData: false,
+							data:data,
+
+							success: function(a){
+								console.log("a")
+								console.log(a.msg)
+								console.log(a.id)
+								// if(a == 'DONE'){
+								// 	alert('Successfully Edited Personnel');
+								// 	location.reload();
+								// } else {
+								// 	console.log(a);
+								// }
+							},
+							fail: function(a,b,c){
+								console.log([a,b,c]);
+							}
+						})
+}
+					})
+	</script>
+									
 							
 						</td>
 					</tr>
@@ -343,10 +411,7 @@
 			</div>
 
 	</div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-	<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
 
 	<script src="{{asset('ra-idlis/public/js/forall.js')}}"></script>
 	<script type="text/javascript">
@@ -411,6 +476,73 @@
 	@include('client1.cmp.footer')
 </body>
 @endsection
+
+<script>
+
+		function subProofPay(appid){
+
+			
+			document.getElementById("uppp-"+appid).addEventListener("submit", function(event){
+			event.preventDefault()
+			});
+
+			
+			var form =	document.forms["uppp-"+appid].getElementsByTagName("input");
+			
+			if(form[0].value != ""){
+				if(confirm("Are you sure you want to send your proof of payment?")){
+				
+					$(document).on('submit','#uppp'+appid,function(event){
+						event.preventDefault();
+						let data = new FormData(this);
+						console.log("data")
+						console.log(data)
+						$.ajax({
+							url: '{{asset('client1/sendproofpay')}}',
+							type: 'POST',
+							contentType: false,
+							processData: false,
+							data:data,
+							success: function(a){
+								console.log("a")
+								// console.log(a)
+								// if(a == 'DONE'){
+								// 	alert('Successfully Edited Personnel');
+								// 	location.reload();
+								// } else {
+								// 	console.log(a);
+								// }
+							},
+							fail: function(a,b,c){
+								console.log([a,b,c]);
+							}
+						})
+					})
+
+
+				// $.ajax({
+				// 		url: '{{asset('client1/sendproofpay')}}',
+				// 		// dataType: "json", 
+	    		// 		async: false,
+				// 		type: 'POST',
+				// 	data:subs,
+				// 	cache: false,
+			    //     contentType: false,
+			    //     processData: false,
+				// 		success: function(a){
+				// 			console.log(a.msg)
+                            
+				// 		}
+				// 	});
+
+
+				}
+			}
+			
+		}								
+										
+
+									</script>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.0.3/css/dataTables.dateTime.min.css" />

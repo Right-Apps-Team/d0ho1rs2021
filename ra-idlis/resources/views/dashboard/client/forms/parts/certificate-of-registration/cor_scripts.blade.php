@@ -156,13 +156,13 @@
                             sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getServiceCharge')}}", "POST", true, {
                                    functionProcess: function(arr) {
 
-                            console.log("arr")
-                            console.log(arr)
+                            // console.log("arr")
+                            // console.log(arr)
                             // tempAppCharge
 
                             const subclass = $('#subclass').val()  == "" ||  $('#subclass').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}' : $('#subclass').val();//appchargetemp
-                            console.log("subclass")//appchargetemp
-                            console.log(subclass)//appchargetemp
+                            // console.log("subclass")//appchargetemp
+                            // console.log(subclass)//appchargetemp
                             var ta=[]; //appchargetemp
                                           // const distinctArr = [...new Set(arr.map(x => x.facname))];
 
@@ -209,8 +209,8 @@
                                                         serv_chg.innerHTML = '<tr><td colspan="2">No Services selected.</td></tr>';
                                                  }
                                           }
-                                          console.log("tadss")//appchargetemp
-                                          console.log(JSON.stringify(ta))//appchargetemp
+                                          // console.log("tadss")//appchargetemp
+                                          // console.log(JSON.stringify(ta))//appchargetemp
                                           document.getElementById('tempAppCharge').value = JSON.stringify(ta)//appchargetemp
                                    }
                             });
@@ -236,13 +236,13 @@
         sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getChargesPerApplication')}}", "POST", true, {
             functionProcess: function(arr) {
 
-                       console.log("arrC")
-                       console.log(arr)
+                     //   console.log("arrC")
+                     //   console.log(arr)
                         // tempAppCharge
 
                         const subclass = $('#subclass').val()  == "" ||  $('#subclass').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}' : $('#subclass').val();//appchargetemp
-                        console.log("subclass")//appchargetemp
-                        console.log(subclass)//appchargetemp
+                     //    console.log("subclass")//appchargetemp
+                     //    console.log(subclass)//appchargetemp
 
                         var ta=[]; //appchargetemp
 
@@ -276,8 +276,8 @@
                     } else {
                         not_serv_chg.innerHTML = '<tr><td colspan="2">Chosen facility has no Registration fee Required.</td></tr>';
                     }
-                    console.log("tadssC")//appchargetemp
-                    console.log(JSON.stringify(ta))//appchargetemp
+              //       console.log("tadssC")//appchargetemp
+              //       console.log(JSON.stringify(ta))//appchargetemp
                     document.getElementById('tempAppChargeHgpid').value = JSON.stringify(ta)//appchargetemp
                 }
             }

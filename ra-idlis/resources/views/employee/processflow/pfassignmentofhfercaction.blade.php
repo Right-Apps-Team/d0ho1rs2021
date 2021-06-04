@@ -22,11 +22,22 @@
       height: 100%;
     }
   </style>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+
+
+
   {{-- <input type="text" id="CurrentPage" hidden="" value="PF012"> --}}
   <div class="content p-4">
     <div class="card">
       <div class="card-header bg-white font-weight-bold">
-         HFERC Assignment
+         HFERC Assignment  
          <button class="btn btn-primary" onclick="window.history.back();">Back</button>
       </div>
       <div class="card-body">
@@ -39,8 +50,14 @@
         </div>
         <hr>
         @if(isset($AppData->isAcceptedFP))
+        <script>
+        console.log('count')
+        console.log('{!! $count !!}')
+            console.log("{!! count($free).'--'. in_array($currentUser->grpid, ['PO','NA','PO1','PO2','RLO']) . '--'. $isHead. '--'. $canEval!!}")
+          </script>
         <div class="row">
           @if(count($free) > 0 && in_array($currentUser->grpid, ['PO','NA','PO1','PO2','RLO']))
+         
             <div class="col-md-1">
               <button class="btn btn-primary p-2" data-toggle="modal" data-target="#viewModal"><i class="fa fa-plus-circle"></i> Add</button>
             </div>
@@ -180,7 +197,7 @@
     @isset($free)
       @if(count($free) > 0)
       <div class="modal fade" id="viewModal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content" style="border-radius: 0px;border: none;">
             <div class="modal-body" style=" background-color: #272b30;color: white;">
               <h5 class="modal-title text-center">Add HFERC Committee Member</h5>
@@ -189,7 +206,10 @@
                 <form id="memberadd">
                   {{csrf_field()}}
                     <div class="container pl-5">
-                      <div class="row mb-2">
+
+
+                      <!-- 
+                        <div class="row mb-2">
                         <div class="col-sm">
                           Member Name:
                         </div>
@@ -205,6 +225,7 @@
                           </select>
                         </div>
                       </div>
+
                     <div class="row mb-2 mt-3">
                       <div class="col-sm">
                         Commitee Position:
@@ -218,6 +239,73 @@
                         </select>
                       </div>
                     </div>
+                     -->
+
+                    <div style="width:95%; padding-left: 35px">
+
+                  <div class="row col-border-right showAmb">
+
+                      <table class="table table-bordered">
+                          <thead>
+                              <tr>
+                                  <td> <button class="btn btn-success" id="buttonIdAos"><i class="fa fa-plus-circle"></i></button> </td>
+                                  <th>
+                                      <center>Member Name</center>
+                                  </th>
+                                  <th>
+                                      <center> Commitee Position:</center>
+                                  </th>
+                              </tr>
+                          </thead>
+                          <tbody id="body_addOn">
+                              <tr id="tr_addOn">
+                                  <!-- preventDef -->
+                                  <!-- onclick="if(! this.parentNode.parentNode.hasAttribute('id')) { this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); }" -->
+                                  <!-- onClick="$(this).closest('tr').remove();" -->
+                                  <td onclick="return preventDef()"> <button class="btn btn-danger "  onclick="if(! this.parentNode.parentNode.hasAttribute('id')) { this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); }"><i class="fa fa-minus-circle" onclick="return preventDef()"></i></button> </td>
+                                  <td>
+
+                                   <div class="row mb-2">
+                                    <div class="col-sm">
+                                      Member Name:
+                                    </div>
+                                    <div class="col-sm-11">
+                                      <select name="uid" id="uidadd" class="form-control" required>
+                                        @if(count($free) > 0)
+                                          @foreach($free as $f)
+                                            <option value="{{$f->uid}}">{{$f->uid}} - {{ucfirst($f->fname.' '.$f->lname)}}</option>
+                                          @endforeach
+                                        @else
+                                          <option value="">No Available Employee on this Region</option>
+                                        @endif
+                                      </select>
+                                    </div>
+                                  </div>
+
+                                  </td>
+                                  <td>
+                                
+                                      <div class="col-sm">
+                                        Commitee Position:
+                                      </div>
+                                      <div class="col-sm-11">
+                                        <select name="pos" id="pos" class="form-control" required>
+                                          <option value="E">Member</option>
+                                          <option value="C">Chairperson</option>
+                                          <option value="VC">Vice ChairPerson</option>
+                                          {{-- <option value="S">Secretariat</option> --}}
+                                        </select>
+                                      </div>
+                                   
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+                  </div>
+
+
+
                     <input type="hidden" name="action" value="add">
                       <button class="btn btn-primary pt-2" type="submit">Submit</button>
                   </div>
@@ -339,15 +427,53 @@
     @endif
 
     <script type="text/javascript">
+
+      document.getElementById("buttonIdAos").addEventListener("click", function(event) {
+              event.preventDefault()
+              var itm = document.getElementById("tr_addOn");
+              var cln = itm.cloneNode(true);
+              cln.removeAttribute("id");
+              cln.setAttribute("class", "tr_addOn");
+              document.getElementById("body_addOn").appendChild(cln);
+          });
+
+        document.getElementById("tr_addOn").addEventListener("click", function(event) {
+              event.preventDefault()
+            
+          });
+
+  function getAddedmem(){
+   var uid = document.getElementsByName('uid');
+   var pos = document.getElementsByName('pos');
+
+    var alladdmem =[];
+    if(uid[0].options.length > 0){
+    for(var i = 0 ; i < uid.length ; i++){
+            const subs = {
+                uid: uid[i].value,
+                pos: pos[i].value,
+            }
+
+            alladdmem.push(subs);
+    }
+
+    console.log("alladdmem")
+    console.log(alladdmem)
+    }
+   return alladdmem
+}
+
+
+
       function onClickToIFrame(){
         $('iframe').contents().find('button,#menu,nav,#return-to-top,#wrapper').remove();
       }
       
       $(document).ready(function() {
         $('#example').DataTable();
-        $('select').select2({
-          width: '100%'
-        });
+        // $('select').select2({
+        //   width: '100%'
+        // });
       });
       // var ToBeAddedMembers = [];
       $(function () {
@@ -448,9 +574,30 @@
       $("#memberadd").submit(function(e){
         e.preventDefault();
         if($("#pos").val() != '' || $("#uidadd").val() != ''){
-          $.ajax({
+          var sArr = {
+        _token: $("input[name=_token]").val(), 
+        action:'add',
+        type: 'PTC',
+        members: JSON.stringify(getAddedmem())
+       }
+
+       console.log("sArr")
+       console.log(sArr)
+          // console.log($(this).serialize())
+          // $.ajax({
+          //   method: "post",
+          //   data: $(this).serialize(),
+          //   success:function(a){
+          //     if(a == 'done'){
+          //       alert('Added Successfully');
+          //       location.reload();
+          //     }
+          //   }
+          // })
+
+            $.ajax({
             method: "post",
-            data: $(this).serialize(),
+            data: sArr,
             success:function(a){
               if(a == 'done'){
                 alert('Added Successfully');

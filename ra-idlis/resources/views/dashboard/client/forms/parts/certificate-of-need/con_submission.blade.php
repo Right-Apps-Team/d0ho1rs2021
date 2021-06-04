@@ -202,7 +202,8 @@ function submitProper (e){
         con_hospital:           con_hospital,
         facid:                  JSON.stringify(allFacids),
         hgpid:                  $('input[name="hgpid"]:checked').val(),
-
+        assignedRgn:             $('#assignedRgn').val(),//6-3-2021
+        
         appcharge:             $('#tempAppCharge').val(),//appchargetemp
         hfser: "CON",
         aptid: "IN"

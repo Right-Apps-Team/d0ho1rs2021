@@ -6,7 +6,7 @@
   <div class="content p-4">
       <div class="card">
           <div class="card-header bg-white font-weight-bold">
-             Evaluate Applicants
+             Evaluate Applicants 
           </div>
           <div class="card-body table-responsive">
               <table class="table table-hover" id="example" style="font-size:13px;">

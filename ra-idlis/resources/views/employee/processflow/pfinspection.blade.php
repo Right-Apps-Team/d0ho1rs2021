@@ -1,7 +1,11 @@
+
+
 @if (session()->exists('employee_login'))   
   @extends('mainEmployee')
   @section('title', 'Inspection Schedule')
   @section('content')
+
+
    <input type="text" id="CurrentPage" hidden="" value="PF011">
 		<div class="content p-4">
   	<div class="card">
@@ -21,7 +25,16 @@
                   <tbody id="FilterdBody" >
                     
                    	@foreach($applicant as $apply)
-                      @if($apply->isrecommended == 1 && $apply->isPayEval == 1 && $apply->isCashierApprove == 1 && in_array($apply->hfser_id, ['LTO','COA']) && AjaxController::canProcessNextStepFDA($apply->appid,'isCashierApproveFDA','isCashierApprovePharma'))
+					   <script>
+						console.log("{!! $apply->hasAssessors.'---'. $apply->facilityname.'---' . AjaxController::canProcessNextStepFDA($apply->appid,'isCashierApproveFDA','isCashierApprovePharma') !!}")
+						</script>
+					  
+
+
+                      @if($apply->isPayEval == 1 && $apply->isCashierApprove == 1 && in_array($apply->hfser_id, ['LTO','COA']) && AjaxController::canProcessNextStepFDA($apply->appid,'isCashierApproveFDA','isCashierApprovePharma'))
+					  
+					
+					  <!-- if($apply->isrecommended == 1 && $apply->isPayEval == 1 && $apply->isCashierApprove == 1 && in_array($apply->hfser_id, ['LTO','COA']) && AjaxController::canProcessNextStepFDA($apply->appid,'isCashierApproveFDA','isCashierApprovePharma')) -->
                      		@if($apply->hasAssessors == 'T')
             							<tr style="padding-right: 20px!important;">
                             <td scope="row" class="font-weight-bold">{{$apply->hfser_id}}</td>

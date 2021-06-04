@@ -6,7 +6,7 @@
   <div class="content p-4">
       <div class="card">
           <div class="card-header bg-white font-weight-bold">
-             Recommendation for Final Approval
+             Recommendation for Final Approval 
           </div>
           <div class="card-body table-responsive">
               <table class="table table-hover" id="example" style="font-size:13px;">
@@ -37,10 +37,19 @@
                                 continue;
                               }
                             }
+                           
+                            @endphp
+                            <script>
+                            console.log('{!!strtolower($data->hfser_id)."--". $data->appid. "--" . !FunctionsClientController::existOnDB("hferc_evaluation",[["appid",$data->appid]])."--". $data->trns_desc !!}')
+                            </script>
+                            @php
+                            
+
                             if(strtolower($data->hfser_id) == 'ptc' && !FunctionsClientController::existOnDB('hferc_evaluation',[['appid',$data->appid]]) ){
                               continue;
                             }
-
+                            
+                           
                             if($data->isApprove !== null){
                               continue;
                             }
@@ -50,6 +59,7 @@
                             }
 
                           @endphp
+                          
                           <tr>
                             <td class="text-center">{{$data->hfser_id}}</td>
                             <td class="text-center">{{$data->hfser_id}}R{{$data->rgnid}}-{{$data->appid}}</td>

@@ -833,6 +833,8 @@ class NewClientController extends Controller {
 
 					$test = DB::table('chgfil')->insert(['appform_id' => $appid,'paymentMode'=> $request->mPay, 'attachedFile'=>$filename, 'draweeBank' => $request->drawee, 'number' => $request->number, 'userChoosen' => 1, 't_date' => Date('Y-m-d',strtotime('now')) , 't_time' => Date('H:i:s',strtotime('now'))]);
 					if($test){
+						DB::table('appform')->where('appid',$appid)->update(['isPayEval' => 1]);//6-1-2021
+						// DB::table('appform')->where('appid',$appid)->update(['isrecommended' => 1,'isPayEval' => 1]);
 						return redirect('client1/apply')->with('errRet', ['errAlt'=>'success', 'errMsg'=>'Successfully submitted application form and updated payment information.']);
 					}
 				}

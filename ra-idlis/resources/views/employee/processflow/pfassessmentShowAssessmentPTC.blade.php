@@ -192,7 +192,12 @@
 							{!! ($key == 0 ? '' : ' / ').'<a href="'.(($bread['beforeAddress'] == 'MAIN') ? url('employee/dashboard/processflow/parts/'.$data->appid)  : url('employee/dashboard/processflow/'.$bread['beforeAddress'].'/'.$data->appid.'/'.$bread['id'].'/'.$isMon)).'">'.$bread['desc'].'</a>' !!}
 						@endforeach
 					@endisset
+					
 				</div>
+				<script>
+				console.log("part")
+				console.log('{!! $part !!}')
+				</script>
 	        	<div class="container">
 	        		<form action="{{(isset($toSaveUrl) ? $toSaveUrl : url('employee/dashboard/processflow/SaveAssessments/'))}}" method="POST">
 	        			{{csrf_field()}}
@@ -323,6 +328,10 @@
 												<div class="form-check form-check-inline">
 												{{-- yes --}}
 												<div class="custom-control custom-radio">
+													<script>
+														console.log("{{$fourthHeader->id}}[lvl1]")
+														</script>
+												
 												<input required type="text" name="{{$fourthHeader->id}}[lvl1]" class="custom-control-input" value="{{$fourthHeader->h1idReal}}">
 												<input required type="text" name="{{$fourthHeader->id}}[lvl2]" class="custom-control-input" value="{{$fourthHeader->h2idReal}}">
 												<input required type="text" name="{{$fourthHeader->id}}[lvl3]" class="custom-control-input" value="{{$fourthHeader->h3idReal}}">

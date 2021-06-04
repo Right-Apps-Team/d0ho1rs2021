@@ -106,13 +106,13 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
         }
         sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getChargesPerApplication')}}", "POST", true, {
             functionProcess: function(arr) {
-                       console.log("arrC")
-                       console.log(arr)
+                     //   console.log("arrC")
+                     //   console.log(arr)
                         // tempAppCharge
 
                         const subclass = $('#subclass').val()  == "" ||  $('#subclass').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}' : $('#subclass').val();//appchargetemp
-                        console.log("subclass")//appchargetemp
-                        console.log(subclass)//appchargetemp
+                     //    console.log("subclass")//appchargetemp
+                     //    console.log(subclass)//appchargetemp
 
                         var ta=[]; //appchargetemp
 
@@ -143,8 +143,8 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
                     } else {
                         not_serv_chg.innerHTML = '<tr><td colspan="2">Chosen facility has no Registration fee Required.</td></tr>';
                     }
-                    console.log("tadssC")//appchargetemp
-                    console.log(JSON.stringify(ta))//appchargetemp
+              //       console.log("tadssC")//appchargetemp
+              //       console.log(JSON.stringify(ta))//appchargetemp
                     document.getElementById('tempAppChargeHgpid').value = JSON.stringify(ta)//appchargetemp
                 }
             }
@@ -194,13 +194,13 @@ if (arrCol.length > 0) {
                             // console.log("fees")
                             // console.log(arr)
 
-                            console.log("arr")
-                            console.log(arr)
+                            // console.log("arr")
+                            // console.log(arr)
                             // tempAppCharge
 
                             const subclass = $('#subclass').val()  == "" ||  $('#subclass').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}' : $('#subclass').val();//appchargetemp
-                            console.log("subclass")//appchargetemp
-                            console.log(subclass)//appchargetemp
+                            // console.log("subclass")//appchargetemp
+                            // console.log(subclass)//appchargetemp
 
                             var ta=[]; //appchargetemp
 
@@ -236,8 +236,8 @@ if (arrCol.length > 0) {
                                    }
                             }
 
-                                console.log("tadss")//appchargetemp
-                                console.log(JSON.stringify(ta))//appchargetemp
+                            //     console.log("tadss")//appchargetemp
+                            //     console.log(JSON.stringify(ta))//appchargetemp
                                 document.getElementById('tempAppCharge').value = JSON.stringify(ta)//appchargetemp
                      }
               });

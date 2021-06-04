@@ -372,10 +372,13 @@
                             <div class="col-md d-flex justify-content-center">
                               <select name="recommendation" class="form-control" required style="width: 100%;">
                                 <option disabled hidden selected>Please Select</option>
-                                <option value="COC">COC</option>
-                                <option value="RL">RL</option>
+                                <option value="Recommendation for Approval">Recommendation for Approval</option>
+                                <option value="Return for Correction">Return for Correction</option>
+                                
+                                <!-- <option value="RL">RL</option>
                                 <option value="RFD">RFD</option>
-                                <option value="RFC">RFC</option>
+                                <option value="RFC">RFC</option> -->
+
                               </select>
                             </div>
                           </div>

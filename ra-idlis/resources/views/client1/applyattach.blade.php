@@ -31,6 +31,9 @@
 					{{csrf_field()}}
 					@foreach($appDet AS $each)
 					<tr>
+						<script>
+							console.log('{!! $each->upid. "--". $each->updesc !!}')
+						</script>
 						<td >
 							{!!((isset($each->upDesc)) ? ('<span class="req">'. $each->upDesc . ' (' . $each->updesc . ')' . '</span>') . '<br>' . (isset($each->upDescRemarks) ? '<span class="font-weight-bold"><br>Evaluator\'s Remarks: <br></span>'. $each->upDescRemarks : '') : ($each->isRequired == 1 ? '<span class="req">'.$each->updesc.'</span>' : $each->updesc))!!}
 						</td>
@@ -43,6 +46,7 @@
 										@endphp
 										<label class="badge badge-danger">Uploaded file denied.</label>
 										{{-- @if($appform->canapply == 1) --}}
+										
 											<input class="form-control" type="file" name="upload[{{$each->upid}}]" @if($each->isRequired == 1) required @endif>
 										{{-- @endif --}}
 										@break

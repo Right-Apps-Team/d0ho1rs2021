@@ -133,6 +133,8 @@ class LtoAppController extends Controller
         $appform->addonDesc             = $request->addonDesc;
         $appform->savingStat            = $request->saveas;
         $appform->noofdialysis          = $request->noofdialysis;
+        
+        $appform->assignedRgn           = $request->assignedRgn;
   
         if($request->saveas == 'final'){
             $appform->draft = null;

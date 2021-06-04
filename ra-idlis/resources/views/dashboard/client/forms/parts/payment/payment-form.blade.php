@@ -19,7 +19,7 @@
                                 <th>Amount</th>
                             </tr>
                         </thead>
-                        <tr ><td colspan="2"><center><b>Facility Fee</b></center></td></tr>
+                        <tr ><td colspan="2"><center><b>Facility Registration Fee</b></center></td></tr>
                         <tbody id="not_serv_chg">
                             <tr>
                                 <td colspan="2">No Facility Type selected.</td>

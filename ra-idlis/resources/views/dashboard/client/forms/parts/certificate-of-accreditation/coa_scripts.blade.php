@@ -151,6 +151,7 @@ function removeOtherServContAdd() {
     }
 
     function getGoAncillary() {
+        getFacServCharge()
 				let arrAddon = [];
 				$.ajax({
 					url: '{{asset('client1/request/customQuery/getAncillary')}}',
@@ -235,7 +236,8 @@ function getFacServCharge(val = null) {
             let thisFacid = [],
                     appendToPayment = ['groupThis'],
                     hospitalFaci = ['H', 'H2', 'H3'];
-            let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'hfser_id=' + mhfser_id, 'aptid=' + aptid];
+            let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'hfser_id=' + mhfser_id];
+            // let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'hfser_id=' + mhfser_id, 'aptid=' + aptid];
             if (Array.isArray(arrCol)) {
                     for (let i = 0; i < arrCol.length; i++) {
                             sArr.push('facid[]=' + arrCol[i]);
@@ -249,13 +251,13 @@ function getFacServCharge(val = null) {
                     sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getServiceCharge')}}", "POST", true, {
                             functionProcess: function(arr) {
 
-                            console.log("arr")
-                            console.log(arr)
+                            // console.log("arr")
+                            // console.log(arr)
                             // tempAppCharge
 
                             const subclass = $('#subclass').val()  == "" ||  $('#subclass').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}' : $('#subclass').val();//appchargetemp
-                            console.log("subclass")//appchargetemp
-                            console.log(subclass)//appchargetemp
+                            // console.log("subclass")//appchargetemp
+                            // console.log(subclass)//appchargetemp
 
                             var ta=[]; //appchargetemp
                                     // const distinctArr = [...new Set(arr.map(x => x.facname))];
@@ -291,11 +293,11 @@ function getFacServCharge(val = null) {
                                                         // serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['facname'] + '</td><td>&#8369;&nbsp;<span>' + numberWithCommas((parseInt(distinctArr[i]['amt'])).toFixed(2)) + '</span></td></tr>';
                                                 }
                                         } else {
-                                                serv_chg.innerHTML = '<tr><td colspan="2">No Services selected.</td></tr>';
+                                                serv_chg.innerHTML = '<tr><td colspan="2">No Fee for this service.</td></tr>';
                                         }
                                     }
-                                    console.log("tadss")//appchargetemp
-                                    console.log(JSON.stringify(ta))//appchargetemp
+                                    // console.log("tadss")//appchargetemp
+                                    // console.log(JSON.stringify(ta))//appchargetemp
                                     document.getElementById('tempAppCharge').value = JSON.stringify(ta)//appchargetemp
                             }
                     });
@@ -307,7 +309,8 @@ function getFacServCharge(val = null) {
 }
 
 function getChargesPerApplication() {
-        let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'aptid=' + aptid, 'hfser_id=' + mhfser_id],
+        let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'aptid=' + aptid],
+        // let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'aptid=' + aptid, 'hfser_id=' + mhfser_id],
             ghgpid = document.getElementsByName('hgpid');
 
             // console.log(ghgpid)
@@ -321,13 +324,13 @@ function getChargesPerApplication() {
         sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getChargesPerApplication')}}", "POST", true, {
             functionProcess: function(arr) {
 
-                console.log("arrC")
-                       console.log(arr)
+                // console.log("arrC")
+                    //    console.log(arr)
                         // tempAppCharge
 
                         const subclass = $('#subclass').val()  == "" ||  $('#subclass').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}' : $('#subclass').val();//appchargetemp
-                        console.log("subclass")//appchargetemp
-                        console.log(subclass)//appchargetemp
+                        // console.log("subclass")//appchargetemp
+                        // console.log(subclass)//appchargetemp
 
                         var ta=[]; //appchargetemp
 
@@ -363,8 +366,8 @@ function getChargesPerApplication() {
                     } else {
                         not_serv_chg.innerHTML = '<tr><td colspan="2">Chosen facility has no Registration fee Required.</td></tr>';
                     }
-                    console.log("tadssC")//appchargetemp
-                    console.log(JSON.stringify(ta))//appchargetemp
+                    // console.log("tadssC")//appchargetemp
+                    // console.log(JSON.stringify(ta))//appchargetemp
                     document.getElementById('tempAppChargeHgpid').value = JSON.stringify(ta)//appchargetemp
                 }
             }

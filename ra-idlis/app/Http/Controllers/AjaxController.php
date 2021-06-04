@@ -4327,7 +4327,9 @@
 						$stat = null;
 						switch ($clienthfser_id) {
 							case 'LTO':
-								$stat = 'FI';
+								$curStat = DB::table('appform')->where('appid',$request->apid)->select('status')->first()->status;
+								// $stat = 'FI';
+								$stat = $curStat;
 								break;
 							case 'PTC':
 								if(DB::table('appform')->where([['appid',$request->apid],['isAcceptedFP','<>',1]])->doesntExist()){

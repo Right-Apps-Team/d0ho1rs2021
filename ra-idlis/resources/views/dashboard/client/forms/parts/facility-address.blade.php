@@ -4,6 +4,8 @@
     <input type="hidden" name="tempAppCharge" id="tempAppCharge" >
     <input type="hidden" name="tempAppChargeHgpid" id="tempAppChargeHgpid" >
     <input type="hidden" name="tempAppChargeAmb" id="tempAppChargeAmb" >
+    <input type="hidden" name="assignedRgn" id="assignedRgn" >
+   
     <label for="region">Region <span class="text-danger">*</span></label>
     @if(isset($fAddress) && count($fAddress) > 0)
     <input class="form-control "  id="regionU" name="rgnidU" value="{{$fAddress[0]->rgn_desc}}" disabled />
@@ -68,3 +70,58 @@
     >
     <small><span class="text-danger">NOTE: </span>for reference, please follow this <a href="https://www.phlpost.gov.ph/zip-code-search.php" target="_blank">link</a></small>
 </div>
+
+
+
+<script>
+  var fs =  document.getElementById("facid")
+  if(fs){
+  fs.value = $('#region').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->rgnid: "")!!}' : $('#region').val()
+}
+
+window.addEventListener('click', function(e) {
+        var facs =  document.getElementsByName('facid');
+        var ass =  document.getElementById("assignedRgn")
+ setTimeout(function(){
+       
+        if(facs){
+          
+            if(facs.length > 0){
+                for( i = 0; i < facs.length; i++ ) {
+                    console.log("exist facid")
+                        if( facs[i].checked ) {
+                    
+                            if(facs[i].value == 'H2' || facs[i].value == 'H3'){
+                                ass.value = 'hfsrb';
+                                console.log('facs' + facs[i].value)
+                                
+                            }else{
+                                ass.value = $('#region').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->rgnid: "")!!}' : $('#region').val()
+                            }
+                                        
+                        }
+                    }
+            }else{
+                ass.value = $('#region').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->rgnid: "")!!}' : $('#region').val()
+            }
+        }
+
+       
+
+      
+   }, 1000);
+   setTimeout(function(){
+       console.log("assignedRgn")
+       console.log($('#assignedRgn').val())
+
+      
+ }, 2000);
+  
+ });
+
+ setTimeout(function(){
+       console.log("assignedRgn")
+       console.log($('#assignedRgn').val())
+ }, 2000);
+
+</script>

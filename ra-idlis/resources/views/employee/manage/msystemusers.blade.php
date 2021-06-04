@@ -161,6 +161,7 @@
                   <div class="row">
                     <div class="col-sm-4">Type:<span class="text-danger">*</span></div>
                     <div class="col-sm-8" style="margin:0 0 .8em 0;">
+                    
                       <select class="form-control" name="typ" data-parsley-required-message="*<strong>Type</strong> required" onchange="getTeams(); ;" required=""> {{--getDefFaci()--}}
                         <option value=""></option>
                       }

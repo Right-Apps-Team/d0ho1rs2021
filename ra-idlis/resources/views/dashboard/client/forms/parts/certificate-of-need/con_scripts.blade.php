@@ -7,7 +7,7 @@ var aptid = "IN"
 var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
 
 
-console.log(mserv_cap)
+// console.log(mserv_cap)
 if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
     var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "")!!}');
 //     console.log("servFacArray")
@@ -289,13 +289,13 @@ if (arrCol.length > 0) {
         setTimeout(function() {
                 sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getServiceCharge')}}", "POST", true, {
                         functionProcess: function(arr) {
-                        console.log("arr")
-                        console.log(arr)
+                        // console.log("arr")
+                        // console.log(arr)
                         // tempAppCharge
 
                         const subclass = $('#subclass').val()  == "" ||  $('#subclass').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}' : $('#subclass').val();//appchargetemp
-                        console.log("subclass")//appchargetemp
-                        console.log(subclass)//appchargetemp
+                        // console.log("subclass")//appchargetemp
+                        // console.log(subclass)//appchargetemp
 
                         var ta=[]; //appchargetemp
 
@@ -326,8 +326,8 @@ if (arrCol.length > 0) {
                                         }
                                 }
 
-                                console.log("tadss")//appchargetemp
-                                console.log(JSON.stringify(ta))//appchargetemp
+                                // console.log("tadss")//appchargetemp
+                                // console.log(JSON.stringify(ta))//appchargetemp
                                 document.getElementById('tempAppCharge').value = JSON.stringify(ta)//appchargetemp
                         }
                 });
