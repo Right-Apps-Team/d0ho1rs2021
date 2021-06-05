@@ -344,7 +344,7 @@
 											</div>
 											<div class="modal-body">
 											
-											@if($each[0]->proofpaystat == 'posted' || $each[0]->proofpaystatPhar = 'posted'  || $each[0]->proofpaystatMach = 'posted'  )
+											@if($each[0]->proofpaystat == 'posted'  )
 												
 												PROOF OF PAYMENT ALREADY EVALUATED
 											
