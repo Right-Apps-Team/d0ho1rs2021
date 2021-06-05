@@ -7990,7 +7990,7 @@ namespace App\Http\Controllers;
 				  		$test2 = DB::table('chg_app')->where('chgapp_id', '=', $request->id)->update($upd);
 			  		} elseif($request->action == 'evalute') {
 			  			DB::table('chgfil')->where([['appform_id',$appid],['chg_num','<>',null],['isPaid',null]])->update(['isPaid'=>1]);
-			  			$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveBy'=>$cur_user['cur_user'],'CashierApproveDate' => Date('Y-m-d',strtotime('now')), 'CashierApproveTime' => Date('H:i:s',strtotime('now')), 'CashierApproveIp' => $request->ip(), 'isCashierApprove' => 1]);
+			  			$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveBy'=>$cur_user['cur_user'],'CashierApproveDate' => Date('Y-m-d',strtotime('now')), 'CashierApproveTime' => Date('H:i:s',strtotime('now')), 'CashierApproveIp' => $request->ip(), 'isCashierApprove' => 1, 'proofpaystat' => 'posted']);
 			  			if($update){
 			  				$uid = AjaxController::getUidFrom($request->appid);
 			  				AjaxController::notifyClient($request->appid,$uid,31);
@@ -8070,7 +8070,11 @@ namespace App\Http\Controllers;
 				  		$upd = array('chg_num'=>(intval($getData->chg_num) + 1));
 				  		$test2 = DB::table('chg_app')->where('chgapp_id', '=', $request->id)->update($upd);
 			  		} elseif($request->action == 'evalute') {
-			  			$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByFDA'=>$cur_user['cur_user'],'CashierApproveDateFDA' => $cur_user['date'], 'CashierApproveTimeFDA' => $cur_user['time'], 'CashierApproveIpFDA' => $cur_user['ip'], 'isCashierApproveFDA' => 1, 'FDAstatus' => 'FA']);
+
+						
+
+
+			  			$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByFDA'=>$cur_user['cur_user'],'CashierApproveDateFDA' => $cur_user['date'], 'CashierApproveTimeFDA' => $cur_user['time'], 'CashierApproveIpFDA' => $cur_user['ip'], 'isCashierApproveFDA' => 1, 'FDAstatus' => 'FA', 'proofpaystatMach' => 'posted']);
 			  			if($update){
 			  				return 'DONE';
 			  			} else {
@@ -8147,7 +8151,7 @@ namespace App\Http\Controllers;
 				  		$upd = array('chg_num'=>(intval($getData->chg_num) + 1));
 				  		$test2 = DB::table('chg_app')->where('chgapp_id', '=', $request->id)->update($upd);
 			  		} elseif($request->action == 'evalute') {
-			  			$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByPharma'=>$cur_user['cur_user'],'CashierApproveDatePharma' => $cur_user['date'], 'CashierApproveTimePharma' => $cur_user['time'], 'CashierApproveIpPharma' => $cur_user['ip'], 'isCashierApprovePharma' => 1, 'FDAstatus' => 'FA']);
+			  			$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByPharma'=>$cur_user['cur_user'],'CashierApproveDatePharma' => $cur_user['date'], 'CashierApproveTimePharma' => $cur_user['time'], 'CashierApproveIpPharma' => $cur_user['ip'], 'isCashierApprovePharma' => 1, 'FDAstatus' => 'FA', 'proofpaystatPhar' => 'posted']);
 			  			if($update){
 			  				return 'DONE';
 			  			} else {

@@ -103,38 +103,78 @@ class NewGeneralController extends Controller
 
     public function uploadProofofPay(Request $request) {
 
-        // $reData = FunctionsClientController::uploadFile($request->upproof);
+        $msg = 0;
 
-        $data = $request->input('upproof');
-        $fname = $request->file('upproof')->getClientOriginalName();
+        $app =  DB::table('appform')->where('appid',$request->appid)->first();
+
+        if($request->upproof){
+            $data = $request->input('upproof');
+            $fname = $request->file('upproof')->getClientOriginalName();
+            $fileExtension = $request->file('upproof')->getClientOriginalExtension();
+            $fileNameToStore = (session()->has('employee_login') ? FunctionsClientController::getSessionParamObj("employee_login", "uid") : FunctionsClientController::getSessionParamObj("uData", "uid")).'_'.Str::random(10).'_'.date('Y_m_d_i_s').'.'.$fileExtension;
+            $request->file('upproof')->storeAs('public/uploaded', $fileNameToStore);
 
 
-        $fileExtension = $request->file('upproof')->getClientOriginalExtension();
-        $fileNameToStore = (session()->has('employee_login') ? FunctionsClientController::getSessionParamObj("employee_login", "uid") : FunctionsClientController::getSessionParamObj("uData", "uid")).'_'.Str::random(10).'_'.date('Y_m_d_i_s').'.'.$fileExtension;
+          
+            $val =  DB::table('appform')->where('appid',$request->appid)->update(['payProofFilen' => $fileNameToStore,'isPayProofFilen' => 1 ]);
+        
+            if($val){
+                $msg += 1;
+            }
+        }
+
+        if($request->upmach){
+            $data = $request->input('upmach');
+            $fname = $request->file('upmach')->getClientOriginalName();
+            $fileExtension = $request->file('upmach')->getClientOriginalExtension();
+            $fileNameToStore = (session()->has('employee_login') ? FunctionsClientController::getSessionParamObj("employee_login", "uid") : FunctionsClientController::getSessionParamObj("uData", "uid")).'_'.Str::random(10).'_'.date('Y_m_d_i_s').'.'.$fileExtension;
+            $request->file('upmach')->storeAs('public/uploaded', $fileNameToStore);
+
+
+            
+            $valmch =  DB::table('appform')->where('appid',$request->appid)->update(['payProofFilenMach' => $fileNameToStore,'ispayProofFilenMach' => 1 ]);
+        
+            if($valmch){
+                $msg += 1;
+            }
+
+            if(is_null($app->proofpaystatMach)){
+                DB::table('appform')->where('appid',$request->appid)->update(['proofpaystatMach' => 'posting']);
+            }
+        }
+
+        if($request->upphar){
+            $data = $request->input('upphar');
+            $fname = $request->file('upphar')->getClientOriginalName();
+            $fileExtension = $request->file('upphar')->getClientOriginalExtension();
+            $fileNameToStore = (session()->has('employee_login') ? FunctionsClientController::getSessionParamObj("employee_login", "uid") : FunctionsClientController::getSessionParamObj("uData", "uid")).'_'.Str::random(10).'_'.date('Y_m_d_i_s').'.'.$fileExtension;
+            $request->file('upphar')->storeAs('public/uploaded', $fileNameToStore);
+
+
+            
+            $valmch =  DB::table('appform')->where('appid',$request->appid)->update(['payProofFilenPhar' => $fileNameToStore,'ispayProofFilenPhar' => 1 ]);
+        
+            if($valmch){
+                $msg += 1;
+            }
+
+            if(is_null($app->proofpaystatMach)){
+                DB::table('appform')->where('appid',$request->appid)->update(['proofpaystatPhar' => 'posting']);
+            }
+        }
+
+        if(is_null($app->proofpaystat)){
+            DB::table('appform')->where('appid',$request->appid)->update(['proofpaystat' => 'posting']);
+        }
        
 
-
-
-        $request->file('upproof')->storeAs('public/uploaded', $fileNameToStore);
-
-
-        // $request->file('upproof')->storeAs('public/uploaded', $fname);
-        // $destination = base_path() . '/public/uploads';
-        // $request->file('upproof')->move($destination, $fname);
-
-        $msg = 'success';
-        
-
-        DB::table('appform')->where('appid',$request->appid)->update(['payProofFilen' => $fileNameToStore,'isPayProofFilen' => 1 ]);
-        // if(DB::table('appform')->where('appid',$request->appid)->update(['payProofFilen' => "new",'isPayProofFilen' => 1 ])){
-        // if(DB::table('appform')->where('appid',$request->appid)->update(['payProofFilen' => $reData,'isPayProofFilen' => 1 ])){
-        //     $msg = 'success';
-        // }
         return  response()->json([
-            'msg' => $msg,
+            'msg' => 'success' ,
             'id' => $request->appid
           
         ]);
     }
   
+
+    
 }

@@ -30,7 +30,9 @@
           <input type="" id="token" value="{{ Session::token() }}" hidden>
            Cashier Evaluation <span class="optnTD" style="display: none;">(Overide Payment Mode)</span>&nbsp;
            <button class="btn btn-primary" onclick="window.history.back();">Back</button>
+           <input style="float: right; width: 10%; background-color: {{$AppData->proofpaystat == 'posted' ? '#BDE5F8' : 'orange'}}"  class="form-control" type="text" disabled value="{{$AppData->proofpaystat == 'posting' ? 'For Posting' : ( $AppData->proofpaystat == 'posted' ? 'Posted' : 'No Proof')}}">
         </div>
+     
         <div class="card-body">
           <table class="table table-borderless">
           <thead>
@@ -50,20 +52,44 @@
         <hr>
         <div class="container-fluid border mb-3">
             <div class="row">
+                
               @if($AppData->isCashierApprove != 1)
-              @if($canAdd)
-                <button type="button" onclick="insert()" data-toggle="modal" data-target="#bd-example-modal-sm" class="btn btn-primary p-2 m-1">
-                  <i class="fa fa-plus" aria-hidden="true"></i> Accept Payment
-                </button>
-              @endif
+                @if($canAdd)
+              
+                  <!-- <button type="button" onclick="insert()" data-toggle="modal" data-target="#bd-example-modal-sm" class="btn btn-primary p-2 m-1">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Accept Payment
+                  </button> -->
+
+                  
+
+                  @if($AppData->isPayProofFilen == 1 )
+                 
+                  <a target="_blank" href="{{ route('OpenFile', $AppData->payProofFilen) }}" >
+                  <button style="float: right;" type="button" class="btn btn-primary p-2 m-1">
+                  </i> View Proof of Payment
+                  </button>
+                  </a>
+                  <button class="btn btn-success p-2 m-1" data-toggle="modal" data-target="#evaluatePayment"> <i class="fa fa-check" aria-hidden="true"></i> Confirm Payment </button>
+                  
+                  @else
+                  <button style="float: right;" onclick="alert('Please wait for the proof of payment.')" type="button" class="btn btn-warning p-2 m-1">
+                  </i> No proof of payment attached yet
+                  </button>
+                  @endif
+                @endif
               @endif
               @if($AppData->isCashierApprove == 1)
-              <button type="button" onclick="window.location.href='{{asset('employee/dashboard/processflow/printor/').'/'.$APPID}}'" class="btn btn-primary p-2 m-1">
+              <!-- <button type="button" onclick="window.location.href='{{asset('employee/dashboard/processflow/printor/').'/'.$APPID}}'" class="btn btn-primary p-2 m-1">
                 <i class="fa fa-print" aria-hidden="true"></i> Print Official Receipt
-              </button>
+              </button> -->
+              <a target="_blank" href="{{ route('OpenFile', $AppData->payProofFilen) }}" >
+                  <button style="float: right;" type="button" class="btn btn-primary p-2 m-1">
+                  </i> View Proof of Payment
+                  </button>
+                  </a>
               @endif
               @if($Sum <= 0 && empty($AppData->isCashierApprove))
-              <button class="btn btn-success p-2 m-1" data-toggle="modal" data-target="#evaluatePayment"> <i class="fa fa-check" aria-hidden="true"></i> Confirm Payment</button>
+              <!-- <button class="btn btn-success p-2 m-1" data-toggle="modal" data-target="#evaluatePayment"> <i class="fa fa-check" aria-hidden="true"></i> Confirm Payment</button> -->
               @endif
             </div>
           </div>
@@ -81,6 +107,8 @@
               </div>
             </div>
             @endisset
+          
+    {{-- Start Removal 
           <div class="row pt-5">
             <div class="col text-left">
               <span class="pl-1 h2">Payment</span>
@@ -170,9 +198,12 @@
                   <td class="text-center font-weight-bold" colspan="7">No Payment Records</td>
                 </tr>
               @endif
+
+
             @endisset
           </tbody>
         </table>
+     
         <div class="container-fluid h3 text-left mt-5 pb-1">
           Order of Payments
         </div>
@@ -211,12 +242,15 @@
               @endforeach
             @endisset
           </tbody>
-        </table>
+        </table> 
         @isset($AppData)
         @if(!isset($AppData->isCashierApprove))
         <br>
         <hr
         @endif
+
+    
+
         @endisset
       </div>
       </div>

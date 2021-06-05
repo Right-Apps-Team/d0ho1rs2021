@@ -104,7 +104,7 @@
 				<tbody id="homeTbl">
 					@if(count($appDet) > 0) @foreach($appDet AS $each) @if($each[0]->canapply == $each[0]->canapply) <?php $_payment = "bg-info"; if(count($each[1]) > 0) { $_payment = "bg-info"; } $_percentage = ""; if(intval($each[2][0]) < 100) { if(intval($each[2][0]) > 0) { $_percentage = "warning"; } else { $_percentage = "danger"; } } else { $_percentage = "success"; } ?> {{-- 2 --}}
 					<tr>
-						<?php $_tColor = (($each[0]->canapply == 0) ? "success" : (($each[0]->canapply == 1) ? "warning" : "")); ?>
+						<?php $_tColor = (($each[0]->canapply == 0) ? "success" : (($each[0]->canapply == 1) ? "warning" : "primary")); ?>
 						<td>{{$each[0]->hfser_id}}R{{$each[0]->rgnid}}-{{$each[0]->appid}}</td>
 						<td style="width: 10%; height: auto;">{{$each[0]->facilityname}}</td>
 						<td>{{$each[0]->hfser_desc}}</td>
@@ -343,17 +343,37 @@
 											
 											</div>
 											<div class="modal-body">
-											<form id="uppp-{{$each[0]->appid}}" method="post" enctype="multipart/form-data">
-											Upload proof of payment here
-											<input id="file-{{$each[0]->appid}}" class="form-control" type="file" name="upproof">
-											<input id="appi-{{$each[0]->appid}}" class="form-control" type="hidden" name="appid">
-											<button type="submit"  >Submit</button>
-											<!-- <button type="submit" onclick="subProofPay('{{$each[0]->appid}}')"  >Submit</button> -->
-											</form>
+											
+											@if($each[0]->proofpaystat == 'posted' || $each[0]->proofpaystatPhar = 'posted'  || $each[0]->proofpaystatMach = 'posted'  )
+												
+												PROOF OF PAYMENT ALREADY EVALUATED
+											
 										
+											@else	
+											<form id="uppp-{{$each[0]->appid}}" method="post" enctype="multipart/form-data">
+													Upload proof of payment 
+													<br/>
+													<label style="float: left;" for="file-{{$each[0]->appid}}">Cashiering</label>
+													<input id="file-{{$each[0]->appid}}" class="form-control" type="file"  required name="upproof">
+													@if($each[0]->hfser_desc == "Certificate of Accreditation" || $each[0]->hfser_desc == "License to Operate")
+													<label style="float: left;" for="filemach-{{$each[0]->appid}}">Machine</label>
+													<input id="filemach-{{$each[0]->appid}}" class="form-control" required type="file" name="upmach">
+													
+													<label style="float: left;" for="filemach-{{$each[0]->appid}}">Pharmacy</label>
+													<input id="filephar-{{$each[0]->appid}}" class="form-control" required type="file" name="upphar">
+													@endif
+													
+													
+													<input id="appi-{{$each[0]->appid}}" class="form-control" type="hidden" name="appid">
+													
+													<br/>
+													<button  style="width: 30%; float: right;"	class="btn btn-info btn-block " type="submit"  >Submit</button>
+													<!-- <button type="submit" onclick="subProofPay('{{$each[0]->appid}}')"  >Submit</button> -->
+											</form>
+											@endif
 											</div>
 											<div class="modal-footer">
-											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-default " data-dismiss="modal">Close</button>
 											</div>
 										</div>
 										
@@ -380,6 +400,13 @@ if(confirm('Are you sure you want to upload proof of payment?')){
 								console.log("a")
 								console.log(a.msg)
 								console.log(a.id)
+
+								if(a.msg == "success"){
+									alert("Payment upload successful")
+								}else{
+									alert("Payment upload failed")
+								}
+								
 								// if(a == 'DONE'){
 								// 	alert('Successfully Edited Personnel');
 								// 	location.reload();

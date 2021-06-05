@@ -30,7 +30,9 @@
           @isset($appid)<input type="text" id="APPID" value="{{$appid}}" hidden>@endisset
           <input type="" id="token" value="{{ Session::token() }}" hidden>
            Cashier Evaluation (MACHINES) <span class="optnTD" style="display: none;">(Overide Payment Mode)</span>&nbsp;
-           <button class="btn btn-primary" onclick="window.history.back();">Back</button>
+           <button class="btn btn-primary" onclick="window.history.back();">Back</button> 
+           <input style="float: right; width: 10%; background-color: {{$AppData->proofpaystatMach == 'posted' ? '#BDE5F8' : 'orange'}}"  class="form-control" type="text" disabled value="{{$AppData->proofpaystatMach == 'posting' ? 'For Posting' : ( $AppData->proofpaystatMach == 'posted' ? 'Posted' : 'No Proof')}}">
+        
         </div>
         <div class="card-body">
           <table class="table table-borderless">
@@ -55,19 +57,44 @@
         <div class="container-fluid border mb-3">
             <div class="row">
               @if($AppData->isCashierApproveFDA != 1)
-                @if(count($payables) <= 0)
-                  <button type="button" onclick="insert()" data-toggle="modal" data-target="#bd-example-modal-sm" class="btn btn-primary p-2 m-1">
+
+             <!-- if(count($payables) <= 0) -->
+                  <!-- <button type="button" onclick="insert()" data-toggle="modal" data-target="#bd-example-modal-sm" class="btn btn-primary p-2 m-1">
                     <i class="fa fa-plus" aria-hidden="true"></i> Accept Payment
-                  </button>
-                @endif
+                  </button> -->
+                <!-- endif  -->
+                @if($AppData->ispayProofFilenMach == 1 )
+                 
+                 <a target="_blank" href="{{ route('OpenFile', $AppData->payProofFilenMach) }}" >
+                 <button style="float: right;" type="button" class="btn btn-primary p-2 m-1">
+                 </i> View Proof of Payment
+                 </button>
+                 </a>
+                 <!-- <button class="btn btn-success p-2 m-1" data-toggle="modal" data-target="#evaluatePayment"> <i class="fa fa-check" aria-hidden="true"></i> Confirm Payment </button> -->
+                 <button class="btn btn-success p-2 m-1" data-toggle="modal" data-target="#evaluatePayment"> <i class="fa fa-check" aria-hidden="true"></i> Confirm Payment</button>
+            
+                 @else
+                 <button style="float: right;" onclick="alert('Please wait for the proof of payment.')" type="button" class="btn btn-warning p-2 m-1">
+                 </i> No proof of payment attached yet
+                 </button>
+                 @endif
+
+
+
               @endif
               @if($AppData->isCashierApproveFDA == 1)
+              <a target="_blank" href="{{ route('OpenFile', $AppData->payProofFilenMach) }}" >
+                  <button style="float: right;" type="button" class="btn btn-primary p-2 m-1">
+                  </i> View Proof of Payment
+                  </button>
+                  </a>
+
               {{-- <button type="button" onclick="window.location.href='{{asset('employee/dashboard/processflow/FDA/printor/').'/'.$appid}}'" class="btn btn-primary p-2 m-1">
                 <i class="fa fa-print" aria-hidden="true"></i> Print Official Receipt
               </button> --}}
               @endif
               @if($Sum <= 0 && empty($AppData->isCashierApproveFDA))
-              <button class="btn btn-success p-2 m-1" data-toggle="modal" data-target="#evaluatePayment"> <i class="fa fa-check" aria-hidden="true"></i> Confirm Payment</button>
+              <!-- <button class="btn btn-success p-2 m-1" data-toggle="modal" data-target="#evaluatePayment"> <i class="fa fa-check" aria-hidden="true"></i> Confirm Payment</button> -->
               @endif
               <div class="col d-flex justify-content-end">
               <button type="button" class="btn btn-primary p-2 m-1" data-toggle="modal" data-target="#showOP">
@@ -76,7 +103,8 @@
               </div>
             </div>
           </div>
-          <div class="row pt-3">
+        
+          <!-- <div class="row pt-3">
             <div class="col text-left">
               <span class="pl-1 h2">Payments</span>
             </div>
@@ -124,7 +152,8 @@
               @endforeach
             @endisset
           </tbody>
-        </table>
+        </table> -->
+        
         @isset($AppData)
         @if(!isset($AppData->isCashierApproveFDA))
         <br>
@@ -432,6 +461,8 @@
              var z = $('#ref').val();
              var a = $('#amt').val();
              var b = $('#id').val();
+
+            //  console.log("received")
              $.ajax({
                 url: '{{asset('employee/cashier/FDA/actions')}}',
                 method: 'POST',
