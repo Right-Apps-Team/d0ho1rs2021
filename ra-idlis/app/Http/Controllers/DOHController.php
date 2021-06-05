@@ -3529,7 +3529,8 @@ namespace App\Http\Controllers;
 							'recommendedbyFDA',
 							'recommendedtimeFDA',
 							'recommendeddateFDA',
-							'recommendedippaddrFDA'
+							'recommendedippaddrFDA',
+							'FDAStatMach'
 						];
 					} else {
 						$forAppform = [
@@ -3537,15 +3538,19 @@ namespace App\Http\Controllers;
 							'recommendedbyFDAPharma',
 							'recommendedtimeFDAPharma',
 							'recommendeddateFDAPharma',
-							'recommendedippaddrFDAPharma'
+							'recommendedippaddrFDAPharma',
+							'FDAStatPhar'
 						];
 					}
+
+					$fstat = $requestOfClient == 'machines' ? 'For Recommendation' : 'For Final Decision';
 					$answers = [
 						1,
 						$uData['cur_user'],
 						$uData['time'],
 						$uData['date'],
 						$uData['ip'],
+						$fstat
 					];
 					if($request->hasFile('fileUp')){
 						$uploadName = FunctionsClientController::uploadFile($request->fileUp)['fileNameToStore'];
@@ -6322,6 +6327,8 @@ namespace App\Http\Controllers;
 						if(isset($canView[0])){
 							$canView[0] = false;
 						}
+
+						DB::table('appform')->where('appid', '=', $appid)->update(['FDAStatMach'=>'For Final Dicision']);
 					} else{
 						$typeOfRequest = 'cdrr';
 						if(isset($canView[1])){
@@ -6329,6 +6336,7 @@ namespace App\Http\Controllers;
 						}
 					}
 					$approveForCurrentRequest = ($reqType == 'machines' ? $data->isRecoFDA : 1);
+				
 					$hasJudge = DB::table('fdacert')->where([['appid',$appid],['department',$typeOfRequest]])->exists();
 					return view('employee.FDA.pfreco', ['AppData'=>$data,/*'PreAss'=>$data1, */'APPID' => $appid, 'Teams4theApplication' => $data2, 'canView' => $canView, 'canjudge' => $hasJudge, 'currentRequest' => $approveForCurrentRequest, 'request' => $reqType]);
 				} 
@@ -6414,11 +6422,15 @@ namespace App\Http\Controllers;
 						if(isset($canView[0])){
 							$canView[0] = false;
 						}
+
+						DB::table('appform')->where('appid', '=', $appid)->update(['FDAStatMach'=>'For Monitoring']);
 					} else{
 						$typeOfRequest = 'cdrr';
 						if(isset($canView[1])){
 							$canView[1] = false;
 						}
+
+						DB::table('appform')->where('appid', '=', $appid)->update(['FDAStatPhar'=>'For Monitoring']);
 					}
 					$approveForCurrentRequest = ($reqType == 'machines' ? $data->isApproveFDA : $data->isApproveFDAPharma);
 					$hasJudge = DB::table('fdacert')->where([['appid',$appid],['department',$typeOfRequest]])->exists();
@@ -8074,7 +8086,7 @@ namespace App\Http\Controllers;
 						
 
 
-			  			$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByFDA'=>$cur_user['cur_user'],'CashierApproveDateFDA' => $cur_user['date'], 'CashierApproveTimeFDA' => $cur_user['time'], 'CashierApproveIpFDA' => $cur_user['ip'], 'isCashierApproveFDA' => 1, 'FDAstatus' => 'FA', 'proofpaystatMach' => 'posted']);
+			  			$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByFDA'=>$cur_user['cur_user'],'CashierApproveDateFDA' => $cur_user['date'], 'CashierApproveTimeFDA' => $cur_user['time'], 'CashierApproveIpFDA' => $cur_user['ip'], 'isCashierApproveFDA' => 1, 'FDAstatus' => 'FA', 'FDAStatMach' => 'For Evaluation', 'proofpaystatMach' => 'posted']);
 			  			if($update){
 			  				return 'DONE';
 			  			} else {
@@ -8151,7 +8163,7 @@ namespace App\Http\Controllers;
 				  		$upd = array('chg_num'=>(intval($getData->chg_num) + 1));
 				  		$test2 = DB::table('chg_app')->where('chgapp_id', '=', $request->id)->update($upd);
 			  		} elseif($request->action == 'evalute') {
-			  			$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByPharma'=>$cur_user['cur_user'],'CashierApproveDatePharma' => $cur_user['date'], 'CashierApproveTimePharma' => $cur_user['time'], 'CashierApproveIpPharma' => $cur_user['ip'], 'isCashierApprovePharma' => 1, 'FDAstatus' => 'FA', 'proofpaystatPhar' => 'posted']);
+			  			$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByPharma'=>$cur_user['cur_user'],'CashierApproveDatePharma' => $cur_user['date'], 'CashierApproveTimePharma' => $cur_user['time'], 'CashierApproveIpPharma' => $cur_user['ip'], 'isCashierApprovePharma' => 1, 'FDAstatus' => 'FA', 'FDAStatPhar' => 'For Evaluation', 'proofpaystatPhar' => 'posted']);
 			  			if($update){
 			  				return 'DONE';
 			  			} else {

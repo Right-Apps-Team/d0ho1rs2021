@@ -94,7 +94,10 @@
 						<th style="white-space: nowrap;" class="text-center">Owner</th>
 						<th style="white-space: nowrap;" class="text-center">Date <br/> applied</th>
 						<th style="white-space: nowrap;" class="text-center">DOH Status</th>
-						<th style="white-space: nowrap;" class="text-center">FDA Status</th>
+						<th style="white-space: nowrap;" class="text-center">FDA Machine </br> Status</th>
+						<th style="white-space: nowrap;" class="text-center">FDA Pharmacy </br> Status</th>
+						<!-- <th style="white-space: nowrap;" class="text-center">DOH Status</th> -->
+					{{--	<th style="white-space: nowrap;" class="text-center">FDA Status</th>--}}
 						{{-- <th>Self-Assement Complied (%)</th> --}}
 						<th style="white-space: nowrap;" class="text-center">Document <br/> Received On</th>
 						<th style="white-space: nowrap;" class="text-center">HFSRB/FDA <br/>Requirements</th>
@@ -111,7 +114,8 @@
 						<td>{{$each[0]->owner}}</td>
 						<td>{{$each[0]->t_date}}</td>
 						<td style="background-color : {{$each[0]->dohcolor}}">{{$each[0]->trns_desc}}</td>
-						<td>{!!($each[0]->noofsatellite > 0 ? (isset($each[0]->FDAstat) ? $each[0]->FDAstat : 'Evaluation In Process') : '<span class="font-weight-bold">Not Applicable</span>')!!}</td>
+						<td>{!!($each[0]->noofsatellite > 0 ? (isset($each[0]->FDAStatMach) ? $each[0]->FDAStatMach : 'Evaluation In Process') : '<span class="font-weight-bold">Not Applicable</span>')!!}</td>
+						<td>{!!($each[0]->noofsatellite > 0 ? (isset($each[0]->FDAStatPhar) ? $each[0]->FDAStatPhar : 'Evaluation In Process') : '<span class="font-weight-bold">Not Applicable</span>')!!}</td>
 						{{-- <td>
 
 							{!!strtolower($each[0]->hfser_id) == 'lto' ? '<label class="badge badge-'.$_percentage.'">'.$each[2][0].'%</label>' : '<span class="font-weight-bold">Not Applicable</span>'!!}
@@ -355,7 +359,7 @@
 													<br/>
 													<label style="float: left;" for="file-{{$each[0]->appid}}">Cashiering</label>
 													<input id="file-{{$each[0]->appid}}" class="form-control" type="file"  required name="upproof">
-													@if($each[0]->hfser_desc == "Certificate of Accreditation" || $each[0]->hfser_desc == "License to Operate")
+													@if( $each[0]->hfser_desc == "License to Operate")
 													<label style="float: left;" for="filemach-{{$each[0]->appid}}">Machine</label>
 													<input id="filemach-{{$each[0]->appid}}" class="form-control" required type="file" name="upmach">
 													

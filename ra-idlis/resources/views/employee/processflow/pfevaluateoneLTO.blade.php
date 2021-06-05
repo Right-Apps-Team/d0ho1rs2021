@@ -284,7 +284,9 @@
                   @if(count($requirements) != $forNosent)
                   <button type="button" id="approveButton" class="btn btn-success" onclick="Recommended4Inspection('ApproveApplication');">Approve</button>
                   @endif
-                  <button type="button" id="rejectButton" class="btn btn-danger" onclick="Recommended4Inspection('RejectApplication');">Disapprove</button>
+                  &nbsp;
+                  &nbsp;
+                  <!-- <button type="button" id="rejectButton" class="btn btn-danger" onclick="Recommended4Inspection('RejectApplication');">Disapprove</button> -->
                   <button type="button" id="reviseButton" class="btn btn-warning" onclick="Recommended4Inspection('ReviseApplication')">Need for Revision</button>
                   @endif
                 @endisset

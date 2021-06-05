@@ -94,7 +94,7 @@
         <div class="card-header bg-white font-weight-bold">
           @isset($APPID)<input type="text" id="APPID" value="{{$APPID}}" hidden>@endisset
           <input type="" id="token" value="{{ Session::token() }}" hidden>
-           Approval/Issuance Certificate
+           Approval/Issuance Certificate 
            <button class="btn btn-primary" onclick="window.history.back();">Back</button>
         </div>
         <div class="card-body">
@@ -227,7 +227,7 @@
             <div class="card-header @isset($AppData) @if($cashier == null) list-group-item-info @elseif($cashier == 1) list-group-item-success  @else list-group-item-danger @endif @endisset" id="headingOne" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseOne" style="">
               <div class="mb-0">
                 <button class="btn btn-link @isset($AppData) @if($cashier == null) list-group-item-info @elseif($cashier == 1) list-group-item-success  @else list-group-item-danger @endif @endisset" type="button" style="text-decoration:none">
-                  <h3>Cashier Evaluation (Machines)</h3>
+                  <h3>Cashier Evaluation (Machines) </h3>
                 </button>
               </div>
             </div>

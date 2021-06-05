@@ -4363,6 +4363,7 @@
 										'payEvaltime' => $Cur_useData['time'],
 										'payEvalip'=> $Cur_useData['ip'],
 										'status' => (strtolower($hfser) == 'ptc' ? 'FPPR' : 'CE')
+										// 'FDAStatMach' => 'For Evaluation'
 
 
 										);
@@ -4383,6 +4384,7 @@
 											'no_chklist' => $chkUpd,
 											'status' => 'REV',
 											'isReadyForInspec' => 0
+											// 'FDAStatMach' => 'Evaluated, but for Revision'
 										);
 					}
 					$userInf = DB::table('appform')->select('hfser_id','uid')->where('appid',$request->apid)->first();

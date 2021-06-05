@@ -3,7 +3,7 @@
         <div class="modal-content" >
 
             <div class="modal-header" id="viewHead">
-                <h5 class="modal-title" id="viewModalLabel">LIST OF PERSONNEL (Annex A)bbbbb</h5>
+                <h5 class="modal-title" id="viewModalLabel">LIST OF PERSONNEL (Annex A)</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>

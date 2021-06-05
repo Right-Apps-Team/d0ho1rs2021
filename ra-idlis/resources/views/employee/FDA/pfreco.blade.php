@@ -84,7 +84,7 @@
         <div class="card-header bg-white font-weight-bold">
           @isset($APPID)<input type="text" id="APPID" value="{{$APPID}}" hidden>@endisset
           <input type="" id="token" value="{{ Session::token() }}" hidden>
-           Decision of recommendation of Approval
+           Decision of recommendation of Approval 
            <button class="btn btn-primary" onclick="window.history.back();">Back</button>
         </div>
         <div class="card-body">
@@ -367,7 +367,7 @@
                       <div class="row">
                         <div class="col-md-12">
                             <div class="col-md text-center pb-2 pt-3" style="font-size: 20px;">
-                              Evaluation Recommendation
+                              Evaluation Recommendation 
                             </div>
                             <div class="col-md d-flex justify-content-center">
                               <select name="recommendation" class="form-control" required style="width: 100%;">

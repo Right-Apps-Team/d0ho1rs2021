@@ -215,7 +215,7 @@
 	            		<div class="row">
 	            			<div class="col-md-12">
 	            				<div class="col-md text-center pb-2 pt-3" style="font-size: 20px;">
-	            					Evaluation Recommendation
+	            					Evaluation Recommendation 
 	            				</div>
 	            				<div class="col-md d-flex justify-content-center">
 	            					<select name="recommendation" class="form-control" required style="width: 30%;">
