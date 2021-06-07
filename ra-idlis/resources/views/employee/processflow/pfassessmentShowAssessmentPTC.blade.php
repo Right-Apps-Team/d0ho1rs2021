@@ -199,7 +199,7 @@
 				console.log('{!! $part !!}')
 				</script>
 	        	<div class="container">
-	        		<form action="{{(isset($toSaveUrl) ? $toSaveUrl : url('employee/dashboard/processflow/SaveAssessments/'))}}" method="POST">
+	        		<form id="form1" name="form1" action="{{(isset($toSaveUrl) ? $toSaveUrl : url('employee/dashboard/processflow/SaveAssessments/'))}}" method="POST">
 	        			{{csrf_field()}}
 	        			<input type="hidden" name="appid" value="{{$data->appid}}">
 	        			<input type="hidden" name="part" value="{{$part}}">
@@ -220,10 +220,12 @@
 				            @endphp
 				            @for ($i = 0; $i <= $divHeaderCount; $i++)
 				            <div class="container divContent border rounded">
+							
 				                @for ($j = $indexSecondHeader; $j <= $check; $j++)
 					                @php
 					                	$rowSize = 1;
 					                @endphp
+									
 					                {{-- start object exist --}}
 					                @if(isset($head[$j]))
 					                	{{-- start not empty id --}}
@@ -233,10 +235,12 @@
 								<div class="col-md text-uppercase font-weight-bold">
 									{{-- header 1 --}}
 									@if(!in_array($head[$j]->h2HeadBack, $arrHeaderOneLable))
+									
 									<a style="font-size: 20px;">{{$head[$j]->h2HeadBack}}</a>
 									@php
 									array_push($arrHeaderOneLable, $head[$j]->h2HeadBack);
 									@endphp
+									
 									@endif
 								</div>
 								@php 
@@ -260,6 +264,7 @@
 								</div>
 								@php
 									foreach($head as $thirdHeader){
+										
 									// dd($head);
 										if(!in_array($newTry->h3idReal, $arLvl3)){
 											array_push($arLvl3,$newTry->h3idReal);
@@ -275,12 +280,24 @@
 												if(!isset($fourthHeader->subFor)){
 												@endphp
 												<div class="col-md-8">
+												<!-- <script>
+													var num = {
+														id: '{{$fourthHeader->id}}',
+														lvl1 : '{{$fourthHeader->h1idReal}}',
+														lvl2: '{{$fourthHeader->h2idReal}}',
+														lvl3: '{{$fourthHeader->h3idReal}}',
+														part: '{{$fourthHeader->partidReal}}',
+
+													}
+														console.log(num)
+														</script> -->
 												<div class="pt-3" style="padding-left: {{($fourthHeader->isAlign != 1 ? '4rem!important;' : '1rem!important;')}}">
 												<div class="row operations" id="{{$fourthHeader->id}}" >
 												<div class="col-md-3">
 												<div class="form-check form-check-inline">
 												{{-- yes --}}
 												<div class="custom-control custom-radio">
+												
 												<input required type="text" name="{{$fourthHeader->id}}[lvl1]" class="custom-control-input" value="{{$fourthHeader->h1idReal}}">
 												<input required type="text" name="{{$fourthHeader->id}}[lvl2]" class="custom-control-input" value="{{$fourthHeader->h2idReal}}">
 												<input required type="text" name="{{$fourthHeader->id}}[lvl3]" class="custom-control-input" value="{{$fourthHeader->h3idReal}}">
@@ -328,10 +345,10 @@
 												<div class="form-check form-check-inline">
 												{{-- yes --}}
 												<div class="custom-control custom-radio">
-													<script>
-														console.log("{{$fourthHeader->id}}[lvl1]")
-														</script>
 												
+												
+												
+
 												<input required type="text" name="{{$fourthHeader->id}}[lvl1]" class="custom-control-input" value="{{$fourthHeader->h1idReal}}">
 												<input required type="text" name="{{$fourthHeader->id}}[lvl2]" class="custom-control-input" value="{{$fourthHeader->h2idReal}}">
 												<input required type="text" name="{{$fourthHeader->id}}[lvl3]" class="custom-control-input" value="{{$fourthHeader->h3idReal}}">
@@ -339,6 +356,7 @@
 												<input required type="radio" name="{{$fourthHeader->id}}[comp]" class="custom-control-input" value="true" id="customCheck1{{$fourthHeader->id}}" checked>
 												<label class="custom-control-label text-success check" for="customCheck1{{$fourthHeader->id}}"><i class="fa fa-check" aria-hidden="true"></i></label>
 												</div> &nbsp;&nbsp;
+											
 												{{-- end yes --}}
 												{{-- no --}}
 												<div class="custom-control custom-radio">
@@ -427,7 +445,8 @@
 				                              </li> --}}
 				                              <li {{-- id="next" --}} class="page-item">
 				                                {{-- <button class="btn btn-success mr-1 p-3" type="button">Next <i class="fa fa-chevron-right"></i></button> --}}
-				                                <button class="btn btn-primary mr-1 p-3" type="submit">Submit <i class="fa fa-chevron-right"></i></button>
+				                            <buton onclick="getAll()">Get</buton>
+											    <button class="btn btn-primary mr-1 p-3" type="submit">Submit <i class="fa fa-chevron-right"></i></button>
 				                              </li>
 				                            </div>
 				                          </span>
@@ -477,7 +496,62 @@
       </div>
     </div>
 	{{-- {{dd($arrLvl1, $arLvl2 ,$arLvl3, $arLvl4, $newArr,$head)}} --}}
+<script>
+function getFormData($form){
+    var unindexed_array = $form.serializeArray();
+    var indexed_array = {};
 
+    $.map(unindexed_array, function(n, i){
+        indexed_array[n['name']] = n['value'];
+    });
+
+    return indexed_array;
+}
+
+
+	$('#form12').on('submit', function(event){
+		event.preventDefault();
+// 		var $form = $("#form1");
+// var data = getFormData($form);
+// data = JSON.stringify(data);
+// console.log(data)
+
+
+
+	// let data = new FormData(this);
+    // var arr = $(this).serializeArray();
+    // console.log("arr");
+    // console.log($("#form1").serialize()+'&form_name='+$("#form1").attr("name"));
+
+	var form_data = $(this).serialize()
+// console.log(form_data)
+	$.ajax({
+							url: '{{asset('/api/ptc/save/asessment')}}',
+							dataType: "json", 
+	    					// async: false,
+							type: 'POST',
+							data:form_data,
+							// data:$("#form1").serialize()+'&form_name='+$("#form1").attr("name"),
+
+							success: function(a){
+								console.log("request")
+								console.log(a.request)
+							},
+							fail: function(a,b,c){
+								console.log("fail")
+								console.log([a,b,c]);
+							}
+						})
+
+
+
+
+
+    return false; //      /<-- Only, if you don't want the form to be submitted after above commands
+
+
+});
+</script>
 		<script type="text/javascript">
 		    let errorField, messageToUser;
 		    $(document).ready(function(){

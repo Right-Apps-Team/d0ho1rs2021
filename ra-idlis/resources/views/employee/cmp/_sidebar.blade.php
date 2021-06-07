@@ -591,7 +591,7 @@
 
                 <span class="MOD03_allow">
 
-                    <li><a href="#ProFlowMenu" data-toggle="collapse"><i class="fa fa-sitemap"></i> Licensing</a>
+                    <li><a href="#ProFlowMenu" data-toggle="collapse"><i class="fa fa-sitemap"></i> Licensing </a>
 
                         <ul id="ProFlowMenu" class="list-unstyled collapse">
 
@@ -655,7 +655,7 @@
 
                             <span class="PF012_allow">
 
-                                <li class="border-top"><a href="{{asset('/employee/dashboard/processflow/assignmentofhferc')}}">&nbsp;&nbsp;&nbsp;&nbsp;HFERC Operations</a></li>
+                                <li class="border-top"><a href="{{asset('/employee/dashboard/processflow/assignmentofhferc')}}">&nbsp;&nbsp;&nbsp;&nbsp;HFERC Operations </a></li>
 
                             </span>
 
@@ -756,7 +756,7 @@
 
                             <span class="PF004_allow">
 
-                                <li><a href="{{asset('employee/dashboard/processflow/cashier')}}">&nbsp;&nbsp;&nbsp;&nbsp;Cashiering</a></li>
+                                <li><a href="{{asset('employee/dashboard/processflow/cashier')}}">&nbsp;&nbsp;&nbsp;&nbsp;Cashiering </a></li>
 
                             </span>
 

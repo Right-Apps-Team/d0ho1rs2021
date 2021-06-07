@@ -285,6 +285,7 @@ class EvaluationController extends Controller
 					$uData = AjaxController::getCurrentUserAllData();
 // suggest to place if count $filteredAssessment
 					foreach ($filteredAssessment as $key => $value) {
+						
 						if(is_numeric($key) && !in_array($key, $getOnDBID)){
 							$res = DB::table('assessmentcombined')->whereIn('asmtComb',[$key])->select('asmtComb','assessmentName','assessmentSeq','headingText','subFor','isAlign')->first();
 							$dataFromDB = AjaxController::forAssessmentHeaders(array(['asmt_title.title_code',$value['part']],['asmt_h1.asmtH1ID',$value['lvl1']],['asmt_h2.asmtH2ID',$value['lvl2']],['asmt_h3.asmtH3ID',$value['lvl3']]),array('asmt_h1.*','asmt_h2.*','asmt_h3.*','asmt_title.title_code','asmt_title.title_name', 'asmt_h2.isdisplay'))[0];

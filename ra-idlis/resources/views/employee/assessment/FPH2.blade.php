@@ -27,7 +27,7 @@
 				</div> --}}
 				
 				<div class="text-left font-weight-bold pt-3">
-					1. PHYSICAL PLANT
+					1. PHYSICAL PLANT 
 				</div>
 				<div class="container-fluid">
 					<ul>

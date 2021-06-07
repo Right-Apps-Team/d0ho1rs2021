@@ -43,6 +43,12 @@ Route::post(
     'Client\Api\NewGeneralController@uploadProofofPay'
 ); //->middleware([APIMiddleware::class]);
 
+
+Route::post(
+    '/ptc/save/asessment',
+    'Client\Api\NewGeneralController@FPSaveAssessments'
+); //->middleware([APIMiddleware::class]);
+
 Route::post(
     '/application/lto/save',
     'Client\Api\LtoAppController@save'

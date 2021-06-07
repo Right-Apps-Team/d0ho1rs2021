@@ -125,6 +125,7 @@
 					@endphp
 					<div class="col-sm-12">
 						<a href="{{$address.'/'.$value->id.'/'.$isMon.($isOtherUid ?? '')}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a>
+						<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.($isOtherUid ?? '')}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a> -->
 					</div>
 					@endif
 				@endforeach
