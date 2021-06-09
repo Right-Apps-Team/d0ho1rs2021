@@ -43,7 +43,7 @@
                         <h1>5</h1>
                     </td>
                     <td>
-                        <small><b>Client</b></small>
+                        
                         <p>Payment (Auto Generated Order of Payment)</p>
                     </td>
 
@@ -52,7 +52,7 @@
                     <td>
                         <h1>6</h1>
                     </td>
-                </tr>
+                </tr>   
                 <tr>
                     <td>
                         <h1>&nbsp;&nbsp;&nbsp;<small><sup>6</sup></small><small>.1</small>&nbsp;&nbsp;</h1>

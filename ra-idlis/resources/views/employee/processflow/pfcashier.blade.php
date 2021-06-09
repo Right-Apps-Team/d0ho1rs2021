@@ -13,15 +13,24 @@
               <table class="table table-hover" id="example" style="font-size:13px;">
                   <thead>
                   <tr>
-                      {{-- <th scope="col" class="text-center">ID</th> --}}
-                      <th scope="col" class="text-center">Type</th>
-                      <th scope="col" class="text-center">Application Code</th>
-                      <th scope="col" class="text-center">Name of Facility</th>
-                      {{-- <th scope="col" class="text-center">Type of Facility</th> --}}
-                      <th scope="col" class="text-center">Date</th>
-                      {{-- <th scope="col" class="text-center">&nbsp;</th> --}}
-                      <th scope="col" class="text-center">Current Status</th>
-                      <th scope="col" class="text-center">Options</th>
+                      <th class="select-filter"></th>
+                      <th ></th>
+                      <th ></th>
+                      <th ></th>
+                      <th class="select-filter"></th>
+                      <th ></th>
+                     
+                  </tr>
+                  <tr>
+                      {{-- <td scope="col" class="text-center">ID</td> --}}
+                      <td scope="col" class="text-center">Type</td>
+                      <td scope="col" class="text-center">Application Code</td>
+                      <td scope="col" class="text-center">Name of Facility</tdth>
+                      {{-- <td scope="col" class="text-center">Type of Facility</td> --}}
+                      <td scope="col" class="text-center">Date</td>
+                      {{-- <td scope="col" class="text-center">&nbsp;</td> --}}
+                      <td scope="col" class="text-center">Current Status</td>
+                      <td scope="col" class="text-center">Options</td>
                   </tr>
                   </thead>
                   <tbody id="FilterdBody">  
@@ -165,8 +174,30 @@
 </div>
   <script type="text/javascript">
     $(document).ready(function(){
-      $('#example').DataTable();
+      // $('#example').DataTable();
+      var table = $('#example').DataTable();
+      $("#example thead .select-filter").each( function ( i ) {
+      var e = i == 0 ? 0 :  4 ;
+        var select = $('<select><option value=""></option></select>')
+            .appendTo( $(this).empty() )
+            // .appendTo( $(this).empty() )
+            .on( 'change', function () {
+                table.column( e )
+                    .search( $(this).val() )
+                    .draw();
+            } );
+ 
+        table.column(e).data().unique().sort().each( function ( d, j ) {
+            select.append( '<option value="'+d+'">'+d+'</option>' )
+        } );
+
+
+
+
+
     });
+
+  });
 
     function insert(id) {
       $('input[name=appid]').empty().val(id);

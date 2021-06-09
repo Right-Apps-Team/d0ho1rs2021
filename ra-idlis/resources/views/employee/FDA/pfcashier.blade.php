@@ -7,11 +7,23 @@
   <div class="content p-4">
       <div class="card">
           <div class="card-header bg-white font-weight-bold">
-             Cashiering  (Machines)
+             Cashiering  (Machines) 
           </div>
           <div class="card-body table-responsive">
               <table class="table table-hover" id="example" style="font-size:13px;">
                   <thead>
+                  <tr>
+                      <th ></th>
+                      <th></th>
+                      <th ></th>
+                      <th  ></th>
+                      <th class="select-filter"></th>
+                      <th ></th>
+                      <th ></th>
+                      <th class="select-filter"></th>
+                      <th ></th>
+                     
+                  </tr>
                   <tr>
                       <th scope="col" class="text-center">ID</th>
                       <th scope="col" class="text-center">Type</th>
@@ -160,7 +172,30 @@
 </div>
   <script type="text/javascript">
     $(document).ready(function(){
-      $('#example').DataTable();
+
+
+
+      var table = $('#example').DataTable();
+      $("#example thead .select-filter").each( function ( i ) {
+      var e = i == 0 ? 4 :  7;
+        var select = $('<select><option value=""></option></select>')
+            .appendTo( $(this).empty() )
+            // .appendTo( $(this).empty() )
+            .on( 'change', function () {
+                table.column( e )
+                    .search( $(this).val() )
+                    .draw();
+            } );
+ 
+        table.column(e).data().unique().sort().each( function ( d, j ) {
+            select.append( '<option value="'+d+'">'+d+'</option>' )
+        } );
+
+
+    } );
+
+
+
     });
 
     function insert(id) {

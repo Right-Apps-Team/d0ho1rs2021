@@ -273,7 +273,7 @@
                         <ul id="ProFlowMenu" class="list-unstyled collapse">
                             {{-- @if($employeeData->grpid != 'CS' || $employeeData->grpid != "C") --}}
                             <span class="PF001_allow">
-                                <li><a href="{{asset('/employee/dashboard/processflow/view')}}">&nbsp;&nbsp;&nbsp;&nbsp;View Application Status</a></li>
+                                <li><a href="{{asset('/employee/dashboard/processflow/view')}}">&nbsp;&nbsp;&nbsp;&nbsp;View Application Status </a></li>
                             </span>
                             {{-- @endif --}}
                             {{-- @if ($employeeData->grpid == 'NA' || $employeeData->grpid == "PO" || $employeeData->grpid == "FDA") --}}

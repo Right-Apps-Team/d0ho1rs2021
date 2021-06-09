@@ -12,14 +12,24 @@
           	<table class="table table-hover" style="font-size:13px;" id="example">
                   <thead>
                   <tr>
-                      <th scope="col" class="text-center">Type</th>
-                      <th scope="col" class="text-center">Application Code</th>
-                      <th scope="col" class="text-center">Name of Facility</th>
-                      <th scope="col" class="text-center">Type of Facility</th>
-                      <th scope="col" class="text-center">Date</th>
-                      {{-- <th scope="col" class="text-center">&nbsp;</th> --}}
-                      <th scope="col" class="text-center">Current Status</th>
-                      <th scope="col" class="text-center">Options</th>
+                      <th class="select-filter"></th>
+                      <th ></th>
+                      <th ></th>
+                      <th  class="select-filter"></th>
+                      <th></th>
+                      <th class="select-filter"></th>
+                      <th ></th>
+                     
+                  </tr>
+                  <tr>
+                      <td scope="col" class="text-center">Type</td>
+                      <td scope="col" class="text-center">Application Code</td>
+                      <td scope="col" class="text-center">Name of Facility</td>
+                      <td scope="col" class="text-center">Type of Facility</td>
+                      <td scope="col" class="text-center">Date</td>
+                      {{-- <th scope="col" class="text-center">&nbsp;</td> --}}
+                      <td scope="col" class="text-center">Current Status</td>
+                      <td scope="col" class="text-center">Options</td>
                   </tr>
                   </thead>
                   <tbody id="FilterdBody">
@@ -74,7 +84,33 @@
   	</div>
   </div>
   <script type="text/javascript">
-    $(document).ready(function() {$('#example').DataTable();});
+    $(document).ready(function() {
+      
+      var table = $('#example').DataTable();
+    
+      $("#example thead .select-filter").each( function ( i ) {
+      var e = i == 0 ? 0 : i == 1 ? 3 : 5;
+        var select = $('<select><option value=""></option></select>')
+            .appendTo( $(this).empty() )
+            // .appendTo( $(this).empty() )
+            .on( 'change', function () {
+                table.column( e )
+                    .search( $(this).val() )
+                    .draw();
+            } );
+ 
+        table.column(e).data().unique().sort().each( function ( d, j ) {
+            select.append( '<option value="'+d+'">'+d+'</option>' )
+        } );
+
+
+    } );
+
+    
+    });
+   
+
+
     function acceptDocu(id){
             Swal.fire({
               title: 'You are about to View this documents',
@@ -109,3 +145,6 @@
 @else
   <script type="text/javascript">window.location.href= "{{ asset('employee') }}";</script>
 @endif
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.0.3/css/dataTables.dateTime.min.css" />

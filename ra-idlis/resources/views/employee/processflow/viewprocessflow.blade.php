@@ -8,9 +8,9 @@
   @section('content')
   <input type="text" id="CurrentPage" hidden="" value="PF001">
   <div class="content p-4">
-  	<div class="card">
+  	<div class="card" style="width: 165vh;" >
   		<div class="card-header bg-white font-weight-bold">
-             Application Status 
+             Application Status  
           </div>
           <div class="card-body table-responsive">
           <!-- <table border="0" cellspacing="5" cellpadding="5">
@@ -23,15 +23,17 @@
             <td><input type="date" id="max" name="max"></td>
         </tr>
     </tbody></table> -->
-          	<table class="table table-hover" style="font-size:13px;" id="example">
+    <div  >
+    
+          	<table class="table table-hover" style="font-size:13px; zoom: 87% ;width: 5vh" id="example">
                   <thead>
                   <tr>
+                      <th ></th>
                       <th class="select-filter"></th>
-                      <th></th>
+                      <th ></th>
                       <th ></th>
                       <th class="select-filter"></th>
                       <th class="select-filter"></th>
-                      <th ></th>
                       <th ></th>
                       <th></th>
                       <th ></th>
@@ -40,6 +42,7 @@
                      
                   </tr>
                   <tr>
+                      <td scope="col" style="text-align: center; width:auto">Options</td>
                       <td scope="col" style="text-align: center; width:auto">Type</td>
                       <td scope="col" style="text-align: center; width:auto">Code</td>
                       <td scope="col" style="text-align: center; width:auto">Name of the Facility</td>
@@ -47,14 +50,15 @@
                       <td scope="col" style="text-align: center; width:auto">Type</td>
                       <td scope="col" style="text-align: center; width:auto">Date Applied</td>
                       {{-- <td scope="col" style="">Paid</td> --}}
+                      <td scope="col" style="text-align: center; width:auto">Status</td>
                       <td scope="col" style="text-align:center">Evaluated</td>
                       {{-- <td scope="col" style="">Evaluated by</td> --}}
                       {{-- <td scope="col" style="">Region Evaluated</td> --}}
                       <td scope="col" style="text-align: center; width:auto">Inspected</td>
                       <td scope="col" style="text-align: center; width:auto">Approved</td>
-                      <td scope="col" style="text-align: center; width:auto">Status</td>
+                      
                       {{-- <td scope="col" style="">Current Status</td> --}}
-                      <td scope="col" style="text-align: center; width:auto">Options</td>
+                     
                   </tr>
                   </thead>
                   <tbody id="FilterdBody">
@@ -63,12 +67,16 @@
                       @if(in_array($data->hfser_id, $serv))
 
                      <tr>
+                        <td><center>
+                          <button type="button" title="View detailed information for {{$data->facilityname}}" class="btn btn-outline-info" onclick="showData({{$data->appid}},'{{$data->aptdesc}}', '{{$data->authorizedsignature}}','{{$data->brgyname}}', '{{$data->classname}}' ,'{{$data->cmname}}', '{{$data->email}}', '{{$data->facilityname}}','{{$data->hgpdesc}}', '{{$data->formattedDate}}', '{{$data->formattedTime}}', '{{$data->hfser_desc}}','{{$data->ocdesc}}', '{{$data->provname}}','{{$data->rgn_desc}}', '{{$data->streetname}}', '{{$data->zipcode}}', '{{$data->isrecommended}}', '{{$data->hfser_id}}', '{{$data->status}}', '{{$data->uid}}', '{{$data->trns_desc}}');" data-toggle="modal" data-target="#GodModal"><i class="fa fa-fw fa-eye"></i></button>
+                        </center></td>
                        <td style="text-align:center">{{$data->hfser_id}}</td>
                        <td style="text-align:center">{{$data->hfser_id}}R{{$data->rgnid}}-{{$data->appid}}</td>
                        <td style="text-align:center"><strong>{{$data->facilityname}}</strong></td>
                        <td style="text-align:center">{{(ajaxController::getFacilitytypeFromHighestApplicationFromX08FT($data->appid)->hgpdesc ?? 'NOT FOUND')}}</td>
                        <td style="text-align:center">{{$data->aptdesc}}</td>
                         <td style="text-align:center">{{$data->formattedDate}}</td>
+                        <td style="color:black;font-weight:bolder;text-decoration: underline;">{{$data->trns_desc}}</td>
                         <td><center> {{-- EVALUATION --}}
                           <h5>
                             @if($data->isrecommended == 1) 
@@ -99,10 +107,8 @@
                             @endif
                           </h5>
                         </center></td>
-                        <td style="color:black;font-weight:bolder;text-decoration: underline;">{{$data->trns_desc}}</td>
-                        <td><center>
-                          <button type="button" title="View detailed information for {{$data->facilityname}}" class="btn btn-outline-info" onclick="showData({{$data->appid}},'{{$data->aptdesc}}', '{{$data->authorizedsignature}}','{{$data->brgyname}}', '{{$data->classname}}' ,'{{$data->cmname}}', '{{$data->email}}', '{{$data->facilityname}}','{{$data->hgpdesc}}', '{{$data->formattedDate}}', '{{$data->formattedTime}}', '{{$data->hfser_desc}}','{{$data->ocdesc}}', '{{$data->provname}}','{{$data->rgn_desc}}', '{{$data->streetname}}', '{{$data->zipcode}}', '{{$data->isrecommended}}', '{{$data->hfser_id}}', '{{$data->status}}', '{{$data->uid}}', '{{$data->trns_desc}}');" data-toggle="modal" data-target="#GodModal"><i class="fa fa-fw fa-eye"></i></button>
-                        </center></td>
+                       
+                        
                      </tr>
 
                      @endif
@@ -113,6 +119,8 @@
                   </tbody>
                  
               </table>
+    </div>
+        
           </div>
   	</div>
   </div>
@@ -248,7 +256,7 @@ var minDate, maxDate;
 
       var table = $('#example').DataTable();
       $("#example thead .select-filter").each( function ( i ) {
-      var e = i == 0 ? 0 : i == 1 ? 3 : 4;
+      var e = i == 0 ? 1 : i == 1 ? 4 : 5;
         var select = $('<select><option value=""></option></select>')
             .appendTo( $(this).empty() )
             // .appendTo( $(this).empty() )
