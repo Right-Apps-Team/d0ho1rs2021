@@ -29,7 +29,8 @@
                 </div>
                 <div class="card-body">
                     <form class="row" id="ltoForm">
-                        <input type="hidden" name="uid" id="uid" value="{{$user->uid}}" />
+                    <input type="hidden" name="uid" id="uid" value="{{isset($user->uid) ? $user->uid : '' }}"/>
+                <!-- <input type="hidden" name="uid" id="uid" value="$user->uid"/> 6-9-2021 -->
                         <input type="hidden" name="appid" id="appid" />
                         <!-- <input type="hidden" name="appid" id="appid" value="{{ isset($appdata->appid) ? $appdata->appid : '' }}" /> -->
 

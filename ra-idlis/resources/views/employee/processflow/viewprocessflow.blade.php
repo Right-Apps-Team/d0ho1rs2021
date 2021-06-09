@@ -39,6 +39,7 @@
                       <th ></th>
                       <th ></th>
                       <th ></th>
+                      <th ></th>
                      
                   </tr>
                   <tr>
@@ -56,6 +57,7 @@
                       {{-- <td scope="col" style="">Region Evaluated</td> --}}
                       <td scope="col" style="text-align: center; width:auto">Inspected</td>
                       <td scope="col" style="text-align: center; width:auto">Approved</td>
+                      <td scope="col" style="text-align: center; width:auto">Assgn. <br/> region</td>
                       
                       {{-- <td scope="col" style="">Current Status</td> --}}
                      
@@ -107,6 +109,7 @@
                             @endif
                           </h5>
                         </center></td>
+                        <td style="text-align:center">{{$data->assignedRgn}}</td>
                        
                         
                      </tr>
