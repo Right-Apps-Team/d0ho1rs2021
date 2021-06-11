@@ -38,7 +38,7 @@
     <div class="card">
       <div class="card-header bg-white font-weight-bold">
          HFERC Assignment  
-         <button class="btn btn-primary" onclick="window.history.back();">Back</button>
+         <button class="btn btn-primary" onclick="window.history.back();">Back</button> 
       </div>
       <div class="card-body">
         <div class="col-sm-12">
@@ -50,11 +50,7 @@
         </div>
         <hr>
         @if(isset($AppData->isAcceptedFP))
-        <script>
-        console.log('count')
-        console.log('{!! $count !!}')
-            console.log("{!! count($free).'--'. in_array($currentUser->grpid, ['PO','NA','PO1','PO2','RLO']) . '--'. $isHead. '--'. $canEval!!}")
-          </script>
+        
         <div class="row">
           @if(count($free) > 0 && in_array($currentUser->grpid, ['PO','NA','PO1','PO2','RLO']))
          
@@ -73,11 +69,19 @@
 
 
 
-        @if(isset($membDone) && $canViewOthers)
+        <!-- if(isset($membDone) && $canViewOthers) -->
         <div class="col-md-2" id="toFrame">
           
         </div>
-        @endif
+        
+        @if($isHead)
+            @if($canEval && count($membDone) != 0)
+            <button class="btn btn-success p-2" data-backdrop="static" data-toggle="modal" data-target="#compareModal" onclick="onClickToIFrame()"><i class="fa fa-files-o" aria-hidden="true"></i> Compare Results </button>
+       
+            @endif
+          @endif
+         <!-- endif -->
+         {{$evaluation}}
         @if(isset($evaluation) && isset($evaluation->HFERC_eval) )
           <div class="col-md-2">
             <button class="btn btn-primary p-2" onclick="window.location.href='{{asset('employee/dashboard/processflow/view/hfercevaluation/'.$AppData->appid.'/'.$revisionCountCurent)}}'" data-toggle="modal" data-target="#evaluate"><i class="fa fa-file"> </i> View Evaluation</button>
@@ -378,7 +382,7 @@
             </div>
         </div>
     </div>
-    
+    {{$canEval}}
     @isset($canEval)
       @if($canEval)
       <div class="modal fade" id="evaluate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -388,7 +392,7 @@
               <h5 class="modal-title text-center">Evalute Application</h5>
               <hr>
               <div class="col-sm-12">
-                <form id="evaluateSend">
+                <form id="evaluateSend"  >
                   <div class="row">
                     {{csrf_field()}}
                     <div class="col-12 text-uppercase font-weight-bold text-center">
@@ -412,9 +416,10 @@
                   <div class="col-md-12 mt-3">
                     <textarea name="comments" class="form-control" cols="40" rows="10"></textarea>
                   </div>
+                  <!-- <button type="submit" class="btn btn-primary btn-block p-2">Save</button> -->
                   <div class="d-flex justify-content-center mt-4">
                     <div class="custom-control">
-                      <button class="btn btn-primary btn-block p-2">Save</button>
+                      <button type="submit" class="btn btn-primary btn-block p-2">Save</button>
                     </div>
                   </div>
                 </form>
@@ -427,7 +432,24 @@
     @endif
 
     <script type="text/javascript">
-
+ $(document).on('submit','#evaluateSend',function(event){
+ 
+  event.preventDefault();
+  console.log($(this).serialize())
+          $.ajax({
+            method: "POST",
+            data: $(this).serialize(),
+            success: function(a){
+              if(a == 'done'){
+                // location.reload();
+                alert("Applciation Approved")
+              } else {
+                console.log(a);
+              }
+            }
+          })
+})
+ 
       document.getElementById("buttonIdAos").addEventListener("click", function(event) {
               event.preventDefault()
               var itm = document.getElementById("tr_addOn");
@@ -553,22 +575,25 @@
         }
       }
 
-      @if($canEval)
-        $("#evaluateSend").submit(function(e){
-          e.preventDefault();
-          $.ajax({
-            method: "POST",
-            data: $(this).serialize(),
-            success: function(a){
-              if(a == 'done'){
-                location.reload();
-              } else {
-                console.log(a);
-              }
-            }
-          })
-        })
-      @endif
+     
+      // if($canEval)
+        // $("#evaluateSend").submit(function(e){
+       
+        //   e.preventDefault();
+        //   console.log($(this).serialize())
+        //   $.ajax({
+        //     method: "POST",
+        //     data: $(this).serialize(),
+        //     success: function(a){
+        //       if(a == 'done'){
+        //         location.reload();
+        //       } else {
+        //         console.log(a);
+        //       }
+        //     }
+        //   })
+        // })
+      // endif
 
       @if(count($free) > 0)
       $("#memberadd").submit(function(e){
@@ -646,12 +671,13 @@
             txt = "You pressed Cancel!";
         }
       }
-      @if(isset($membDone) && $canViewOthers && ($canProcessAction || in_array($currentUser->grpid, ['NA'])))
+      // if(isset($membDone) && $canViewOthers && $canProcessAction)
+      // if(isset($membDone) && $canViewOthers && ($canProcessAction || in_array($currentUser->grpid, ['NA'])))
       $(function(){
-        $("#toFrame").empty().append('<button class="btn btn-success p-2" data-backdrop="static" data-toggle="modal" data-target="#compareModal" onclick="onClickToIFrame()"><i class="fa fa-files-o" aria-hidden="true"></i> Compare Results</button>');
+        // $("#toFrame").empty().append('<button class="btn btn-success p-2" data-backdrop="static" data-toggle="modal" data-target="#compareModal" onclick="onClickToIFrame()"><i class="fa fa-files-o" aria-hidden="true"></i> Compare Results 11</button>');
         
       })
-      @endif
+      //endif
 
       $('[name=revisioncount]').change(function(event) {
         /* Act on the event */

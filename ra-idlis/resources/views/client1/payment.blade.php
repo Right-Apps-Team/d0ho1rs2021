@@ -64,7 +64,12 @@
 					        @endfor @endif
 					        <input type="hidden" name="return" id="return">
 					        <input type="hidden" name="cancel_return" id="cancel_return" value="{{asset('/client1/request/payment')}}/{{$cToken}}/292/{{$appid}}">
-					        <button type="submit" class="btn btn-primary" style="float: right;">Continue with PayPal <i class="fab fa-paypal"></i></button>
+							@if(($hfser_id == 'LTO' || $hfser_id == 'COA') && $hasAssessment == 0)
+								<button class="btn btn-warning" disabled  style="float: right;">No assessment yet</button>
+								@else
+					        <button type="submit" class="btn btn-primary"  style="float: right;">Continue with PayPal <i class="fab fa-paypal"></i></button>
+@endif
+
 					 	</form>
 					  </div>
 					  <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
@@ -101,13 +106,21 @@
 					      </div>
 					    </form>
 					    <hr>
+						@if(($hfser_id == 'LTO' || $hfser_id == 'COA') && $hasAssessment == 0)
+								<button class="btn btn-warning" disabled  style="float: right;">No assessment yet</button>
+								@else
 					    <button form="_lndForm" class="btn btn-primary" style="float: right;">Continue with LandBank</button>
+						@endif
 					  </div>
 					  <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
 						<img src="https://www.dragonpay.ph/wp-content/themes/wp365_theme/img/logo_dragonpay.png" style="width: 100px; height: 100px; object-fit: contain;">
 						<p style="line-height: 1;"><small>Dragonpay is a leading online payment service provider in the Philippines. We provide an easy and convenient way to pay for products and services online.</small></p>
 						<hr>
-						<button class="btn btn-primary" style="float: right;">Continue with DragonPay</button>
+							@if(($hfser_id == 'LTO' || $hfser_id == 'COA') && $hasAssessment == 0)
+								<button class="btn btn-warning" disabled  style="float: right;">No assessment yet</button>
+								@else
+							<button class="btn btn-primary" style="float: right;">Continue with DragonPay</button>
+							@endif
 					  </div> --}}
 					  <div class="tab-pane fade show active" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
 					  	<div class="row">
@@ -128,7 +141,13 @@
 							        </form>
 							    </div>
 							    <br>
-								<button form="_fWlk" class="btn btn-primary" style="float: right;">Continue with Cash Payment</button>
+								
+								@if(($hfser_id == 'LTO' || $hfser_id == 'COA') && $hasAssessment == 0)
+								<button class="btn btn-warning" disabled  style="float: right;">No assessment yet</button>
+								@else
+								
+								<button form="_fWlk" class="btn btn-primary"  style="float: right;">Continue with Cash Payment</button>
+								@endif
 							</div>
 						</div>
 					  </div>
@@ -157,7 +176,11 @@
 							        </form>
 							    </div>
 							    <br>
+								@if(($hfser_id == 'LTO' || $hfser_id == 'COA') && $hasAssessment == 0)
+								<button class="btn btn-warning" disabled  style="float: right;">No assessment yet</button>
+								@else
 								<button form="PMO" class="btn btn-primary" style="float: right;">Continue with PMO Payment</button>
+								@endif
 							</div>
 						</div>
 					  </div>
@@ -202,7 +225,11 @@
 							        </form>
 							    </div>
 							    <br>
+								@if(($hfser_id == 'LTO' || $hfser_id == 'COA') && $hasAssessment == 0)
+								<button class="btn btn-warning" disabled  style="float: right;">No assessment yet</button>
+								@else
 								<button form="MC" class="btn btn-primary" style="float: right;">Continue with Manager's Check Payment</button>
+								@endif
 							</div>
 						</div>
 					  </div>

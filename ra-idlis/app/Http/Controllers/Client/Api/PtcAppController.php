@@ -9,7 +9,7 @@ use App\Models\Barangay;
 use App\Models\Classification;
 use App\Models\Municipality;
 use App\Models\Province;
-use App\Models\PTC;
+use Carbon\Carbon;
 use DB;
 
 class PtcAppController extends Controller
@@ -21,14 +21,8 @@ class PtcAppController extends Controller
         
         if (isset($request->appid)) {
             $appform = ApplicationForm::where('appid', $request->appid)->first();
-          
-
-            // DB::insert('insert into x08_ft (uid, appid, facid) values (?, ?, ?)', ['fds', 'ff', 'fds']);
         } else {
             $appform = new ApplicationForm;
-            // $ptcform = new PTC;
-
-            // $ptcform->appid  = $appform->appid;
         }
 
 
@@ -73,35 +67,24 @@ class PtcAppController extends Controller
         $appform->noofdialysis          = $request->noofdialysis;
         $appform->noofsatellite         = $request->noofsatellite;
         $appform->savingStat            = $request->saveas;
+        $appform->aptid                 = $request->aptid;
         // $appform->savingStat            = $request->saveas;
 
         if($request->saveas == 'final'){
             $appform->draft = null;
         }
 
-        // $ptcform->type                      = $request->type;
-        // $ptcform->construction_description  = $request->construction_description;
-        // $ptcform->propbedcap                = $request->propbedcap;
-        // $ptcform->renoOption                = $request->renoOption;
-        // $ptcform->incbedcapfrom             = $request->incbedcapfrom;
-        // $ptcform->incbedcapto               = $request->incbedcapto;
-        // $ptcform->ltonum                    = $request->ltonum;
-        // $ptcform->coanum                    = $request->coanum;
-        // $ptcform->noofdialysis              = $request->noofdialysis;
-        // $ptcform->incstationfrom            = $request->incstationfrom;
-        // $ptcform->incstationto              = $request->incstationto;
+    
       
 
-        // $ptcform->save();
+      
         $appform->save();
         
-        $facid = json_decode($request->facid, true);
+      
         $this->ltoAppDetSave($request->facid, $appform->appid, $request->uid);
         $this->ptcAppDet($request->ptcdet, $appform->appid);
 
-        // if(count($facid) > 0){
-        //    $this->ltoAppDetSave($request->facid, $appform->appid, $request->uid);
-        // }
+       
 
         $chg = DB::table('chgfil')->where([['appform_id', $appform->appid]])->first();
         if (!is_null($chg)) {
@@ -109,10 +92,14 @@ class PtcAppController extends Controller
         }
 
         if($request->appcharge != ""){
-        NewGeneralController::appCharge($request->appcharge, $appform->appid, $request->uid);}
+        // NewGeneralController::appCharge($request->appcharge, $appform->appid, $request->uid);
+        $this->appCharge($request->appcharge, $appform->appid, $request->uid);
+          }
 
         if($request->appchargeHgp != ""){
-        NewGeneralController::appCharge($request->appchargeHgp, $appform->appid, $request->uid);}
+            $this->appCharge($request->appchargeHgp, $appform->appid, $request->uid);
+        // NewGeneralController::appCharge($request->appchargeHgp, $appform->appid, $request->uid);
+    }
         // $this->appCharge($request->appcharge, $appform->appid, $request->uid);
 
     
@@ -121,24 +108,17 @@ class PtcAppController extends Controller
         return response()->json(
             [
                 'id' => $appform->appid,
-                'applicaiton' => $appform,
-                'provinces'     => Province::where('rgnid', $appform->rgnid)->get(),
-                'cities'        => Municipality::where('provid', $appform->provid)->get(),
-                'brgy'          => Barangay::where('cmid', $appform->cmid)->get(),
-                'classification' => Classification::where('ocid',  $appform->ocid)->where('isSub', null)->get(),
-                'subclass'      => Classification::where('ocid', $appform->ocid)->where('isSub',  $appform->classid)->get(),
+                // 'applicaiton' => $appform,
+                // 'provinces'     => Province::where('rgnid', $appform->rgnid)->get(),
+                // 'cities'        => Municipality::where('provid', $appform->provid)->get(),
+                // 'brgy'          => Barangay::where('cmid', $appform->cmid)->get(),
+                // 'classification' => Classification::where('ocid',  $appform->ocid)->where('isSub', null)->get(),
+                // 'subclass'      => Classification::where('ocid', $appform->ocid)->where('isSub',  $appform->classid)->get(),
             ],
             200
         );
 
-        // } catch (Exception $e) {
-        //     return response()->json(
-        //         [
-        //             'error' => $e,
-        //              ],
-        //         200
-        //     );
-        // }
+        
     }
     function ltoAppDetSave($reqfacid, $appid, $uid)
     {
@@ -200,6 +180,51 @@ class PtcAppController extends Controller
                 ]);
 
             }
+        }
+    }
+
+     function appCharge($appcharge, $appid, $uid)
+    {
+
+        $arrVal = json_decode($appcharge, true);
+
+        $arrSaveChgfil = ['chgapp_id', 'chg_num', 'appform_id', 'chgapp_id_pmt', 'orreference', 'deposit', 'other', 'au_id', 'au_date', 'reference', 'amount', 't_date', 't_time', 't_ipaddress', 'uid'];
+
+        $tPayment = 0;
+        foreach ($arrVal as $a) {
+            // if ($a["amount"] > 0) {
+                $chg_num = (DB::table('chg_app')->where('chgapp_id', $a["chgapp_id"])->first())->chg_num;
+                $arrDataChgfil =
+                    [
+                        $a["chgapp_id"],
+                        $chg_num,
+                        $appid,
+                        NULL,
+                        NULL,
+                        NULL,
+                        NULL,
+                        NULL,
+                        NULL,
+                        $a["reference"],
+                        $a["amount"],
+                        Carbon::now()->toDateString(),
+                        Carbon::now()->toTimeString(),
+                        request()->ip(),
+                        $uid
+                    ];
+
+                if (DB::table('chgfil')->insert(array_combine($arrSaveChgfil, $arrDataChgfil))) {
+                    $tPayment +=  $a["amount"];
+                    DB::table('chg_app')->where([['chgapp_id', $a["chgapp_id"]]])->update(['chg_num' => ($chg_num + 1)]);
+                }
+            // }
+        }
+
+        $chkGet = DB::table('appform_orderofpayment')->where([['appid', $appid]])->first();
+        if(isset($chkGet)) {
+            DB::table('appform_orderofpayment')->where([['appop_id', $chkGet->appop_id]])->update(['oop_total' => ($chkGet->oop_total + $tPayment)]);
+        } else {
+            DB::table('appform_orderofpayment')->insert(['appid' => $appid, 'oop_total' => $tPayment, 'oop_time' => Carbon::now()->toTimeString(), 'oop_date' => Carbon::now()->toDateString(), 'oop_ip' => request()->ip(), 'uid' => $uid]);
         }
     }
 

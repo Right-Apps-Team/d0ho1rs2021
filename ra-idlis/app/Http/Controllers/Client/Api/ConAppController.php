@@ -69,6 +69,7 @@ class ConAppController extends Controller
         $appform->noofmain              = $request->noofmain;
         $appform->noofsatellite         = $request->noofsatellite;
         $appform->savingStat            = $request->saveas;
+        $appform->aptid                 = $request->aptid;
         // $appform->savingStat            = $request->saveas;
 
         if($request->saveas == 'final'){
@@ -81,45 +82,6 @@ class ConAppController extends Controller
         $facid = json_decode($request->facid, true);
         $this->ltoAppDetSave($request->facid, $appform->appid, $request->uid);
 
-        // if(count($facid) > 0){
-        //    $this->ltoAppDetSave($request->facid, $appform->appid, $request->uid);
-        // }
-
-        $con_catch = [];
-        $con_hospital = [];
-
-        foreach ($request->con_catch  as $cc) {
-            // dd($cc['type']);
-            $arr = [
-                'appid'         => $appform->appid,
-                'type'          => $cc['type'],
-                'location'      => $cc['location'],
-                'population'    => $cc['population'],
-                'isfrombackend' => null
-            ];
-            array_push($con_catch, $arr);
-        }
-        foreach ($request->con_hospital  as $ch) {
-            // dd($cc['type']);
-            $arr = [
-                'appid'         => $appform->appid,
-                'facilityname'  => $ch['facilityname'],
-                'location1'     => $ch['location1'],
-                'cat_hos'       => $ch['cat_hos'],
-                'noofbed1'      => $ch['noofbed1'],
-                'license'       => $ch['license'],
-                'validity'      => $ch['validity'],
-                'date_operation' => $ch['date_operation'],
-                'remarks'       => $ch['remarks']
-            ];
-            array_push($con_hospital, $arr);
-        }
-        $conhospital = CONHospital::where('appid', $request->appid)->delete();
-        $concatch = CONCatchment::where('appid', $request->appid)->delete();
-        CONHospital::insert($con_hospital);
-        CONCatchment::insert($con_catch);
-
-
         $chg = DB::table('chgfil')->where([['appform_id', $appform->appid]])->first();
         if (!is_null($chg)) {
             DB::table('chgfil')->where([['appform_id', $appform->appid]])->delete();
@@ -129,6 +91,57 @@ class ConAppController extends Controller
         if($request->appcharge != ""){
           NewGeneralController::appCharge($request->appcharge, $appform->appid, $request->uid);
         }
+
+        // if(count($facid) > 0){
+        //    $this->ltoAppDetSave($request->facid, $appform->appid, $request->uid);
+        // }
+
+        
+      
+        if($request->con_catch != "[]"){
+            $concatch1 = json_decode($request->con_catch, true);
+            $con_catch = [];
+            // foreach ($request->con_catch  as $cc) {
+            foreach ($concatch1  as $cc) {
+                // dd($cc['type']);
+                $arr = [
+                    'appid'         => $appform->appid,
+                    'type'          => $cc['type'],
+                    'location'      => $cc['location'],
+                    'population'    => $cc['population'],
+                    'isfrombackend' => null
+                ];
+                array_push($con_catch, $arr);
+            }
+            $concatch = CONCatchment::where('appid', $request->appid)->delete();
+            CONCatchment::insert($con_catch);
+        }
+
+        if($request->con_hospital != "[]"){
+                $con_hospital = [];
+                $conhosp = json_decode($request->con_hospital, true);
+            foreach ($conhosp   as $ch) {
+            // foreach ($request->con_hospital  as $ch) {
+                // dd($cc['type']);
+                $arr = [
+                    'appid'         => $appform->appid,
+                    'facilityname'  => $ch['facilityname'],
+                    'location1'     => $ch['location1'],
+                    'cat_hos'       => $ch['cat_hos'],
+                    'noofbed1'      => $ch['noofbed1'],
+                    'license'       => $ch['license'],
+                    'validity'      => $ch['validity'],
+                    'date_operation' => $ch['date_operation'],
+                    'remarks'       => $ch['remarks']
+                ];
+                array_push($con_hospital, $arr);
+            }
+            $conhospital = CONHospital::where('appid', $request->appid)->delete();
+            CONHospital::insert($con_hospital);
+       }
+
+
+       
 
         return response()->json(
             [

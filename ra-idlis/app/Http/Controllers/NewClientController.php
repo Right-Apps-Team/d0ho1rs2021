@@ -810,13 +810,26 @@ class NewClientController extends Controller {
 					// $payment = FunctionsClientController::getChgfilCharges($appid);
 					$payment = FunctionsClientController::getChgfilTransactions($appid,'C');
 					if(isset($payment)) { if(isset($payment)) {
+
+						// 6-9-2021
+						$dohC = new DOHController();
+						$toViewArr = $dohC->GenerateReportAssessment($request,$appid,null,1);
+						$hasAssessment = 0;
+						if($toViewArr){
+							$hasAssessment = 1;
+						}
+
+						$af = DB::table('appform')->where('appid',$appid)->first();
+
 						$arrRet = [
 							'userInf'=>FunctionsClientController::getUserDetails(),
 							// 'npayment'=>"payment",
 							// 'npayment'=>$appid,
 							'npayment'=>$payment,
 							'cToken'=>FunctionsClientController::getToken(),
-							'appid'=>$appid
+							'appid'=>$appid,
+							'hasAssessment'=>$hasAssessment,
+							'hfser_id'=>$af->hfser_id
 						];
 						return view('client1.payment', $arrRet);
 					} }
@@ -833,7 +846,7 @@ class NewClientController extends Controller {
 
 					$test = DB::table('chgfil')->insert(['appform_id' => $appid,'paymentMode'=> $request->mPay, 'attachedFile'=>$filename, 'draweeBank' => $request->drawee, 'number' => $request->number, 'userChoosen' => 1, 't_date' => Date('Y-m-d',strtotime('now')) , 't_time' => Date('H:i:s',strtotime('now'))]);
 					if($test){
-						DB::table('appform')->where('appid',$appid)->update(['isPayEval' => 1]);//6-1-2021
+						DB::table('appform')->where('appid',$appid)->update(['isPayEval' => 1, 't_date' => date('Y-m-d')]);//6-1-2021
 						// DB::table('appform')->where('appid',$appid)->update(['isrecommended' => 1,'isPayEval' => 1]);
 						return redirect('client1/apply')->with('errRet', ['errAlt'=>'success', 'errMsg'=>'Successfully submitted application form and updated payment information.']);
 					}
@@ -1115,6 +1128,8 @@ class NewClientController extends Controller {
 					'fAddress'=>$appDet,
 					'hideExtensions'=>$hideExtensions,
 					'appid'=>$appDet[0]->appid,
+					'hfser_id'=>$appDet[0]->hfser_id,
+					'isReadyForInspecFDA'=>$appDet[0]->isReadyForInspecFDA,
 					'appform'=>$appDet[0],
 					'data' =>AjaxController::getAllRequirementsLTO($appid)
 				];

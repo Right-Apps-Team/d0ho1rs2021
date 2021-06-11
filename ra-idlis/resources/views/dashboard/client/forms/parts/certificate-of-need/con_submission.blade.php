@@ -163,7 +163,8 @@ function submitProper (e){
 
     const facid = $('input[name="facid"]:checked').val();    
     const data = {
-        saveas:                  e,
+        saveas:                  e == 'update' ? 'final' : e,
+        aptid:                  $('#aptid').val(),
         appid:                  $('#appid').val(),
         hfser_id:               $('#typeOfApplication').val(),
         facilityname:           $('#facility_name').val(),
@@ -198,8 +199,8 @@ function submitProper (e){
         approvingauthority:     $('#approving_authority_name').val(),
         hfep_funded:            ($('#hfep').prop('checked') ? 0 : null),
         draft:                  1,
-        con_catch:              con_catch,
-        con_hospital:           con_hospital,
+        con_catch:               JSON.stringify(con_catch),
+        con_hospital:           JSON.stringify(con_hospital),
         facid:                  JSON.stringify(allFacids),
         hgpid:                  $('input[name="hgpid"]:checked').val(),
         assignedRgn:             $('#assignedRgn').val(),//6-3-2021
@@ -221,7 +222,7 @@ function submitProper (e){
             }else{
                 alert('Information now saved');
             }
-        alert('Information now saved');
+        // alert('Information now saved');
         // window.location.replace(`${base_url}/client/dashboard/new-application?appid=${id}`);
        
     }).then(error => {

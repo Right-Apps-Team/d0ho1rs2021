@@ -135,8 +135,8 @@
                         <div class="col-12 mb-3">
                             @if(isset($data[1][2][0]->evaluation))
                                 @if($data[1][2][0]->evaluation == 1)
-                                    <i class="fa fa-check text-success"></i>
-                                    <button class="btn" onclick="addT('{{$data[1][1]}}','{{$data[1][2][0]->remarks}}')" data-toggle="modal" data-target="#modal">Show Remarks</button>
+                                    <!-- <i class="fa fa-check text-success"></i>
+                                    <button class="btn" onclick="addT('{{$data[1][1]}}','{{$data[1][2][0]->remarks}}')" data-toggle="modal" data-target="#modal">Show Remarks3</button> -->
                                 @elseif($data[1][2][0]->evaluation == 0)
                                     <i class="fa fa-times text-danger"></i>
                                     <button class="btn" onclick="addT('{{$data[1][1]}}','{{$data[1][2][0]->remarks}}')" data-toggle="modal" data-target="#modal">Show Remarks</button>
@@ -250,8 +250,13 @@
                 </div> --}}
                 @if($appform->isReadyForInspec <= 0)
                     <div class="d-flex justify-content-center" style="margin-top: 100px;">
-                        <button onclick="readyforInspection()" class="btn btn-primary p-3">Finalize and Submit</button>
+                    @if($isReadyForInspecFDA == 0 && $hfser_id == 'LTO') 
+                    <button disabled class="btn btn-warning p-3">FDA requirements not yet finalize</button>
+                    @else
+                    <button onclick="readyforInspection()" class="btn btn-primary p-3">Finalize and Submit</button>
+                    @endif
                     </div>
+
                 @endif
 
             </div>

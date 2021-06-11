@@ -155,7 +155,8 @@ function submitProper (e){
 
     const facid = $('input[name="facid"]:checked').val();    
     const data = {
-        saveas:                  e,
+        saveas:                  e == 'update' ? 'final' : e,
+        aptid:                  $('#aptid').val(),
         appid:                  $('#appid').val(),
         hfser_id:               $('#typeOfApplication').val(),
         facilityname:           $('#facility_name').val(),

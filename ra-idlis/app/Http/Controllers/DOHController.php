@@ -4364,7 +4364,13 @@ namespace App\Http\Controllers;
 								$cur = AjaxController::getCurrentUserAllData();
 								$maxID = AjaxController::maxRevisionFor($appid);
 
-								$ret = DB::table('hferc_evaluation')->insert(['HFERC_eval' => $request->evaluation, 'HFERC_comments' => $request->comments, 'HFERC_evalBy' => $cur['cur_user'], 'revision' => $maxID + 1, 'appid' => $appid]);
+								$rev = $maxID;
+								if($request->evaluation == 2){
+									$rev =	$maxID + 1;
+								}
+
+								$ret = DB::table('hferc_evaluation')->insert(['HFERC_eval' => $request->evaluation, 'HFERC_comments' => $request->comments, 'HFERC_evalBy' => $cur['cur_user'], 'revision' => $rev, 'appid' => $appid]);
+								// $ret = DB::table('hferc_evaluation')->insert(['HFERC_eval' => $request->evaluation, 'HFERC_comments' => $request->comments, 'HFERC_evalBy' => $cur['cur_user'], 'revision' => $maxID + 1, 'appid' => $appid]);
 
 								$notifyAllHere = DB::table('hferc_team')->where('appid',$appid)->get();
 								foreach ($notifyAllHere as $value) {

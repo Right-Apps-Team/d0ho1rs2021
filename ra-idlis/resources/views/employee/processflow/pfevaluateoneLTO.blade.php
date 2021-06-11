@@ -276,6 +276,7 @@
             </div>
             <br>
             {{-- @endif --}}
+            
             <div class="col-sm-12 d-flex justify-content-center">
               @if(!empty($documentDate))
                 @isset($AppData)
@@ -506,11 +507,11 @@
                         title: 'Success',
                         text: 'Successfully Accepted Application.',
                       }).then(() => {
-                        @if(!$forhfsrb || $redirect)
+                        // if(!$forhfsrb || $redirect)
                             location.reload();
-                        @else
-                         window.location.href = '{{ asset('employee/dashboard/processflow/orderofpayment/') }}/{{$appID}}';
-                        @endif
+                        // else
+                        //  window.location.href = '{{ asset('employee/dashboard/processflow/orderofpayment/') }}/{{$appID}}';
+                        // endif
                       });
                         
                       } else if (data == 'ERROR') {

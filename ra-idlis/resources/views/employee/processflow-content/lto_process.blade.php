@@ -101,7 +101,8 @@
                         <p>Assignment of Team</p>
                     </td>
                     @if($grpid == 'NA' || $grpid == 'DC' )
-                    <td><a href="{{asset('employee/dashboard/others/monitoring/teams')}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>
+                    <td><a  href="{{asset('/employee/dashboard/processflow/assignmentofteam')}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>
+                    <!-- <td><a href="{{asset('employee/dashboard/others/monitoring/teams')}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td> -->
                     @endif
                 </tr>
 

@@ -28,6 +28,7 @@
 	.ddi{
 		color: #fff;
 	}
+
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -84,7 +85,8 @@
 			@include('dashboard.client.modal.type-of-application')
 	</div>
 	<div  style="background: #fff;padding: 25px;">
-		<div style="overflow-x: scroll">
+	<!-- <div  style="background: #fff;padding: 25px;"> -->
+		<div style="overflow-x: scroll; min-height: 50%" >
 			<table class="table table-bordered" id="tAppCl" style="border-bottom: none;border-collapse: collapse;">
 				<thead class="thead-dark">
 					<tr>
@@ -169,11 +171,11 @@
 							{{-- <a href="{{asset('client1/certificates')}}/{{strtoupper($each->hfser_id)}}/{{$each->appid}}"><button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Print"><i class="fa fa-print"></i></button></a> --}}
 							{{-- <a href="{{asset('client1/apply/edit')}}/{{$each->appid}}"><button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil-square-o"></i></button></a> --}}
 							{{-- @if($each[0]->isPayEval == 1) --}}
-							<div class="btn-group mb-1">
+							<div class="btn-group mb-1 dropup" >
 							  <button class="btn btn-block btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							    Operations
 							  </button>
-							  <div class="dropdown-menu">
+							  <div class="dropdown-menu" style=" position: relative; z-index: 1000">
 							  	@switch($each[0]->hfser_id)
 									@case('PTC')
 									  	<div style="margin-left: 10px;margin-right: 10px;">
@@ -348,24 +350,25 @@
 											</div>
 											<div class="modal-body">
 											
-											@if($each[0]->proofpaystat == 'posted'  )
+											<!-- if($each[0]->proofpaystat == 'posted'  )
 												
 												PROOF OF PAYMENT ALREADY EVALUATED
 											
 										
-											@else	
+											else	 -->
+											@if( $each[0]->hfser_desc == "License to Operate")
 											<form id="uppp-{{$each[0]->appid}}" method="post" enctype="multipart/form-data">
 													Upload proof of payment 
 													<br/>
-													<label style="float: left;" for="file-{{$each[0]->appid}}">Cashiering</label>
-													<input id="file-{{$each[0]->appid}}" class="form-control" type="file"  required name="upproof">
-													@if( $each[0]->hfser_desc == "License to Operate")
+													<!-- <label style="float: left;" for="file-{{$each[0]->appid}}">Cashiering</label>
+													<input id="file-{{$each[0]->appid}}" class="form-control" type="file"  required name="upproof"> -->
+												
 													<label style="float: left;" for="filemach-{{$each[0]->appid}}">Machine</label>
-													<input id="filemach-{{$each[0]->appid}}" class="form-control" required type="file" name="upmach">
+													<input id="filemach-{{$each[0]->appid}}" class="form-control"  type="file" name="upmach">
 													
 													<label style="float: left;" for="filemach-{{$each[0]->appid}}">Pharmacy</label>
-													<input id="filephar-{{$each[0]->appid}}" class="form-control" required type="file" name="upphar">
-													@endif
+													<input id="filephar-{{$each[0]->appid}}" class="form-control"  type="file" name="upphar">
+													
 													
 													
 													<input id="appi-{{$each[0]->appid}}" class="form-control" type="hidden" name="appid">
@@ -374,7 +377,10 @@
 													<button  style="width: 30%; float: right;"	class="btn btn-info btn-block " type="submit"  >Submit</button>
 													<!-- <button type="submit" onclick="subProofPay('{{$each[0]->appid}}')"  >Submit</button> -->
 											</form>
+											@else
+												PROOF OF PAYMENT NOT APPLICABLE
 											@endif
+											<!-- endif -->
 											</div>
 											<div class="modal-footer">
 											<button type="button" class="btn btn-default " data-dismiss="modal">Close</button>
@@ -383,10 +389,12 @@
 										
 										</div>
 									</div>
+									
 <script>
 	$(document).on('submit','#uppp-{{$each[0]->appid}}',function(event){
+		event.preventDefault();
 if(confirm('Are you sure you want to upload proof of payment?')){
-						event.preventDefault();
+						
 						let data = new FormData(this);
 						// data.append('upproof', document.getElementById("file-{{$each[0]->appid}}").value);
 						data.append('appid', '{{$each[0]->appid}}');

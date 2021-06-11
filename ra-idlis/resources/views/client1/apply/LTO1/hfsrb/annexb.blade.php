@@ -337,7 +337,8 @@
 			})
 			@endif
 
-			$('[name=manDate],[name=dop]').on('change',function(){
+			// $('[name=manDate],[name=dop]').on('change',function(){
+			$('[name=manDate],[name=dop]').on('blur',function(){
 				validateDateLessGreat($('[name=manDate]'),$('[name=dop]'));
 			})
 		</script>

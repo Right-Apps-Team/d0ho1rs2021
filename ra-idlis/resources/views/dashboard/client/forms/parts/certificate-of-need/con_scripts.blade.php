@@ -18,14 +18,12 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
     var lot_area ='{!!((count($fAddress) > 0) ? $fAddress[0]->lot_area: "")!!}';
     var noofbed ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofbed: "")!!}';
 
-    var condet =JSON.parse('{!!((count($condet[0]) > 0) ? $condet[0]: "")!!}');
-    var exHosp =JSON.parse('{!!((count($condet[1]) > 0) ? $condet[1]: "")!!}');
+ 
 //     console.log("condet")
 //     console.log(condet)
 //     console.log("exHosp")
 //     console.log(exHosp)
-    initialProPo()
-    listHosps()
+  
 
      document.getElementById("appid").value = appid;
      document.getElementById("cap_inv").value = cap_inv;
@@ -84,12 +82,16 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
                 return rad;
         }
         
-    
+
+      
+   
+    initialProPo()
+    listHosps()
 
  
  
-                function initialProPo(){
-
+function initialProPo(){
+        var condet =JSON.parse('{!!((count($condet[0]) > 0) ? $condet[0]: "")!!}');
         if(condet.length > 0 ){
             for(var i = 0; i < condet.length ; i++){
                 // console.log(i)
@@ -163,10 +165,15 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
             }
         }
 
+        setTimeout(function(){ 
+                       
+                        calculatepop()
+                }, 1000);
+
     }
 
     function listHosps(){
-        
+        var exHosp =JSON.parse('{!!((count($condet[1]) > 0) ? $condet[1]: "")!!}');
         if(exHosp.length > 0 ){
                 for(var i = 0; i < exHosp.length ; i++){
                         var newTr = document.createElement("tr");

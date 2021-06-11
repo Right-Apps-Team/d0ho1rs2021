@@ -118,11 +118,11 @@
                        
                         <div class="form-group row col-md-12 mt-5">
                             <div class="col-lg-3 col-md-3 col-xs-12"></div>
-                            <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
+                            <!-- <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
                                 <a class="btn btn-danger btn-block" href="{{URL::to('/client1/apply')}}">
                                     <i class="fa fa-times" aria-hidden="true"></i> Cancel
                                 </a>
-                            </div>
+                            </div> -->
                             <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
                                 <button id="submit"  class="btn btn-info btn-block" type="button" value="submit" name="submit" data-toggle="modal" data-target="#confirmSubmitModalLto">
                                     <i class="fa fa-paper-plane" aria-hidden="true"></i>
@@ -138,6 +138,12 @@
                                     Save as Draft
                                 </button>
                             </div>
+                            <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
+                        <button id="update" hidden class="btn btn-primary btn-block" type="button" onClick="savePartialLto('update')">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                            Update
+                        </button>
+                    </div>
                         </div>
 
                         
@@ -214,6 +220,7 @@
  if(savStat == "final"){
     document.getElementById('submit').setAttribute("hidden", "hidden");
     document.getElementById('save').setAttribute("hidden", "hidden");
+document.getElementById('update').removeAttribute("hidden");
  }
 
 

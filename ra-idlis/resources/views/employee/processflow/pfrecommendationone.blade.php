@@ -135,16 +135,16 @@
           {{-- /////////////////// --}}
           <div class="card">
             {{-- START HEAD --}}
-            <div class="card-header @isset($AppData) @if($AppData->isPayEval == null) list-group-item-info @elseif($AppData->isPayEval == 1) list-group-item-success  @else list-group-item-danger @endif @endisset" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne" style="">
+            <!-- <div class="card-header @isset($AppData) @if($AppData->isPayEval == null) list-group-item-info @elseif($AppData->isPayEval == 1) list-group-item-success  @else list-group-item-danger @endif @endisset" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne" style="">
               <div class="mb-0">
                 <button class="btn btn-link @isset($AppData) @if($AppData->isPayEval == null) list-group-item-info @elseif($AppData->isPayEval == 1) list-group-item-success  @else list-group-item-danger @endif @endisset" type="button" style="text-decoration:none">
                   <h3>Order of Payment Evaluation</h3>
                 </button>
               </div>
-            </div>
+            </div> -->
              {{-- END HEAD --}}
              {{-- START BODY --}}
-            <div id="collapseTwo"  class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <!-- <div id="collapseTwo"  class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
               <div class="card-body">
                 <div class="row">
                   <div class="col-sm-5">
@@ -183,7 +183,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
             {{-- END BODY --}}
           </div>
           {{-- /////////////////// --}}

@@ -58,7 +58,7 @@
 						<p style="float: right;">Bed Capacity :</p>
 					</div>
 					<div class="col-md-6">
-						<p><strong>{{((isset($otherDetails->ubn)) ? $otherDetails->ubn : (isset($retTable[0]->noofbed) ? $retTable[0]->noofbed : 0) )}} Bed(s)</strong></p>
+						<p><strong>{{((isset($otherDetails->ubn)) ? abs($otherDetails->ubn) : (isset($retTable[0]->noofbed) ? abs($retTable[0]->noofbed) : 0) )}} Bed(s)</strong></p>
 					</div>
 				</div>
 				<div class="row">
@@ -71,10 +71,11 @@
 				</div>
 				<div class="row">
 					<div class="col-md-6">
-						<p style="float: right;">Validity Until :</p>
+						<p style="float: right;">Validity Period :</p>
+						<!-- <p style="float: right;">Validity Until :</p> -->
 					</div>
 					<div class="col-md-6">
-						<p><strong>{{((isset($retTable[0]->t_date)) ? date("F j, Y", ((strtotime($retTable[0]->t_date)-(86400*2))+15552000)) : 'DATE_ISSUED')}}</strong></p>
+						<p><strong>{{((isset($retTable[0]->t_date)) ? date("F j, Y", strtotime($retTable[0]->t_date)) : 'DATE_ISSUED')}} to {{((isset($retTable[0]->t_date)) ? date("F j, Y", ((strtotime($retTable[0]->t_date)-(86400*2))+15552000)) : 'DATE_ISSUED')}}</strong></p>
 					</div>
 				</div>
 				<br><br>

@@ -39,7 +39,7 @@
                       <th ></th>
                       <th ></th>
                       <th ></th>
-                      <th ></th>
+                      <th class="select-filter"></th>
                      
                   </tr>
                   <tr>
@@ -57,7 +57,7 @@
                       {{-- <td scope="col" style="">Region Evaluated</td> --}}
                       <td scope="col" style="text-align: center; width:auto">Inspected</td>
                       <td scope="col" style="text-align: center; width:auto">Approved</td>
-                      <td scope="col" style="text-align: center; width:auto">Assgn. <br/> region</td>
+                      <td scope="col" style="text-align: center; width:auto">Region</td>
                       
                       {{-- <td scope="col" style="">Current Status</td> --}}
                      
@@ -109,7 +109,7 @@
                             @endif
                           </h5>
                         </center></td>
-                        <td style="text-align:center">{{$data->assignedRgn}}</td>
+                        <td style="text-align:center">{{$data->rgn_desc}}</td>
                        
                         
                      </tr>
@@ -259,7 +259,7 @@ var minDate, maxDate;
 
       var table = $('#example').DataTable();
       $("#example thead .select-filter").each( function ( i ) {
-      var e = i == 0 ? 1 : i == 1 ? 4 : 5;
+      var e = i == 0 ? 1 : i == 1 ? 4 : i == 2 ? 5 : 11;
         var select = $('<select><option value=""></option></select>')
             .appendTo( $(this).empty() )
             // .appendTo( $(this).empty() )

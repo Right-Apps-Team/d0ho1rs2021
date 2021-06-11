@@ -445,7 +445,7 @@
 				                              </li> --}}
 				                              <li {{-- id="next" --}} class="page-item">
 				                                {{-- <button class="btn btn-success mr-1 p-3" type="button">Next <i class="fa fa-chevron-right"></i></button> --}}
-				                            <buton onclick="getAll()">Get</buton>
+				                            <!-- <buton onclick="getAll()">Get</buton> -->
 											    <button class="btn btn-primary mr-1 p-3" type="submit">Submit <i class="fa fa-chevron-right"></i></button>
 				                              </li>
 				                            </div>

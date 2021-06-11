@@ -38,6 +38,7 @@
 							{!!((isset($each->upDesc)) ? ('<span class="req">'. $each->upDesc . ' (' . $each->updesc . ')' . '</span>') . '<br>' . (isset($each->upDescRemarks) ? '<span class="font-weight-bold"><br>Evaluator\'s Remarks: <br></span>'. $each->upDescRemarks : '') : ($each->isRequired == 1 ? '<span class="req">'.$each->updesc.'</span>' : $each->updesc))!!}
 						</td>
 						<td><center>
+					
 							@isset($each->filepath)
 								@isset($each->evaluation) @switch($each->evaluation)
 									@case(0)
@@ -55,6 +56,7 @@
 											$currentStatus = 1;
 										@endphp
 										<label class="badge badge-success">Uploaded file approved.</label>
+										<input class="form-control" type="file" name="upload[{{$each->upid}}]" @if($each->isRequired == 1) required @endif>
 										@break
 									@default
 										@break
@@ -63,6 +65,7 @@
 											$currentStatus = 3;
 										@endphp
 									<label class="badge badge-warning">Uploaded file not yet evaluated.</label>
+									<!-- <input class="form-control" type="file" name="upload[{{$each->upid}}]" @if($each->isRequired == 1) required @endif> -->
 								@endisset
 							@else
 								@php

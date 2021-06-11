@@ -75,6 +75,7 @@ class AtoAppController extends Controller
         $appform->noofmain              = $request->noofmain;
         $appform->noofsatellite         = $request->noofsatellite;
         $appform->savingStat            = $request->saveas;
+        $appform->aptid                 = $request->aptid;
         // $appform->savingStat            = $request->saveas;
 
         if($request->saveas == 'final'){

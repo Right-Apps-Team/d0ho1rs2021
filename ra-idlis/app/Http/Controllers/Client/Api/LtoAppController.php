@@ -135,6 +135,7 @@ class LtoAppController extends Controller
         $appform->noofdialysis          = $request->noofdialysis;
         
         $appform->assignedRgn           = $request->assignedRgn;
+        $appform->aptid                 = $request->aptid;
   
         if($request->saveas == 'final'){
             $appform->draft = null;
