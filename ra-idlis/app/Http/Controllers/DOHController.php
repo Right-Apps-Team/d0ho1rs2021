@@ -4543,13 +4543,25 @@ namespace App\Http\Controllers;
 								DB::table('con_evalsave')->insert($existHospital);
 							}
 						}
-						if(isset($request->addr) && isset($request->catchment) && isset($request->type) && count($request->addr) == count($request->catchment)){
+						// if(isset($request->addr) && isset($request->catchment) && isset($request->type) && count($request->addr) == count($request->catchment)){
+						if(isset($request->addr) && isset($request->catchment)&& isset($request->est) && isset($request->type) && count($request->addr) == count($request->catchment)){
+						
+						$ccatch = 	DB::table('con_catch')->where([['appid', $appid]])->first();//6-12-2021
+						 
+						if(!is_null($ccatch)){
+							DB::table('con_catch')->where([['appid', $appid]])->delete();//6-12-2021
+						}
+							// DB::table('con_catch')->where([['appid', $appid]])->delete();//6-12-2021
 
 							for ($j=0; $j < count($request->addr); $j++) { 
-								DB::table('con_catch')->insert(['appid' => $appid, 'type' => ($request->type[$j] == strtolower('primary') ? 0 : 1), 'location' => $request->addr[$j], 'population' => $request->catchment[$j], 'isfrombackend' => 1]);
+								// DB::table('con_catch')->insert(['appid' => $appid, 'type' => ($request->type[$j] == strtolower('primary') ? 0 : 1), 'location' => $request->addr[$j], 'population' => $request->catchment[$j], 'isfrombackend' => 1]);
+								DB::table('con_catch')->insert(['appid' => $appid, 'type' => ($request->type[$j] == strtolower('primary') ? 0 : 1), 'location' => $request->addr[$j], 'population' => $request->catchment[$j], 'eval_est' => $request->est[$j], 'isfrombackend' => 1]);
+						
+						
 							}
 
 						}
+
 						if($request->has('draft')){
 							return 'DONE';
 						}

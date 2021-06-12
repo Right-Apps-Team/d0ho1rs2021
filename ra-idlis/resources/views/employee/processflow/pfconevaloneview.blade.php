@@ -19,12 +19,13 @@
       	<table class="table table-bordered mt-3 DT">
       		<thead>
       			<tr>
-      				<th colspan="3">Determination of Projected Primary and Secondary Catchment Population (P)</th>
+      				<th colspan="4">Determination of Projected Primary and Secondary Catchment Population (P)</th>
       			</tr>
       			<tr>
       				<td></td>
       				<td>Barangay/Municipality/District/Province/Region</td>
       				<td>Projected Population (5<sup>th</sup> year) of Catchment Area</td>
+              <td>Projected Population recommendation</td>
       			</tr>
       		</thead>
       		<tbody>
@@ -42,6 +43,9 @@
   					<td>
   						{{number_format($b->population)}}
   					</td>
+            <td>
+  						{{number_format($b->eval_est)}}
+  					</td>
   				</tr>
       			@endforeach
             @endif
@@ -49,6 +53,7 @@
       				<td>Total</td>
       				<td class="text-center font-weight-bold">Projected Primary and Secondary Catchment Population(P) = </td>
       				<td class="font-weight-bold">{{number_format($total)}}</td>
+      				<td class="font-weight-bold"></td>
       			</tr>
       		</tbody>
       	</table>

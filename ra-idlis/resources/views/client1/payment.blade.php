@@ -20,7 +20,9 @@
 				</tr>
 			</thead>
 			<tbody>
+			
 		     	@if(count($npayment) > 0) @for($i = 0; $i < count($npayment); $i++)
+				
 		     	<tr>
 		     		<td>{{$npayment[$i]->reference}}</td>
 		     		<td>&#8369;&nbsp;{{number_format($npayment[$i]->amount, 2)}}</td>

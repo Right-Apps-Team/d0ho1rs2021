@@ -1,4 +1,16 @@
 <script>
+
+
+    window.addEventListener('change', function(e) {
+        
+        console.log("received ocid")
+        if(e.target.name == 'ocid'){
+            setTimeout(function(){  
+                   console.log("received ocid")
+                    getFacServCharge()
+            }, 1000);
+        }
+    });
 var ghgpid = document.getElementsByName('hgpid')
 var curAppid = ""
 var mhfser_id = "COA"
@@ -149,6 +161,7 @@ function removeOtherServContAdd() {
     function insertAfter(referenceNode, newNode) {
         referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
     }
+   
 
     function getGoAncillary() {
         getFacServCharge()
@@ -256,6 +269,8 @@ function getFacServCharge(val = null) {
                             // tempAppCharge
 
                             const subclass = $('#subclass').val()  == "" ||  $('#subclass').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}' : $('#subclass').val();//appchargetemp
+                            const owns = $('#ocid').val()  == "" ||  $('#ocid').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->ocid: "")!!}' : $('#ocid').val();//appchargetemp
+ 
                             // console.log("subclass")//appchargetemp
                             // console.log(subclass)//appchargetemp
 
@@ -269,7 +284,8 @@ function getFacServCharge(val = null) {
                                
                                         return {
                                         facname: facname,
-                                        amt: subclass == "ND" ? 0 :  arr.find(s =>
+                                        // amt: subclass == "ND" ? 0 :  arr.find(s =>
+                                        amt: owns == "G" ? 0 :  arr.find(s =>
                                                 s.facname === facname).amt,
                                         chgapp_id: arr.find(s =>
                                                 s.facname === facname).chgapp_id
@@ -407,4 +423,8 @@ function getChargesPerApplication() {
 				console.log(errMsg);
 	    	}
 		}
+
+    
+    
+
 </script>

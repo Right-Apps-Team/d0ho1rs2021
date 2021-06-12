@@ -65,6 +65,14 @@ Route::prefix('check')->group(function() {
 });
 // Checking
 
+
+Route::prefix('cont')->group(function() {
+	Route::match(['get', 'post'], '/ptc/{appid}', 'Client\Api\PtcAppController@contfromCon');
+});
+
+
+// Checking
+
 // Route::get('/', 'NewClientController@__index')->name('client1.login');
 
 Route::get('samplefix','DOHController@samplefix');

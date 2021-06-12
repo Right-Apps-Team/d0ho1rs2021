@@ -390,10 +390,15 @@ const fetchClassification = async (e) => {
             })
             $("#classification").selectpicker('refresh')
         })
+
+        
+
     }
     else {
         $("#classification").addAttr('disabled')
     }
+
+    
 }
 
 const fetchBaranggay = async (e) => {

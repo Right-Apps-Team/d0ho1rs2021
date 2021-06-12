@@ -79,6 +79,13 @@ Route::post(
     'Client\Api\ProvinceApiController@fetch'
 ); //->middleware([APIMiddleware::class]);
 
+// Route::post(
+//     '/cont/ptc/{appid}',
+//     'Client\Api\PtcAppController@contfromCon'
+// ); //->middleware([APIMiddleware::class]);
+
+// Route::match(['get', 'post'], '/updApp/{appid}', 'NewClientController@__updApp')->name('client1.updapp');
+
 Route::post(
     '/municipality/fetch/',
     'Client\Api\MunicipalityApiController@fetch'

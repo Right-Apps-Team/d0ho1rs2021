@@ -88,31 +88,7 @@ window.addEventListener('click', function(e) {
         var ass =  document.getElementById("assignedRgn")
  setTimeout(function(){
        
-        
-
-        if(hgpid){
-          
-          if(hgpid.length > 0){
-              for( i = 0; i < hgpid.length; i++ ) {
-                  console.log("exist facid")
-                      if( hgpid[i].checked ) {
-                  
-                          if(hgpid[i].value == '1' || hgpid[i].value == '9' || hgpid[i].value == '28' || hgpid[i].value == '5' || hgpid[i].value == '12'){
-                              ass.value = 'hfsrb';
-                              console.log('hgpid' + hgpid[i].value)
-                              
-                          }else{
-                              ass.value = $('#region').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->rgnid: "")!!}' : $('#region').val()
-                          }
-                                      
-                      }
-                  }
-          }else{
-              ass.value = $('#region').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->rgnid: "")!!}' : $('#region').val()
-          }
-      }
-
-      if(facs){
+    if(facs){
           
           if(facs.length > 0){
               for( i = 0; i < facs.length; i++ ) {
@@ -133,6 +109,49 @@ window.addEventListener('click', function(e) {
               ass.value = $('#region').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->rgnid: "")!!}' : $('#region').val()
           }
       }
+
+    
+         
+        if(hgpid){
+          
+          if(hgpid.length > 0){
+              for( i = 0; i < hgpid.length; i++ ) {
+                  console.log("exist facid")
+                      if( hgpid[i].checked ) {
+                  
+                          if(hgpid[i].value == '1' || hgpid[i].value == '9' || hgpid[i].value == '28' || hgpid[i].value == '5' || hgpid[i].value == '12'){
+                              ass.value = 'hfsrb';
+                              console.log('hgpid' + hgpid[i].value)
+                              
+                          }else if(hgpid[i].value == '6'){
+                                    if(facs.length > 0){
+                                        for( var a = 0; a < facs.length; a++ ) {
+                                        console.log("exist facid")
+                                            if( facs[a].checked ) {
+                                        
+                                                if(facs[a].value == 'H2' || facs[a].value == 'H3'){
+                                                    ass.value = 'hfsrb';
+                                                    console.log('facs' + facs[a].value)
+                                                    
+                                                }
+                                                            
+                                            }
+                                        }
+                                    }else{
+                                        ass.value = $('#region').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->rgnid: "")!!}' : $('#region').val()
+                                    }
+                          }else{
+                              ass.value = $('#region').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->rgnid: "")!!}' : $('#region').val()
+                          }
+                                      
+                      }
+                  }
+          }else{
+              ass.value = $('#region').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->rgnid: "")!!}' : $('#region').val()
+          }
+      }
+ 
+      
 
        
 

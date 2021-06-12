@@ -145,7 +145,11 @@
 								<div class="dropdown">
 									<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-align-justify"></i></button>
 									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="padding: 0px 10px 10px 10px;">
-										<button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Continue Application" onclick="window.location.href='{{asset('client1/apply/app/updApp')}}/{{$each[0]->appid}}'"><i class="fa fa-copy"></i></button>
+
+										<!-- <button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Continue Application" onclick="window.location.href='{{asset('client1/apply/app/updApp')}}/{{$each[0]->appid}}'"><i class="fa fa-copy"></i></button> -->
+										@if($each[0]->hfser_id == 'CON')
+										<button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Continue Application" onclick="window.location.href='{{asset('/cont/ptc')}}/{{$each[0]->appid}}'"><i class="fa fa-copy"></i></button>
+										@endif
 										<button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Print" onclick="window.location.href='{{asset('client1/certificates')}}/{{strtoupper($each[0]->hfser_id)}}/{{$each[0]->appid}}'"><i class="fa fa-print"></i></button>
 										<button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Change Request Form" onclick="window.location.href='{{asset('client1/apply/change_request')}}/{{$each[0]->appid}}'"><i class="fa fa-pencil-square-o"></i></button>
 										<button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="View Payment Details" onclick="remAppHiddenId('chgfil{{$each[0]->appid}}')"><i class="fa fa-money"></i></button>

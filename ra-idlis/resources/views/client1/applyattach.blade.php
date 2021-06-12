@@ -56,7 +56,7 @@
 											$currentStatus = 1;
 										@endphp
 										<label class="badge badge-success">Uploaded file approved.</label>
-										<input class="form-control" type="file" name="upload[{{$each->upid}}]" @if($each->isRequired == 1) required @endif>
+										<!-- <input class="form-control" type="file" name="upload[{{$each->upid}}]" @if($each->isRequired == 1) required @endif> -->
 										@break
 									@default
 										@break

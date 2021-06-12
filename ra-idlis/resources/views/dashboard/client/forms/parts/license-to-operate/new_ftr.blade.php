@@ -736,6 +736,7 @@ function getFacServCharge (val = null){
                             // tempAppCharge
 
                             const subclass = $('#subclass').val()  == "" ||  $('#subclass').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}' : $('#subclass').val();//appchargetemp
+                            const owns = $('#ocid').val()  == "" ||  $('#ocid').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->ocid: "")!!}' : $('#ocid').val();//appchargetemp
                             // console.log("subclass")//appchargetemp
                             // console.log(subclass)//appchargetemp
 
@@ -754,17 +755,20 @@ function getFacServCharge (val = null){
                             //         s.facname===facname).amt
                             //     }
                             // })
-
+                            // console.log("owns")
+                            // console.log(owns)
+                            // console.log("owns")
                              //appchargetemp
                              const distinctArr = Array.from(new Set(arr.map(s => s.facname))).map(facname => {
-                               
+                            
                                return {
                                facname: facname,
-                               amt: subclass == "ND" ? 0 :  arr.find(s =>
+                               amt: owns == "G" ? 0 :  arr.find(s =>
+                            //    amt: subclass == "ND" ? 0 :  arr.find(s =>
                                        s.facname === facname).amt,
                                chgapp_id: arr.find(s =>
                                        s.facname === facname).chgapp_id
-                            }
+                              }
                             })
 
 
@@ -788,7 +792,12 @@ function getFacServCharge (val = null){
 							}
                             // console.log("tadss")//appchargetemp
                             //     console.log(JSON.stringify(ta))//appchargetemp
-                                document.getElementById('tempAppCharge').value = JSON.stringify(ta)//appchargetemp
+
+
+
+
+                                document.getElementById('tempAppCharge').value = JSON.stringify(getUnique(ta,'chgapp_id'))//appchargetemp
+                                // document.getElementById('tempAppCharge').value = JSON.stringify(ta)//appchargetemp
 						}
 					});
             }, 1000);
@@ -798,6 +807,20 @@ function getFacServCharge (val = null){
 				}
    
 
+}
+
+function getUnique(arr, comp) {
+
+// store the comparison  values in array
+const unique =  arr.map(e => e[comp])
+
+// store the indexes of the unique objects
+.map((e, i, final) => final.indexOf(e) === i && i)
+
+// eliminate the false indexes & return unique objects
+.filter((e) => arr[e]).map(e => arr[e]);
+
+return unique;
 }
 
     function getCheckedValue( groupName ) {
@@ -1373,6 +1396,13 @@ function getFacServCharge (val = null){
             if(e.target.className != "custom-control-input exAddRenew"){
             renewAddOnSelect(e.target.value)
             }
+        }
+
+        if(e.target.name == 'ocid'){
+            setTimeout(function(){  
+                   
+                    getFacServCharge()
+            }, 1000);
         }
     });
     

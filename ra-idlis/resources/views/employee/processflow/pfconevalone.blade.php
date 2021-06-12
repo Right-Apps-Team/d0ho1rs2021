@@ -10,10 +10,11 @@
   <input type="text" id="CurrentPage" hidden="" value="PF015">
   <div class="content p-4">
     <form id="evalSave" method="POST" action="{{asset('employee/dashboard/processflow/conevalution/').'/'.$AppData->appid}}">
+    <!-- <form id="evalSave"> -->
       {{csrf_field()}}
     <div class="card">
       <div class="card-header bg-white font-weight-bold">
-         Committee Evaluation Tool
+         Committee Evaluation Tool 
          <button class="btn btn-primary" onclick="window.history.back();">Back</button>
       </div>
       <div class="card-body">
@@ -35,6 +36,7 @@
               <td>Type</td>
               <td>Barangay/Municipality/District/Province/Region</td>
               <td>Projected Population (5<sup>th</sup> year) of Catchment Area</td>
+              <td>Projected Population recommendation</td>
             </tr>
           </thead>
           <tbody id="mainCatch">
@@ -795,10 +797,12 @@
       // });
       $("#draft").click(function(event) {
         let data = $("#evalSave").serialize()+'&draft=true';
+       console.log(data)
         $.ajax({
           method: 'POST',
           data: data,
           success: function(a){
+            console.log(a)
             if(a == 'DONE'){
               alert('Saved Successfully!');
             }
@@ -961,7 +965,8 @@
             '</select>'+
           '</td>'+
           '<td><input type="text" name="addr[]" class="form-control"></td>'+
-          '<td><input type="text" name="catchment[]" class="form-control"></td>'+
+          '<td><input type="text"  name="catchment[]" class="form-control"></td>'+
+          '<td><input type="text" name="est[]" class="form-control"></td>'+
         '</tr>'
         $(toInsert).insertBefore($('#mainCatch'));    
         processPopulationCount();
@@ -1061,6 +1066,7 @@
         $('.'+counterForMain).find('[name="type[]"]').val('{{($b->type == 1 ? 'Secondary' : 'Primary')}}');
         $('.'+counterForMain).find('[name="addr[]"]').val('{{$b->location}}');
         $('.'+counterForMain).find('[name="catchment[]"]').val('{{$b->population}}');
+        $('.'+counterForMain).find('[name="est[]"]').val('{{$b->eval_est}}');
         @endforeach
         processPopulationCount();
       @endif

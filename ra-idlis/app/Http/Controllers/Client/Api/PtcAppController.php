@@ -81,8 +81,7 @@ class PtcAppController extends Controller
         $appform->save();
         
       
-        $this->ltoAppDetSave($request->facid, $appform->appid, $request->uid);
-        $this->ptcAppDet($request->ptcdet, $appform->appid);
+       
 
        
 
@@ -103,7 +102,8 @@ class PtcAppController extends Controller
         // $this->appCharge($request->appcharge, $appform->appid, $request->uid);
 
     
-
+        $this->ltoAppDetSave($request->facid, $appform->appid, $request->uid);
+        $this->ptcAppDet($request->ptcdet, $appform->appid);
       
         return response()->json(
             [
@@ -120,6 +120,59 @@ class PtcAppController extends Controller
 
         
     }
+
+
+    public function contfromCon(Request $request,  $appid)
+    {
+
+        $conapp = ApplicationForm::where('appid', $appid)->first();
+
+        $appform = new ApplicationForm;
+
+        $appform->hfser_id              = 'PTC';
+        $appform->facilityname          = $conapp->facilityname;
+        $appform->rgnid                 = $conapp->rgnid;
+        $appform->provid                = $conapp->provid;
+        $appform->cmid                  = $conapp->cmid;
+        $appform->brgyid                = $conapp->brgyid;
+        $appform->street_number         = $conapp->street_number;
+        $appform->street_name           = $conapp->street_name;
+        $appform->zipcode               = $conapp->zipcode;
+        $appform->contact               = $conapp->contact;
+        $appform->areacode              = $conapp->areacode;
+        $appform->landline              = $conapp->landline;
+        $appform->faxnumber             = $conapp->faxnumber;
+        $appform->email                 = $conapp->email;
+        $appform->cap_inv               = $conapp->cap_inv;
+        $appform->lot_area              = $conapp->lot_area;
+        $appform->noofbed               = $conapp->noofbed;
+        $appform->uid                   = $conapp->uid;
+        $appform->ocid                  = $conapp->ocid;
+        $appform->classid               = $conapp->classid;
+        $appform->subClassid            = $conapp->subClassid;
+        $appform->facmode               = $conapp->facmode;
+        $appform->funcid                = $conapp->funcid;
+        $appform->owner                 = $conapp->owner;
+        $appform->ownerMobile           = $conapp->ownerMobile;
+        $appform->ownerLandline         = $conapp->ownerLandline;
+        $appform->ownerEmail            = $conapp->ownerEmail;
+        $appform->mailingAddress        = $conapp->mailingAddress;
+        $appform->approvingauthoritypos = $conapp->approvingauthoritypos;
+        $appform->approvingauthority    = $conapp->approvingauthority;
+        $appform->hfep_funded           = $conapp->hfep_funded;
+        $appform->noofmain              = $conapp->noofmain;
+        $appform->noofsatellite         = $conapp->noofsatellite;
+        $appform->aptid                 = $conapp->aptid;
+
+        $appform->save();
+
+        return redirect('client1/apply/app/PTC/'.$appform->appid.'');
+
+
+    }
+
+
+
     function ltoAppDetSave($reqfacid, $appid, $uid)
     {
 
@@ -144,24 +197,26 @@ class PtcAppController extends Controller
 
         foreach($dets as $d){
             if (is_null($ptc)) {
-                DB::insert('insert into ptc (appid,  type, construction_description, propbedcap, renoOption,incbedcapfrom, incbedcapto, conCode,ltoCode, incstationfrom,
-                    incstationto
-                    ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                     [
-                        $appid, 
-                        $d["type"], 
-                        $d["construction_description"], 
-                        $d["propbedcap"], 
-                        $d["renoOption"], 
-                        $d["incbedcapfrom"], 
-                        $d["incbedcapto"], 
-                        $d["connum"], 
-                        $d["ltonum"], 
-                        $d["incstationfrom"], 
-                        $d["incstationto"]
+                // DB::insert('insert into ptc (appid,  type, construction_description, propbedcap, renoOption,incbedcapfrom, incbedcapto, conCode,ltoCode, incstationfrom,
+                //     incstationto
+                //     ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                //      [
+                //         $appid, 
+                //         $d["type"], 
+                //         $d["construction_description"], 
+                //         $d["propbedcap"], 
+                //         $d["renoOption"], 
+                //         $d["incbedcapfrom"], 
+                //         $d["incbedcapto"], 
+                //         $d["connum"], 
+                //         $d["ltonum"], 
+                //         $d["incstationfrom"], 
+                //         $d["incstationto"]
                         
                          
-                    ]);
+                //     ]);
+
+                DB::insert('insert into ptc (appid,  type, construction_description, propbedcap, renoOption,incbedcapfrom, incbedcapto, conCode,ltoCode, incstationfrom, incstationto) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',[$appid, $d["type"], $d["construction_description"], $d["propbedcap"], $d["renoOption"], $d["incbedcapfrom"], $d["incbedcapto"], $d["connum"], $d["ltonum"], $d["incstationfrom"], $d["incstationto"]]);
 
             }else{
                 DB::table('ptc')

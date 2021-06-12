@@ -820,7 +820,7 @@ class NewClientController extends Controller {
 						}
 
 						$af = DB::table('appform')->where('appid',$appid)->first();
-
+						// $payment = array_unique($payment);
 						$arrRet = [
 							'userInf'=>FunctionsClientController::getUserDetails(),
 							// 'npayment'=>"payment",

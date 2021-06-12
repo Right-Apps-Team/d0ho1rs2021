@@ -349,6 +349,8 @@ console.log(arr)
                                     // console.log(arr)
 
                                     const subclass = $('#subclass').val()  == "" ||  $('#subclass').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}' : $('#subclass').val();//appchargetemp
+                                    const owns = $('#ocid').val()  == "" ||  $('#ocid').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->ocid: "")!!}' : $('#ocid').val();//appchargetemp
+    
                                     // console.log("subclass")//appchargetemp
                                     // console.log(subclass)//appchargetemp
 
@@ -361,7 +363,8 @@ console.log(arr)
                                
                                             return {
                                             facname: facname,
-                                            amt: subclass == "ND" ? 0 :  arr.find(s =>
+                                            // amt: subclass == "ND" ? 0 :  arr.find(s =>
+                                            amt: owns == "G" ? 0 :  arr.find(s =>
                                                     s.facname === facname).amt,
                                             chgapp_id: arr.find(s =>
                                                     s.facname === facname).chgapp_id
@@ -423,5 +426,16 @@ console.log(arr)
         console.log(errMsg);
     }
 }
+
+window.addEventListener('change', function(e) {
+        
+
+        if(e.target.name == 'ocid'){
+            setTimeout(function(){  
+                   
+                    getFacServCharge()
+            }, 1000);
+        }
+    });
 
 </script>
