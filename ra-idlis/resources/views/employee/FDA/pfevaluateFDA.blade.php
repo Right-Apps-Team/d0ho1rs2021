@@ -25,51 +25,57 @@
                   <tbody id="FilterdBody">
                    @if (isset($BigData))
                         @foreach ($BigData as $data)
-                          @php
-                          $preassess = (strtolower($request) == 'machines' ? $data->ispreassessed : $data->ispreassessedpharma);
-                          $oop = (strtolower($request) == 'machines' ? $data->isPayEvalFDA : $data->isPayEvalFDAPharma);
-                          $eval = (strtolower($request) == 'machines' ? $data->isrecommendedFDA : $data->isrecommendedFDAPharma);
-                          $cashier = (strtolower($request) == 'machines' ? $data->isCashierApproveFDA : $data->isCashierApprovePharma);
-                          @endphp
-                        @if($eval == null || $eval == 2 || ($request != 'machines' && FunctionsClientController::existOnDB('cdrrpersonnel',[['appid',$data->appid],['isTag',1]])) )
-                          @if(in_array(strtolower($data->hfser_id), ['lto','coa']) && $data->isReadyForInspecFDA == 1 && $oop == 1 && $cashier == 1 && $preassess == 1)
-                            @php
-                              $toCheck = ($request == 'machines' ? 'cdrrhr' : 'cdrr');
-                            @endphp
-                            @if(!FunctionsClientController::hasRequirementsFor($toCheck,$data->appid))
-                            @php continue; @endphp
-                            @endif
-                            @php
-                              $status = '';
-                              $paid = $data->appid_payment;
-                              $reco = $data->isrecommended;
-                              $ifdisabled = '';$color = '';
-                              // if($data->status == 'P'){
-                              //   $ifdisabled = 'disabled';
-                              // }
-                            @endphp
-                            <tr>
-                              <td class="text-center">{{$data->hfser_id}}</td>
-                              <td class="text-center">{{$data->hfser_id}}R{{$data->rgnid}}-{{$data->appid}}</td>
-                              <td class="text-center"><strong>{{$data->facilityname}}</strong></td>
-                              <td class="text-center">{{(ajaxController::getFacilitytypeFromHighestApplicationFromX08FT($data->appid)->hgpdesc ?? 'NOT FOUND')}}</td>
-                              <td class="text-center">{{$data->formattedDate}}</td>
-                              <td class="text-center">{{$data->aptdesc}}</td>
-                              <td class="text-center" style="font-weight:bold;">{{(AjaxController::getTransStatusById($data->FDAstatus)[0]->trns_desc ?? '')}}</td>
-                                <td>
-                                  <center>
-                                    @if(!isset($data->documentSent))
-                                      <button type="button" title="Evaluate {{$data->facilityname}}" class="btn btn-outline-primary" onclick="acceptDocu({{$data->appid}})"  {{$ifdisabled}}><i class="fa fa-fw fa-clipboard-check" {{$ifdisabled}}></i></button>&nbsp;
-                                      {{-- <button type="button" title="Edit {{$data->facilityname}}" class="btn btn-outline-warning" onclick="window.location.href = '{{ asset('/employee/dashboard/processflow/evaluate') }}/{{$data->appid}}/edit'"  {{$ifdisabled}}><i class="fa fa-fw fa-edit" {{$ifdisabled}}></i></button> --}}
-                                    @else
-                                      <button type="button" title="Evaluate {{$data->facilityname}}" class="btn btn-outline-primary" onclick="window.location.href = '{{ asset('employee/dashboard/processflow/evaluate/FDA/') }}/{{$data->appid}}/{{$request}}'"  {{$ifdisabled}}><i class="fa fa-fw fa-clipboard-check" {{$ifdisabled}}></i></button>&nbsp;
-                                    {{-- <button type="button" title="Edit {{$data->facilityname}}" class="btn btn-outline-warning" onclick="window.location.href = '{{ asset('/employee/dashboard/processflow/evaluate') }}/{{$data->appid}}/edit'"  {{$ifdisabled}}><i class="fa fa-fw fa-edit" {{$ifdisabled}}></i></button> --}}
-                                    @endif
-                                </center>
-                              </td>
-                            </tr>
-                            @endif
-                          @endif
+                        
+                        
+                                @php
+                                $preassess = (strtolower($request) == 'machines' ? $data->ispreassessed : $data->ispreassessedpharma);
+                                $oop = (strtolower($request) == 'machines' ? $data->isPayEvalFDA : $data->isPayEvalFDAPharma);
+                                $eval = (strtolower($request) == 'machines' ? $data->isrecommendedFDA : $data->isrecommendedFDAPharma);
+                                $cashier = (strtolower($request) == 'machines' ? $data->isCashierApproveFDA : $data->isCashierApprovePharma);
+                                @endphp
+                              @if($data->isRecoDecision == 'Return for Correction' || $eval == null || $eval == 2 || ($request != 'machines' && FunctionsClientController::existOnDB('cdrrpersonnel',[['appid',$data->appid],['isTag',1]])) )
+                                @if(in_array(strtolower($data->hfser_id), ['lto','coa']) && $data->isReadyForInspecFDA == 1 && $oop == 1 && $cashier == 1 && $preassess == 1)
+                                  @php
+                                    $toCheck = ($request == 'machines' ? 'cdrrhr' : 'cdrr');
+                                  @endphp
+                                  @if(!FunctionsClientController::hasRequirementsFor($toCheck,$data->appid))
+                                  @php continue; @endphp
+                                  @endif
+
+                                  @php
+                                    $status = '';
+                                    $paid = $data->appid_payment;
+                                    $reco = $data->isrecommended;
+                                    $ifdisabled = '';$color = '';
+                                    // if($data->status == 'P'){
+                                    //   $ifdisabled = 'disabled';
+                                    // }
+                                  @endphp
+                                  <tr>
+                                    <td class="text-center">{{$data->hfser_id}}</td>
+                                    <td class="text-center">{{$data->hfser_id}}R{{$data->rgnid}}-{{$data->appid}}</td>
+                                    <td class="text-center"><strong>{{$data->facilityname}}</strong></td>
+                                    <td class="text-center">{{(ajaxController::getFacilitytypeFromHighestApplicationFromX08FT($data->appid)->hgpdesc ?? 'NOT FOUND')}}</td>
+                                    <td class="text-center">{{$data->formattedDate}}</td>
+                                    <td class="text-center">{{$data->aptdesc}}</td>
+                                    <td class="text-center" style="font-weight:bold;">{{(AjaxController::getTransStatusById($data->FDAstatus)[0]->trns_desc ?? '')}}</td>
+                                      <td>
+                                        <center>
+                                          @if(!isset($data->documentSent))
+                                            <button type="button" title="Evaluate {{$data->facilityname}}" class="btn btn-outline-primary" onclick="acceptDocu({{$data->appid}})"  {{$ifdisabled}}><i class="fa fa-fw fa-clipboard-check" {{$ifdisabled}}></i></button>&nbsp;
+                                            {{-- <button type="button" title="Edit {{$data->facilityname}}" class="btn btn-outline-warning" onclick="window.location.href = '{{ asset('/employee/dashboard/processflow/evaluate') }}/{{$data->appid}}/edit'"  {{$ifdisabled}}><i class="fa fa-fw fa-edit" {{$ifdisabled}}></i></button> --}}
+                                          @else
+                                            <button type="button" title="Evaluate {{$data->facilityname}}" class="btn btn-outline-primary" onclick="window.location.href = '{{ asset('employee/dashboard/processflow/evaluate/FDA/') }}/{{$data->appid}}/{{$request}}'"  {{$ifdisabled}}><i class="fa fa-fw fa-clipboard-check" {{$ifdisabled}}></i></button>&nbsp;
+                                          {{-- <button type="button" title="Edit {{$data->facilityname}}" class="btn btn-outline-warning" onclick="window.location.href = '{{ asset('/employee/dashboard/processflow/evaluate') }}/{{$data->appid}}/edit'"  {{$ifdisabled}}><i class="fa fa-fw fa-edit" {{$ifdisabled}}></i></button> --}}
+                                          @endif
+                                      </center>
+                                    </td>
+                                  </tr>
+                                  @endif
+                                @endif
+
+                          
+                          
                         @endforeach
                       @endif
                   </tbody>

@@ -27,7 +27,9 @@
                         @foreach ($BigData as $data)
                           <!-- if($data->isPayEval == 1 && $data->isrecommended == 1 && $data->isCashierApprove == 1 && $data->isInspected == null && in_array($data->hfser_id, ['LTO','COA']) && $data->proposedWeek != null && AjaxController::canProcessNextStepFDA($data->appid,'isCashierApproveFDA','isCashierApprovePharma')) -->
                           @if($data->isPayEval == 1  && $data->isCashierApprove == 1 && $data->isInspected == null && in_array($data->hfser_id, ['LTO','COA']) && $data->proposedWeek != null && AjaxController::canProcessNextStepFDA($data->appid,'isCashierApproveFDA','isCashierApprovePharma'))
-                          @php
+                      
+                        
+                         @php
                             $status = '';
                             $paid = $data->appid_payment;
                             $reco = $data->isrecommended;

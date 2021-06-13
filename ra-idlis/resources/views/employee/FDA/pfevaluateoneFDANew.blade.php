@@ -153,7 +153,7 @@
         <div class="card">
             <div class="card-header bg-white font-weight-bold">
               <input type="" id="token" value="{{ Session::token() }}" hidden>
-               Evaluation
+               Evaluation 
                <button class="btn btn-primary" onclick="window.history.back();">Back</button>
             </div>
             <div class="card-body">
@@ -170,7 +170,11 @@
                         </a>
                     </h6>
                     @endif
-                    <h6>@isset($AppData) Status: @if ($AppData->isrecommendedFDA === null) <span style="color:blue">For Evaluation</span> @elseif($AppData->isrecommendedFDA == 1)  <span style="color:green">Accepted Evaluation</span> @elseif($AppData->isrecommendedFDA === 0) <span style="color:red">Disapproved Evaluation</span> @else <span style="color:orange">Evaluated, for Revision</span> @endif @endisset</h6>
+                    <h6>@isset($AppData) Status: @if ($AppData->isrecommendedFDA === null) <span style="color:blue">For Evaluation</span> @elseif($AppData->isrecommendedFDA == 1)  <span style="color:green">Accepted Evaluation</span> @elseif($AppData->isrecommendedFDA === 0) <span style="color:red">Disapproved Evaluation</span> 
+                   
+                    @else <span style="color:orange">Evaluated, for Revision</span> @endif @endisset</h6>
+
+                    @if($AppData->isRecoDecision == 'Return for Correction') <span style="color:orange">Retuned for Correction</span> @endif
               	</div>
                 <div class="d-flex justify-content-end">
                   <div class="row">
@@ -185,7 +189,7 @@
                   </div>
                   
                 </div>
-            	@if(!isset($eval))
+            	@if($AppData->isRecoDecision == 'Return for Correction' || !isset($eval))
 
             	<div class="container pt-5 pb-3">
 

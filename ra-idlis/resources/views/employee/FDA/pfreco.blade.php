@@ -325,7 +325,7 @@
         </div>
         {{--  --}}
         @isset($AppData)
-          @if($currentRequest == null)  
+          @if($AppData->isRecoDecision == 'Return for Correction' || $currentRequest == null)  
           <hr>
           <div class="container">
             <center>

@@ -32,7 +32,7 @@
                           $reco = (strtolower($request) == 'machines' ? $data->isRecoFDA : 1);
                           @endphp
                           {{-- {{dd([$oop,$eval,$cashier,$reco])}} --}}
-                          @if($oop == 1 && $eval == 1 && $cashier == 1 && $reco == null && ($request == 'machines' ? $data->isApproveFDA : $data->isApproveFDAPharma) == null)
+                          @if($data->isRecoDecision == 'Return for Correction' || $oop == 1 && $eval == 1 && $cashier == 1 && $reco == null && ($request == 'machines' ? $data->isApproveFDA : $data->isApproveFDAPharma) == null)
                           @php
                               $toCheck = ($request == 'machines' ? 'cdrrhr' : 'cdrr');
                             @endphp
