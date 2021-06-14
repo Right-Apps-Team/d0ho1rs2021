@@ -40,10 +40,11 @@
             </tr>
           </thead>
           <tbody id="mainCatch">
-            @php $total = 0; @endphp
+            @php $total = 0;$totalinpt = 0; @endphp
             
             <tr>
               <td colspan="3" class="text-right font-weight-bold">Projected Primary and Secondary Catchment Population(P) = </td>
+              <td class="font-weight-bold totalEditInpt">{{number_format($totalinpt)}}</td>
               <td class="font-weight-bold totalEdit">{{number_format($total)}}</td>
             </tr>
           </tbody>
@@ -780,9 +781,15 @@
   <script>
     let population = processPopulationCount();
     let counterForDom = 0;
-    let counterForMain = 0;    
-    $(document).on('keyup keypress change keydown paste',$('[name="catchment[]"]'),function(){
+    let counterForMain = 0;  
+    $( document ).ready(function() {
+      processPopulationCountInpt()
+});  
+   
+    $(document).on('keyup keypress change keydown paste',$('[name="est[]"]'),function(){
+    // $(document).on('keyup keypress change keydown paste',$('[name="catchment[]"]'),function(){
       processPopulationCount();
+      processPopulationCountInpt()
       getBPR();
       getPBN();
       getUBN();
@@ -832,10 +839,21 @@
     });
     function processPopulationCount(){
       let totalValue = 0;
-      $('[name="catchment[]"]').map(function(index, elem) {
+      $('[name="est[]"]').map(function(index, elem) {
+      // $('[name="catchment[]"]').map(function(index, elem) {
           totalValue += Number($(elem).val());
       })
       $('.totalEdit').text(totalValue);
+      return totalValue;
+    } 
+    
+    function processPopulationCountInpt(){
+      let totalValue = 0;
+      // $('[name="est[]"]').map(function(index, elem) {
+      $('[name="catchment[]"]').map(function(index, elem) {
+          totalValue += Number($(elem).val());
+      })
+      $('.totalEditInpt').text(totalValue);
       return totalValue;
     }
     function getABCCount(){

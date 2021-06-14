@@ -4273,6 +4273,9 @@ namespace App\Http\Controllers;
 		public function hfercTeamAssignment(Request $request,$appid, $revision = null)
 		{
 			if(DB::table('appform')->where('appid',$appid)->exists()){
+
+				// $revision = $revision == 1 ? 0 : $revision;
+
 				if( $revision > 2 && AjaxController::isRequredToPayPTC($revision) && !FunctionsClientController::existOnDB('chgfil',array(['appform_id',$appid],['uid',AjaxController::getUidFrom($appid)],['revision',$revision],['isPaid',1])) && !AjaxController::isSessionExist(['employee_login'])){
 					return redirect('employee/dashboard/processflow/assignmentofhferc/'.$appid.'/'.(AjaxController::maxRevisionFor($appid) != 0 ? AjaxController::maxRevisionFor($appid)-1 : 1))->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Payment is not settled.']);
 				}
@@ -4285,7 +4288,9 @@ namespace App\Http\Controllers;
 						{
 							$count = $canViewOthers = 0;
 							$data = AjaxController::getAllDataEvaluateOne($appid);
+							// $evaluationResult = [];
 							$evaluationResult = AjaxController::maxRevisionFor($appid, (isset($revision) ? ['revision',$revision] : []), 1);
+							// $evaluationResult = AjaxController::maxRevisionFor($appid, (isset($revision) ? ['revision',$revision] : []), 1);
 							$members = AjaxController::getMembersInHFERC($data->appid,$data->rgnid,2,(isset($evaluationResult->revision) ? $evaluationResult->revision : AjaxController::maxRevisionFor($appid)+1));
 							$notin = AjaxController::getMembersInHFERC($data->appid,$data->rgnid,1,(isset($evaluationResult->revision) ? $evaluationResult->revision : AjaxController::maxRevisionFor($appid)+1));
 							if(count($members) > 0){
@@ -4364,18 +4369,26 @@ namespace App\Http\Controllers;
 								$cur = AjaxController::getCurrentUserAllData();
 								$maxID = AjaxController::maxRevisionFor($appid);
 
-								$rev = $maxID;
-								if($request->evaluation == 2){
+								// $rev = $maxID;
+								// if($request->evaluation == 2){
 									$rev =	$maxID + 1;
-								}
+								// }
 
 								$ret = DB::table('hferc_evaluation')->insert(['HFERC_eval' => $request->evaluation, 'HFERC_comments' => $request->comments, 'HFERC_evalBy' => $cur['cur_user'], 'revision' => $rev, 'appid' => $appid]);
+								
 								// $ret = DB::table('hferc_evaluation')->insert(['HFERC_eval' => $request->evaluation, 'HFERC_comments' => $request->comments, 'HFERC_evalBy' => $cur['cur_user'], 'revision' => $maxID + 1, 'appid' => $appid]);
 
 								$notifyAllHere = DB::table('hferc_team')->where('appid',$appid)->get();
 								foreach ($notifyAllHere as $value) {
 									AjaxController::notifyClient($appid,$value->uid,($request->evaluation == 1 ? 42 : 43));
 								}
+
+								if($request->evaluation == 1){
+									DB::table('appform')->where('appid',$appid)->update(['status' => 'FR']);
+								}else if($request->evaluation == 2){
+									DB::table('appform')->where('appid',$appid)->update(['status' => 'REVF']);
+								}
+
 							} else if($request->action == 'FP'){
 								$cur = AjaxController::getCurrentUserAllData();
 								$ret = DB::table('appform')->where('appid',$appid)->update(['isAcceptedFP' => $request->fpselect, 'FPacceptedDate' => $cur['date'], 'FPacceptedTime' => $cur['time'], 'FPacceptedBy' => $cur['cur_user'], 'fpcomment' => $request->fpremark, 'status' => 'FPE']);
@@ -4396,8 +4409,13 @@ namespace App\Http\Controllers;
 
 		public function viewhfercresult(Request $request, $appid, $revision, $isSelfAssess = false){
 			try {
+				// $revision =  0;
+
+				// $revision = $revision == 1 ? 1 : 0;
+
 				$data = AjaxController::getAllDataEvaluateOne($appid);
 				$evaluation = AjaxController::maxRevisionFor($appid, ['revision',$revision], 1);
+				// $evaluation = AjaxController::maxRevisionFor($appid, ['revision',$revision], 1);
 				$dataOfEntry = null;
 				if(!isset($evaluation->HFERC_eval)){
 					return ($isSelfAssess ? false : back()->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Evaluation Doesnt\' exist.']) );

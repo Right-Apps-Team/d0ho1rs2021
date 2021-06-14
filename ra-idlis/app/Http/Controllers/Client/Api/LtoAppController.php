@@ -222,6 +222,57 @@ class LtoAppController extends Controller
             DB::insert('insert into x08_ft (uid, appid, facid) values (?, ?, ?)', [$uid, $appid, $facid[$i]]);
         }
     }
+    public function contfromPtc(Request $request,  $appid)
+    {
+
+        $ptcapp = ApplicationForm::where('appid', $appid)->first();
+
+        $appform = new ApplicationForm;
+
+        $appform->hfser_id              = 'LTO';
+        $appform->facilityname          = $ptcapp->facilityname;
+        $appform->rgnid                 = $ptcapp->rgnid;
+        $appform->provid                = $ptcapp->provid;
+        $appform->cmid                  = $ptcapp->cmid;
+        $appform->brgyid                = $ptcapp->brgyid;
+        $appform->street_number         = $ptcapp->street_number;
+        $appform->street_name           = $ptcapp->street_name;
+        $appform->zipcode               = $ptcapp->zipcode;
+        $appform->contact               = $ptcapp->contact;
+        $appform->areacode              = $ptcapp->areacode;
+        $appform->landline              = $ptcapp->landline;
+        $appform->faxnumber             = $ptcapp->faxnumber;
+        $appform->email                 = $ptcapp->email;
+        $appform->cap_inv               = $ptcapp->cap_inv;
+        $appform->lot_area              = $ptcapp->lot_area;
+        $appform->noofbed               = $ptcapp->noofbed;
+        $appform->uid                   = $ptcapp->uid;
+        $appform->ocid                  = $ptcapp->ocid;
+        $appform->classid               = $ptcapp->classid;
+        $appform->subClassid            = $ptcapp->subClassid;
+        $appform->facmode               = $ptcapp->facmode;
+        $appform->funcid                = $ptcapp->funcid;
+        $appform->owner                 = $ptcapp->owner;
+        $appform->ownerMobile           = $ptcapp->ownerMobile;
+        $appform->ownerLandline         = $ptcapp->ownerLandline;
+        $appform->ownerEmail            = $ptcapp->ownerEmail;
+        $appform->mailingAddress        = $ptcapp->mailingAddress;
+        $appform->approvingauthoritypos = $ptcapp->approvingauthoritypos;
+        $appform->approvingauthority    = $ptcapp->approvingauthority;
+        $appform->hfep_funded           = $ptcapp->hfep_funded;
+        $appform->assignedRgn           = $ptcapp->assignedRgn;
+        $appform->ptcCode               = $ptcapp->ptcCode;
+        $appform->noofmain              = $ptcapp->noofmain;
+        $appform->noofdialysis          = $ptcapp->noofdialysis;
+        $appform->noofsatellite         = $ptcapp->noofsatellite;
+        $appform->aptid                 = $ptcapp->aptid;
+
+        $appform->save();
+
+        return redirect('client1/apply/app/LTO/'.$appform->appid.'');
+
+
+    }
 }
 
 

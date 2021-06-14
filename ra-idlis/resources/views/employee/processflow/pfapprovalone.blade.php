@@ -133,7 +133,7 @@
           </div>
           {{-- /////////////////// --}}
           {{-- /////////////////// --}}
-          <div class="card">
+          <!-- <div class="card">
             {{-- START HEAD --}}
             <div class="card-header @isset($AppData) @if($AppData->isPayEval == null) list-group-item-info @elseif($AppData->isPayEval == 1) list-group-item-success  @else list-group-item-danger @endif @endisset" id="headingOne" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne" style="">
               <div class="mb-0">
@@ -185,7 +185,7 @@
               </div>
             </div>
             {{-- END BODY --}}
-          </div>
+          </div> -->
           {{-- /////////////////// --}}
           {{-- /////////////////// --}}
           <div class="card">

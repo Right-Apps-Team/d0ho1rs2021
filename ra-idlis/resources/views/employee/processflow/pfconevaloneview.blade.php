@@ -29,10 +29,10 @@
       			</tr>
       		</thead>
       		<tbody>
-      			@php $total = 0; @endphp
+      			@php $total = 0; $totalinpt= 0; @endphp
             @if(!empty($brp[0]))
       			@foreach($brp[0] as $b)
-      			@php $total += $b->population; @endphp
+      			@php $total += $b->population; $totalinpt+= $b->eval_est; @endphp
   				<tr>
   					<td>
   						{{($b->type == 1 ? 'Secondary' : 'Primary')}}
@@ -53,7 +53,7 @@
       				<td>Total</td>
       				<td class="text-center font-weight-bold">Projected Primary and Secondary Catchment Population(P) = </td>
       				<td class="font-weight-bold">{{number_format($total)}}</td>
-      				<td class="font-weight-bold"></td>
+      				<td class="font-weight-bold">{{number_format($totalinpt)}}</td>
       			</tr>
       		</tbody>
       	</table>

@@ -69,6 +69,9 @@ Route::prefix('check')->group(function() {
 Route::prefix('cont')->group(function() {
 	Route::match(['get', 'post'], '/ptc/{appid}', 'Client\Api\PtcAppController@contfromCon');
 });
+Route::prefix('cont')->group(function() {
+	Route::match(['get', 'post'], '/lto/{appid}', 'Client\Api\LtoAppController@contfromPtc');
+});
 
 
 // Checking

@@ -47,12 +47,33 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
         var provid ='{!!((count($fAddress) > 0) ? $fAddress[0]->provid: "")!!}';
         var cmid ='{!!((count($fAddress) > 0) ? $fAddress[0]->cmid: "")!!}';
         var brgyid ='{!!((count($fAddress) > 0) ? $fAddress[0]->brgyid: "")!!}';
+        var noofdialysis ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofdialysis: "")!!}';
+
+        document.getElementById("appid").value = appid;
+      document.getElementById("facmode").value = facmode;
+      document.getElementById("funcid").value = funcid;
+      document.getElementById("owner").value = owner;
+      document.getElementById("prop_mobile").value = ownerMobile;
+      document.getElementById("prop_landline").value = ownerLandline;
+      document.getElementById("prop_email").value = ownerEmail;
+      document.getElementById("official_mail_address").value = mailingAddress;
+      document.getElementById("approving_authority_pos").value = approvingauthoritypos;
+      document.getElementById("approving_authority_name").value = approvingauthority;
+      document.getElementById("ptcCode").value = ptcCode;
+      document.getElementById("noofbed").value = noofbed;
+      document.getElementById("noofmain").value = noofmain;
+      document.getElementById("noofsatellite").value = noofsatellite;
+      document.getElementById("noofdialysis").value = noofdialysis;
+
+      if(hfep === '0'){
+        document.getElementById("hfep").checked = true;
+        }
 
         var typeamb =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->typeamb: "")!!}');
         var ambtyp =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->ambtyp: "")!!}');
         var plate_number =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->plate_number: "")!!}');
         var ambOwner =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->ambOwner: "")!!}');
-        var noofdialysis ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofdialysis: "")!!}';
+        // var noofdialysis ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofdialysis: "")!!}';
 
         // console.log("typeamb")
         // console.log(typeamb)
@@ -164,9 +185,9 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
                
          
   
-        if(hfep === '0'){
-        document.getElementById("hfep").checked = true;
-        }
+        // if(hfep === '0'){
+        // document.getElementById("hfep").checked = true;
+        // }
 
         
         var ocidInpt = document.getElementById("ocid");
@@ -190,21 +211,21 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
 						}
 					});
         }
-      document.getElementById("appid").value = appid;
-      document.getElementById("facmode").value = facmode;
-      document.getElementById("funcid").value = funcid;
-      document.getElementById("owner").value = owner;
-      document.getElementById("prop_mobile").value = ownerMobile;
-      document.getElementById("prop_landline").value = ownerLandline;
-      document.getElementById("prop_email").value = ownerEmail;
-      document.getElementById("official_mail_address").value = mailingAddress;
-      document.getElementById("approving_authority_pos").value = approvingauthoritypos;
-      document.getElementById("approving_authority_name").value = approvingauthority;
-      document.getElementById("ptcCode").value = ptcCode;
-      document.getElementById("noofbed").value = noofbed;
-      document.getElementById("noofmain").value = noofmain;
-      document.getElementById("noofsatellite").value = noofsatellite;
-      document.getElementById("noofdialysis").value = noofdialysis;
+    //   document.getElementById("appid").value = appid;
+    //   document.getElementById("facmode").value = facmode;
+    //   document.getElementById("funcid").value = funcid;
+    //   document.getElementById("owner").value = owner;
+    //   document.getElementById("prop_mobile").value = ownerMobile;
+    //   document.getElementById("prop_landline").value = ownerLandline;
+    //   document.getElementById("prop_email").value = ownerEmail;
+    //   document.getElementById("official_mail_address").value = mailingAddress;
+    //   document.getElementById("approving_authority_pos").value = approvingauthoritypos;
+    //   document.getElementById("approving_authority_name").value = approvingauthority;
+    //   document.getElementById("ptcCode").value = ptcCode;
+    //   document.getElementById("noofbed").value = noofbed;
+    //   document.getElementById("noofmain").value = noofmain;
+    //   document.getElementById("noofsatellite").value = noofsatellite;
+    //   document.getElementById("noofdialysis").value = noofdialysis;
 
     
 

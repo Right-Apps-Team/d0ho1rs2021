@@ -197,7 +197,7 @@
           <span class="info-box-icon bg-green"><i class="fa fa-thumbs-o-up"></i></span>
 
           <div class="info-box-content">
-            <span class="info-box-text" style="white-space: normal;">Approved Applications</span>
+            <span class="info-box-text" style="white-space: normal;">Approved Applications d</span>
             <span class="info-box-number">{{$approved}}</span>
           </div>
           <!-- /.info-box-content -->

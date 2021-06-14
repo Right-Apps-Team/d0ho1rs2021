@@ -477,11 +477,16 @@
 			try 
 			{
 				$cur_data = AjaxController::getCurrentUserAllData();
+
+				$dateup = new DateTime("now", new DateTimeZone('Asia/Manila'));
+				$dup = $dateup->format('Y-m-d H:i:s');
+
 				if ($uid != null) {
 					DB::table('notificiationlog')->insert([
 								'appid' => $appid,
 								'uid' => $uid,
-								'msg_code' => $selected
+								'msg_code' => $selected,
+								'notifdatetime' => $dup
 								// 'otherLinks' => ($oLink ? $oLink : null)
 						]);
 				}
@@ -5025,6 +5030,8 @@
 			{
 				$data0 = DB::table('appform')
 												->join('x08', 'appform.uid', '=', 'x08.uid')
+												->leftJoin('x08 AS comeval', 'appform.concommittee_evalby', '=', 'comeval.uid')
+												->leftJoin('x07', 'comeval.grpid', '=', 'x07.grp_id')
 												->join('barangay', 'appform.brgyid', '=', 'barangay.brgyid')
 												->join('city_muni', 'appform.cmid', '=', 'city_muni.cmid')
 												->join('province', 'appform.provid', '=', 'province.provid')
@@ -5032,7 +5039,7 @@
 												->leftjoin('trans_status', 'appform.status', '=', 'trans_status.trns_id')
 												// ->join('orderofpayment', 'type_facility.oop_id', '=', 'orderofpayment.oop_id')
 												// , 'orderofpayment.*'
-												->select('appform.*',  'x08.*', 'barangay.brgyname', 'city_muni.cmname', 'province.provname', 'trans_status.trns_desc') //, 'type_facility.*'
+												->select('appform.*',  'x08.*',  'x07.grp_desc', 'barangay.brgyname', 'city_muni.cmname', 'province.provname', 'trans_status.trns_desc') //, 'type_facility.*'
 												->where('appform.appid', '=', $appid)
 												// , 'type_facility.*', 'orderofpayment.*'
 												// ->where('type_facility.facid', '=', 'appform.facid')
@@ -7687,7 +7694,9 @@
 		if(count($otherCondition) > 0){
 			array_push($whereClause, $otherCondition);
 		}
-		return ($getAll ? DB::table('hferc_evaluation')->where($whereClause)->orderBy('revision','DESC')->first() : (DB::table('hferc_evaluation')->where($whereClause)->max('revision') ?? 0));
+		// return 1;
+		return ($getAll ? DB::table('hferc_evaluation')->where($whereClause)->first() : (DB::table('hferc_evaluation')->where($whereClause)->max('revision') ?? 0));
+		// return ($getAll ? DB::table('hferc_evaluation')->where($whereClause)->orderBy('revision','DESC')->first() : (DB::table('hferc_evaluation')->where($whereClause)->max('revision') ?? 0));
 	}
 
 	public static function mobileMaxRevision(Request $request, $appid){

@@ -313,7 +313,7 @@ class NewClientController extends Controller {
 
 				if($request->has('upload')){
 					if($curForm[0]->isReadyForInspec == 0){
-						DB::table('appform')->where('appid',$appid)->update(['isReadyForInspec' => 1]);
+						DB::table('appform')->where('appid',$appid)->update(['isReadyForInspec' => 1, 'status'=>'FE']);
 					}
 					foreach($request->upload AS $uKey => $uValue) {
 						if(in_array($uKey, $curRecord)) {
@@ -846,7 +846,7 @@ class NewClientController extends Controller {
 
 					$test = DB::table('chgfil')->insert(['appform_id' => $appid,'paymentMode'=> $request->mPay, 'attachedFile'=>$filename, 'draweeBank' => $request->drawee, 'number' => $request->number, 'userChoosen' => 1, 't_date' => Date('Y-m-d',strtotime('now')) , 't_time' => Date('H:i:s',strtotime('now'))]);
 					if($test){
-						DB::table('appform')->where('appid',$appid)->update(['isPayEval' => 1, 't_date' => date('Y-m-d')]);//6-1-2021
+						DB::table('appform')->where('appid',$appid)->update(['isPayEval' => 1, 't_date' => date('Y-m-d'), 'status' => 'P']);//6-1-2021
 						// DB::table('appform')->where('appid',$appid)->update(['isrecommended' => 1,'isPayEval' => 1]);
 						return redirect('client1/apply')->with('errRet', ['errAlt'=>'success', 'errMsg'=>'Successfully submitted application form and updated payment information.']);
 					}
@@ -3453,7 +3453,40 @@ class NewClientController extends Controller {
 
 	public function generateForCertificate($appid){
 		if(isset($appid)){
-			return self::generateQR(url('client1/certificates/view/external/').'/'.$appid);
+			$appform = DB::table('appform')->where('appid', $appid)->first();
+			$message = "No data";
+			if(!is_null($appform)){
+				if($appform->hfser_id == "CON"){
+					$retTable = DB::table('appform')->where('appid', $appid)->leftJoin('facmode', 'facmode.facmid', '=', 'appform.facmode')->leftJoin('region', 'region.rgnid', '=', 'appform.rgnid')->leftJoin('province', 'province.provid', '=', 'appform.provid')->leftJoin('city_muni', 'city_muni.cmid', '=', 'appform.cmid')->leftJoin('barangay', 'barangay.brgyid', '=', 'appform.brgyid')->select('appform.appid', 'appform.facilityname', 'appform.owner', 'appform.street_name', 'facmode.facmdesc', 'region.rgn_desc', 'province.provname', 'city_muni.cmname', 'barangay.brgyname', 'appform.hfser_id', 'appform.noofbed', 'appform.t_date')->first(); 
+					$coneval = DB::table('con_evaluate')->where('appid', $appid)->first(); 
+					
+					$serviceType = DB::select("SELECT facname FROM facilitytyp WHERE facilitytyp.facid IN (SELECT facid FROM x08_ft WHERE appid = '$appid')");
+					
+					if(count($serviceType)) {
+						$impArr1 = [];
+						foreach($serviceType AS $serviceTypeRow) {
+							array_push($impArr1, $serviceTypeRow->facname);
+						}
+						$serviceId = implode(', ', $impArr1);
+					}
+
+					$message = 
+						"\nCON No. ". date('Y') . "-".str_pad(((isset($appid)) ? $appid : '_1'), 3, '0', STR_PAD_LEFT).
+						"\nFacility Name: ". $retTable->facilityname . " \n".
+						"Location: ". $retTable->rgn_desc. ", ". $retTable->provname. ", ". $retTable->cmname. ", ". $retTable->brgyname. ", ". $retTable->street_name . 
+						"\nLevel of Hospital: ". $serviceId.
+						"\nBed Capacity: ". abs($coneval->ubn). " Bed(s)".
+						"\nDate Issued: ". date("F j, Y", strtotime($retTable->t_date)).
+						"\nValidity Period: ". date("F j, Y", strtotime($retTable->t_date)). " to ". ((isset($retTable->t_date)) ? date("F j, Y", ((strtotime($retTable->t_date)-(86400*2))+15552000)) : 'Not Specified')
+					;
+				}else{
+					$message = url('client1/certificates/view/external/').'/'.$appid;
+				}
+			}
+
+
+			return self::generateQR($message);
+			// return self::generateQR(url('client1/certificates/view/external/').'/'.$appid);
 		}
 	}
 

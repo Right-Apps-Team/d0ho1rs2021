@@ -48,7 +48,7 @@
       <li class="nav-item dropdown" id="notifArea">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <p class="fa fa-bell">
-            <span class="mt-5" style="color:red;font-size:10px; font-family: ', cursive, sans-serif', cursive, sans-serif" id="unread">0</span>
+            <span class="mt-5" style="color:red;font-size:10px; font-family: ', cursive, sans-serif', cursive, sans-serif" id="unread"></span>
           </p>
         </a>
         <div class="dropdown-menu drop dropdown-menu-right" aria-labelledby="navbarDropdown" id="notifBody">

@@ -73,7 +73,9 @@
         <div class="col-md-2" id="toFrame">
           
         </div>
-        
+        <!-- <div class="col-md-2">
+            <button class="btn btn-primary p-2" onclick="window.location.href='{{asset('employee/dashboard/processflow/view/hfercevaluation/'.$AppData->appid.'/'.$revisionCountCurent)}}'" data-toggle="modal" data-target="#evaluate"><i class="fa fa-file"> </i> View Evaluation</button>
+          </div> -->
         @if($isHead)
             @if($canEval && count($membDone) != 0)
             <button class="btn btn-success p-2" data-backdrop="static" data-toggle="modal" data-target="#compareModal" onclick="onClickToIFrame()"><i class="fa fa-files-o" aria-hidden="true"></i> Compare Results </button>
@@ -81,7 +83,7 @@
             @endif
           @endif
          <!-- endif -->
-         {{$evaluation}}
+       
         @if(isset($evaluation) && isset($evaluation->HFERC_eval) )
           <div class="col-md-2">
             <button class="btn btn-primary p-2" onclick="window.location.href='{{asset('employee/dashboard/processflow/view/hfercevaluation/'.$AppData->appid.'/'.$revisionCountCurent)}}'" data-toggle="modal" data-target="#evaluate"><i class="fa fa-file"> </i> View Evaluation</button>
@@ -117,6 +119,7 @@
                 </tr>
               </thead>
               <tbody>
+             
               @foreach($hferc as $members)
                 <tr>
                   <td style="font-size: 20px;">
@@ -193,7 +196,7 @@
             </div>
           </div>
           @endif
-
+        
         </div>
       </div>
     </div>
@@ -441,8 +444,11 @@
             data: $(this).serialize(),
             success: function(a){
               if(a == 'done'){
+                if(confirm("Application Approved! Reload?")){
+                  location.reload();
+                }
                 // location.reload();
-                alert("Applciation Approved")
+                // alert("Applciation Approved")
               } else {
                 console.log(a);
               }
