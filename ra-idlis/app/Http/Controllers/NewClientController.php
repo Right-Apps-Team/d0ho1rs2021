@@ -313,7 +313,7 @@ class NewClientController extends Controller {
 
 				if($request->has('upload')){
 					if($curForm[0]->isReadyForInspec == 0){
-						DB::table('appform')->where('appid',$appid)->update(['isReadyForInspec' => 1, 'status'=>'FE']);
+						DB::table('appform')->where('appid',$appid)->update(['isReadyForInspec' => 1, 'status'=>'FDE']);
 					}
 					foreach($request->upload AS $uKey => $uValue) {
 						if(in_array($uKey, $curRecord)) {
@@ -1137,7 +1137,8 @@ class NewClientController extends Controller {
 				return view('client1.apply.LTO1.ltohfsrb', $arrRet);
 			} else {
 				if(isset($request->readyNow)){
-					$ret = DB::table('appform')->where('appid',$appid)->update(['isReadyForInspec' => 1]);
+					$ret = DB::table('appform')->where('appid',$appid)->update(['isReadyForInspec' => 1, 'status'=> 'CRFE']);
+					// $ret = DB::table('appform')->where('appid',$appid)->update(['isReadyForInspec' => 1, 'status'=> 'FE']);
 					if($ret){
 						return 'succ';
 					}

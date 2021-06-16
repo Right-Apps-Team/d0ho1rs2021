@@ -501,6 +501,7 @@ document.getElementsByName('areacode').value = 3;
         removeAmbuRows()
         deselectOpts('anxsel')
         deselectOpts('facid')
+        document.querySelector('select[data-funcid="duplicate"]').value = null;
 
         document.getElementById('serv_chg').innerHTML = '<tr><td colspan="2">No Services Selected.</td></tr>';
         document.getElementById('tempAppCharge').value = " ";
@@ -642,6 +643,8 @@ document.getElementsByName('areacode').value = 3;
     }
 
 function getFacServCharge (val = null){
+console.log("hello")
+
     getChargesPerApplication()
     getChargesPerAmb()
 
@@ -780,18 +783,21 @@ function getFacServCharge (val = null){
                             // console.log(owns)
                             // console.log("owns")
                              //appchargetemp
+                             console.log(arr)
                              const distinctArr = Array.from(new Set(arr.map(s => s.facname))).map(facname => {
                             
                                return {
+                               facid:  arr.find(s =>
+                                       s.facname === facname).facid,
                                facname: facname,
-                               amt: owns == "G" ? 0 :  arr.find(s =>
-                            //    amt: subclass == "ND" ? 0 :  arr.find(s =>
+                            //    amt: owns == "G" ? 0 :  arr.find(s =>
+                               amt: subclass == "ND" ? 0 :  arr.find(s =>
                                        s.facname === facname).amt,
                                chgapp_id: arr.find(s =>
                                        s.facname === facname).chgapp_id
                               }
                             })
-
+                            console.log(owns)
 
                          
 							if(serv_chg != undefined || serv_chg != null) {
@@ -800,10 +806,22 @@ function getFacServCharge (val = null){
 									for(let i = 0; i < distinctArr.length; i++) {
                                         serv_chg.innerHTML = '';
                                           for (let i = 0; i < distinctArr.length; i++) {
-                                                 ta.push({reference : distinctArr[i]['facname'],amount: distinctArr[i]['amt'], chgapp_id:  distinctArr[i]['chgapp_id'] }) //appcharge
-                                                 serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['facname'] + '</td><td>&#8369;&nbsp;<span>' + numberWithCommas(subclass == "ND" ? 0 : (parseInt(distinctArr[i]['amt'])).toFixed(2)) + '</span></td></tr>';
+                                              var amt =  distinctArr[i]['amt'];
+                                              console.log(owns)
+                                                if(  owns == "G" ){
+                                                    if(distinctArr[i]['facid'] == "H" ||distinctArr[i]['facid'] == "H2" || distinctArr[i]['facid'] == "H3" ){
+                                                        amt = 0
+                                                    }
+                                                    
+                                                }
+                                                console.log(amt)
+                                                //  ta.push({reference : distinctArr[i]['facname'],amount: distinctArr[i]['amt'], chgapp_id:  distinctArr[i]['chgapp_id'] }) //appcharge
+                                                 ta.push({reference : distinctArr[i]['facname'],amount: amt, chgapp_id:  distinctArr[i]['chgapp_id'] }) //appcharge
+                                                 serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['facname'] + '</td><td>&#8369;&nbsp;<span>' + numberWithCommas(subclass == "ND" ? 0 : (parseInt(amt)).toFixed(2)) + '</span></td></tr>';
                                                  // serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['facname'] + '</td><td>&#8369;&nbsp;<span>' + numberWithCommas((parseInt(distinctArr[i]['amt'])).toFixed(2)) + '</span></td></tr>';
-                                          }
+                                        
+                                        
+                                                }
 										// serv_chg.innerHTML += '<tr><td>'+distinctArr[i]['facname']+'</td><td>&#8369;&nbsp;<span>'+numberWithCommas((parseInt(distinctArr[i]['amt'])).toFixed(2))+'</span></td></tr>';
 									
                                     }
@@ -1425,7 +1443,16 @@ return unique;
                     getFacServCharge()
             }, 1000);
         }
+
+        // if(e.target.name == 'funcid'){
+        //  var val =   document.querySelector('select[data-funcid="main"]').value;
+        //  console.log("val")
+        //  console.log(val)
+        // //    document.getElementById()
+        // }
     });
+
+    
     
     window.addEventListener('click', function(e) {
         setTimeout(function(){  

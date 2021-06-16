@@ -92,12 +92,12 @@ window.addEventListener('click', function(e) {
           
           if(facs.length > 0){
               for( i = 0; i < facs.length; i++ ) {
-                  console.log("exist facid")
+                //   console.log("exist facid")
                       if( facs[i].checked ) {
                   
                           if(facs[i].value == 'H2' || facs[i].value == 'H3'){
                               ass.value = 'hfsrb';
-                              console.log('facs' + facs[i].value)
+                            //   console.log('facs' + facs[i].value)
                               
                           }else{
                               ass.value = $('#region').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->rgnid: "")!!}' : $('#region').val()
@@ -116,22 +116,22 @@ window.addEventListener('click', function(e) {
           
           if(hgpid.length > 0){
               for( i = 0; i < hgpid.length; i++ ) {
-                  console.log("exist facid")
+                //   console.log("exist facid")
                       if( hgpid[i].checked ) {
                   
                           if(hgpid[i].value == '1' || hgpid[i].value == '9' || hgpid[i].value == '28' || hgpid[i].value == '5' || hgpid[i].value == '12'){
                               ass.value = 'hfsrb';
-                              console.log('hgpid' + hgpid[i].value)
+                            //   console.log('hgpid' + hgpid[i].value)
                               
                           }else if(hgpid[i].value == '6'){
                                     if(facs.length > 0){
                                         for( var a = 0; a < facs.length; a++ ) {
-                                        console.log("exist facid")
+                                        // console.log("exist facid")
                                             if( facs[a].checked ) {
                                         
                                                 if(facs[a].value == 'H2' || facs[a].value == 'H3'){
                                                     ass.value = 'hfsrb';
-                                                    console.log('facs' + facs[a].value)
+                                                    // console.log('facs' + facs[a].value)
                                                     
                                                 }
                                                             
@@ -158,8 +158,8 @@ window.addEventListener('click', function(e) {
       
    }, 1000);
    setTimeout(function(){
-       console.log("assignedRgn")
-       console.log($('#assignedRgn').val())
+    //    console.log("assignedRgn")
+    //    console.log($('#assignedRgn').val())
 
       
  }, 2000);
@@ -167,8 +167,8 @@ window.addEventListener('click', function(e) {
  });
 
  setTimeout(function(){
-       console.log("assignedRgn")
-       console.log($('#assignedRgn').val())
+    //    console.log("assignedRgn")
+    //    console.log($('#assignedRgn').val())
  }, 2000);
 
 </script>

@@ -284,8 +284,8 @@ function getFacServCharge(val = null) {
                                
                                         return {
                                         facname: facname,
-                                        // amt: subclass == "ND" ? 0 :  arr.find(s =>
-                                        amt: owns == "G" ? 0 :  arr.find(s =>
+                                        amt: subclass == "ND" ? 0 :  arr.find(s =>
+                                        // amt: owns == "G" ? 0 :  arr.find(s =>
                                                 s.facname === facname).amt,
                                         chgapp_id: arr.find(s =>
                                                 s.facname === facname).chgapp_id

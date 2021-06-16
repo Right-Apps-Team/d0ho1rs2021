@@ -17,7 +17,7 @@
 </div> -->
 
     <div class="col-md-12 ">
-        <select onchange="sel_hosp_class(this.value)" class="form-control" id="funcid" name="funcid">
+        <select onchange="sel_hosp_class(this.value)" class="form-control"  data-funcid="duplicate" id="funcid" name="funcid">
             <option  selected value hidden disabled>Please select</option>
          
             @foreach($function AS $each)

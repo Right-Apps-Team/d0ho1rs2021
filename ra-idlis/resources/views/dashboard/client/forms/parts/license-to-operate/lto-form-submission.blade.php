@@ -182,6 +182,8 @@ function submitProper(e){
     console.log("alladdondesc")
     console.log(alladdondesc)
 
+  
+
     const facid = $('input[name="facid"]:checked').val();    
     const data = {
         // appid:                  appid,
@@ -213,7 +215,8 @@ function submitProper(e){
         classid:                $('#classification').val()  == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->classid: "")!!}' : $('#classification').val() ,
         subClassid:             $('#subclass').val()  == "" ||  $('#subclass').val() == undefined ? '{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}' : $('#subclass').val(),
         facmode:                $('#facmode').val(),
-        funcid:                 $('#funcid').val(),
+        funcid:                 document.querySelector('select[data-funcid="duplicate"]').value ? document.querySelector('select[data-funcid="duplicate"]').value : document.querySelector('select[data-funcid="main"]').value,
+        // funcid:                 $('#funcid').val(),
 
         typeamb:                JSON.stringify(allambdet[0]),
         ambtyp:                 JSON.stringify(allambdet[1]),

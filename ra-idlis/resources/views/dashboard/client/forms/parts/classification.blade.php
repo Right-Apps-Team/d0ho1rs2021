@@ -75,7 +75,7 @@
 </div>
 <div class="col-md-6">
     <label for="funcid">Function <span class="text-danger">*</span></label>
-    <select class="form-control selectpicker show-menu-arrow" id="funcid" name="funcid" data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" required>
+    <select class="form-control selectpicker show-menu-arrow" data-funcid="main" id="funcid" name="funcid" data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" required>
         <option>Please select</option>
         <option value="1">General</option>
         <option value="2">Specialty</option>

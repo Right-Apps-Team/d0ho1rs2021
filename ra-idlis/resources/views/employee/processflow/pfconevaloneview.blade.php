@@ -11,7 +11,7 @@
   <div class="content p-4">
   	<div class="card">
   		<div class="card-header bg-white font-weight-bold">
-         	View CON Evaluation Result
+         	View CON Evaluation Result g
          	<button class="btn btn-primary" onclick="window.history.back();">Back</button>
       	</div>
       	<div class="container-fluid border mb-3 pt-3">
@@ -473,11 +473,23 @@
           </thead>
           <tbody>
             @if(isset($members))
+            @php
+              $pageNos = array();
+            @endphp
               @foreach($members as $mem)
+                @php
+                $pageno = $mem->fname .' '. ($mem->mname ?? $mem->mname.'.') . ' ' . $mem->lname;
+                @endphp
+                   @if(!in_array($pageno, $pageNos))
+
               <tr>
               	<td>{{$mem->fname .' '. ($mem->mname ?? $mem->mname.'.') . ' ' . $mem->lname}}</td>
               	<td>{{$mem->pos}}</td>
               </tr>
+                    @php
+                      array_push($pageNos,$pageno);
+                    @endphp
+                  @endif
               @endforeach
             @endif
           </tbody>

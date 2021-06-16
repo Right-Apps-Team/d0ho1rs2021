@@ -57,6 +57,10 @@
             <div class="col-md-1">
               <button class="btn btn-primary p-2" data-toggle="modal" data-target="#viewModal"><i class="fa fa-plus-circle"></i> Add</button>
             </div>
+            @else 
+            <div class="col-md-1">
+              <button class="btn btn-warning p-2" disable>No availbale evaluator for this region/office</button>
+            </div>
           @endif
           
           @if($isHead)

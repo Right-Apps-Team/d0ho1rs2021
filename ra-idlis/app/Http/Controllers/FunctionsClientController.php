@@ -678,7 +678,7 @@ class FunctionsClientController extends Controller {
 				if(isset($facmode) && isset($extraHgpid)){
 					$retArr = DB::table('serv_chg')->leftJoin('facilitytyp', 'facilitytyp.facid', '=', 'serv_chg.facid')->leftJoin('chg_app', 'chg_app.chgapp_id', '=', 'serv_chg.chgapp_id')->whereIn('serv_chg.facid', $arrVal)->where([['serv_chg.hfser_id', $hfser],['serv_chg.facmid',$facmode], ['extrahgpid', $extraHgpid]])
 					// ->where('serv_chg.aptid', $aptid) // 6-4-2021
-					->select('facilitytyp.facname', 'chg_app.amt', 'chg_app.chgapp_id')
+					->select('facilitytyp.facname', 'chg_app.amt', 'chg_app.chgapp_id', 'serv_chg.facid')
 					->get();
 					// $retArr = DB::table('serv_chg')->leftJoin('facilitytyp', 'facilitytyp.facid', '=', 'serv_chg.facid')->leftJoin('chg_app', 'chg_app.chgapp_id', '=', 'serv_chg.chgapp_id')->whereIn('serv_chg.facid', $arrVal)->where([['serv_chg.hfser_id', $hfser],['serv_chg.facmid',$facmode], ['extrahgpid', $extraHgpid]])->select('facilitytyp.facname', 'chg_app.amt', 'chg_app.chgapp_id')->get();
 				}
@@ -686,7 +686,7 @@ class FunctionsClientController extends Controller {
 					// $retArr = DB::table('serv_chg')->leftJoin('facilitytyp', 'facilitytyp.facid', '=', 'serv_chg.facid')->leftJoin('chg_app', 'chg_app.chgapp_id', '=', 'serv_chg.chgapp_id')->whereIn('serv_chg.facid', $arrVal)->where([['serv_chg.hfser_id', $hfser], ['serv_chg.facmid',null], ['extrahgpid', null]])->select('facilitytyp.facname', 'chg_app.amt', 'chg_app.chgapp_id')->get();
 					$retArr = DB::table('serv_chg')->leftJoin('facilitytyp', 'facilitytyp.facid', '=', 'serv_chg.facid')->leftJoin('chg_app', 'chg_app.chgapp_id', '=', 'serv_chg.chgapp_id')->whereIn('serv_chg.facid', $arrVal)->where([['serv_chg.hfser_id', $hfser], ['serv_chg.facmid',null], ['extrahgpid', null]])
 					// ->where('serv_chg.aptid', $aptid) //6-4-2021
-					->select('facilitytyp.facname', 'chg_app.amt', 'chg_app.chgapp_id')
+					->select('facilitytyp.facname', 'chg_app.amt', 'chg_app.chgapp_id', 'serv_chg.facid')
 					->get();
 				}
 

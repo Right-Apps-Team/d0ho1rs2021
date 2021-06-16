@@ -4367,7 +4367,10 @@
 										'payEvaldate' => $Cur_useData['date'],
 										'payEvaltime' => $Cur_useData['time'],
 										'payEvalip'=> $Cur_useData['ip'],
-										'status' => (strtolower($hfser) == 'ptc' ? 'FPPR' :  'FI')
+										// 'status' => 'FP'
+										'status' => (strtolower($hfser) == 'lto' || strtolower($hfser) == 'coa' ? 'FI' : 'P')
+										// 'status' => (strtolower($hfser) == 'ptc' ? 'FPPR' :  'FP')
+										// 'status' => (strtolower($hfser) == 'ptc' ? 'FPPR' :  'FI')
 										// 'status' => (strtolower($hfser) == 'ptc' ? 'FPPR' : (strtolower($hfser) == 'lto' ? 'FI' :'CE'))
 										// 'status' => (strtolower($hfser) == 'ptc' ? 'FPPR' : 'CE')
 										// 'FDAStatMach' => 'For Evaluation'
@@ -4872,9 +4875,22 @@
 				// 				->select('x08.uid', 'x08.fname', 'x08.mname', 'x08.lname', 'x08.position', 'x08.team', 'x07.grp_desc')
 				// 				->where('x08.team', '=', $request->teamid)
 				// 				->get();
-				$query = 	"SELECT x08.uid, x08.fname, x08.mname, x08.lname, x08.position, x08.team, x07.grp_desc
-						  	FROM x08 LEFT JOIN  x07 ON x08.grpid = x07.grp_id 
-							WHERE x08.grpid IN ('RLO','LO') AND x08.team = '$request->teamid' AND  x08.uid NOT IN (SELECT uid FROM app_team WHERE teamid = '$request->teamid' AND appid = '$request->id')";
+
+				$check = DB::table('appform')->select('assignedRgn')->where('appid',$request->id)->first()->assignedRgn;
+
+				if($check == 'hfsrb'){
+					$query = 	"SELECT x08.uid, x08.fname, x08.mname, x08.lname, x08.position, x08.team, x07.grp_desc
+					FROM x08 LEFT JOIN  x07 ON x08.grpid = x07.grp_id 
+				  WHERE x08.grpid IN ('LO1','LO2') AND x08.team = '$request->teamid' AND  x08.uid NOT IN (SELECT uid FROM app_team WHERE teamid = '$request->teamid' AND appid = '$request->id')";
+  
+				}else{
+					$query = 	"SELECT x08.uid, x08.fname, x08.mname, x08.lname, x08.position, x08.team, x07.grp_desc
+					FROM x08 LEFT JOIN  x07 ON x08.grpid = x07.grp_id 
+				  WHERE x08.grpid IN ('RLO','LO') AND x08.team = '$request->teamid' AND  x08.uid NOT IN (SELECT uid FROM app_team WHERE teamid = '$request->teamid' AND appid = '$request->id')";
+  
+				}
+
+
 				// $data = DB::table('x08')
 				// 				->join('x07', 'x08.grpid', '=', 'x07.grp_id')
 				// 				->select('x08.uid', 'x08.fname', 'x08.mname', 'x08.lname', 'x08.position', 'x08.team', 'x07.grp_desc')
@@ -5039,7 +5055,7 @@
 												->leftjoin('trans_status', 'appform.status', '=', 'trans_status.trns_id')
 												// ->join('orderofpayment', 'type_facility.oop_id', '=', 'orderofpayment.oop_id')
 												// , 'orderofpayment.*'
-												->select('appform.*',  'x08.*',  'x07.grp_desc', 'barangay.brgyname', 'city_muni.cmname', 'province.provname', 'trans_status.trns_desc') //, 'type_facility.*'
+												->select('appform.*',  'x08.*',  'comeval.fname as com_fname',  'comeval.mname as com_mname',  'comeval.lname as com_lname',  'x07.grp_desc', 'barangay.brgyname', 'city_muni.cmname', 'province.provname', 'trans_status.trns_desc') //, 'type_facility.*'
 												->where('appform.appid', '=', $appid)
 												// , 'type_facility.*', 'orderofpayment.*'
 												// ->where('type_facility.facid', '=', 'appform.facid')
@@ -7712,7 +7728,19 @@
 
 	public static function getHighestApplicationFromX08FT($appid){
 		if(!empty($appid)){
-			return DB::table('x08_ft')->join('facilitytyp','x08_ft.facid','facilitytyp.facid')->join('hfaci_grp','facilitytyp.hgpid','hfaci_grp.hgpid')->where([['x08_ft.appid',$appid],['facilitytyp.servtype_id',1]])->first();
+
+			$check =  DB::table('x08_ft')->join('facilitytyp','x08_ft.facid','facilitytyp.facid')->join('hfaci_grp','facilitytyp.hgpid','hfaci_grp.hgpid')->where([['x08_ft.appid',$appid]])->get();
+
+			$st = 1;
+			foreach($check as $c){
+				if($c->hgpid == 6 && !is_null($c->specified)){
+					$st = $c->servtype_id;
+				}
+			}
+			
+			
+			return DB::table('x08_ft')->join('facilitytyp','x08_ft.facid','facilitytyp.facid')->join('hfaci_grp','facilitytyp.hgpid','hfaci_grp.hgpid')->where([['x08_ft.appid',$appid],['facilitytyp.servtype_id',$st]])->first();
+			// return DB::table('x08_ft')->join('facilitytyp','x08_ft.facid','facilitytyp.facid')->join('hfaci_grp','facilitytyp.hgpid','hfaci_grp.hgpid')->where([['x08_ft.appid',$appid],['facilitytyp.servtype_id',1]])->first();
 		}
 	}
 
