@@ -16,8 +16,9 @@ namespace App\Http\Controllers;
 	use Schema;
 	use Mail;
 	use Illuminate\Http\File;
+use Illuminate\Support\Str;
 
-	class OthersController extends Controller
+class OthersController extends Controller
 	{
 
 		///////////////////////////////// Lloyd - November162018/////////////////////////////////////////////////////
@@ -77,8 +78,20 @@ namespace App\Http\Controllers;
 				// 		->first();
 
 				// Query.
+				$up = null;
+				if($request->reqcompattach){
+					$data = $request->input('reqcompattach');
+					$fname = $request->file('reqcompattach')->getClientOriginalName();
+					$fileExtension = $request->file('reqcompattach')->getClientOriginalExtension();
+					$fileNameToStore = (session()->has('employee_login') ? FunctionsClientController::getSessionParamObj("employee_login", "uid") : FunctionsClientController::getSessionParamObj("uData", "uid")).'_'.Str::random(10).'_'.date('Y_m_d_i_s').'.'.$fileExtension;
+					$request->file('reqcompattach')->storeAs('public/uploaded', $fileNameToStore);
+					$up = $fileNameToStore;
+				}
+
+
+
 				$x = DB::table('req_ast_form')->insert(
-					[/*'ref_no'=>$request->ref_no, */'source'=>$request->source,'type'=>$request->type, 'name_of_comp'=>$request->name_of_comp, 'age'=>$request->age, 'civ_stat'=>$request->civ_stat, 'address'=>$request->address, 'gender'=>$request->gender, 'contact_no'=>$request->contact_no, 'appid'=>(isset($request->name_of_faci) && is_numeric($request->name_of_faci) ? $request->name_of_faci : null), 'name_of_faci'=>$name, 'type_of_faci'=>$type, 'address_of_faci'=>$request->address_of_faci, 'name_of_conf_pat'=>$request->name_of_conf_pat, 'date_of_conf_pat'=>$request->date_of_conf_pat, 'reqs'=>$fin_reqs, 'comps'=>'', 'signature'=>"", 'details'=>$request->txt_details, 'compEmail' => $request->email,"others"=>$request->ot_text]
+					[/*'ref_no'=>$request->ref_no, */'attachment'=>$up,'source'=>$request->source,'type'=>$request->type, 'name_of_comp'=>$request->name_of_comp, 'age'=>$request->age, 'civ_stat'=>$request->civ_stat, 'address'=>$request->address, 'gender'=>$request->gender, 'contact_no'=>$request->contact_no, 'appid'=>(isset($request->name_of_faci) && is_numeric($request->name_of_faci) ? $request->name_of_faci : null), 'name_of_faci'=>$name, 'type_of_faci'=>$type, 'address_of_faci'=>$request->address_of_faci, 'name_of_conf_pat'=>$request->name_of_conf_pat, 'date_of_conf_pat'=>$request->date_of_conf_pat, 'reqs'=>$fin_reqs, 'comps'=>'', 'signature'=>"", 'details'=>$request->txt_details, 'compEmail' => $request->email,"others"=>$request->ot_text]
 				);
 				
 				return redirect()->back()->with('errRet', ['errAlt'=>'success', 'errMsg'=>'Addded new entry Successfully.']);

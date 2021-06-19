@@ -57,6 +57,12 @@
                                             <li><a href="{{ asset('/employee/dashboard/mf/apptype') }}">&nbsp;&nbsp;&nbsp;&nbsp;Application Type</a></li>
 
                                         </span>
+                                        
+                                        <span class="AP001_allow">
+
+                                            <li><a href="{{ asset('/employee/dashboard/mf/registered/facility') }}">&nbsp;&nbsp;&nbsp;&nbsp;Registered Facilities</a></li>
+
+                                        </span>
 
                                         {{-- new --}}
 

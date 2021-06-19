@@ -257,6 +257,7 @@ Route::post('employee/mf/getMembersInTeam', 'AjaxController@getMembersInTeam'); 
 Route::match(['get', 'post'], 'employee/dashboard/mf/manage/teams', 'DOHController@MfManageTeam'); // Main, Add
 // Application Type
 Route::match(['get', 'post'], 'employee/dashboard/mf/apptype', 'DOHController@AppType'); // Main, Add
+Route::match(['get', 'post'], 'employee/dashboard/mf/registered/facility', 'DOHController@RegFacilities'); // Main, Add
 Route::match(['get', 'post'], 'employee/dashboard/mf/licenseValidity', 'DOHController@licenseValidity'); // application license validity
 Route::post('employee/mf/save_apptype', 'AjaxController@saveAppType'); // Update
 Route::post('employee/mf/del_apptype', 'AjaxController@delAppType'); // Delete

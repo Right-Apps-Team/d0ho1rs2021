@@ -6,6 +6,8 @@ use App\Http\Controllers\AjaxController;
 use Session;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\FunctionsClientController;
+use App\Models\ApplicationForm;
+use App\Models\RegisteredFacility;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DB;
@@ -262,6 +264,147 @@ public function FPSaveAssessments (Request $request){
 		
 	}
   
+
+    public static function appFormRegisterFacs($id){
+        $chechkApp = ApplicationForm::where('appid',$id)->first();
+
+        $checknhfcode = RegisteredFacility::where('nhfcode',$chechkApp->nhfcode)->first();
+
+       
+        if(!is_null($checknhfcode)){
+
+            $ngc = new NewGeneralController; 
+            $ngc->upRegFac($checknhfcode->regfac_id, $chechkApp);
+
+        }else{
+            $term = strtolower($chechkApp->facilityname);
+            $chechkReg = RegisteredFacility::whereRaw('lower(facilityname) like (?) ',["%{$term}%"])->first();
+
+            if(!is_null($chechkReg)){
+
+                $ngc = new NewGeneralController; 
+                $ngc->upRegFac($chechkReg->regfac_id, $chechkApp);
+                DB::table('appform')->where('appid', '=', $chechkApp->appid)->update(['nhfcode'=>$chechkReg->nhfcode]);
+            }else{
+                $ngc = new NewGeneralController; 
+                $ngc->addregFac($chechkApp);
+            }
+        }
+
+    }
+
+    function upRegFac($regfac_id, $data){
+        
+        $reg =  DB::table('registered_facility')->where('regfac_id', $regfac_id)->first();
+        DB::table('registered_facility')->where('regfac_id', '=', $regfac_id)->update([
+            'facilityname'=>$data->facilityname,
+            'rgnid'=>$data->rgnid,
+            'provid'=>$data->provid,
+            'cmid'=>$data->cmid,
+            'brgyid'=>$data->brgyid,
+            'street_number'=>$data->street_number,
+            'street_name'=>$data->street_name,
+            'zipcode'=>$data->zipcode,
+            'contact'=>$data->contact,
+            'areacode'=>$data->areacode,
+            'landline'=>$data->landline,
+            'faxnumber'=>$data->faxnumber,
+            'email'=>$data->email,
+            'ocid'=>$data->ocid,
+            'classid'=>$data->classid,
+            'subClassid'=>$data->subClassid,
+            'facmode'=>$data->facmode,
+            'funcid'=>$data->funcid,
+            'owner'=>$data->owner,
+            'ownerMobile'=>$data->ownerMobile,
+            'ownerLandline'=>$data->ownerLandline,
+            'ownerEmail'=>$data->ownerEmail,
+            'mailingAddress'=>$data->mailingAddress,
+            'approvingauthoritypos'=>$data->approvingauthoritypos,
+            'approvingauthority'=>$data->approvingauthority,
+            'hfep_funded'=>$data->hfep_funded,
+            'con_id'=>is_null($reg->con_id) ?  ($data->hfser_id == 'CON'? $data->appid : null) : $reg->con_id,
+            'ptc_id'=>is_null($reg->ptc_id) ?  ($data->hfser_id == 'PTC'? $data->appid : null) : $reg->ptc_id,
+            'ato_id'=>is_null($reg->ato_id) ?  ($data->hfser_id == 'ATO'? $data->appid : null) : $reg->ato_id,
+            'coa_id'=>is_null($reg->coa_id) ?  ($data->hfser_id == 'COA'? $data->appid : null) : $reg->coa_id,
+            'lto_id'=>is_null($reg->lto_id) ?  ($data->hfser_id == 'LTO'? $data->appid : null) : $reg->lto_id,
+            'cor_id'=>is_null($reg->cor_id) ?  ($data->hfser_id == 'COR'? $data->appid : null) : $reg->cor_id
+        ]);
+
+        
+
+      
+
+       
+    }
+
+    function addregFac($request){
+
+        $zr = 1;
+        if(!is_null($ch = RegisteredFacility::orderBy('regfac_id', 'desc')->first())){
+            $zr += 1;
+        }
+
+        $code = date('Y').date('d').'-'.rand(111, 999).'-'. $zr;
+
+       
+
+       DB::insert('insert into registered_facility (
+            nhfcode, 
+            facilityname, 
+            rgnid, 
+            provid,
+            cmid,
+            brgyid,
+            street_number,
+            street_name,
+            zipcode,
+            contact,
+            areacode,
+            landline,
+            faxnumber,
+            email,
+            ocid,
+            classid,
+            subClassid,
+            facmode,
+            funcid,
+            owner,
+            ownerMobile,
+            ownerLandline,
+            ownerEmail,
+            mailingAddress,
+            approvingauthoritypos,
+            approvingauthority,
+            hfep_funded
+            ) values (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+            [$code, $request->facilityname, $request->rgnid, $request->provid, $request->cmid, $request->brgyid, $request->street_number, $request->street_name, $request->zipcode, $request->contact, $request->areacode, $request->landline, $request->faxnumber, $request->email, $request->ocid, $request->classid, $request->subClassid, $request->facmode, $request->funcid, $request->owner, $request->ownerMobile, $request->ownerLandline, $request->ownerEmail, $request->mailingAddress, $request->approvingauthoritypos, $request->approvingauthority, $request->hfep_funded ]);
+
+   
+            $reg =  DB::table('registered_facility')->where('nhfcode', $code)->first();
+
+           
+    
+              DB::table('appform')->where('appid', '=',  $request->appid)->update(['nhfcode'=>$code]);
+
+    
+
+              DB::table('registered_facility')->where('nhfcode', '=', $code)->update(
+                  [
+                      'con_id'=>is_null($reg->con_id) ?  ($request->hfser_id == 'CON'? $request->appid : null) : $reg->con_id,
+                      'ptc_id'=>is_null($reg->ptc_id) ?  ($request->hfser_id == 'PTC'? $request->appid : null) : $reg->ptc_id,
+                      'ato_id'=>is_null($reg->ato_id) ?  ($request->hfser_id == 'ATO'? $request->appid : null) : $reg->ato_id,
+                      'coa_id'=>is_null($reg->coa_id) ?  ($request->hfser_id == 'COA'? $request->appid : null) : $reg->coa_id,
+                      'lto_id'=>is_null($reg->lto_id) ?  ($request->hfser_id == 'LTO'? $request->appid : null) : $reg->lto_id,
+                      'cor_id'=>is_null($reg->cor_id) ?  ($request->hfser_id == 'COR'? $request->appid : null) : $reg->cor_id
+                  ]
+                );
+
+
+        
+            
+   
+        }
 
     
 }

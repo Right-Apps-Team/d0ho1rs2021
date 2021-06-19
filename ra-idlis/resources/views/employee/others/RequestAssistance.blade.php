@@ -223,6 +223,14 @@
                             <i class="fa fa-fw fa-cog"></i>
                           </button>
 
+                          @if( $a->attachment)
+                          <a target="_blank" href="{{ route('OpenFile', $a->attachment) }}" >
+                          <button type="button" class="btn btn-light" title="Attachment {{$a->type}}" >
+                            <i class="fa fa-fw fa-paperclip"></i>
+                          </button>
+                          </a>
+                          @endif
+
                           @if(!$a->resolveDate)
                           <button type="button" onclick="act('ref_noResolve','{{$a->ref_no}}','{{$a->type}}')" class="btn btn-light" data-toggle="modal" data-target="#resolve" title="Resolve {{$a->type}}">
 
@@ -672,7 +680,7 @@
 
                       @isset($ROAData)
 
-                        <form class="container" name="sub" method="POST" action="{{asset('employee/dashboard/others/req_submit').'/'.count($ROAData)}}" id="r-others-form"   data-parsley-validate>
+                        <form class="container" enctype="multipart/form-data" name="sub" method="POST" action="{{asset('employee/dashboard/others/req_submit').'/'.count($ROAData)}}" id="r-others-form"   data-parsley-validate>
 
                           {{csrf_field()}}
 
@@ -1112,7 +1120,7 @@
 
                             <div class="col-sm-4">
 
-                              Name of Facility:<span style="color:red">*</span>
+                              Name of Facility: <span style="color:red">*</span>
 
                             </div>
 
@@ -1382,6 +1390,16 @@
                             </div>
                             <div class="col-sm-8">
                               <textarea type="text" name="txt_details" class="form-control" rows="3"></textarea>
+                            </div>
+                          </div> 
+                        <br/>
+                          <div class="row">
+                            <div class="col-sm-4">
+                              Upload attachment:<span style="color:red">*</span>
+                            </div>
+                            <div class="col-sm-8">
+                           
+												      	<input  class="form-control"  type="file" name="reqcompattach">
                             </div>
                           </div>
                           <hr>

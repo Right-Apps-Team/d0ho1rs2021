@@ -15,6 +15,7 @@ use App\Models\CONCatchment;
 use App\Models\CONHospital;
 use App\Models\Classification;
 use App\Models\FacIds;
+use App\Models\RegisteredFacility;
 use App\Models\x08Ft;
 use DB;
 use Illuminate\Support\Facades\DB as FacadesDB;
@@ -25,6 +26,16 @@ class ApplicationApiController extends Controller
     {
         $name = $request->name;
         $applications = ApplicationForm::where('facilityname', $name)->get();
+        if (count($applications)) {
+            return  response()->json(['message' => 'Facility name no longer available'], 400);
+        } else {
+            return  response()->json(['message' => 'Facility name is safe to use'], 200);
+        }
+    }
+    public function checkRegistered(Request $request)
+    {
+        $name = $request->name;
+        $applications = RegisteredFacility::where('facilityname', $name)->get();
         if (count($applications)) {
             return  response()->json(['message' => 'Facility name no longer available'], 400);
         } else {

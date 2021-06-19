@@ -18,7 +18,10 @@ namespace App\Http\Controllers;
 	// syrel added
 	use Cache;
 	use Agent;
-	use FunctionsClientController;
+use App\Http\Controllers\Client\Api\NewGeneralController;
+use App\Models\Regions;
+use App\Models\RegisteredFacility;
+use FunctionsClientController;
 	use EvaluationController;
 
 	class DOHController extends Controller
@@ -649,6 +652,144 @@ namespace App\Http\Controllers;
 					return 'ERROR';
 				}
 			}
+		}
+
+		public function RegFacilities(Request $request) // Master File - Application Type
+		{
+			if ($request->isMethod('get')) 
+			{
+				try 
+				{	
+					$data = DB::table('registered_facility')
+					->join('region', 'region.rgnid', '=', 'registered_facility.rgnid')
+					->join('province', 'province.provid', '=', 'registered_facility.provid')
+					->join('barangay', 'barangay.brgyid', '=', 'registered_facility.brgyid')
+					->select('registered_facility.*','region.rgn_desc', 'barangay.brgyname', 'province.provname')
+					->get();
+
+					
+
+					// return view('employee.masterfile.registeredfacility',['data'=>$data]);	
+					return view('employee.masterfile.registeredfacility',['data'=>$data, 'regions'   => Regions::orderBy('sort')->get()]);	
+				} 
+				catch (Exception $e) 
+				{
+					
+					return view('employee.masterfile.registeredfacility');	
+				}
+			}
+			if ($request->isMethod('post')) 
+			{
+				try 
+					{
+						// $this->submitRegFacilities($request);
+						DB::insert('insert into registered_facility (
+							facilityname, 
+							rgnid, 
+							provid,
+							cmid,
+							brgyid,
+							street_number,
+							street_name,
+							zipcode,
+							contact,
+							areacode,
+							landline,
+							faxnumber,
+							email,
+							ocid,
+							classid,
+							subClassid,
+							facmode,
+							funcid,
+							owner,
+							ownerMobile,
+							ownerLandline,
+							ownerEmail,
+							mailingAddress,
+							approvingauthoritypos,
+							approvingauthority,
+							hfep_funded
+							) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+							[$request->facilityname, $request->rgnid, $request->provid, $request->cmid, $request->brgyid, $request->street_number, $request->street_name, $request->zipcode, $request->contact, $request->areacode, $request->landline, $request->faxnumber, $request->email, $request->ocid, $request->classid, $request->subClassid, $request->facmode, $request->funcid, $request->owner, $request->ownerMobile, $request->ownerLandline, $request->ownerEmail, $request->mailingAddress, $request->approvingauthoritypos, $request->approvingauthority, $request->hfep_funded ]);
+			
+
+
+						return response()->json(
+							[
+								'mssg' => "success",
+							],
+							200
+						);
+					} 
+				catch (Exception $e) 
+				{
+					
+					return view('employee.masterfile.registeredfacility');	
+				}
+			}
+		}
+
+		public function submitRegFacilities(Request $request){
+
+				try 
+					{
+						// .((RegisteredFacility::orderBy('regfac_id', 'desc')->first()->regfac_id ? RegisteredFacility::orderBy('regfac_id', 'desc')->first()->regfac_id : 0) + 1)
+				$zr = 1;
+				if(!is_null($ch = RegisteredFacility::orderBy('regfac_id', 'desc')->first())){
+					$zr += 1;
+				}
+				
+						$code = date('Y').date('d').'-'.rand(111, 999).'-'. $zr;
+					
+						
+					DB::insert('insert into registered_facility (
+				nhfcode, 
+				facilityname, 
+				rgnid, 
+				provid,
+				cmid,
+				brgyid,
+				street_number,
+				street_name,
+				zipcode,
+				contact,
+				areacode,
+				landline,
+				faxnumber,
+				email,
+				ocid,
+				classid,
+				subClassid,
+				facmode,
+				funcid,
+				owner,
+				ownerMobile,
+				ownerLandline,
+				ownerEmail,
+				mailingAddress,
+				approvingauthoritypos,
+				approvingauthority,
+				hfep_funded
+				) values (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+				[$code, $request->facilityname, $request->rgnid, $request->provid, $request->cmid, $request->brgyid, $request->street_number, $request->street_name, $request->zipcode, $request->contact, $request->areacode, $request->landline, $request->faxnumber, $request->email, $request->ocid, $request->classid, $request->subClassid, $request->facmode, $request->funcid, $request->owner, $request->ownerMobile, $request->ownerLandline, $request->ownerEmail, $request->mailingAddress, $request->approvingauthoritypos, $request->approvingauthority, $request->hfep_funded ]);
+
+
+						return response()->json(
+							[
+								'mssg' =>"hello",
+							],
+							200
+						);
+					} 
+				catch (Exception $e) 
+					{
+						
+						return 'ERROR';
+					}
+
+			
+
 		}
 
 		// other ancillary
@@ -6328,6 +6469,11 @@ namespace App\Http\Controllers;
 								DB::table('branch')->where('regionid',$appform->rgnid)->update([$hferID => ($branchData->$hferID+1)]);
 								$selected = AjaxController::getUidFrom($request->id);
 								AjaxController::notifyClient($request->id,$selected,($request->isOk == 1 ? 21 : 22));
+
+								NewGeneralController::appFormRegisterFacs($request->id);
+
+
+
 								return 'DONE';
 							} else {
 								return 'ERROR';
