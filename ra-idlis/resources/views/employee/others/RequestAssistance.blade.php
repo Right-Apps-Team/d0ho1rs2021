@@ -199,7 +199,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="padding-left: 5px">
 
                           <button type="button" class="btn btn-light" data-toggle="modal" data-target="#vReqModal" title="View {{$a->type}}" onclick="vReqComp('{{$a->ref_no}}', '{{$a->type}}', '{{$a->name_of_comp}}', '{{$a->appid}}', '{{$a->name_of_faci}}', '{{$a->type_of_faci}}', '{{$a->reqs}}', '{{$a->comps}}')">
-
+                          
                             <i class="fa fa-fw fa-eye"></i>
                           </button>
 
@@ -216,6 +216,7 @@
                           </button> 
 
                           <button type="button" class="btn btn-light" title="Edit {{$a->type}}" data-toggle="modal" data-target="#reqModal" onclick="FillFields('{{json_encode($a)}}')">
+                         
                             <i class="fa fa-fw fa-edit"></i>
                           </button>
 
@@ -273,6 +274,7 @@
                         </button> 
 
                         <button type="button" class="btn btn-outline-warning" title="Edit {{$a->type}}" data-toggle="modal" data-target="#reqModal" onclick="FillFields('{{json_encode($a)}}')">
+                          
                           <i class="fa fa-fw fa-edit"></i>
                         </button>
 
@@ -415,7 +417,7 @@
 
 
     $('#add_new_new').on('click', function() {
-      $('#modal_title_new').html('<b>Add new Request/Complaints<b>');
+      $('#modal_title_new').html('<b>Add new Request/Complaints <b>');
 
       for(i=0; i<$('input[name="comps[]"]').length; i++) {
         $('input[name="comps[]"]')[i].removeAttribute('checked');
@@ -428,7 +430,8 @@
       naturechange();
 
       $('#r-others-form')[0].removeAttribute('action');
-      $('#r-others-form')[0].setAttribute('action', '{{asset('employee/dashboard/others/req_submit').'/'.count($ROAData)}}');
+      $('#r-others-form')[0].setAttribute('action', '{{asset('employee/dashboard/others/req_submit/reg').'/'.count($ROAData)}}');
+      // $('#r-others-form')[0].setAttribute('action', '{{asset('employee/dashboard/others/req_submit').'/'.count($ROAData)}}');
 
       $('input[name="ref_no_new_new"]').val('');
 
@@ -465,6 +468,7 @@
 
     function FillFields(data) {
       let d = JSON.parse(data);
+      console.log(d)
       // console.log(d);
 
       for(i=0; i<$('input[name="comps[]"]').length; i++) {
@@ -491,20 +495,25 @@
       $('input[name="age"]').val(d.age);
       $('select[name="gender"]').val(d.gender).trigger('change');
       $('input[name="address"]').val(d.address);
+      $('input[name="address_of_faci"]').val(d.address_of_faci);
       $('select[name="civ_stat"]').val(d.civ_stat).trigger('change');
       $('input[name="contact_no"]').val(d.contact_no);
       $('input[name="email"]').val(d.compEmail);
 
-      $('#xfacName').val(d.appid).trigger('change');
+      $('#xfacName').val(d.regfac_id).trigger('change');
+      // $('#xfacName').val(d.appid).trigger('change');
       $('#factype').val(d.type_of_faci).trigger('change');
-      $('#facaddr').val(d.address_of_faci);
+      // $('#factype').val(d.type_of_faci).trigger('change');
+      // $('#facaddr').val(d.address_of_faci);
 
-      $('#unregxfacName').val(d.name_of_faci);
-      $('#unregfactype').val(d.type_of_faci).trigger('change');
-      $('#unregfacaddr').val(d.address_of_faci);
+      
+
+     
 
       $('#name_of_conf_pat').val(d.name_of_conf_pat);
-      $('#date_of_conf_pat').val(d.date_of_conf_pat);
+      $('#conf-date').val(d.date_of_conf_pat);
+      $('#txt_details').val(d.details);
+      // $('#date_of_conf_pat').val(d.date_of_conf_pat);
 
       if(d.type=="Complaints") {
         $('#togBtn').bootstrapToggle('off');
@@ -563,6 +572,11 @@
       $('#r-others-form')[0].setAttribute('action', '{{asset('employee/dashboard/others/action/edit')}}^{{count($ROAData)}}');
       $('#togBtn')[0].setAttribute('disabled', '');
       $('#facitogBtn')[0].setAttribute('disabled', '');
+
+
+      $('#unregxfacName').val(d.name_of_faci);
+      $('#unregfactype').val(d.type_of_faci).trigger('change');
+      $('#unregfacaddr').val(d.address_of_faci);
       // $('#togBtn')[0].disabled = true;
     }
 
@@ -670,7 +684,7 @@
 
             <div class="modal-body text-justify" style=" background-color: #272b30;color: white;">
 
-                <h5 class="modal-title text-center" id="modal_title_new"><strong>Add New Request/Complaints</strong></h5>
+                <h5 class="modal-title text-center" id="modal_title_new"><strong>Add New Request/Complaints </strong></h5>
 
                 <hr>
 
@@ -680,7 +694,7 @@
 
                       @isset($ROAData)
 
-                        <form class="container" enctype="multipart/form-data" name="sub" method="POST" action="{{asset('employee/dashboard/others/req_submit').'/'.count($ROAData)}}" id="r-others-form"   data-parsley-validate>
+                        <form class="container" enctype="multipart/form-data" name="sub" method="POST" action="{{asset('employee/dashboard/others/req_submit/reg').'/'.count($ROAData)}}" id="r-others-form"   data-parsley-validate>
 
                           {{csrf_field()}}
 
@@ -1133,7 +1147,7 @@
 
 
                               {{-- <input list="facName" id="xfacName" name="name_of_faci" class="form-control" onchange="changeFaciSelect()" required data-parsley-required-message="<b>*Name of Facility</b> required">
-
+<!-- 
                               <datalist id="facName">
 
                                 @isset($FacName)
@@ -1142,7 +1156,7 @@
 
                                     @if($value->facilityname!="")
 
-                                      <option value="{{$value->appid}}">{{$value->facilityname}}</option>
+                                      <option value="{{$value->appid}}">{{$value->facilityname}} </option>
 
                                     @endif
 
@@ -1150,11 +1164,13 @@
 
                                 @endisset
 
-                              </datalist> --}}
+                              </datalist>  -->
+                              --}}
 
                                 
 
-                              <select type="" style="width: 100%" name="name_of_faci" class="form-control" onchange="changeFaciSelect()" id="xfacName" required data-parsley-required-message="<b>*Name of Facility</b> required" data-parsley="">
+                              <select type="" style="width: 100%" name="name_of_faci" class="form-control" onchange="changeFacname(this.value)" id="xfacName" required data-parsley-required-message="<b>*Name of Facility</b> required" data-parsley="">
+                              <!-- <select type="" style="width: 100%" name="name_of_faci" class="form-control" onchange="changeFaciSelect()" id="xfacName" required data-parsley-required-message="<b>*Name of Facility</b> required" data-parsley=""> -->
 
                                 <option disabled hidden selected value="0"></option>
 
@@ -1164,7 +1180,7 @@
 
                                     @if($value->facilityname!="")
 
-                                      <option value="{{$value->appid}}">{{$value->facilityname}}</option>
+                                      <option value="{{$value->regfac_id}}">{{$value->facilityname}} </option>
 
                                     @endif
 
@@ -1196,9 +1212,24 @@
 
                               <input type="text" class="form-control" name="type_of_faci" id="unregfactype" hidden disabled>
 
-                              <select name="type_of_faci" style="width: 100%" class="form-control" id="factype" onchange="changeFaciType()" required data-parsley-required-message="<b>*Type of Facility</b> required" data-parsley="">
+                              <select name="type_of_faci" id="type_of_faci" style="width: 100%" class="form-control" id="factype"  required data-parsley-required-message="<b>*Type of Facility</b> required" data-parsley="">
+                              <!-- <select name="type_of_faci" style="width: 100%" class="form-control" id="factype" onchange="changeFaciType()" required data-parsley-required-message="<b>*Type of Facility</b> required" data-parsley=""> -->
 
-                                <option diabled hidden selected value="">Type of Facility*</option>
+                                <!-- <option diabled hidden selected value="">Type of Facility*</option> -->
+                                @isset($hgps)
+
+                                    @foreach($hgps as $key => $hg)
+
+                                     
+
+                                        <option value="{{$hg->hgpdesc}}">{{$hg->hgpdesc}} </option>
+                                        <!-- <option value="{{$hg->hgpid}}">{{$hg->hgpdesc}} </option> -->
+
+                                      
+
+                                    @endforeach
+
+                                    @endisset
 
                               </select>
 
@@ -1222,9 +1253,9 @@
 
                             <div class="col-sm-8">
 
-                              <input type="text" class="form-control" name="address_of_faci" id="unregfacaddr" data-parsley-required-message="<b>*Address of Facility</b> required" data-parsley="" hidden disabled>
+                              <input type="text"  class="form-control" name="address_of_faci" id="unregfacaddr" data-parsley-required-message="<b>*Address of Facility</b> required" data-parsley="" hidden disabled>
 
-                              <input type="text" name="address_of_faci" class="form-control form-inline" readonly required id="facaddr" data-parsley-required-message="<b>*Address of Facility</b> required" data-parsley="">
+                              <input type="text" id="address_of_faci" name="address_of_faci" class="form-control form-inline" readonly required id="facaddr" data-parsley-required-message="<b>*Address of Facility</b> required" data-parsley="">
 
                             </div>
 
@@ -1250,7 +1281,7 @@
 
                             <div class="col-sm-8">
 
-                              <input type="text" name="name_of_conf_pat" class="form-control form-inline" oninput="toggleDate(this)">
+                              <input type="text" id="name_of_conf_pat" name="name_of_conf_pat" class="form-control form-inline" oninput="toggleDate(this)">
 
                             </div>
 
@@ -1386,10 +1417,10 @@
 
                           <div class="row">
                             <div class="col-sm-4">
-                              Brief Narration of Facts/Circumstances:<span style="color:red">*</span>
+                              Brief Narration of Facts/Circumstances:ds<span style="color:red">*</span>
                             </div>
                             <div class="col-sm-8">
-                              <textarea type="text" name="txt_details" class="form-control" rows="3"></textarea>
+                              <textarea type="text" id="txt_details" name="txt_details" class="form-control" rows="3"></textarea>
                             </div>
                           </div> 
                         <br/>
@@ -1406,7 +1437,7 @@
 
                           <div class="mx-auto">
 
-                            <button type="submit" name="btn_sub" class="btn btn-primary"><b>SUBMIT</b></button>
+                            <button type="submit" name="btn_sub" class="btn btn-primary"><b>SUBMIT </b></button>
 
                           </div>
 
@@ -1431,6 +1462,25 @@
 
 
   <script>
+var facnames = JSON.parse('{!!addslashes(json_encode($FacName))!!}')
+console.log(facnames)
+
+  function changeFacname (value){
+        console.log(value)
+
+        var result = facnames.filter(function (v) {
+                                return v.regfac_id == value;
+                            })
+
+                            document.getElementById("address_of_faci").value = result[0].address
+                            document.getElementById("type_of_faci").value = result[0].hgpdesc
+                            // document.getElementById("type_of_faci").value = result[0].facid
+                            console.log("facilityname")
+                            console.log(result[0].facilityname)
+                            console.log(result[0].hgpdesc)
+                            console.log(result[0].address)
+
+  }
 
    //  function naturechange() {
 

@@ -158,7 +158,7 @@ function submitProper (e){
     const facid = $('input[name="facid"]:checked').val();    
     const data = {
         saveas:                  e == 'update' ? 'final' : e,
-        aptid:                  $('#aptid').val(),
+        aptid:                  $('#aptidnew').val(),
         appid:                  $('#appid').val(),
         hfser_id:               $('#typeOfApplication').val(),
         facilityname:           $('#facility_name').val(),
@@ -202,7 +202,7 @@ function submitProper (e){
         appchargeHgp:             $('#tempAppChargeHgpid').val(),//appchargetemp
         assignedRgn:             $('#assignedRgn').val(),//6-3-2021
         hfser: "ATO",
-        aptid: "IN"
+        // aptid: "IN"
     }
     console.log(data)
     callApi('/api/application/ato/save', data, 'POST').then(d => {

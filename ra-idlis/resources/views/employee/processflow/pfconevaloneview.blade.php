@@ -11,7 +11,7 @@
   <div class="content p-4">
   	<div class="card">
   		<div class="card-header bg-white font-weight-bold">
-         	View CON Evaluation Result g
+         	View CON Evaluation Result 
          	<button class="btn btn-primary" onclick="window.history.back();">Back</button>
       	</div>
       	<div class="container-fluid border mb-3 pt-3">

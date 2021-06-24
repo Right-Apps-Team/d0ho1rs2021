@@ -50,25 +50,40 @@
 
 						                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="padding-left: 10px">
 
-												<button class="btn btn-outline-info" data-toggle="modal" data-target="#aMonVModal" onclick="viewTMonitoring('{{$value->novid}}', '{{$value->appid}}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}', '{{$value->name_of_faci}}', '{{$value->address_of_faci}}', '{{ AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname}}')" title="View {{$value->name_of_faci}} {{AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname}}">
+												<button class="btn btn-outline-info" data-toggle="modal" data-target="#aMonVModal" onclick="viewTMonitoring('{{$value->novid}}', '{{$value->appid}}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}', '{{$value->name_of_faci}}', '{{$value->address_of_faci}}', '{{ AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc}}')" title="View {{$value->name_of_faci}} {{AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc}}">
 		                        					<i class="fa fa-fw fa-eye"></i>
 		                      					</button>
+												  
+												  <!-- <button class="btn btn-outline-info" data-toggle="modal" data-target="#aMonVModal" onclick="viewTMonitoring('{{$value->novid}}', '{{$value->appid}}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}', '{{$value->name_of_faci}}', '{{$value->address_of_faci}}', ' AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname')" title="View {{$value->name_of_faci}} AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname">
+		                        					<i class="fa fa-fw fa-eye"></i>
+		                      					</button> -->
 
-		                      					<button class="btn btn-outline-primary" data-toggle="modal" data-target="#aMonTModal" onclick="getMonitoringData('{{$value->appid}}', '{{$value->monid}}')" title="Assign Team in {{$value->name_of_faci}} {{AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname}}">
+		                      					<button class="btn btn-outline-primary" data-toggle="modal" data-target="#aMonTModal" onclick="getMonitoringData('{{$value->appid}}', '{{$value->monid}}')" title="Assign Team in {{$value->name_of_faci}} {{AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc}}">
 		                        					<i class="fa fa-users" aria-hidden="true"></i>
 		                      					</button>
+<!-- 												  
+<button class="btn btn-outline-primary" data-toggle="modal" data-target="#aMonTModal" onclick="getMonitoringData('{{$value->appid}}', '{{$value->monid}}')" title="Assign Team in {{$value->name_of_faci}} AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname">
+		                        					<i class="fa fa-users" aria-hidden="true"></i>
+		                      					</button> -->
 
 						                    </div>
 									</td>
 
 			        				{{-- <td style="text-align:center">
-			        					<button class="btn btn-outline-info" data-toggle="modal" data-target="#aMonVModal" onclick="viewTMonitoring('{{$value->novid}}', '{{$value->appid}}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}', '{{$value->name_of_faci}}', '{{$value->address_of_faci}}', '{{ AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname}}')" title="View {{$value->name_of_faci}} {{AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname}}">
+			        					<button class="btn btn-outline-info" data-toggle="modal" data-target="#aMonVModal" onclick="viewTMonitoring('{{$value->novid}}', '{{$value->appid}}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}', '{{$value->name_of_faci}}', '{{$value->address_of_faci}}', '{{ AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc}}')" title="View {{$value->name_of_faci}} {{AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc}}">
                         					<i class="fa fa-fw fa-eye"></i>
                       					</button>
+<!-- <button class="btn btn-outline-info" data-toggle="modal" data-target="#aMonVModal" onclick="viewTMonitoring('{{$value->novid}}', '{{$value->appid}}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}', '{{$value->name_of_faci}}', '{{$value->address_of_faci}}', 'AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname')" title="View {{$value->name_of_faci}} AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname">
+                        					<i class="fa fa-fw fa-eye"></i>
+                      					</button> -->
 
-			        					<button class="btn btn-outline-primary" data-toggle="modal" data-target="#aMonTModal" onclick="getMonitoringData('{{$value->appid}}', '{{$value->monid}}')" title="Assign Team in {{$value->name_of_faci}} {{AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname}}">
+			        					<button class="btn btn-outline-primary" data-toggle="modal" data-target="#aMonTModal" onclick="getMonitoringData('{{$value->appid}}', '{{$value->monid}}')" title="Assign Team in {{$value->name_of_faci}} {{AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc}}">
                         					<i class="fa fa-users" aria-hidden="true"></i>
                       					</button>
+										  <!-- <button class="btn btn-outline-primary" data-toggle="modal" data-target="#aMonTModal" onclick="getMonitoringData('{{$value->appid}}', '{{$value->monid}}')" title="Assign Team in {{$value->name_of_faci}} AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname">
+                        					<i class="fa fa-users" aria-hidden="true"></i>
+                      					</button>
+										   -->
 			        				</td> --}}
 			        			</tr>
 			        		@endforeach

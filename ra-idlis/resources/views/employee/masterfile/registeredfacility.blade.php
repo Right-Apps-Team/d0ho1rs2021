@@ -15,6 +15,7 @@
 					<tr>
 						<th style="width:  auto">NHF CODE</th>
 						<th style="width:  auto">Facility Name</th>
+						<th style="width:  auto">Facility Type</th>
 						<th style="width: auto;text-align: center">Owner</th>
 						<th style="width: auto;text-align: center">Region</th>
 						<th style="width:  auto">
@@ -28,6 +29,7 @@
 						<tr>
 							<td scope="row"> {{$d->nhfcode}}</td>
 							<td>{{$d->facilityname}}</td>
+							<td>{{$d->hgpdesc}}</td>
 							<td>{{$d->owner}}</td>
 							<td>{{$d->rgn_desc}}</td>
 							<td></td>

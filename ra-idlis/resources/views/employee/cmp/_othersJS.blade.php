@@ -274,6 +274,7 @@
          var facIdd = ($('#xfacName').length > 0 ? $('#xfacName').val() : $('#facName').val());
 
          var facUid = document.getElementById('factype').value;
+        document.getElementById('regfac_id').value = $('#facName').val();
          if(facUid != "") {
 
             facAddr.open("GET", "{{asset('employee/dashboard/others/getAllFacAddr')}}", true);
@@ -1083,6 +1084,17 @@
 
 
    function vReqComp(ref_no, type, name_of_comp, appid, name_of_faci, type_of_faci, reqs, comps) {
+   document.getElementById('vcom').innerText = "";
+   document.getElementById('vcom_name').innerText="";
+   document.getElementById('vtype').innerText="";
+   document.getElementById('vname').innerText="";
+   document.getElementById('vtypef').innerText="";
+   document.getElementById('rc').innerText="";
+   document.getElementById('rqtextarea').value="";
+   document.getElementById('rc').innerText="";
+   document.getElementById('rqtextarea').value="";
+
+      // 
 
       document.getElementById('vcom').innerText = (reqs == "")?"Complainant:":"Client:";
 

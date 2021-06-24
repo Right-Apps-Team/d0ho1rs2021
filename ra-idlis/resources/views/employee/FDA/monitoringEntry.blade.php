@@ -79,7 +79,7 @@
 
                     <div class="row mb-1" hidden>
                       <div class="col-sm-6">
-                        City/Municipality: <br>
+                        City/Municipality:<br>
                         <input class="form-control w-100" type="" name="" readonly id="facc">
                       </div>
 
@@ -354,6 +354,8 @@
               document.getElementsByName(_allObj[i])[0].innerHTML = '<option value hidden selected disabled>Please select</option>';
             }
           }
+          // console.log("obsss")
+          // console.log(_obj[tName])
           sendRequestRetArr(["_token="+document.getElementsByName('_token')[0].value, "rTbl="+_arrQCol[tName], "rId="+document.getElementsByName(tName)[0].value], "{{asset('client1/request')}}/"+_obj[tName], "POST", true, {
             functionProcess: function(arr) {            
               if(curDom != undefined || curDom != null) {

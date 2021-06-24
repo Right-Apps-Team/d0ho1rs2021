@@ -4,7 +4,22 @@ var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
 // console.log(mserv_cap)
 // START OF DATA INITIALIZATION FOR VIEWING EXISTING APPLICATION
 if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
-    
+    console.log("typee")
+    console.log('{!! $apptypenew !!}')
+    console.log("typee")
+
+    var apptypenew = '{!! $apptypenew !!}';
+
+    if(apptypenew == "renewal"){
+
+    document.getElementById("aptidnew").value = 'R';
+    document.getElementById("appid").value = null;
+    document.getElementById("renewal").removeAttribute("hidden");
+
+    }else{
+    document.getElementById("appid").value = appid;
+    }
+
    
     var areacode = JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->areacode: "")!!}');
     
@@ -49,7 +64,8 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
         var brgyid ='{!!((count($fAddress) > 0) ? $fAddress[0]->brgyid: "")!!}';
         var noofdialysis ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofdialysis: "")!!}';
 
-        document.getElementById("appid").value = appid;
+    //   document.getElementById("appid").value = appid;
+
       document.getElementById("facmode").value = facmode;
       document.getElementById("funcid").value = funcid;
       document.getElementById("owner").value = owner;
@@ -372,7 +388,7 @@ document.getElementsByName('areacode').value = 3;
     var ghgpid = document.getElementsByName('hgpid')
     var curAppid = ""
     var mhfser_id = "LTO"
-    var aptid = "IN"
+    var aptid = document.getElementById("aptidnew").value
     
       var  ghgpid = document.getElementsByName('hgpid');
 
@@ -529,7 +545,7 @@ document.getElementsByName('areacode').value = 3;
 
 
     function getChargesPerApplication() {
-        let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'aptid=' + document.getElementById('aptid').value, 'hfser_id=' + mhfser_id],
+        let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'aptid=' + document.getElementById("aptidnew").value, 'hfser_id=' + mhfser_id],
             ghgpid = document.getElementsByName('hgpid');
         if (ghgpid != null || ghgpid != undefined) {
             for (let i = 0; i < ghgpid.length; i++) {
@@ -706,7 +722,7 @@ console.log("hello")
         let serv_chg = document.getElementById('serv_chg');
 				if(arrCol.length > 0){
 					let thisFacid = [], appendToPayment = ['groupThis'], hospitalFaci = ['H','H2','H3'];
-					let sArr = ['_token='+document.getElementsByName('_token')[0].value, 'appid='+curAppid, 'hfser_id='+mhfser_id, 'aptid='+aptid];
+					let sArr = ['_token='+document.getElementsByName('_token')[0].value, 'appid='+curAppid, 'hfser_id='+mhfser_id, 'aptid='+ document.getElementById("aptidnew").value];
 					if(Array.isArray(arrCol)) {
 						for(let i = 0; i < arrCol.length; i++) {
 					  		sArr.push('facid[]='+arrCol[i]); 
@@ -806,7 +822,12 @@ console.log("hello")
 									for(let i = 0; i < distinctArr.length; i++) {
                                         serv_chg.innerHTML = '';
                                           for (let i = 0; i < distinctArr.length; i++) {
-                                              var amt =  distinctArr[i]['amt'];
+                                               //   var amt =  distinctArr[i]['amt'];
+                                               var amt = parseFloat(distinctArr[i]['amt']) + 0;
+                                               if(isNaN(amt)){
+                                                   amt = 0;
+                                               }
+
                                               console.log(owns)
                                                 if(  owns == "G" ){
                                                     if(distinctArr[i]['facid'] == "H" ||distinctArr[i]['facid'] == "H2" || distinctArr[i]['facid'] == "H3" ){
@@ -816,10 +837,12 @@ console.log("hello")
                                                 }
                                                 console.log(amt)
                                                 //  ta.push({reference : distinctArr[i]['facname'],amount: distinctArr[i]['amt'], chgapp_id:  distinctArr[i]['chgapp_id'] }) //appcharge
-                                                 ta.push({reference : distinctArr[i]['facname'],amount: amt, chgapp_id:  distinctArr[i]['chgapp_id'] }) //appcharge
+                                                
+                                                if(distinctArr[i]['chgapp_id']){
+                                                ta.push({reference : distinctArr[i]['facname'],amount: amt, chgapp_id:  distinctArr[i]['chgapp_id'] }) //appcharge
                                                  serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['facname'] + '</td><td>&#8369;&nbsp;<span>' + numberWithCommas(subclass == "ND" ? 0 : (parseInt(amt)).toFixed(2)) + '</span></td></tr>';
                                                  // serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['facname'] + '</td><td>&#8369;&nbsp;<span>' + numberWithCommas((parseInt(distinctArr[i]['amt'])).toFixed(2)) + '</span></td></tr>';
-                                        
+                                                }
                                         
                                                 }
 										// serv_chg.innerHTML += '<tr><td>'+distinctArr[i]['facname']+'</td><td>&#8369;&nbsp;<span>'+numberWithCommas((parseInt(distinctArr[i]['amt'])).toFixed(2))+'</span></td></tr>';

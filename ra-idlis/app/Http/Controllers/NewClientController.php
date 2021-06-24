@@ -455,7 +455,8 @@ class NewClientController extends Controller {
 						'hfer' => $apptype,
 						'hideExtensions'=>$hideExtensions,
 						'aptid'=>$aptid,
-						'arrCon'=>json_encode($arrCon)
+						'arrCon'=>json_encode($arrCon),
+						'apptypenew'=> $request->apptype ? $request->apptype : 'IN'
 					]; 
 					// unset($arrRet['fAddress'][0]->areacode);
 					// dd($arrRet);
@@ -495,6 +496,7 @@ class NewClientController extends Controller {
 						'hideExtensions'=>$hideExtensions,
 						'aptid'=>$aptid,
 						'ptc'=>$ptc,
+						'apptypenew'=> $request->apptype ? $request->apptype : 'IN'
 					]; 
 					// dd($arrRet);
 					$locRet = "dashboard.client.permit-to-construct";
@@ -541,6 +543,7 @@ class NewClientController extends Controller {
 						'aptid'=>$aptid,
 						'group' => json_encode(DB::table('facilitytyp')->where('servtype_id','>',1)->whereNotNull('grphrz_name')->get()),
 						'forAmbulance' => json_encode($proceesedAmb),
+						'apptypenew'=> $request->apptype ? $request->apptype : 'IN'
 					];
 					 $locRet = "dashboard.client.license-to-operate";
 					//  $locRet = "client1.apply.LTO1.ltoapp";
@@ -572,7 +575,8 @@ class NewClientController extends Controller {
 							'cToken'=>FunctionsClientController::getToken(),
 							'hfer' => $apptype,
 							'hideExtensions'=>$hideExtensions,
-							'aptid'=>$aptid
+							'aptid'=>$aptid,
+							'apptypenew'=> $request->apptype ? $request->apptype : 'IN'
 						]; 
 						$locRet = "dashboard.client.certificate-of-registration";
 						// $locRet = "client1.apply.default1.defaultapp";
@@ -605,7 +609,8 @@ class NewClientController extends Controller {
 						'cToken'=>FunctionsClientController::getToken(),
 						'hfer' => $apptype,
 						'hideExtensions'=>$hideExtensions,
-						'aptid'=>$aptid
+						'aptid'=>$aptid,
+						'apptypenew'=> $request->apptype ? $request->apptype : 'IN'
 					]; 
 					
 					$locRet = "dashboard.client.certificate-of-accreditation";
@@ -638,7 +643,8 @@ class NewClientController extends Controller {
 							'cToken'=>FunctionsClientController::getToken(),
 							'hfer' => $apptype,
 							'hideExtensions'=>$hideExtensions,
-							'aptid'=>$aptid
+							'aptid'=>$aptid,
+							'apptypenew'=> $request->apptype ? $request->apptype : 'IN'
 						]; 
 						$locRet = "dashboard.client.authority-to-operate";
 					break;
@@ -660,7 +666,8 @@ class NewClientController extends Controller {
 						'cToken'=>FunctionsClientController::getToken(),
 						'hfer' => $apptype,
 						'hideExtensions'=>$hideExtensions,
-						'aptid'=>$aptid
+						'aptid'=>$aptid,
+						'apptypenew'=> $request->apptype ? $request->apptype : 'IN'
 					]; 
 					$locRet = "client1.apply.default1.defaultapp";
 					break;

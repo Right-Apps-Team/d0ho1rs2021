@@ -29,7 +29,8 @@
                 <tbody>
                 @if(count($appFacName) > 0) @foreach($appFacName AS $each)
                     <tr>
-                        <td><a data-dismiss="modal" onclick="document.getElementsByName('facilityname')[0].value = '{{$each->facilityname}}';" href="javascript:void(0);">{{$each->facilityname}}</a></td>
+                        <td><a data-dismiss="modal" onclick="checkFacilityNameNew('{{$each->facilityname}}')" href="javascript:void(0);">{{$each->facilityname}}</a></td>
+                        <!-- <td><a data-dismiss="modal" onclick="document.getElementsByName('facilityname')[0].value = '{{$each->facilityname}}';" href="javascript:void(0);">{{$each->facilityname}}</a></td> -->
                         <td>{{$each->rgn_desc}}</td>
                         <td>{{$each->provname}}</td>
                         <td>{{$each->cmname}}</td>

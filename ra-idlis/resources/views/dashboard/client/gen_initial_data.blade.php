@@ -1,8 +1,22 @@
 <script>
  
     if ('{!!isset($fAddress)&&(count($fAddress) > 0)!!}') {
+      console.log("typee")
+      console.log('{!! $apptypenew !!}')
+
+
       var appid ='{!!((count($fAddress) > 0) ? $fAddress[0]->appid: "")!!}';
+      // document.getElementById("appid").value = appid;
+      var apptypenew = '{!! $apptypenew !!}';
+
+      if(apptypenew == "renewal"){
+
+      document.getElementById("aptidnew").value = 'R';
+      document.getElementById("appid").value = null;
+      }else{
       document.getElementById("appid").value = appid;
+      }
+
         var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
         var areacode = JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->areacode: "")!!}');
 

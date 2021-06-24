@@ -2,6 +2,14 @@
 @extends('mainEmployee')
 @section('title', 'Monitoring')
 @section('content')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+
   <div class="content p-4">
     <div class="card">
       <div class="card-header bg-white font-weight-bold">
@@ -128,9 +136,14 @@
                   {{-- <td style="text-align:center">
                     <center>
                       <button class="btn btn-outline-info" data-toggle="modal" data-target="#eMonModal" onclick="getEditData(
-                        '{{$value->novid}}', '{{$value->name_of_faci}}', '{{ AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname }}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}')" title="View {{$value->name_of_faci}}">
+                        '{{$value->novid}}', '{{$value->name_of_faci}}', '{{ AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc }}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}')" title="View {{$value->name_of_faci}}">
                         <i class="fa fa-fw fa-eye"></i>
                       </button>
+
+ <!-- <button class="btn btn-outline-info" data-toggle="modal" data-target="#eMonModal" onclick="getEditData(
+                        '{{$value->novid}}', '{{$value->name_of_faci}}', ' AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname ', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}')" title="View {{$value->name_of_faci}}">
+                        <i class="fa fa-fw fa-eye"></i>
+                      </button> -->
 
                       @if($value->team != "")
                         @php
@@ -160,9 +173,15 @@
                       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="padding-left: 10px">
 
                         <button class="btn btn-outline-info" data-toggle="modal" data-target="#eMonModal" onclick="getEditData(
-                          '{{$value->novid}}', '{{$value->name_of_faci}}', '{{ AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname }}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}')" title="View {{$value->name_of_faci}}">
+                          '{{$value->novid}}', '{{$value->name_of_faci}}', '{{ AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc }}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}')" title="View {{$value->name_of_faci}}">
                           <i class="fa fa-fw fa-eye"></i>
                         </button>
+                      
+                      <!-- <button class="btn btn-outline-info" data-toggle="modal" data-target="#eMonModal" onclick="getEditData(
+                          '{{$value->novid}}', '{{$value->name_of_faci}}', ' AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname ', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}')" title="View {{$value->name_of_faci}}">
+                          <i class="fa fa-fw fa-eye"></i>
+                        </button> -->
+
 
                         @if($value->team != "")
                           @php
@@ -294,12 +313,23 @@
                     Type of Service:<span style="color:red">*</span>
                   </div>
 
-                  <div class="col-sm-8">
+                  <!-- <div class="col-sm-8">
                     <select name="name_of_faci" class="form-control w-100" onchange="changeFaciMonitoring()" id="factype" data-parsley-required-message="<b>*Type of Facility</b> required" required data-parsley="factype" required>  
                       <option disabled hidden selected value=""></option>
                       @isset($TypName)
                         @foreach($TypName as $key => $value)
-                          <option value="{{$value->facid}}">{{$value->facname}}</option>
+                          <option value="{{$value->facid}}">{{$value->facname}} </option>
+                        @endforeach
+                      @endisset
+                    </select>
+                  </div>  -->
+                  
+                  <div class="col-sm-8">
+                    <select name="name_of_faci" class="form-control w-100" onchange="fetchFacNames()" id="factype" data-parsley-required-message="<b>*Type of Facility</b> required" required data-parsley="factype" required>  
+                      <option disabled hidden selected value=""></option>
+                      @isset($hgpgrp)
+                        @foreach($hgpgrp as $key => $value)
+                          <option value="{{$value->hgpid}}">{{$value->hgpdesc}} </option>
                         @endforeach
                       @endisset
                     </select>
@@ -319,7 +349,10 @@
                   </div>
 
                   <div class="col-sm-8">
-                    <select name="type_of_faci" class="form-control w-100" id="facName" multiple onchange="changeFaciType()">
+                    <!-- <select name="type_of_faci" class="form-control w-100" id="facName" multiple onchange="changeFaciType()">
+                      {{-- <option diabled hidden selected value=""></option> --}}
+                    </select> -->
+                    <select name="type_of_faci" class="form-control w-100" id="facName"  onchange="changeFaciType()">
                       {{-- <option diabled hidden selected value=""></option> --}}
                     </select>
                   </div>
@@ -340,6 +373,9 @@
 
   <script type="text/javascript">
     function submitprompt(children) {
+      console.log("what")
+      console.log(document.getElementById('facName').children[0])
+
       if(document.getElementById('factype').value == "") {
         document.getElementById('prmsg').innerHTML = "<b>Please select a facility before submitting.</b>";
         document.getElementById('prdisplay').innerHTML = "";
@@ -357,6 +393,16 @@
         document.getElementById('p_sappid').value = document.getElementById('e_sappid').value;
         document.getElementById('p_date').value = document.getElementById('e_date').value;
         document.getElementById('prfactype').value = document.getElementById('factype').value;
+        document.getElementById('regfac_id').value = document.getElementById('facName').value;
+
+        console.log("p_sappid")
+        console.log(document.getElementById('e_sappid').value)
+        console.log("p_date")
+        console.log(document.getElementById('e_date').value)
+        console.log("prfactype")
+        console.log( document.getElementById('factype').value)
+console.log("regfac")
+        console.log( document.getElementById('facName').value)
 
         var display = "";
         Array.from(children).forEach(function(v) {
@@ -535,10 +581,12 @@
           <hr>
           <div class="input-group form-inline">
             <div class="card-body">
-              <form method="POST" action="{{asset('employee/dashboard/others/mon_submit')}}" data-parsley-validate>
+              <form method="POST" action="{{asset('employee/dashboard/others/mon_submit/new')}}" data-parsley-validate>
+              <!-- <form method="POST" action="{{asset('employee/dashboard/others')}}" data-parsley-validate> -->
 
                 {{csrf_field()}}
 
+                <input type="hidden" name="regfac_id" id="regfac_id">
                 <input type="hidden" name="e_sappid" id="p_sappid">
                 <input type="hidden" name="e_date" id="p_date" value="{{date('Y-m-d')}}">
                  <input type="hidden" name="cmidVal" id="cmidVal">
@@ -602,7 +650,8 @@
 
                 <div class="row">
                   <div class="col-sm-12">
-                    <button type="submit" name="btn_sub" id="prsubmit" class="btn btn-primary w-100"><b>SUBMIT</b></button>
+                    <button type="submit" name="submit" onclick="submitForMon()" id="prsubmit" class="btn btn-primary w-100"><b>SUBMIT</b></button>
+                    <!-- <button type="submit" name="btn_sub" id="prsubmit" class="btn btn-primary w-100"><b>SUBMIT</b></button> -->
                   </div>
                 </div>
 
@@ -618,8 +667,83 @@
       </div>
     </div>
   </div>
-
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js" integrity="sha512-yDlE7vpGDP7o2eftkCiPZ+yuUyEcaBwoJoIhdXv71KZWugFqEphIS3PU60lEkFaz8RxaVsMpSvQxMBaKVwA5xg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
   <script>
+  	const base_url = '{{URL::to('/')}}';
+// /get/facids/mons
+function callApi(url, data, method) {
+        const config = {
+            method: method,
+            url: `${base_url}${url}`,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+        return axios(config)
+    };
+    $("#regform").submit(function(e) {
+        e.preventDefault();
+    });
+
+function submitForMon(){
+ 
+  const subs = {
+    regfac_id: document.getElementById('regfac_id').value,
+    e_date:document.getElementById('e_date').value,
+
+  }
+console.log("subs")
+console.log(subs)
+  callApi('/api/submit/save/monitoring', subs, 'POST').then(d => {
+      console.log(d.data.mssg)
+      alert("Success")
+     location.reload();
+       
+       
+    }).catch(error => {
+        console.log(error);
+    })
+
+}
+
+const fetchFacNames = async (e) => {
+  console.log("Received")
+        const factype = $("#factype").val() //.text()
+        const cmid = $("#cmid").val() //.text()
+        console.log('EYYY, ', rgnid);
+        // if (factype) {
+            const data = {
+                'facid': factype,
+                'cmid': cmid
+            }
+            console.log(data)
+            callApi('/api/get/facids/mons', data, 'POST').then(facs => {
+              console.log("faac")
+              console.log(facs.data)
+               
+                $("#facName").empty();
+                // $("#facName").append(`<option value=''>Please select</option>`);
+                $("#facName").removeAttr('disabled');
+                facs.data.map(facName => {
+
+                    $("#facName").append(`<option value='${facName.regfac_id}' >${facName.facilityname}</option>`);
+                })
+                
+                $("#facName").selectpicker('refresh')
+            }).catch(err => {
+                console.log(err);
+            })
+        // } else {
+        //     alert("Please provide Municipality or Type of Services")
+        //     // $("#province").addAttr('disabled')
+        // }
+    }
+
+
+
+
     function sendRequestRetArr(arr_data, loc, type, bolRet, objFunction) {
       try {
         type = type.toUpperCase();

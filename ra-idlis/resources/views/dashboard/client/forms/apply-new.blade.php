@@ -58,7 +58,7 @@
                         <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
                             <button id="submit" class="btn btn-info btn-block" type="button" value="submit" name="submit" data-toggle="modal" data-target="#confirmSubmitModalCon">
                                 <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                                Submit Form
+                                Submit Form 
                             </button>
                         </div>
 
@@ -73,7 +73,7 @@
                         <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
                         <button id="update" hidden class="btn btn-primary btn-block" type="button" onClick="savePartialCon('update')">
                             <i class="fa fa-floppy-o" aria-hidden="true"></i>
-                            Update
+                            Update 
                         </button>
                     </div>
                     </div>
@@ -143,13 +143,24 @@
 <script>
  var savStat = "partial";
  savStat ='{!!((count($fAddress) > 0) ? $fAddress[0]->savingStat: "")!!}';
+ var apptypenew = '{!! $apptypenew !!}';
 
- if(savStat == "final"){
+ if(savStat == "final" && apptypenew != "renewal"){
     document.getElementById('submit').setAttribute("hidden", "hidden");
     document.getElementById('save').setAttribute("hidden", "hidden");
-document.getElementById('update').removeAttribute("hidden");
+    document.getElementById('update').removeAttribute("hidden");
+
+ }
+
+ if(apptypenew == "renewal"){
+   var ren =   document.getElementsByClassName("renewal");
+
+   for(var i = 0 ; i < ren.length ; i++){
+       ren[i].removeAttribute("hidden");
+   }
  }
 
 
 
 </script>
+

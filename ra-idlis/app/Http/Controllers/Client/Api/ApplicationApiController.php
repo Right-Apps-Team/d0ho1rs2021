@@ -35,11 +35,18 @@ class ApplicationApiController extends Controller
     public function checkRegistered(Request $request)
     {
         $name = $request->name;
-        $applications = RegisteredFacility::where('facilityname', $name)->get();
+        $applications = RegisteredFacility::where('facilityname', $name)
+        ->join('region', 'region.rgnid', '=', 'registered_facility.rgnid')
+        ->join('province', 'province.provid', '=', 'registered_facility.provid')
+        ->join('barangay', 'barangay.brgyid', '=', 'registered_facility.brgyid')
+        ->join('city_muni', 'city_muni.cmid', '=', 'registered_facility.cmid')
+        ->leftJoin('hfaci_grp', 'registered_facility.facid', '=', 'hfaci_grp.hgpid')
+        ->select('registered_facility.*','region.rgn_desc', 'barangay.brgyname', 'province.provname', 'hfaci_grp.hgpdesc', 'city_muni.cmname')
+        ->get();
         if (count($applications)) {
-            return  response()->json(['message' => 'Facility name no longer available'], 400);
+            return  response()->json(['message' => 'Facility name no longer available', 'appdata'=>$applications, 'resp'=>'exist'], 200);
         } else {
-            return  response()->json(['message' => 'Facility name is safe to use'], 200);
+            return  response()->json(['message' => 'Facility name is safe to use', 'resp'=>'dontexist'], 200);
         }
     }
     public function fetch(Request $request)

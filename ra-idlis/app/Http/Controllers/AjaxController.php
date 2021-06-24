@@ -3890,8 +3890,10 @@
 		/////// Monitoring
 		public static function getAllMonitoringForm() {
 			///////////////// Lloyd - Dec 12, 2018 ///////////////
+							// Jacky was here 6-21-2021
 			try {
-				$data = DB::table('mon_form')->join('appform','appform.appid','mon_form.appid')->get();
+				$data = DB::table('mon_form')->join('registered_facility','mon_form.regfac_id','registered_facility.regfac_id')->get();
+				// $data = DB::table('mon_form')->join('appform','appform.appid','mon_form.appid')->get(); 6-21-2021
 				return $data;
 			} catch (Exception $e) {
 				AjaxController::SystemLogs($e->getMessage());
@@ -4165,6 +4167,34 @@
 				return null;
 			}
 		}
+
+		public static function getAllDataEvaluateOneRegFac($regfac_id) // Get All Information on Single Application
+		{
+			try 
+			{
+				$data = DB::table('registered_facility')
+						// ->leftJoin('x08', 'appform.uid', '=', 'x08.uid')
+						->leftJoin('barangay', 'registered_facility.brgyid', '=', 'barangay.brgyid')
+						->leftJoin('city_muni', 'registered_facility.cmid', '=', 'city_muni.cmid')
+						->leftJoin('province', 'registered_facility.provid', '=', 'province.provid')
+						->leftJoin('facmode', 'registered_facility.facmode', '=', 'facmode.facmid')
+						->select('registered_facility.*', 'registered_facility.street_name', 'registered_facility.street_name as streetname' ,'barangay.brgyname', 'city_muni.cmname', 'province.provname','facmode.facmdesc', 'registered_facility.street_number')
+						// ->select('appform.*', 'appform.street_name', 'appform.street_name as streetname', 'x08.zipcode' ,'barangay.brgyname', 'city_muni.cmname', 'province.provname', 'appform.recommendedtime', 'appform.recommendeddate', 'hfaci_serv_type.*', 'appform.aptid', 'appform.status', 'trans_status.trns_desc', 'facmode.facmdesc', 'appform.street_number')
+						->where('registered_facility.regfac_id', '=', $regfac_id)
+						->first();
+				
+				
+				return $data;
+			
+				
+			} 
+			catch (Exception $e) 
+			{
+				AjaxController::SystemLogs($e->getMessage());
+				return null;
+			}
+		}
+
 
 		public static function getAllRequirementsLTO($appid){
 			$annexa = DB::table('hfsrbannexa')->where('appid',$appid)->get();
@@ -6040,6 +6070,27 @@
 			}
 		}
 
+		public static function getFacNameByFacidNew(Request $request) // Get Facility Name
+		{
+			try 
+			{
+				$facs = DB::table('registered_facility')
+				->where('cmid', $request->cmid)
+				->where('facid', $request->facid)
+				->get();
+
+			
+				
+
+				return response()->json($facs);
+			}
+			catch (Exception $e) 
+			{
+				AjaxController::SystemLogs($e->getMessage());
+				return 'ERROR';
+			}
+		}
+
 		public static function getFacNameNotApprovedByFacid(Request $request, $facid) // Get Facility Name
 		{
 			try 
@@ -6107,6 +6158,21 @@
 			try 
 			{
 				$sql = "SELECT * FROM facilitytyp WHERE facid = '$facid'";
+				$facType = DB::select($sql);
+
+				return $facType;
+			}
+			catch (Exception $e) 
+			{
+				AjaxController::SystemLogs($e->getMessage());
+				return 'ERROR';
+			}
+		}
+		public static function getHgpByFacid($facid) // Get Facility Type
+		{
+			try 
+			{
+				$sql = "SELECT * FROM hfaci_grp WHERE hgpid = '$facid'";
 				$facType = DB::select($sql);
 
 				return $facType;
@@ -6544,6 +6610,22 @@
 				return 'ERROR';
 			}
 		}
+		
+public static function getAllUidByRegFac($regfac_id) {
+			try {
+
+				$data = DB::table('registered_facility')
+							->where('regfac_id', '=', $regfac_id)
+							->select( 'email', 'owner', 'rgnid')
+							->distinct()
+							->first();
+
+				return $data;
+			} catch (Exception $e) {
+				AjaxController::SystemLogs($e->getMessage());
+				return 'ERROR';
+			}
+		}
 
 
 
@@ -6739,6 +6821,31 @@
 						->join('province', 'province.provid', '=', 'appform.provid')
 						->join('city_muni', 'city_muni.cmid', '=', 'appform.cmid')
 						->join('barangay', 'barangay.brgyid', '=', 'appform.brgyid')
+						->select('rgn_desc', 'provname', 'cmname', 'brgyname')
+						->first();
+
+				$newData = $data->brgyname.' '.$data->cmname.' '.$data->provname.' '.$data->rgn_desc;
+				// dd($newData);
+
+				return $newData;
+			}
+			catch (Exception $e) 
+			{
+				AjaxController::SystemLogs($e->getMessage());
+				return 'ERROR';
+			}
+		}
+
+		public static function getFacAddrByRegFacId($id) // Get Facility Name
+		{
+			try 
+			{
+				$data = DB::table('registered_facility')
+						->where('regfac_id', '=', $id)
+						->join('region', 'region.rgnid', '=', 'registered_facility.rgnid')
+						->join('province', 'province.provid', '=', 'registered_facility.provid')
+						->join('city_muni', 'city_muni.cmid', '=', 'registered_facility.cmid')
+						->join('barangay', 'barangay.brgyid', '=', 'registered_facility.brgyid')
 						->select('rgn_desc', 'provname', 'cmname', 'brgyname')
 						->first();
 
@@ -7442,6 +7549,47 @@
 		return false;
 	}
 
+	public static function forAssessmentHeadersRegFac($whereClause = array(),$select = '*',$case = 'default'){
+		if(session()->has('employee_login') || Agent::isMobile() || session()->has('uData')){
+		
+			switch ($case) {
+					case(2):
+						return DB::table('registered_facility')
+						// ->join('appform','appform.appid','x08_ft.appid')
+						->join('facilitytyp','facilitytyp.hgpid','registered_facility.facid')
+						// ->join('hfaci_serv_type','hfaci_serv_type.hfser_id','appform.hfser_id')
+						->join('asmt_title','asmt_title.serv','facilitytyp.facid')
+						->join('asmt_h1','asmt_h1.partID','asmt_title.title_code')
+						->join('asmt_h2','asmt_h2.asmtH1ID_FK','asmt_h1.asmtH1ID')
+						->join('asmt_h3','asmt_h3.asmtH2ID_FK','asmt_h2.asmtH2ID')
+						->join('assessmentcombined','assessmentcombined.asmtH3ID_FK','asmt_h3.asmtH3ID')
+						->where($whereClause)
+						->orderBy('assessmentSeq','ASC')
+						->select($select)
+						->distinct()
+						->get();
+					break;
+
+					default:
+						return DB::table('registered_facility')
+						// ->join('appform','appform.appid','x08_ft.appid')
+						->join('facilitytyp','facilitytyp.hgpid','registered_facility.facid')
+						// ->join('hfaci_serv_type','hfaci_serv_type.hfser_id','appform.hfser_id')
+						->join('asmt_title','asmt_title.serv','facilitytyp.facid')
+						->join('asmt_h1','asmt_h1.partID','asmt_title.title_code')
+						->join('asmt_h2','asmt_h2.asmtH1ID_FK','asmt_h1.asmtH1ID')
+						->join('asmt_h3','asmt_h3.asmtH2ID_FK','asmt_h2.asmtH2ID')
+						->where($whereClause)
+						->select($select)
+						->distinct()
+						->get();
+					break;
+				}		
+		
+		}
+		return false;
+	}
+
 	// public static function forDoneHeaders($appid,$monid,$selfAssess,$isPtc = false){
 	// 	$h1 = $h2 = $h3 = array();
 	// 	$monid = ($monid ? $monid : null);
@@ -7791,7 +7939,8 @@
 
 				case 'edit':
 				try {
-					OthersController::surv_sub_edit($request, explode('^', $action)[1], $request->ref_noResolve, $request->type);
+					OthersController::surv_sub_editRegFac($request, explode('^', $action)[1], $request->ref_noResolve, $request->type);//6-24-2021
+					// OthersController::surv_sub_edit($request, explode('^', $action)[1], $request->ref_noResolve, $request->type);
 					return back();
 				} catch (Exception $e) {
 					return back()->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'']);
@@ -8036,7 +8185,38 @@
 	public static function listForMonitoringAssessment(Request $request){
 		self::createMobileSessionIfMobile($request);
 		if(in_array(true, AjaxController::isSessionExist(['employee_login']))){
-			$allDataSql = (session()->get("employee_login")->uid == 'ADMIN' ? "SELECT * FROM mon_form join appform on appform.appid = mon_form.appid join mon_team on mon_team.montid = mon_form.team WHERE team IS NOT NULL" : "SELECT mon_form.type_of_faci, mon_form.date_added, mon_form.novid, mon_team_members.uid ,monid, date_monitoring, date_monitoring_end, name_of_faci, isApproved, isFinePaid, recommendation, assessmentStatus, team, mon_form.appid, name_of_faci FROM mon_form join appform on appform.appid = mon_form.appid join mon_team on mon_team.montid = mon_form.team join mon_team_members on mon_team_members.montid = mon_form.team WHERE team IS NOT NULL and mon_team_members.uid = '".session()->get('employee_login')->uid."'");
+			// 6-21-2021
+			// $allDataSql = (session()->get("employee_login")->uid == 'ADMIN' ? "SELECT * FROM mon_form join appform on appform.appid = mon_form.appid join mon_team on mon_team.montid = mon_form.team WHERE team IS NOT NULL" : "SELECT mon_form.type_of_faci, mon_form.date_added, mon_form.novid, mon_team_members.uid ,monid, date_monitoring, date_monitoring_end, name_of_faci, isApproved, isFinePaid, recommendation, assessmentStatus, team, mon_form.appid, name_of_faci FROM mon_form join appform on appform.appid = mon_form.appid join mon_team on mon_team.montid = mon_form.team join mon_team_members on mon_team_members.montid = mon_form.team WHERE team IS NOT NULL and mon_team_members.uid = '".session()->get('employee_login')->uid."'");
+			$allDataSql = (session()->get("employee_login")->uid == 'ADMIN' ? 
+			"SELECT * FROM mon_form
+			 join registered_facility on registered_facility.regfac_id = mon_form.regfac_id 
+			 join mon_team on mon_team.montid = mon_form.team WHERE team IS NOT NULL" 
+			 : 
+			 "SELECT mon_form.type_of_faci,
+			  mon_form.date_added, 
+			  mon_form.novid, 
+			  mon_team_members.uid ,
+			  monid, 
+			  date_monitoring,
+			  date_monitoring_end, 
+			  name_of_faci, 
+			  isApproved, 
+			  isFinePaid, 
+			  recommendation, 
+			  assessmentStatus, 
+			  team, 
+			  mon_form.appid, 
+			  name_of_faci 
+			  
+			  FROM mon_form 
+			  
+			  join registered_facility on registered_facility.regfac_id = mon_form.regfac_id 
+			  join mon_team on mon_team.montid = mon_form.team 
+			  join mon_team_members on mon_team_members.montid = mon_form.team 
+			  
+			  WHERE team IS NOT NULL and mon_team_members.uid = '".session()->get('employee_login')->uid."'");
+		
+		
 			return DB::select($allDataSql);
 		}
 		return 'no data';

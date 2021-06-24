@@ -155,10 +155,27 @@
  var savStat = "partial";
  savStat ='{!!((count($fAddress) > 0) ? $fAddress[0]->savingStat: "")!!}';
 
- if(savStat == "final"){
+//  if(savStat == "final"){
+//     document.getElementById('submit').setAttribute("hidden", "hidden");
+//     document.getElementById('save').setAttribute("hidden", "hidden");
+//     document.getElementById('update').removeAttribute("hidden");
+//  }
+
+var apptypenew = '{!! $apptypenew !!}';
+
+ if(savStat == "final" && apptypenew != "renewal"){
     document.getElementById('submit').setAttribute("hidden", "hidden");
     document.getElementById('save').setAttribute("hidden", "hidden");
     document.getElementById('update').removeAttribute("hidden");
+
+ }
+
+ if(apptypenew == "renewal"){
+   var ren =   document.getElementsByClassName("renewal");
+
+   for(var i = 0 ; i < ren.length ; i++){
+       ren[i].removeAttribute("hidden");
+   }
  }
 
 

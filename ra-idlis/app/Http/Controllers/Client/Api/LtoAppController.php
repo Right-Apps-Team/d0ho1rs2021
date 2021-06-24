@@ -136,6 +136,7 @@ class LtoAppController extends Controller
         
         $appform->assignedRgn           = $request->assignedRgn;
         $appform->aptid                 = $request->aptid;
+        $appform->hgpid                 = $request->hgpid;//6-22-2021
   
         if($request->saveas == 'final'){
             $appform->draft = null;

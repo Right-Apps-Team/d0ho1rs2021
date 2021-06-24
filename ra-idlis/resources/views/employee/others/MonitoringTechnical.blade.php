@@ -52,7 +52,8 @@
 	        						
         							@if($value->hasViolation != "")
         								<td style="text-align:center">
-        									<button type="btn" class="btn btn-danger" data-toggle="modal" data-target="#vMonModal" onclick="issueNOV('{{$value->monid}}', '{{$value->appid}}', '{{date('Y-m-d')}}', '{{$value->name_of_faci}}', '{{AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname}}', '{{AjaxController::getAllViolationsNew($value->monid)}}', '{{AjaxController::getAllViolationsKeyNew($value->monid)}}', '{{$value->team}}')">
+        									<button type="btn" class="btn btn-danger" data-toggle="modal" data-target="#vMonModal" onclick="issueNOV('{{$value->monid}}', '{{$value->regfac_id}}', '{{date('Y-m-d')}}', '{{$value->name_of_faci}}', '{{ AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc }}', '{{AjaxController::getAllViolationsNew($value->monid)}}', '{{AjaxController::getAllViolationsKeyNew($value->monid)}}', '{{$value->team}}')">
+        									<!-- <button type="btn" class="btn btn-danger" data-toggle="modal" data-target="#vMonModal" onclick="issueNOV('{{$value->monid}}', '{{$value->appid}}', '{{date('Y-m-d')}}', '{{$value->name_of_faci}}', 'AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname', '{{AjaxController::getAllViolationsNew($value->monid)}}', '{{AjaxController::getAllViolationsKeyNew($value->monid)}}', '{{$value->team}}')"> -->
     											<i class="fa fa-fw fa-eye"></i>
     											Show Violation
     										</button>
@@ -88,7 +89,8 @@
         								<td style="text-align: center;">
         									@if($value->novid == "" && $value->team != "")
         										{{-- {{dd(AjaxController::getTeamByTeamId($value->team))}} --}}
-	        									<button class="btn btn-outline-warning" title="Issue NOV" data-toggle="modal" data-target="#novMonModal" onclick="issueNOV('{{$value->monid}}', '{{$value->appid}}', '{{date('Y-m-d')}}', '{{$value->name_of_faci}}', '{{AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname}}', '', '', '{{$value->team}}', '{{AjaxController::getTeamByTeamId($value->team)->montname}}')">
+	        									<button class="btn btn-outline-warning" title="Issue NOV" data-toggle="modal" data-target="#novMonModal" onclick="issueNOV('{{$value->monid}}', '{{$value->regfac_id}}', '{{date('Y-m-d')}}', '{{$value->name_of_faci}}', '{{ AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc }}', '', '', '{{$value->team}}', '{{AjaxController::getTeamByTeamId($value->team)->montname}}')">
+	        									<!-- <button class="btn btn-outline-warning" title="Issue NOV" data-toggle="modal" data-target="#novMonModal" onclick="issueNOV('{{$value->monid}}', '{{$value->appid}}', '{{date('Y-m-d')}}', '{{$value->name_of_faci}}', 'AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname', '', '', '{{$value->team}}', '{{AjaxController::getTeamByTeamId($value->team)->montname}}')"> -->
 							                        <i class="fa fa-fw fa-clipboard-check"></i> Issue NOV
 							                    </button>
 							                @elseif($value->novid != "")
@@ -98,11 +100,13 @@
 							                    	</button>
 	    										</a>
 	    										<br><br>
-	    										<a class="btn btn-outline-info w-100" href="{{asset('employee/dashboard/processflow/GenerateReportAssessments/'.$value->appid)}}/{{$value->monid}}"><i class="fa fa-eye" aria-hidden="true"></i> View HF Assessment</a>
+	    										<a class="btn btn-outline-info w-100" href="{{asset('employee/dashboard/processflow/GenerateReportAssessments/regfac/'.$value->regfac_id)}}/{{$value->monid}}"><i class="fa fa-eye" aria-hidden="true"></i> View HF Assessment</a>
+	    										<!-- <a class="btn btn-outline-info w-100" href="{{asset('employee/dashboard/processflow/GenerateReportAssessments/'.$value->appid)}}/{{$value->monid}}"><i class="fa fa-eye" aria-hidden="true"></i> View HF Assessment</a> -->
 	    										
 	    										@if($value->hasLOE == "" && $value->isCDO == null)
 	    										<br><br>
-		    										<button class="btn btn-outline-secondary w-100" title="Update NOV" data-toggle="modal" data-target="#unovMonModal" onclick="issueNOVu('{{$value->monid}}', '{{$value->appid}}', '{{date('Y-m-d')}}', '{{$value->name_of_faci}}', '{{AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname}}', '', '', '{{$value->team}}', '{{AjaxController::getTeamByTeamId($value->team)->montname}}')">
+		    										<button class="btn btn-outline-secondary w-100" title="Update NOV" data-toggle="modal" data-target="#unovMonModal" onclick="issueNOVu('{{$value->monid}}', '{{$value->regfac_id}}', '{{date('Y-m-d')}}', '{{$value->name_of_faci}}', '{{ AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc }}', '', '', '{{$value->team}}', '{{AjaxController::getTeamByTeamId($value->team)->montname}}')">
+		    										<!-- <button class="btn btn-outline-secondary w-100" title="Update NOV" data-toggle="modal" data-target="#unovMonModal" onclick="issueNOVu('{{$value->monid}}', '{{$value->appid}}', '{{date('Y-m-d')}}', '{{$value->name_of_faci}}', 'AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname', '', '', '{{$value->team}}', '{{AjaxController::getTeamByTeamId($value->team)->montname}}')"> -->
 							                    		<i class="fa fa-clipboard-check" aria-hidden="true"></i> Update NOV
 							                    	</button>
 						                    	@endif

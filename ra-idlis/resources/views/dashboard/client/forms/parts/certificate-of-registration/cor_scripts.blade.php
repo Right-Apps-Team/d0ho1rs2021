@@ -6,7 +6,7 @@
        var ghgpid = document.getElementsByName('hgpid')
        var curAppid = ""
        var mhfser_id = "COR"
-       var aptid = "IN"
+       var aptid = document.getElementById("aptidnew").value
 
        var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
        // console.log("mserv_cap")
@@ -142,7 +142,7 @@
                      let thisFacid = [],
                             appendToPayment = ['groupThis'],
                             hospitalFaci = ['H', 'H2', 'H3'];
-                     let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'hfser_id=' + mhfser_id, 'aptid=' + aptid];
+                     let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'hfser_id=' + mhfser_id, 'aptid=' + document.getElementById("aptidnew").value];
                      if (Array.isArray(arrCol)) {
                             for (let i = 0; i < arrCol.length; i++) {
                                    sArr.push('facid[]=' + arrCol[i]);
@@ -223,7 +223,7 @@
 
        function getChargesPerApplication() {
        // console.log("get charge")
-        let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'aptid=' + aptid, 'hfser_id=' + mhfser_id],
+        let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'aptid=' + document.getElementById("aptidnew").value, 'hfser_id=' + mhfser_id],
         ghgpid = document.getElementsByName('hgpid');
        //  console.log(ghgpid)
         if (ghgpid != null || ghgpid != undefined) {

@@ -664,13 +664,16 @@ use FunctionsClientController;
 					->join('region', 'region.rgnid', '=', 'registered_facility.rgnid')
 					->join('province', 'province.provid', '=', 'registered_facility.provid')
 					->join('barangay', 'barangay.brgyid', '=', 'registered_facility.brgyid')
-					->select('registered_facility.*','region.rgn_desc', 'barangay.brgyname', 'province.provname')
+					->leftJoin('hfaci_grp', 'registered_facility.facid', '=', 'hfaci_grp.hgpid')
+					->select('registered_facility.*','region.rgn_desc', 'barangay.brgyname', 'province.provname', 'hfaci_grp.hgpdesc')
 					->get();
 
+					$factype =  DB::table('hfaci_grp')->select('hfaci_grp.*')
+					->get();
 					
 
 					// return view('employee.masterfile.registeredfacility',['data'=>$data]);	
-					return view('employee.masterfile.registeredfacility',['data'=>$data, 'regions'   => Regions::orderBy('sort')->get()]);	
+					return view('employee.masterfile.registeredfacility',['data'=>$data, 'regions'   => Regions::orderBy('sort')->get(),'factype' =>$factype ]);	
 				} 
 				catch (Exception $e) 
 				{
@@ -682,45 +685,45 @@ use FunctionsClientController;
 			{
 				try 
 					{
-						// $this->submitRegFacilities($request);
-						DB::insert('insert into registered_facility (
-							facilityname, 
-							rgnid, 
-							provid,
-							cmid,
-							brgyid,
-							street_number,
-							street_name,
-							zipcode,
-							contact,
-							areacode,
-							landline,
-							faxnumber,
-							email,
-							ocid,
-							classid,
-							subClassid,
-							facmode,
-							funcid,
-							owner,
-							ownerMobile,
-							ownerLandline,
-							ownerEmail,
-							mailingAddress,
-							approvingauthoritypos,
-							approvingauthority,
-							hfep_funded
-							) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-							[$request->facilityname, $request->rgnid, $request->provid, $request->cmid, $request->brgyid, $request->street_number, $request->street_name, $request->zipcode, $request->contact, $request->areacode, $request->landline, $request->faxnumber, $request->email, $request->ocid, $request->classid, $request->subClassid, $request->facmode, $request->funcid, $request->owner, $request->ownerMobile, $request->ownerLandline, $request->ownerEmail, $request->mailingAddress, $request->approvingauthoritypos, $request->approvingauthority, $request->hfep_funded ]);
+						// // $this->submitRegFacilities($request);
+						// DB::insert('insert into registered_facility (
+						// 	facilityname, 
+						// 	rgnid, 
+						// 	provid,
+						// 	cmid,
+						// 	brgyid,
+						// 	street_number,
+						// 	street_name,
+						// 	zipcode,
+						// 	contact,
+						// 	areacode,
+						// 	landline,
+						// 	faxnumber,
+						// 	email,
+						// 	ocid,
+						// 	classid,
+						// 	subClassid,
+						// 	facmode,
+						// 	funcid,
+						// 	owner,
+						// 	ownerMobile,
+						// 	ownerLandline,
+						// 	ownerEmail,
+						// 	mailingAddress,
+						// 	approvingauthoritypos,
+						// 	approvingauthority,
+						// 	hfep_funded
+						// 	) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+						// 	[$request->facilityname, $request->rgnid, $request->provid, $request->cmid, $request->brgyid, $request->street_number, $request->street_name, $request->zipcode, $request->contact, $request->areacode, $request->landline, $request->faxnumber, $request->email, $request->ocid, $request->classid, $request->subClassid, $request->facmode, $request->funcid, $request->owner, $request->ownerMobile, $request->ownerLandline, $request->ownerEmail, $request->mailingAddress, $request->approvingauthoritypos, $request->approvingauthority, $request->hfep_funded ]);
 			
 
 
-						return response()->json(
-							[
-								'mssg' => "success",
-							],
-							200
-						);
+						// return response()->json(
+						// 	[
+						// 		'mssg' => "success",
+						// 	],
+						// 	200
+						// );
 					} 
 				catch (Exception $e) 
 				{
@@ -737,7 +740,7 @@ use FunctionsClientController;
 						// .((RegisteredFacility::orderBy('regfac_id', 'desc')->first()->regfac_id ? RegisteredFacility::orderBy('regfac_id', 'desc')->first()->regfac_id : 0) + 1)
 				$zr = 1;
 				if(!is_null($ch = RegisteredFacility::orderBy('regfac_id', 'desc')->first())){
-					$zr += 1;
+					$zr = $ch->regfac_id + 1;
 				}
 				
 						$code = date('Y').date('d').'-'.rand(111, 999).'-'. $zr;
@@ -746,6 +749,7 @@ use FunctionsClientController;
 					DB::insert('insert into registered_facility (
 				nhfcode, 
 				facilityname, 
+				facid, 
 				rgnid, 
 				provid,
 				cmid,
@@ -771,8 +775,8 @@ use FunctionsClientController;
 				approvingauthoritypos,
 				approvingauthority,
 				hfep_funded
-				) values (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-				[$code, $request->facilityname, $request->rgnid, $request->provid, $request->cmid, $request->brgyid, $request->street_number, $request->street_name, $request->zipcode, $request->contact, $request->areacode, $request->landline, $request->faxnumber, $request->email, $request->ocid, $request->classid, $request->subClassid, $request->facmode, $request->funcid, $request->owner, $request->ownerMobile, $request->ownerLandline, $request->ownerEmail, $request->mailingAddress, $request->approvingauthoritypos, $request->approvingauthority, $request->hfep_funded ]);
+				) values (?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+				[$code, $request->facilityname, $request->facid, $request->rgnid, $request->provid, $request->cmid, $request->brgyid, $request->street_number, $request->street_name, $request->zipcode, $request->contact, $request->areacode, $request->landline, $request->faxnumber, $request->email, $request->ocid, $request->classid, $request->subClassid, $request->facmode, $request->funcid, $request->owner, $request->ownerMobile, $request->ownerLandline, $request->ownerEmail, $request->mailingAddress, $request->approvingauthoritypos, $request->approvingauthority, $request->hfep_funded ]);
 
 
 						return response()->json(
@@ -5200,6 +5204,47 @@ use FunctionsClientController;
 
 		}
 
+		// 6-22-2021
+
+
+	
+
+
+
+
+		public function AssessmentShowPartNewRegFac(Request $request, $regfac_id, $isMon = false, $isSelfAssess = false){
+			AjaxController::createMobileSessionIfMobile($request);
+			if( in_array(true, AjaxController::isSessionExist(['uData','employee_login']))){
+				try {
+					$data = AjaxController::getAllDataEvaluateOneRegFac($regfac_id);//
+					$toViewArr = [
+						'data' => $data,
+						'head' => AjaxController::forAssessmentHeadersRegFac(array(['registered_facility.regfac_id',$regfac_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id')),
+						// 'head' => AjaxController::forAssessmentHeaders(array(['appform.appid',$appid],['asmt_h1.apptype',$data->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id')),
+						'address' =>  url('employee/dashboard/processflow/HeaderOne/regfac/'.$regfac_id.'/'),
+						'isMain' => true,
+						'assesed' => [],
+						// 'assesed' => AjaxController::assessedDone(3,$appid,$isMon,$isSelfAssess),
+						'isMon' => $isMon,
+						'isSentFromMobile' => [],
+						// 'isSentFromMobile' => DB::table('frommobileinspection')->where([['appid',$appid],['monid',($isMon ? $isMon : null)]])->exists(),
+						'hasselfassess' =>[],
+						// 'hasselfassess' => DB::table('assessmentcombinedduplicate')->where([['appid',$appid],['selfassess',1]])->exists(),
+						'regfac_id' => $regfac_id
+					];
+					return AjaxController::sendTo($isSelfAssess,$this->agent,$request->all(),'employee.processflow.pfassessmentShowPartRegFac',$toViewArr);
+					// return AjaxController::sendTo($isSelfAssess,$this->agent,$request->all(),'employee.processflow.pfassessmentShowPart',$toViewArr);
+				} catch (Exception $e) {
+					AjaxController::SystemLogs($e);
+					return $e;
+				}
+
+			} else {
+				return back()->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Application not exist.']);
+			}
+
+		}
+
 
 		// public function AssessmentShowH1(Request $request,$appid,$part,$isMon = false,$isSelfAssess = false){
 		// 	if(isset($appid) && FunctionsClientController::isExistOnAppform($appid) && FunctionsClientController::existOnDB('asmt_title',[['title_code',$part]]) && in_array(true, AjaxController::isSessionExist(['uData','employee_login']))){
@@ -5249,6 +5294,43 @@ use FunctionsClientController;
 					];
 					// dd($toViewArr);
 					return AjaxController::sendTo($isSelfAssess,$this->agent,$request->all(),'employee.processflow.pfassessmentShowPart',$toViewArr);
+				} catch (Exception $e) {
+					AjaxController::SystemLogs($e);
+					return $e;
+
+				}
+
+			} else {
+				return ($isSelfAssess ? false : back()->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Part does not exist.']));
+			}
+		}
+
+		public function AssessmentShowH1RegFac(Request $request,$regfac_id,$part,$isMon = false,$isSelfAssess = false){
+			AjaxController::createMobileSessionIfMobile($request);
+			if(FunctionsClientController::existOnDB('asmt_title',[['title_code',$part]]) && in_array(true, AjaxController::isSessionExist(['uData','employee_login']))){
+				try {
+
+					$data = AjaxController::getAllDataEvaluateOneRegFac($regfac_id);
+					$whereClause = array(['registered_facility.regfac_id',$regfac_id],['asmt_h1.partID',$part]);
+					$headData = AjaxController::forAssessmentHeadersRegFac($whereClause,array('asmt_h1.h1name as desc','asmt_h1.asmtH1ID as id','asmt_title.title_name as h1HeadBack','asmt_title.title_code as h1HeadID'));
+					$toViewArr = [
+						'data' => $data,
+						'mon' => DB::table('mon_form')->where('regfac_id', $regfac_id)->first(),
+						'head' => $headData,
+						// 'address' => ($isSelfAssess ? url('client1/apply/HeaderTwo/'.$appid.'/') : url('employee/dashboard/processflow/HeaderTwo/'.$appid.'/')),
+						'address' => ($isSelfAssess ? url('client1/apply/ShowAssessments/'.$appid.'/') : url('employee/dashboard/processflow/ShowAssessments/regfac/'.$regfac_id.'/')),
+						'customAddress' => ($isSelfAssess ? url('client1/apply/assessmentReady/'.$regfac_id.'/') :url('employee/dashboard/processflow/parts/'.$regfac_id)),
+						// 'assesed' => AjaxController::assessedDone(2,$appid,$isMon,$isSelfAssess),
+						'assesed' => [],
+						// 'assesed' => AjaxController::forDoneHeaders($appid,$isMon,$isSelfAssess)['h3'],
+						'neededData' => array('level' => 3,'id' => $part),
+						'isMon' => $isMon,
+						'regfac_id' => $regfac_id,
+						'crumb' => isset($headData[0]->h1HeadID) ? [array('id' => $headData[0]->h1HeadID,'desc' => $headData[0]->h1HeadBack, 'beforeAddress' => 'MAIN')] : null
+					];
+					// dd($toViewArr);
+					return AjaxController::sendTo($isSelfAssess,$this->agent,$request->all(),'employee.processflow.pfassessmentShowPartRegFac',$toViewArr);
+					// return AjaxController::sendTo($isSelfAssess,$this->agent,$request->all(),'employee.processflow.pfassessmentShowPart',$toViewArr);
 				} catch (Exception $e) {
 					AjaxController::SystemLogs($e);
 					return $e;
@@ -5373,6 +5455,35 @@ use FunctionsClientController;
 			}
 		}
 
+		public function ShowAssessmentsRegFac(Request $request,$regfac_id,$h3, $isMon = false,$isSelfAssess = false){
+			AjaxController::createMobileSessionIfMobile($request);
+			// return response()->json([!FunctionsClientController::existOnDB('assessmentcombinedduplicate',[['asmtH3ID_FK',$h3],['appid',$appid],['monid',$isMon],['selfassess',($isSelfAssess ? 1 : null)]])]);
+			if(FunctionsClientController::existOnDB('asmt_h1',[['asmtH1ID',$h3]]) ){
+				try {
+					$data = AjaxController::getAllDataEvaluateOneRegFac($regfac_id);
+					$whereClause = array(['assessmentcombined.assessmentStatus',1],['registered_facility.regfac_id',$regfac_id],['asmt_h1.asmtH1ID',$h3]);
+					$toSelect = array('assessmentcombined.asmtComb as id','assessmentcombined.assessmentName as description','assessmentcombined.asmtH3ID_FK as h3Header','assessmentcombined.headingText as otherHeading', 'assessmentcombined.assessmentSeq as sequence','asmt_h3.asmtH2ID_FK as idForBack','asmt_title.title_name as h1HeadBack','asmt_title.title_code as h1HeadID','asmt_h1.h1name as h2HeadBack','asmt_h1.partID as h2HeadID','asmt_h2.h2name as h3HeadBack','asmt_h2.asmtH2ID as h3HeadID','asmt_h3.h3name as h4HeadBack','asmt_h3.asmtH3ID as h4HeadID');
+					$headData = AjaxController::forAssessmentHeadersRegFac($whereClause,$toSelect,2);
+					$toViewArr = [
+						'data' => $data,
+						'head' => $headData,
+						'address' => url('employee/dashboard/processflow/HeaderThree/'.$regfac_id.'/'),
+						'part' => $h3,
+						'isMon' => $isMon,
+						'regfac_id' => $regfac_id,
+						'crumb' => (isset($headData[0]) ? [array('id' => $headData[0]->h1HeadID,'desc' => $headData[0]->h1HeadBack, 'beforeAddress' => 'MAIN'),array('id' => $headData[0]->h2HeadID,'desc' => $headData[0]->h2HeadBack, 'beforeAddress' => 'HeaderOne')/*,array('id' => $headData[0]->h3HeadID,'desc' => $headData[0]->h3HeadBack,'beforeAddress' => 'HeaderTwo') ,array('id' => $headData[0]->idForBack,'desc' => $headData[0]->h4HeadBack,'beforeAddress' => 'HeaderThree')*/] : [])
+					];
+					return AjaxController::sendTo($isSelfAssess,$this->agent,$request->all(),'employee.processflow.pfassessmentShowAssessmentRegFac',$toViewArr);
+					// return AjaxController::sendTo($isSelfAssess,$this->agent,$request->all(),'employee.processflow.pfassessmentShowAssessment',$toViewArr);
+				} catch (Exception $e) {
+					return $e;
+				}
+
+			} else {
+				return ($isSelfAssess ? false  : redirect('employee/dashboard/processflow/HeaderThree/'.$regfac_id.'/'.$h3)->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Sub Category does not exist or has been assessed.']));
+			}
+		}
+
 		// public function SaveAssessments (Request $request, $isSelfAssess = false){
 		// 	$arrOfUnneeded = array('_token','appid','part');
 		// 	$arrForCheck = $request->except($arrOfUnneeded);
@@ -5440,6 +5551,85 @@ use FunctionsClientController;
 							}
 						}
 						$urlToRedirect = ($isSelfAssess ? url('client1/apply/HeaderOne/'.$request->appid.'/'.$dataFromDB->title_code) : url('employee/dashboard/processflow/HeaderOne/'.$request->appid.'/'.$dataFromDB->title_code.'/'.(isset($request->monid) && $request->monid > 0 ? $request->monid : '')));
+						$toViewArr = [
+							'redirectTo' => $urlToRedirect
+						];
+						return AjaxController::sendTo($isSelfAssess,$this->agent,$request->all(),'employee/assessment/operationSuccess',$toViewArr);
+					}
+				} catch (Exception $e) {
+					AjaxController::SystemLogs($e);
+					return $e;
+				}
+			}
+			return ($isSelfAssess ? false : back()->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Item not found on DB.']));
+			
+		}
+
+
+		public function SaveAssessmentsRegFac (Request $request, $isSelfAssess = false){
+			$arrOfUnneeded = array('_token','regfac_id','part');
+			$arrForCheck = $request->except($arrOfUnneeded);
+			if(!isset($request->regfac_id) || count($arrForCheck) <= 0 ){
+				return back()->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'No items to pass.']);
+			}
+			
+			$getOnDBID = $sample = array();
+			$res = null;
+			if( FunctionsClientController::existOnDB('asmt_h1',[['asmtH1ID',$request->part]]) && in_array(true, AjaxController::isSessionExist(['uData','employee_login']))){
+				try {
+					if(DB::table('assessmentcombinedduplicate')->where([['asmtH3ID_FK',$request->part],['regfac_id',$request->regfac_id],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0){
+
+						$data = AjaxController::getAllDataEvaluateOneRegFac($request->regfac_id);//
+						$filteredAssessment = $request->except($arrOfUnneeded);
+
+						$dataFromDB = AjaxController::forAssessmentHeadersRegFac(
+							array(['registered_facility.regfac_id',$request->regfac_id],
+							['asmt_h1.asmtH1ID',$request->part]
+						),array('asmt_h1.*','asmt_h2.*','asmt_h3.*','asmt_title.title_code'))[0];
+
+						$uData = AjaxController::getCurrentUserAllData();
+
+						foreach ($filteredAssessment as $key => $value) {
+
+							if(is_numeric($key) && !in_array($key, $getOnDBID)){
+
+								$res = DB::table('assessmentcombined')
+								->whereIn('asmtComb',[$key])
+								->select('asmtComb','assessmentName','assessmentSeq','headingText')
+								->first();
+
+								$forInsertArray = array(
+									'asmtComb_FK' => $res->asmtComb, 
+									'assessmentName' => $res->assessmentName, 
+									'asmtH3ID_FK' => $request->part, 
+									'h3name' => $dataFromDB->h3name, 
+									'asmtH2ID_FK' => $dataFromDB->asmtH2ID, 
+									'h2name' => $dataFromDB->h2name, 
+									'asmtH1ID_FK' => $dataFromDB->asmtH1ID, 
+									'partID' => $dataFromDB->title_code, 
+									'h1name' => $dataFromDB->h1name, 
+									'evaluation' => 
+										($value['comp'] == 'false' ? 0 : 
+										($value['comp'] == 'NA' ? 'NA' : 1)), 
+									'remarks' => $value['remarks'], 
+									'assessmentSeq' => $res->assessmentSeq, 
+									'evaluatedBy'=> 
+										($uData['cur_user'] != 'ERROR' ? $uData['cur_user'] : 
+										(session()->has('uData') ? session()->get('uData')->uid :
+										'UNKOWN, '.$request->ip())), 
+									'assessmentHead' => $res->headingText, 
+									'monid' => $request->monid, 
+									'selfassess' => ($isSelfAssess ? $isSelfAssess : null), 
+									'regfac_id' => $request->regfac_id)
+									
+									;
+								
+								// (isset($request->monid) && $request->monid > 0 ? $forInsertArray['monid'] = $request->monid : '');
+								DB::table('assessmentcombinedduplicate')->insert($forInsertArray);
+								array_push($getOnDBID, $key);
+							}
+						}
+						$urlToRedirect = url('employee/dashboard/processflow/HeaderOne/regfac/'.$request->regfac_id.'/'.$dataFromDB->title_code.'/'.(isset($request->monid) && $request->monid > 0 ? $request->monid : ''));
 						$toViewArr = [
 							'redirectTo' => $urlToRedirect
 						];
@@ -5547,6 +5737,127 @@ use FunctionsClientController;
 					'otherDetails' => $otherDet
 				];
 				return AjaxController::sendTo($isSelfAssess,$this->agent,$request->all(),'employee/processflow/pfassessmentgeneratedreport',$data);
+
+			} else {
+				return ($isSelfAssess ? false : back()->with('errRet', ['errAlt'=>'warning', 'errMsg'=>'Assessment records not found.']));
+			}
+		}
+
+		public function GenerateReportAssessmentRegFac (Request $request, $regfac_id, $monid = null, $isSelfAssess = null){
+			$reco = $otherDet = null;
+			if(FunctionsClientController::existOnDB('assessmentcombinedduplicate',array(['assessmentcombinedduplicate.regfac_id',$regfac_id]))){
+				$uInf = AjaxController::getAllDataEvaluateOneRegFac($regfac_id);
+
+
+				if( $request->isMethod('post') && 
+					in_array(true, AjaxController::isSessionExist(['employee_login'])) && 
+					!FunctionsClientController::existOnDB('assessmentrecommendation',array(['regfac_id',$regfac_id],['monid',$monid]))){
+					$uData = AjaxController::getCurrentUserAllData();
+
+					$isSent = DB::table('assessmentrecommendation')->insert(
+						['choice' => $request->choice, 
+						'details' => $request->details, 
+						'valfrom' => $request->vf, 
+						'valto' => $request->vto, 
+						'days' => $request->days, 
+						'regfac_id' => $regfac_id, 
+						'selfAssess' => $isSelfAssess , 
+						'monid' => $monid, 
+						'noofbed' => $request->noofbed, 
+						'noofdialysis' => $request->noofdialysis, 
+						'conforme' => $request->conformee, 
+						'conformeDesignation' => $request->conformeeDes, 
+						'evaluatedby' => $uData['cur_user']
+					]);
+
+					if(!$isSent){
+						return redirect('employee/dashboard/processflow/parts/new/'.$regfac_id)->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Error Occured. Please try again later']);
+					}
+				}//
+
+				// if(!isset($monid)){
+					if(!FunctionsClientController::existOnDB('assessmentrecommendation',
+					array(['regfac_id',$regfac_id],
+					['selfAssess',$isSelfAssess],['monid',$monid])) && 
+					in_array(true, AjaxController::isSessionExist(['employee_login'])) && $isSelfAssess == null){
+						$uInf->isMon = $monid;
+						$arrRet = [
+							'uInf' => $uInf,
+							'mon' =>  $monid
+						];
+						return AjaxController::sendTo($isSelfAssess,$this->agent,$request->all(),'employee.processflow.pfassessmentrecommendation',$arrRet);
+					}
+
+					$reco = DB::table('assessmentrecommendation')->where([['regfac_id',$regfac_id],['selfAssess',$isSelfAssess],['monid',$monid]])->first();
+				// }
+
+				if(!FunctionsClientController::existOnDB('mon_form',[['monid',$monid],['assessmentStatus',1]])){
+					DB::table('mon_form')->where('monid',$monid)->update(['assessmentStatus' => 1]);
+				}
+
+				// if(!isset($isSelfAssess)){
+				// // if(!isset($isSelfAssess) && FunctionsClientController::existOnDB('appform',array(['appid',$appid],['isInspected',null]))){
+				// 	$evaluation = (
+				// 		DB::table('assessmentcombinedduplicate')
+				// 		->where([
+				// 			['regfac_id',$appid],
+				// 			['monid',$monid],
+				// 			['selfassess',$isSelfAssess]
+				// 		])->whereNotin('evaluation',[1,'NA'])->exists() == true ? 2 : 1);
+
+				// 	$empData = AjaxController::getCurrentUserAllData();
+				// 	DB::table('appform')->where('appid',$appid)->update(['isInspected' => $evaluation, 'inspecteddate' => $empData['date'], 'inspectedtime' => $empData['time'], 'inspectedipaddr' => $empData['ip'], 'inspectedby' => $empData['cur_user']]);
+				// }
+
+				$assessor = array();
+				$dataFromDB = DB::table('assessmentcombinedduplicate')
+				->where([
+					['assessmentcombinedduplicate.regfac_id',$regfac_id],
+					['selfAssess',$isSelfAssess],
+					['monid',$monid]
+				])->orderBy('assessmentSeq','ASC')->get();
+
+				foreach ($dataFromDB as $key) {
+					if(!in_array($key->evaluatedBy, $assessor)){
+						array_push($assessor, $key->evaluatedBy);
+					}	
+				}
+				$onWhereClause = (count($assessor) > 0 ? $assessor : []);
+
+				$arrForImprovement = $arrForCompliance = array();
+
+				if(count($dataFromDB) > 0){
+					foreach ($dataFromDB as $key => $value) {
+						if($value->evaluation === 1 && isset($value->remarks) && !empty($value->remarks)){
+							$arrForImprovement[$key] = $value;
+						}
+						if(!in_array($value->evaluation, [1,2,'NA'])){
+							$arrForCompliance[$key] = $value;
+						}
+					}
+				}
+
+				if(isset($monid)){
+					$novForm = DB::table('nov_issued')->where('monid',$monid)->first();
+					if($novForm != null){
+						$novFormArr = explode(',', $novForm->novdire);
+						foreach ($novFormArr as $key) {
+							$otherDet['mon']['NOV'][] = (DB::table('nov')->select('novdesc','novid_directions')->where('novid_directions',$key)->first() ?? null);
+						}
+						$otherDet['mon']['NOVDetails'] = $novForm;
+					}
+				}
+
+				$data = [
+					'reports' => $dataFromDB,
+					'assessor' => DB::table('x08')->whereIn('uid',$onWhereClause)->get(),
+					'reco' => $reco,
+					'uInf' => $uInf,
+					'otherReports' => [$arrForImprovement,$arrForCompliance],
+					'isMon' => $monid,
+					'otherDetails' => $otherDet
+				];
+				return AjaxController::sendTo($isSelfAssess,$this->agent,$request->all(),'employee/processflow/pfassessmentgeneratedreportRegfac',$data);
 
 			} else {
 				return ($isSelfAssess ? false : back()->with('errRet', ['errAlt'=>'warning', 'errMsg'=>'Assessment records not found.']));
@@ -6875,7 +7186,9 @@ use FunctionsClientController;
 						// dd(AjaxController::getFacTypeByFacid("BB")[0]->facname);
 						$allRec = AjaxController::getAllSurveillanceRecommendation(); 
 						$typNameSql = "SELECT * FROM facilitytyp WHERE servtype_id = 1";
+						
 						$typName = DB::select($typNameSql);
+						$hgpgrp = DB::select("SELECT * FROM hfaci_grp");
 						$region = DB::table('region')->get();
 						// dd($faciName);
 
@@ -6907,7 +7220,7 @@ use FunctionsClientController;
 
 						// dd($allData);
 
-						return view('employee.others.Monitoring', ['TypName'=>$typName, 'AllData'=>$allData, 'AllRec'=>$allRec, 'region' => $region]);
+						return view('employee.others.Monitoring', ['hgpgrp'=>$hgpgrp,'TypName'=>$typName, 'AllData'=>$allData, 'AllRec'=>$allRec, 'region' => $region]);
 					} 
 					catch (Exception $e) 
 					{
@@ -6927,7 +7240,9 @@ use FunctionsClientController;
 				{
 					try 
 					{
-						$allDataSql = "SELECT * FROM mon_form join appform on appform.appid = mon_form.appid WHERE team IS NULL";
+						$allDataSql = "SELECT * FROM mon_form join registered_facility on registered_facility.regfac_id = mon_form.regfac_id WHERE team IS NULL";
+						// $allDataSql = "SELECT * FROM mon_form join appform on appform.appid = mon_form.appid WHERE team IS NULL"; 6-21-2021
+						
 						$allData = DB::select($allDataSql);
 						$allRec = AjaxController::getAllSurveillanceRecommendation();
 						$allTeam = AjaxController::getAllTeams();
@@ -7733,6 +8048,85 @@ use FunctionsClientController;
 						$allData[$i]->comps = $ctemp;
 					}
 					return view('employee.others.RequestAssistance', ['ROAData'=>$data, 'CompData'=>$data3, 'FormData'=>$data1, 'FacName'=>$faciName, 'AllData'=>$allData]);
+				} 
+				catch (Exception $e) 
+				{
+					dd($e);
+					AjaxController::SystemLogs($e);
+					session()->flash('system_error', 'ERROR');
+					return view('employee.others.RequestAssistance');
+				}
+			}
+		}
+
+		public function RequestAssistanceOthersRegFac(Request $request)
+		{
+			if ($request->isMethod('get')) 
+			{
+				try 
+				{
+					$allDataSql = "(SELECT * from complaints_form where `type` = 'Complaints') UNION (SELECT * from req_ast_form where `type` = 'Assistance')";
+					$allData = DB::select($allDataSql);
+					// dd($allData);
+					$data = AjaxController::getAllRequestForAssistance();
+					$data3 = AjaxController::getAllComplaints();
+					$data2 = DB::table('complaints_form')->orderBy('ref_no', 'desc')->get();
+					$data1 = DB::table('req_ast_form')->orderBy('ref_no', 'desc')->get();
+
+					$hgps = DB::table('hfaci_grp')->get();
+
+					$faciNameSql = "SELECT registered_facility.*, hfaci_grp.hgpdesc , CONCAT(region.rgn_desc,' ', province.provname,' ',city_muni.cmname,' ',barangay.brgyname) as address FROM registered_facility 
+					join hfaci_grp on registered_facility.facid = hfaci_grp.hgpid
+					join region on region.rgnid = registered_facility.rgnid
+					join province on province.provid = registered_facility.provid
+					join city_muni on city_muni.cmid = registered_facility.cmid
+					join barangay on barangay.brgyid = registered_facility.brgyid
+					";
+					// $faciNameSql = "SELECT DISTINCT appform.appid, appform.uid, appform.facilityname FROM appform WHERE isApprove IS NOT NULL AND hfser_id IN ('LTO','ATO') ORDER BY appform.appid ASC";
+
+					$faciName = DB::select($faciNameSql);
+
+					if(count($data1) < 1) {
+						$data1 = array("ref_no"=>"0", "name_of_comp"=>"0", "age"=>"0", "civ_stat"=>"0", "address"=>"0", "gender"=>"0", "req_date"=>"0", "contact_no"=>"0", "name_of_faci"=>"0", "type_of_faci"=>"0", "address_of_faci"=>"0", "name_of_conf_pat"=>"0", "date_of_conf_pat"=>"0", "reqs"=>"0", "comps"=>"0", "signature"=>"0");
+						$data1 = (object) $data1;
+					}					
+
+					if(count($data2) < 1) {
+						$data2 = array("ref_no"=>"0", "name_of_comp"=>"0", "age"=>"0", "civ_stat"=>"0", "address"=>"0", "gender"=>"0", "req_date"=>"0", "contact_no"=>"0", "name_of_faci"=>"0", "type_of_faci"=>"0", "address_of_faci"=>"0", "name_of_conf_pat"=>"0", "date_of_conf_pat"=>"0", "reqs"=>"0", "comps"=>"0", "signature"=>"0");
+						$data2 = (object) $data2;
+					} 
+
+					for($i=0; $i<count($allData); $i++) {
+						$rtemp = explode(', ', $allData[$i]->reqs);
+						$ctemp = explode(', ', $allData[$i]->comps);
+
+						$allData[$i]->x_reqs = rtrim($allData[$i]->reqs, ', ');
+						$allData[$i]->x_comps = rtrim($allData[$i]->comps, ', ');
+
+						if($allData[$i]->appid != $allData[$i]->name_of_faci)
+							$allData[$i]->select_type = (isset($allData[$i]->appid) ? AjaxController::getFacTypeByAppId($request, $allData[$i]->appid) : []);
+
+						for($j=0; $j<count($rtemp); $j++) {
+							for($k=0; $k<count($data); $k++) {
+								if($rtemp[$j] == $data[$k]->rq_id) {
+									$rtemp[$j] = $data[$k]->rq_desc;
+								}
+							}
+						}
+
+						for($j=0; $j<count($ctemp); $j++) {
+							for($k=0; $k<count($data3); $k++) {
+								if($ctemp[$j] == $data3[$k]->cmp_id) {
+									$ctemp[$j] = $data3[$k]->cmp_desc;
+								}
+							}
+						}
+						$rtemp = implode(', ', $rtemp);
+						$ctemp = implode(', ', $ctemp);
+						$allData[$i]->reqs = $rtemp;
+						$allData[$i]->comps = $ctemp;
+					}
+					return view('employee.others.RequestAssistance', ['ROAData'=>$data,'hgps'=>$hgps, 'CompData'=>$data3, 'FormData'=>$data1, 'FacName'=>$faciName, 'AllData'=>$allData]);
 				} 
 				catch (Exception $e) 
 				{

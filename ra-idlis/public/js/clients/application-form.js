@@ -477,21 +477,39 @@ const checkFacilityName = async (e) => {
     const facilityname = $('#facility_name').val()
     console.log('EYYY, ', facilityname);
     if( facilityname ) {
-        callApi('/api/application/validate-name', {
+        callApi('/api/application/validate-name/registered', {
+        // callApi('/api/application/validate-name', {
             name: facilityname
         }, 'POST').then(ok => {
+
+            if(ok.data.resp == "dontexist"){
+                console .log("appdata")
             console.log(ok.data.message)
             localStorage.setItem('facilityname', facilityname)
             $("#facility_name").css('border', '1px solid green');
             $("#facility_name_feedback").removeClass('text-danger');
             $("#facility_name_feedback").addClass('text-success');
             $("#facility_name_feedback").html(ok.data.message);
-        }).catch(err => {
+        }else{
+            var appdata = ok.data.appdata
+            console .log("appdata")
+            console .log(appdata)
+            console .log("appdata")
             // alert(err.response.data.message)
             $("#facility_name").css('border', '1px solid red');
             $("#facility_name_feedback").removeClass('text-success');
             $("#facility_name_feedback").addClass('text-danger');
             $("#facility_name_feedback").html(err.response.data.message);
+        }
+
+        }).catch(err => {
+            // var appdata = err.data.appdata
+            // console .log(appdata)
+            // // alert(err.response.data.message)
+            // $("#facility_name").css('border', '1px solid red');
+            // $("#facility_name_feedback").removeClass('text-success');
+            // $("#facility_name_feedback").addClass('text-danger');
+            // $("#facility_name_feedback").html(err.response.data.message);
         })
     }
     else {
@@ -502,6 +520,54 @@ const checkFacilityName = async (e) => {
     }
     
 }
+
+// const checkFacilityNameNew1 = async (e) => {
+//     const facilityname = $('#facility_name').val()
+//     console.log('EYYY, ', facilityname);
+//     if( facilityname ) {
+//         callApi('/api/application/validate-name/registered', {
+//         // callApi('/api/application/validate-name', {
+//             name: facilityname
+//         }, 'POST').then(ok => {
+
+//             if(ok.data.resp == "dontexist"){
+//                 console .log("appdata")
+//             console.log(ok.data.message)
+//             localStorage.setItem('facilityname', facilityname)
+//             $("#facility_name").css('border', '1px solid green');
+//             $("#facility_name_feedback").removeClass('text-danger');
+//             $("#facility_name_feedback").addClass('text-success');
+//             $("#facility_name_feedback").html(ok.data.message);
+//         }else{
+//             var appdata = ok.data.appdata
+//             console .log("appdata")
+//             console .log(appdata)
+//             console .log("appdata")
+//             // alert(err.response.data.message)
+//             $("#facility_name").css('border', '1px solid red');
+//             $("#facility_name_feedback").removeClass('text-success');
+//             $("#facility_name_feedback").addClass('text-danger');
+//             $("#facility_name_feedback").html(err.response.data.message);
+//         }
+
+//         }).catch(err => {
+//             // var appdata = err.data.appdata
+//             // console .log(appdata)
+//             // // alert(err.response.data.message)
+//             // $("#facility_name").css('border', '1px solid red');
+//             // $("#facility_name_feedback").removeClass('text-success');
+//             // $("#facility_name_feedback").addClass('text-danger');
+//             // $("#facility_name_feedback").html(err.response.data.message);
+//         })
+//     }
+//     else {
+//         $("#facility_name").css('border', '1px solid red');
+//         $("#facility_name_feedback").removeClass('text-success');
+//         $("#facility_name_feedback").addClass('text-danger');
+//         $("#facility_name_feedback").html('Facility name is required');
+//     }
+    
+// }
 function callApi(url, data, method) {
     const config = {
         method: method,

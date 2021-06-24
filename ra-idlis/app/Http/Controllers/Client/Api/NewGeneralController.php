@@ -298,6 +298,7 @@ public function FPSaveAssessments (Request $request){
         $reg =  DB::table('registered_facility')->where('regfac_id', $regfac_id)->first();
         DB::table('registered_facility')->where('regfac_id', '=', $regfac_id)->update([
             'facilityname'=>$data->facilityname,
+            'facid'=>$data->hgpid,
             'rgnid'=>$data->rgnid,
             'provid'=>$data->provid,
             'cmid'=>$data->cmid,
@@ -342,7 +343,7 @@ public function FPSaveAssessments (Request $request){
 
         $zr = 1;
         if(!is_null($ch = RegisteredFacility::orderBy('regfac_id', 'desc')->first())){
-            $zr += 1;
+            $zr = $ch->regfac_id + 1;
         }
 
         $code = date('Y').date('d').'-'.rand(111, 999).'-'. $zr;
@@ -351,6 +352,7 @@ public function FPSaveAssessments (Request $request){
 
        DB::insert('insert into registered_facility (
             nhfcode, 
+            facid, 
             facilityname, 
             rgnid, 
             provid,
@@ -377,8 +379,8 @@ public function FPSaveAssessments (Request $request){
             approvingauthoritypos,
             approvingauthority,
             hfep_funded
-            ) values (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-            [$code, $request->facilityname, $request->rgnid, $request->provid, $request->cmid, $request->brgyid, $request->street_number, $request->street_name, $request->zipcode, $request->contact, $request->areacode, $request->landline, $request->faxnumber, $request->email, $request->ocid, $request->classid, $request->subClassid, $request->facmode, $request->funcid, $request->owner, $request->ownerMobile, $request->ownerLandline, $request->ownerEmail, $request->mailingAddress, $request->approvingauthoritypos, $request->approvingauthority, $request->hfep_funded ]);
+            ) values (?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+            [$code, $request->hgpid, $request->facilityname, $request->rgnid, $request->provid, $request->cmid, $request->brgyid, $request->street_number, $request->street_name, $request->zipcode, $request->contact, $request->areacode, $request->landline, $request->faxnumber, $request->email, $request->ocid, $request->classid, $request->subClassid, $request->facmode, $request->funcid, $request->owner, $request->ownerMobile, $request->ownerLandline, $request->ownerEmail, $request->mailingAddress, $request->approvingauthoritypos, $request->approvingauthority, $request->hfep_funded ]);
 
    
             $reg =  DB::table('registered_facility')->where('nhfcode', $code)->first();

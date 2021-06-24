@@ -1,5 +1,14 @@
 <div class="col-md-12"><b class="text-primary">APPLICATION</b></div>
 <div class="form-group col-md-6">
+<label for="approving_authority_pos">Application Type<span class="text-danger">*</span></label>
+        <select class="form-control" id="aptidnew" name="aptidnew">
+           
+            <option value="IN" selected="selected" >Initial New</option>
+            <option value="R">Renewal</option>
+        </select>
+</div>
+
+<div class="form-group col-md-6">
     <label for="typeOfApplication">Type of Application <span class="text-danger">*</span></label>
     <?php
     $hfser_id = isset($appdata->hfser_id) ? $appdata->hfser_id : '';
@@ -42,15 +51,20 @@
         <input class="form-control" type="text" value="{{ $value }}" readonly>
     </div>
 </div>
-<div class="form-group col-md-6">
-    <label for="facility_name">Facility Name <span class="text-danger">*</span></label>
+
+<div class="form-group col-md-12">
+    <label for="facility_name">Facility Name  <span class="text-danger">*</span></label>
     <div class="input-group">
         <input type="text" name="facilityname" class="form-control" placeholder="FACILITY NAME" 
         value="{{isset($fAddress) && count($fAddress) > 0 ? $fAddress[0]->facilityname : null}}" 
-        id="facility_name" onChange="checkFacilityName(this)" required>
+        id="facility_name" onblur="checkFacilityNameNew(this.value)" required> 
+        <!-- <input type="text" name="facilityname" class="form-control" placeholder="FACILITY NAME" 
+        value="{{isset($fAddress) && count($fAddress) > 0 ? $fAddress[0]->facilityname : null}}" 
+        id="facility_name" onChange="checkFacilityName(this)" required> -->
         <div class="input-group-append" data-toggle="tooltip" data-placement="top" title="" data-original-title="Manually search existing Facility">
-            <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-info"></i></button>
+            <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-search"></i></button>
         </div>
         <small id="facility_name_feedback" class="feedback"></small>
     </div>
 </div>
+

@@ -62,6 +62,7 @@ class ConAppController extends Controller
         $appform->approvingauthority    = $request->approvingauthority;
         $appform->hfep_funded           = $request->hfep_funded;
         $appform->draft                 = $request->draft;
+        $appform->hgpid                 = $request->hgpid;//6-22-2021
 
 
         $appform->assignedRgn           = $request->rgnid;

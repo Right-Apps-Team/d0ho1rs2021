@@ -1,10 +1,13 @@
 <script>
-    // console.log("received")
+   
 
+    
+    
     var ghgpid = document.getElementsByName('hgpid')
     var curAppid = ""
     var mhfser_id = "PTC"
-    var aptid = "IN"
+    var aptid =  document.getElementById("aptidnew").value
+    // var aptid = "IN"
 
     var mservfac = JSON.parse('{!!addslashes($serv_cap)!!}')
     // console.log(mservfac)
@@ -20,6 +23,19 @@
        
     }
     function inputtedDataInitial(){
+        var apptypenew = '{!! $apptypenew !!}';
+
+        if(apptypenew == "renewal"){
+        
+        document.getElementById("aptidnew").value = 'R';
+        document.getElementById("appid").value = null;
+        }else{
+        document.getElementById("appid").value = appid;
+        }
+
+        console.log("typee")
+        console.log('{!! $apptypenew !!}')
+
         // console.log("data from db")
 
         var ptcorg =JSON.parse('{!!((count($ptc) > 0) ? addslashes($ptc): "")!!}');
@@ -168,7 +184,7 @@
     }
 
     function getChargesPerApplication() {
-        let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'aptid=' + aptid],
+        let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'aptid=' +  document.getElementById("aptidnew").value],
         // let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'aptid=' + aptid, 'hfser_id=' + mhfser_id],
             ghgpid = document.getElementsByName('hgpid');
 
@@ -328,7 +344,7 @@ console.log(arr)
             let thisFacid = [],
                     appendToPayment = ['groupThis'],
                     hospitalFaci = ['H', 'H2', 'H3'];
-            let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'hfser_id=' + mhfser_id, 'aptid=' + aptid];
+            let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'hfser_id=' + mhfser_id, 'aptid=' +  document.getElementById("aptidnew").value];
             if (Array.isArray(arrCol)) {
                     for (let i = 0; i < arrCol.length; i++) {
                             sArr.push('facid[]=' + arrCol[i]);

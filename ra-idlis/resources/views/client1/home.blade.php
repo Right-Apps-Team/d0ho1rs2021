@@ -108,6 +108,7 @@
 							<th style="white-space: nowrap;">Facility Name</th>
 							<th style="white-space: nowrap;">Type of Application</th>
 							<th>Owner</th>
+							<th>Type</th>
 							<th style="white-space: nowrap;">Date applied</th>
 							<th style="white-space: nowrap;">Date approved</th>
 							{{-- <th>Status</th> --}}
@@ -131,6 +132,7 @@
 							<td>{{$each[0]->hfser_desc}}</td>
 							{{-- owner --}}
 							<td>{{$each[0]->owner}}</td> 
+							<td>{{$each[0]->aptid == 'IN' ? 'Initial New' : 'Renewal'}}</td>
 							{{-- date applied --}}
 							<td>{{$each[0]->t_date}}</td>
 							<td>{{Date('M d,  Y',strtotime($each[0]->approvedDate))}}</td>
@@ -149,14 +151,18 @@
 										<!-- <button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Continue Application" onclick="window.location.href='{{asset('client1/apply/app/updApp')}}/{{$each[0]->appid}}'"><i class="fa fa-copy"></i></button> -->
 										@if($each[0]->hfser_id == 'CON' || $each[0]->hfser_id == 'PTC')
 											@if($each[0]->hfser_id == 'CON')
-											<button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Continue Application" onclick="window.location.href='{{asset('/cont/ptc')}}/{{$each[0]->appid}}'"><i class="fa fa-copy"></i></button>
+											<button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Continue Application" onclick="window.location.href='{{asset('/cont/ptc')}}/{{$each[0]->appid}}'"><i class="fa fa-arrow-right"></i></button>
 											@elseif($each[0]->hfser_id == 'PTC')
-											<button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Continue Application" onclick="window.location.href='{{asset('/cont/lto')}}/{{$each[0]->appid}}'"><i class="fa fa-copy"></i></button>
+											<button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Continue Application" onclick="window.location.href='{{asset('/cont/lto')}}/{{$each[0]->appid}}'"><i class="fa fa-arrow-right"></i></button>
 											@endif
 										@endif
 										<button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Print" onclick="window.location.href='{{asset('client1/certificates')}}/{{strtoupper($each[0]->hfser_id)}}/{{$each[0]->appid}}'"><i class="fa fa-print"></i></button>
 										<button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Change Request Form" onclick="window.location.href='{{asset('client1/apply/change_request')}}/{{$each[0]->appid}}'"><i class="fa fa-pencil-square-o"></i></button>
 										<button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="View Payment Details" onclick="remAppHiddenId('chgfil{{$each[0]->appid}}')"><i class="fa fa-money"></i></button>
+										<form action="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}" method="get">
+										<input type="hidden" name="apptype" value="renewal" />
+										<button type="submit" style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Renew Application" ><i class="fa fa-refresh"></i></button>
+										</form>
 										@if($each[0]->hfser_id == 'LTO' && !in_array(AjaxController::getHighestApplicationFromX08FT($each[0]->appid)->facid, ['H','H2','H3','INFSEV','BHSERV'])) <button hidden style="margin-top: 10px;" {{(FunctionsClientController::checkExpiryDate($each[0]->validDate) ? "" : "")}} class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Renew Facility" onclick="window.location.href='{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}/R'"><i class="fas fa-refresh"></i></button> @endif
 									</div>
 								</div>					

@@ -70,11 +70,13 @@
 									@endif
 			        				<td style="text-align:center">
 			        					@php
-				                          $url = 'employee/dashboard/processflow/parts/'.$value->appid.'/'.$value->monid;
+				                          $url = 'employee/dashboard/processflow/parts/new/'.$value->regfac_id.'/'.$value->monid;
+				                   
 				                        @endphp
 				                        <button class="btn btn-outline-primary" title="Inspect {{$value->name_of_faci}}" onclick="window.location.href='{{url($url)}}'">
 				                          <i class="fa fa-search" aria-hidden="true"></i>
 				                        </button>
+										   <!-- url = 'employee/dashboard/processflow/parts/'.$value->appid.'/'.$value->monid;  -->
 			        				</td>
 			        			</tr>
 			        		@endforeach

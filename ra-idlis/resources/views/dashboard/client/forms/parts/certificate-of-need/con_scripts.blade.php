@@ -2,13 +2,21 @@
 var ghgpid = document.getElementsByName('hgpid')
 var curAppid = ""
 var mhfser_id = "CON"
-var aptid = "IN"
+var aptid = document.getElementById("aptidnew").value
+console.log(aptid)
+// var aptid = "IN"
 
 var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
 
 
 // console.log(mserv_cap)
 if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
+console.log("typee")
+console.log('{!! $apptypenew !!}')
+
+
+
+
     var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "")!!}');
 //     console.log("servFacArray")
 //     console.log(servFacArray)
@@ -24,8 +32,21 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
 //     console.log("exHosp")
 //     console.log(exHosp)
   
+     var apptypenew = '{!! $apptypenew !!}';
 
-     document.getElementById("appid").value = appid;
+     if(apptypenew == "renewal"){
+
+        document.getElementById("aptidnew").value = 'R';
+        document.getElementById("appid").value = null;
+        console.log(document.getElementById("renewal"))
+        // document.getElementById("renewal").removeAttribute("hidden");
+      
+
+}else{
+document.getElementById("appid").value = appid;
+}
+
+    
      document.getElementById("cap_inv").value = cap_inv;
      document.getElementById("lot_area").value = lot_area;
      document.getElementById("noofbed").value = noofbed;
@@ -283,7 +304,9 @@ if (arrCol.length > 0) {
         let thisFacid = [],
                 appendToPayment = ['groupThis'],
                 hospitalFaci = ['H', 'H2', 'H3'];
-        let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'hfser_id=' + mhfser_id, 'aptid=' + aptid];
+        let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'hfser_id=' + mhfser_id, 'aptid=' + document.getElementById("aptidnew").value];
+        console.log("sArr")
+        console.log(sArr)
         if (Array.isArray(arrCol)) {
                 for (let i = 0; i < arrCol.length; i++) {
                         sArr.push('facid[]=' + arrCol[i]);

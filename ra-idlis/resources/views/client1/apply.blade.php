@@ -94,6 +94,7 @@
 						<th style="white-space: nowrap;" class="text-center">Facility Name</th>
 						<th style="white-space: nowrap;" class="text-center">Type of <br/> Application</th>
 						<th style="white-space: nowrap;" class="text-center">Owner</th>
+						<th style="white-space: nowrap;" class="text-center">App Type</th>
 						<th style="white-space: nowrap;" class="text-center">Date <br/> applied</th>
 						<th style="white-space: nowrap;" class="text-center">DOH Status</th>
 						<th style="white-space: nowrap;" class="text-center">FDA Machine </br> Status</th>
@@ -114,6 +115,7 @@
 						<td style="width: 10%; height: auto;">{{$each[0]->facilityname}}</td>
 						<td>{{$each[0]->hfser_desc}}</td>
 						<td>{{$each[0]->owner}}</td>
+						<td>{{$each[0]->aptid == 'IN' ? 'Initial New' : 'Renewal'}}</td>
 						<td>{{$each[0]->t_date}}</td>
 						<td style="background-color : {{$each[0]->dohcolor}}">{{$each[0]->trns_desc}}</td>
 						<td>{!!($each[0]->noofsatellite > 0 ? (isset($each[0]->FDAStatMach) ? $each[0]->FDAStatMach : 'Evaluation In Process') : '<span class="font-weight-bold">Not Applicable</span>')!!}</td>

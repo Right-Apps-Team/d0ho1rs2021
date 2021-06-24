@@ -98,6 +98,111 @@ class OthersController extends Controller
 			}
 		}
 
+		public function req_submitRegFac(Request $request, $id){
+			if ($request->isMethod('post')) {
+				$fin_reqs = "";
+				$test = "";
+				// return dd($request->all());
+				// Check if empty
+				// $checkReq = $request->except('_token', 'ref_no', 'ot_text', 'name_of_conf_pat', 'date_of_conf_pat', 'btn_sub');
+				// foreach ($checkReq as $key => $value) {
+				// 	if($value==null) {
+				// 		return redirect()->back();
+				// 	}
+				// }	
+
+				// Checks whether reqs[] is null, if yes, redirects back.
+				if($request->reqs == null) {return redirect()->back()->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Please provide your requests.']);}
+				// Modifies all reqs[] to be a single string, if <<others>> is checked then also included.
+				if(in_array($id, $request->reqs)) {
+					$key = array_search($id, $request->reqs);
+					foreach ($request->reqs as $req => $r) {
+						$fin_reqs.=$r.', ';
+					}
+					// $fin_reqs=substr($fin_reqs, 0, strlen($fin_reqs)-3);
+
+					// $fin_reqs.=$request->ot_text;
+				} else {
+					foreach ($request->reqs as $req => $r) {
+						$fin_reqs.=$r.', ';
+					}
+					$fin_reqs=substr($fin_reqs, 0, strlen($fin_reqs)-2);
+				}				
+
+				//Gets Faciname
+				$name = DB::table('registered_facility')
+						->select('facilityname')
+						->where('regfac_id', $request->name_of_faci)
+						->first();
+				
+				// $name = DB::table('appform')
+				// 		->select('facilityname')
+				// 		->where('appid', $request->name_of_faci)
+				// 		->first();
+				
+						
+				
+
+				if($request->facinaturevalue == "false") {
+					$name = $request->name_of_faci;
+					$type = $request->type_of_faci;
+				}
+				else {
+					$name=$name->facilityname;
+					$type=$request->type_of_faci;
+					// $type=explode("^",$request->type_of_faci)[1];
+				}
+
+				//Gets Facitype hg
+				// $type = DB::table('appform')
+				// 		->join('x08_ft', 'appform.appid', '=', 'x08_ft.appid')
+				// 		->join('facilitytyp', 'x08_ft.facid', '=', 'facilitytyp.facid')
+				// 		->select('facilitytyp.facname')
+				// 		->first();
+
+				// Query.
+				$up = null;
+				if($request->reqcompattach){
+					$data = $request->input('reqcompattach');
+					$fname = $request->file('reqcompattach')->getClientOriginalName();
+					$fileExtension = $request->file('reqcompattach')->getClientOriginalExtension();
+					$fileNameToStore = (session()->has('employee_login') ? FunctionsClientController::getSessionParamObj("employee_login", "uid") : FunctionsClientController::getSessionParamObj("uData", "uid")).'_'.Str::random(10).'_'.date('Y_m_d_i_s').'.'.$fileExtension;
+					$request->file('reqcompattach')->storeAs('public/uploaded', $fileNameToStore);
+					$up = $fileNameToStore;
+				}
+
+
+
+				$x = DB::table('req_ast_form')->insert(
+					[/*'ref_no'=>$request->ref_no, */
+						'attachment'=>$up,
+						'source'=>$request->source,
+						'type'=>$request->type, 
+						'name_of_comp'=>$request->name_of_comp, 
+						'age'=>$request->age, 
+						'civ_stat'=>$request->civ_stat, 
+						'address'=>$request->address, 
+						'gender'=>$request->gender, 
+						'contact_no'=>$request->contact_no, 
+						// 'appid'=>(isset($request->name_of_faci) && is_numeric($request->name_of_faci) ? $request->name_of_faci : null), 
+						'regfac_id'=>(isset($request->name_of_faci) && is_numeric($request->name_of_faci) ? $request->name_of_faci : null), 
+						'name_of_faci'=>$name, 
+						'type_of_faci'=>$type, 
+						'address_of_faci'=>$request->address_of_faci, 
+						'name_of_conf_pat'=>$request->name_of_conf_pat, 
+						'date_of_conf_pat'=>$request->date_of_conf_pat, 
+						'reqs'=>$fin_reqs, 
+						'comps'=>'', 
+						'signature'=>"", 
+						'details'=>$request->txt_details, 
+						'compEmail' => $request->email,
+						"others"=>$request->ot_text]
+				);
+				
+				return redirect()->back()->with('errRet', ['errAlt'=>'success', 'errMsg'=>'Addded new entry Successfully.']);
+			}
+		}
+
 		public static function surv_sub_edit(Request $request, $id, $xid, $xtype)
 		{
 			$fin_reqs = "";
@@ -192,6 +297,194 @@ class OthersController extends Controller
 					"gender" => $request->gender,
 					"contact_no" => $request->contact_no,
 					"appid" => $request->name_of_faci,
+					"name_of_faci" => $name,
+					"type_of_faci" => $type,
+					"address_of_faci" => $request->address_of_faci,
+					"name_of_conf_pat" => $request->name_of_conf_pat,
+					"date_of_conf_pat"=>$request->date_of_conf_pat,
+					"reqs" => $fin_reqs,
+					"comps" => "",
+					"details" => $request->txt_details,
+					"others"=>$request->ot_text,
+
+				];
+
+				$x = DB::table('req_ast_form')->where('ref_no', $request->ref_no_new_new)->update($data);
+
+				// $data["logged_date"] = date('Y-m-d H:i:s');
+				// $data["ref_no"] = $request->ref_no_new_new;
+				// $y = DB::table('roacomplaintlog')->insertGetId($data);
+				// dd($x);
+				OthersController::save_to_log($request->ref_no_new_new, 'req_ast_form', 'edit');
+			} else {
+				//Gets Facitype
+				$type = DB::table('appform')
+						->join('x08_ft', 'appform.appid', '=', 'x08_ft.appid')
+						->join('facilitytyp', 'x08_ft.facid', '=', 'facilitytyp.facid')
+						->select('facilitytyp.facname')
+						->first();
+
+				$name = DB::table('appform')
+						->select('facilityname')
+						->where('appid', $request->name_of_faci)
+						->first();
+
+				if($request->facinaturevalue == "false") {
+					$name = $request->name_of_faci;
+					$type = $request->type_of_faci;
+				}
+				else {
+					$name=$name->facilityname;
+					$type=explode("^",$request->type_of_faci)[1];
+				}
+
+				$data = [
+					"source" => $request->source,
+					"type" => $request->type,
+					"name_of_comp" => $request->name_of_comp,
+					"compEmail" => $request->email,
+					"age" => $request->age,
+					"civ_stat" => $request->civ_stat,
+					"address" => $request->address,
+					"gender" => $request->gender,
+					"contact_no" => $request->contact_no,
+					"appid" => $request->name_of_faci,
+					"name_of_faci" => $name,
+					"type_of_faci" => $type,
+					"address_of_faci" => $request->address_of_faci,
+					"name_of_conf_pat" => $request->name_of_conf_pat,
+					"date_of_conf_pat"=>$request->date_of_conf_pat,
+					"reqs" => "",
+					"comps" => $fin_comps,
+					"details" => $request->txt_details,
+					"others"=>$request->ot_text,
+
+				];
+
+
+				$x = DB::table('complaints_form')->where('ref_no', $request->ref_no_new_new)->update($data);
+
+				// $data["logged_date"] = date('Y-m-d H:i:s');
+				// $data["ref_no"] = $request->ref_no_new_new;
+				// $y = DB::table('roacomplaintlog')->insertGetId($data);
+				// dd($x);
+
+				OthersController::save_to_log($request->ref_no_new_new, 'complaints_form', 'edit');
+			}
+				
+		}
+
+
+		public static function surv_sub_editRegFac(Request $request, $id, $xid, $xtype)
+		{
+			$fin_reqs = "";
+			$fin_comps = "";
+			$test = "";
+			// dd($request->all());
+			// Modifies all reqs[] to be a single string, if <<others>> is checked then also included.
+			if($xtype=="Assistance") {
+				// Checks whether reqs[] is null, if yes, redirects back.
+				if($request->reqs == null) return redirect()->back();
+				if(in_array($id, $request->reqs)) {
+					$key = array_search($id, $request->reqs);
+					foreach ($request->reqs as $req => $r) {
+						$fin_reqs.=$r.', ';
+					}
+					// $fin_reqs=substr($fin_reqs, 0, strlen($fin_reqs)-3);
+
+					// $fin_reqs.=$request->ot_text;
+				} else {
+					foreach ($request->reqs as $req => $r) {
+						$fin_reqs.=$r.', ';
+					}
+					$fin_reqs=substr($fin_reqs, 0, strlen($fin_reqs)-2);
+				}	
+			} else {
+				// Checks whether comps[] is null, if yes, replace with an empty array.
+				if($request->comps == null) return redirect()->back();
+				if(in_array($id, $request->comps)) {
+					$key = array_search($id, $request->comps);
+					foreach ($request->comps as $com => $r) {
+						$fin_comps.=$r.', ';
+					}
+					// $fin_comps=substr($fin_comps, 0, strlen($fin_comps)-3);
+					// $fin_comps.=$request->ot_text;
+				} else {
+					foreach ($request->comps as $com => $r) {
+						$fin_comps.=$r.', ';
+					}
+					$fin_comps=substr($fin_comps, 0, strlen($fin_comps)-2);
+				}	
+			}
+							
+
+			//Gets Faciname
+			// $name = DB::table('appform')
+			// 		->select('facilityname')
+			// 		->where('appid', $request->name_of_faci)
+			// 		->first();
+			
+			$name = DB::table('registered_facility')
+			->select('facilityname')
+			->where('regfac_id', $request->name_of_faci)
+			->first();
+
+			if($request->facinaturevalue == "false") {
+				$name = $request->name_of_faci;
+				$type = $request->type_of_faci;
+			}
+			else {
+				$name=$name->facilityname;
+				$type=$request->type_of_faci;
+				// $type=explode("^",$request->type_of_faci)[1];
+			}
+
+
+			if($xtype=="Assistance") {
+
+				//Gets Facitype
+				// $type = DB::table('appform')
+				// 		->join('x08_ft', 'appform.appid', '=', 'x08_ft.appid')
+				// 		->join('facilitytyp', 'x08_ft.facid', '=', 'facilitytyp.facid')
+				// 		->select('facilitytyp.facname')
+				// 		->first();
+
+				// $name = DB::table('appform')
+				// 		->select('facilityname')
+				// 		->where('appid', $request->name_of_faci)
+				// 		->first();
+
+				// if($request->facinaturevalue == "false") {
+				// 	$name = $request->name_of_faci;
+				// 	$type = $request->type_of_faci;
+				// }
+				// else {
+				// 	$name=$name->facilityname;
+				// 	$type=explode("^",$request->type_of_faci)[1];
+				// }
+
+				$up = null;
+				if($request->reqcompattach){
+					$data = $request->input('reqcompattach');
+					$fname = $request->file('reqcompattach')->getClientOriginalName();
+					$fileExtension = $request->file('reqcompattach')->getClientOriginalExtension();
+					$fileNameToStore = (session()->has('employee_login') ? FunctionsClientController::getSessionParamObj("employee_login", "uid") : FunctionsClientController::getSessionParamObj("uData", "uid")).'_'.Str::random(10).'_'.date('Y_m_d_i_s').'.'.$fileExtension;
+					$request->file('reqcompattach')->storeAs('public/uploaded', $fileNameToStore);
+					$up = $fileNameToStore;
+				}
+
+				$data = [
+					'attachment'=>$up,
+					"source" => $request->source,
+					"type" => $request->type,
+					"name_of_comp" => $request->name_of_comp,
+					"compEmail" => $request->email,
+					"age" => $request->age,
+					"civ_stat" => $request->civ_stat,
+					"address" => $request->address,
+					"gender" => $request->gender,
+					"contact_no" => $request->contact_no,
+					"regfac_id" => $request->name_of_faci,
 					"name_of_faci" => $name,
 					"type_of_faci" => $type,
 					"address_of_faci" => $request->address_of_faci,
@@ -643,6 +936,52 @@ class OthersController extends Controller
 			}
 		}
 
+		// Jacky 6-20-2021
+		public function mon_submitNew(Request $request) {
+			// dd($request->all());
+			// if ($request->isMethod('post')) {
+				
+				$reg =  DB::table('registered_facility')->where('regfac_id', $request->regfac_id)->first();
+				
+					// Query
+					DB::table('mon_form')->insert(
+						['regfac_id'=>$request->regfac_id, 'date_added'=>$request->e_date, 'name_of_faci'=>$reg->facilityname, 'type_of_faci'=>$reg->facid]
+					);
+
+				// DB::table('mon_form')->insert(
+				// 		['regfac_id'=>$request->regfac_id, 'date_added'=>$request->e_date, 'name_of_faci'=>$reg->facilityname, 'type_of_faci'=>$reg->facid, 'address_of_faci'=>$this->getFacAddrByRegFacId($request->regfac_id)]
+				// 	);
+			
+					return response()->json(
+						[
+							'mssg' => 'Success',	],
+						200
+					);
+
+				// return redirect()->back()->with('errRet', ['errAlt'=>'success', 'errMsg'=>'Added new entry Successfully.']);
+			// }
+		}
+
+		function getFacAddrByRegFacId($id) // Get Facility Name
+		{
+			
+				$data = DB::table('registered_facility')
+						->where('regfac_id', '=', $id)
+						->join('region', 'region.rgnid', '=', 'appform.rgnid')
+						->join('province', 'province.provid', '=', 'appform.provid')
+						->join('city_muni', 'city_muni.cmid', '=', 'appform.cmid')
+						->join('barangay', 'barangay.brgyid', '=', 'appform.brgyid')
+						->select('rgn_desc', 'provname', 'cmname', 'brgyname')
+						->first();
+
+				$newData = $data->brgyname.' '.$data->cmname.' '.$data->provname.' '.$data->rgn_desc;
+				// dd($newData);
+
+				return $newData;
+		
+		}
+
+
 		public function mon_team(Request $request) {
 			if ($request->isMethod('post')) {
 				// dd($request->all());
@@ -691,11 +1030,18 @@ class OthersController extends Controller
 				// 	->select('offense')
 				//     ->where('monid', '=', $request->novmonid)
 				//     ->first()->offense+1;
+
+
 				$offense = DB::table('mon_form')
-			    ->where('appid', '=', $request->novappid)
+			    ->where('regfac_id', '=', $request->novappid)
 			    ->get();
 
-				$Uids = AjaxController::getAllUidByAppid($request->novappid); // array
+	// $offense = DB::table('mon_form')
+	// 		    ->where('appid', '=', $request->novappid)
+	// 		    ->get(); //6-22-2021
+
+				$Uids = AjaxController::getAllUidByRegFac($request->novappid); // array
+				// $Uids = AjaxController::getAllUidByAppid($request->novappid); // array 6-22-2021
 
 				// insert notificationlog
 				// DB::table('notificiationlog')

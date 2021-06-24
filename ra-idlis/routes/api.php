@@ -89,6 +89,17 @@ Route::post(
     'Client\Api\ProvinceApiController@fetch'
 ); //->middleware([APIMiddleware::class]);
 
+
+Route::post(
+    '/get/facids/mons',
+    'AjaxController@getFacNameByFacidNew'
+); //->middleware([APIMiddleware::class]);
+
+Route::post(
+    '/submit/save/monitoring',
+    'OthersController@mon_submitNew'
+); //->middleware([APIMiddleware::class]);
+
 // Route::post(
 //     '/cont/ptc/{appid}',
 //     'Client\Api\PtcAppController@contfromCon'

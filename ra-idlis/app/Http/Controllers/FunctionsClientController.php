@@ -639,6 +639,25 @@ class FunctionsClientController extends Controller {
 			return $e;
 		}
 	}
+	public static function getDistinctByFacilityNameRegFac() {
+		try {
+			$sql = "SELECT facilityname, 
+			region.rgn_desc, 
+			province.provname, 
+			city_muni.cmname, 
+			barangay.brgyname 
+			FROM registered_facility 
+			LEFT JOIN region ON region.rgnid = registered_facility.rgnid 
+			LEFT JOIN province ON province.provid = registered_facility.provid 
+			LEFT JOIN city_muni ON city_muni.cmid = registered_facility.cmid 
+			LEFT JOIN barangay ON barangay.brgyid = registered_facility.brgyid 
+			";
+
+			return DB::select($sql); //array_chunk(DB::select($sql), 5);
+		} catch(Exception $e) {
+			return $e;
+		}
+	}
 	public static function getPTCDetails($appid = "") {
 		try {
 			$arrRet = [];

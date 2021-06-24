@@ -15,7 +15,9 @@
 	    <div class="card">
 			<div class="card-header bg-white font-weight-bold">
 				Manage Request For Assistance/Complaints
-				<a href="{{URL::route('others.roacomp')}}"><button type="button" class="btn-primarys"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Back</button></a>
+				<!-- <a href="{{URL::route('others.roacomp')}}"> -->
+				<a href="{{asset('employee/dashboard/others/roacomplaints/regfac')}}">
+				<button type="button" class="btn-primarys"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Back</button></a>
 			</div>
 			<div class="card-body table-responsive">
 				@isset($RequestData)

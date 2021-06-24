@@ -1234,7 +1234,8 @@
 
                             <span class="OT003_allow">
 
-                                <li><a href="{{asset('employee/dashboard/others/roacomplaints')}}"> ROA/Complaints Entry</a></li>
+                                <li><a href="{{asset('employee/dashboard/others/roacomplaints/regfac')}}"> ROA/Complaints Entry</a></li>
+                                <!-- <li><a href="{{asset('employee/dashboard/others/roacomplaints')}}"> ROA/Complaints Entry</a></li> -->
 
                             </span>
 

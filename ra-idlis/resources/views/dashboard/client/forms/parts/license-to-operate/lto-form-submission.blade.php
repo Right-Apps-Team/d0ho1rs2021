@@ -189,7 +189,7 @@ function submitProper(e){
         // appid:                  appid,
         saveas:                  e == 'update' ? 'final' : e,
         // saveas:                  $('#saveasn').val(),
-        aptid:                  $('#aptid').val(),
+        aptid:                  $('#aptidnew').val(),
         appid:                  $('#appid').val(),
         hfser_id:               $('#typeOfApplication').val(),
         facilityname:           $('#facility_name').val(),

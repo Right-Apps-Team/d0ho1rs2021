@@ -11,15 +11,20 @@
     @if(isset($fAddress) && count($fAddress) > 0)
     <input class="form-control "  id="regionU" name="rgnidU" value="{{$fAddress[0]->rgn_desc}}" disabled />
     @else
-
-    <select class="form-control selectpicker show-menu-arrow toRemove"  id="region" name="rgnid" required data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" onChange="fetchProvince(this)">
-        <option value="">Please select</option>
-        @foreach( $regions as $region)
-            @if($region->rgnid != 'HFSRB')
-            <option value="{{$region->rgnid}}">{{$region->rgn_desc}}</option>
-            @endif
-        @endforeach
-    </select>
+    <div id="region_org">
+       
+        <select class="form-control selectpicker show-menu-arrow toRemove" data-rgid="reg" id="region" name="rgnid" required data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" onChange="fetchProvince(this)">
+            <option value="">Please select</option>
+            @foreach( $regions as $region)
+                @if($region->rgnid != 'HFSRB')
+                <option value="{{$region->rgnid}}">{{$region->rgn_desc}}</option>
+                @endif
+            @endforeach
+        </select>
+    </div>
+    <div id="region_ex" hidden>
+          <input class="form-control "  id="regionU" name="rgnidU"  disabled />
+    </div>
     @endif
 </div>
 <div class="col-md-3">
@@ -27,10 +32,14 @@
     @if(isset($fAddress) && count($fAddress) > 0)
     <input class="form-control "  id="provinceU" name="providU" value="{{$fAddress[0]->provname}}" disabled />
     @else
-
-    <select class="form-control selectpicker show-menu-arrow toRemove" value='{{((isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->provid: null)}}' id="province"  disabled name="provid" required data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" onChange="fetchMonicipality(this)">
-        <option value="">Please select</option>
-    </select>
+    <div id="prov_org">
+        <select class="form-control selectpicker show-menu-arrow toRemove" value='{{((isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->provid: null)}}' id="province"  disabled name="provid" required data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" onChange="fetchMonicipality(this)">
+            <option value="">Please select</option>
+        </select>
+    </div>
+    <div id="prov_ex" hidden>
+          <input class="form-control "  id="provinceU" name="providU"  disabled />
+    </div>
     @endif
 </div>
 <div class="col-md-3">
@@ -38,9 +47,14 @@
     @if(isset($fAddress) && count($fAddress) > 0)
     <input class="form-control " id="city_monicipalityU" name="cmidU"  value="{{$fAddress[0]->cmname}}" disabled />
     @else
-    <select class="form-control  selectpicker show-menu-arrow toRemove" value='{{((isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->cmid: null)}}' id="city_monicipality" disabled name="cmid" required data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" onChange="fetchBaranggay(this)">
-        <option value="">Please select</option>
-    </select>
+    <div id="cm_org">
+        <select class="form-control  selectpicker show-menu-arrow toRemove" value='{{((isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->cmid: null)}}' id="city_monicipality" disabled name="cmid" required data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" onChange="fetchBaranggay(this)">
+            <option value="">Please select</option>
+        </select>
+    </div>
+    <div id="cm_ex" hidden>
+          <input class="form-control "  id="city_monicipalityU" name="cmidU"  disabled />
+    </div>
     @endif
 </div>
 <div class="col-md-3">
@@ -48,9 +62,14 @@
     @if(isset($fAddress) && count($fAddress) > 0)
     <input class="form-control "  id="brgyU" name="brgyidU" value="{{$fAddress[0]->brgyname}}" disabled />
     @else
-    <select class="form-control selectpicker show-menu-arrow toRemove" value='{{((isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->brgyid: null)}}' id="brgy" disabled name="brgyid" data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" required>
-        <option value="">Please select</option>
-    </select>
+    <div id="br_org">
+        <select class="form-control selectpicker show-menu-arrow toRemove" value='{{((isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->brgyid: null)}}' id="brgy" disabled name="brgyid" data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" required>
+            <option value="">Please select</option>
+        </select>
+     </div>
+    <div id="br_ex" hidden>
+          <input class="form-control "  id="brgyU" name="brgyidU"  disabled />
+    </div>
     @endif
 </div>
 <div class="mb-2 col-md-12">&nbsp;</div>

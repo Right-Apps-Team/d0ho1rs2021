@@ -164,7 +164,8 @@ function submitProper (e){
     const facid = $('input[name="facid"]:checked').val();    
     const data = {
         saveas:                  e == 'update' ? 'final' : e,
-        aptid:                  $('#aptid').val(),
+        aptid:                  $('#aptidnew').val(),
+        // aptid:                  $('#aptid').val(),
         appid:                  $('#appid').val(),
         hfser_id:               $('#typeOfApplication').val(),
         facilityname:           $('#facility_name').val(),
@@ -202,12 +203,13 @@ function submitProper (e){
         con_catch:               JSON.stringify(con_catch),
         con_hospital:           JSON.stringify(con_hospital),
         facid:                  JSON.stringify(allFacids),
-        hgpid:                  $('input[name="hgpid"]:checked').val(),
+        hgpid:                  6,
+        // hgpid:                  $('input[name="hgpid"]:checked').val(),
         assignedRgn:             $('#assignedRgn').val(),//6-3-2021
         
         appcharge:             $('#tempAppCharge').val(),//appchargetemp
         hfser: "CON",
-        aptid: "IN"
+        // aptid: "IN"
     }
     console.log(data)
     callApi('/api/application/con/save', data, 'POST').then(d => {

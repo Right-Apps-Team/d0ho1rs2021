@@ -55,10 +55,13 @@ class ClientDashboardController extends Controller
             'fAddress'              => [],
             'serv_cap' => json_encode(DB::table('facilitytyp')->where('servtype_id', 1)->get()),
             'user' => $user_data,
-            'appFacName' => FunctionsClientController::getDistinctByFacilityName(),
+            'appFacName' => FunctionsClientController::getDistinctByFacilityNameRegFac(),
+            // 'appFacName' => FunctionsClientController::getDistinctByFacilityName(),
             'regions'   => Regions::orderBy('sort')->get(),
             'hfser' =>  $hfser_id,
-            'condet' =>  [[], []]
+            'condet' =>  [[], []],
+            'apptypenew'=> 'IN'
+
         ];
         // dd($data);
         return view('dashboard.client.newapplication', $data);
@@ -80,12 +83,14 @@ class ClientDashboardController extends Controller
             'fAddress'              => [],
             'user'                  => $user_data,
             'serv_cap' => json_encode(DB::table('facilitytyp')->where('servtype_id', 1)->get()),
-            'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
+            'appFacName'            => FunctionsClientController::getDistinctByFacilityNameRegFac(),
+            // 'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
             'regions'               => Regions::orderBy('sort')->get(),
             'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),
 
             //mychanges
-            'hfser' =>  $hfser_id
+            'hfser' =>  $hfser_id,
+            'apptypenew'=> 'IN'
         ];
         // dd($hfaci_service_type);
         // dd($faclArr);
@@ -107,10 +112,12 @@ class ClientDashboardController extends Controller
             'fAddress'              => [],
             'serv_cap' => json_encode(DB::table('facilitytyp')->where('servtype_id', 1)->get()),
             'user'                  => $user_data,
-            'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
+            'appFacName'            => FunctionsClientController::getDistinctByFacilityNameRegFac(),
+            // 'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
             'regions'               => Regions::orderBy('sort')->get(),
             'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),
-            'hfser' =>  $hfser_id
+            'hfser' =>  $hfser_id,
+            'apptypenew'=> 'IN'
         ];
         // dd($hfaci_service_type);
         return view('dashboard.client.authority-to-operate', $data);
@@ -130,11 +137,13 @@ class ClientDashboardController extends Controller
         $data = [
             'user'                  => $user_data,
             'fAddress'              => [],
-            'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
+            'appFacName'            => FunctionsClientController::getDistinctByFacilityNameRegFac(),
+            // 'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
             'regions'               => Regions::orderBy('sort')->get(),
             'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),
             'hfser' =>  $hfser_id,
             'serv_cap' => json_encode(DB::table('facilitytyp')->where('servtype_id', 1)->get()),
+            'apptypenew'=> 'IN'
         ];
         // dd($hfaci_service_type);
         return view('dashboard.client.certificate-of-accreditation', $data);
@@ -155,10 +164,12 @@ class ClientDashboardController extends Controller
             'user'                  => $user_data,
             'serv_cap'              =>json_encode(DB::table('facilitytyp')->where([['servtype_id',1],['forSpecialty',0]])->get()),
             'fAddress'              => [],
-            'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
+            'appFacName'            => FunctionsClientController::getDistinctByFacilityNameRegFac(),
+            // 'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
             'regions'               => Regions::orderBy('sort')->get(),
             'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),
-            'hfser' =>  $hfser_id
+            'hfser' =>  $hfser_id,
+            'apptypenew'=> 'IN'
         ];
         // dd($hfaci_service_type);
         return view('dashboard.client.certificate-of-registration', $data);
@@ -202,7 +213,8 @@ class ClientDashboardController extends Controller
 
         $data = [
             'user'                  => $user_data,
-            'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
+            'appFacName'            => FunctionsClientController::getDistinctByFacilityNameRegFac(),
+            // 'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
             'regions'               => Regions::orderBy('sort')->get(),
             'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),
             'hfser' =>  $hfser_id,
@@ -246,7 +258,8 @@ class ClientDashboardController extends Controller
             'ambcharges' => DB::table('chg_app')->whereIn('chgapp_id', ['284', '472'])->get(),
             'aptid' => null,
             'group' => json_encode(DB::table('facilitytyp')->where('servtype_id', '>', 1)->whereNotNull('grphrz_name')->get()),
-            'forAmbulance' => json_encode($proceesedAmb)
+            'forAmbulance' => json_encode($proceesedAmb),
+            'apptypenew'=> 'IN'
         ];
         // dd($hfaci_service_type);
         return view('dashboard.client.license-to-operate', $data);

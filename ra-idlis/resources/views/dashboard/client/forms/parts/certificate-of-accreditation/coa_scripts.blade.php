@@ -14,7 +14,7 @@
 var ghgpid = document.getElementsByName('hgpid')
 var curAppid = ""
 var mhfser_id = "COA"
-var aptid = "IN"
+var aptid = document.getElementById("aptidnew").value
 
     var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
     // console.log('mserv_cap')
@@ -239,7 +239,7 @@ function getFacServCharge(val = null) {
     // console.log("rec ff")
     var curAppid = "";
     var mhfser_id = "COA";
-    var aptid = "IN";
+    var aptid = document.getElementById("aptidnew").value;
         var facids = getCheckedValue('facid')
 
         var arrCol = facids;
@@ -325,7 +325,7 @@ function getFacServCharge(val = null) {
 }
 
 function getChargesPerApplication() {
-        let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'aptid=' + aptid],
+        let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'aptid=' + document.getElementById("aptidnew").value],
         // let sArr = ['_token=' + document.getElementsByName('_token')[0].value, 'appid=' + curAppid, 'aptid=' + aptid, 'hfser_id=' + mhfser_id],
             ghgpid = document.getElementsByName('hgpid');
 

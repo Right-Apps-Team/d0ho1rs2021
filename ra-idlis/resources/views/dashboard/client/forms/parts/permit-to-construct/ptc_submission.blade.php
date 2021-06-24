@@ -172,7 +172,7 @@ function submitProper (e){
 
     const data = {
         saveas:                  e == 'update' ? 'final' : e,
-        aptid:                  $('#aptid').val(),
+        aptid:                  $('#aptidnew').val(),
         appid:                  $('#appid').val(),
         hfser_id:               $('#typeOfApplication').val(),
         facilityname:           $('#facility_name').val(),
@@ -218,7 +218,7 @@ function submitProper (e){
         appcharge:             $('#tempAppCharge').val(),//appchargetemp
         appchargeHgp:             $('#tempAppChargeHgpid').val(),//appchargetemp
         hfser: "CON",
-        aptid: "IN"
+        // aptid: "IN"
     }
     console.log(data)
     console.log("submit")

@@ -6,9 +6,23 @@
                 <hr>
                 <div class="container">
                     <form id="regform">
-                        <label for="facility_name">Facility Name <span class="text-danger">*</span></label>
-                        <input type="text" name="facilityname" class="form-control" placeholder="FACILITY NAME" id="facility_name" onChange="checkFacilityName(this)" required>
-                        <small id="facility_name_feedback" class="feedback"></small>
+                        <div class="row">
+                            <div class="col-md">
+                                <label for="facility_name">Facility Name <span class="text-danger">*</span></label>
+                                <input type="text" name="facilityname" class="form-control" placeholder="FACILITY NAME" id="facility_name" onChange="checkFacilityName(this)" required>
+                                <small id="facility_name_feedback" class="feedback"></small>
+                            </div>
+                            <div class="col-md">
+                                <label for="facility_name">Facility Type <span class="text-danger">*</span></label>
+                                <select name="facilitytype" id="facilitytype" class="form-control">
+                                    @foreach( $factype as $ft)
+                                    <option value="{{$ft->hgpid}}">{{$ft->hgpdesc}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+
                         <br />
 
                         <div class="row">
@@ -106,7 +120,7 @@
                             </div>
                             <div class="col-sm">
                                 <label for="subclass">Sub Classification <span class="text-danger">*</span></label>
-                                <select class="form-control selectpicker show-menu-arrow toRemove"  id="subclass" disabled value='{{((isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->subClassid: null)}}' name="subClassid" data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5">
+                                <select class="form-control selectpicker show-menu-arrow toRemove" id="subclass" disabled value='{{((isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->subClassid: null)}}' name="subClassid" data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5">
                                     <option>Please select</option>
                                 </select>
                             </div>
@@ -187,7 +201,7 @@
                             </div>
                         </div>
                         <button id="mainbtn" class="btn btn-primary p-2 m-1" onClick="submtForm('update')">Submit</button>
-                       
+
                     </form>
                 </div>
             </div>
@@ -215,8 +229,8 @@
 
         const data = {
 
-          
-            
+
+
             hfser_id: $('#typeOfApplication').val(),
             facilityname: $('#facility_name').val(),
             rgnid: $('#region').val(),
@@ -231,9 +245,9 @@
             landline: $('#landline').val(),
             faxnumber: $('#faxNumber').val(),
             email: $('#fac_email_address').val(),
-         
-           
-           
+
+
+
             ocid: $('#ocid').val(),
             classid: $('#classification').val(),
             subClassid: $('#subclass').val(),
@@ -249,6 +263,7 @@
             approvingauthority: $('#approving_authority_name').val(),
             // hfep_funded: ($('#hfep').prop('checked') ? 0 : null),
             hfep_funded: "",
+            facid: $('#facilitytype').val(),
 
         }
         console.log(data)
@@ -263,7 +278,7 @@
             console.log(error);
         })
 
-       
+
     };
     const checkFacilityName = async (e) => {
         const facilityname = $('#facility_name').val()
@@ -278,10 +293,10 @@
                 $("#facility_name_feedback").removeClass('text-danger');
                 $("#facility_name_feedback").addClass('text-success');
                 $("#facility_name_feedback").html(ok.data.message);
-                var btn =   document.getElementById("mainbtn");
+                var btn = document.getElementById("mainbtn");
                 btn.innerHTML = "Submit";
                 btn.removeAttribute("disabled", "disabled")
-                
+
             }).catch(err => {
                 // alert(err.response.data.message)
                 $("#facility_name").css('border', '1px solid red');
@@ -289,10 +304,10 @@
                 $("#facility_name_feedback").addClass('text-danger');
                 $("#facility_name_feedback").html(err.response.data.message);
 
-              var btn =   document.getElementById("mainbtn");
-              btn.innerHTML = "Check Facility Name";
-              btn.setAttribute("disabled", "disabled")
-                
+                var btn = document.getElementById("mainbtn");
+                btn.innerHTML = "Check Facility Name";
+                btn.setAttribute("disabled", "disabled")
+
 
             })
         } else {

@@ -552,18 +552,23 @@ end of new evaluation tool
 ////// new assessment
 Route::match(['get', 'post'], 'employee/dashboard/processflow/forAssessements', 'DOHController@AssessmentParts'); // assessment
 Route::match(['get', 'post'], 'employee/dashboard/processflow/parts/{appid}/{montype?}', 'DOHController@AssessmentShowPart'); // View each
+Route::match(['get', 'post'], 'employee/dashboard/processflow/parts/new/{regfac_id}/{montype?}', 'DOHController@AssessmentShowPartNewRegFac'); // View each new 6-22-2021
 Route::match(['get', 'post'], 'employee/dashboard/processflow/HeaderOne/{appid}/{part}/{montype?}', 'DOHController@AssessmentShowH1'); // View each
+Route::match(['get', 'post'], 'employee/dashboard/processflow/HeaderOne/regfac/{appid}/{part}/{montype?}', 'DOHController@AssessmentShowH1RegFac'); // View each
 Route::match(['get', 'post'], 'employee/dashboard/processflow/HeaderTwo/{appid}/{headerOne}/{montype?}', 'DOHController@AssessmentShowH2'); // View each
 Route::match(['get', 'post'], 'employee/dashboard/processflow/HeaderThree/{appid}/{headerTwo}/{montype?}', 'DOHController@AssessmentShowH3'); // View each
 Route::match(['get', 'post'], 'employee/dashboard/processflow/ShowAssessments/{appid}/{headerThree}/{montype?}', 'DOHController@ShowAssessments'); // View each
+Route::match(['get', 'post'], 'employee/dashboard/processflow/ShowAssessments/regfac/{appid}/{headerThree}/{montype?}', 'DOHController@ShowAssessmentsRegFac'); // View each
 
 //accept assessment
 Route::match(['get', 'post'], 'employee/dashboard/processflow/SaveAssessments/', 'DOHController@SaveAssessments'); 
+Route::match(['get', 'post'], 'employee/dashboard/processflow/SaveAssessments/regfac/', 'DOHController@SaveAssessmentsRegFac'); 
 Route::post('employee/dashboard/processflow/SaveInspection/Mobile', 'DOHController@SaveInspectionMobile');// View each
 Route::match(['get', 'post'], 'employee/dashboard/processflow/SaveAssessmentsMobile/{hash?}', 'DOHController@SaveAssessmentsMobile'); // View each
 
 //generate report on assessment
 Route::match(['get', 'post'], 'employee/dashboard/processflow/GenerateReportAssessments/{appid}/{monid?}', 'DOHController@GenerateReportAssessment'); // View each
+Route::match(['get', 'post'], 'employee/dashboard/processflow/GenerateReportAssessments/regfac/{appid}/{monid?}', 'DOHController@GenerateReportAssessmentRegFac'); // View each
 
 Route::match(['get', 'post'], 'employee/dashboard/processflow/fixAssessmentOrder', 'AssessmentController@assessmentOrder'); // View each
 Route::match(['get', 'post'], 'employee/dashboard/processflow/registerAssess', 'AssessmentController@assessmentRegister'); // View each
@@ -636,6 +641,7 @@ Route::match(['get', 'post'], 'employee/dashboard/others/surveillance/inspection
 Route::match(['get', 'post'], 'employee/dashboard/others/surveillance/recommendation', 'DOHController@SurveillanceRecommendationOthers'); // View All, Add
 // Request for Assistance
 Route::match(['get', 'post'], 'employee/dashboard/others/roacomplaints', 'DOHController@RequestAssistanceOthers')->name('others.roacomp'); // View All, Add
+Route::match(['get', 'post'], 'employee/dashboard/others/roacomplaints/regfac', 'DOHController@RequestAssistanceOthersRegFac')->name('others.roacompregfac'); // View All, Add
 //ajax
 Route::post('employee/dashboard/others/restoreROAC', 'OthersController@restoreROAC');
 Route::get('employee/dashboard/others/getHistoryLogs', 'AjaxController@getHistoryLogs');
@@ -712,6 +718,7 @@ Route::match(['get', 'post'], 'employee/dashboard/assessment/ambsurclinic', 'Ass
 //// Request for assistance
 // Add
 Route::match(['get', 'post'], 'employee/dashboard/others/req_submit/{id}', 'OthersController@req_submit');
+Route::match(['get', 'post'], 'employee/dashboard/others/req_submit/reg/{id}', 'OthersController@req_submitRegFac');
 Route::match(['get', 'post'], 'employee/dashboard/others/comp_submit/{id}', 'OthersController@comp_submit');
 // Manage
 Route::match(['get', 'post'], 'employee/dashboard/others/roacomplaints/manage', 'OthersController@roacomplaints_manage');
@@ -733,6 +740,7 @@ Route::match(['get', 'post'], 'employee/dashboard/others/surv_recommendation', '
 //// Monitoring
 //Add
 Route::match(['get', 'post'], 'employee/dashboard/others/mon_submit', 'OthersController@mon_submit');
+Route::match(['get', 'post'], 'employee/dashboard/others/mon_submit/new', 'OthersController@mon_submitNew');
 //Team
 Route::match(['get', 'post'], 'employee/dashboard/others/mon_team', 'OthersController@mon_team');
 // Edit

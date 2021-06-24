@@ -54,12 +54,12 @@
                               continue;
                             }
                             
-                            if($data->status == 'P' || $data->status == 'RA' || $data->status == 'RE' || $data->status == 'RI' ){
-                              $ifdisabled = 'disabled';
-                            }
+                          
 
                           @endphp
-                          
+                          {{--if($data->status == 'P' || $data->status == 'RA' || $data->status == 'RE' || $data->status == 'RI' ){
+                              $ifdisabled = 'disabled';
+                            } --}} 
                           <tr>
                             <td class="text-center">{{$data->hfser_id}}</td>
                             <td class="text-center">{{$data->hfser_id}}R{{$data->rgnid}}-{{$data->appid}}</td>
@@ -69,7 +69,8 @@
                             <td class="text-center">{{$data->aptdesc}}</td>
                             <td class="text-center" style="font-weight:bold;">{{$data->trns_desc}}</td>
                               <td><center>
-                                  <button type="button" title="Evaluate Payment for {{$data->facilityname}}" class="btn btn-outline-primary" onclick="window.location.href='{{asset('employee/dashboard/processflow/recommendation')}}/{{$data->appid}}'"  {{$ifdisabled}}><i class="fa fa-fw fa-clipboard-check" {{$ifdisabled}}></i></button>
+                                  <button type="button" title="Evaluate Payment for {{$data->facilityname}}" class="btn btn-outline-primary" onclick="window.location.href='{{asset('employee/dashboard/processflow/recommendation')}}/{{$data->appid}}'"  ><i class="fa fa-fw fa-clipboard-check" ></i></button>
+                                  <!-- <button type="button" title="Evaluate Payment for {{$data->facilityname}}" class="btn btn-outline-primary" onclick="window.location.href='{{asset('employee/dashboard/processflow/recommendation')}}/{{$data->appid}}'"  $ifdisabled><i class="fa fa-fw fa-clipboard-check" {{$ifdisabled}}></i></button> -->
                               </center></td>
                           </tr>
                           @endif
