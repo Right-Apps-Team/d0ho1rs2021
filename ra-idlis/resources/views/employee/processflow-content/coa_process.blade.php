@@ -54,10 +54,10 @@
                     </td>
                     <td>
                         <small><b>Cashier</b></small>
-                        <p>Payment Confirmation</p>
+                        <a href="{{$grpid == 'NA' || $grpid == 'CS' ? asset('employee/dashboard/processflow/cashier') : '#'}}">   <p>Payment Confirmation</p></a>
                     </td>
                     @if($grpid == 'NA' || $grpid == 'CS')
-                    <td><a href="{{asset('employee/dashboard/processflow/cashier')}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>
+                    <!-- <td><a href="{{asset('employee/dashboard/processflow/cashier')}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td> -->
                     @endif
                 </tr>
               
@@ -68,10 +68,10 @@
                     </td>
                     <td>
                         <small><b>Div Chief</b></small>
-                        <p>Assignment of Team</p>
+                        <a href="{{$grpid == 'NA' || $grpid == 'DC'  ? asset('employee/dashboard/others/monitoring/teams') : '#'}}">   <p>Assignment of Team</p></a>
                     </td>
                     @if($grpid == 'NA' || $grpid == 'DC' )
-                    <td><a href="{{asset('employee/dashboard/others/monitoring/teams')}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>
+                    <!-- <td><a href="{{asset('employee/dashboard/others/monitoring/teams')}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td> -->
                     @endif
                 </tr>
 
@@ -81,10 +81,10 @@
                     </td>
                     <td>
 
-                        <p>Inspection Schedule</p>
+                    <a href="{{$grpid == 'NA' || $grpid == 'DC' ? asset('/employee/dashboard/processflow/inspection') : '#'}}"> <p>Inspection Schedule</p> </a>
                     </td>
                     @if($grpid == 'NA' || $grpid == 'DC' )
-                    <td><a href="{{asset('/employee/dashboard/processflow/inspection')}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>
+                    <!-- <td><a href="{{asset('/employee/dashboard/processflow/inspection')}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td> -->
                     @endif
                 </tr>
                 <tr>
@@ -93,10 +93,10 @@
                     </td>
                     <td>
                         <small><b>LO(HFSRB)/RLO(Region)</b></small>
-                        <p>Documentary Evaluation</p>
+                        <a href="{{$grpid == 'NA' || $grpid == 'PO' || $grpid == 'DA' ? asset('/employee/dashboard/processflow/evaluate') : '#'}}">  <p>Documentary Evaluation</p> </a>
                     </td>
                     @if ($grpid == 'NA' || $grpid == "PO" || $grpid == "FDA")
-                    <td><a href="{{asset('/employee/dashboard/processflow/evaluate')}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>
+                    <!-- <td><a href="{{asset('/employee/dashboard/processflow/evaluate')}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td> -->
                     @endif
                 </tr>
                 <tr>
@@ -105,10 +105,10 @@
                     </td>
                     <td>
                         <small><b>Div Chief</b></small>
-                        <p>Recommendation for Approval</p>
+                        <a href="{{ $grpid == 'NA' || $grpid == 'DC' ? asset('/employee/dashboard/processflow/recommendation') : '#'}}">  <p>Recommendation for Approval</p></a>
                     </td>
                     @if ($grpid == 'NA' || $grpid == "DC")
-                    <td>&nbsp;&nbsp;<a href="{{ asset('/employee/dashboard/processflow/recommendation') }}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>
+                    <!-- <td>&nbsp;&nbsp;<a href="{{ asset('/employee/dashboard/processflow/recommendation') }}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td> -->
                     @endif
                 </tr>
                 <tr>
@@ -117,10 +117,10 @@
                     </td>
                     <td>
                         <small><b>Director</b></small>
-                        <p>Approval/Issuance of Certificate</p>
+                        <a href="{{$grpid == 'NA' || $grpid == 'DR' || $grpid == 'PO' ? asset('/employee/dashboard/processflow/approval') : '#'}}">   <p>Approval/Issuance of Certificate</p> </a>
                     </td>
                     @if($grpid == 'NA' || $grpid == 'DR' || $grpid == 'PO')
-                    <td>&nbsp;&nbsp;<a href="{{asset('/employee/dashboard/processflow/approval')}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td>
+                    <!-- <td>&nbsp;&nbsp;<a href="{{asset('/employee/dashboard/processflow/approval')}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td> -->
                     @endif
                 </tr>
 

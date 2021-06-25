@@ -145,7 +145,7 @@
 
 
       function changeFaciSurveillance(){
-
+// console.log("received")
          // var data = $('select[name=name_of_faci]').val();
 
          var facId = document.getElementById('factype').value;
@@ -158,6 +158,7 @@
 
          if(facId != "") {
 
+            // facName.open("GET", "{{asset('employee/dashboard/others/reg/getFacNameNotApprovedByFacid')}}"+facId, true);
             facName.open("GET", "{{asset('employee/dashboard/others/getFacNameNotApprovedByFacid')}}"+facId, true);
 
             facName.send();

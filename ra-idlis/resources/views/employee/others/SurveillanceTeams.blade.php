@@ -41,13 +41,19 @@
 					                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="padding-left: 5px">
 
 												@if($value->type_of_faci != "")
-						        					<button class="btn btn-outline-info" data-toggle="modal" data-target="#aMonVModal" onclick="viewTMonitoring('{{$value->hfsrbno}}', '{{$value->appid}}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}', '{{$value->name_of_faci}}', '{{$value->address_of_faci}}', '{{ AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname}}')" title="View {{$value->name_of_faci}} {{AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname}}">
+						        					<button class="btn btn-outline-info" data-toggle="modal" data-target="#aMonVModal" onclick="viewTMonitoring('{{$value->hfsrbno}}', '{{$value->appid}}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}', '{{$value->name_of_faci}}', '{{$value->address_of_faci}}', '{{ AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc}}')" title="View {{$value->name_of_faci}} {{AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc}}">
 			                        					<i class="fa fa-fw fa-eye"></i>
 			                      					</button>
+													  <!-- <button class="btn btn-outline-info" data-toggle="modal" data-target="#aMonVModal" onclick="viewTMonitoring('{{$value->hfsrbno}}', '{{$value->appid}}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}', '{{$value->name_of_faci}}', '{{$value->address_of_faci}}', ' AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname')" title="View {{$value->name_of_faci}} AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname">
+			                        					<i class="fa fa-fw fa-eye"></i>
+			                      					</button> -->
 
-			                      					<button class="btn btn-outline-primary" data-toggle="modal" data-target="#aMonTModal" onclick="getMonitoringData('{{$value->appid}}', '{{$value->survid}}')" title="Assign Team in {{$value->name_of_faci}} {{AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname}}">
+			                      					<button class="btn btn-outline-primary" data-toggle="modal" data-target="#aMonTModal" onclick="getMonitoringData('{{$value->appid}}', '{{$value->survid}}')" title="Assign Team in {{$value->name_of_faci}} {{AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc}}">
 			                        					<i class="fa fa-users" aria-hidden="true"></i>
-			                      					</button>
+			                      					</button>	
+													  <!-- <button class="btn btn-outline-primary" data-toggle="modal" data-target="#aMonTModal" onclick="getMonitoringData('{{$value->appid}}', '{{$value->survid}}')" title="Assign Team in {{$value->name_of_faci}} AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname">
+			                        					<i class="fa fa-users" aria-hidden="true"></i>
+			                      					</button> -->
 			                      					@else
 			                      					<button class="btn btn-outline-info" data-toggle="modal" data-target="#aMonVModal" onclick="viewTMonitoring('{{$value->hfsrbno}}', '{{$value->appid}}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}', '{{$value->name_of_faci}}', '{{$value->address_of_faci}}', '')" title="View {{$value->name_of_faci}}">
 			                        					<i class="fa fa-fw fa-eye"></i>
@@ -62,11 +68,17 @@
 										</div>
 
 			        					{{-- @if($value->type_of_faci != "")
-			        					<button class="btn btn-outline-info" data-toggle="modal" data-target="#aMonVModal" onclick="viewTMonitoring('{{$value->hfsrbno}}', '{{$value->appid}}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}', '{{$value->name_of_faci}}', '{{$value->address_of_faci}}', '{{ AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname}}')" title="View {{$value->name_of_faci}} {{AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname}}">
+			        					<button class="btn btn-outline-info" data-toggle="modal" data-target="#aMonVModal" onclick="viewTMonitoring('{{$value->hfsrbno}}', '{{$value->appid}}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}', '{{$value->name_of_faci}}', '{{$value->address_of_faci}}', '{{ AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc}}')" title="View {{$value->name_of_faci}} {{AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc}}">
                         					<i class="fa fa-fw fa-eye"></i>
                       					</button>
+	<!-- <button class="btn btn-outline-info" data-toggle="modal" data-target="#aMonVModal" onclick="viewTMonitoring('{{$value->hfsrbno}}', '{{$value->appid}}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}', '{{$value->name_of_faci}}', '{{$value->address_of_faci}}', 'AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname')" title="View {{$value->name_of_faci}} AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname">
+                        					<i class="fa fa-fw fa-eye"></i>
+                      					</button> -->
 
-                      					<button class="btn btn-outline-primary" data-toggle="modal" data-target="#aMonTModal" onclick="getMonitoringData('{{$value->appid}}', '{{$value->survid}}')" title="Assign Team in {{$value->name_of_faci}} {{AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname}}">
+                      					<!-- <button class="btn btn-outline-primary" data-toggle="modal" data-target="#aMonTModal" onclick="getMonitoringData('{{$value->appid}}', '{{$value->survid}}')" title="Assign Team in {{$value->name_of_faci}} AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname">
+                        					<i class="fa fa-users" aria-hidden="true"></i>
+                      					</button>	 -->
+										  <button class="btn btn-outline-primary" data-toggle="modal" data-target="#aMonTModal" onclick="getMonitoringData('{{$value->appid}}', '{{$value->survid}}')" title="Assign Team in {{$value->name_of_faci}} {{AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc}}">
                         					<i class="fa fa-users" aria-hidden="true"></i>
                       					</button>
                       					@else

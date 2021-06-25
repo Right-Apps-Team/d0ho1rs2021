@@ -633,6 +633,99 @@ class OthersController extends Controller
 				}	
 
 				//Gets Faciname
+				// $name = DB::table('appform')
+				// 		->select('facilityname')
+				// 		->where('appid', $request->name_of_faci)
+				// 		->first();
+				$name = DB::table('registered_facility')
+				->select('facilityname')
+				->where('regfac_id', $request->name_of_faci)
+				->first();
+				// dd($request->all());
+
+				if($request->facinaturevalue == "false") {
+					$name = $request->name_of_faci;
+					$type = $request->type_of_faci;
+				}
+				else {
+					$name=$name->facilityname;
+					$type=$request->type_of_faci;
+					// $type=explode("^",$request->type_of_faci)[1];
+				}
+
+				//Gets Facitype
+				$up = null;
+				if($request->reqcompattach){
+					$data = $request->input('reqcompattach');
+					$fname = $request->file('reqcompattach')->getClientOriginalName();
+					$fileExtension = $request->file('reqcompattach')->getClientOriginalExtension();
+					$fileNameToStore = (session()->has('employee_login') ? FunctionsClientController::getSessionParamObj("employee_login", "uid") : FunctionsClientController::getSessionParamObj("uData", "uid")).'_'.Str::random(10).'_'.date('Y_m_d_i_s').'.'.$fileExtension;
+					$request->file('reqcompattach')->storeAs('public/uploaded', $fileNameToStore);
+					$up = $fileNameToStore;
+				}
+
+				// dd(($request->name_of_faci ?? null));
+				// Query.
+				DB::table('complaints_form')->insert(
+					[/*'ref_no'=>$request->ref_no, */
+						'attachment'=>$up,
+						'source'=>$request->source,
+						'type'=>$request->type, 
+						'name_of_comp'=>$request->name_of_comp, 
+						'age'=>$request->age, 
+						'civ_stat'=>$request->civ_stat, 
+						'address'=>$request->address, 
+						'gender'=>$request->gender, 
+						'contact_no'=>$request->contact_no, 
+						'regfac_id'=>(isset($request->name_of_faci) && is_numeric($request->name_of_faci) ? $request->name_of_faci : null),
+						// 'appid'=>(is_numeric($request->name_of_faci) ? $request->name_of_faci : null), 
+						'name_of_faci'=>$name, 
+						'type_of_faci'=>$type, 
+						'address_of_faci'=>$request->address_of_faci, 
+						'name_of_conf_pat'=>$request->name_of_conf_pat, 
+						'date_of_conf_pat'=>$request->date_of_conf_pat, 
+						'reqs'=>'', 
+						'comps'=>$fin_comps, 
+						'signature'=>"",
+						'compEmail' => $request->email, 
+						'details'=>$request->txt_details, 
+						"others"=>$request->ot_text]
+				);
+
+				return redirect()->back()->with('errRet', ['errAlt'=>'success', 'errMsg'=>'Added new entry Successfully.']);
+
+			}
+		}	
+		
+		public function comp_submitOld(Request $request, $id){
+			if ($request->isMethod('post')) {
+				$fin_comps = "";
+				// dd($request->all());
+				// Check if empty
+				// $checkComp = $request->except('_token', 'ref_no', 'ot_text', 'name_of_conf_pat', 'date_of_conf_pat', 'btn_sub');
+				// foreach ($checkComp as $key => $value) {
+				// 	if($value==null) {
+				// 		return redirect()->back();
+				// 	}
+				// }	
+				// Checks whether comps[] is null, if yes, replace with an empty array.
+				if($request->comps == null) return redirect()->back();
+				// Modifies all comps[] to be a single string, if <<others>> is checked then also included.
+				if(in_array($id, $request->comps)) {
+					$key = array_search($id, $request->comps);
+					foreach ($request->comps as $com => $r) {
+						$fin_comps.=$r.', ';
+					}
+					// $fin_comps=substr($fin_comps, 0, strlen($fin_comps)-3);
+					// $fin_comps.=$request->ot_text;
+				} else {
+					foreach ($request->comps as $com => $r) {
+						$fin_comps.=$r.', ';
+					}
+					$fin_comps=substr($fin_comps, 0, strlen($fin_comps)-2);
+				}	
+
+				//Gets Faciname
 				$name = DB::table('appform')
 						->select('facilityname')
 						->where('appid', $request->name_of_faci)
@@ -699,6 +792,30 @@ class OthersController extends Controller
 			}
 		}
 
+		public function surv_submitRegFac(Request $request) {
+					if ($request->isMethod('post')) {
+						// dd($request->all());				
+						
+						//Gets Faciname
+						$name = DB::table('registered_facility')->where('regfac_id', $request->e_sappid)->first();;
+						// $name = AjaxController::getFacNameByFacidEx($request->e_sappid)[0];
+
+						// dd($name);
+
+						// Query
+						DB::table('surv_form')->insert(
+							['regfac_id'=>$request->e_sappid, 
+							'date_added'=>$request->e_date, 
+							'name_of_faci'=>$name->facilityname, 
+							'type_of_faci'=>$request->name_of_faci, 
+							'address_of_faci'=>$request->address_of_faci, 
+							'fromWhere' => $request->fromWhere]
+						);
+
+						return redirect()->back()->with('errRet', ['errAlt'=>'success', 'errMsg'=>'Added new entry Successfully.']);
+					}
+				}
+
 		public function surv_submit_u(Request $r) {
 			if ($r->isMethod('post')) {
 				$currData = $email = null;			
@@ -751,6 +868,56 @@ class OthersController extends Controller
 			}
 		}
 
+
+		public function surv_submit_uRegFac(Request $r) {
+			if ($r->isMethod('post')) {
+				$currData = $email = null;			
+				// dd([AjaxController::getAddressByLocation($r->u_reg,$r->u_prov,$r->u_cm,$r->u_brgy),$r->address,$r->all()]);
+				// Query
+				// DB::table('surv_form')->insert(
+				// 	['date_added'=>$request->u_sdate, 'name_of_faci'=>$request->u_nameoffaci, 'type_of_faci'=>$request->u_typeoffaci, 'address_of_faci'=>AjaxController::getAddressByLocation($request->u_reg, $request->u_prov, $request->u_cm, $request->u_brgy)]
+				// );
+				// dd($r->all());
+				// dd($r->has('formNeed'));
+
+				
+
+				if(isset($r->comAppid) && !empty($r->comAppid)){
+					$email = DB::table('appform')->where('appid',$r->comAppid)->first();
+				}
+
+				DB::table('surv_form')->insert(
+					['appid'=>(isset($r->comAppid) ? $r->comAppid : $currData), 
+					'date_added'=>date('Y-m-d'), 
+					'regfac_id'=>$r->regfac_idcomp, 
+					'name_of_faci'=>$r->u_nameoffaci, 
+					'address_of_faci'=>(isset($r->address) ? $r->address : AjaxController::getAddressByLocation($r->u_reg,$r->u_prov,$r->u_cm,$r->u_brgy) .' ' .$r->uAddr), 
+					'type_of_faci'=>$r->u_typeoffaci, 
+					'hasViolation' => 1 ,
+					'violation' => $r->complaint, 
+					'faciEmail' => (isset($email) ? $email->email : ($r->fromWhere == 'Complaints' ? DB::table('complaints_form')->where('ref_no',$r->compid)->first()->compEmail : null) ), 
+					'compid' => $r->compid, 
+					'fromWhere' => $r->fromWhere, 
+					'compAddress' => (strtolower($r->fromWhere) == 'unregistered facility' ? json_encode(['reg' => $r->u_reg,'prov' => $r->u_prov, 'cm' => $r->u_cm, 'brgy' => $r->u_brgy]) : '')
+					]
+				);
+
+				if(isset($r->compid)){
+					$fromComplaints = DB::table('complaints_form')->where('ref_no',$r->compid)->first();
+					if(isset($fromComplaints->compEmail)){
+						$toData = array('name' => $fromComplaints->name_of_comp, 'faciname' => $fromComplaints->name_of_faci);
+						Mail::send('employee.others.mailForComplaints', $toData, function($msg) use ($fromComplaints) {
+							$msg->to($fromComplaints->compEmail);
+							$msg->subject('DOHOLRS Surveillance Team');
+							$msg->from('doholrs@gmail.com','DOH Surveillance Team');
+						});
+						DB::table('complaints_form')->where('ref_no',$r->compid)->update(['isChecked' => 1]);
+					}
+				}
+
+				return redirect()->back()->with('errRet', ['errAlt'=>'success', 'errMsg'=>'Added new entry Successfully.']);
+			}
+		}
 		public function surv_team(Request $request) {
 			if ($request->isMethod('post')) {
 				// dd($request->all());
@@ -871,19 +1038,36 @@ class OthersController extends Controller
 			if($request->isMethod('post')) {
 				// dd($request->all());
 
+				$fileNameToStore = null;
+				if($request->filesup){
+					$data = $request->input('filesup');
+					$fname = $request->file('filesup')->getClientOriginalName();
+					$fileExtension = $request->file('filesup')->getClientOriginalExtension();
+					$fileNameToStore = (session()->has('employee_login') ? FunctionsClientController::getSessionParamObj("employee_login", "uid") : FunctionsClientController::getSessionParamObj("uData", "uid")).'_'.Str::random(10).'_'.date('Y_m_d_i_s').'.'.$fileExtension;
+					$request->file('filesup')->storeAs('public/uploaded', $fileNameToStore);
+				}
+
 				DB::table('surv_form')
 				    ->where('survid', '=', $request->recmonid)
-				    ->update(['recommendation'=>$request->recrecom, 'date_recom'=>$request->recdate, 'payment'=>$request->payment, 'suspension'=>$request->suspension, 's_rec_others'=>$request->others, 'verdict'=>$request->recverdict, 's_ver_others'=>$request->recothers]);
+				    ->update(['recommendation'=>$request->recrecom, 
+					'date_recom'=>$request->recdate, 
+					'payment'=>$request->payment, 
+					'suspension'=>$request->suspension, 
+					's_rec_others'=>$request->others, 
+					'verdict'=>$request->recverdict, 
+					's_ver_others'=>$request->recothers,
+					'supportDoc'=>$fileNameToStore
+				]);
 
 				$fromSurv = DB::table('surv_form')->where('survid',$request->recmonid)->select('compid')->first();
 				if(isset($fromSurv->compid)){
 					$fromComplaints = DB::table('complaints_form')->where('ref_no',$fromSurv->compid)->first();
-					$toData = array('name' => $fromComplaints->name_of_comp, 'faciname' => $fromComplaints->name_of_faci);
-					Mail::send('employee.others.mailForComplaintDone', $toData, function($msg) use ($fromComplaints) {
-						$msg->to($fromComplaints->compEmail);
-						$msg->subject('DOHOLRS Surveillance Team');
-						$msg->from('doholrs@gmail.com','DOH Surveillance Team');
-					});
+					// $toData = array('name' => $fromComplaints->name_of_comp, 'faciname' => $fromComplaints->name_of_faci);
+					// Mail::send('employee.others.mailForComplaintDone', $toData, function($msg) use ($fromComplaints) {
+					// 	$msg->to($fromComplaints->compEmail);
+					// 	$msg->subject('DOHOLRS Surveillance Team');
+					// 	$msg->from('doholrs@gmail.com','DOH Surveillance Team');
+					// });
 					DB::table('complaints_form')->where('ref_no',$fromSurv->compid)->update(['isChecked' => 2]);
 				}
 				$uid = DB::table('surv_form')->where('survid',$request->recmonid)->select('appid')->first();

@@ -1302,7 +1302,7 @@
 
                             {{-- new --}}
 
-                            <span class="SU005_allow">
+                         {{--   <span class="SU005_allow">
 
                                 <li>
 
@@ -1310,23 +1310,25 @@
 
                                 </li>
 
-                            </span>
-
+                            </span>--}}
+{{--
                             <span class="SU006_allow">
 
                                 <li>
 
-                                    <a href="#">&nbsp;&nbsp;Surveillance Tracking of Unlicensed HF</a>
+                                    <a href="#">&nbsp;&nbsp;Surveillance Recommendation</a>
+                                    <!-- <a href="#">&nbsp;&nbsp;Surveillance Tracking of Unlicensed HF</a> -->
 
                                 </li>
 
                             </span>
-
+--}}
                             <span class="SU007_allow">
 
                                 <li>
 
-                                    <a href="{{asset('employee/dashboard/others/surveillance/recommendation')}}">&nbsp;&nbsp;Status Report of Surveyed HF</a>
+                                    <a href="{{asset('employee/dashboard/others/surveillance/recommendation')}}">&nbsp;&nbsp;Recommendation</a>
+                                    <!-- <a href="{{asset('employee/dashboard/others/surveillance/recommendation')}}">&nbsp;&nbsp;Status Report of Surveyed HF</a> -->
 
                                 </li>
 

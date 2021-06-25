@@ -7719,13 +7719,15 @@ use FunctionsClientController;
 			{
 				try 
 				{
-					$allData = AjaxController::getAllSurveillanceForm();
+					$allData = AjaxController::getAllSurveillanceFormRegFac();
+					// $allData = AjaxController::getAllSurveillanceForm();
 					$test = AjaxController::getFacTypeByFacid("BB");
 					$arrayToCheck = array();
 					// dd($allData);
 					// dd(AjaxController::getFacTypeByFacid("BB")[0]->facname);
 					$allRec = AjaxController::getAllSurveillanceRecommendation();
-					$typNameSql = "SELECT * FROM facilitytyp";
+					$typNameSql = "SELECT * FROM hfaci_grp";
+					// $typNameSql = "SELECT * FROM facilitytyp";
 					$typName = DB::select($typNameSql);
 					$compFromSurvform = DB::table('surv_form')->select('compid')->whereNotNull('compid')->get();
 					if(count($compFromSurvform) > 0){
@@ -7737,8 +7739,24 @@ use FunctionsClientController;
 						$arrayToCheck = implode(',', $arrayToCheck);
 					}
 					// dd($allData);
-					$fromComplaints = DB::table('complaints_form')->where('type','Complaints')->whereNotIn('ref_no',(is_array($arrayToCheck) ? $arrayToCheck : [$arrayToCheck]) )->get();
-					return view('employee.others.Surveillance', ['TypName'=>$typName, 'AllData'=>$allData, 'AllRec'=>$allRec, 'comp' => $fromComplaints]);
+
+					$faciNameSql = "SELECT registered_facility.*, hfaci_grp.hgpdesc , CONCAT(region.rgn_desc,' ', province.provname,' ',city_muni.cmname,' ',barangay.brgyname) as address FROM registered_facility 
+					join hfaci_grp on registered_facility.facid = hfaci_grp.hgpid
+					join region on region.rgnid = registered_facility.rgnid
+					join province on province.provid = registered_facility.provid
+					join city_muni on city_muni.cmid = registered_facility.cmid
+					join barangay on barangay.brgyid = registered_facility.brgyid
+					";
+					$faciName = DB::select($faciNameSql);
+
+
+
+
+					$fromComplaints = DB::table('complaints_form')
+					->where('type','Complaints')
+					->whereNotIn('ref_no',(is_array($arrayToCheck) ? $arrayToCheck : [$arrayToCheck]) )->get();
+					
+					return view('employee.others.Surveillance', ['TypName'=>$typName,'FacName'=>$faciName, 'AllData'=>$allData, 'AllRec'=>$allRec, 'comp' => $fromComplaints]);
 				} 
 				catch (Exception $e) 
 				{
@@ -7792,7 +7810,15 @@ use FunctionsClientController;
 						array_push($images,$imageRec['fileNameToStore']);
 					}
 				}
-				$toUpdate = ['survAct' => $request->action, 'comments' => $request->comments, 'LOAttachments' => (is_array($images) ? implode(',',$images): null ), 'issuedBy' => $cUser['cur_user'], 'issuedDate' => $cUser['date'], 'issuedTime' => $cUser['time'], 'hfsrbno' => $request->novNo, 'faciEmail' => $request->emailFaci, 'dpo' => $request->dpo];
+				$toUpdate = ['survAct' => $request->action, 
+				'comments' => $request->comments, 
+				'LOAttachments' => (is_array($images) ? implode(',',$images): null ), 
+				'issuedBy' => $cUser['cur_user'], 
+				'issuedDate' => $cUser['date'], 
+				'issuedTime' => $cUser['time'], 
+				'hfsrbno' => $request->novNo, 
+				'faciEmail' => $request->emailFaci, 
+				'dpo' => $request->dpo];
 				if(trim($request->violation) != ''){
 					$toUpdate['violation'] = $request->violation;
 					$toUpdate['hasViolation'] = 1;
@@ -7800,22 +7826,22 @@ use FunctionsClientController;
 
 				$test = DB::table('surv_form')->where('survid',$request->survid)->update($toUpdate);
 
-				if($test){
-					$toNotify = DB::table('surv_form')->where('survid',$request->survid)->first();
-					if(isset($toNotify->appid)){
-						$uid = AjaxController::getUidFrom($toNotify->appid);
-						if(isset($uid)){
-							AjaxController::notifyClient($toNotify->survid,$uid,44,'surv');
-						}
-					} else {
-						$dataToBeSend = array('name' => $toNotify->name_of_faci, 'action' => 'Surveillance', 'url' => asset('client1/action/sendActionTaken/surv/'.$request->survid));
-						Mail::send('employee.others.mailForActivityLog', $dataToBeSend, function($message) use ($toNotify,$request) {
-			               $message->to($request->emailFaci);
-			               $message->subject('DOHOLRS Violation on Facility');
-			               $message->from('doholrs@gmail.com','DOH Support');
-			            });
-					}
-				}
+				// if($test){
+				// 	$toNotify = DB::table('surv_form')->where('survid',$request->survid)->first();
+				// 	if(isset($toNotify->appid)){
+				// 		$uid = AjaxController::getUidFrom($toNotify->appid);
+				// 		if(isset($uid)){
+				// 			AjaxController::notifyClient($toNotify->survid,$uid,44,'surv');
+				// 		}
+				// 	} else {
+				// 		$dataToBeSend = array('name' => $toNotify->name_of_faci, 'action' => 'Surveillance', 'url' => asset('client1/action/sendActionTaken/surv/'.$request->survid));
+				// 		Mail::send('employee.others.mailForActivityLog', $dataToBeSend, function($message) use ($toNotify,$request) {
+			    //            $message->to($request->emailFaci);
+			    //            $message->subject('DOHOLRS Violation on Facility');
+			    //            $message->from('doholrs@gmail.com','DOH Support');
+			    //         });
+				// 	}
+				// }
 
 				return redirect('employee/dashboard/others/surveillance/survact');
 			}

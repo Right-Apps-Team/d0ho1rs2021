@@ -62,7 +62,8 @@
                     <td style="text-align:center">{{$value->name_of_faci}}</td>
                     <td style="text-align:center">{{$value->fromWhere}}</td>
                     <td style="text-align:center">{{$value->address_of_faci}}</td>
-                    <td style="text-align:center">{{$value->facname}}</td>
+                    <td style="text-align:center">{{$value->hgpdesc}}</td>
+                    <!-- <td style="text-align:center">$value->facname</td> -->
                     {{-- <td style="text-align:center">{{ \Carbon\Carbon::parse($value->date_recom)->format('M d, Y') }}</td> --}}
                     <td style="text-align:center">
                       @if($value->team != "")
@@ -144,9 +145,13 @@
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="padding-left: 5px">
                           <button class="btn btn-outline-info" data-toggle="modal" data-target="#eMonModal" onclick="getEditData(
-                          '{{$value->hfsrbno}}', '{{$value->name_of_faci}}', '{{ AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname }}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}')" title="View {{$value->name_of_faci}}">
+                          '{{$value->hfsrbno}}', '{{$value->name_of_faci}}', '{{ AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc }}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}')" title="View {{$value->name_of_faci}}">
                             <i class="fa fa-fw fa-eye"></i>
-                          </button>
+                          </button>  
+                           <!-- <button class="btn btn-outline-info" data-toggle="modal" data-target="#eMonModal" onclick="getEditData(
+                          '{{$value->hfsrbno}}', '{{$value->name_of_faci}}', ' AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname ', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}')" title="View {{$value->name_of_faci}}">
+                            <i class="fa fa-fw fa-eye"></i>
+                          </button> -->
                           @if($value->team != "")
                             @php
                               $url = 'employee/dashboard/processflow/assessment/'.$value->survid.'/SURV/'.$value->type_of_faci;
@@ -174,9 +179,13 @@
 
                       {{-- <center>
                         <button class="btn btn-outline-info" data-toggle="modal" data-target="#eMonModal" onclick="getEditData(
-                          '{{$value->hfsrbno}}', '{{$value->name_of_faci}}', '{{ AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname }}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}')" title="View {{$value->name_of_faci}}">
+                          '{{$value->hfsrbno}}', '{{$value->name_of_faci}}', '{{ AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc }}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}')" title="View {{$value->name_of_faci}}">
                           <i class="fa fa-fw fa-eye"></i>
                         </button>
+ <!-- <button class="btn btn-outline-info" data-toggle="modal" data-target="#eMonModal" onclick="getEditData(
+                          '{{$value->hfsrbno}}', '{{$value->name_of_faci}}', ' AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname ', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}')" title="View {{$value->name_of_faci}}">
+                          <i class="fa fa-fw fa-eye"></i>
+                        </button> -->
 
                         @if($value->team != "")
                           @php
@@ -226,7 +235,9 @@
           <hr>
           <div class="input-group form-inline">
             <div class="card-body">
-              <form method="POST" action="{{asset('employee/dashboard/others/surv_submit')}}" data-parsley-validate>
+            <!--  -->
+              <form method="POST" action="{{asset('employee/dashboard/others/surv_submit/regfac')}}" data-parsley-validate>
+              <!-- <form method="POST" action="{{asset('employee/dashboard/others/surv_submit')}}" data-parsley-validate> -->
 
                 {{csrf_field()}}
 
@@ -241,11 +252,12 @@
                   </div>
 
                   <div class="col-sm-8">
-                    <select name="name_of_faci" class="form-control w-100" onchange="changeFaciSurveillance()" id="factype" data-parsley-required-message="<b>*Type of Facility</b> required" required data-parsley="factype" required>  
+                    <select name="name_of_faci" class="form-control w-100" onchange="changeFactypeNew(this.value)" id="factype" data-parsley-required-message="<b>*Type of Facility</b> required" required data-parsley="factype" required>  
+                    <!-- <select name="name_of_faci" class="form-control w-100" onchange="changeFaciSurveillance()" id="factype" data-parsley-required-message="<b>*Type of Facility</b> required" required data-parsley="factype" required>   -->
                       <option disabled hidden selected value=""></option>
                       @isset($TypName)
                         @foreach($TypName as $key => $value)
-                          <option value="{{$value->facid}}">{{$value->facname}}</option>
+                          <option value="{{$value->hgpid}}">{{$value->hgpdesc}}</option>
                         @endforeach
                       @endisset
                     </select>
@@ -265,8 +277,9 @@
                   </div>
 
                   <div class="col-sm-8">
-                    <select name="e_sappid" class="form-control w-100" id="facName" data-parsley-required-message="<b>*Name of Facility</b> required" class="form-control" required data-parsley-multiple="facName" onchange="changeFaciType()">
-                      {{-- <option diabled hidden selected value=""></option> --}}
+                    <select name="e_sappid" class="form-control w-100" id="facName" data-parsley-required-message="<b>*Name of Facility</b> required" class="form-control" required data-parsley-multiple="facName" onchange="changeFacnameNew(this.value)">
+                    <!-- <select name="e_sappid" class="form-control w-100" id="facName" data-parsley-required-message="<b>*Name of Facility</b> required" class="form-control" required data-parsley-multiple="facName" onchange="changeFaciType()"> -->
+                       <option diabled hidden selected value=""></option> 
                     </select>
                   </div>
                 </div>
@@ -289,7 +302,7 @@
                   </div>
 
                   <div class="col-sm-8">
-                    <input type="text" name="address_of_faci" class="form-control form-inline w-100" readonly required id="facaddr" data-parsley-required-message="<b>*Address of Facility</b> required" data-parsley="facName">
+                    <input type="text" name="address_of_faci"  class="form-control form-inline w-100" readonly required id="facaddr" data-parsley-required-message="<b>*Address of Facility</b> required" data-parsley="facName">
                   </div>
                 </div>
 
@@ -721,12 +734,17 @@
                   <div class="col-sm-8">
                     <select class="form-control w-100" id="u_typeoffaci" name="u_typeoffaci" data-parsley-required-message="<b>*Type of Facility</b> required" required data-parsley="factype">
                       <option selected disabled hidden>Facility Type</option>
-                      @foreach(AjaxController::getAllFacilityType() as $key => $value)
+                      <!-- @foreach(AjaxController::getAllFacilityType() as $key => $value)
                         @if($value->servtype_id == 1)
                         <option value="{{$value->facid}}">{{$value->facname}}</option>
                         @endif
 
-                      @endforeach
+                      @endforeach -->
+                      @isset($TypName)
+                        @foreach($TypName as $key => $value)
+                          <option value="{{$value->hgpid}}">{{$value->hgpdesc}}</option>
+                        @endforeach
+                      @endisset
                     </select>
                   </div>
                 </div>
@@ -818,10 +836,11 @@
           <hr>
           <div class="input-group form-inline">
             <div class="card-body">
-              <form method="POST" action="{{asset('employee/dashboard/others/surv_submit_u')}}" id="fromComp" data-parsley-validate>
+              <form method="POST" action="{{asset('employee/dashboard/others/surv_submit_u/regfac')}}" id="fromComp" data-parsley-validate>
 
                 {{csrf_field()}}
                 <input type="hidden" name="fromWhere" value="Complaints">
+                <input type="hidden" name="regfac_idcomp" id="regfac_idcomp" >
 
                 <input type="hidden" name="u_sdate" value="{{date('Y-m-d')}}">
                 {{-- <input type="hidden" name="formNeed"> --}}
@@ -835,7 +854,7 @@
                     <select class="form-control w-100" onchange="getComplaintsDet(this)">
                       <option value="">Please Select</option>
                       @foreach($comp as $complaint)
-                      <option value="{{$complaint->ref_no}}">{{$complaint->name_of_faci}}</option>
+                      <option value="{{$complaint->ref_no}}">{{$complaint->ref_no}}-{{$complaint->name_of_faci}}</option>
                       @endforeach
                     </select>
                     <input type="hidden" name="u_nameoffaci" id="compNameofFaci" hidden="" readonly>
@@ -1024,6 +1043,40 @@
   
 
   <script type="text/javascript">
+ var facnames = JSON.parse('{!!addslashes(json_encode($FacName))!!}')
+        console.log(facnames)
+function changeFacnameNew (value){
+        console.log("value")
+        console.log(value)
+       
+
+        var result = facnames.filter(function (v) {
+                                return v.regfac_id == value;
+                            })
+
+                            document.getElementById("facaddr").value = result[0].address
+
+  }
+function changeFactypeNew (value){
+        console.log("value")
+        console.log(value)
+       
+
+        var result = facnames.filter(function (v) {
+                                return v.facid == value;
+                            })
+console.log(result)
+
+        for(var i = 0; i < result.length ; i++){
+          var x = document.createElement("OPTION");
+          x.setAttribute("value", result[i].regfac_id);
+          var t = document.createTextNode(result[i].facilityname);
+          x.appendChild(t);
+          document.getElementById("facName").appendChild(x);
+        }
+                            // document.getElementById("facaddr").value = result[0].address
+
+  }
 
     function unregRegionChange(dom) {
       unregRegion.open("GET", "{{asset('employee/dashboard/others/surveillance/unreg')}}"+"/"+dom.value, true);

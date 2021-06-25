@@ -648,6 +648,7 @@ Route::get('employee/dashboard/others/getHistoryLogs', 'AjaxController@getHistor
 Route::get('employee/dashboard/others/getAppTeamByAppId', 'AjaxController@getAppTeamByAppId'); // Get Teams
 Route::get('employee/dashboard/others/getFacNameByFacid{facid}/{brgyid?}', 'AjaxController@getFacNameByFacid'); // Get FacName
 Route::get('employee/dashboard/others/getFacNameNotApprovedByFacid{facid}', 'AjaxController@getFacNameNotApprovedByFacid'); // Get FacName
+Route::get('employee/dashboard/others/reg/getFacNameNotApprovedByFacid{facid}', 'AjaxController@getFacNameNotApprovedByFacidRegFac'); // Get FacName
 Route::get('employee/dashboard/others/getFacTypeByAppId{appid}', 'AjaxController@getFacTypeByAppId'); // Get FacType
 Route::get('employee/dashboard/others/getAllFacAddr', 'AjaxController@getAllFacAddr'); // Get FacAddr
 Route::get('employee/dashboard/monitor/getRemarksByAstSurveillance{ast}/{survid}', 'AjaxController@getRemarksByAstSurveillance'); // Get Remarks
@@ -720,13 +721,16 @@ Route::match(['get', 'post'], 'employee/dashboard/assessment/ambsurclinic', 'Ass
 Route::match(['get', 'post'], 'employee/dashboard/others/req_submit/{id}', 'OthersController@req_submit');
 Route::match(['get', 'post'], 'employee/dashboard/others/req_submit/reg/{id}', 'OthersController@req_submitRegFac');
 Route::match(['get', 'post'], 'employee/dashboard/others/comp_submit/{id}', 'OthersController@comp_submit');
+Route::match(['get', 'post'], 'employee/dashboard/others/req_submit/comp_submit/{id}', 'OthersController@comp_submit');
 // Manage
 Route::match(['get', 'post'], 'employee/dashboard/others/roacomplaints/manage', 'OthersController@roacomplaints_manage');
 //// Surveillance
 // Add
 Route::match(['get', 'post'], 'employee/dashboard/others/surv_submit', 'OthersController@surv_submit');
+Route::match(['get', 'post'], 'employee/dashboard/others/surv_submit/regfac', 'OthersController@surv_submitRegFac');
 // Add Unreg
 Route::match(['get', 'post'], 'employee/dashboard/others/surv_submit_u', 'OthersController@surv_submit_u');
+Route::match(['get', 'post'], 'employee/dashboard/others/surv_submit_u/regfac', 'OthersController@surv_submit_uRegFac');
 //Team
 Route::match(['get', 'post'], 'employee/dashboard/others/surv_team', 'OthersController@surv_team');
 // Edit

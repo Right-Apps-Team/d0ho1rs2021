@@ -1325,7 +1325,7 @@
 
                             <div class="col-sm-8" id="tog_tog_btn">
 
-                              <input value="Request" type="checkbox" name="togglenature" checked data-toggle="toggle" data-on="Assistance&nbsp;{{'<i class="fa fa-caret-right" aria-hidden="true"></i>'}}" data-off="{{'<i class="fa fa-caret-left" aria-hidden="true"></i>'}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Complaints&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" data-onstyle="primary" data-offstyle="success" data-width="180" onchange="naturechange()" id="togBtn">
+                              <input value="Request" type="checkbox" name="togglenature" checked data-toggle="toggle" data-on="Assistance&nbsp;{{'<i class="fa fa-caret-right" aria-hidden="true"></i>'}}" data-off="{{'<i class="fa fa-caret-left" aria-hidden="true"></i>'}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Complaints &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" data-onstyle="primary" data-offstyle="success" data-width="180" onchange="naturechange()" id="togBtn">
 
                               {{-- &nbsp; --}}
 

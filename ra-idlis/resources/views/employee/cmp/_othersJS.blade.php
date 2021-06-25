@@ -145,7 +145,7 @@
 
 
       function changeFaciSurveillance(){
-
+         console.log("received")
          // var data = $('select[name=name_of_faci]').val();
 
          var facId = document.getElementById('factype').value;
@@ -158,8 +158,8 @@
 
          if(facId != "") {
 
-            facName.open("GET", "{{asset('employee/dashboard/others/getFacNameByFacid')}}"+facId, true);
-
+            // facName.open("GET", "{{asset('employee/dashboard/others/getFacNameByFacid')}}"+facId, true);
+            facName.open("GET", "{{asset('employee/dashboard/others/reg/getFacNameNotApprovedByFacid')}}"+facId, true);
             facName.send();
 
          }
@@ -183,6 +183,8 @@
                success: function(a){
 
                   let data = JSON.parse(a);
+                  console.log("data")
+                  console.log(data)
 
                   $("#compNameofFaci").empty().val(data['name_of_faci']);
 
@@ -190,7 +192,8 @@
 
                   $("#comTypeDisplay").empty().val(data['type_of_faci']);
 
-                  $("#comType").empty().val(data['facid']);
+                  $("#comType").empty().val(data['typefacid_id']);
+                  // $("#comType").empty().val(data['facid']);
 
                   $("#comLoc").empty().val(data['address_of_faci']);
 
@@ -201,6 +204,7 @@
                   $("#compid").empty().val(data['ref_no']);
 
                   $('#comDetails').empty().val(data['details']);
+                  $('#regfac_idcomp').empty().val(data['regfac_id']);
 
                }
 
@@ -269,6 +273,36 @@
 
       function changeFaciType() {
 
+         //facaddr ajax
+
+         var facIdd = ($('#xfacName').length > 0 ? $('#xfacName').val() : $('#facName').val());
+
+         var facUid = document.getElementById('factype').value;
+        document.getElementById('regfac_id').value = $('#facName').val();
+         if(facUid != "") {
+
+            facAddr.open("GET", "{{asset('employee/dashboard/others/getAllFacAddr')}}", true);
+
+            facAddr.send();
+
+         }
+
+
+
+         //appteam ajax
+
+         if(facIdd != "" && facUid != "") {
+
+            appTeam.open("GET", "{{asset('employee/dashboard/others/getAppTeamByAppId')}}", true);
+
+            appTeam.send();
+
+         }
+
+      }
+
+ function changeFaciTypeNew() {
+console.log("Hello")
          //facaddr ajax
 
          var facIdd = ($('#xfacName').length > 0 ? $('#xfacName').val() : $('#facName').val());

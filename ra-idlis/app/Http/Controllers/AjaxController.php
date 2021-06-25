@@ -3886,6 +3886,20 @@
 				return null;
 			}
 		}
+	public static function getAllSurveillanceFormRegFac() {
+			///////////////// jacky - Jun 24, 2021 ///////////////
+			try {
+				$data = DB::table('surv_form')
+				->leftJoin('registered_facility','registered_facility.regfac_id','surv_form.regfac_id')
+				->leftJoin('hfaci_grp','hfaci_grp.hgpid','surv_form.type_of_faci')
+				->get();
+				
+				return $data;
+			} catch (Exception $e) {
+				AjaxController::SystemLogs($e->getMessage());
+				return null;
+			}
+		}
 
 		/////// Monitoring
 		public static function getAllMonitoringForm() {
@@ -6107,6 +6121,24 @@
 			}
 		}
 
+		public static function getFacNameNotApprovedByFacidRegFac(Request $request, $facid) // Get Facility Name
+		{
+			try 
+			{
+				$sql = "SELECT * FROM registered_facility 
+				WHERE registered_facility.facid = '$facid'";
+
+				$facName = DB::select($sql);
+
+				return response()->json($facName);
+			}
+			catch (Exception $e) 
+			{
+				AjaxController::SystemLogs($e->getMessage());
+				return 'ERROR';
+			}
+		}
+
 		public static function getFacTypeByAppId(Request $request, $appid) // Get Facility Type
 		{
 			try 
@@ -6189,6 +6221,30 @@
 			try 
 			{
 				$sql = "SELECT appform.appid, barangay.brgyname, city_muni.cmname, province.provname, region.rgn_desc FROM appform LEFT JOIN barangay ON barangay.brgyid = appform.brgyid LEFT JOIN city_muni ON city_muni.cmid = appform.cmid LEFT JOIN province ON province.provid = appform.provid LEFT JOIN region ON region.rgnid = appform.rgnid";
+				$facAddr = DB::select($sql);
+
+				return response()->json($facAddr);
+			}
+			catch (Exception $e) 
+			{
+				AjaxController::SystemLogs($e->getMessage());
+				return 'ERROR';
+			}
+		}
+	public static function getAllFacAddrRegFac(Request $request) // Get Facility Address
+		{
+			try 
+			{
+				$sql = "SELECT appform.appid, 
+				barangay.brgyname, 
+				city_muni.cmname, 
+				province.provname, 
+				region.rgn_desc FROM appform 
+				LEFT JOIN barangay ON barangay.brgyid = appform.brgyid 
+				LEFT JOIN city_muni ON city_muni.cmid = appform.cmid 
+				LEFT JOIN province ON province.provid = appform.provid 
+				LEFT JOIN region ON region.rgnid = appform.rgnid";
+				
 				$facAddr = DB::select($sql);
 
 				return response()->json($facAddr);
@@ -6442,6 +6498,13 @@
 				$ar = array();
 				$fac = null;
 				$db = DB::table('complaints_form')->where('ref_no',$req->refno)->first();
+
+				if(!is_null($db->regfac_id)){
+					$reg = DB::table('registered_facility')->where('regfac_id',$db->regfac_id)->first();
+					$db->typefacid_id = $reg->facid;
+				}
+
+
 				$comps = explode(',',$db->comps);
 				foreach($comps as $comp){
 					array_push($ar,(!empty(DB::table('complaints')->where('cmp_id',$comp)->first()) ? DB::table('complaints')->where('cmp_id',$comp)->first()->cmp_desc : $comp));

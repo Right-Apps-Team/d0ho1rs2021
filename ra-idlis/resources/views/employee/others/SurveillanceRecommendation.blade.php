@@ -32,7 +32,7 @@
 	        				@foreach($AllData as $key => $value)
 	        					<tr>
 	        						<td style="text-align: center;">{{$value->survid}}</td>
-	        						<td style="text-align: center;">{!!(isset($value->appid) ? 'Licensed' : '<span class="font-weight-bold">Unlicensed</span>')!!}</td>
+	        						<td style="text-align: center;">{!!(isset($value->regfac_id) ? 'Licensed' : '<span class="font-weight-bold">Unlicensed</span>')!!}</td>
 	        						<td style="text-align: center;">{{$value->hfsrbno}}</td>
 	        						<td style="text-align: center;">{{$value->name_of_faci}}</td>
 	        						<td style="text-align: center;">{{$value->address_of_faci}}</td>
@@ -115,17 +115,30 @@
 						                    @endif --}}
 
 						                    {{-- @if($value->hasLOE != "" && $value->survAct != "CDO") --}}
-	        									<button class="btn btn-outline-success" title="Recommendation" data-toggle="modal" data-target="#recMonModal" @if($value->hfsrbno == "" || $value->recommendation != "") hidden @endif onclick="recommendationModal('{{$value->survid}}', '{{$value->appid}}', '{{$value->date_issued}}', '{{$value->name_of_faci}}', '{{AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname}}', '{{$value->hfsrbno}}')">
+	        									<button class="btn btn-outline-success" title="Recommendation" data-toggle="modal" data-target="#recMonModal" @if($value->hfsrbno == "" || $value->recommendation != "") hidden @endif onclick="recommendationModal('{{$value->survid}}', '{{$value->appid}}', '{{$value->date_issued}}', '{{$value->name_of_faci}}', '{{AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc}}', '{{$value->hfsrbno}}')">
 							                		<i class="fa fa-sticky-note" aria-hidden="true"></i>
 							                	</button>
+												@if($value->supportDoc)
+												
+
+												<a target="_blank" href="{{ route('OpenFile', $value->supportDoc) }}" >
+													<button title="Supporting Document" style="float: right;" type="button" class="btn btn-primary p-2 m-1">
+													<i class="fa fa-paperclip" aria-hidden="true"></i>
+													</button>
+													</a>
+												@endif
+												
+												<!-- <button class="btn btn-outline-success" title="Recommendation" data-toggle="modal" data-target="#recMonModal" @if($value->hfsrbno == "" || $value->recommendation != "") hidden @endif onclick="recommendationModal('{{$value->survid}}', '{{$value->appid}}', '{{$value->date_issued}}', '{{$value->name_of_faci}}', 'AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname', '{{$value->hfsrbno}}')">
+							                		<i class="fa fa-sticky-note" aria-hidden="true"></i>
+							                	</button> -->
 							               {{--  @elseif($value->survAct == "CDO")
 							                	<span class="text-success"><b>Not Applicable</b></span>
 							                @endif --}}
 
-        									{{-- <button class="btn btn-outline-warning" title="Issue NOV" data-toggle="modal" data-target="#novMonModal"  onclick="issueNOV('{{$value->survid}}', '{{$value->appid}}', '{{date('Y-m-d')}}', '{{$value->name_of_faci}}', '{{AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname}}', '{{AjaxController::getAllViolationBySurvId($value->survid)}}', '{{ AjaxController::getViolationDescById(AjaxController::getAllViolationBySurvId($value->survid)) }}', '{{$value->team}}')" 
+        									<!-- {{-- <button class="btn btn-outline-warning" title="Issue NOV" data-toggle="modal" data-target="#novMonModal"  onclick="issueNOV('{{$value->survid}}', '{{$value->appid}}', '{{date('Y-m-d')}}', '{{$value->name_of_faci}}', 'AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname', '{{AjaxController::getAllViolationBySurvId($value->survid)}}', '{{ AjaxController::getViolationDescById(AjaxController::getAllViolationBySurvId($value->survid)) }}', '{{$value->team}}')" 
         									@if($value->hfsrbno != "") hidden @endif>
 						                        <i class="fa fa-fw fa-clipboard-check"></i>
-						                    </button> --}}
+						                    </button> --}} -->
 
         								</td>
         							@else
@@ -150,6 +163,8 @@
 	        			@endisset
 	        		</tbody>
 	        	</table>
+
+			
 			</div>
 	      	</div>
 	    </div>
@@ -324,7 +339,7 @@
 			          	
 		          	<hr>
 		          	<div class="input-group form-inline mb-1 mt-2">
-		            	<form class="container" method="POST" action="{{asset('employee/dashboard/others/surv_recommendation')}}" data-parsley-validate>
+		            	<form class="container" enctype="multipart/form-data" method="POST" action="{{asset('employee/dashboard/others/surv_recommendation')}}" data-parsley-validate>
 			              	{{csrf_field()}}
 
 			              	{{-- monid --}}
@@ -413,6 +428,14 @@
 									<span id="recextra"></span>
 								</div>
 							</div>
+
+							<div class="row mb-2">
+								<div class="col-sm-12">
+									<label style="float: left;" for="fileup">Attach supporting documents</label>
+									<input id="fileup" class="form-control"  type="file" name="filesup">
+								</div>
+							</div>
+
 
 			              	{{-- submit btn --}}
 			              	<div class="row mt-3">
