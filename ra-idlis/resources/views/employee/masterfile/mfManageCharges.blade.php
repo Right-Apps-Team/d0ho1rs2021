@@ -19,7 +19,7 @@
   <div class="content p-4">
     <div class="card">
             <div class="card-header bg-white font-weight-bold">
-               Manage Charges <a href="" title="Add New" data-toggle="modal" data-target="#myModal">
+               Manage Charges<a href="" title="Add New" data-toggle="modal" data-target="#myModal">
                 <span class="PY004_add">
                   <button class="btn-primarys"><i class="fa fa-plus-circle"></i>&nbsp;Add new</button>
               </span>

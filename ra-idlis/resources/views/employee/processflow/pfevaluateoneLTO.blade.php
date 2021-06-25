@@ -191,9 +191,9 @@
                   <td scope="col" width="60%" >
                     <strong>Requirements</strong>
                   </td>
-                  <td scope="col" width="40%">
+                  <!-- <td scope="col" width="40%">
                     <center><strong>Evaluation</strong></center>
-                  </td>
+                  </td> -->
                 </tr>
               </thead>
               <tbody>
@@ -210,7 +210,7 @@
                       </div>
                       </div>
                     </td>
-                    <td>
+                    <!-- <td>
                       @if(!empty($req[2][0]))
                        <span class="{{$req[2][0]->id.$req[2][0]->id}}_span_edit" @if($req[2][0]->evaluation !== NULL)style="display: none"@endif>
                           <div class="row booleans laSelected" apup="{{$req[2][0]->id}}" >
@@ -260,7 +260,7 @@
                         $forNosent++;
                       @endphp
                       @endif
-                    </td>
+                    </td> -->
 
                   </tr>
                   @php $counter++; @endphp
@@ -283,12 +283,13 @@
                   @if ($triggerThis)
                   {{-- @if ($AppData->isrecommended == 2 || $AppData->isrecommended == null) --}}
                   @if(count($requirements) != $forNosent)
-                  <button type="button" id="approveButton" class="btn btn-success" onclick="Recommended4Inspection('ApproveApplication');">Approve</button>
+                  <!-- <button type="button" id="approveButton" class="btn btn-success" onclick="Recommended4Inspection('ApproveApplication');">Approve</button> -->
                   @endif
                   &nbsp;
                   &nbsp;
                   <!-- <button type="button" id="rejectButton" class="btn btn-danger" onclick="Recommended4Inspection('RejectApplication');">Disapprove</button> -->
-                  <button type="button" id="reviseButton" class="btn btn-warning" onclick="Recommended4Inspection('ReviseApplication')">Need for Revision</button>
+             
+                 <!-- 6-26-2021 <button type="button" id="reviseButton" class="btn btn-warning" onclick="Recommended4Inspection('ReviseApplication')">Need for Revision</button> -->
                   @endif
                 @endisset
               @else

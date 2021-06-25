@@ -618,6 +618,11 @@
                                 <li><a href="{{asset('/employee/dashboard/processflow/evaluate')}}">&nbsp;&nbsp;&nbsp;&nbsp;Documentary Evaluation</a></li>
 
                             </span>
+                             <span class="PF002_allow">
+
+                                <li><a href="{{asset('/employee/dashboard/processflow/evaluate/technical')}}">&nbsp;&nbsp;&nbsp;&nbsp;Technical Evaluation</a></li>
+
+                            </span>
 
                             {{-- @endif --}}
 

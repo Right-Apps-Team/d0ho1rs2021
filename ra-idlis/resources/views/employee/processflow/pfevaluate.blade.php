@@ -54,6 +54,13 @@
                               $reco = $data->isrecommended;
                               $ifdisabled = '';$color = '';
                             @endphp
+
+                            @if($type == 'technical' && strtolower($data->hfser_id) != 'lto' )
+                                <?php continue; ?>
+                            @elseif($type == 'documentary' && strtolower($data->hfser_id) == 'lto' )
+                            <?php continue; ?>
+                             @endif
+
                             <tr @if(!isset($data->documentSent) || $data->isrecommended == 2)style="background-color: #c4c1bb";@endif>
                               <td class="text-center">{{$data->hfser_id}}</td>
                               <td class="text-center">{{$data->hfser_id}}R{{$data->rgnid}}-{{$data->appid}}</td>

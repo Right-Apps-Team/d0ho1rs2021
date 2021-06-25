@@ -3294,7 +3294,22 @@ use FunctionsClientController;
 			{
 				$data = AjaxController::getAllApplicantsProcessFlow();
 				// dd(AjaxController::getCurrentUserAllData());
-				return view('employee.processflow.pfevaluate', ['BigData'=>$data]);
+				return view('employee.processflow.pfevaluate', ['BigData'=>$data, 'type'=>'documentary']);
+			} 
+			catch (Exception $e) 
+			{
+				AjaxController::SystemLogs($e);
+				session()->flash('system_error','ERROR');
+				return view('employee.processflow.pfevaluate');
+			}
+		}
+		public function EvaluateProcessFlowTechnical(Request $request)
+		{
+			try 
+			{
+				$data = AjaxController::getAllApplicantsProcessFlow();
+				// dd(AjaxController::getCurrentUserAllData());
+				return view('employee.processflow.pfevaluate', ['BigData'=>$data, 'type'=>'technical']);
 			} 
 			catch (Exception $e) 
 			{
@@ -3474,6 +3489,27 @@ use FunctionsClientController;
 					} else {
 						$tables = $arrTemp;
 					}
+
+					$Cur_useData = AjaxController::getCurrentUserAllData();
+					$checdata = DB::table('appform')->where('appid', '=', $appid)->first();
+					if(is_null($checdata->isrecommended)){
+					$updateData = array(
+						'isrecommended'=>1,
+						'recommendedby' => $Cur_useData['cur_user'],
+						'recommendedtime' => $Cur_useData['time'],
+						'recommendeddate' =>  $Cur_useData['date'],
+						'recommendedippaddr' =>$Cur_useData['ip'],
+						'isPayEval' => 1,
+						'payEvalby' => $Cur_useData['cur_user'],
+						'payEvaldate' => $Cur_useData['date'],
+						'payEvaltime' => $Cur_useData['time'],
+						'payEvalip'=> $Cur_useData['ip'],
+						'status' => 'FI'
+					);
+
+					DB::table('appform')->where('appid', '=', $appid)->update($updateData);
+					}
+					
 					return view('employee.processflow.pfevaluateoneLTO', ['AppData'=> $data, 'requirements' => $req, 'appID' => $appid, 'documentDate' => $documentDate, 'linkToEdit' => $linkToEdit, 'ActualString' => $data8->toDateString(), 'DateString' => $data8->toFormattedDateString(),'appID' => $appid, 'DateNow' => $data9->toDateString(), 'AfterDay'=> $data10->toDateString(), 'tables' => json_encode($tables), 'forhfsrb' => $forhfsrb, 'office' => $office, 'coaFlag' => $coaFlag, 'redirect' => $boolRedirect]);
 				}
 			}
