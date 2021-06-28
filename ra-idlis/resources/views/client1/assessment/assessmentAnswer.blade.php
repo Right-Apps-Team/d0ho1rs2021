@@ -216,8 +216,10 @@
               <div class="container">
                 <form action="{{url('client1/apply/SaveAssessments')}}" method="POST">
                   {{csrf_field()}}
+                 
                   <input type="hidden" name="appid" value="{{$data->appid}}">
                   <input type="hidden" name="part" value="{{$part}}">
+                  <input type="hidden" name="xid" value=" {{ app('request')->input('xid') }}">
                   {!!($isMon ? '<input type="hidden" name="monid" value="'.$isMon.'">' :'')!!}
                   <div class="container divs">
                     <div class="container divs">

@@ -552,9 +552,11 @@ end of new evaluation tool
 
 ////// new assessment
 Route::match(['get', 'post'], 'employee/dashboard/processflow/forAssessements', 'DOHController@AssessmentParts'); // assessment
-Route::match(['get', 'post'], 'employee/dashboard/processflow/parts/{appid}/{montype?}', 'DOHController@AssessmentShowPart'); // View each
+Route::match(['get', 'post'], 'employee/dashboard/processflow/parts/{appid}/{montype?}', 'DOHController@AssessmentShowPartNewLto'); // View each
+// Route::match(['get', 'post'], 'employee/dashboard/processflow/parts/{appid}/{montype?}', 'DOHController@AssessmentShowPart'); // View each
 Route::match(['get', 'post'], 'employee/dashboard/processflow/parts/new/{regfac_id}/{montype?}', 'DOHController@AssessmentShowPartNewRegFac'); // View each new 6-22-2021
 Route::match(['get', 'post'], 'employee/dashboard/processflow/HeaderOne/{appid}/{part}/{montype?}', 'DOHController@AssessmentShowH1'); // View each
+Route::match(['get', 'post'], 'employee/dashboard/processflow/HeaderOne/new/{appid}/{part}/{montype?}', 'DOHController@AssessmentShowH1'); // View each
 Route::match(['get', 'post'], 'employee/dashboard/processflow/HeaderOne/regfac/{appid}/{part}/{montype?}', 'DOHController@AssessmentShowH1RegFac'); // View each
 Route::match(['get', 'post'], 'employee/dashboard/processflow/HeaderTwo/{appid}/{headerOne}/{montype?}', 'DOHController@AssessmentShowH2'); // View each
 Route::match(['get', 'post'], 'employee/dashboard/processflow/HeaderThree/{appid}/{headerTwo}/{montype?}', 'DOHController@AssessmentShowH3'); // View each

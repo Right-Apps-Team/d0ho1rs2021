@@ -255,6 +255,7 @@
                     id : id,
                   },
                   success: function(data) {
+                    console.log(data)
                     if (data == 'NONE') {
                       $('#FilterdBody').empty();
                     } else {

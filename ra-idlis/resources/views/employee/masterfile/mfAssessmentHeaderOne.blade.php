@@ -29,6 +29,7 @@
 						</tr>
 					</thead>
 					<tbody>
+					
 						@if (!empty($allData))
 							@foreach($allData as $titleData)
 								<tr class="text-center">

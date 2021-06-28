@@ -2291,8 +2291,10 @@ class NewClientController extends Controller {
 		}
 		try {
 			$dohC = new DOHController();
+			// $toViewArr = $dohC->AssessmentShowPartClientAss($request,$appid,false,true);
 			$toViewArr = $dohC->AssessmentShowPart($request,$appid,false,true);
-			$toViewArr['appform'] = $curForm[0];
+			// $toViewArr['appform'] = DB::table('appform')->where('appid', $appid)->first();
+			// $toViewArr['appform'] = $curForm[0];
 			return view('client1.assessment.assessmentView',$toViewArr);
 		} catch (Exception $e) {
 			return $e;
@@ -2305,6 +2307,7 @@ class NewClientController extends Controller {
 			$dohC = new DOHController();
 			$toViewArr = $dohC->AssessmentShowH1($request,$appid,$part,false,true);
 			if($toViewArr){
+				$toViewArr['headon'] = true;
 				return view('client1.assessment.assessmentView',$toViewArr);
 			}
 			return redirect('client1/apply/assessmentReady/'.$appid)->with('errRet', ['errAlt'=>'Part does not exist.']);
@@ -2363,7 +2366,7 @@ class NewClientController extends Controller {
 			if($toViewArr){
 				return view('client1.assessment.assessmentSuccess',$toViewArr);
 			}
-			return back()->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Item not found on DB.']);
+			return back()->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Item not found on DB. hh']);
 		} catch (Exception $e) {
 			return $e;
 		}

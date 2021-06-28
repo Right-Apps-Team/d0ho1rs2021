@@ -5217,16 +5217,139 @@ use FunctionsClientController;
 			if(isset($appid) && FunctionsClientController::isExistOnAppform($appid) && in_array(true, AjaxController::isSessionExist(['uData','employee_login']))){
 				try {
 					$data = AjaxController::getAllDataEvaluateOne($appid);
+
+					$newHead = DB::table('x08_ft')
+					->join('appform','appform.appid','x08_ft.appid')
+					->join('facilitytyp','facilitytyp.facid','x08_ft.facid')
+					->join('hfaci_serv_type','hfaci_serv_type.hfser_id','appform.hfser_id')
+					->join('asmt_title','asmt_title.serv','facilitytyp.facid')
+					->join('asmt_h1','asmt_h1.partID','asmt_title.title_code')
+					->join('asmt_h2','asmt_h2.asmtH1ID_FK','asmt_h1.asmtH1ID')
+					->join('asmt_h3','asmt_h3.asmtH2ID_FK','asmt_h2.asmtH2ID')
+					->where(array(['appform.appid',$appid],['asmt_h1.apptype',$data->hfser_id]))
+					->select(array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'))
+					// ->groupBy('x08_ft.id')
+					->get();
+
 					$toViewArr = [
 						'data' => $data,
-						'head' => AjaxController::forAssessmentHeaders(array(['appform.appid',$appid],['asmt_h1.apptype',$data->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id')),
+						// 'head' => AjaxController::forAssessmentHeaders(array(['appform.appid',$appid],['asmt_h1.apptype',$data->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id')),
+						'head' => $newHead,
 						'address' => ($isSelfAssess ? url('client1/apply/HeaderOne/'.$appid.'/') : url('employee/dashboard/processflow/HeaderOne/'.$appid.'/')),
 						'isMain' => true,
 						'assesed' => AjaxController::assessedDone(3,$appid,$isMon,$isSelfAssess),
 						'isMon' => $isMon,
 						'isSentFromMobile' => DB::table('frommobileinspection')->where([['appid',$appid],['monid',($isMon ? $isMon : null)]])->exists(),
 						'hasselfassess' => DB::table('assessmentcombinedduplicate')->where([['appid',$appid],['selfassess',1]])->exists(),
-						'appid' => $appid
+						'appid' => $appid,
+						'appform' => DB::table('appform')->where('appid', $appid)->first()
+					];
+					return AjaxController::sendTo($isSelfAssess,$this->agent,$request->all(),'employee.processflow.pfassessmentShowPart',$toViewArr);
+				} catch (Exception $e) {
+					AjaxController::SystemLogs($e);
+					return $e;
+				}
+
+			} else {
+				return back()->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Application not exist.']);
+			}
+
+		}
+
+		public function AssessmentShowPartNewLto(Request $request, $appid, $isMon = false, $isSelfAssess = false){
+			AjaxController::createMobileSessionIfMobile($request);
+			if(isset($appid) && FunctionsClientController::isExistOnAppform($appid) && in_array(true, AjaxController::isSessionExist(['uData','employee_login']))){
+				try {
+					$data = AjaxController::getAllDataEvaluateOne($appid);
+
+					$newHead = DB::table('x08_ft')
+					->join('appform','appform.appid','x08_ft.appid')
+					->join('facilitytyp','facilitytyp.facid','x08_ft.facid')
+					->join('hfaci_serv_type','hfaci_serv_type.hfser_id','appform.hfser_id')
+					->join('asmt_title','asmt_title.serv','facilitytyp.facid')
+					->join('asmt_h1','asmt_h1.partID','asmt_title.title_code')
+					->join('asmt_h2','asmt_h2.asmtH1ID_FK','asmt_h1.asmtH1ID')
+					->join('asmt_h3','asmt_h3.asmtH2ID_FK','asmt_h2.asmtH2ID')
+					->where(array(['appform.appid',$appid],['asmt_h1.apptype',$data->hfser_id]))
+					->select(array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'))
+					// ->groupBy('x08_ft.id')
+					->get();
+
+					$toViewArr = [
+						'data' => $data,
+						// 'head' => AjaxController::forAssessmentHeaders(array(['appform.appid',$appid],['asmt_h1.apptype',$data->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id')),
+						'head' => $newHead,
+						'address' => ($isSelfAssess ? url('client1/apply/HeaderOne/'.$appid.'/') : url('employee/dashboard/processflow/HeaderOne/'.$appid.'/')),
+						'isMain' => true,
+						'assesed' => AjaxController::assessedDone(3,$appid,$isMon,$isSelfAssess),
+						'assesednew' => AjaxController::forDoneHeadersNew($appid,$isMon,$isSelfAssess)['h5'],
+						'isMon' => $isMon,
+						'isSentFromMobile' => DB::table('frommobileinspection')->where([['appid',$appid],['monid',($isMon ? $isMon : null)]])->exists(),
+						'hasselfassess' => DB::table('assessmentcombinedduplicate')->where([['appid',$appid],['selfassess',1]])->exists(),
+						'appid' => $appid,
+						'appform' => DB::table('appform')->where('appid', $appid)->first()
+					];
+					return AjaxController::sendTo($isSelfAssess,$this->agent,$request->all(),'employee.processflow.pfassessmentShowPart',$toViewArr);
+				} catch (Exception $e) {
+					AjaxController::SystemLogs($e);
+					return $e;
+				}
+
+			} else {
+				return back()->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Application not exist.']);
+			}
+
+		}
+
+
+		public function AssessmentShowPartClientAss(Request $request, $appid, $isMon = false, $isSelfAssess = false){
+			AjaxController::createMobileSessionIfMobile($request);
+			if(isset($appid) && FunctionsClientController::isExistOnAppform($appid) && in_array(true, AjaxController::isSessionExist(['uData','employee_login']))){
+				try {
+					$data = AjaxController::getAllDataEvaluateOne($appid);
+					$headData = AjaxController::forAssessmentHeaders(array(['appform.appid',$appid],['asmt_h1.apptype',$data->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
+					
+					$check = DB::table('appform')->where('appid', $appid)->first();
+
+					$newHeads = $headData;
+					if(!is_null($check->typeamb) ){
+						// $tempHead =  DB::table('x08_ft')->join('appform','appform.appid','x08_ft.appid')
+						// ->join('facilitytyp','facilitytyp.facid','x08_ft.facid')
+						// ->join('hfaci_serv_type','hfaci_serv_type.hfser_id','appform.hfser_id')
+						// ->join('asmt_title','asmt_title.serv','facilitytyp.facid')
+						// ->join('asmt_h1','asmt_h1.partID','asmt_title.title_code')
+						// ->join('asmt_h2','asmt_h2.asmtH1ID_FK','asmt_h1.asmtH1ID')
+						// ->join('asmt_h3','asmt_h3.asmtH2ID_FK','asmt_h2.asmtH2ID')
+						// ->where(array(['appform.appid',$appid],['asmt_h1.apptype',$data->hfser_id]))->select(array('asmt_title.title_name as desc','asmt_title.title_code as id'))->distinct();
+
+						// $b = DB::table('asmt_h1')->join('asmt_title', 'asmt_title.title_code', '=', 'asmt_h1.partID' )
+						// ->join('hfaci_serv_type', 'hfaci_serv_type.hfser_id', '=', 'asmt_h1.apptype' )
+						// ->select('asmt_title.title_name as desc','asmt_title.title_code as id')
+						// ->where('asmt_h1.partID', 'ASP-AT(TYPE1)')->union($tempHead)
+						// ->get();
+
+						// $newHeads = $b;
+
+						// $newHeads = DB::table('asmt_h1')->join('asmt_title', 'asmt_title.title_code', '=', 'asmt_h1.partID' )
+						// ->join('hfaci_serv_type', 'hfaci_serv_type.hfser_id', '=', 'asmt_h1.apptype' )
+						// ->select('asmt_title.title_name as desc','asmt_title.title_code as id')
+						// ->where('asmt_h1.partID', 'ASP-AT(TYPE1)')->distinct()
+						// ->get();
+
+						
+					}
+
+					$toViewArr = [
+						'data' => $data,
+						'head' => $newHeads,
+						'address' => ($isSelfAssess ? url('client1/apply/HeaderOne/'.$appid.'/') : url('employee/dashboard/processflow/HeaderOne/'.$appid.'/')),
+						'isMain' => true,
+						'assesed' => AjaxController::assessedDone(3,$appid,$isMon,$isSelfAssess),
+						'isMon' => $isMon,
+						'isSentFromMobile' => DB::table('frommobileinspection')->where([['appid',$appid],['monid',($isMon ? $isMon : null)]])->exists(),
+						'hasselfassess' => DB::table('assessmentcombinedduplicate')->where([['appid',$appid],['selfassess',1]])->exists(),
+						'appid' => $appid,
+						'appform' => DB::table('appform')->where('appid', $appid)->first()
 					];
 					return AjaxController::sendTo($isSelfAssess,$this->agent,$request->all(),'employee.processflow.pfassessmentShowPart',$toViewArr);
 				} catch (Exception $e) {
@@ -5308,14 +5431,14 @@ use FunctionsClientController;
 		// 	}
 		// }
 
-		public function AssessmentShowH1(Request $request,$appid,$part,$isMon = false,$isSelfAssess = false){
+		public function AssessmentShowH1Old(Request $request,$appid,$part,$isMon = false,$isSelfAssess = false){
 			AjaxController::createMobileSessionIfMobile($request);
 			if(isset($appid) && FunctionsClientController::isExistOnAppform($appid) && FunctionsClientController::existOnDB('asmt_title',[['title_code',$part]]) && in_array(true, AjaxController::isSessionExist(['uData','employee_login']))){
 				try {
 
 					$data = AjaxController::getAllDataEvaluateOne($appid);
 					$whereClause = array(['appform.appid',$appid],['asmt_h1.apptype',$data->hfser_id],['asmt_h1.partID',$part]);
-					$headData = AjaxController::forAssessmentHeaders($whereClause,array('asmt_h1.h1name as desc','asmt_h1.asmtH1ID as id','asmt_title.title_name as h1HeadBack','asmt_title.title_code as h1HeadID'));
+					$headData = AjaxController::forAssessmentHeaders($whereClause,array('asmt_h1.h1name as desc','asmt_h1.asmtH1ID as id','asmt_title.title_name as h1HeadBack','asmt_title.title_code as h1HeadID', 'x08_ft.id as xid'));
 					$toViewArr = [
 						'data' => $data,
 						'head' => $headData,
@@ -5324,6 +5447,59 @@ use FunctionsClientController;
 						'customAddress' => ($isSelfAssess ? url('client1/apply/assessmentReady/'.$appid.'/') :url('employee/dashboard/processflow/parts/'.$appid)),
 						// 'assesed' => AjaxController::assessedDone(2,$appid,$isMon,$isSelfAssess),
 						'assesed' => AjaxController::forDoneHeaders($appid,$isMon,$isSelfAssess)['h3'],
+						'assesednew' => AjaxController::forDoneHeadersNew($appid,$isMon,$isSelfAssess)['h5'],
+						'neededData' => array('level' => 3,'id' => $part),
+						'isMon' => $isMon,
+						'crumb' => isset($headData[0]->h1HeadID) ? [array('id' => $headData[0]->h1HeadID,'desc' => $headData[0]->h1HeadBack, 'beforeAddress' => 'MAIN')] : null
+					];
+					// dd($toViewArr);
+					return AjaxController::sendTo($isSelfAssess,$this->agent,$request->all(),'employee.processflow.pfassessmentShowPart',$toViewArr);
+				} catch (Exception $e) {
+					AjaxController::SystemLogs($e);
+					return $e;
+
+				}
+
+			} else {
+				return ($isSelfAssess ? false : back()->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Part does not exist.']));
+			}
+		}
+
+		public function AssessmentShowH1(Request $request,$appid,$part,$isMon = false,$isSelfAssess = false){
+			AjaxController::createMobileSessionIfMobile($request);
+			if(isset($appid) && FunctionsClientController::isExistOnAppform($appid) && FunctionsClientController::existOnDB('asmt_title',[['title_code',$part]]) && in_array(true, AjaxController::isSessionExist(['uData','employee_login']))){
+				try {
+					
+
+					$data = AjaxController::getAllDataEvaluateOne($appid);
+					$whereClause = array(['appform.appid',$appid],['asmt_h1.apptype',$data->hfser_id],['asmt_h1.partID',$part]);
+					$headData = AjaxController::forAssessmentHeaders($whereClause,array('asmt_h1.h1name as desc','asmt_h1.asmtH1ID as id','asmt_title.title_name as h1HeadBack','asmt_title.title_code as h1HeadID', 'x08_ft.id as xid'));
+					
+					$newHead = DB::table('x08_ft')
+					->join('appform','appform.appid','x08_ft.appid')
+					->join('facilitytyp','facilitytyp.facid','x08_ft.facid')
+					->join('hfaci_serv_type','hfaci_serv_type.hfser_id','appform.hfser_id')
+					->join('asmt_title','asmt_title.serv','facilitytyp.facid')
+					->join('asmt_h1','asmt_h1.partID','asmt_title.title_code')
+					->join('asmt_h2','asmt_h2.asmtH1ID_FK','asmt_h1.asmtH1ID')
+					->join('asmt_h3','asmt_h3.asmtH2ID_FK','asmt_h2.asmtH2ID')
+					->where(array(['appform.appid',$appid],['asmt_h1.apptype',$data->hfser_id],['asmt_h1.partID',$part]))
+					// ->where(array(['appform.appid',$appid],['asmt_h1.apptype',$data->hfser_id],['asmt_h1.partID',$part]))
+					->select(array('asmt_h1.h1name as desc','asmt_h1.asmtH1ID as id','asmt_title.title_name as h1HeadBack','asmt_title.title_code as h1HeadID', 'x08_ft.id as xid'))
+					// ->groupBy('x08_ft.id')
+					->get();
+					
+					$toViewArr = [
+						'data' => $data,
+						'head' => $newHead,
+						'headon' => true,
+						// 'head' => $headData,
+						// 'address' => ($isSelfAssess ? url('client1/apply/HeaderTwo/'.$appid.'/') : url('employee/dashboard/processflow/HeaderTwo/'.$appid.'/')),
+						'address' => ($isSelfAssess ? url('client1/apply/ShowAssessments/'.$appid.'/') : url('employee/dashboard/processflow/ShowAssessments/'.$appid.'/')),
+						'customAddress' => ($isSelfAssess ? url('client1/apply/assessmentReady/'.$appid.'/') :url('employee/dashboard/processflow/parts/'.$appid)),
+						// 'assesed' => AjaxController::assessedDone(2,$appid,$isMon,$isSelfAssess),
+						'assesed' => AjaxController::forDoneHeaders($appid,$isMon,$isSelfAssess)['h3'],
+						'assesednew' => AjaxController::forDoneHeadersNew($appid,$isMon,$isSelfAssess)['h5'],
 						'neededData' => array('level' => 3,'id' => $part),
 						'isMon' => $isMon,
 						'crumb' => isset($headData[0]->h1HeadID) ? [array('id' => $headData[0]->h1HeadID,'desc' => $headData[0]->h1HeadBack, 'beforeAddress' => 'MAIN')] : null
@@ -5384,7 +5560,7 @@ use FunctionsClientController;
 				try {
 					$data = AjaxController::getAllDataEvaluateOne($appid);
 					$whereClause = array(['appform.appid',$appid],['asmt_h1.apptype',$data->hfser_id],['asmt_h2.asmtH1ID_FK',$h1]);
-					$headData = AjaxController::forAssessmentHeaders($whereClause,array('asmt_h2.h2name as desc','asmt_h2.asmtH2ID as id','asmt_title.title_code as idForBack','asmt_title.title_name as h1HeadBack','asmt_title.title_code as h1HeadID','asmt_h1.h1name as h2HeadBack','asmt_h1.partID as h2HeadID'));
+					$headData = AjaxController::forAssessmentHeaders($whereClause,array('asmt_h2.h2name as desc','asmt_h2.asmtH2ID as id','asmt_title.title_code as idForBack','asmt_title.title_name as h1HeadBack','asmt_title.title_code as h1HeadID','asmt_h1.h1name as h2HeadBack','asmt_h1.partID as h2HeadID', 'x08_ft.id as xid'));
 					$toViewArr = [
 						'data' => $data,
 						'head' => $headData,
@@ -5571,16 +5747,59 @@ use FunctionsClientController;
 			$res = null;
 			if(isset($request->appid) && FunctionsClientController::isExistOnAppform($request->appid) && FunctionsClientController::existOnDB('asmt_h1',[['asmtH1ID',$request->part]]) && in_array(true, AjaxController::isSessionExist(['uData','employee_login']))){
 				try {
-					if(DB::table('assessmentcombinedduplicate')->where([['asmtH3ID_FK',$request->part],['appid',$request->appid],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0){
+					if(DB::table('assessmentcombinedduplicate')->where([['x08_id',$request->xid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0){
+					// if(DB::table('assessmentcombinedduplicate')->where([['asmtH3ID_FK',$request->part],['appid',$request->appid],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0){
 
 						$data = AjaxController::getAllDataEvaluateOne($request->appid);
 						$filteredAssessment = $request->except($arrOfUnneeded);
-						$dataFromDB = AjaxController::forAssessmentHeaders(array(['appform.appid',$request->appid],['asmt_h1.apptype',$data->hfser_id],['asmt_h1.asmtH1ID',$request->part]),array('asmt_h1.*','asmt_h2.*','asmt_h3.*','asmt_title.title_code'))[0];
+						$dataFromDB = AjaxController::forAssessmentHeaders(array(['appform.appid',$request->appid],['asmt_h1.apptype',$data->hfser_id],['asmt_h1.asmtH1ID',$request->part]),array('asmt_h1.*','asmt_h2.*','asmt_h3.*','asmt_title.title_code', 'x08_ft.id as xid'))[0];
 						$uData = AjaxController::getCurrentUserAllData();
 						foreach ($filteredAssessment as $key => $value) {
 							if(is_numeric($key) && !in_array($key, $getOnDBID)){
 								$res = DB::table('assessmentcombined')->whereIn('asmtComb',[$key])->select('asmtComb','assessmentName','assessmentSeq','headingText')->first();
-								$forInsertArray = array('asmtComb_FK' => $res->asmtComb, 'assessmentName' => $res->assessmentName, 'asmtH3ID_FK' => $request->part, 'h3name' => $dataFromDB->h3name, 'asmtH2ID_FK' => $dataFromDB->asmtH2ID, 'h2name' => $dataFromDB->h2name, 'asmtH1ID_FK' => $dataFromDB->asmtH1ID, 'partID' => $dataFromDB->title_code, 'h1name' => $dataFromDB->h1name, 'evaluation' => ($value['comp'] == 'false' ? 0 : ($value['comp'] == 'NA' ? 'NA' : 1)), 'remarks' => $value['remarks'], 'assessmentSeq' => $res->assessmentSeq, 'evaluatedBy'=> ($uData['cur_user'] != 'ERROR' ? $uData['cur_user'] : (session()->has('uData') ? session()->get('uData')->uid :'UNKOWN, '.$request->ip())), 'assessmentHead' => $res->headingText, 'monid' => $request->monid, 'selfassess' => ($isSelfAssess ? $isSelfAssess : null), 'appid' => $request->appid);
+								$forInsertArray = array('x08_id' => $request->xid, 'asmtComb_FK' => $res->asmtComb, 'assessmentName' => $res->assessmentName, 'asmtH3ID_FK' => $request->part, 'h3name' => $dataFromDB->h3name, 'asmtH2ID_FK' => $dataFromDB->asmtH2ID, 'h2name' => $dataFromDB->h2name, 'asmtH1ID_FK' => $dataFromDB->asmtH1ID, 'partID' => $dataFromDB->title_code, 'h1name' => $dataFromDB->h1name, 'evaluation' => ($value['comp'] == 'false' ? 0 : ($value['comp'] == 'NA' ? 'NA' : 1)), 'remarks' => $value['remarks'], 'assessmentSeq' => $res->assessmentSeq, 'evaluatedBy'=> ($uData['cur_user'] != 'ERROR' ? $uData['cur_user'] : (session()->has('uData') ? session()->get('uData')->uid :'UNKOWN, '.$request->ip())), 'assessmentHead' => $res->headingText, 'monid' => $request->monid, 'selfassess' => ($isSelfAssess ? $isSelfAssess : null), 'appid' => $request->appid);
+								// (isset($request->monid) && $request->monid > 0 ? $forInsertArray['monid'] = $request->monid : '');
+								DB::table('assessmentcombinedduplicate')->insert($forInsertArray);
+								array_push($getOnDBID, $key);
+							}
+						}
+						$urlToRedirect = ($isSelfAssess ? url('client1/apply/HeaderOne/'.$request->appid.'/'.$dataFromDB->title_code) : url('employee/dashboard/processflow/HeaderOne/'.$request->appid.'/'.$dataFromDB->title_code.'/'.(isset($request->monid) && $request->monid > 0 ? $request->monid : '')));
+						$toViewArr = [
+							'redirectTo' => $urlToRedirect
+						];
+						return AjaxController::sendTo($isSelfAssess,$this->agent,$request->all(),'employee/assessment/operationSuccess',$toViewArr);
+					}
+				} catch (Exception $e) {
+					AjaxController::SystemLogs($e);
+					return $e;
+				}
+			}
+			return ($isSelfAssess ? false : back()->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Item not found on DB.']));
+			
+		}
+
+		public function SaveAssessmentsNew (Request $request, $isSelfAssess = false){
+			$arrOfUnneeded = array('_token','appid','part');
+			$arrForCheck = $request->except($arrOfUnneeded);
+			if(!isset($request->appid) || count($arrForCheck) <= 0 ){
+				return back()->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'No items to pass.']);
+			}
+			
+			$getOnDBID = $sample = array();
+			$res = null;
+			if(isset($request->appid) && FunctionsClientController::isExistOnAppform($request->appid) && FunctionsClientController::existOnDB('asmt_h1',[['asmtH1ID',$request->part]]) && in_array(true, AjaxController::isSessionExist(['uData','employee_login']))){
+				try {
+					if(DB::table('assessmentcombinedduplicate')->where([['x08_id',$request->xid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0){
+					// if(DB::table('assessmentcombinedduplicate')->where([['asmtH3ID_FK',$request->part],['appid',$request->appid],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0){
+
+						$data = AjaxController::getAllDataEvaluateOne($request->appid);
+						$filteredAssessment = $request->except($arrOfUnneeded);
+						$dataFromDB = AjaxController::forAssessmentHeaders(array(['appform.appid',$request->appid],['asmt_h1.apptype',$data->hfser_id],['asmt_h1.asmtH1ID',$request->part]),array('asmt_h1.*','asmt_h2.*','asmt_h3.*','asmt_title.title_code', 'x08_ft.id as xid'))[0];
+						$uData = AjaxController::getCurrentUserAllData();
+						foreach ($filteredAssessment as $key => $value) {
+							if(is_numeric($key) && !in_array($key, $getOnDBID)){
+								$res = DB::table('assessmentcombined')->whereIn('asmtComb',[$key])->select('asmtComb','assessmentName','assessmentSeq','headingText')->first();
+								$forInsertArray = array('x08_id' => $request->xid, 'asmtComb_FK' => $res->asmtComb, 'assessmentName' => $res->assessmentName, 'asmtH3ID_FK' => $request->part, 'h3name' => $dataFromDB->h3name, 'asmtH2ID_FK' => $dataFromDB->asmtH2ID, 'h2name' => $dataFromDB->h2name, 'asmtH1ID_FK' => $dataFromDB->asmtH1ID, 'partID' => $dataFromDB->title_code, 'h1name' => $dataFromDB->h1name, 'evaluation' => ($value['comp'] == 'false' ? 0 : ($value['comp'] == 'NA' ? 'NA' : 1)), 'remarks' => $value['remarks'], 'assessmentSeq' => $res->assessmentSeq, 'evaluatedBy'=> ($uData['cur_user'] != 'ERROR' ? $uData['cur_user'] : (session()->has('uData') ? session()->get('uData')->uid :'UNKOWN, '.$request->ip())), 'assessmentHead' => $res->headingText, 'monid' => $request->monid, 'selfassess' => ($isSelfAssess ? $isSelfAssess : null), 'appid' => $request->appid);
 								// (isset($request->monid) && $request->monid > 0 ? $forInsertArray['monid'] = $request->monid : '');
 								DB::table('assessmentcombinedduplicate')->insert($forInsertArray);
 								array_push($getOnDBID, $key);

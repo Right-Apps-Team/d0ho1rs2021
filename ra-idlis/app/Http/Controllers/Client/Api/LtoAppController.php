@@ -150,6 +150,24 @@ class LtoAppController extends Controller
            $this->ltoAppDetSave($request->facid, $appform->appid, $request->uid);
         }
 
+        if($request->typeamb){
+           $amb = json_decode($request->typeamb, true);
+           $ambty = json_decode($request->ambtyp, true);
+
+           for ($i = 0; $i < count($amb); $i++) {
+                if($ambty[$i] == '2'){
+                    $type = 'AOASPT1';
+                    if($amb[$i] == '2'){
+                        $type = 'AOASPT2';
+                    }
+                    DB::insert('insert into x08_ft (uid, appid, facid) values (?, ?, ?)', [$request->uid, $appform->appid, $type]);
+                }
+           }
+
+        }
+
+
+
         $payment = session()->get('payment');
         $appcharge =  session()->get('appcharge');
         $ambcharge   =  session()->get('ambcharge');

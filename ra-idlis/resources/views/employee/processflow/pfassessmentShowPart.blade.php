@@ -115,11 +115,15 @@
 				@endisset
 			</div>
 			<div class="row p-5 text-center main">
+			
 				@php 
 					$arrDat = array();
+					$arrDat1 = array();
 				@endphp
 				@foreach($head as $key => $value)
-					@if(!in_array($value->id, $arrDat))
+				
+
+				{{--	@if(!in_array($value->id, $arrDat))
 					@php 
 						array_push($arrDat, $value->id)
 					@endphp
@@ -127,7 +131,36 @@
 						<a href="{{$address.'/'.$value->id.'/'.$isMon.($isOtherUid ?? '')}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a>
 						<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.($isOtherUid ?? '')}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a> -->
 					</div>
+					@endif --}}
+
+			@if(isset($headon))
+
+
+					@if(!in_array($value->xid, $arrDat))
+					@php 
+						array_push($arrDat, $value->xid)
+					@endphp 
+					<div class="col-sm-12">
+						<a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid}}" class="button6 btn-block {{$value->xid}}">{{$value->desc}}</a>
+						<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a> -->
+					</div>
+					 @endif 
+			@else
+					@if(!in_array($value->id, $arrDat1))
+					@php 
+						array_push($arrDat1, $value->id)
+					@endphp 
+
+					<div class="col-sm-12">
+						<a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid}}" class="button6 btn-block {{$value->xid}}">{{$value->desc}}</a>
+						<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a> -->
+					</div>
 					@endif
+			@endif
+
+
+
+
 				@endforeach
 				@isset($isMain)
 				<div class="col-sm-12">
@@ -150,13 +183,19 @@
 
             	@endif
 
-                let assesed = {!!empty($assesed) ? json_encode('none') : json_encode($assesed) !!};
+			
+                let assesed = {!!empty($assesednew) ? json_encode('none') : json_encode($assesednew) !!};
+                // let assesed = {!!empty($assesed) ? json_encode('none') : json_encode($assesed) !!};
                 if(assesed instanceof Array){
                     $.each(assesed,function(index, el) {
-                        let textOnDiv = $('.'+$.escapeSelector(el)).text();
-                        $('.'+el).replaceWith('<p class="buttonOthers btn-block done" style="background-color:#28A745;"><i class="fa fa-check-circle p-2" aria-hidden="true"></i>'+textOnDiv+'</p>');
-                    });
+						@if(isset($headon))
+							let textOnDiv = $('.'+$.escapeSelector(el)).text();
+							$('.'+el).replaceWith('<p class="buttonOthers btn-block done" style="background-color:#28A745;"><i class="fa fa-check-circle p-2" aria-hidden="true"></i>'+textOnDiv+'</p>');
+           	    	    @endif
+					});
                 }
+				
+
                 if($('.main div').length == $('.main p.done').length){
                 	@if(!isset($isMain))
 					$.ajax({

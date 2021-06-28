@@ -11,7 +11,7 @@ class ReportsController extends Controller
     //
 
 	public function assessment(Request $request){
-		$dataFromDB = AjaxController::forAssessmentHeaders(array(['asmt_title.serv','<>',null],['hfaci_serv_type.hfser_id','LTO']),array('facilitytyp.facid','facilitytyp.facname','hfaci_serv_type.hfser_id'));
+		$dataFromDB = AjaxController::forAssessmentHeaders(array(['asmt_title.serv','<>',null],['hfaci_serv_type.hfser_id','LTO']),array('facilitytyp.facid','facilitytyp.facname','hfaci_serv_type.hfser_id', 'x08_ft.id as xid', 'x08_ft.id as xid'));
 
 		return view('employee.reports.assessment', ['servCap' => $dataFromDB]);
 	}

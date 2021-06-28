@@ -7605,6 +7605,18 @@ public static function getAllUidByRegFac($regfac_id) {
 
 				
 				default:
+					// return DB::table('x08_ft')
+					// ->join('appform','appform.appid','x08_ft.appid')
+					// ->join('facilitytyp','facilitytyp.facid','x08_ft.facid')
+					// ->join('hfaci_serv_type','hfaci_serv_type.hfser_id','appform.hfser_id')
+					// ->join('asmt_title','asmt_title.serv','facilitytyp.facid')
+					// ->join('asmt_h1','asmt_h1.partID','asmt_title.title_code')
+					// ->join('asmt_h2','asmt_h2.asmtH1ID_FK','asmt_h1.asmtH1ID')
+					// ->join('asmt_h3','asmt_h3.asmtH2ID_FK','asmt_h2.asmtH2ID')
+					// ->where($whereClause)
+					// ->select($select)
+					// // ->groupBy('x08_ft.id')
+					// ->get();
 					return DB::table('x08_ft')->join('appform','appform.appid','x08_ft.appid')->join('facilitytyp','facilitytyp.facid','x08_ft.facid')->join('hfaci_serv_type','hfaci_serv_type.hfser_id','appform.hfser_id')->join('asmt_title','asmt_title.serv','facilitytyp.facid')->join('asmt_h1','asmt_h1.partID','asmt_title.title_code')->join('asmt_h2','asmt_h2.asmtH1ID_FK','asmt_h1.asmtH1ID')->join('asmt_h3','asmt_h3.asmtH2ID_FK','asmt_h2.asmtH2ID')->where($whereClause)->select($select)->distinct()->get();
 					break;
 			}
@@ -7721,6 +7733,47 @@ public static function getAllUidByRegFac($regfac_id) {
 			'h2' => $h2,
 			'h3' => $h3,
 			'h4' => $h4
+		];
+		return $retArray;
+	}
+public static function forDoneHeadersNew($appid,$monid,$selfAssess,$isPtc = false,$revision = null){
+		$h1 = $h2 = $h3 = $h4= $h5 = array();
+		$monid = ($monid ? $monid : null);
+		$selfAssess = ($selfAssess ? 1 : null);
+		if(!$isPtc){
+			$table = 'assessmentcombinedduplicate';
+			$whereClause = [['appid',$appid],['monid',$monid],['selfassess',$selfAssess]];
+		} else {
+			$table = 'assessmentcombinedduplicateptc';
+			$whereClause = [['appid',$appid],['evaluatedBy',session()->get('employee_login')->uid],['revision',$revision]];
+		}
+		$db = DB::table($table)->where($whereClause)->select('asmtH3ID_FK','asmtH2ID_FK','asmtH1ID_FK','partID','x08_id')->distinct()->get();
+		foreach ($db as $key => $value) {
+			for ($i=0; $i < 4; $i++) { 
+				
+			}
+			if(!in_array($value->asmtH1ID_FK, $h1)){
+				array_push($h1, $value->asmtH1ID_FK);
+			}
+			if(!in_array($value->asmtH2ID_FK, $h2)){
+				array_push($h2, $value->asmtH2ID_FK);
+			}
+			if(!in_array($value->asmtH3ID_FK, $h3)){
+				array_push($h3, $value->asmtH3ID_FK);
+			}
+			if(!in_array($value->partID, $h4)){
+				array_push($h4, $value->partID);
+			}
+			if(!in_array($value->x08_id, $h5)){
+				array_push($h5, $value->x08_id);
+			}
+		}
+		$retArray = [
+			'h1' => $h1,
+			'h2' => $h2,
+			'h3' => $h3,
+			'h4' => $h4,
+			'h5' => $h5
 		];
 		return $retArray;
 	}

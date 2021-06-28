@@ -73,7 +73,7 @@ class EvaluationController extends Controller
 				$data = AjaxController::getAllDataEvaluateOne($appid);
 				$toViewArr = [
 					'data' => $data,
-					'head' => AjaxController::forAssessmentHeaders(array(['appform.appid',$appid],['asmt_h1.apptype',$data->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id')),
+					'head' => AjaxController::forAssessmentHeaders(array(['appform.appid',$appid],['asmt_h1.apptype',$data->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid')),
 					'address' => url('employee/dashboard/processflow/floorPlan/HeaderOne/'.$appid.'/'.$revision),
 					'isMain' => true,
 					// 'assesed' => AjaxController::assessedDone(3,$appid,$isMon,$isSelfAssess,true),
@@ -115,7 +115,7 @@ class EvaluationController extends Controller
 				$isMon = $isSelfAssess = false;
 				$data = AjaxController::getAllDataEvaluateOne($appid);
 				$whereClause = array(['appform.appid',$appid],['asmt_h1.apptype',$data->hfser_id],['asmt_h1.partID',$part]);
-				$headData = AjaxController::forAssessmentHeaders($whereClause,array('asmt_h1.h1name as desc','asmt_h1.asmtH1ID as id','asmt_title.title_name as h1HeadBack','asmt_title.title_code as h1HeadID'));
+				$headData = AjaxController::forAssessmentHeaders($whereClause,array('asmt_h1.h1name as desc','asmt_h1.asmtH1ID as id','asmt_title.title_name as h1HeadBack','asmt_title.title_code as h1HeadID', 'x08_ft.id as xid'));
 				$toViewArr = [
 					'data' => $data,
 					'head' => $headData,
@@ -161,7 +161,7 @@ class EvaluationController extends Controller
 				$isMon = $isSelfAssess = false;
 				$data = AjaxController::getAllDataEvaluateOne($appid);
 				$whereClause = array(['appform.appid',$appid],['asmt_h1.apptype',$data->hfser_id],['asmt_h2.asmtH1ID_FK',$h1]);
-				$headData = AjaxController::forAssessmentHeaders($whereClause,array('asmt_h2.h2name as desc','asmt_h2.asmtH2ID as id','asmt_title.title_code as idForBack','asmt_title.title_name as h1HeadBack','asmt_title.title_code as h1HeadID','asmt_h1.h1name as h2HeadBack','asmt_h1.partID as h2HeadID'));
+				$headData = AjaxController::forAssessmentHeaders($whereClause,array('asmt_h2.h2name as desc','asmt_h2.asmtH2ID as id','asmt_title.title_code as idForBack','asmt_title.title_name as h1HeadBack','asmt_title.title_code as h1HeadID','asmt_h1.h1name as h2HeadBack','asmt_h1.partID as h2HeadID', 'x08_ft.id as xid'));
 				$toViewArr = [
 					'data' => $data,
 					'head' => $headData,
@@ -289,7 +289,7 @@ class EvaluationController extends Controller
 						
 						if(is_numeric($key) && !in_array($key, $getOnDBID)){
 							$res = DB::table('assessmentcombined')->whereIn('asmtComb',[$key])->select('asmtComb','assessmentName','assessmentSeq','headingText','subFor','isAlign')->first();
-							$dataFromDB = AjaxController::forAssessmentHeaders(array(['asmt_title.title_code',$value['part']],['asmt_h1.asmtH1ID',$value['lvl1']],['asmt_h2.asmtH2ID',$value['lvl2']],['asmt_h3.asmtH3ID',$value['lvl3']]),array('asmt_h1.*','asmt_h2.*','asmt_h3.*','asmt_title.title_code','asmt_title.title_name', 'asmt_h2.isdisplay'))[0];
+							$dataFromDB = AjaxController::forAssessmentHeaders(array(['asmt_title.title_code',$value['part']],['asmt_h1.asmtH1ID',$value['lvl1']],['asmt_h2.asmtH2ID',$value['lvl2']],['asmt_h3.asmtH3ID',$value['lvl3']]),array('asmt_h1.*','asmt_h2.*','asmt_h3.*','asmt_title.title_code','asmt_title.title_name', 'asmt_h2.isdisplay', 'x08_ft.id as xid'))[0];
 		//6-4-2021 original_state					// $dataFromDB = AjaxController::forAssessmentHeaders(array(['asmt_title.title_code',$value['part']],['asmt_h1.asmtH1ID',$value['lvl1']],['asmt_h2.asmtH2ID',$value['lvl2']],['asmt_h3.asmtH3ID',$value['lvl3']]),array('asmt_h1.*','asmt_h2.*','asmt_h3.*','asmt_title.title_code','asmt_title.title_name', 'asmt_h2.isdisplay'))[0];
 							$forInsertArray = array('asmtComb_FK' => $res->asmtComb, 'assessmentName' => $res->assessmentName, 'asmtH3ID_FK' => $request->part, 'h3name' => $dataFromDB->h3name, 'asmtH2ID_FK' => $dataFromDB->asmtH2ID, 'isdisplay' => $dataFromDB->isdisplay, 'h2name' => $dataFromDB->h2name, 'asmtH1ID_FK' => $dataFromDB->asmtH1ID, 'h1name' => $dataFromDB->h1name, 'sub' => $res->subFor, 'isAlign' => $res->isAlign, 'revision' => $revision, 'partID' => $dataFromDB->title_code, 'parttitle' => $dataFromDB->title_name, 'evaluation' => ($value['comp'] == 'false' ? 0 : ($value['comp'] == 'NA' ? 'NA' : 1)), 'remarks' => ($value['remarks'] ?? null), 'assessmentSeq' => $res->assessmentSeq, 'evaluatedBy'=> ($uData['cur_user'] != 'ERROR' ? $uData['cur_user'] : (session()->has('uData') ? session()->get('uData')->uid :'UNKOWN, '.$request->ip())), 'assessmentHead' => $res->headingText, 'appid' => $request->appid);
 							// (isset($request->monid) && $request->monid > 0 ? $forInsertArray['monid'] = $request->monid : '');
