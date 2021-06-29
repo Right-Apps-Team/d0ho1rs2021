@@ -2649,6 +2649,31 @@ use FunctionsClientController;
 				}
 			// }
 		}
+
+		public static function ServiceFees(Request $request)
+		{
+			// if ($request->isMethod('get')) 
+			// {
+				try  // mfServiceCharges
+				{
+					$allfactypes = DB::table('facilitytyp')
+					->leftJoin('facilitytyp as specified', 'specified.facid', '=', 'facilitytyp.specified' )
+					->leftJoin('serv_type', 'facilitytyp.servtype_id', '=', 'serv_type.servtype_id' )
+					->leftJoin('hfaci_grp', 'facilitytyp.hgpid', '=', 'hfaci_grp.hgpid' )
+					->select('facilitytyp.*', 'specified.facname as spec', 'hfaci_grp.hgpdesc', 'serv_type.anc_name')
+					->orderBy('facilitytyp.facname')
+					->get();
+					return view('employee.masterfile.mfServiceFees', ['factypes' =>$allfactypes]);
+				} 
+				catch (Exception $e) 
+				{
+					dd($e);
+					AjaxController::SystemLogs($e);
+					session()->flash('system_error','ERROR');
+					return view('employee.masterfile.mfServiceCharges');
+				}
+			// }
+		}
 		////// SERVICE CHARGES
 		////// ASSESSMENT CATEGORY
 		public function AssessmentCategory(Request $request)

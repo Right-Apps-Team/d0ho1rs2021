@@ -41,7 +41,7 @@
 	<div class="container mb-5">
 			<div class="row mb-5">
 				<div class="col-sm-4">
-					<a class="btn btn-success btn-block" href="{{asset('client1/apply/new')}}" style="text-decoration: none;color:#fff; margin-top: 20%">Add new Application</a>
+					<!-- <a class="btn btn-success btn-block" href="{{asset('client1/apply/new')}}" style="text-decoration: none;color:#fff; margin-top: 20%">Add new Application</a> -->
 					<!-- <a 
 						class="btn btn-info btn-block" 
 						href="{{asset('client/dashboard/new-application')}}" 

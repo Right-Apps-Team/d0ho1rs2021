@@ -67,7 +67,8 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'facilityname' => $data['facilityname'],
             'pwd' => bcrypt($data['pwd']),
-            'token' => \str_random(40)
+            'token' => null
+            // 'token' => \str_random(40)
         ]);
 
         Mail::to($user->email)->send(new VerifyMail($user));

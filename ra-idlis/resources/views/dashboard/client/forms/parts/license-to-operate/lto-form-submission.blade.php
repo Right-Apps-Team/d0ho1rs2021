@@ -30,10 +30,10 @@
         if($('#zip').val() == ""){errors +=1; ermsg += "Zip Code, "}
 
         if($('#fac_mobile_number').val() == ""){errors +=1; ermsg += "Facility Mobile No., "}
-        if($('#areacode').val() == ""){errors +=1; ermsg += "Facility Landline Area code, "}
-        if($('#landline').val() == ""){errors +=1; ermsg += "Facility Landline, "}
-        if($('#faxareacode').val() == ""){errors +=1; ermsg += "Fax Area code, "}
-        if($('#faxNumber').val() == ""){errors +=1; ermsg += "Fax Number, "}
+        // if($('#areacode').val() == ""){errors +=1; ermsg += "Facility Landline Area code, "}
+        // if($('#landline').val() == ""){errors +=1; ermsg += "Facility Landline, "}
+        // if($('#faxareacode').val() == ""){errors +=1; ermsg += "Fax Area code, "}
+        // if($('#faxNumber').val() == ""){errors +=1; ermsg += "Fax Number, "}
         if($('#fac_email_address').val() == ""){errors +=1; ermsg += "Facility Email, " }
 
         if($('#fac_email_address').val() != ""){
@@ -75,8 +75,8 @@
       
         if($('#owner').val() == ""){errors +=1; ermsg += "Owner, "}
         if($('#prop_mobile').val() == ""){errors +=1; ermsg += "Proponent Mobile, "}
-        if($('#prop_landline_areacode').val() == ""){errors +=1; ermsg += "Proponent Landline Areacode, "}
-        if($('#prop_landline').val() == ""){errors +=1; ermsg += "Proponent Landline, "}
+        // if($('#prop_landline_areacode').val() == ""){errors +=1; ermsg += "Proponent Landline Areacode, "}
+        // if($('#prop_landline').val() == ""){errors +=1; ermsg += "Proponent Landline, "}
         if($('#prop_email').val() == ""){errors +=1; ermsg += "Proponent Email, "}
         if($('#official_mail_address').val() == ""){errors +=1; ermsg += "Official Mailing Address, "}
         if($('#approving_authority_pos').val() == ""){errors +=1; ermsg += "Approving Authority Position, "}

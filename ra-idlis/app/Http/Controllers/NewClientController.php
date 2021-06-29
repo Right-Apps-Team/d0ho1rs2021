@@ -2930,7 +2930,8 @@ class NewClientController extends Controller {
 							break;
 						case 'fRegister':
 							// qwe
-							$rToken = Str::random(40);
+							$rToken = null;
+							// $rToken = Str::random(40);
 							$nPassword = (strlen($request->pwd) > 3) ? str_repeat('*', (strlen($request->pwd) - 3)) . substr($request->pwd, -3) : "***";
 							$arrData = [/*'rgnid', 'province', 'city_muni', 'barangay', 'streetname', 'zipcode', 'street_number',  */'authorizedsignature', 'assign', 'email', 'contact', 'uid', 'pwd', 'nameofcompany']; 
 							$arrCheck = [['uid', 'email'], ['uid'=>"Username already taken.", 'email'=>"Email already used. Please use another email."]]; 

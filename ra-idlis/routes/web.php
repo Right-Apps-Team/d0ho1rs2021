@@ -403,6 +403,7 @@ Route::get('employee/dashboard/mf/defaultpayment/get', 'AjaxController@getAllDef
 Route::match(['get', 'post'], 'employee/dashboard/mf/defaultpayment', 'DOHController@DefaultPayment'); // Main, Add
 // Service Charges
 Route::match(['get', 'post'], 'employee/dashboard/mf/service_charges', 'DOHController@ServiceCharges'); // Main, Add
+Route::match(['get', 'post'], 'employee/dashboard/mf/service_fees', 'DOHController@ServiceFees'); // Main, Add
 Route::get('employee/mf/assessment/get_ServiceCharges', 'AjaxController@getServiceCharges'); // Get
 Route::post('employee/mf/assessment/del_ServiceCharges', 'AjaxController@delServiceCharges'); // Del
 // Assessment Category

@@ -53,8 +53,8 @@
             <!-- <select class="form-control selectpicker show-menu-arrow" id="facmode" name="facmode" data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" required> -->
                 <option>Please select</option>
                 <option value="2">Free Standing</option>
-                <option value="4">Institution Based (Hospital)</option>
-                <option value="5">Institution Based (Non-Hospital)</option>
+                <option value="4">Institution Based</option>
+                <option value="5">Institution Based</option>
             </select>
         </div>
         <div class="col-lg-2 col-md-2 col-xs-2">

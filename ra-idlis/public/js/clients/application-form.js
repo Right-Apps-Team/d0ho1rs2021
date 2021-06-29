@@ -349,7 +349,11 @@ const setOfficialMailAddress = async (e) => {
             alert(errMessage);
         }
         else {
-            $("#official_mail_address").val(`${street_number} ${street_name} ${brgy} ${city} ${prov} ${region}`)
+
+            // $("#official_mail_address").val(`${street_number} ${street_name} ${brgy} ${city} ${prov} ${region}`)
+            var offmail = `${street_number} ${street_name} ${brgy} ${city} ${prov} ${region}`;
+            $("#official_mail_address").val(offmail.toUpperCase())
+       
         }
     }
     else {

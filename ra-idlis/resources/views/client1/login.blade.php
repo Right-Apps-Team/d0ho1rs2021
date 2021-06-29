@@ -695,7 +695,8 @@
                         document.getElementById('inputEmailEmail').classList.remove('loading');
                         if(arr == true) {
                           document.getElementById('forSignIn').click();
-                          sendMessage('success', 'Successfully registerered account. Please verify account through the email you provided.');
+                          sendMessage('success', 'Successfully registerered account.');
+                          // sendMessage('success', 'Successfully registerered account. Please verify account through the email you provided.'); //6-29-2021
                         } else {
                           sendMessage('danger', arr);
                         }
