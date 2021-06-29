@@ -31,7 +31,7 @@ console.log(e)
        }, 'POST').then(ok => {
 
         if(ok.data.resp == "dontexist"){
-               console .log("appdata")
+           console .log("appdata")
            console.log(ok.data.message)
            localStorage.setItem('facilityname', facilityname)
            $("#facility_name").css('border', '1px solid green');
@@ -39,12 +39,12 @@ console.log(e)
            $("#facility_name_feedback").addClass('text-success');
            $("#facility_name_feedback").html("Facility Name safe to use");
 
-           document.getElementById("region").value = null;
-           document.getElementById("province").value =null;
-           document.getElementById("city_monicipality").value = null;
-           document.getElementById("brgy").value = null;
+        //    document.getElementById("region").value = null;
+        //    document.getElementById("province").value =null;
+        //    document.getElementById("city_monicipality").value = null;
+        //    document.getElementById("brgy").value = null;
 
-           removeDefault()
+        //    removeDefault()
 
        }else{
            var appdata = ok.data.appdata

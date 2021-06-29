@@ -188,15 +188,31 @@
 									    <div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/attachment')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Attachments</a>
 									    </div>
+
+										@if($each[0]->isRecommended)
+											<div class="dropdown-divider"></div>
+											<div style="margin-left: 10px;margin-right: 10px;">
+											<a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;"  href="{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$each[0]->appid)}}">Confirm Order of Payment</a>
+											</div>
+										@endif
+
+
 									@break
 									@case('CON')
+									
 										<div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Certificate of Need Details</a>
 									    </div>									    
 									    <div class="dropdown-divider"></div>
 									    <div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/attachment')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Attachments</a>
-									    </div>									    
+									    </div>	
+										@if($each[0]->isRecommended)
+										<div class="dropdown-divider"></div>
+										<div style="margin-left: 10px;margin-right: 10px;">
+									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$each[0]->appid)}}">Confirm Order of Payment</a>
+									    </div>
+										@endif								    
 									@break
 									@case('LTO')
 										<div style="margin-left: 10px;margin-right: 10px;">
@@ -235,7 +251,15 @@
 									    <div class="dropdown-divider"></div>
 									    <div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/attachment')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Attachments</a>
-									    </div>								
+									    </div>
+
+										@if($each[0]->isRecommended)
+										<div class="dropdown-divider"></div>
+										<div style="margin-left: 10px;margin-right: 10px;">
+									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$each[0]->appid)}}">Confirm Order of Payment</a>
+									    </div>
+										@endif
+
 							    	@break
 									@case('ATO')
 										<div style="margin-left: 10px;margin-right: 10px;">
@@ -244,7 +268,15 @@
 									    <div class="dropdown-divider"></div>
 									    <div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/attachment')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Attachments</a>
-									    </div>								
+									    </div>
+
+										@if($each[0]->isRecommended)
+										<div class="dropdown-divider"></div>		
+										<div style="margin-left: 10px;margin-right: 10px;">
+									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$each[0]->appid)}}">Confirm Order of Payment</a>
+									    </div>	
+										@endif	
+
 							    	@break
 									@default
 										<div style="margin-left: 10px;margin-right: 10px;">
@@ -253,7 +285,13 @@
 									    <div class="dropdown-divider"></div>
 									    <div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/attachment')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Attachments</a>
-									    </div>								
+									    </div>	
+										@if($each[0]->isRecommended)
+										<div class="dropdown-divider"></div>
+										<div style="margin-left: 10px;margin-right: 10px;">
+									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$each[0]->appid)}}">Confirm Order of Payment</a>
+									    </div>	
+										@endif					
 							    	@break
 								@endswitch
 								<div class="dropdown-divider"></div>

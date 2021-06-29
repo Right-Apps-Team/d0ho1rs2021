@@ -318,8 +318,13 @@
 		})
 
 		@if($prompt == true)
-		var r = confirm('Requirements submitted. Proceed to Payment Method?');
-		if (r == true) { window.location.href = "{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$appid)}}" };
+
+		alert('Requirements submitted. Payment will follow after documents are evaluated.');
+		window.location.href = "{{url('client1/apply')}}"
+		// if (r == true) { window.location.href = "{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$appid)}}" };
+		// var r = confirm('Requirements submitted. Proceed to Payment Method?');
+		// if (r == true) { window.location.href = "{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$appid)}}" };
+	
 		@endif
 	</script>
 	@include('client1.cmp.footer')
