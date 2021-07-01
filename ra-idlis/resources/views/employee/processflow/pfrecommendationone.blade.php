@@ -242,7 +242,7 @@
             {{-- END BODY --}}
           </div>
           {{-- hferc eval --}}
-          @if(isset(strtolower($AppData->hfser_id)) == 'ptc' && isset($otherDetails->HFERC_eval))
+          @if(strtolower($AppData->hfser_id) == 'ptc' && isset($otherDetails->HFERC_eval))
           <div class="card">
             {{-- START HEAD --}}
             <div class="card-header @isset($AppData) @if($otherDetails->HFERC_eval == null) list-group-item-info @elseif($otherDetails->HFERC_eval == 1) list-group-item-success  @else list-group-item-danger @endif @endisset" id="headingThree" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="true" aria-controls="collapseOne" style="">

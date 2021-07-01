@@ -4,7 +4,8 @@
       console.log("typee")
       console.log('{!! $apptypenew !!}')
 
-
+      var aptidnew ='{!!((count($fAddress) > 0) ? $fAddress[0]->aptid: "")!!}';
+  document.getElementById("aptidnew").value = aptidnew;
       var appid ='{!!((count($fAddress) > 0) ? $fAddress[0]->appid: "")!!}';
       // document.getElementById("appid").value = appid;
       var apptypenew = '{!! $apptypenew !!}';

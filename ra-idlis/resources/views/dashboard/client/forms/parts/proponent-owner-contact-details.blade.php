@@ -1,7 +1,9 @@
 <p>&nbsp;</p>
 <div class="col-md-12"><b class="text-primary">Proponent/Owner Contact Details</b></div>
 <div class="col-md-4">
-    <label for="prop_mobile">Proponent/Owner Mobile No. <span class="text-danger">*</span></label>
+    <label for="prop_mobile">Proponent/Owner Mobile No. 
+    <!-- <span class="text-danger">*</span> -->
+    </label>
     <input 
         type="text" 
         class="form-control" 
@@ -10,7 +12,9 @@
         placeholder="Proponent/Owner Mobile No."/>
 </div>
 <div class="col-md-4">
-    <label for="prop_landline">Proponent/Owner Landline <span class="text-danger">*</span></label>
+    <label for="prop_landline">Proponent/Owner Landline 
+    <!-- <span class="text-danger">*</span> -->
+    </label>
     <div class="row">
         <div class="col-xs-12 col-md-5 col-xs-5">
             <input 

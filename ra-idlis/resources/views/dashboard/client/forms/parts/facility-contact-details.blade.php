@@ -14,7 +14,9 @@
 
 </div>
 <div class="col-md-3">
-    <label for="facility_landline">Facility Landline <span class="text-danger">*</span></label>
+    <label for="facility_landline">Facility Landline 
+    <!-- <span class="text-danger">*</span> -->
+    </label>
     <div class='form-group row'>
         <div class="col-xs-12 col-md-6 col-lg-5">
             <input 
@@ -41,7 +43,9 @@
     </div>
 </div>
 <div class="col-md-3">
-    <label for="fax">Fax Number <span class="text-danger">*</span></label>
+    <label for="fax">Fax Number 
+    <!-- <span class="text-danger">*</span> -->
+    </label>
     <div class="form-group row">
         <div class="col-xs-12 col-md-6 col-lg-5">
             <input 

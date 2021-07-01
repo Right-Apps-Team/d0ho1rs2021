@@ -97,7 +97,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" onclick="setTimeout(function() {window.print()}, 10); ">
+                            <button type="button" data-dismiss="modal" class="btn btn-primary" onclick="setTimeout(function() {window.print()}, 10); ">
                                 <i class="fa fa-eye" aria-hidden="true"></i> Preview
                             </button>
                             <button type="button" class="btn btn-danger" data-dismiss="modal">

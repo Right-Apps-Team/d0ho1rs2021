@@ -39,11 +39,13 @@
             <div class="modal-content" style="border-radius: 0px;border: none;">
                 <div class="modal-body text-justify" style="color: black;">
                     <h5 class="modal-title text-center"><strong>Add New Service Fee</strong></h5><button class="btn btn-success" id="buttonId"><i class="fa fa-plus-circle"></i></button>
+                    <button class="btn btn-primary" onclick="submit()">Submit</button>
                     <hr>
                     <div>
                         <table style="width: 100%;">
                             <thead>
                                 <tr>
+                                    <th rowspan="2"> <label for="servetype"></label></th>
                                     <th rowspan="2"> <label for="servetype">Service Type</label></th>
                                     <th rowspan="2"> <label for="ocid">Ownership <br />type</label></th>
                                     <th rowspan="2"><label for="facmode">Instituitional Character</label></th>
@@ -62,9 +64,11 @@
                             </thead>
                             <tbody id="body_amb">
                                 <tr id="tr_amb">
+                                <td width="50" > <button class="btn btn-danger " onclick="if(! this.parentNode.parentNode.hasAttribute('id')) { this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); }"><i class="fa fa-minus-circle"></i></button> </td>
                                     <td width="400">
 
-                                        <select data-live-search="true" data-style="text-dark form-control custom-selectpicker" class="form-control selectpicker show-menu-arrow " name="servetype" data-style="text-dark form-control custom-selectpicker" data-size="5" required>
+                                        <select  class="form-control  show-menu-arrow " name="servetype" data-style="text-dark form-control custom-selectpicker" data-size="5" data-live-search="true" required>
+                                        <!-- <select  class="form-control selectpicker show-menu-arrow " name="servetype" data-style="text-dark form-control custom-selectpicker" data-size="5" data-live-search="true" required> -->
                                             <option>Please select</option>
                                             @foreach($factypes as $key => $value)
                                             <option value="{{$value->facid}}">{{$value->facname}} {{$value->spec ? '('.$value->spec.')' : '('.$value->hgpdesc.'-'.$value->anc_name.')' }}</option>
@@ -73,7 +77,7 @@
                                     </td>
                                     <td width="120">
 
-                                        <select class="form-control show-menu-arrow" id="ocid" name="ocid" data-style="text-dark form-control custom-selectpicker" data-size="5" required>
+                                        <select class="form-control   show-menu-arrow" id="ocid" name="ocid" data-style="text-dark form-control custom-selectpicker" data-size="5" required>
                                             <option>Please select</option>
                                             <option value="G">Government</option>
                                             <option value="P">Private</option>
@@ -84,7 +88,7 @@
                                         <select class="form-control  show-menu-arrow" id="facmode" name="facmode" data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" required>
                                             <option>Please select</option>
                                             <option value="4">Institution Based</option>
-                                            <option value="5">Institution Based</option>
+                                            <option value="5">Non-Institution Based</option>
                                         </select>
                                     </td>
                                     <td width="120">
@@ -98,10 +102,10 @@
                                     </td>
                                     <td width="100">
                                         <!-- <label for="funcid">Initial Amount </label> -->
-                                        <input type="number" class="form-control" id="inamount" name="inamount">
+                                        <input type="number" class="form-control" id="innamount" name="innamount">
                                     <td width="100">
                                         <!-- <label for="reamount">Renewal Amount </label> -->
-                                        <input type="number" class="form-control  " id="reamount" name="reamount">
+                                        <input type="number" class="form-control  " id="icamount" name="icamount">
                                     </td>
                                     <td width="100">
                                         <!-- <label for="reamount">Renewal Amount </label> -->
@@ -117,7 +121,7 @@
                                     </td>
                                     <td width="50">
 
-                                        <input type="checkbox" class="form-control" id="fpenalty" name="fpenalty">
+                                        <input type="checkbox" class="form-control" id="fpenalty" value="1" name="fpenalty">
                                     </td>
                                 </tr>
                             </tbody>
@@ -134,13 +138,75 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
 <script>
+
+function submit(){
+    const servetype           = document.getElementsByName('servetype');
+    const ocid          = document.getElementsByName('ocid');
+    const facmode    = document.getElementsByName('facmode');
+    const funcid           =document.getElementsByName('funcid');
+    const innamount           =document.getElementsByName('innamount');
+    const icamount           = document.getElementsByName('icamount');
+    const reamount           = document.getElementsByName('reamount');
+    const reperiod           =document.getElementsByName('reperiod');
+    const remarks           = document.getElementsByName('remarks');
+    const fpenalty           = document.getElementsByName('fpenalty');
+
+    console.log("servetype")
+    console.log(servetype[0].value)
+
+    const fees = [];
+    for(let i  = 0; i < servetype.length; i++ ) {
+        console.log( servetype[i].value)
+        const data = {
+            servetype:          servetype[i].value,
+            ocid:   ocid[i].value,
+            facmode:      facmode[i].value,
+            funcid:        funcid[i].value,
+            innamount:       innamount[i].value,
+            icamount:        icamount[i].value,
+            reamount:       reamount[i].value,
+            reperiod: reperiod[i].value,
+            remarks:        remarks[i].value,
+            fpenalty:        fpenalty[i].value
+        }
+        fees.push(data)
+    }
+    console.log(fees);
+}
+
+
      document.getElementById("buttonId").addEventListener("click", function(event) {
         event.preventDefault()
+       var trs = document.getElementsByClassName("tr_amb");
         var itm = document.getElementById("tr_amb");
         var cln = itm.cloneNode(true);
         cln.removeAttribute("id");
         cln.setAttribute("class", "tr_amb");
+        cln.setAttribute("id", "tr_amb"+(parseInt(trs.length)  + 1));
+
         document.getElementById("body_amb").appendChild(cln);
+
+//         var id= "tr_amb"+(parseInt(trs.length)  + 1)
+// console.log(id)
+// setTimeout(function(){  
+//     var sel = document.getElementById(id);
+//         // .querySelectorAll('input[name="servetype"]');
+//        console.log(sel)
+       
+//  }, 1000);
+      
+        // cln.find('input[name="servetype"]').removeClass("selectpicker")
+        // cln.find('.selectpicker').remove();
+        // cln.find('input[name="servetype"]').selectpicker();
+        // cln.find('input[name="servetype"]').remove();
+        // cln.find('input[name="servetype"]').selectpicker();
+        // cln.find('input[name="servetype"]').removeClass("selectpicker");
+       
+
+        // var opt = document.createElement("option");
+        //     opt.value = "what";
+        //     opt.textContent = "whatts";
+        //     sel.appendChild(opt);
     });
 </script>
 

@@ -39,6 +39,7 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
     }
 
     
+        var aptidnew ='{!!((count($fAddress) > 0) ? $fAddress[0]->aptid: "")!!}';
         var appid ='{!!((count($fAddress) > 0) ? $fAddress[0]->appid: "")!!}';
         var ocid ='{!!((count($fAddress) > 0) ? $fAddress[0]->ocid: "")!!}';
         var classid ='{!!((count($fAddress) > 0) ? $fAddress[0]->classid: "")!!}';
@@ -64,8 +65,95 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
         var brgyid ='{!!((count($fAddress) > 0) ? $fAddress[0]->brgyid: "")!!}';
         var noofdialysis ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofdialysis: "")!!}';
 
+
+        // setTimeout(function(){  
+        var ocidInpt = document.getElementById("ocid");
+        ocidInpt.value = ocid;
+        // ocidInpt.setAttribute("disabled", "disabled")
+        //  }, 1000);
+if(ocid){
+     setTimeout(function(){  
+        
+        fetchClassification1()
+     }, 1000);
+
+     setTimeout(function(){ 
+
+        document.getElementById("classification").value=classid;
+        // document.getElementById("subclass").value=subclassid;
+        
+ }, 2000);
+ setTimeout(function(){ 
+    fetchSubClass1()
+// console.log(classid)
+// console.log(subclassid)
+        // document.getElementById("classification").value=classid;
+       
+ }, 3000);
+ setTimeout(function(){ 
+    document.getElementById("subclass").value=subclassid;
+// console.log(classid)
+// console.log(subclassid)
+        // document.getElementById("classification").value=classid;
+       
+ }, 4000);
+}
+
+const fetchClassification1 = async (e) => {
+    const ocid = $("#ocid").val();
+    console.log('EYYY, ', ocid);
+    if( ocid ) {
+        const data = { 'ocid' : ocid }
+        callApi('/api/classification/fetch', data, 'POST').then(classification => {
+            $("#classification").empty();
+            $("#classification").append(`<option value=''>Please select</option>`);
+            $("#classification").removeAttr('disabled');
+            classification.data.map(c => {
+                $("#classification").append(`<option value='${c.classid}'>${c.classname}</option>`);
+            })
+            // $("#classification").selectpicker('refresh')
+        })
+
+        
+
+    }
+    else {
+        $("#classification").addAttr('disabled')
+    }
+
+    
+}
+
+const fetchSubClass1 = async (e) => {
+    console.log("received")
+    const ocido = $("#ocid").val();
+    const classido = $("#classification").val();
+    console.log("classid")
+    console.log(classido)
+    if(ocido ) {
+        const data = { 'ocid' : ocid, 'classid' : classid }
+        callApi('/api/classification/fetch', data, 'POST').then(classification => {
+            $("#subclass").empty();
+            $("#subclass").append(`<option value=''>Please select</option>`);
+            $("#subclass").removeAttr('disabled');
+            classification.data.map(c => {
+                $("#subclass").append(`<option value='${c.classid}'>${c.classname}</option>`);
+            })
+            // $("#subclass").selectpicker('refresh')
+        })
+    }
+    else {
+        $("#subclass").addAttr('disabled')
+    }
+}
+
+         console.log("ocidInpt")
+         console.log(ocidInpt)
+         console.log(ocid)
+
     //   document.getElementById("appid").value = appid;
 
+      document.getElementById("aptidnew").value = aptidnew;
       document.getElementById("facmode").value = facmode;
       document.getElementById("funcid").value = funcid;
       document.getElementById("owner").value = owner;
@@ -206,10 +294,6 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
         // }
 
         
-        var ocidInpt = document.getElementById("ocid");
-        ocidInpt.value = ocid;
-        ocidInpt.setAttribute("disabled", "disabled")
-
         const data = { 'ocid' : ocid, 'classid' : classid }
         if(subclassid != ""){
         $.ajax({

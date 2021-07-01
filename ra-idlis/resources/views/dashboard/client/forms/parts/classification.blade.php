@@ -22,26 +22,26 @@
 </div>
 <div class="col-md-4">
     <label for="classification">Classification <span class="text-danger">*</span></label>
-    @if(isset($fAddress) && count($fAddress) > 0)
+    <!-- if(isset($fAddress) && count($fAddress) > 0)
     <input class="form-control "  value="{{$fAddress[0]->classname}}" disabled />
     
-    @else
+    else -->
     <select class="form-control  show-menu-arrow toRemove" id="classification" value='{{((isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->classid: null)}}' disabled name="classid"  data-style="text-dark form-control custom-selectpicker" data-size="5" required onChange="fetchSubClass(this)">
     <!-- <select class="form-control selectpicker show-menu-arrow toRemove" id="classification" value='{{((isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->classid: null)}}' disabled name="classid" data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" required onChange="fetchSubClass(this)"> -->
         <option>Please select</option>
     </select>
-    @endif
+    <!-- endif -->
 </div>
 <div class="col-md-4">
     <label for="subclass">Sub Classification <span class="text-danger">*</span></label>
-    @if(isset($fAddress) && count($fAddress) > 0)
+    <!-- if(isset($fAddress) && count($fAddress) > 0)
     <input class="form-control " name="subClassid" id="subclass"  disabled  />
-    @else
+    else -->
     <select class="form-control  show-menu-arrow toRemove" onchange="getFacServCharge()" id="subclass" disabled value='{{((isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->subClassid: null)}}'name="subClassid" data-style="text-dark form-control custom-selectpicker" data-size="5" required>
     <!-- <select class="form-control selectpicker show-menu-arrow toRemove" onchange="getFacServCharge()" id="subclass" disabled value='{{((isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->subClassid: null)}}'name="subClassid" data-live-search="true" data-style="text-dark form-control custom-selectpicker" data-size="5" required> -->
         <option>Please select</option>
     </select>
-    @endif
+    <!-- endif -->
 </div>
 <div class="mb-2 col-md-12">&nbsp;</div>
 <div class="col-md-6">

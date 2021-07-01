@@ -113,6 +113,7 @@
         <button 
             type="button" 
             class="btn btn-primary" 
+            data-dismiss="modal"
             onclick="setTimeout(function() {window.print()}, 10); "
         >
             <i class="fa fa-eye" aria-hidden="true"></i> Preview

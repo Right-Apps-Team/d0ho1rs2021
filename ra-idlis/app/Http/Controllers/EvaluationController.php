@@ -281,6 +281,7 @@ class EvaluationController extends Controller
 				if(DB::table('assessmentcombinedduplicateptc')->where([['asmtH3ID_FK',$request->part],['appid',$request->appid],['evaluatedBy',session()->get('employee_login')->uid],['revision',$revision]])->count() <= 0){
 
 					$data = AjaxController::getAllDataEvaluateOne($request->appid);
+					// $filteredAssessment = var_dump($request->except($arrOfUnneeded)) ;
 					$filteredAssessment = $request->except($arrOfUnneeded);
 					$uData = AjaxController::getCurrentUserAllData();
 // suggest to place if count $filteredAssessment
