@@ -4011,7 +4011,8 @@
 							// 	['appform.hfser_id','LTO'],
 							// 	['isApprove',1]
 							// ])
-							->where([['appform.hfser_id','LTO'],['appform.noofsatellite', '>', 0]])
+							->where([['appform.hfser_id','LTO']])
+							// ->where([['appform.hfser_id','LTO'],['appform.noofsatellite', '>', 0]]) 7-2-2021
 							->orderBy('appform.appid','desc')
 							->get();
 							break;
@@ -8322,7 +8323,8 @@ public static function forDoneHeadersNew($appid,$monid,$selfAssess,$isPtc = fals
 			  assessmentStatus, 
 			  team, 
 			  mon_form.appid, 
-			  name_of_faci 
+			  name_of_faci,
+			  registered_facility.regfac_id 
 			  
 			  FROM mon_form 
 			  

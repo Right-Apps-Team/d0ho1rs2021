@@ -123,17 +123,29 @@
                         <h1>9</h1>
                     </td>
                     <td>
+
+                    <a href="{{ $grpid == 'NA' || $grpid == 'DC'  ? asset('/employee/dashboard/processflow/assessment')  : '#'}}"> <p>Assessment Tool</p> </a>
+                    </td>
+                    @if($grpid == 'NA' || $grpid == 'DC' )
+                    <!-- <td><a href="{{asset('/employee/dashboard/processflow/inspection')}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td> -->
+                    @endif
+                </tr>
+                <tr>
+                    <td>
+                        <h1>10</h1>
+                    </td>
+                    <td>
                         <small><b>LO(HFSRB)/RLO(Region)</b></small>
                         <p> Inspection/Technical Evaluation</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <h1>&nbsp;&nbsp;&nbsp;<small><sup>9</sup></small><small>.1</small>&nbsp;&nbsp;</h1>
+                        <h1>&nbsp;&nbsp;&nbsp;<small><sup>10</sup></small><small>.1</small>&nbsp;&nbsp;</h1>
                     </td>
                     <td>
 
-                    <a href="{{ $grpid == 'NA' || $grpid == 'PO' || $grpid == 'FDA' ? asset('/employee/dashboard/processflow/evaluate') : '#'}}"> <p>Documentary Evaluation</p> </a>
+                    <a href="{{ $grpid == 'NA' || $grpid == 'PO' || $grpid == 'FDA' ? asset('/employee/dashboard/processflow/evaluate/technical') : '#'}}"> <p>Technical Evaluation</p> </a>
                     </td>
                     @if ($grpid == 'NA' || $grpid == "PO" || $grpid == "FDA")
                     <!-- <td><a href="{{asset('/employee/dashboard/processflow/evaluate')}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td> -->
@@ -147,21 +159,21 @@
             <table>
                 <tr>
                     <td>
-                        <h1>&nbsp;&nbsp;&nbsp;<small><sup>9</sup></small><small>.2</small>&nbsp;&nbsp;</h1>
+                        <h1>&nbsp;&nbsp;&nbsp;<small><sup>10</sup></small><small>.2</small>&nbsp;&nbsp;</h1>
                     </td>
                     <td><b>FDA</b></td>
 
                 </tr>
                 <tr>
                     <td>
-                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small><sup>9.2</sup></small><small>.1</small>&nbsp;&nbsp;</h1>
+                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small><sup>10.2</sup></small><small>.1</small>&nbsp;&nbsp;</h1>
                     </td>
                     <td><b>Machines</b></td>
 
                 </tr>
                 <tr>
                     <td>
-                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small><sup>9.2.1</sup></small><small>.1</small>&nbsp;&nbsp;</h1>
+                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small><sup>10.2.1</sup></small><small>.1</small>&nbsp;&nbsp;</h1>
                     </td>
                     <td>  <a href="{{ $grpid == 'NA' || $grpid == 'PO' || $grpid == 'FDA' ? asset('employee/dashboard/processflow/pre-assessment/FDA/xray') : '#'}}"> Pre-Assessment </a></td>
                     @if ($grpid == 'NA' || $grpid == "PO" || $grpid == "FDA")
@@ -170,7 +182,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;"><small><sup>9.2.1</sup></small></span><small>.2</small>&nbsp;&nbsp;</h1>
+                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;"><small><sup>10.2.1</sup></small></span><small>.2</small>&nbsp;&nbsp;</h1>
                     </td>
                     <td>    <a href="{{ $grpid == 'NA' || $grpid == 'PO' || $grpid == 'FDA' ? asset('/employee/dashboard/processflow/evaluate/FDA') : '#'}}">    Evaluation</a></td> 
                     @if ($grpid == 'NA' || $grpid == "PO" || $grpid == "FDA")
@@ -179,7 +191,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;"><small><sup>9.2.1</sup></small></span><small>.3</small>&nbsp;&nbsp;</h1>
+                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;"><small><sup>10.2.1</sup></small></span><small>.3</small>&nbsp;&nbsp;</h1>
                     </td>
                     <td>  <a href="{{ $grpid == 'NA' || $grpid == 'PO' || $grpid == 'FDA' ? asset('employee/dashboard/processflow/FDA/recommendation/machines') : '#'}}"> Recommendation </a></td>
                     @if ($grpid == 'NA' || $grpid == "PO" || $grpid == "FDA")
@@ -188,7 +200,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;"><small><sup>9.2.1</sup></small></span><small>.4</small>&nbsp;&nbsp;</h1>
+                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;"><small><sup>10.2.1</sup></small></span><small>.4</small>&nbsp;&nbsp;</h1>
                     </td>
                     <td>  <a href="{{  $grpid == 'NA' || $grpid == 'PO' || $grpid == 'FDA' ? asset('employee/dashboard/processflow/FDA/approval/machines') : '#'}}">Final Decision </a></td>
                     @if ($grpid == 'NA' || $grpid == "PO" || $grpid == "FDA")
@@ -197,7 +209,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;"><small><sup>9.2.1</sup></small></span><small>.5</small>&nbsp;&nbsp;</h1>
+                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;"><small><sup>10.2.1</sup></small></span><small>.5</small>&nbsp;&nbsp;</h1>
                     </td>
                     <td> <a href="{{ $grpid == 'NA' || $grpid == 'PO' || $grpid == 'FDA' ? asset('employee/dashboard/processflow/FDA/monitoring/machines') :  '#'}}">Monitoring Tool </a></td>
                     @if ($grpid == 'NA' || $grpid == "PO" || $grpid == "FDA")
@@ -206,14 +218,14 @@
                 </tr>
                 <tr>
                     <td>
-                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small><sup>9.2</sup></small><small>.2</small>&nbsp;&nbsp;</h1>
+                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small><sup>10.2</sup></small><small>.2</small>&nbsp;&nbsp;</h1>
                     </td>
                     <td><b>Pharmacy</b></td>
 
                 </tr>
                 <tr>
                     <td>
-                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small><sup>9.2.2</sup></small><small>.1</small>&nbsp;&nbsp;</h1>
+                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small><sup>10.2.2</sup></small><small>.1</small>&nbsp;&nbsp;</h1>
                     </td>
                     <td>    <a href="{{ $grpid == 'NA' || $grpid == 'PO' || $grpid == 'FDA' ? asset('employee/dashboard/processflow/pre-assessment/FDA/pharma') : '#'}}">Pre-Assessment </a></td>
                     @if ($grpid == 'NA' || $grpid == "PO" || $grpid == "FDA")
@@ -222,7 +234,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;"><small><sup>9.2.2</sup></small></span><small>.2</small>&nbsp;&nbsp;</h1>
+                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;"><small><sup>10.2.2</sup></small></span><small>.2</small>&nbsp;&nbsp;</h1>
                     </td>
                     <td>   <a href="{{ $grpid == 'NA' || $grpid == 'PO' || $grpid == 'FDA' ? asset('/employee/dashboard/processflow/evaluate/FDA/pharma') : '#'}}">  Evaluation </a></td>
                     @if ($grpid == 'NA' || $grpid == "PO" || $grpid == "FDA")
@@ -231,7 +243,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;"><small><sup>9.2.2</sup></small></span><small>.3</small>&nbsp;&nbsp;</h1>
+                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;"><small><sup>10.2.2</sup></small></span><small>.3</small>&nbsp;&nbsp;</h1>
                     </td>
                     <td>  <a href="{{ $grpid == 'NA' || $grpid == 'PO' || $grpid == 'FDA' ? asset('employee/dashboard/processflow/FDA/approval/pharma') : '#'}}">  Final Decision </a></td>
                     @if ($grpid == 'NA' || $grpid == "PO" || $grpid == "FDA")
@@ -240,7 +252,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;"><small><sup>9.2.2</sup></small></span><small>.4</small>&nbsp;&nbsp;</h1>
+                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;"><small><sup>10.2.2</sup></small></span><small>.4</small>&nbsp;&nbsp;</h1>
                     </td>
                     <td>    <a href="{{ $grpid == 'NA' || $grpid == 'PO' || $grpid == 'FDA' ?  asset('employee/dashboard/processflow/FDA/monitoring/pharma'): '#'}}"> Monitoring Tool </a></td>
                     @if ($grpid == 'NA' || $grpid == "PO" || $grpid == "FDA")
@@ -257,7 +269,7 @@
             <table>
                 <tr>
                     <td>
-                        <h1>10 &nbsp;&nbsp;</h1>
+                        <h1>11 &nbsp;&nbsp;</h1>
                     </td>
                     <td>
                         <small><b>Div Chief</b></small>
@@ -269,7 +281,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <h1>11</h1>
+                        <h1>12</h1>
                     </td>
                     <td>
                         <small><b>Director</b></small>

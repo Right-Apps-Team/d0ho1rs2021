@@ -118,8 +118,15 @@
 						<td>{{$each[0]->aptid == 'IN' ? 'Initial New' : 'Renewal'}}</td>
 						<td>{{$each[0]->t_date}}</td>
 						<td style="background-color : {{$each[0]->dohcolor}}">{{$each[0]->trns_desc}}</td>
-						<td>{!!($each[0]->noofsatellite > 0 ? (isset($each[0]->FDAStatMach) ? $each[0]->FDAStatMach : 'Evaluation In Process') : '<span class="font-weight-bold">Not Applicable</span>')!!}</td>
+						
+						
+						<td>{!! (isset($each[0]->FDAStatMach) ? $each[0]->FDAStatMach : 'Evaluation In Process') !!}</td>
+						<td>{!! (isset($each[0]->FDAStatPhar) ? $each[0]->FDAStatPhar : 'Evaluation In Process') !!}</td>
+						
+						<!-- <td>{!!($each[0]->noofsatellite > 0 ? (isset($each[0]->FDAStatMach) ? $each[0]->FDAStatMach : 'Evaluation In Process') : '<span class="font-weight-bold">Not Applicable</span>')!!}</td>
 						<td>{!!($each[0]->noofsatellite > 0 ? (isset($each[0]->FDAStatPhar) ? $each[0]->FDAStatPhar : 'Evaluation In Process') : '<span class="font-weight-bold">Not Applicable</span>')!!}</td>
+						
+						 -->
 						{{-- <td>
 
 							{!!strtolower($each[0]->hfser_id) == 'lto' ? '<label class="badge badge-'.$_percentage.'">'.$each[2][0].'%</label>' : '<span class="font-weight-bold">Not Applicable</span>'!!}

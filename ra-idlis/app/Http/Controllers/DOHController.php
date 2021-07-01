@@ -5401,15 +5401,65 @@ use FunctionsClientController;
 			AjaxController::createMobileSessionIfMobile($request);
 			if( in_array(true, AjaxController::isSessionExist(['uData','employee_login']))){
 				try {
+					
 					$data = AjaxController::getAllDataEvaluateOneRegFac($regfac_id);//
+					$assesed = [];
+					$assesednew = [];
+
+					$head = AjaxController::forAssessmentHeadersRegFac(array(['registered_facility.regfac_id',$regfac_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id'));
+					if(!is_null($data->lto_id)){
+  						$appform =  DB::table('appform')->where('appid', $data->lto_id)->first();
+						$head = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->lto_id],['asmt_h1.apptype',$appform->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
+						$assesed = AjaxController::assessedDone(3,$data->lto_id,$isMon,$isSelfAssess);
+						$assesednew =  AjaxController::forDoneHeadersNew($data->lto_id,$isMon,$isSelfAssess)['h5'];
+					}else{
+						if(!is_null($data->ptc_id)){
+							$appform =  DB::table('appform')->where('appid', $data->ptc_id)->first();
+							$head = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->ptc_id],['asmt_h1.apptype',$appform->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
+							$assesed = AjaxController::assessedDone(3,$data->ptc_id,$isMon,$isSelfAssess);
+							$assesednew =  AjaxController::forDoneHeadersNew($data->ptc_id,$isMon,$isSelfAssess)['h5'];
+						}else{
+							if(!is_null($data->con_id)){
+								$appform =  DB::table('appform')->where('appid', $data->con_id)->first();
+								$head = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->con_id],['asmt_h1.apptype',$appform->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
+								$assesed = AjaxController::assessedDone(3,$data->con_id,$isMon,$isSelfAssess);
+								$assesednew =  AjaxController::forDoneHeadersNew($data->con_id,$isMon,$isSelfAssess)['h5'];
+							}else{
+								if(!is_null($data->ato_id)){
+									$appform =  DB::table('appform')->where('appid', $data->ato_id)->first();
+									$head = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->ato_id],['asmt_h1.apptype',$appform->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
+									$assesed = AjaxController::assessedDone(3,$data->ato_id,$isMon,$isSelfAssess);
+									$assesednew =  AjaxController::forDoneHeadersNew($data->ato_id,$isMon,$isSelfAssess)['h5'];
+								}else{
+									if(!is_null($data->coa_id)){
+										$appform =  DB::table('appform')->where('appid', $data->coa_id)->first();
+										$head = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->coa_id],['asmt_h1.apptype',$appform->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
+										$assesed = AjaxController::assessedDone(3,$data->coa_id,$isMon,$isSelfAssess);
+										$assesednew =  AjaxController::forDoneHeadersNew($data->coa_id,$isMon,$isSelfAssess)['h5'];
+									}else{
+										if(!is_null($data->cor_id)){
+											$appform =  DB::table('appform')->where('appid', $data->cor_id)->first();
+											$head = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->cor_id],['asmt_h1.apptype',$appform->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
+											$assesed = AjaxController::assessedDone(3,$data->cor_id,$isMon,$isSelfAssess);
+											$assesednew =  AjaxController::forDoneHeadersNew($data->cor_id,$isMon,$isSelfAssess)['h5'];
+										}
+									}
+								}
+								
+							}
+						}
+					}
+
+
 					$toViewArr = [
 						'data' => $data,
-						'head' => AjaxController::forAssessmentHeadersRegFac(array(['registered_facility.regfac_id',$regfac_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id')),
+						'head' => $head,
 						// 'head' => AjaxController::forAssessmentHeaders(array(['appform.appid',$appid],['asmt_h1.apptype',$data->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id')),
 						'address' =>  url('employee/dashboard/processflow/HeaderOne/regfac/'.$regfac_id.'/'),
 						'isMain' => true,
-						'assesed' => [],
-						// 'assesed' => AjaxController::assessedDone(3,$appid,$isMon,$isSelfAssess),
+						// 'assesed' => [],
+						'assesed' => $assesed,
+						'assesednew' => $assesednew,
 						'isMon' => $isMon,
 						'isSentFromMobile' => [],
 						// 'isSentFromMobile' => DB::table('frommobileinspection')->where([['appid',$appid],['monid',($isMon ? $isMon : null)]])->exists(),
@@ -5555,16 +5605,79 @@ use FunctionsClientController;
 
 					$data = AjaxController::getAllDataEvaluateOneRegFac($regfac_id);
 					$whereClause = array(['registered_facility.regfac_id',$regfac_id],['asmt_h1.partID',$part]);
+				
+					$assesed = [];
+					$assesednew = [];
+
 					$headData = AjaxController::forAssessmentHeadersRegFac($whereClause,array('asmt_h1.h1name as desc','asmt_h1.asmtH1ID as id','asmt_title.title_name as h1HeadBack','asmt_title.title_code as h1HeadID'));
+				
+					if(!is_null($data->lto_id)){
+					  $appform =  DB::table('appform')->where('appid', $data->lto_id)->first();
+					  $headData = $this->monAss($data->lto_id,$appform->hfser_id, $part);
+
+					  	$assesed = AjaxController::assessedDone(3,$data->lto_id,$isMon,$isSelfAssess);
+					  	// $assesed =  AjaxController::forDoneHeadersNew($data->lto_id,$isMon,$isSelfAssess)['h5'];
+						$assesednew =  AjaxController::forDoneHeadersNew($data->lto_id,$isMon,$isSelfAssess)['h5'];
+					}else{
+						if(!is_null($data->ptc_id)){
+							$appform =  DB::table('appform')->where('appid', $data->ptc_id)->first();
+							$headData = $this->monAss($data->ptc_id,$appform->hfser_id, $part);
+
+							$assesed = AjaxController::assessedDone(3,$data->ptc_id,$isMon,$isSelfAssess);
+							// $assesed =  AjaxController::forDoneHeadersNew($data->ptc_id,$isMon,$isSelfAssess)['h5'];
+							$assesednew =  AjaxController::forDoneHeadersNew($data->ptc_id,$isMon,$isSelfAssess)['h5'];
+						}else{
+							if(!is_null($data->con_id)){
+								$appform =  DB::table('appform')->where('appid', $data->con_id)->first();
+								$headData = $this->monAss($data->con_id,$appform->hfser_id, $part);
+
+								$assesed = AjaxController::assessedDone(3,$data->con_id,$isMon,$isSelfAssess);
+								// $assesed =AjaxController::forDoneHeadersNew($data->con_id,$isMon,$isSelfAssess)['h5'];
+								$assesednew =  AjaxController::forDoneHeadersNew($data->con_id,$isMon,$isSelfAssess)['h5'];
+							}else{
+								if(!is_null($data->ato_id)){
+									$appform =  DB::table('appform')->where('appid', $data->ato_id)->first();
+									$headData = $this->monAss($data->ato_id,$appform->hfser_id, $part);
+
+									$assesed = AjaxController::assessedDone(3,$data->ato_id,$isMon,$isSelfAssess);
+									// $assesed =  AjaxController::forDoneHeadersNew($data->ato_id,$isMon,$isSelfAssess)['h5'];
+									$assesednew =  AjaxController::forDoneHeadersNew($data->ato_id,$isMon,$isSelfAssess)['h5'];
+								}else{
+									if(!is_null($data->coa_id)){
+										$appform =  DB::table('appform')->where('appid', $data->coa_id)->first();
+										$headData = $this->monAss($data->coa_id,$appform->hfser_id, $part);
+
+										$assesed = AjaxController::assessedDone(3,$data->coa_id,$isMon,$isSelfAssess);
+										// $assesed = AjaxController::forDoneHeadersNew($data->coa_id,$isMon,$isSelfAssess)['h5'];
+										$assesednew =  AjaxController::forDoneHeadersNew($data->coa_id,$isMon,$isSelfAssess)['h5'];
+									}else{
+										if(!is_null($data->cor_id)){
+											$appform =  DB::table('appform')->where('appid', $data->cor_id)->first();
+											$headData = $this->monAss($data->cor_id,$appform->hfser_id, $part);
+
+											$assesed = AjaxController::assessedDone(3,$data->cor_id,$isMon,$isSelfAssess);
+											// $assesed =  AjaxController::forDoneHeadersNew($data->cor_id,$isMon,$isSelfAssess)['h5'];
+											$assesednew =  AjaxController::forDoneHeadersNew($data->cor_id,$isMon,$isSelfAssess)['h5'];
+										}
+									}
+								}
+								
+							}
+						}
+					}
+
+				
 					$toViewArr = [
 						'data' => $data,
 						'mon' => DB::table('mon_form')->where('regfac_id', $regfac_id)->first(),
 						'head' => $headData,
+						'headon' =>true,
 						// 'address' => ($isSelfAssess ? url('client1/apply/HeaderTwo/'.$appid.'/') : url('employee/dashboard/processflow/HeaderTwo/'.$appid.'/')),
 						'address' => ($isSelfAssess ? url('client1/apply/ShowAssessments/'.$appid.'/') : url('employee/dashboard/processflow/ShowAssessments/regfac/'.$regfac_id.'/')),
 						'customAddress' => ($isSelfAssess ? url('client1/apply/assessmentReady/'.$regfac_id.'/') :url('employee/dashboard/processflow/parts/'.$regfac_id)),
 						// 'assesed' => AjaxController::assessedDone(2,$appid,$isMon,$isSelfAssess),
-						'assesed' => [],
+						'assesed' => $assesed,
+						'assesednew' => $assesednew,
 						// 'assesed' => AjaxController::forDoneHeaders($appid,$isMon,$isSelfAssess)['h3'],
 						'neededData' => array('level' => 3,'id' => $part),
 						'isMon' => $isMon,
@@ -5583,6 +5696,14 @@ use FunctionsClientController;
 			} else {
 				return ($isSelfAssess ? false : back()->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Part does not exist.']));
 			}
+		}
+
+
+		function monAss($appid, $hfser_id, $part){
+			$whereClause = array(['appform.appid',$appid],['asmt_h1.apptype',$hfser_id],['asmt_h1.partID',$part]);
+			$headData = AjaxController::forAssessmentHeaders($whereClause,array('asmt_h1.h1name as desc','asmt_h1.asmtH1ID as id','asmt_title.title_name as h1HeadBack','asmt_title.title_code as h1HeadID', 'x08_ft.id as xid'));
+					
+			return $headData;
 		}
 
 		public function AssessmentShowH2(Request $request,$appid,$h1, $isMon = false,$isSelfAssess = false){
@@ -5698,15 +5819,58 @@ use FunctionsClientController;
 			}
 		}
 
+		function getMonShowFac($appid, $hfser_id , $h3){
+			$whereClause = array(['assessmentcombined.assessmentStatus',1],['appform.appid',$appid],['asmt_h1.apptype',$hfser_id],['asmt_h1.asmtH1ID',$h3]);
+			$toSelect = array('assessmentcombined.asmtComb as id','assessmentcombined.assessmentName as description','assessmentcombined.asmtH3ID_FK as h3Header','assessmentcombined.headingText as otherHeading', 'assessmentcombined.assessmentSeq as sequence','asmt_h3.asmtH2ID_FK as idForBack','asmt_title.title_name as h1HeadBack','asmt_title.title_code as h1HeadID','asmt_h1.h1name as h2HeadBack','asmt_h1.partID as h2HeadID','asmt_h2.h2name as h3HeadBack','asmt_h2.asmtH2ID as h3HeadID','asmt_h3.h3name as h4HeadBack','asmt_h3.asmtH3ID as h4HeadID');
+			$headData = AjaxController::forAssessmentHeaders($whereClause,$toSelect,2);
+			return $headData;
+		}
+
 		public function ShowAssessmentsRegFac(Request $request,$regfac_id,$h3, $isMon = false,$isSelfAssess = false){
 			AjaxController::createMobileSessionIfMobile($request);
 			// return response()->json([!FunctionsClientController::existOnDB('assessmentcombinedduplicate',[['asmtH3ID_FK',$h3],['appid',$appid],['monid',$isMon],['selfassess',($isSelfAssess ? 1 : null)]])]);
 			if(FunctionsClientController::existOnDB('asmt_h1',[['asmtH1ID',$h3]]) ){
 				try {
 					$data = AjaxController::getAllDataEvaluateOneRegFac($regfac_id);
+			
+			
 					$whereClause = array(['assessmentcombined.assessmentStatus',1],['registered_facility.regfac_id',$regfac_id],['asmt_h1.asmtH1ID',$h3]);
 					$toSelect = array('assessmentcombined.asmtComb as id','assessmentcombined.assessmentName as description','assessmentcombined.asmtH3ID_FK as h3Header','assessmentcombined.headingText as otherHeading', 'assessmentcombined.assessmentSeq as sequence','asmt_h3.asmtH2ID_FK as idForBack','asmt_title.title_name as h1HeadBack','asmt_title.title_code as h1HeadID','asmt_h1.h1name as h2HeadBack','asmt_h1.partID as h2HeadID','asmt_h2.h2name as h3HeadBack','asmt_h2.asmtH2ID as h3HeadID','asmt_h3.h3name as h4HeadBack','asmt_h3.asmtH3ID as h4HeadID');
 					$headData = AjaxController::forAssessmentHeadersRegFac($whereClause,$toSelect,2);
+
+					if(!is_null($data->lto_id)){
+						$appform =  DB::table('appform')->where('appid', $data->lto_id)->first();
+					    $headData = $this->getMonShowFac($data->lto_id, $appform->hfser_id , $h3);
+					}else{
+						if(!is_null($data->ptc_id)){
+							$appform =  DB::table('appform')->where('appid', $data->ptc_id)->first();
+							$headData = $this->getMonShowFac($data->ptc_id, $appform->hfser_id , $h3);
+						}else{
+							if(!is_null($data->con_id)){
+								$appform =  DB::table('appform')->where('appid', $data->con_id)->first();
+								$headData = $this->getMonShowFac($data->con_id, $appform->hfser_id , $h3);
+							}else{
+								if(!is_null($data->ato_id)){
+									$appform =  DB::table('appform')->where('appid', $data->ato_id)->first();
+									$headData = $this->getMonShowFac($data->ato_id, $appform->hfser_id , $h3);
+								}else{
+									if(!is_null($data->coa_id)){
+										$appform =  DB::table('appform')->where('appid', $data->coa_id)->first();
+										$headData = $this->getMonShowFac($data->coa_id, $appform->hfser_id , $h3);
+									}else{
+										if(!is_null($data->cor_id)){
+											$appform =  DB::table('appform')->where('appid', $data->cor_id)->first();
+											$headData = $this->getMonShowFac($data->cor_id, $appform->hfser_id , $h3);
+										}
+									}
+								}
+								
+							}
+						}
+					}
+
+
+
 					$toViewArr = [
 						'data' => $data,
 						'head' => $headData,
@@ -5805,7 +5969,8 @@ use FunctionsClientController;
 								array_push($getOnDBID, $key);
 							}
 						}
-						$urlToRedirect = ($isSelfAssess ? url('client1/apply/HeaderOne/'.$request->appid.'/'.$dataFromDB->title_code.'?hid='.$request->hid) : url('employee/dashboard/processflow/HeaderOne/'.$request->appid.'/'.$dataFromDB->title_code.'/'.(isset($request->monid) && $request->monid > 0 ? $request->monid : '').'?hid='.$request->hid));
+						$urlToRedirect = ($isSelfAssess ? url('client1/apply/HeaderOne/'.$request->appid.'/'.$dataFromDB->title_code.'?hid='.$request->hid.'&pid='.$request->hid) : url('employee/dashboard/processflow/HeaderOne/'.$request->appid.'/'.$dataFromDB->title_code.'/'.(isset($request->monid) && $request->monid > 0 ? $request->monid : '').'?hid='.$request->hid.'&pid='.$request->hid));
+						// $urlToRedirect = ($isSelfAssess ? url('client1/apply/HeaderOne/'.$request->appid.'/'.$dataFromDB->title_code.'?hid='.$request->hid) : url('employee/dashboard/processflow/HeaderOne/'.$request->appid.'/'.$dataFromDB->title_code.'/'.(isset($request->monid) && $request->monid > 0 ? $request->monid : '').'?hid='.$request->hid));
 						// $urlToRedirect = ($isSelfAssess ? url('client1/apply/HeaderOne/'.$request->appid.'/'.$dataFromDB->title_code) : url('employee/dashboard/processflow/HeaderOne/'.$request->appid.'/'.$dataFromDB->title_code.'/'.(isset($request->monid) && $request->monid > 0 ? $request->monid : '')));
 						$toViewArr = [
 							'redirectTo' => $urlToRedirect,
@@ -5876,15 +6041,135 @@ use FunctionsClientController;
 			$res = null;
 			if( FunctionsClientController::existOnDB('asmt_h1',[['asmtH1ID',$request->part]]) && in_array(true, AjaxController::isSessionExist(['uData','employee_login']))){
 				try {
-					if(DB::table('assessmentcombinedduplicate')->where([['asmtH3ID_FK',$request->part],['regfac_id',$request->regfac_id],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0){
+					$data = AjaxController::getAllDataEvaluateOneRegFac($request->regfac_id);
+
+
+
+
+					$newcheck = DB::table('assessmentcombinedduplicate')->where([['asmtH3ID_FK',$request->part],['regfac_id',$request->regfac_id],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0;
+					
+					if(!is_null($data->lto_id)){
+						$newcheck = DB::table('assessmentcombinedduplicate')->where([['asmtH3ID_FK',$request->part],['appid',$data->lto_id],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0;
+					}else{
+						if(!is_null($data->ptc_id)){
+							
+							$newcheck = DB::table('assessmentcombinedduplicate')->where([['asmtH3ID_FK',$request->part],['appid',$data->ptc_id],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0;
+						}else{
+							if(!is_null($data->con_id)){
+								
+								$newcheck = DB::table('assessmentcombinedduplicate')->where([['asmtH3ID_FK',$request->part],['appid',$data->con_id],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0;
+							}else{
+								if(!is_null($data->ato_id)){
+									
+									$newcheck = DB::table('assessmentcombinedduplicate')->where([['asmtH3ID_FK',$request->part],['appid',$data->ato_id],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0;
+								}else{
+									if(!is_null($data->coa_id)){
+										
+										$newcheck = DB::table('assessmentcombinedduplicate')->where([['asmtH3ID_FK',$request->part],['appid',$data->coa_id],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0;
+									}else{
+										if(!is_null($data->cor_id)){
+											
+											$newcheck = DB::table('assessmentcombinedduplicate')->where([['asmtH3ID_FK',$request->part],['appid',$data->cor_id],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0;
+										}
+									}
+								}
+								
+							}
+						}
+					}
+
+					if($request->hid){
+						if($request->hid == 'AOASPT1AT' || $request->hid == 'AOASPT2AT'){
+							$newcheck = DB::table('assessmentcombinedduplicate')->where([['x08_id',$request->xid],['asmtH3ID_FK',$request->part],['regfac_id',$request->regfac_id],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0;
+					
+							if(!is_null($data->lto_id)){
+								$newcheck = DB::table('assessmentcombinedduplicate')->where([['x08_id',$request->xid],['asmtH3ID_FK',$request->part],['appid',$data->lto_id],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0;
+							}else{
+								if(!is_null($data->ptc_id)){
+									
+									$newcheck = DB::table('assessmentcombinedduplicate')->where([['x08_id',$request->xid],['asmtH3ID_FK',$request->part],['appid',$data->ptc_id],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0;
+								}else{
+									if(!is_null($data->con_id)){
+										
+										$newcheck = DB::table('assessmentcombinedduplicate')->where([['x08_id',$request->xid],['asmtH3ID_FK',$request->part],['appid',$data->con_id],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0;
+									}else{
+										if(!is_null($data->ato_id)){
+											
+											$newcheck = DB::table('assessmentcombinedduplicate')->where([['x08_id',$request->xid],['asmtH3ID_FK',$request->part],['appid',$data->ato_id],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0;
+										}else{
+											if(!is_null($data->coa_id)){
+												
+												$newcheck = DB::table('assessmentcombinedduplicate')->where([['x08_id',$request->xid],['asmtH3ID_FK',$request->part],['appid',$data->coa_id],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0;
+											}else{
+												if(!is_null($data->cor_id)){
+													
+													$newcheck = DB::table('assessmentcombinedduplicate')->where([['x08_id',$request->xid],['asmtH3ID_FK',$request->part],['appid',$data->cor_id],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0;
+												}
+											}
+										}
+										
+									}
+								}
+							}
+
+						}
+					}
+
+
+
+
+
+					if($newcheck){
 
 						$data = AjaxController::getAllDataEvaluateOneRegFac($request->regfac_id);//
 						$filteredAssessment = $request->except($arrOfUnneeded);
 
-						$dataFromDB = AjaxController::forAssessmentHeadersRegFac(
-							array(['registered_facility.regfac_id',$request->regfac_id],
-							['asmt_h1.asmtH1ID',$request->part]
-						),array('asmt_h1.*','asmt_h2.*','asmt_h3.*','asmt_title.title_code'))[0];
+					$appid=null;
+					
+					if(!is_null($data->lto_id)){
+						$appform =  DB::table('appform')->where('appid', $data->lto_id)->first();
+						$dataFromDB = AjaxController::forAssessmentHeaders(array(['appform.appid', $data->lto_id],['asmt_h1.apptype',$appform->hfser_id],['asmt_h1.asmtH1ID',$request->part]),array('asmt_h1.*','asmt_h2.*','asmt_h3.*','asmt_title.title_code', 'x08_ft.id as xid'))[0];
+						$appid = $data->lto_id;
+					}else{
+						if(!is_null($data->ptc_id)){
+							$appform =  DB::table('appform')->where('appid', $data->ptc_id)->first();
+							$dataFromDB = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->ptc_id],['asmt_h1.apptype',$appform->hfser_id],['asmt_h1.asmtH1ID',$request->part]),array('asmt_h1.*','asmt_h2.*','asmt_h3.*','asmt_title.title_code', 'x08_ft.id as xid'))[0];
+							$appid = $data->ptc_id;
+						}else{
+							if(!is_null($data->con_id)){
+								$appform =  DB::table('appform')->where('appid', $data->con_id)->first();
+								$dataFromDB = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->con_id],['asmt_h1.apptype',$appform->hfser_id],['asmt_h1.asmtH1ID',$request->part]),array('asmt_h1.*','asmt_h2.*','asmt_h3.*','asmt_title.title_code', 'x08_ft.id as xid'))[0];
+							$appid = $data->con_id;
+							}else{
+								if(!is_null($data->ato_id)){
+									$appform =  DB::table('appform')->where('appid', $data->ato_id)->first();
+									$dataFromDB = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->ato_id],['asmt_h1.apptype',$appform->hfser_id],['asmt_h1.asmtH1ID',$request->part]),array('asmt_h1.*','asmt_h2.*','asmt_h3.*','asmt_title.title_code', 'x08_ft.id as xid'))[0];
+									$appid = $data->ato_id;
+								}else{
+									if(!is_null($data->coa_id)){
+										$appform =  DB::table('appform')->where('appid', $data->coa_id)->first();
+										$appid = $data->coa_id;	$dataFromDB = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->coa_id],['asmt_h1.apptype',$appform->hfser_id],['asmt_h1.asmtH1ID',$request->part]),array('asmt_h1.*','asmt_h2.*','asmt_h3.*','asmt_title.title_code', 'x08_ft.id as xid'))[0];
+								
+									}else{
+										if(!is_null($data->cor_id)){
+											$appform =  DB::table('appform')->where('appid', $data->cor_id)->first();
+											$dataFromDB = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->cor_id],['asmt_h1.apptype',$appform->hfser_id],['asmt_h1.asmtH1ID',$request->part]),array('asmt_h1.*','asmt_h2.*','asmt_h3.*','asmt_title.title_code', 'x08_ft.id as xid'))[0];
+											$appid = $data->cor_id;
+										}else{
+											$dataFromDB = AjaxController::forAssessmentHeadersRegFac(
+												array(['registered_facility.regfac_id',$request->regfac_id],
+												['asmt_h1.asmtH1ID',$request->part]
+											),array('asmt_h1.*','asmt_h2.*','asmt_h3.*','asmt_title.title_code'))[0];
+					
+										}
+									}
+								}
+								
+							}
+						}
+					}
+
+
 
 						$uData = AjaxController::getCurrentUserAllData();
 
@@ -5898,6 +6183,8 @@ use FunctionsClientController;
 								->first();
 
 								$forInsertArray = array(
+									'appid' => $appid,
+									'x08_id' => $request->xid,
 									'asmtComb_FK' => $res->asmtComb, 
 									'assessmentName' => $res->assessmentName, 
 									'asmtH3ID_FK' => $request->part, 
@@ -5928,7 +6215,8 @@ use FunctionsClientController;
 								array_push($getOnDBID, $key);
 							}
 						}
-						$urlToRedirect = url('employee/dashboard/processflow/HeaderOne/regfac/'.$request->regfac_id.'/'.$dataFromDB->title_code.'/'.(isset($request->monid) && $request->monid > 0 ? $request->monid : ''));
+						$urlToRedirect = url('employee/dashboard/processflow/HeaderOne/regfac/'.$request->regfac_id.'/'.$dataFromDB->title_code.'/'.(isset($request->monid) && $request->monid > 0 ? $request->monid : '').'?hid='.$request->hid.'&pid='.$request->hid);
+						// $urlToRedirect = url('employee/dashboard/processflow/HeaderOne/regfac/'.$request->regfac_id.'/'.$dataFromDB->title_code.'/'.(isset($request->monid) && $request->monid > 0 ? $request->monid : ''));
 						$toViewArr = [
 							'redirectTo' => $urlToRedirect
 						];

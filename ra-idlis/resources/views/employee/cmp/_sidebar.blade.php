@@ -543,7 +543,8 @@
 
                                         <span class="FD012_allow">
 
-                                           <li><a href="{{ asset('/employee/mf/FDA/machines/requirements') }}">&nbsp;&nbsp;&nbsp;&nbsp;Machine Requirements</a></li>
+                                           <li><a href="{{ asset('/employee/mf/FDA/machines/requirements') }}">&nbsp;&nbsp;&nbsp;&nbsp;Radiation Facility Requirements</a></li>
+                                           <!-- <li><a href="{{ asset('/employee/mf/FDA/machines/requirements') }}">&nbsp;&nbsp;&nbsp;&nbsp;Machine Requirements</a></li> -->
 
                                         </span>
 
@@ -777,7 +778,7 @@
 
                             <span class="FDACM_allow">
 
-                                <li><a href="{{asset('employee/dashboard/processflow/FDA/cashier')}}">&nbsp;&nbsp;&nbsp;&nbsp;FDA Cashiering (Machines)</a></li>
+                                <li><a href="{{asset('employee/dashboard/processflow/FDA/cashier')}}">&nbsp;&nbsp;&nbsp;&nbsp;FDA Cashiering (Radiation Facility)</a></li>
 
                             </span>
 
@@ -804,7 +805,8 @@
                         <ul class="list-unstyled">
                             <ul id="FDA" class="list-unstyled collapse">
                                 {{-- machines --}}
-                                <li class="FDAM_allow"><a href="#machines" data-toggle="collapse">&nbsp;&nbsp;<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Machines</a>
+                                <li class="FDAM_allow"><a href="#machines" data-toggle="collapse">&nbsp;&nbsp;<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Radiation facility</a>
+                                <!-- <li class="FDAM_allow"><a href="#machines" data-toggle="collapse">&nbsp;&nbsp;<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Machines</a> -->
                                     <ul id="machines" class="list-unstyled collapse">
 
                                         <span class="FD008_allow">

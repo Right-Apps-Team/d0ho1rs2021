@@ -242,6 +242,7 @@
             {{-- END BODY --}}
           </div>
           {{-- hferc eval --}}
+          @if(isset($AppData))
           @if(strtolower($AppData->hfser_id) == 'ptc' && isset($otherDetails->HFERC_eval))
           <div class="card">
             {{-- START HEAD --}}
@@ -300,7 +301,9 @@
             </div>
             {{-- END BODY --}}
           </div>
+             @endif
           @endif
+          @if(isset($AppData))
           @if(strtolower($AppData->hfser_id) == 'con' )
           <div class="card">
             {{-- START HEAD --}}
@@ -356,6 +359,7 @@
             </div>
             {{-- END BODY --}}
           </div>
+          @endif
           @endif
           {{-- /////////////////// --}}
           {{-- /////////////////// --}}

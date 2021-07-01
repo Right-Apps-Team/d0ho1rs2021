@@ -199,7 +199,7 @@
 				// 	});
                 // }
 
-				@if(isset($headon))
+				// if(isset($headon))
 				@if(app('request')->input('pid') == 'AOASPT1AT' || app('request')->input('pid') == 'AOASPT2AT')
                 let assesed = {!!empty($assesednew) ? json_encode('none') : json_encode($assesednew) !!};
                 if(assesed instanceof Array){
@@ -231,7 +231,7 @@
                 }
 
 				@endif
-				 @endif
+				//  endif
 
                 if($('.main div').length == $('.main p.done').length){
                 	@if(!isset($isMain))
