@@ -136,7 +136,7 @@
 					@endphp 
 					
 					<div class="col-sm-12">
-						<a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid.'&pid='.$value->id.'&hid='.app('request')->input('pid')}}" class="button6 btn-block {{$value->xid}}">{{$value->desc}}</a>
+						<a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid.'&pid='.$value->id.'&hid='.(app('request')->input('pid')?app('request')->input('pid'): app('request')->input('hid'))}}" class="button6 btn-block {{$value->xid}}">{{$value->desc}}</a>
 						<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a> -->
 					</div>
 					 @endif 
@@ -150,7 +150,7 @@
 					@endphp 
 					
 					<div class="col-sm-12">
-						<a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid.'&pid='.$value->id.'&hid='.app('request')->input('pid')}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a>
+						<a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid.'&pid='.$value->id.'&hid='.(app('request')->input('pid')?app('request')->input('pid'): app('request')->input('hid'))}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a>
 						<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid.'&pid='.$value->id.'&hid='.app('request')->input('pid')}}" class="button6 btn-block {{$value->xid}}">{{$value->desc}}</a> -->
 						<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a> -->
 					</div>

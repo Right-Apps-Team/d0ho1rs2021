@@ -210,6 +210,58 @@
                       </div>
                       </div>
                     </td>
+                    <td>
+                      @if(!empty($req[2][0]))
+                       <span class="{{$req[2][0]->id.$req[2][0]->id}}_span_edit" @if($req[2][0]->evaluation !== NULL)style="display: none"@endif>
+                          <div class="row booleans laSelected" apup="{{$req[2][0]->id}}" >
+                             <div class="col-6">
+                               <div class="control-group">
+                                <label class="control control--radio">Yes
+                                  <input value="1" type="radio" name="{{$req[2][0]->id}}_rad_{{$req[2][0]->id}}" @if($req[2][0]->evaluation !== NULL AND $req[2][0]->evaluation == 1)checked=""@endif>
+                                  <div class="control__indicator"></div>
+                                  </label>
+                               </div> 
+                             </div>
+                              <div class="col-6">
+                                <div class="control-group">
+                                   <label class="control control--radio">No
+                                     <input value="0" type="radio" name="{{$req[2][0]->id}}_rad_{{$req[2][0]->id}}" @if($req[2][0]->evaluation !== NULL AND $req[2][0]->evaluation == 0)checked=""@endif>
+                                     <div class="control__indicator"></div>
+                                   </label>
+                                 </div> 
+                              </div>
+                          </div>
+                          <p style="text-align: left;">Remarks:</p>
+                          <textarea name="{{$req[2][0]->id}}_txt" class="form-control" rows="5">@if($req[2][0]->evaluation !== NULL){{$req[2][0]->remarks}}@endif</textarea>
+                          <br>
+                          <button type="button" title="Save" onclick="saveEvals()" class="btn btn-success" style="display: none"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                          <button type="button" title="Cancel Edit" onclick="').toggle()" class="btn btn-danger" style="display: none"><i class="fa fa-times" aria-hidden="true"></i></button>
+                        </span>
+                        <span class="{{$req[2][0]->id.$req[2][0]->id}}_span_edit" @if($req[2][0]->evaluation === NULL)style="display: none"@else style=""@endif>
+                            @if($req[2][0]->evaluation == 1) 
+                              <button type="button" title="Evaluation Accepted" class="btn btn-success" disabled>
+                               <i class="fa fa-check-circle" aria-hidden="true"></i>
+                              </button>
+                            @else
+                              <button type="button" class="btn btn-danger" title="Evaluation Not Accepted" disabled>
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                              </button>
+                            @endif
+                            @isset($AppData)
+                              {{-- @if($AppData->isrecommended == 2 || $AppData->isrecommended == null)  --}}
+                              @if($triggerThis)
+                                <button type="button" title="Edit" onclick="$('.{{$req[2][0]->id.$req[2][0]->id}}_span_edit').toggle()" class="btn btn-warning"><i class="fa fa-edit" aria-hidden="true"></i></button>
+                              @endif
+                            @endisset
+                         </span>
+                      @else
+                      <span class="font-weight-bold">NO LIST(S) GIVEN</span>
+                      @php 
+                        $forNosent++;
+                      @endphp
+                      @endif
+                    </td>
+
                     <!-- <td>
                       @if(!empty($req[2][0]))
                        <span class="{{$req[2][0]->id.$req[2][0]->id}}_span_edit" @if($req[2][0]->evaluation !== NULL)style="display: none"@endif>
@@ -283,12 +335,16 @@
                   @if ($triggerThis)
                   {{-- @if ($AppData->isrecommended == 2 || $AppData->isrecommended == null) --}}
                   @if(count($requirements) != $forNosent)
+                 <button type="button" id="approveButton" class="btn btn-success" onclick="Recommended4Inspection('ApproveApplication');">Approve</button>
+                  <!-- 7-1-2021 <button type="button" id="approveButton" class="btn btn-success" onclick="Recommended4Inspection('ApproveApplication');">Approve</button> -->
                   <!-- <button type="button" id="approveButton" class="btn btn-success" onclick="Recommended4Inspection('ApproveApplication');">Approve</button> -->
                   @endif
                   &nbsp;
                   &nbsp;
                   <!-- <button type="button" id="rejectButton" class="btn btn-danger" onclick="Recommended4Inspection('RejectApplication');">Disapprove</button> -->
              
+                  <button type="button" id="reviseButton" class="btn btn-warning" onclick="Recommended4Inspection('ReviseApplication')">Need for Revision</button>
+                 <!-- 7-1-2021 <button type="button" id="reviseButton" class="btn btn-warning" onclick="Recommended4Inspection('ReviseApplication')">Need for Revision</button> -->
                  <!-- 6-26-2021 <button type="button" id="reviseButton" class="btn btn-warning" onclick="Recommended4Inspection('ReviseApplication')">Need for Revision</button> -->
                   @endif
                 @endisset

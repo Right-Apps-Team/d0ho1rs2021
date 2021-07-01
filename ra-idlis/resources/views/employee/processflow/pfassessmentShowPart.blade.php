@@ -130,10 +130,12 @@
 					<div class="col-sm-12">
 						<a href="{{$address.'/'.$value->id.'/'.$isMon.($isOtherUid ?? '')}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a>
 						<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.($isOtherUid ?? '')}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a> -->
+						<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.($isOtherUid ?? '')}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a> -->
 					</div>
 					@endif --}}
 
-			@if(isset($headon))
+					@if(isset($headon) && ($value->h1HeadID == 'AOASPT2AT' || $value->h1HeadID == 'AOASPT1AT'))
+			<!-- if(isset($headon)) -->
 
 
 					@if(!in_array($value->xid, $arrDat))
@@ -141,7 +143,8 @@
 						array_push($arrDat, $value->xid)
 					@endphp 
 					<div class="col-sm-12">
-						<a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid}}" class="button6 btn-block {{$value->xid}}">{{$value->desc}}</a>
+						<a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid.'&pid='.$value->id.'&hid='.(app('request')->input('pid')?app('request')->input('pid'): app('request')->input('hid'))}}" class="button6 btn-block {{$value->xid}}">{{$value->desc}}</a>
+						<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid}}" class="button6 btn-block {{$value->xid}}">{{$value->desc}}</a> -->
 						<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a> -->
 					</div>
 					 @endif 
@@ -152,7 +155,8 @@
 					@endphp 
 
 					<div class="col-sm-12">
-						<a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid}}" class="button6 btn-block {{$value->xid}}">{{$value->desc}}</a>
+						<a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid.'&pid='.$value->id.'&hid='.(app('request')->input('pid')?app('request')->input('pid'): app('request')->input('hid'))}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a>
+						<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid}}" class="button6 btn-block {{$value->xid}}">{{$value->desc}}</a> -->
 						<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a> -->
 					</div>
 					@endif
@@ -184,17 +188,50 @@
             	@endif
 
 			
+                // let assesed = {!!empty($assesednew) ? json_encode('none') : json_encode($assesednew) !!};
+                // // let assesed = {!!empty($assesed) ? json_encode('none') : json_encode($assesed) !!};
+                // if(assesed instanceof Array){
+                //     $.each(assesed,function(index, el) {
+				// 		@if(isset($headon))
+				// 			let textOnDiv = $('.'+$.escapeSelector(el)).text();
+				// 			$('.'+el).replaceWith('<p class="buttonOthers btn-block done" style="background-color:#28A745;"><i class="fa fa-check-circle p-2" aria-hidden="true"></i>'+textOnDiv+'</p>');
+           	    // 	    @endif
+				// 	});
+                // }
+
+				@if(isset($headon))
+				@if(app('request')->input('pid') == 'AOASPT1AT' || app('request')->input('pid') == 'AOASPT2AT')
                 let assesed = {!!empty($assesednew) ? json_encode('none') : json_encode($assesednew) !!};
-                // let assesed = {!!empty($assesed) ? json_encode('none') : json_encode($assesed) !!};
                 if(assesed instanceof Array){
                     $.each(assesed,function(index, el) {
-						@if(isset($headon))
-							let textOnDiv = $('.'+$.escapeSelector(el)).text();
-							$('.'+el).replaceWith('<p class="buttonOthers btn-block done" style="background-color:#28A745;"><i class="fa fa-check-circle p-2" aria-hidden="true"></i>'+textOnDiv+'</p>');
-           	    	    @endif
+						console.log("el")
+						console.log(el)
+						// if(el != 'AOASPT1AT' && el != 'AOASPT2AT' && el != 298 && el != 299){
+
+                        let textOnDiv = $('.'+el).text();
+                        $('.'+el).replaceWith('<p class="buttonOthers btn-block done" style="background-color:#28A745;"><i class="fa fa-check-circle p-2" aria-hidden="true"></i>'+textOnDiv+'</p>');
+                 	//    }
+					
 					});
                 }
-				
+				@else
+
+				let assesed = {!!empty($assesed) ? json_encode('none') : json_encode($assesed) !!};
+                if(assesed instanceof Array){
+                    $.each(assesed,function(index, el) {
+						console.log("el1")
+						console.log(el)
+						// if(el != 'AOASPT1AT' && el != 'AOASPT2AT' && el != 298 && el != 299){
+
+                        let textOnDiv = $('.'+el).text();
+                        $('.'+el).replaceWith('<p class="buttonOthers btn-block done" style="background-color:#28A745;"><i class="fa fa-check-circle p-2" aria-hidden="true"></i>'+textOnDiv+'</p>');
+                 	//    }
+					
+					});
+                }
+
+				@endif
+				 @endif
 
                 if($('.main div').length == $('.main p.done').length){
                 	@if(!isset($isMain))
