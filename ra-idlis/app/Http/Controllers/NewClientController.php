@@ -2308,6 +2308,7 @@ class NewClientController extends Controller {
 			$toViewArr = $dohC->AssessmentShowH1($request,$appid,$part,false,true);
 			if($toViewArr){
 				$toViewArr['headon'] = true;
+				$toViewArr['parts'] = $part;
 				return view('client1.assessment.assessmentView',$toViewArr);
 			}
 			return redirect('client1/apply/assessmentReady/'.$appid)->with('errRet', ['errAlt'=>'Part does not exist.']);
@@ -2366,7 +2367,7 @@ class NewClientController extends Controller {
 			if($toViewArr){
 				return view('client1.assessment.assessmentSuccess',$toViewArr);
 			}
-			return back()->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Item not found on DB. hh']);
+			return back()->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Item not found on DB..']);
 		} catch (Exception $e) {
 			return $e;
 		}

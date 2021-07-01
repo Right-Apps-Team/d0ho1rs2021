@@ -23,7 +23,7 @@
 <div class="col-md-4">
     <label for="classification">Classification <span class="text-danger">*</span></label>
     <!-- if(isset($fAddress) && count($fAddress) > 0)
-    <input class="form-control "  value="{{$fAddress[0]->classname}}" disabled />
+    <input class="form-control "  value="$fAddress[0]->classname" disabled />
     
     else -->
     <select class="form-control  show-menu-arrow toRemove" id="classification" value='{{((isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->classid: null)}}' disabled name="classid"  data-style="text-dark form-control custom-selectpicker" data-size="5" required onChange="fetchSubClass(this)">

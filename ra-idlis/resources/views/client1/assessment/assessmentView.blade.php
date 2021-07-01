@@ -121,29 +121,37 @@
 					$arrDat = array();
 					$arrDat1 = array();
 				@endphp
+				<script>
+				console.log('{{$head}}')
+				</script>
 				@foreach($head as $key => $value)
 				
 				
-				@if(isset($headon))
+				@if(isset($headon) && ($value->h1HeadID == 'AOASPT2AT' || $value->h1HeadID == 'AOASPT1AT'))
 
-
+				
 					@if(!in_array($value->xid, $arrDat))
 					@php 
 						array_push($arrDat, $value->xid)
 					@endphp 
+					
 					<div class="col-sm-12">
-						<a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid}}" class="button6 btn-block {{$value->xid}}">{{$value->desc}}</a>
+						<a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid.'&pid='.$value->id.'&hid='.app('request')->input('pid')}}" class="button6 btn-block {{$value->xid}}">{{$value->desc}}</a>
 						<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a> -->
 					</div>
 					 @endif 
 				@else
+
+				
+
 					@if(!in_array($value->id, $arrDat1))
 					@php 
 						array_push($arrDat1, $value->id)
 					@endphp 
-
+					
 					<div class="col-sm-12">
-						<a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid}}" class="button6 btn-block {{$value->xid}}">{{$value->desc}}</a>
+						<a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid.'&pid='.$value->id.'&hid='.app('request')->input('pid')}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a>
+						<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid.'&pid='.$value->id.'&hid='.app('request')->input('pid')}}" class="button6 btn-block {{$value->xid}}">{{$value->desc}}</a> -->
 						<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a> -->
 					</div>
 					@endif
@@ -180,6 +188,8 @@
 	  <script src="{{asset('ra-idlis/public/js/forall.js')}}"></script>
 		<script>
             $(function(){
+
+		@if(app('request')->input('pid') == 'AOASPT1AT' || app('request')->input('pid') == 'AOASPT2AT')
                 let assesed = {!!empty($assesednew) ? json_encode('none') : json_encode($assesednew) !!};
                 if(assesed instanceof Array){
                     $.each(assesed,function(index, el) {
@@ -193,6 +203,23 @@
 					
 					});
                 }
+		@else
+
+				let assesed = {!!empty($assesed) ? json_encode('none') : json_encode($assesed) !!};
+                if(assesed instanceof Array){
+                    $.each(assesed,function(index, el) {
+						console.log("el1")
+						console.log(el)
+						// if(el != 'AOASPT1AT' && el != 'AOASPT2AT' && el != 298 && el != 299){
+
+                        let textOnDiv = $('.'+el).text();
+                        $('.'+el).replaceWith('<p class="buttonOthers btn-block done" style="background-color:#28A745;"><i class="fa fa-check-circle p-2" aria-hidden="true"></i>'+textOnDiv+'</p>');
+                 	//    }
+					
+					});
+                }
+
+		@endif
 				// let assesed = {!!empty($assesed) ? json_encode('none') : json_encode($assesed) !!};
                 // if(assesed instanceof Array){
                 //     $.each(assesed,function(index, el) {

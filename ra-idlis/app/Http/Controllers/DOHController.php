@@ -5302,6 +5302,7 @@ use FunctionsClientController;
 
 					$toViewArr = [
 						'data' => $data,
+						'partid' => "true",
 						// 'head' => AjaxController::forAssessmentHeaders(array(['appform.appid',$appid],['asmt_h1.apptype',$data->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id')),
 						'head' => $newHead,
 						'address' => ($isSelfAssess ? url('client1/apply/HeaderOne/'.$appid.'/') : url('employee/dashboard/processflow/HeaderOne/'.$appid.'/')),
@@ -5465,8 +5466,10 @@ use FunctionsClientController;
 					$whereClause = array(['appform.appid',$appid],['asmt_h1.apptype',$data->hfser_id],['asmt_h1.partID',$part]);
 					$headData = AjaxController::forAssessmentHeaders($whereClause,array('asmt_h1.h1name as desc','asmt_h1.asmtH1ID as id','asmt_title.title_name as h1HeadBack','asmt_title.title_code as h1HeadID', 'x08_ft.id as xid'));
 					$toViewArr = [
+						'part' => $part,
 						'data' => $data,
 						'head' => $headData,
+						'partid' => "true",
 						// 'address' => ($isSelfAssess ? url('client1/apply/HeaderTwo/'.$appid.'/') : url('employee/dashboard/processflow/HeaderTwo/'.$appid.'/')),
 						'address' => ($isSelfAssess ? url('client1/apply/ShowAssessments/'.$appid.'/') : url('employee/dashboard/processflow/ShowAssessments/'.$appid.'/')),
 						'customAddress' => ($isSelfAssess ? url('client1/apply/assessmentReady/'.$appid.'/') :url('employee/dashboard/processflow/parts/'.$appid)),
@@ -5516,8 +5519,11 @@ use FunctionsClientController;
 					
 					$toViewArr = [
 						'data' => $data,
+						'part' => $part,
 						'head' => $newHead,
 						'headon' => true,
+						'partid' => "true",
+						
 						// 'head' => $headData,
 						// 'address' => ($isSelfAssess ? url('client1/apply/HeaderTwo/'.$appid.'/') : url('employee/dashboard/processflow/HeaderTwo/'.$appid.'/')),
 						'address' => ($isSelfAssess ? url('client1/apply/ShowAssessments/'.$appid.'/') : url('employee/dashboard/processflow/ShowAssessments/'.$appid.'/')),
@@ -5771,8 +5777,19 @@ use FunctionsClientController;
 			$getOnDBID = $sample = array();
 			$res = null;
 			if(isset($request->appid) && FunctionsClientController::isExistOnAppform($request->appid) && FunctionsClientController::existOnDB('asmt_h1',[['asmtH1ID',$request->part]]) && in_array(true, AjaxController::isSessionExist(['uData','employee_login']))){
+			// if(isset($request->appid) && FunctionsClientController::isExistOnAppform($request->appid) && FunctionsClientController::existOnDB('asmt_h1',[['asmtH1ID',$request->part]]) && in_array(true, AjaxController::isSessionExist(['uData','employee_login']))){
 				try {
-					if(DB::table('assessmentcombinedduplicate')->where([['x08_id',$request->xid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0){
+
+					$newcheck  = DB::table('assessmentcombinedduplicate')->where([['asmtH3ID_FK',$request->part],['appid',$request->appid],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0;
+					if($request->hid){
+						if($request->hid == 'AOASPT1AT' || $request->hid == 'AOASPT2AT'){
+							$newcheck = DB::table('assessmentcombinedduplicate')->where([['x08_id',$request->xid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0;
+						}
+					}
+
+
+					if($newcheck){
+					// if(DB::table('assessmentcombinedduplicate')->where([['x08_id',$request->xid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0){
 					// if(DB::table('assessmentcombinedduplicate')->where([['asmtH3ID_FK',$request->part],['appid',$request->appid],['monid',$request->monid],['selfassess',($isSelfAssess ? 1 : null)]])->count() <= 0){
 
 						$data = AjaxController::getAllDataEvaluateOne($request->appid);
