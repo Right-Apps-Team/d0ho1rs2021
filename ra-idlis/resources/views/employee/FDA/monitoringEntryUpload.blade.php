@@ -189,7 +189,7 @@
 						{{csrf_field()}}
 						<div class="row">
 	            			<div class="col-md-12 text-center" style="font-size: 40px;">
-	            				<u>{{($choosen == 'machines' ? 'Machine' : 'Pharmacy')}}</u>
+	            				<u>{{($choosen == 'machines' ? 'Radiation Facility' : 'Pharmacy')}}</u>
 	            			</div>
 	            		</div>
 	            		<div class="row pt-3">
@@ -257,7 +257,7 @@
 				<div class="container pt-5">
 					<div class="row pb-3">
             			<div class="col-md-12 text-center" style="font-size: 40px;">
-            				<u>{{($choosen == 'machines' ? 'Machine' : 'Pharmacy')}}</u>
+            				<u>{{($choosen == 'machines' ? 'Radiation Facility' : 'Pharmacy')}}</u>
             			</div>
             		</div>
 					<div class="row">

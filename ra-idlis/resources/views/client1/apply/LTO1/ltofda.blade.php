@@ -195,7 +195,8 @@
                                 @endif
                             @endif
                         </div>
-						<button class="btn btn-info" style="white-space: normal; width: 100%; height: 100%;" onclick="window.location.href='{{asset('client1/apply/fda/CDRRHR/xraymachines/'.$appid)}}'"><i class="fa fa-fax"></i> LIST OF DIAGNOSTIC MACHINES</button>
+						<button class="btn btn-info" style="white-space: normal; width: 100%; height: 100%;" onclick="window.location.href='{{asset('client1/apply/fda/CDRRHR/xraymachines/'.$appid)}}'"><i class="fa fa-fax"></i> LIST OF DIAGNOSTIC RADIATION FACILITY</button>
+						<!-- <button class="btn btn-info" style="white-space: normal; width: 100%; height: 100%;" onclick="window.location.href='{{asset('client1/apply/fda/CDRRHR/xraymachines/'.$appid)}}'"><i class="fa fa-fax"></i> LIST OF DIAGNOSTIC MACHINES</button> -->
 					</div>
 				</div>
 				<div class="row marginbottom-md" style="margin-top: 100px;">

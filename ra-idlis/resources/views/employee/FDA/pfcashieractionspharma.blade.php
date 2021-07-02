@@ -31,7 +31,8 @@
           <input type="" id="token" value="{{ Session::token() }}" hidden>
            Cashier Evaluation (PHARMACY) <span class="optnTD" style="display: none;">(Overide Payment Mode)</span>&nbsp;
            <button class="btn btn-primary" onclick="window.history.back();">Back</button>
-           <input style="float: right; width: 10%; background-color: {{$AppData->proofpaystatPhar == 'posted' ? '#BDE5F8' : 'orange'}}"  class="form-control" type="text" disabled value="{{$AppData->proofpaystatPhar == 'posting' ? 'For Posting' : ( $AppData->proofpaystatPhar == 'posted' ? 'Posted' : 'No Proof')}}">
+           <input style="float: right; width: 13%; background-color: {{$AppData->proofpaystatPhar == 'posted' ? '#BDE5F8' : 'orange'}}"  class="form-control" type="text" disabled value="{{$AppData->proofpaystatPhar == 'posting' ? 'For Posting' : ( $AppData->proofpaystatPhar == 'posted' ? 'Posted' : 'Status Not Verified')}}">
+           <!-- <input style="float: right; width: 10%; background-color: {{$AppData->proofpaystatPhar == 'posted' ? '#BDE5F8' : 'orange'}}"  class="form-control" type="text" disabled value="{{$AppData->proofpaystatPhar == 'posting' ? 'For Posting' : ( $AppData->proofpaystatPhar == 'posted' ? 'Posted' : 'No Proof')}}"> -->
         
         </div>
         <div class="card-body">
@@ -55,7 +56,7 @@
         </table>
         <hr>
         <div class="container-fluid border mb-3">
-            <div class="row">
+            <div class="row" style="padding: 1%">
               @if($AppData->isCashierApprovePharma != 1)
                 <!-- if(count($payables) <= 0) -->
                   <!-- <button type="button" onclick="insert()" data-toggle="modal" data-target="#bd-example-modal-sm" class="btn btn-primary p-2 m-1">
@@ -71,7 +72,7 @@
                  </button>
                  </a>
                  <!-- <button class="btn btn-success p-2 m-1" data-toggle="modal" data-target="#evaluatePayment"> <i class="fa fa-check" aria-hidden="true"></i> Confirm Payment </button> -->
-                 <button class="btn btn-success p-2 m-1" data-toggle="modal" data-target="#evaluatePayment"> <i class="fa fa-check" aria-hidden="true"></i> Confirm Payment</button>
+                 <!-- <button class="btn btn-success p-2 m-1" data-toggle="modal" data-target="#evaluatePayment"> <i class="fa fa-check" aria-hidden="true"></i> Confirm Payment</button> -->
             
                  @else
                  <button style="float: right;" onclick="alert('Please wait for the proof of payment.')" type="button" class="btn btn-warning p-2 m-1">
@@ -95,14 +96,41 @@
               </button> --}}
               @endif
               @if($Sum <= 0 && empty($AppData->isCashierApprovePharma))
-              <button class="btn btn-success p-2 m-1" data-toggle="modal" data-target="#evaluatePayment"> <i class="fa fa-check" aria-hidden="true"></i> Confirm Payment</button>
+              <!-- <button class="btn btn-success p-2 m-1" data-toggle="modal" data-target="#evaluatePayment"> <i class="fa fa-check" aria-hidden="true"></i> Confirm Payment</button> -->
               @endif
               <div class="col d-flex justify-content-end">
               <button type="button" class="btn btn-primary p-2 m-1" data-toggle="modal" data-target="#showOP">
-                <i class="fa fa-eye" aria-hidden="true"></i> View Order of Payment 
+                <i class="fa fa-eye" aria-hidden="true"></i> View Order of Payment  ff
               </button>
               </div>
+              
+
+
+
+
+
+
             </div>
+
+            <br/>
+                <div style="padding-top: .4%; width: 20%;">
+
+                <select required class="form-control" style="width: 100%; " id="postAct" name="postAct">
+                            <option value="">Select Status</option>
+                            <option  value="posting">For Posting</option>
+                            <option  value="posted">Posted</option>
+                          
+                </select>
+                @if(!empty($AppData->isCashierApprovePharma))
+                <input type="hidden" id="typestat" value="update" />
+                @else
+                <input type="hidden" id="typestat" value="new" />
+                @endif
+              
+
+                </div>
+                <button class="btn btn-primary p-2 m-1" data-toggle="modal" data-target="#evaluatePayment">Confirm Status</button>
+
           </div>
           <div class="row pt-3">
             <div class="col text-left">
@@ -405,9 +433,21 @@
     }
 
   function seq(){
+    var val = document.getElementById("postAct").value;
+    var ts = document.getElementById("typestat").value;
+
+    console.log("val")
+    console.log(val)
+    console.log("typestat")
+    console.log(ts)
+
+    if(val == ""){
+      alert("Please select status")
+    }else{
+
     $.ajax({
       type: 'POST',
-      data: {_token:$('#token').val(),action:'evalute', appid:'{{$appid}}'},
+      data: {_token:$('#token').val(),action:'evalute', appid:'{{$appid}}',postact: val,typestat: ts },
       success: function(data){
         if(data == 'DONE'){
           Swal.fire({
@@ -422,6 +462,10 @@
         }
       }
     })
+
+  }
+
+
     
   }
 

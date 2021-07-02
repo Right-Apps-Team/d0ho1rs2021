@@ -286,7 +286,7 @@
 		                   		'</div>'+
 		                   		'<div class="row mb-2">'+
 		                   			'<div class="col-sm">'+
-		                   				'PRC Certificate:<span class="text-danger">*</span>'+
+		                   				'PRC ID:<span class="text-danger">*</span>'+
 		                   			'</div>'+
 		                   			'<div class="col-sm-11">'+
 		                   			'	<input  type="file" class="form-control w-100" name="edit_prc" '+(prcFile == "" ? "required" : "") +'>'+

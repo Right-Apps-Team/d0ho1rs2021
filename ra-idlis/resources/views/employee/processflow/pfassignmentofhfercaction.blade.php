@@ -80,12 +80,12 @@
         <!-- <div class="col-md-2">
             <button class="btn btn-primary p-2" onclick="window.location.href='{{asset('employee/dashboard/processflow/view/hfercevaluation/'.$AppData->appid.'/'.$revisionCountCurent)}}'" data-toggle="modal" data-target="#evaluate"><i class="fa fa-file"> </i> View Evaluation</button>
           </div> -->
-        @if($isHead)
+     {{--   @if($isHead)--}}
             @if($canEval && count($membDone) != 0)
             <button class="btn btn-success p-2" data-backdrop="static" data-toggle="modal" data-target="#compareModal" onclick="onClickToIFrame()"><i class="fa fa-files-o" aria-hidden="true"></i> Compare Results </button>
        
             @endif
-          @endif
+         {{-- @endif --}}
          <!-- endif -->
        
         @if(isset($evaluation) && isset($evaluation->HFERC_eval) )

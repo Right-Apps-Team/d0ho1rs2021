@@ -173,10 +173,26 @@ const fetchSubClass1 = async (e) => {
         document.getElementById("hfep").checked = true;
         }
 
-        var typeamb =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->typeamb: "")!!}');
-        var ambtyp =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->ambtyp: "")!!}');
-        var plate_number =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->plate_number: "")!!}');
-        var ambOwner =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->ambOwner: "")!!}');
+      
+        var typeamb=[];
+ var ambtyp=[];
+ var plate_number =[];
+ var ambOwner=[];
+        
+       @if(count($fAddress) > 0 && isset($fAddress[0]->typeamb))
+         typeamb =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->typeamb: "" )!!}');
+         ambtyp =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->ambtyp: "[]")!!}');
+         plate_number =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->plate_number: "[]")!!}');
+         ambOwner =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->ambOwner: "[]")!!}');
+    @endif
+
+//   var typeamb =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->typeamb: "" )!!}');
+       
+//         var ambtyp =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->ambtyp: "[]")!!}');
+//         var plate_number =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->plate_number: "[]")!!}');
+//         var ambOwner =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->ambOwner: "[]")!!}');
+
+
         // var noofdialysis ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofdialysis: "")!!}';
 
         // console.log("typeamb")
@@ -188,7 +204,8 @@ const fetchSubClass1 = async (e) => {
         // console.log("ambOwner")
         // console.log(ambOwner)
 
-        var addonDesc ='{!!((count($fAddress) > 0) ? $fAddress[0]->addonDesc: "")!!}';
+        var addonDesc ='{!!((count($fAddress) > 0) ? $fAddress[0]->addonDesc: "[]")!!}';
+        // var addonDesc ='{!!((count($fAddress) > 0) ? $fAddress[0]->addonDesc: "")!!}';
         var addonDescArr = JSON.parse(addonDesc);
 
         // console.log("addonDesc")
@@ -197,7 +214,8 @@ const fetchSubClass1 = async (e) => {
         // console.log(subclassid)
         // console.log(JSON.parse(addonDesc))
 
-        var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "")!!}');
+        var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "[]")!!}');
+        // var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "")!!}');
 
                 // console.log("servFac")
                 // console.log(servFacArray)
@@ -210,7 +228,8 @@ const fetchSubClass1 = async (e) => {
                                 type_of_fac(dbhgpid) //display facilities
 
                                 
-                                var funcid ='{!!((count($fAddress) > 0) ? $fAddress[0]->funcid: "")!!}';
+                                var funcid ='{!!((count($fAddress) > 0) ? $fAddress[0]->funcid: "[]")!!}';
+                                // var funcid ='{!!((count($fAddress) > 0) ? $fAddress[0]->funcid: "")!!}';
                                 var fniInpt = document.getElementsByName('funcid')
 
                                         // set value for hosp classif and function
@@ -1635,6 +1654,7 @@ return unique;
 
 
     function getAddonServices(theId) {
+        console.log("get add on")
         let arrAddon = [];
         if (typeof(theId) !== 'undefined' && theId.length) {
             // let arrAddon = [];

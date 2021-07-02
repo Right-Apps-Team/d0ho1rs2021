@@ -15,7 +15,7 @@
 							<th>Qualification</th>
 							<th>PRC License Number</th>
 							<th>Validity Period</th>
-							<th>PRC Certificate</th>
+							<th>PRC ID</th>
 							<th>Board Certificate</th>
 							<th>Contract of Employment</th>
 						</tr>

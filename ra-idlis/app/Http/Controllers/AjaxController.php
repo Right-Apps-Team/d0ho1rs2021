@@ -7779,6 +7779,41 @@ public static function forDoneHeadersNew($appid,$monid,$selfAssess,$isPtc = fals
 		return $retArray;
 	}
 
+	public static function forDoneHeadersNewMon($appid,$monid,$selfAssess,$isPtc = false,$revision = null){
+		$h1 = $h2 = $h3 = $h4= $h5 = array();
+		$monid = ($monid ? $monid : null);
+		$selfAssess = ($selfAssess ? 1 : null);
+		// if(!$isPtc){
+		// 	$table = 'assessmentcombinedduplicate';
+		// 	$whereClause = [['appid',$appid],['monid',$monid],['selfassess',$selfAssess]];
+		// } else {
+		// 	$table = 'assessmentcombinedduplicateptc';
+		// 	$whereClause = [['appid',$appid],['evaluatedBy',session()->get('employee_login')->uid],['revision',$revision]];
+		// }
+
+		$whereClause = [['assessmentcombinedduplicate.appid',$appid],['monid',$monid]];
+		$db = DB::table('assessmentcombinedduplicate')
+		->join('asmt_h1', 'asmt_h1.partID', '=', 'assessmentcombinedduplicate.partID')
+		->where($whereClause)
+		->select('asmt_h1.asmtH1ID')
+		->groupBy('asmt_h1.asmtH1ID')
+		->get();
+
+		foreach ($db as $key => $value) {
+			for ($i=0; $i < 4; $i++) { 
+				
+			}
+			if(!in_array($value->asmtH1ID, $h1)){
+				array_push($h1, $value->asmtH1ID);
+			}
+		}
+		$retArray = [
+			'h1' => $h1,
+
+		];
+		return $retArray;
+	}
+
 	public static function sendTo($isSelfAssessment,$isMobile,$requests,$view,$data = array()){
 		return ($isSelfAssessment ? $data : ($isMobile && array_key_exists('isMobile', $requests) ? response()->json( $data ) : view($view,$data)) );
 	}

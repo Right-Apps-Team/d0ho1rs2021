@@ -168,7 +168,7 @@
                     <td>
                         <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small><sup>10.2</sup></small><small>.1</small>&nbsp;&nbsp;</h1>
                     </td>
-                    <td><b>Machines</b></td>
+                    <td><b>Radiation Facility</b></td>
 
                 </tr>
                 <tr>

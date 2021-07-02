@@ -78,13 +78,18 @@
 		</style>
 		<div class="container border">
 			<input type="text" id="CurrentPage" hidden="" value="PF009">
+			
 			@if(isset($head[0]->idForBack) || isset($customAddress))
 										@php
-				                          $url = 'employee/dashboard/processflow/parts/new/'.$data->regfac_id.'/'.$mon->monid ;
+				                          $url = 'employee/dashboard/processflow/parts/new/'.$data->regfac_id.'/'.$isMon.'/' ;
+				                     
 				                   
 				                        @endphp
+										<!-- {{-- url = 'employee/dashboard/processflow/parts/new/'.$data->regfac_id.'/'.$mon->monid ;--}} -->
+										
 			<div class="col-md mt-5">   <button class="btn btn-outline-primary" onclick="window.location.href='{{url($url)}}'">Back </button></div>
 			@else
+		
 				<div class="col-md mt-5">   <a href="{{asset('employee/dashboard/others/monitoring/inspection')}}"> <button class="btn btn-outline-primary" >Back </button></a></div>
 			
 			@endif
@@ -109,6 +114,7 @@
 				</tr>
 				
 			</table>
+			
 			<div class="col text-center mt-3" style="font-size: 30px">{{($isMon ? 'Monitoring Tool' : (isset($isPtc) ? 'Evaluation Tool' : 'Assessment Tool') )}}</div>
 			@if(isset($hasselfassess) && $hasselfassess)
 			<!-- remove 6-22-2021 -->
@@ -139,10 +145,9 @@
 					@if(!in_array((isset($value->xid)? $value->xid : $value->id), $arrDat))
 					@php 
 						array_push($arrDat, (isset($value->xid)? $value->xid : $value->id))
-					@endphp 
-
+					@endphp
 					<div class="col-sm-12">
-						<a href="{{$address.'/'.$value->id.'/'.$isMon.($isOtherUid ?? '').'?xid='.(isset($value->xid)? $value->xid : $value->id).'&pid='.$value->id.'&hid='.(app('request')->input('pid')?app('request')->input('pid'): app('request')->input('hid'))}}" class="button6 btn-block {{(isset($value->xid)? $value->xid : $value->id)}}">{{$value->desc}}</a>
+						<a href="{{$address.'/'.$value->id.'/'.$isMon.($isOtherUid ?? '').'?xid='.(isset($value->xid)? $value->xid : $value->id).'&pid='.$value->id.'&hid='.(app('request')->input('pid')?app('request')->input('pid'): app('request')->input('hid')).'&monid='.$isMon}}" class="button6 btn-block {{(isset($value->xid)? $value->xid : $value->id)}}">{{$value->desc}}</a>
 						<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a> -->
 					</div>
 					@endif 
@@ -154,11 +159,9 @@
 					@php 
 						array_push($arrDat1, $value->id)
 					@endphp 
-				
 					<div class="col-sm-12">
-						<a href="{{$address.'/'.$value->id.'/'.$isMon.($isOtherUid ?? '').'?xid='.(isset($value->xid)? $value->xid : $value->id).'&pid='.$value->id.'&hid='.(app('request')->input('pid')?app('request')->input('pid'): app('request')->input('hid'))}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a>
-						<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid.'&pid='.$value->id.'&hid='.app('request')->input('pid')}}" class="button6 btn-block {{$value->xid}}">{{$value->desc}}</a> -->
-						<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a> -->
+						<a href="{{$address.'/'.$value->id.'/'.$isMon.($isOtherUid ?? '').'?xid='.(isset($value->xid)? $value->xid : $value->id).'&pid='.$value->id.'&hid='.(app('request')->input('pid')?app('request')->input('pid'): app('request')->input('hid')).'&monid='.$isMon}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a>
+						
 					</div>
 					@endif
 					@endif
@@ -186,41 +189,41 @@
 
             	@endif
 
-					@if(app('request')->input('pid') == 'AOASPT1AT' || app('request')->input('pid') == 'AOASPT2AT')
+					// @if(app('request')->input('pid') == 'AOASPT1AT' || app('request')->input('pid') == 'AOASPT2AT')
 					
-					let assesed = {!!empty($assesednew) ? json_encode('none') : json_encode($assesednew) !!};
-					console.log("assesed")
-					console.log(assesed)
-					if(assesed instanceof Array){
-						$.each(assesed,function(index, el) {
-							console.log("el")
-							console.log(el)
-							// if(el != 'AOASPT1AT' && el != 'AOASPT2AT' && el != 298 && el != 299){
+					// let assesed = {!!empty($assesednew) ? json_encode('none') : json_encode($assesednew) !!};
+					// console.log("assesed")
+					// console.log(assesed)
+					// if(assesed instanceof Array){
+					// 	$.each(assesed,function(index, el) {
+					// 		console.log("el")
+					// 		console.log(el)
+					// 		// if(el != 'AOASPT1AT' && el != 'AOASPT2AT' && el != 298 && el != 299){
 
-							let textOnDiv = $('.'+el).text();
-							$('.'+el).replaceWith('<p class="buttonOthers btn-block done" style="background-color:#28A745;"><i class="fa fa-check-circle p-2" aria-hidden="true"></i>'+textOnDiv+'</p>');
-						//    }
+					// 		let textOnDiv = $('.'+el).text();
+					// 		$('.'+el).replaceWith('<p class="buttonOthers btn-block done" style="background-color:#28A745;"><i class="fa fa-check-circle p-2" aria-hidden="true"></i>'+textOnDiv+'</p>');
+					// 	//    }
 						
-									});
-								}
-					@else
-					console.log("assesed11")
-							let assesed = {!!empty($assesed) ? json_encode('none') : json_encode($assesed) !!};
-							console.log(assesed)
-							if(assesed instanceof Array){
-								$.each(assesed,function(index, el) {
-									console.log("el1")
-									console.log(el)
-									// if(el != 'AOASPT1AT' && el != 'AOASPT2AT' && el != 298 && el != 299){
+					// 				});
+					// 			}
+					// @else
+					// console.log("assesed11")
+					// 		let assesed = {!!empty($assesed) ? json_encode('none') : json_encode($assesed) !!};
+					// 		console.log(assesed)
+					// 		if(assesed instanceof Array){
+					// 			$.each(assesed,function(index, el) {
+					// 				console.log("el1")
+					// 				console.log(el)
+					// 				// if(el != 'AOASPT1AT' && el != 'AOASPT2AT' && el != 298 && el != 299){
 
-									let textOnDiv = $('.'+el).text();
-									$('.'+el).replaceWith('<p class="buttonOthers btn-block done" style="background-color:#28A745;"><i class="fa fa-check-circle p-2" aria-hidden="true"></i>'+textOnDiv+'</p>');
-								//    }
+					// 				let textOnDiv = $('.'+el).text();
+					// 				$('.'+el).replaceWith('<p class="buttonOthers btn-block done" style="background-color:#28A745;"><i class="fa fa-check-circle p-2" aria-hidden="true"></i>'+textOnDiv+'</p>');
+					// 			//    }
 								
-								});
-							}
+					// 			});
+					// 		}
 
-					@endif
+					// @endif
 
 
                 // let assesed = {!!empty($assesed) ? json_encode('none') : json_encode($assesed) !!};

@@ -31,7 +31,7 @@
 							<th>Qualification</th>
 							<th>PRC License Number</th>
 							<th>Validity Period</th>
-							<th>PRC Certificate</th>
+							<th>PRC ID</th>
 							<th>Board Certificate</th>
 							<th>Contract of Employment</th>
 							<th>Option</th>
@@ -310,7 +310,7 @@
                    		// '</div>'+
 	               		'<div class="row mb-2">'+
 	               			'<div class="col-sm">'+
-	               				'PRC Certificate:'+
+	               				'PRC ID:'+
 	               			'</div>'+
 	               			'<div class="col-sm-11">'+
 	               			'	<input  type="file" class="form-control w-100" name="edit_prc" '+(prcFile == "" ? "required" : "") +'>'+

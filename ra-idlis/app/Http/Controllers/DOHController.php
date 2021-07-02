@@ -5614,8 +5614,8 @@ use FunctionsClientController;
 					if(!is_null($data->lto_id)){
 					  $appform =  DB::table('appform')->where('appid', $data->lto_id)->first();
 					  $headData = $this->monAss($data->lto_id,$appform->hfser_id, $part);
-
-					  	$assesed = AjaxController::assessedDone(3,$data->lto_id,$isMon,$isSelfAssess);
+					  
+					  	$assesed = AjaxController::forDoneHeadersNewMon($data->lto_id,$isMon,$isSelfAssess)['h1'];
 					  	// $assesed =  AjaxController::forDoneHeadersNew($data->lto_id,$isMon,$isSelfAssess)['h5'];
 						$assesednew =  AjaxController::forDoneHeadersNew($data->lto_id,$isMon,$isSelfAssess)['h5'];
 					}else{
@@ -5623,7 +5623,7 @@ use FunctionsClientController;
 							$appform =  DB::table('appform')->where('appid', $data->ptc_id)->first();
 							$headData = $this->monAss($data->ptc_id,$appform->hfser_id, $part);
 
-							$assesed = AjaxController::assessedDone(3,$data->ptc_id,$isMon,$isSelfAssess);
+							$assesed = AjaxController::forDoneHeadersNewMon($data->ptc_id,$isMon,$isSelfAssess)['h1'];
 							// $assesed =  AjaxController::forDoneHeadersNew($data->ptc_id,$isMon,$isSelfAssess)['h5'];
 							$assesednew =  AjaxController::forDoneHeadersNew($data->ptc_id,$isMon,$isSelfAssess)['h5'];
 						}else{
@@ -5631,7 +5631,7 @@ use FunctionsClientController;
 								$appform =  DB::table('appform')->where('appid', $data->con_id)->first();
 								$headData = $this->monAss($data->con_id,$appform->hfser_id, $part);
 
-								$assesed = AjaxController::assessedDone(3,$data->con_id,$isMon,$isSelfAssess);
+								$assesed = AjaxController::forDoneHeadersNewMon($data->con_id,$isMon,$isSelfAssess)['h1'];
 								// $assesed =AjaxController::forDoneHeadersNew($data->con_id,$isMon,$isSelfAssess)['h5'];
 								$assesednew =  AjaxController::forDoneHeadersNew($data->con_id,$isMon,$isSelfAssess)['h5'];
 							}else{
@@ -5639,7 +5639,7 @@ use FunctionsClientController;
 									$appform =  DB::table('appform')->where('appid', $data->ato_id)->first();
 									$headData = $this->monAss($data->ato_id,$appform->hfser_id, $part);
 
-									$assesed = AjaxController::assessedDone(3,$data->ato_id,$isMon,$isSelfAssess);
+									$assesed = AjaxController::forDoneHeadersNewMon($data->ato_id,$isMon,$isSelfAssess)['h1'];
 									// $assesed =  AjaxController::forDoneHeadersNew($data->ato_id,$isMon,$isSelfAssess)['h5'];
 									$assesednew =  AjaxController::forDoneHeadersNew($data->ato_id,$isMon,$isSelfAssess)['h5'];
 								}else{
@@ -5647,7 +5647,7 @@ use FunctionsClientController;
 										$appform =  DB::table('appform')->where('appid', $data->coa_id)->first();
 										$headData = $this->monAss($data->coa_id,$appform->hfser_id, $part);
 
-										$assesed = AjaxController::assessedDone(3,$data->coa_id,$isMon,$isSelfAssess);
+										$assesed = AjaxController::forDoneHeadersNewMon($data->coa_id,$isMon,$isSelfAssess)['h1'];
 										// $assesed = AjaxController::forDoneHeadersNew($data->coa_id,$isMon,$isSelfAssess)['h5'];
 										$assesednew =  AjaxController::forDoneHeadersNew($data->coa_id,$isMon,$isSelfAssess)['h5'];
 									}else{
@@ -5655,7 +5655,7 @@ use FunctionsClientController;
 											$appform =  DB::table('appform')->where('appid', $data->cor_id)->first();
 											$headData = $this->monAss($data->cor_id,$appform->hfser_id, $part);
 
-											$assesed = AjaxController::assessedDone(3,$data->cor_id,$isMon,$isSelfAssess);
+											$assesed = AjaxController::forDoneHeadersNewMon($data->cor_id,$isMon,$isSelfAssess)['h1'];
 											// $assesed =  AjaxController::forDoneHeadersNew($data->cor_id,$isMon,$isSelfAssess)['h5'];
 											$assesednew =  AjaxController::forDoneHeadersNew($data->cor_id,$isMon,$isSelfAssess)['h5'];
 										}
@@ -6379,7 +6379,8 @@ use FunctionsClientController;
 				// }
 
 				if(!FunctionsClientController::existOnDB('mon_form',[['monid',$monid],['assessmentStatus',1]])){
-					DB::table('mon_form')->where('monid',$monid)->update(['assessmentStatus' => 1]);
+					// DB::table('mon_form')->where('monid',$monid)->update([['assessmentStatus' => 1], ['hasLOE' => 1]]);
+					DB::table('mon_form')->where('monid',$monid)->update(['assessmentStatus' => 1, 'hasLOE' => 1]);
 				}
 
 				// if(!isset($isSelfAssess)){
@@ -8174,7 +8175,8 @@ use FunctionsClientController;
 			{
 				try 
 				{
-					$allDataSql = "SELECT * FROM mon_form join appform on appform.appid = mon_form.appid WHERE hasLOE IS NOT NULL";
+					$allDataSql = "SELECT * FROM mon_form join registered_facility on registered_facility.regfac_id = mon_form.regfac_id WHERE hasLOE IS NOT NULL";
+					// $allDataSql = "SELECT * FROM mon_form join appform on appform.appid = mon_form.appid WHERE hasLOE IS NOT NULL";
 					$allData = DB::select($allDataSql);
 					$allRec = AjaxController::getAllSurveillanceRecommendation();
 					$allVer = AjaxController::getAllVerdict();
@@ -9273,9 +9275,14 @@ use FunctionsClientController;
 			  		} elseif($request->action == 'evalute') {
 
 						
+						if($request->typestat == "new"){
+							$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByFDA'=>$cur_user['cur_user'],'CashierApproveDateFDA' => $cur_user['date'], 'CashierApproveTimeFDA' => $cur_user['time'], 'CashierApproveIpFDA' => $cur_user['ip'], 'isCashierApproveFDA' => 1, 'FDAstatus' => 'FI', 'FDAStatMach' => 'For Evaluation', 'proofpaystatMach' => $request->postact]);
+						}else{
+							$update = DB::table('appform')->where('appid',$request->appid)->update(['proofpaystatMach' => $request->postact]);
+						}
 
-
-			  			$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByFDA'=>$cur_user['cur_user'],'CashierApproveDateFDA' => $cur_user['date'], 'CashierApproveTimeFDA' => $cur_user['time'], 'CashierApproveIpFDA' => $cur_user['ip'], 'isCashierApproveFDA' => 1, 'FDAstatus' => 'FI', 'FDAStatMach' => 'For Evaluation', 'proofpaystatMach' => 'posted']);
+			  		
+			  			// $update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByFDA'=>$cur_user['cur_user'],'CashierApproveDateFDA' => $cur_user['date'], 'CashierApproveTimeFDA' => $cur_user['time'], 'CashierApproveIpFDA' => $cur_user['ip'], 'isCashierApproveFDA' => 1, 'FDAstatus' => 'FI', 'FDAStatMach' => 'For Evaluation', 'proofpaystatMach' => 'posted']);
 			  			// $update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByFDA'=>$cur_user['cur_user'],'CashierApproveDateFDA' => $cur_user['date'], 'CashierApproveTimeFDA' => $cur_user['time'], 'CashierApproveIpFDA' => $cur_user['ip'], 'isCashierApproveFDA' => 1, 'FDAstatus' => 'FA', 'FDAStatMach' => 'For Evaluation', 'proofpaystatMach' => 'posted']);
 			  			if($update){
 			  				return 'DONE';
@@ -9353,8 +9360,18 @@ use FunctionsClientController;
 				  		$upd = array('chg_num'=>(intval($getData->chg_num) + 1));
 				  		$test2 = DB::table('chg_app')->where('chgapp_id', '=', $request->id)->update($upd);
 			  		} elseif($request->action == 'evalute') {
-			  			$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByPharma'=>$cur_user['cur_user'],'CashierApproveDatePharma' => $cur_user['date'], 'CashierApproveTimePharma' => $cur_user['time'], 'CashierApproveIpPharma' => $cur_user['ip'], 'isCashierApprovePharma' => 1, 'FDAstatus' => 'FI', 'FDAStatPhar' => 'For Evaluation', 'proofpaystatPhar' => 'posted']);
-			  			if($update){
+
+						if($request->typestat == "new"){
+							$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByPharma'=>$cur_user['cur_user'],'CashierApproveDatePharma' => $cur_user['date'], 'CashierApproveTimePharma' => $cur_user['time'], 'CashierApproveIpPharma' => $cur_user['ip'], 'isCashierApprovePharma' => 1, 'FDAstatus' => 'FI', 'FDAStatPhar' => 'For Evaluation', 'proofpaystatPhar' =>  $request->postact]);
+						}else{
+							$update = DB::table('appform')->where('appid',$request->appid)->update(['proofpaystatPhar' =>  $request->postact]);
+						}
+
+			  			// $update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByPharma'=>$cur_user['cur_user'],'CashierApproveDatePharma' => $cur_user['date'], 'CashierApproveTimePharma' => $cur_user['time'], 'CashierApproveIpPharma' => $cur_user['ip'], 'isCashierApprovePharma' => 1, 'FDAstatus' => 'FI', 'FDAStatPhar' => 'For Evaluation', 'proofpaystatPhar' => 'posted']);
+			  		
+					
+					
+						  if($update){
 			  				return 'DONE';
 			  			} else {
 			  				return 'ERROR';

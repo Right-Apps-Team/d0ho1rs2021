@@ -141,10 +141,11 @@ class NewGeneralController extends Controller
             if($valmch){
                 $msg += 1;
             }
-
-            if(is_null($app->proofpaystatMach)){
-                DB::table('appform')->where('appid',$request->appid)->update(['proofpaystatMach' => 'posting']);
-            }
+           
+            // 7-2-2020
+            // if(is_null($app->proofpaystatMach)){
+            //     DB::table('appform')->where('appid',$request->appid)->update(['proofpaystatMach' => 'posting']);
+            // }
         }
 
         if($request->upphar){
