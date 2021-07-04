@@ -145,7 +145,7 @@
 				@endforeach
 				@isset($data['isPtc'])
 				<div class="container lead pt-3 pb-3">
-					Evaluated By: {{($data['assessor']->pre ?? null). ' ' . $data['assessor']->fname . ' ' . $data['assessor']->lname}}
+					<!-- Evaluated By: {{($data['assessor']->pre ?? null). ' ' . $data['assessor']->fname . ' ' . $data['assessor']->lname}} -->
 				</div>
 				@endisset
 			</div>

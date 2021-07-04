@@ -49,9 +49,12 @@ class ClientDashboardController extends Controller
     public function newApplication()
     {
         $user_data = session()->get('uData');
+        $nameofcomp = DB::table('x08')->where([['uid', $user_data->uid]])->first()->nameofcompany;
         $hfser_id = 'CON';
 
         $data = [
+            'grpid'              => 'C',
+            'nameofcomp'              => $nameofcomp,
             'fAddress'              => [],
             'serv_cap' => json_encode(DB::table('facilitytyp')->where('servtype_id', 1)->get()),
             'user' => $user_data,
@@ -70,6 +73,7 @@ class ClientDashboardController extends Controller
     public function permitToConstruct()
     {
         $user_data = session()->get('uData');
+        $nameofcomp = DB::table('x08')->where([['uid', $user_data->uid]])->first()->nameofcompany;
         $hfser_id = 'PTC';
 
         $faclArr = [];
@@ -79,6 +83,8 @@ class ClientDashboardController extends Controller
         }
 
         $data = [
+            'grpid'              => 'C',
+            'nameofcomp' =>  $nameofcomp,
             'ptc'              => [],
             'fAddress'              => [],
             'user'                  => $user_data,
@@ -100,6 +106,7 @@ class ClientDashboardController extends Controller
     public function authorityToOperate()
     {
         $user_data = session()->get('uData');
+        $nameofcomp = DB::table('x08')->where([['uid', $user_data->uid]])->first()->nameofcompany;
         $hfser_id = 'ATO';
 
         $faclArr = [];
@@ -109,6 +116,8 @@ class ClientDashboardController extends Controller
         }
 
         $data = [
+            'grpid'              => 'C',
+            'nameofcomp' =>  $nameofcomp,
             'fAddress'              => [],
             'serv_cap' => json_encode(DB::table('facilitytyp')->where('servtype_id', 1)->get()),
             'user'                  => $user_data,
@@ -126,6 +135,7 @@ class ClientDashboardController extends Controller
     public function certificateOfAccreditation()
     {
         $user_data = session()->get('uData');
+        $nameofcomp = DB::table('x08')->where([['uid', $user_data->uid]])->first()->nameofcompany;
         $hfser_id = 'COA';
 
         $faclArr = [];
@@ -135,6 +145,8 @@ class ClientDashboardController extends Controller
         }
 
         $data = [
+            'grpid'              => 'C',
+            'nameofcomp' =>  $nameofcomp,
             'user'                  => $user_data,
             'fAddress'              => [],
             'appFacName'            => FunctionsClientController::getDistinctByFacilityNameRegFac(),
@@ -152,6 +164,7 @@ class ClientDashboardController extends Controller
     public function certificateOfRegistration()
     {
         $user_data = session()->get('uData');
+        $nameofcomp = DB::table('x08')->where([['uid', $user_data->uid]])->first()->nameofcompany;
         $hfser_id = 'COR';
 
         $faclArr = [];
@@ -161,6 +174,8 @@ class ClientDashboardController extends Controller
         }
 
         $data = [
+            'grpid'              => 'C',
+            'nameofcomp' =>  $nameofcomp,
             'user'                  => $user_data,
             'serv_cap'              =>json_encode(DB::table('facilitytyp')->where([['servtype_id',1],['forSpecialty',0]])->get()),
             'fAddress'              => [],
@@ -191,6 +206,7 @@ class ClientDashboardController extends Controller
         // $hfaci_sql = "SELECT * FROM hfaci_grp WHERE hgpid IN (SELECT hgpid FROM `facl_grp` WHERE hfser_id = '$hfser')"; 
 
         $user_data = session()->get('uData');
+        $nameofcomp = DB::table('x08')->where([['uid', $user_data->uid]])->first()->nameofcompany;
         $hfser_id = 'LTO';
 
         $faclArr = [];
@@ -212,6 +228,8 @@ class ClientDashboardController extends Controller
         }
 
         $data = [
+            'grpid'              => 'C',
+            'nameofcomp' =>  $nameofcomp,
             'user'                  => $user_data,
             'appFacName'            => FunctionsClientController::getDistinctByFacilityNameRegFac(),
             // 'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),

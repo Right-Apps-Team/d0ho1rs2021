@@ -48,7 +48,7 @@
         @endif
     </div>
     <div class="input-group">
-        <input class="form-control" type="text" value="{{ $value }}" readonly>
+        <input class="form-control" id="typeApp" type="text" value="{{ $value }}" readonly>
     </div>
 </div>
 

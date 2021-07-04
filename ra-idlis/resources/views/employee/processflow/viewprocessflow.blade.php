@@ -94,7 +94,7 @@
                             @if ($data->isInspected != null)
                               <span class="badge badge-success">Yes</span>
                             @else 
-                              <span class="badge badge-warning">Pending</span>
+                              <span class="badge badge-warning">{{$data->hfser_id == 'CON' ? 'N/A' : 'Pending'}}</span>
                             @endif
                           </h5>
                         </center></td>

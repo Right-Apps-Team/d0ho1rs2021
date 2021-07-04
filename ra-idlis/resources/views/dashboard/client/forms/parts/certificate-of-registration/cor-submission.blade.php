@@ -201,6 +201,7 @@ function submitProper (e){
         
         appcharge:             $('#tempAppCharge').val(),//appchargetemp
         appchargeHgp:             $('#tempAppChargeHgpid').val(),//appchargetemp
+        remarks:             $('#remarks').val(),
     }
     console.log(data)
     callApi('/api/application/cor/save', data, 'POST').then(d => {

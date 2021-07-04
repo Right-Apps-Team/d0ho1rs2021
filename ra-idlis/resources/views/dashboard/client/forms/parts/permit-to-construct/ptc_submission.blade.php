@@ -217,6 +217,8 @@ function submitProper (e){
         
         appcharge:             $('#tempAppCharge').val(),//appchargetemp
         appchargeHgp:             $('#tempAppChargeHgpid').val(),//appchargetemp
+        remarks:             $('#remarks').val(),
+        connumber:             $('#connumber').val(),
         hfser: "CON",
         // aptid: "IN"
     }

@@ -35,7 +35,8 @@
 							console.log('{!! $each->upid. "--". $each->updesc !!}')
 						</script>
 						<td >
-							{!!((isset($each->upDesc)) ? ('<span class="req">'. $each->upDesc . ' (' . $each->updesc . ')' . '</span>') . '<br>' . (isset($each->upDescRemarks) ? '<span class="font-weight-bold"><br>Evaluator\'s Remarks: <br></span>'. $each->upDescRemarks : '') : ($each->isRequired == 1 ? '<span class="req">'.$each->updesc.'</span>' : $each->updesc))!!}
+							{!!((isset($each->upDesc)) ? ('<span class="req"></span>'. $each->upDesc . ' (' . $each->updesc . ')' ) . '<br>' . (isset($each->upDescRemarks) ? '<span class="font-weight-bold"><br>Evaluator\'s Remarks: <br></span>'. $each->upDescRemarks : '') : ($each->isRequired == 1 ? '<span class="req"></span>'.$each->updesc : $each->updesc))!!}
+							<!-- {!!((isset($each->upDesc)) ? ('<span class="req">'. $each->upDesc . ' (' . $each->updesc . ')' . '</span>') . '<br>' . (isset($each->upDescRemarks) ? '<span class="font-weight-bold"><br>Evaluator\'s Remarks: <br></span>'. $each->upDescRemarks : '') : ($each->isRequired == 1 ? '<span class="req">'.$each->updesc.'</span>' : $each->updesc))!!} -->
 						</td>
 						<td><center>
 					
@@ -161,6 +162,8 @@
 		</div>
 		@endif
 		<br>
+
+	@if(!isset($submitted))	
 		<div class="container">
 			<div class="float-right">
 				<a href="{{asset('client1/apply')}}"><button class="btn btn-danger">Back</button></a>
@@ -172,6 +175,7 @@
 				@endif
 			</div>
 		</div>
+	@endif
 	</div>
 	<div class="modal fade" id="orderOfPayment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">

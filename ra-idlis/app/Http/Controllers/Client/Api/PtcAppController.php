@@ -69,6 +69,8 @@ class PtcAppController extends Controller
         $appform->noofsatellite         = $request->noofsatellite;
         $appform->savingStat            = $request->saveas;
         $appform->aptid                 = $request->aptid;
+        $appform->appComment                 = $request->remarks;
+        $appform->con_number                 = $request->connumber;
         // $appform->savingStat            = $request->saveas;
 
         if($request->saveas == 'final'){
@@ -164,10 +166,14 @@ class PtcAppController extends Controller
         $appform->noofmain              = $conapp->noofmain;
         $appform->noofsatellite         = $conapp->noofsatellite;
         $appform->aptid                 = $conapp->aptid;
+        $appform->con_number            = $conapp->hfser_id.'R'.$conapp->rgnid.'-'.$conapp->appid;
+        
+
+
 
         $appform->save();
 
-        return redirect('client1/apply/app/PTC/'.$appform->appid.'');
+        return redirect('client1/apply/app/PTC/'.$appform->appid.'?cont=yes');
 
 
     }

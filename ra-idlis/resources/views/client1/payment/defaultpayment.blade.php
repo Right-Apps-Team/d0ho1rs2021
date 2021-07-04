@@ -29,11 +29,11 @@
 				<div class="container">
 					Name of Health Facility or Service Provider: <span class="font-weight-bold text-uppercase">{{$neededData[0]->facilityname}}</span> 
 				</div>
-				<div class="container">/
+				<div class="container">
 					Application Code: <span class="font-weight-bold text-uppercase">{{$neededData[0]->hfser_id}}R{{$neededData[0]->rgnid}}-{{$neededData[0]->appid}}</span> 
 				</div>
 				<div class="container pt-1">
-					Address: <span class="font-weight-bold text-uppercase">{{$neededData[0]->street_name}} {{$neededData[0]->brgyname}} {{$neededData[0]->cmname}} {{$neededData[0]->provname}} {{$neededData[0]->rgn_desc}}</span> 
+					Address: <span class="font-weight-bold text-uppercase">{{$neededData[0]->street_name}} {{$neededData[0]->street_number}} {{$neededData[0]->brgyname}} {{$neededData[0]->cmname}} {{$neededData[0]->provname}} {{$neededData[0]->rgn_desc}}</span> 
 				</div>
 				<div class="container pt-1">
 					<div class="row">
@@ -114,7 +114,7 @@
 			</div>
 		</div>
 	</div>
-
+					
 	<div class="container mt-5 mb-5 pagebreak">
 		@if(count($appDet[0]) > 0)
 		<div class="card">
@@ -133,7 +133,8 @@
 			<div class="card-body">
 				<div class="row">
 					<div class="col-md-4"><span class="pull-left">Date:</span></div>
-					<div class="col-md-8"><u><strong>{{date("F j, Y", strtotime($appDet[0][0]->t_date))}}</strong></u></div>
+					<!-- <div class="col-md-8"><u><strong>{{date("F j, Y", strtotime($appDet[0][0]->t_date))}}</strong></u></div> -->
+					<div class="col-md-8"><u><strong>{{Date('F, j Y',strtotime($neededData[0]->autoTimeDate))}}</strong></u></div>
 				</div>
 				<div class="row">
 					<div class="col-md-4"><span class="pull-left">Name of Health Facility:</span></div>

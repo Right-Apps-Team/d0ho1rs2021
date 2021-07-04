@@ -3,484 +3,7 @@ var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
 // console.log("mserv_cap")
 // console.log(mserv_cap)
 // START OF DATA INITIALIZATION FOR VIEWING EXISTING APPLICATION
-if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
-    console.log("typee")
-    console.log('{!! $apptypenew !!}')
-    console.log("typee")
 
-    var apptypenew = '{!! $apptypenew !!}';
-
-    if(apptypenew == "renewal"){
-
-    document.getElementById("aptidnew").value = 'R';
-    document.getElementById("appid").value = null;
-    document.getElementById("renewal").removeAttribute("hidden");
-
-    }else{
-    document.getElementById("appid").value = appid;
-    }
-
-   
-    var areacode = JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->areacode: "")!!}');
-    
-    if(areacode.length > 0){
-        
-          var arc = areacode[0];
-          var farc = areacode[1];
-          var proparc = areacode[2];
-          var arcode = document.getElementById('areacode');
-          arcode.value = arc  
-        
-          var farcode = document.getElementById('faxareacode');
-          farcode.value = farc   
-          
-          var propcode = document.getElementById('prop_landline_areacode');
-          propcode.value = proparc 
-    }
-
-    
-        var aptidnew ='{!!((count($fAddress) > 0) ? $fAddress[0]->aptid: "")!!}';
-        var appid ='{!!((count($fAddress) > 0) ? $fAddress[0]->appid: "")!!}';
-        var ocid ='{!!((count($fAddress) > 0) ? $fAddress[0]->ocid: "")!!}';
-        var classid ='{!!((count($fAddress) > 0) ? $fAddress[0]->classid: "")!!}';
-        var subclassid ='{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}';
-        var facmode ='{!!((count($fAddress) > 0) ? $fAddress[0]->facmode: "")!!}';
-        var funcid ='{!!((count($fAddress) > 0) ? $fAddress[0]->funcid: "")!!}';
-        var owner ='{!!((count($fAddress) > 0) ? $fAddress[0]->owner: "")!!}';
-        var ownerMobile ='{!!((count($fAddress) > 0) ? $fAddress[0]->ownerMobile: "")!!}';
-        var ownerLandline ='{!!((count($fAddress) > 0) ? $fAddress[0]->ownerLandline: "")!!}';
-        var ownerEmail ='{!!((count($fAddress) > 0) ? $fAddress[0]->ownerEmail: "")!!}';
-        var mailingAddress ='{!!((count($fAddress) > 0) ? $fAddress[0]->mailingAddress: "")!!}';
-        var approvingauthoritypos ='{!!((count($fAddress) > 0) ? $fAddress[0]->approvingauthoritypos: "")!!}';
-        var approvingauthority ='{!!((count($fAddress) > 0) ? $fAddress[0]->approvingauthority: "")!!}';
-        var ptcCode ='{!!((count($fAddress) > 0) ? $fAddress[0]->ptcCode: "")!!}';
-        var noofbed ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofbed: "")!!}';
-        var noofmain ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofmain: "")!!}';
-        var noofsatellite ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofsatellite: "")!!}';
-        var hfep ='{!!((count($fAddress) > 0) ? $fAddress[0]->hfep_funded: "")!!}';
-
-        var rgnid ='{!!((count($fAddress) > 0) ? $fAddress[0]->rgnid: "")!!}';
-        var provid ='{!!((count($fAddress) > 0) ? $fAddress[0]->provid: "")!!}';
-        var cmid ='{!!((count($fAddress) > 0) ? $fAddress[0]->cmid: "")!!}';
-        var brgyid ='{!!((count($fAddress) > 0) ? $fAddress[0]->brgyid: "")!!}';
-        var noofdialysis ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofdialysis: "")!!}';
-
-
-        // setTimeout(function(){  
-        var ocidInpt = document.getElementById("ocid");
-        ocidInpt.value = ocid;
-        // ocidInpt.setAttribute("disabled", "disabled")
-        //  }, 1000);
-if(ocid){
-     setTimeout(function(){  
-        
-        fetchClassification1()
-     }, 1000);
-
-     setTimeout(function(){ 
-
-        document.getElementById("classification").value=classid;
-        // document.getElementById("subclass").value=subclassid;
-        
- }, 2000);
- setTimeout(function(){ 
-    fetchSubClass1()
-// console.log(classid)
-// console.log(subclassid)
-        // document.getElementById("classification").value=classid;
-       
- }, 3000);
- setTimeout(function(){ 
-    document.getElementById("subclass").value=subclassid;
-// console.log(classid)
-// console.log(subclassid)
-        // document.getElementById("classification").value=classid;
-       
- }, 4000);
-}
-
-const fetchClassification1 = async (e) => {
-    const ocid = $("#ocid").val();
-    console.log('EYYY, ', ocid);
-    if( ocid ) {
-        const data = { 'ocid' : ocid }
-        callApi('/api/classification/fetch', data, 'POST').then(classification => {
-            $("#classification").empty();
-            $("#classification").append(`<option value=''>Please select</option>`);
-            $("#classification").removeAttr('disabled');
-            classification.data.map(c => {
-                $("#classification").append(`<option value='${c.classid}'>${c.classname}</option>`);
-            })
-            // $("#classification").selectpicker('refresh')
-        })
-
-        
-
-    }
-    else {
-        $("#classification").addAttr('disabled')
-    }
-
-    
-}
-
-const fetchSubClass1 = async (e) => {
-    console.log("received")
-    const ocido = $("#ocid").val();
-    const classido = $("#classification").val();
-    console.log("classid")
-    console.log(classido)
-    if(ocido ) {
-        const data = { 'ocid' : ocid, 'classid' : classid }
-        callApi('/api/classification/fetch', data, 'POST').then(classification => {
-            $("#subclass").empty();
-            $("#subclass").append(`<option value=''>Please select</option>`);
-            $("#subclass").removeAttr('disabled');
-            classification.data.map(c => {
-                $("#subclass").append(`<option value='${c.classid}'>${c.classname}</option>`);
-            })
-            // $("#subclass").selectpicker('refresh')
-        })
-    }
-    else {
-        $("#subclass").addAttr('disabled')
-    }
-}
-
-         console.log("ocidInpt")
-         console.log(ocidInpt)
-         console.log(ocid)
-
-    //   document.getElementById("appid").value = appid;
-
-      document.getElementById("aptidnew").value = aptidnew;
-      document.getElementById("facmode").value = facmode;
-      document.getElementById("funcid").value = funcid;
-      document.getElementById("owner").value = owner;
-      document.getElementById("prop_mobile").value = ownerMobile;
-      document.getElementById("prop_landline").value = ownerLandline;
-      document.getElementById("prop_email").value = ownerEmail;
-      document.getElementById("official_mail_address").value = mailingAddress;
-      document.getElementById("approving_authority_pos").value = approvingauthoritypos;
-      document.getElementById("approving_authority_name").value = approvingauthority;
-      document.getElementById("ptcCode").value = ptcCode;
-      document.getElementById("noofbed").value = noofbed;
-      document.getElementById("noofmain").value = noofmain;
-      document.getElementById("noofsatellite").value = noofsatellite;
-      document.getElementById("noofdialysis").value = noofdialysis;
-
-      if(hfep === '0'){
-        document.getElementById("hfep").checked = true;
-        }
-
-      
-        var typeamb=[];
- var ambtyp=[];
- var plate_number =[];
- var ambOwner=[];
-        
-       @if(count($fAddress) > 0 && isset($fAddress[0]->typeamb))
-         typeamb =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->typeamb: "" )!!}');
-         ambtyp =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->ambtyp: "[]")!!}');
-         plate_number =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->plate_number: "[]")!!}');
-         ambOwner =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->ambOwner: "[]")!!}');
-    @endif
-
-//   var typeamb =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->typeamb: "" )!!}');
-       
-//         var ambtyp =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->ambtyp: "[]")!!}');
-//         var plate_number =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->plate_number: "[]")!!}');
-//         var ambOwner =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->ambOwner: "[]")!!}');
-
-
-        // var noofdialysis ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofdialysis: "")!!}';
-
-        // console.log("typeamb")
-        // console.log(typeamb)
-        // console.log("ambtyp")
-        // console.log(ambtyp)
-        // console.log("plate_number")
-        // console.log(plate_number)
-        // console.log("ambOwner")
-        // console.log(ambOwner)
-
-        var addonDesc ='{!!((count($fAddress) > 0) ? $fAddress[0]->addonDesc: "[]")!!}';
-        // var addonDesc ='{!!((count($fAddress) > 0) ? $fAddress[0]->addonDesc: "")!!}';
-        var addonDescArr = JSON.parse(addonDesc);
-
-        // console.log("addonDesc")
-        // console.log(addonDesc)
-        // console.log("subclassid")
-        // console.log(subclassid)
-        // console.log(JSON.parse(addonDesc))
-
-        var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "[]")!!}');
-        // var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "")!!}');
-
-                // console.log("servFac")
-                // console.log(servFacArray)
-                
-                if(servFacArray[0].length > 0){
-
-                                        var getHGPID = servFacArray[0];
-                                        var dbhgpid = getHGPID[0].hgpid;
-                                        
-                                type_of_fac(dbhgpid) //display facilities
-
-                                
-                                var funcid ='{!!((count($fAddress) > 0) ? $fAddress[0]->funcid: "[]")!!}';
-                                // var funcid ='{!!((count($fAddress) > 0) ? $fAddress[0]->funcid: "")!!}';
-                                var fniInpt = document.getElementsByName('funcid')
-
-                                        // set value for hosp classif and function
-                                        for(var i =0; i < fniInpt.length ; i ++){
-                                            fniInpt[i].value = funcid
-                                        }
-
-                                        var getFACID = servFacArray[1];
-                                        var theFACID = getFACID[0].facid;
-                                        // Get the add on
-                                        // if(addonDescArr.length > 0 ){
-                                        renewAddOnSelect(theFACID)
-                                        initialAddOns(addonDescArr)
-                                      
-                                    // }
-                                        // Initial ambulance
-                                        initialAmbulDetails(typeamb, ambtyp, plate_number, ambOwner)
-
-
-                                        // check initial facids
-                                        var getFacidField = document.getElementById(theFACID);
-                                        if(getFacidField){
-                                            document.getElementById(theFACID).checked= true
-                                        }
-                                            // console.log("funcid")
-                                            // console.log(funcid)
-                                            // console.log("facid")
-                                            // console.log(theFACID)
-                                            // console.log("getFACID")
-                                            // console.log(getFACID)
-
-                                        if(dbhgpid == 6){
-                                            // display selected hosp class
-                                            sel_hosp_class(funcid)
-
-                                        
-
-                                            if(funcid != 2){
-                                            getAncillary(theFACID, 6)
-                                        
-                                        
-                                            
-                                            }
-                                            setTimeout(function(){  
-                                            if(getFACID.length > 0){
-                                                getFACID.map((h) => {
-                                                    // console.log(h.facid)
-                                                    var getFacidField = document.getElementById(h.facid);
-                                                    if(getFacidField){
-                                                        document.getElementById(h.facid).checked= true
-                                                    }
-                                                    
-                                                });
-                                            }
-                                           
-                                        }, 1000);
-
-                                        }else if(dbhgpid == 1){
-                                            // console.log("getFACID")
-                                            // console.log(getFACID)
-
-                                            if(getFACID.length > 0){
-                                                getFACID.map((h) => {
-                                                    var getFacidField = document.getElementById(h.facid);
-                                                    if(getFacidField){
-                                                        document.getElementById(h.facid).checked= true
-                                                    }
-                                                    
-                                                });
-                                            }
-                                        }
-
-                      }
-
-
-               
-         
-  
-        // if(hfep === '0'){
-        // document.getElementById("hfep").checked = true;
-        // }
-
-        
-        const data = { 'ocid' : ocid, 'classid' : classid }
-        if(subclassid != ""){
-        $.ajax({
-						url: '{{asset('api/classification/fetch')}}',
-						dataType: "json", 
-	    				async: false,
-						method: 'POST',
-						data: data,
-						success: function(a){
-                            var result = a.filter(function(v) {
-                                    return v.classid == subclassid;
-                            })
-                            document.getElementById("subclass").placeholder = result[0].classname;
-                            
-						}
-					});
-        }
-    //   document.getElementById("appid").value = appid;
-    //   document.getElementById("facmode").value = facmode;
-    //   document.getElementById("funcid").value = funcid;
-    //   document.getElementById("owner").value = owner;
-    //   document.getElementById("prop_mobile").value = ownerMobile;
-    //   document.getElementById("prop_landline").value = ownerLandline;
-    //   document.getElementById("prop_email").value = ownerEmail;
-    //   document.getElementById("official_mail_address").value = mailingAddress;
-    //   document.getElementById("approving_authority_pos").value = approvingauthoritypos;
-    //   document.getElementById("approving_authority_name").value = approvingauthority;
-    //   document.getElementById("ptcCode").value = ptcCode;
-    //   document.getElementById("noofbed").value = noofbed;
-    //   document.getElementById("noofmain").value = noofmain;
-    //   document.getElementById("noofsatellite").value = noofsatellite;
-    //   document.getElementById("noofdialysis").value = noofdialysis;
-
-    
-
-      function initialAddOns(addonDesc){
-                //      console.log("elemTr")
-                //      console.log(elemTr)
-                    
-                // console.log("addonDesc.length")  
-                // console.log(addonDesc  )
-
-                //    First array
-            if(addonDesc.length > 0){
-                var elemTr =   tr_addOn.getElementsByTagName('input');
-                var nln0 =  document.getElementById("tr_addOn").querySelectorAll('#addOnServ');
-                nln0[0].value = addonDesc[0].facid;
-
-                var nlntyp0 =  document.getElementById("tr_addOn").querySelectorAll('#aoservtyp');
-                nlntyp0[0].value = addonDesc[0].servtyp;
-
-                var nlnowner0 =  document.getElementById("tr_addOn").querySelectorAll('#aoservOwner');
-                nlnowner0[0].value = addonDesc[0].servowner;
-
-                // Rest Array
-                    for(var i = 1; i < addonDesc.length ; i++){
-                        var trAdon =   document.getElementById("tr_addOn");
-                        var cln = trAdon.cloneNode(true);
-                        cln.removeAttribute("id");
-                        cln.setAttribute("id","addon"+addonDesc[i].facid );
-                        cln.setAttribute("class", "tr_addOn");
-                        document.getElementById("body_addOn").appendChild(cln);
-
-                        
-                        var nlnsr =  document.getElementById("addon"+addonDesc[i].facid).querySelectorAll('#addOnServ');
-                            nlnsr[0].value = addonDesc[i].facid; 
-                            
-                        var nlntyp =  document.getElementById("addon"+addonDesc[i].facid).querySelectorAll('#aoservtyp');
-                        nlntyp[0].value = addonDesc[i].servtyp;
-
-                        var nlnowner =  document.getElementById("addon"+addonDesc[i].facid).querySelectorAll('#aoservOwner');
-                        nlnowner[0].value = addonDesc[i].servowner;
-                        // console.log(nln)
-                    }
-            }
-      }
-
-     function initialAmbulDetails(typeamb, ambtyp, plate_number, ambOwner){
-        if(typeamb.length > 0){
-            var nltypa =  document.getElementById("tr_amb" ).querySelectorAll('#typeamb');
-            nltypa[0].value = typeamb[0];  
-            
-            var nlamntyp =  document.getElementById("tr_amb" ).querySelectorAll('#ambtyp');
-            nlamntyp[0].value = ambtyp[0]; 
-
-            var nlpn =  document.getElementById("tr_amb" ).querySelectorAll('#plate_number');
-            nlpn[0].value = plate_number[0]; 
-
-            // var nlao =  document.getElementById("tr_amb" ).querySelectorAll('#ambOwner');
-            // nlao[0].value = ambOwner[0]; 
-
-                                // setTimeout(function(){  
-                                    var nlao =  document.getElementById("tr_amb" ).querySelectorAll('#ambOwner');
-                                    var nlaodiv =  document.getElementById("tr_amb" ).querySelectorAll('#ambownerdiv');
-                                    
-                                    if(ambtyp[0] == 1){
-                                        nlaodiv[0].removeAttribute('hidden')
-                                        nlao[0].value = ambOwner[0]; 
-                                    }
-                                    
-                                    // if(ambtyp[0] == 2){
-                                    //     nlaodiv[0].setAttribute('hidden', true)
-                                      
-                                    // }
-                                //  }, 2000);
-
-        
-            for(var ta = 1; ta < typeamb.length ; ta++){
-            
-                                var trAdon =   document.getElementById("tr_amb");
-                                var cln = trAdon.cloneNode(true);
-                                cln.removeAttribute("id");
-                                cln.setAttribute("class", "tr_amb");
-                                cln.className += cln.className ? " "+"amb"+ta : "amb"+ta
-                                // cln.setAttribute("id","amb"+ta );
-                                document.getElementById("body_amb").appendChild(cln);
-
-                                // var nltypa =  document.getElementById("amb"+ta ).querySelectorAll('#typeamb');
-                                var nltypa =  document.getElementsByClassName("amb"+ta )[0].querySelectorAll('#typeamb');
-                                nltypa[0].value = typeamb[ta]; 
-
-                                var nlamntyp =  document.getElementsByClassName("amb"+ta )[0].querySelectorAll('#ambtyp');
-                                nlamntyp[0].value = ambtyp[ta]; 
-
-                                var nlpn =  document.getElementsByClassName("amb"+ta )[0].querySelectorAll('#plate_number');
-                                nlpn[0].value = plate_number[ta];  
-                                
-                                // setTimeout(function(){  
-                                    var nlao =  document.getElementsByClassName("amb"+ta )[0].querySelectorAll('#ambOwner');
-                                    var nlaodiv =  document.getElementsByClassName("amb"+ta )[0].querySelectorAll('#ambownerdiv');
-                                    if(ambtyp[ta] == 1){
-                                        nlaodiv[0].removeAttribute('hidden')
-                                        nlao[0].value = ambOwner[ta]; 
-                                    }
-                                    
-                                    // if(ambtyp[ta] == 2){
-                                    //     nlaodiv[0].setAttribute('hidden', true)
-                                      
-                                    // }
-                                //  }, 2000);
-               
-            }
-        }
-
-     }
-
-      //   Get Fees
- setTimeout(function(){  
-      getFacServCharge(addonDesc.length > 0? 2 : null) ;
-      getChargesPerApplication();
-        // get amubulance charge
-      getChargesPerAmb()
-    //   getNoDialysis()
-
-        if(getFACID.length > 0){
-            getFACID.map((h) => {
-                var getFacidField = document.getElementById(h.facid);
-                if(getFacidField){
-                    document.getElementById(h.facid).checked= true
-                }
-                
-            });
-        }
-    }, 2000);
-
-    
-        
-} 
 
 // END OF DATA INITIALIZATION FOR VIEWING EXISTING APPLICATION
 
@@ -1276,6 +799,7 @@ return unique;
     }
 
     function show_hosplevel_anx(selected, ancData, hgpid) {
+        console.log("Received")
        
         getFacServCharge()
         //  var ancData = getAncillary();
@@ -1499,12 +1023,17 @@ return unique;
 
     function getAncillary(selected, hgpid){
         let sArr = ['_token='+document.getElementsByName('_token')[0].value, 'facid[]=H', 'facid[]=H2', 'facid[]=H3'];
-        
+        console.log("sArr")
+        console.log(sArr)
+        console.log(selected)
+        console.log(hgpid)
+        console.log("hgpid")
         let resp = []
         var nas;
         sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getGoAncillary')}}", "POST", true, {
 					functionProcess: function(arr) {
-                       
+                       console.log("arr")
+                       console.log(arr)
                         show_hosplevel_anx(selected, arr, hgpid)
                     }
 				});
@@ -1559,6 +1088,7 @@ return unique;
             // console.log(e.target.className)
 
             if(e.target.className != "custom-control-input exAddRenew"){
+                console.log("WHAAAT")
             renewAddOnSelect(e.target.value)
             }
         }
@@ -1613,9 +1143,12 @@ return unique;
         removeAddOnRows()
         $('.addOnServ').remove()
         $('#addOnServ').remove()
+        console.log("get id")
+        console.log(id)
 
         var newAddOns = getAddonServices(id);
-       
+       console.log("newAddOns")
+       console.log(newAddOns)
 
         var newSel = document.createElement("select");
         newSel.setAttribute("class", "form-control");
@@ -1625,10 +1158,12 @@ return unique;
 
 
         newAddOns.map((h) => {
+            if(h.facid != "H2-AO-DC" && h.facid != "H1-AO-DC"){
             var opt = document.createElement("option");
             opt.value = h.facid;
             opt.textContent = h.facname;
             document.getElementById("addOnServ").appendChild(opt);
+            }
         });
     }
 
@@ -1741,7 +1276,498 @@ return unique;
         });
     }
 
+//   INITIAL STATES
+
+
+if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
+    console.log("typee")
+    console.log('{!! $apptypenew !!}')
+    console.log("typee")
+
+    var apptypenew = '{!! $apptypenew !!}';
+
+    if(apptypenew == "renewal"){
+
+    document.getElementById("aptidnew").value = 'R';
+    document.getElementById("appid").value = null;
+    document.getElementById("renewal").removeAttribute("hidden");
+
+    }else{
+    document.getElementById("appid").value = appid;
+    }
+
+   
+    var areacode = JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->areacode: "")!!}');
+    
+    if(areacode.length > 0){
+        
+          var arc = areacode[0];
+          var farc = areacode[1];
+          var proparc = areacode[2];
+          var arcode = document.getElementById('areacode');
+          arcode.value = arc  
+        
+          var farcode = document.getElementById('faxareacode');
+          farcode.value = farc   
+          
+          var propcode = document.getElementById('prop_landline_areacode');
+          propcode.value = proparc 
+    }
+
+    
+        var aptidnew ='{!!((count($fAddress) > 0) ? $fAddress[0]->aptid: "")!!}';
+        var appid ='{!!((count($fAddress) > 0) ? $fAddress[0]->appid: "")!!}';
+        var ocid ='{!!((count($fAddress) > 0) ? $fAddress[0]->ocid: "")!!}';
+        var classid ='{!!((count($fAddress) > 0) ? $fAddress[0]->classid: "")!!}';
+        var subclassid ='{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}';
+        var facmode ='{!!((count($fAddress) > 0) ? $fAddress[0]->facmode: "")!!}';
+        var funcid ='{!!((count($fAddress) > 0) ? $fAddress[0]->funcid: "")!!}';
+        var owner ='{!!((count($fAddress) > 0) ? $fAddress[0]->owner: "")!!}';
+        var ownerMobile ='{!!((count($fAddress) > 0) ? $fAddress[0]->ownerMobile: "")!!}';
+        var ownerLandline ='{!!((count($fAddress) > 0) ? $fAddress[0]->ownerLandline: "")!!}';
+        var ownerEmail ='{!!((count($fAddress) > 0) ? $fAddress[0]->ownerEmail: "")!!}';
+        var mailingAddress ='{!!((count($fAddress) > 0) ? $fAddress[0]->mailingAddress: "")!!}';
+        var approvingauthoritypos ='{!!((count($fAddress) > 0) ? $fAddress[0]->approvingauthoritypos: "")!!}';
+        var approvingauthority ='{!!((count($fAddress) > 0) ? $fAddress[0]->approvingauthority: "")!!}';
+        var ptcCode ='{!!((count($fAddress) > 0) ? $fAddress[0]->ptcCode: "")!!}';
+        var noofbed ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofbed: "")!!}';
+        var noofmain ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofmain: "")!!}';
+        var noofsatellite ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofsatellite: "")!!}';
+        var hfep ='{!!((count($fAddress) > 0) ? $fAddress[0]->hfep_funded: "")!!}';
+
+        var rgnid ='{!!((count($fAddress) > 0) ? $fAddress[0]->rgnid: "")!!}';
+        var provid ='{!!((count($fAddress) > 0) ? $fAddress[0]->provid: "")!!}';
+        var cmid ='{!!((count($fAddress) > 0) ? $fAddress[0]->cmid: "")!!}';
+        var brgyid ='{!!((count($fAddress) > 0) ? $fAddress[0]->brgyid: "")!!}';
+        var noofdialysis ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofdialysis: "")!!}';
+
+
+        // setTimeout(function(){  
+        var ocidInpt = document.getElementById("ocid");
+        ocidInpt.value = ocid;
+        // ocidInpt.setAttribute("disabled", "disabled")
+        //  }, 1000);
+if(ocid){
+     setTimeout(function(){  
+        
+        fetchClassification1()
+     }, 1000);
+
+     setTimeout(function(){ 
+
+        document.getElementById("classification").value=classid;
+        // document.getElementById("subclass").value=subclassid;
+        
+ }, 2000);
+ setTimeout(function(){ 
+    fetchSubClass1()
+// console.log(classid)
+// console.log(subclassid)
+        // document.getElementById("classification").value=classid;
+       
+ }, 3000);
+ setTimeout(function(){ 
+    document.getElementById("subclass").value=subclassid;
+// console.log(classid)
+// console.log(subclassid)
+        // document.getElementById("classification").value=classid;
+       
+ }, 4000);
+}
+
+const fetchClassification1 = async (e) => {
+    const ocid = $("#ocid").val();
+    console.log('EYYY, ', ocid);
+    if( ocid ) {
+        const data = { 'ocid' : ocid }
+        callApi('/api/classification/fetch', data, 'POST').then(classification => {
+            $("#classification").empty();
+            $("#classification").append(`<option value=''>Please select</option>`);
+           
+            @if(app('request')->input('cont') != 'yes')
+               $("#classification").removeAttr('disabled');
+            @endif
+
+            classification.data.map(c => {
+                $("#classification").append(`<option value='${c.classid}'>${c.classname}</option>`);
+            })
+            // $("#classification").selectpicker('refresh')
+        })
+
+        
+
+    }
+    else {
+        $("#classification").addAttr('disabled')
+    }
+
+    
+}
+
+const fetchSubClass1 = async (e) => {
+    console.log("received")
+    const ocido = $("#ocid").val();
+    const classido = $("#classification").val();
+    console.log("classid")
+    console.log(classido)
+    if(ocido ) {
+        const data = { 'ocid' : ocid, 'classid' : classid }
+        callApi('/api/classification/fetch', data, 'POST').then(classification => {
+            $("#subclass").empty();
+            $("#subclass").append(`<option value=''>Please select</option>`);
+
+            @if(app('request')->input('cont') != 'yes')
+              $("#subclass").removeAttr('disabled');
+            @endif
+
+            classification.data.map(c => {
+                $("#subclass").append(`<option value='${c.classid}'>${c.classname}</option>`);
+            })
+            // $("#subclass").selectpicker('refresh')
+        })
+    }
+    else {
+        $("#subclass").addAttr('disabled')
+    }
+}
+
+         console.log("ocidInpt")
+         console.log(ocidInpt)
+         console.log(ocid)
+
+    //   document.getElementById("appid").value = appid;
+
+      document.getElementById("aptidnew").value = aptidnew;
+      document.getElementById("facmode").value = facmode;
+      document.getElementById("funcid").value = funcid;
+      document.getElementById("owner").value = owner;
+      document.getElementById("prop_mobile").value = ownerMobile;
+      document.getElementById("prop_landline").value = ownerLandline;
+      document.getElementById("prop_email").value = ownerEmail;
+      document.getElementById("official_mail_address").value = mailingAddress;
+      document.getElementById("approving_authority_pos").value = approvingauthoritypos;
+      document.getElementById("approving_authority_name").value = approvingauthority;
+      document.getElementById("ptcCode").value = ptcCode;
+      document.getElementById("noofbed").value = noofbed;
+      document.getElementById("noofmain").value = noofmain;
+      document.getElementById("noofsatellite").value = noofsatellite;
+      document.getElementById("noofdialysis").value = noofdialysis;
+
+      if(hfep === '0'){
+        document.getElementById("hfep").checked = true;
+        }
+
+      
+        var typeamb=[];
+ var ambtyp=[];
+ var plate_number =[];
+ var ambOwner=[];
+        
+       @if(count($fAddress) > 0 && isset($fAddress[0]->typeamb))
+         typeamb =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->typeamb: "" )!!}');
+         ambtyp =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->ambtyp: "[]")!!}');
+         plate_number =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->plate_number: "[]")!!}');
+         ambOwner =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->ambOwner: "[]")!!}');
+    @endif
+
+//   var typeamb =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->typeamb: "" )!!}');
+       
+//         var ambtyp =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->ambtyp: "[]")!!}');
+//         var plate_number =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->plate_number: "[]")!!}');
+//         var ambOwner =JSON.parse('{!!((count($fAddress) > 0) ? $fAddress[0]->ambOwner: "[]")!!}');
+
+
+        // var noofdialysis ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofdialysis: "")!!}';
+
+        // console.log("typeamb")
+        // console.log(typeamb)
+        // console.log("ambtyp")
+        // console.log(ambtyp)
+        // console.log("plate_number")
+        // console.log(plate_number)
+        // console.log("ambOwner")
+        // console.log(ambOwner)
+
+        var addonDesc ='{!!((count($fAddress) > 0) ? $fAddress[0]->addonDesc: "[]")!!}';
+        // var addonDesc ='{!!((count($fAddress) > 0) ? $fAddress[0]->addonDesc: "")!!}';
+        var addonDescArr = JSON.parse(addonDesc);
+
+        // console.log("addonDesc")
+        // console.log(addonDesc)
+        // console.log("subclassid")
+        // console.log(subclassid)
+        // console.log(JSON.parse(addonDesc))
+
+        var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "[]")!!}');
+        // var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "")!!}');
+
+                // console.log("servFac")
+                // console.log(servFacArray)
+                
+                if(servFacArray[0].length > 0){
+
+                                        var getHGPID = servFacArray[0];
+                                        var dbhgpid = getHGPID[0].hgpid;
+                                        
+                                type_of_fac(dbhgpid) //display facilities
+
+                                
+                                var funcid ='{!!((count($fAddress) > 0) ? $fAddress[0]->funcid: "[]")!!}';
+                                // var funcid ='{!!((count($fAddress) > 0) ? $fAddress[0]->funcid: "")!!}';
+                                var fniInpt = document.getElementsByName('funcid')
+
+                                        // set value for hosp classif and function
+                                        for(var i =0; i < fniInpt.length ; i ++){
+                                            fniInpt[i].value = funcid
+                                        }
+
+                                        var getFACID = servFacArray[1];
+                                        var theFACID = getFACID[0].facid;
+                                        // Get the add on
+                                        // if(addonDescArr.length > 0 ){
+                                      
+                                            renewAddOnSelect(theFACID)
+                                        initialAddOns(addonDescArr)
+                                      
+                                    // }
+                                        // Initial ambulance
+                                        initialAmbulDetails(typeamb, ambtyp, plate_number, ambOwner)
+
+
+                                        // check initial facids
+                                        var getFacidField = document.getElementById(theFACID);
+                                        if(getFacidField){
+                                            document.getElementById(theFACID).checked= true
+                                        }
+                                            // console.log("funcid")
+                                            // console.log(funcid)
+                                            // console.log("facid")
+                                            // console.log(theFACID)
+                                            // console.log("getFACID")
+                                            // console.log(getFACID)
+
+                                        if(dbhgpid == 6){
+                                            // display selected hosp class
+                                            sel_hosp_class(funcid)
+
+                                        
+
+                                            if(funcid != 2){
+                                            getAncillary(theFACID, 6)
+                                        
+                                        
+                                            
+                                            }
+                                            setTimeout(function(){  
+                                            if(getFACID.length > 0){
+                                                getFACID.map((h) => {
+                                                    // console.log(h.facid)
+                                                    var getFacidField = document.getElementById(h.facid);
+                                                    if(getFacidField){
+                                                        document.getElementById(h.facid).checked= true
+                                                    }
+                                                    
+                                                });
+                                            }
+                                           
+                                        }, 1000);
+
+                                        }else if(dbhgpid == 1){
+                                            // console.log("getFACID")
+                                            // console.log(getFACID)
+
+                                            if(getFACID.length > 0){
+                                                getFACID.map((h) => {
+                                                    var getFacidField = document.getElementById(h.facid);
+                                                    if(getFacidField){
+                                                        document.getElementById(h.facid).checked= true
+                                                    }
+                                                    
+                                                });
+                                            }
+                                        }
+
+                      }
+
+
+               
+         
   
+        // if(hfep === '0'){
+        // document.getElementById("hfep").checked = true;
+        // }
+
+        
+        const data = { 'ocid' : ocid, 'classid' : classid }
+        if(subclassid != ""){
+        $.ajax({
+						url: '{{asset('api/classification/fetch')}}',
+						dataType: "json", 
+	    				async: false,
+						method: 'POST',
+						data: data,
+						success: function(a){
+                            var result = a.filter(function(v) {
+                                    return v.classid == subclassid;
+                            })
+                            document.getElementById("subclass").placeholder = result[0].classname;
+                            
+						}
+					});
+        }
+    //   document.getElementById("appid").value = appid;
+    //   document.getElementById("facmode").value = facmode;
+    //   document.getElementById("funcid").value = funcid;
+    //   document.getElementById("owner").value = owner;
+    //   document.getElementById("prop_mobile").value = ownerMobile;
+    //   document.getElementById("prop_landline").value = ownerLandline;
+    //   document.getElementById("prop_email").value = ownerEmail;
+    //   document.getElementById("official_mail_address").value = mailingAddress;
+    //   document.getElementById("approving_authority_pos").value = approvingauthoritypos;
+    //   document.getElementById("approving_authority_name").value = approvingauthority;
+    //   document.getElementById("ptcCode").value = ptcCode;
+    //   document.getElementById("noofbed").value = noofbed;
+    //   document.getElementById("noofmain").value = noofmain;
+    //   document.getElementById("noofsatellite").value = noofsatellite;
+    //   document.getElementById("noofdialysis").value = noofdialysis;
+
+    
+
+      function initialAddOns(addonDesc){
+                //      console.log("elemTr")
+                //      console.log(elemTr)
+                    
+                // console.log("addonDesc.length")  
+                // console.log(addonDesc  )
+
+                //    First array
+            if(addonDesc.length > 0){
+                var elemTr =   tr_addOn.getElementsByTagName('input');
+                var nln0 =  document.getElementById("tr_addOn").querySelectorAll('#addOnServ');
+                nln0[0].value = addonDesc[0].facid;
+
+                var nlntyp0 =  document.getElementById("tr_addOn").querySelectorAll('#aoservtyp');
+                nlntyp0[0].value = addonDesc[0].servtyp;
+
+                var nlnowner0 =  document.getElementById("tr_addOn").querySelectorAll('#aoservOwner');
+                nlnowner0[0].value = addonDesc[0].servowner;
+
+                // Rest Array
+                    for(var i = 1; i < addonDesc.length ; i++){
+                        var trAdon =   document.getElementById("tr_addOn");
+                        var cln = trAdon.cloneNode(true);
+                        cln.removeAttribute("id");
+                        cln.setAttribute("id","addon"+addonDesc[i].facid );
+                        cln.setAttribute("class", "tr_addOn");
+                        document.getElementById("body_addOn").appendChild(cln);
+
+                        
+                        var nlnsr =  document.getElementById("addon"+addonDesc[i].facid).querySelectorAll('#addOnServ');
+                            nlnsr[0].value = addonDesc[i].facid; 
+                            
+                        var nlntyp =  document.getElementById("addon"+addonDesc[i].facid).querySelectorAll('#aoservtyp');
+                        nlntyp[0].value = addonDesc[i].servtyp;
+
+                        var nlnowner =  document.getElementById("addon"+addonDesc[i].facid).querySelectorAll('#aoservOwner');
+                        nlnowner[0].value = addonDesc[i].servowner;
+                        // console.log(nln)
+                    }
+            }
+      }
+
+     function initialAmbulDetails(typeamb, ambtyp, plate_number, ambOwner){
+        if(typeamb.length > 0){
+            var nltypa =  document.getElementById("tr_amb" ).querySelectorAll('#typeamb');
+            nltypa[0].value = typeamb[0];  
+            
+            var nlamntyp =  document.getElementById("tr_amb" ).querySelectorAll('#ambtyp');
+            nlamntyp[0].value = ambtyp[0]; 
+
+            var nlpn =  document.getElementById("tr_amb" ).querySelectorAll('#plate_number');
+            nlpn[0].value = plate_number[0]; 
+
+            // var nlao =  document.getElementById("tr_amb" ).querySelectorAll('#ambOwner');
+            // nlao[0].value = ambOwner[0]; 
+
+                                // setTimeout(function(){  
+                                    var nlao =  document.getElementById("tr_amb" ).querySelectorAll('#ambOwner');
+                                    var nlaodiv =  document.getElementById("tr_amb" ).querySelectorAll('#ambownerdiv');
+                                    
+                                    if(ambtyp[0] == 1){
+                                        nlaodiv[0].removeAttribute('hidden')
+                                        nlao[0].value = ambOwner[0]; 
+                                    }
+                                    
+                                    // if(ambtyp[0] == 2){
+                                    //     nlaodiv[0].setAttribute('hidden', true)
+                                      
+                                    // }
+                                //  }, 2000);
+
+        
+            for(var ta = 1; ta < typeamb.length ; ta++){
+            
+                                var trAdon =   document.getElementById("tr_amb");
+                                var cln = trAdon.cloneNode(true);
+                                cln.removeAttribute("id");
+                                cln.setAttribute("class", "tr_amb");
+                                cln.className += cln.className ? " "+"amb"+ta : "amb"+ta
+                                // cln.setAttribute("id","amb"+ta );
+                                document.getElementById("body_amb").appendChild(cln);
+
+                                // var nltypa =  document.getElementById("amb"+ta ).querySelectorAll('#typeamb');
+                                var nltypa =  document.getElementsByClassName("amb"+ta )[0].querySelectorAll('#typeamb');
+                                nltypa[0].value = typeamb[ta]; 
+
+                                var nlamntyp =  document.getElementsByClassName("amb"+ta )[0].querySelectorAll('#ambtyp');
+                                nlamntyp[0].value = ambtyp[ta]; 
+
+                                var nlpn =  document.getElementsByClassName("amb"+ta )[0].querySelectorAll('#plate_number');
+                                nlpn[0].value = plate_number[ta];  
+                                
+                                // setTimeout(function(){  
+                                    var nlao =  document.getElementsByClassName("amb"+ta )[0].querySelectorAll('#ambOwner');
+                                    var nlaodiv =  document.getElementsByClassName("amb"+ta )[0].querySelectorAll('#ambownerdiv');
+                                    if(ambtyp[ta] == 1){
+                                        nlaodiv[0].removeAttribute('hidden')
+                                        nlao[0].value = ambOwner[ta]; 
+                                    }
+                                    
+                                    // if(ambtyp[ta] == 2){
+                                    //     nlaodiv[0].setAttribute('hidden', true)
+                                      
+                                    // }
+                                //  }, 2000);
+               
+            }
+        }
+
+     }
+
+      //   Get Fees
+ setTimeout(function(){  
+      getFacServCharge(addonDesc.length > 0? 2 : null) ;
+      getChargesPerApplication();
+        // get amubulance charge
+      getChargesPerAmb()
+    //   getNoDialysis()
+
+        if(getFACID.length > 0){
+            getFACID.map((h) => {
+                var getFacidField = document.getElementById(h.facid);
+                if(getFacidField){
+                    document.getElementById(h.facid).checked= true
+                }
+                
+            });
+        }
+    }, 2000);
+
+    
+        
+} 
+//   INITIAL STATES
+
     
 
 </script>

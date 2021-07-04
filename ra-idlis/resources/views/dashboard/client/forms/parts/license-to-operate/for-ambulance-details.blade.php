@@ -97,7 +97,7 @@
 						<td>
 							<select class="form-control" id="ambtyp" name="ambtyp">
 								<option selected value hidden disabled>Please Select</option>
-								<option value="1">Outsource</option>
+								<option value="1">Outsourced</option>
 								<option value="2">Owned</option>
 							</select>
 						</td>

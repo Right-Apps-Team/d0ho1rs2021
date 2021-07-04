@@ -51,27 +51,46 @@
             </div>
             <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                 <div class="card-body table-responsive">
+                <div style="display: none;">
+                    @if ($hfser == 'CON')
+                    <?php $value = 'Certificate of Need' ?>
+                    @elseif ($hfser == 'PTC') {
+                    <?php $value = 'Permit to Construct' ?>
+                    }
+                    @elseif ($hfser == 'ATO') {
+                    <?php $value = 'Authority to Operate' ?>
+                    }
+                    @elseif ($hfser == 'COA') {
+                    <?php $value = 'Certificate of Accreditation' ?>
+                    }
+                    @elseif ($hfser == 'LTO') {
+                    <?php $value = 'License to Operate' ?>
+                    }
+                    @else
+                    <?php $value = 'Certificate of Registration' ?>
+                    @endif
+                </div>
                     <table class="table table-striped">
                         <tbody>
                             <tr>
                                 <th style="background-color: #4682B4; color: white;">Type of Facility</th>
-                                <td>No Type of Application</td>
+                                <td >{{$value}}</td>
                             </tr>
                             <tr>
                                 <th style="background-color: #4682B4; color: white;">Status of Application</th>
-                                <td>No Status</td>
+                                <td id="appStat">No Status</td>
                             </tr>
                             <tr>
                                 <th style="background-color: #4682B4; color: white;">Name of Facility</th>
-                                <td>No Facility Name</td>
+                                <td id="appFacName">No Facility Name</td>
                             </tr>
                             <tr>
                                 <th style="background-color: #4682B4; color: white;">Owner</th>
-                                <td>No Owner</td>
+                                <td id="appOwner">No Owner</td>
                             </tr>
                             <tr>
                                 <th style="background-color: #4682B4; color: white;">Date of Application</th>
-                                <td>No Date</td>
+                                <td id="appDate">No Date</td>
                             </tr>
                         </tbody>
                     </table>
@@ -81,6 +100,30 @@
 
     </div>
 </div>
+
+
+<script>
+ setTimeout(function(){ 
+
+    getDetails()
+
+
+ }, 2000);
+
+ window.addEventListener('change', function(e) {
+    getDetails()
+ })
+
+function getDetails(){
+    
+  
+    // document.getElementById("appStat").innerHTML = $('#facility_name').val()
+    document.getElementById("appFacName").innerHTML = $('#facility_name').val() ? $('#facility_name').val() : "No Facility Name"
+    document.getElementById("appOwner").innerHTML = $('#owner').val() ?  $('#owner').val() : "No Owner Data"
+    // document.getElementById("appDate").innerHTML = $('#facility_name').val()
+
+}
+</script>
 
 
 {{-- <div class="col-4">

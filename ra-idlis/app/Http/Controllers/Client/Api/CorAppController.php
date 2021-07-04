@@ -67,6 +67,7 @@ class CorAppController extends Controller
         $appform->noofsatellite         = $request->noofsatellite;
         $appform->savingStat            = $request->saveas;
         $appform->aptid                 = $request->aptid;
+        $appform->appComment                 = $request->remarks;
         // $appform->savingStat            = $request->saveas;
 
         if($request->saveas == 'final'){

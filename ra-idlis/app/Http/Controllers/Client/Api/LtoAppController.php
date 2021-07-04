@@ -137,6 +137,7 @@ class LtoAppController extends Controller
         $appform->assignedRgn           = $request->assignedRgn;
         $appform->aptid                 = $request->aptid;
         $appform->hgpid                 = $request->hgpid;//6-22-2021
+        $appform->appComment                 = $request->remarks;
   
         if($request->saveas == 'final'){
             $appform->draft = null;
@@ -245,7 +246,8 @@ class LtoAppController extends Controller
     {
 
         $ptcapp = ApplicationForm::where('appid', $appid)->first();
-
+        $ponly = DB::table('ptc')->where([['appid', $appid]])->first();
+       
         $appform = new ApplicationForm;
 
         $appform->hfser_id              = 'LTO';
@@ -264,7 +266,8 @@ class LtoAppController extends Controller
         $appform->email                 = $ptcapp->email;
         $appform->cap_inv               = $ptcapp->cap_inv;
         $appform->lot_area              = $ptcapp->lot_area;
-        $appform->noofbed               = $ptcapp->noofbed;
+        $appform->noofbed               = $ponly->propbedcap;
+        // $appform->noofbed               = $ptcapp->noofbed;
         $appform->uid                   = $ptcapp->uid;
         $appform->ocid                  = $ptcapp->ocid;
         $appform->classid               = $ptcapp->classid;
@@ -280,15 +283,17 @@ class LtoAppController extends Controller
         $appform->approvingauthority    = $ptcapp->approvingauthority;
         $appform->hfep_funded           = $ptcapp->hfep_funded;
         $appform->assignedRgn           = $ptcapp->assignedRgn;
-        $appform->ptcCode               = $ptcapp->ptcCode;
+        $appform->ptcCode               = $ptcapp->hfser_id.'R'.$ptcapp->rgnid.'-'.$ptcapp->appid;
+        // $appform->ptcCode               = $ptcapp->ptcCode;
         $appform->noofmain              = $ptcapp->noofmain;
         $appform->noofdialysis          = $ptcapp->noofdialysis;
-        $appform->noofsatellite         = $ptcapp->noofsatellite;
+        // $appform->noofsatellite         = $ptcapp->noofsatellite;
         $appform->aptid                 = $ptcapp->aptid;
+        $appform->savingStat            = "partial";
 
         $appform->save();
 
-        return redirect('client1/apply/app/LTO/'.$appform->appid.'');
+        return redirect('client1/apply/app/LTO/'.$appform->appid.'?cont=yes');
 
 
     }

@@ -202,6 +202,7 @@ function submitProper (e){
         appchargeHgp:             $('#tempAppChargeHgpid').val(),//appchargetemp
         assignedRgn:             $('#assignedRgn').val(),//6-3-2021
         hfser: "ATO",
+        remarks:             $('#remarks').val(),
         // aptid: "IN"
     }
     console.log(data)

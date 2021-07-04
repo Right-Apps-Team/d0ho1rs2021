@@ -126,7 +126,8 @@
 						<center>:</center>
 					</div>
 					<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
-						{{((isset($retTable[0]->HFERC_swork)) ? $retTable[0]->HFERC_swork : "NOT DEFINED")}}
+						{{((isset($ptcdet)) ? $ptcdet->construction_description : "NOT DEFINED")}}
+					{{--	{{((isset($retTable[0]->HFERC_swork)) ? $retTable[0]->HFERC_swork : "NOT DEFINED")}} --}}
 					</div>	
 				</div>
 				@endif

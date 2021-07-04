@@ -20,7 +20,7 @@
       <div class="card-body">
         <div class="col-sm-12">
           <h2>@isset($AppData) {{$AppData->facilityname}} @endisset</h2>
-          <h5>@isset($AppData) {{strtoupper($AppData->streetname)}}, {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>    
+          <h5>@isset($AppData) {{strtoupper($AppData->streetname)}}, {{strtoupper($AppData->street_number)}},  {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>    
         </div>
       </div>
       {{-- 1 --}}
@@ -149,7 +149,7 @@
                     @endif
                   </td>
                   <td style="width:200px" class="toRemoveaddTT">
-                    <input type="number" class="toRemoveaddTT form-control toTotal toChange" name="abc[]" required="" value="{{$hosp->noofbed}}">
+                    <input type="number" class="toRemoveaddTT form-control toTotal toChange" name="abc[]" required="" readonly value="{{$hosp->noofbed}}">
                   </td>
                   <td class="toRemove toRemoveaddTT">
                     <select class="form-control" name="typeabc[]" required="">
@@ -969,7 +969,19 @@
         $("select[name=verd]").val('0').attr('disabled',true);
       }
     }
-    function createBPR(){
+    function createBPR(dis = null){
+      var tp = document.getElementsByName("type[]");
+          var nonex = "non";
+          if(tp){
+            for(var i = 0; i < tp.length ; tp++){
+              if(tp[i].value == "Primary"){
+                nonex = "ex";
+              }
+            }
+            
+          }
+      console.log(nonex)
+
       counterForMain++;
       let toInsert = 
         '<tr class="'+counterForMain+'">'+
@@ -978,16 +990,23 @@
           '</td>'+
           '<td>'+
             '<select name="type[]" class="form-control">'+
-              '<option value="Primary" selected>Primary</option>'+
-              '<option value="Secondary">Secondary</option>'+
+            (nonex == "non" ? '<option value="Primary" selected>Primary</option>' : '')
+              
+              +
+              '<option value="Secondary">Secondary</option>'
+              +
             '</select>'+
           '</td>'+
           '<td><input type="text" name="addr[]" class="form-control"></td>'+
-          '<td><input type="text"  name="catchment[]" class="form-control"></td>'+
+
+          '<td><input type="text" '+ (dis?  'disabled' : ' ')  +' name="catchment[]" class="form-control"></td>' +
+
           '<td><input type="text" name="est[]" class="form-control"></td>'+
         '</tr>'
         $(toInsert).insertBefore($('#mainCatch'));    
         processPopulationCount();
+
+       
     }
 
     function getAddress(){
@@ -1080,7 +1099,7 @@
       @if(!empty($brp[0]))
         @foreach($brp[0] as $b)
         @php $total += $b->population; @endphp
-        createBPR();
+        createBPR(1);
         $('.'+counterForMain).find('[name="type[]"]').val('{{($b->type == 1 ? 'Secondary' : 'Primary')}}');
         $('.'+counterForMain).find('[name="addr[]"]').val('{{$b->location}}');
         $('.'+counterForMain).find('[name="catchment[]"]').val('{{$b->population}}');

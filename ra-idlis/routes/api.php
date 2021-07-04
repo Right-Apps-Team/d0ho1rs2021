@@ -39,6 +39,11 @@ Route::post(
 ); //->middleware([APIMiddleware::class]);
 
 Route::post(
+    '/doc/eval/save',
+    'DOHController@saveDocEvalFiles'
+); //->middleware([APIMiddleware::class]);
+
+Route::post(
     '/application/cor/save',
     'Client\Api\CorAppController@save'
 ); //->middleware([APIMiddleware::class]);

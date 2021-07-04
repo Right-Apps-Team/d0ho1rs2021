@@ -313,7 +313,7 @@ class NewClientController extends Controller {
 
 				if($request->has('upload')){
 					if($curForm[0]->isReadyForInspec == 0){
-						DB::table('appform')->where('appid',$appid)->update(['isReadyForInspec' => 1, 'status'=>'FDE']);
+						DB::table('appform')->where('appid',$appid)->update(['isReadyForInspec' => 1, 'status'=>'FDE', 'submittedReq'=>1]);
 					}
 					foreach($request->upload AS $uKey => $uValue) {
 						if(in_array($uKey, $curRecord)) {
@@ -363,10 +363,12 @@ class NewClientController extends Controller {
 			}
 			$reqChecklist = DB::table('x08_ft')->join('facilitytypupload','x08_ft.facid','facilitytypupload.facid')->where([['facilitytypupload.hfser_id',$hfser],['x08_ft.appid',$appid]])->get();
 			$req = FunctionsClientController::getReqUploads($hfser, $appid, $office);
+			$apf = DB::table('appform')->where([['appid', $appid]])->first();
 			$arrRet = [
 				'userInf'=>FunctionsClientController::getUserDetails(),
 				'appDet'=>$req,
 				'appform'=>$curForm[0],
+				'submitted'=> $apf->submittedReq,
 				'cToken'=>FunctionsClientController::getToken(),
 				'orderOfPayment'=>FunctionsClientController::getChgfilCharges($appid),
 				'checklist' => $reqChecklist,
@@ -387,7 +389,13 @@ class NewClientController extends Controller {
 	//find me
 	public function __applyApp(Request $request, $hfser, $appid, $hideExtensions = NULL, $aptid = NULL) {
 		try {
+
+			
+
+
 			$user_data = session()->get('uData');
+			$nameofcomp = DB::table('x08')->where([['uid', $user_data->uid]])->first()->nameofcompany;
+
 			$hfLocs = 
 				[
 					'client1/apply/app/LTO/'.$appid, 
@@ -425,6 +433,10 @@ class NewClientController extends Controller {
 			$hfaci_sql = "SELECT * FROM hfaci_grp WHERE hgpid IN (SELECT hgpid FROM `facl_grp` WHERE hfser_id = '$hfser')"; 
 			$arrCon = [6];
 			$apptype = $appGet[0]->hfser_id;
+
+			// $usid = FunctionsClientController::getSessionParamObj("uData", "uid");
+			// $grpid = DB::table('x08')->where([['uid', $usid]])->first()->grpid;
+			// $grpid = ' ';
 			// unset($appGet[0]->areacode);  //temporary fix
 			switch($hfser) {
 				case 'CON':
@@ -437,7 +449,10 @@ class NewClientController extends Controller {
 								array_push($faclArr, $f->hgpid);
 							}
 					$arrRet = [
+						// 'grpid' =>  $grpid,
+						'nameofcomp' =>  $nameofcomp,
 						'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
+						'nameofcomp' =>  $nameofcomp,
 						'hfser' =>  $hfser_id,
 						'user'=> $user_data,
 						'userInf'=>FunctionsClientController::getUserDetails(),
@@ -476,6 +491,8 @@ class NewClientController extends Controller {
 					$ptc =  DB::table('ptc')->where('appid', $appid)->get();
 
 					$arrRet = [
+						// 'grpid' =>  $grpid,
+						'nameofcomp' =>  $nameofcomp,
 						'user'=> $user_data,
 						'hfser' =>  $hfser_id,
 						'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
@@ -517,6 +534,8 @@ class NewClientController extends Controller {
 							}
 
 					$arrRet = [
+						// 'grpid' =>  $grpid,
+						'nameofcomp' =>  $nameofcomp,
 						'hfser' =>  $hfser_id,
 						'user'=> $user_data,
 						'regions' => Regions::orderBy('sort')->get(),
@@ -557,6 +576,8 @@ class NewClientController extends Controller {
 								array_push($faclArr, $f->hgpid);
 							}
 						$arrRet = [
+							// 'grpid' =>  $grpid,
+							'nameofcomp' =>  $nameofcomp,
 							'hfser' =>  "COR",
 							'user'=> $user_data,
 							'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
@@ -591,6 +612,8 @@ class NewClientController extends Controller {
 								array_push($faclArr, $f->hgpid);
 							}
 					$arrRet = [
+						// 'grpid' =>  $grpid,
+						'nameofcomp' =>  $nameofcomp,
 						'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
 						'hfser' =>  "COA",
 						'user'=> $user_data,
@@ -625,6 +648,8 @@ class NewClientController extends Controller {
 								array_push($faclArr, $f->hgpid);
 							}
 						$arrRet = [
+							// 'grpid' =>  $grpid,
+							'nameofcomp' =>  $nameofcomp,
 							'hfser' =>  "ATO",
 							'user'=> $user_data,
 							'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
@@ -652,6 +677,8 @@ class NewClientController extends Controller {
 				default:
 					session()->forget('ambcharge');
 					$arrRet = [
+						// 'grpid' =>  $grpid,
+						'nameofcomp' =>  $nameofcomp,
 						'userInf'=>FunctionsClientController::getUserDetails(),
 						'hfaci_serv_type'=>DB::select($hfaci_sql),
 						'serv_cap'=>json_encode(DB::table('facilitytyp')->where([['servtype_id',1],['forSpecialty',0]])->get()),
@@ -969,8 +996,10 @@ class NewClientController extends Controller {
 					}
 				}
 			}
+			$ptcdet=[];
 			switch ($retTable[0]->hfser_id) {
 				case 'PTC':
+					$ptcdet = DB::table('ptc')->where([['appid',$appid]])->first();
 					$otherDetails = DB::table('hferc_evaluation')->where([['appid',$appid],['HFERC_eval',1]])->first();
 					break;
 
@@ -989,6 +1018,7 @@ class NewClientController extends Controller {
 			$arrData = [
 				'retTable' => $retTable,
 				'servCap' => $arrayFaci,
+				'ptcdet' => $ptcdet,
 				'otherDetails' => $otherDetails
 			];
 			// dd($arrData['retTable'][0]->office);

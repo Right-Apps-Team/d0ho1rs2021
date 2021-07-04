@@ -3377,6 +3377,56 @@ use FunctionsClientController;
 		}
 		////// EVALUATE
 		////// EVALUATE ONE
+		public function saveDocEvalFiles(Request $request){
+			
+						// $addedby = session()->get('employee_login');
+						// $dt = Carbon::now();
+			          	// $dateNow = $dt->toDateString();
+			          	// $timeNow = $dt->toTimeString();
+
+				// $updateData = array(
+				// 	'evaluatedBy' => $addedby->uid,
+				// 	'evaltime' => $timeNow, 
+				// 	'evaldate' => $dateNow,
+				// );
+
+
+				$updateData = array(
+					'evaluation'=>$request->check ,
+					// 'evaluatedBy' => $addedby->uid,
+					// 'evaltime' => $timeNow, 
+					// 'evaldate' => $dateNow,
+					'remarks' => $request->remarks
+				);
+
+				// $test = DB::table('app_upload')->where('apup_id', '=', $request->id)->update($updateData);
+				$test = DB::table('app_upload')->where('apup_id', '=', $request->id);
+
+				if(!is_null($request->check)){
+					$test->update(['evaluation'=>$request->check]);
+				}
+				if(!is_null($request->remarks)){
+					$test->update(['remarks' => $request->remarks]);
+				}
+
+				$msg = "success";
+				if($test){
+					$msg = "failed";
+				}
+
+				return response()->json(
+					[
+						'msg' => $msg
+					],
+					200
+				);
+
+			
+			
+		}
+
+
+
 		public function EvaluateOneProcessFlow(Request $request, $appid, $office = 'hfsrb')
 		{
 			$office = AjaxController::listsofapproved(['hfsrb','xray','pharma'],strtolower($office),'hfsrb');
@@ -7150,6 +7200,7 @@ use FunctionsClientController;
 				try 
 				{
 					// $canView = null;
+					$apdata =DB::table('appform')->where([['appid', $appid]])->first();
 					$data = AjaxController::getRecommendationData($appid);
 					// $data1 = AjaxController::getPreAssessment($data->uid);
 					$data2 = AjaxController::getAssignedMembersInTeam4Recommendation($appid);
@@ -7172,7 +7223,7 @@ use FunctionsClientController;
 					// 	$canView = AjaxController::canViewFDAOOP($appid);
 					// }
 					// dd($otherDetails);
-					return view('employee.processflow.pfrecommendationone', ['AppData'=>$data,/*'PreAss'=>$data1,*/ 'APPID' => $appid, 'Teams4theApplication' => $data2, 'canView' => $canView, 'otherDetails' => $otherDetails]);
+					return view('employee.processflow.pfrecommendationone', ['AppData'=>$data,'apdat'=>$apdata,/*'PreAss'=>$data1,*/ 'APPID' => $appid, 'Teams4theApplication' => $data2, 'canView' => $canView, 'otherDetails' => $otherDetails]);
 				} 
 				catch (Exception $e) 
 				{

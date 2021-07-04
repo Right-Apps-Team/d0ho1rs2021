@@ -6,10 +6,12 @@
     </div>
     <div class="card-body">
         <form class="row">
+        
         <input type="hidden" name="uid" id="uid" value="{{isset($user->uid) ? $user->uid : '' }}"/>
                 <!-- <input type="hidden" name="uid" id="uid" value="$user->uid"/> 6-9-2021 -->
             <!-- <input type="hidden" name="appid" id="appid" value="{{ isset($appdata->appid) ? $appdata->appid : '' }}" /> -->
             <input type="hidden" name="appid" id="appid" />
+            
             <!-- Application Details -->
             @include('dashboard.client.forms.parts.application-details')
 
@@ -56,7 +58,9 @@
                 @include('dashboard.client.forms.parts.permit-to-construct.options')
 
                 {{-- PTC CON Code --}}
-                @include('dashboard.client.forms.parts.permit-to-construct.con-code')
+           
+
+                @include('dashboard.client.forms.parts.con_number')
 
                 {{-- PTC Proposed Health Facility Address --}}
                 {{-- @include('dashboard.client.forms.parts.permit-to-construct.proposed-health-facility-address') --}}
@@ -92,13 +96,34 @@
                         Save as Draft
                     </button>
                 </div>
+
+                
+                <div class="col-md-12" id="divRem" hidden>
+                    <label for="remarks" >Remarks</label>
+                    <textarea class="form-control" name="remarks" id="remarks" >
+                    
+                    </textarea>
+                </div>
+                <div class="col-md-12"> &nbsp;</div>
+                @php
+                    $employeeData = session('employee_login');
+                    $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
+                @endphp
+
+
+                @if($grpid == 'RLO')
+
+
+
+
                 <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
                         <button id="update" hidden class="btn btn-primary btn-block" type="button" onClick="savePartialPtc('update')">
                             <i class="fa fa-floppy-o" aria-hidden="true"></i>
                             Update 
                         </button>
-                    </div>
+                </div>
             </div>
+                 @endif
         </form>
     </div>
 </div>
@@ -175,7 +200,11 @@ var apptypenew = '{!! $apptypenew !!}';
     document.getElementById('submit').setAttribute("hidden", "hidden");
     document.getElementById('save').setAttribute("hidden", "hidden");
     document.getElementById('update').removeAttribute("hidden");
-
+    
+    @if($grpid == 'RLO')
+         document.getElementById('divRem').removeAttribute("hidden");
+    @endif
+    
  }
 
  if(apptypenew == "renewal"){

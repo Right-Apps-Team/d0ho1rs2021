@@ -138,12 +138,23 @@
                                     Save as Draft
                                 </button>
                             </div>
+
+                            @php
+                                $employeeData = session('employee_login');
+                                $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
+                            @endphp
+
+
+                            @if($grpid == 'RLO')
+
                             <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
                         <button id="update" hidden class="btn btn-primary btn-block" type="button" onClick="savePartialLto('update')">
                             <i class="fa fa-floppy-o" aria-hidden="true"></i>
                             Update
                         </button>
                     </div>
+                             @endif
+
                         </div>
 
                         
@@ -228,6 +239,10 @@ var apptypenew = '{!! $apptypenew !!}';
     document.getElementById('submit').setAttribute("hidden", "hidden");
     document.getElementById('save').setAttribute("hidden", "hidden");
     document.getElementById('update').removeAttribute("hidden");
+
+    @if($grpid == 'RLO')
+         document.getElementById('divRem').removeAttribute("hidden");
+    @endif
 
  }
 

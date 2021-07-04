@@ -97,7 +97,7 @@
 						<th style="white-space: nowrap;" class="text-center">App Type</th>
 						<th style="white-space: nowrap;" class="text-center">Date <br/> applied</th>
 						<th style="white-space: nowrap;" class="text-center">DOH Status</th>
-						<th style="white-space: nowrap;" class="text-center">FDA Machine </br> Status</th>
+						<th style="white-space: nowrap;" class="text-center">FDA Radiation Facility </br> Status</th>
 						<th style="white-space: nowrap;" class="text-center">FDA Pharmacy </br> Status</th>
 						<!-- <th style="white-space: nowrap;" class="text-center">DOH Status</th> -->
 					{{--	<th style="white-space: nowrap;" class="text-center">FDA Status</th>--}}
@@ -120,8 +120,8 @@
 						<td style="background-color : {{$each[0]->dohcolor}}">{{$each[0]->trns_desc}}</td>
 						
 						
-						<td>{!! (isset($each[0]->FDAStatMach) ? $each[0]->FDAStatMach : 'Evaluation In Process') !!}</td>
-						<td>{!! (isset($each[0]->FDAStatPhar) ? $each[0]->FDAStatPhar : 'Evaluation In Process') !!}</td>
+						<td>{!! $each[0]->hfser_id == 'LTO' && $each[0]->hfser_id == 'COA' ? (isset($each[0]->FDAStatMach) ? $each[0]->FDAStatMach : 'Evaluation In Process') : 'Not Applicable'!!}</td>
+						<td>{!! $each[0]->hfser_id == 'LTO' && $each[0]->hfser_id == 'COA' ? (isset($each[0]->FDAStatPhar) ? $each[0]->FDAStatPhar : 'Evaluation In Process') : 'Not Applicable'!!}</td>
 						
 						<!-- <td>{!!($each[0]->noofsatellite > 0 ? (isset($each[0]->FDAStatMach) ? $each[0]->FDAStatMach : 'Evaluation In Process') : '<span class="font-weight-bold">Not Applicable</span>')!!}</td>
 						<td>{!!($each[0]->noofsatellite > 0 ? (isset($each[0]->FDAStatPhar) ? $each[0]->FDAStatPhar : 'Evaluation In Process') : '<span class="font-weight-bold">Not Applicable</span>')!!}</td>
@@ -199,7 +199,7 @@
 										@if($each[0]->isRecommended)
 											<div class="dropdown-divider"></div>
 											<div style="margin-left: 10px;margin-right: 10px;">
-											<a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;"  href="{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$each[0]->appid)}}">Confirm Order of Payment</a>
+											<a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;"  href="{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$each[0]->appid)}}">Select Payment Method</a>
 											</div>
 										@endif
 
@@ -217,7 +217,7 @@
 										@if($each[0]->isRecommended)
 										<div class="dropdown-divider"></div>
 										<div style="margin-left: 10px;margin-right: 10px;">
-									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$each[0]->appid)}}">Confirm Order of Payment</a>
+									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$each[0]->appid)}}">Select Payment Method</a>
 									    </div>
 										@endif								    
 									@break
@@ -263,7 +263,7 @@
 										@if($each[0]->isRecommended)
 										<div class="dropdown-divider"></div>
 										<div style="margin-left: 10px;margin-right: 10px;">
-									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$each[0]->appid)}}">Confirm Order of Payment</a>
+									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$each[0]->appid)}}">Select Payment Method</a>
 									    </div>
 										@endif
 
@@ -280,7 +280,7 @@
 										@if($each[0]->isRecommended)
 										<div class="dropdown-divider"></div>		
 										<div style="margin-left: 10px;margin-right: 10px;">
-									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$each[0]->appid)}}">Confirm Order of Payment</a>
+									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$each[0]->appid)}}">Select Payment Method</a>
 									    </div>	
 										@endif	
 
@@ -296,14 +296,15 @@
 										@if($each[0]->isRecommended)
 										<div class="dropdown-divider"></div>
 										<div style="margin-left: 10px;margin-right: 10px;">
-									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$each[0]->appid)}}">Confirm Order of Payment</a>
+									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$each[0]->appid)}}">Select Payment Method</a>
 									    </div>	
 										@endif					
 							    	@break
 								@endswitch
 								<div class="dropdown-divider"></div>
 									    <div style="margin-left: 10px;margin-right: 10px;">
-									    <a  data-toggle="modal" data-target="#chgfil-{{$each[0]->appid}}" class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" onclick="remAppHiddenId('chgfil{{$each[0]->appid}}')" href="#">View Order of Payment on DOH</a>
+									    <a  href="{{asset('client1/printPayment')}}/{{FunctionsClientController::getToken()}}/{{$each[0]->appid}}" class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" onclick="remAppHiddenId('chgfil{{$each[0]->appid}}')" href="#">View Order of Payment on DOH</a>
+									    <!-- <a  data-toggle="modal" data-target="#chgfil-{{$each[0]->appid}}" class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" onclick="remAppHiddenId('chgfil{{$each[0]->appid}}')" href="#">View Order of Payment on DOH</a> -->
 								<div class="dropdown-divider"></div>
 									    <div >
 									    <a  data-toggle="modal" data-target="#chgfilupload-{{$each[0]->appid}}" class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;"  href="#">Upload Proof of payment here</a>

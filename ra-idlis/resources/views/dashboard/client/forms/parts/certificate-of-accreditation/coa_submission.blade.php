@@ -199,6 +199,7 @@ function submitProper (e){
         
         appcharge:             $('#tempAppCharge').val(),//appchargetemp
         appchargeHgp:             $('#tempAppChargeHgpid').val(),//appchargetemp
+        remarks:             $('#remarks').val(),
         
     }
     console.log(data)

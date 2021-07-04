@@ -246,6 +246,7 @@ function submitProper(e){
         appChargeAmb:             $('#tempAppChargeAmb').val(),//appchargetemp,
 
         noofdialysis:           $('#noofdialysis').val(),
+        remarks:             $('#remarks').val(),
 
         // tempAppChargeAmb
     }

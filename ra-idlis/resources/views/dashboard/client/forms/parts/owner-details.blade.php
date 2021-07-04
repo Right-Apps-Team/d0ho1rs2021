@@ -2,12 +2,14 @@
 <div class="col-md-12"><b class="text-primary">OWNER DETAILS</b></div>
 <div class="col-md-12">
     <label for="owner">OWNER <span class="text-danger">*</span></label>
+   
     <input 
         type="text" 
         class="form-control" 
         id="owner" 
         name="owner"
         placeholder="OWNER (Name/Company/Organization)"
+        value="{{$nameofcomp}}"
     >
 </div>
 <div class="col-md-12">

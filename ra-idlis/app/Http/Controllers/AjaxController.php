@@ -5100,7 +5100,7 @@
 												->leftjoin('trans_status', 'appform.status', '=', 'trans_status.trns_id')
 												// ->join('orderofpayment', 'type_facility.oop_id', '=', 'orderofpayment.oop_id')
 												// , 'orderofpayment.*'
-												->select('appform.*',  'x08.*',  'comeval.fname as com_fname',  'comeval.mname as com_mname',  'comeval.lname as com_lname',  'x07.grp_desc', 'barangay.brgyname', 'city_muni.cmname', 'province.provname', 'trans_status.trns_desc') //, 'type_facility.*'
+												->select('appform.*', 'appform.street_number',  'x08.*',  'comeval.fname as com_fname',  'comeval.pre as com_pre',  'comeval.suf as com_suf',  'comeval.mname as com_mname',  'comeval.lname as com_lname',  'x07.grp_desc', 'barangay.brgyname', 'city_muni.cmname', 'province.provname', 'trans_status.trns_desc') //, 'type_facility.*'
 												->where('appform.appid', '=', $appid)
 												// , 'type_facility.*', 'orderofpayment.*'
 												// ->where('type_facility.facid', '=', 'appform.facid')

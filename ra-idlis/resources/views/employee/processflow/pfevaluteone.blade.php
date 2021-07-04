@@ -178,7 +178,7 @@
                       <span class="font-weight-bold">@if(isset($AppData)){{$AppData->no_chklist}}@else{{'Not Available'}}@endif</span>
                     </span>
                     <h6>@isset($AppData) Status: @if ($AppData->isrecommended === null) <span style="color:blue">For Evaluation</span> @elseif($AppData->isrecommended == 1)  <span style="color:green">Accepted Evaluation</span> @elseif($AppData->isrecommended === 0) <span style="color:red">Disapproved Evaluation</span> @else <span style="color:orange">Evaluated, for Revision</span> @endif @endisset</h6>
-                    <h6 class="font-weight-bold"><u>OHSRS Status: <span style="color:blue">Verified</span></u></h6>
+                    <!-- <h6 class="font-weight-bold"><u>OHSRS Status: <span style="color:blue">Verified</span></u></h6> -->
                     </h6>
               </div>
               {{-- @if(!empty($documentDate)) --}}
@@ -290,7 +290,7 @@
                              <div class="col-6">
                                <div class="control-group">
                                 <label class="control control--radio">Yes
-                                  <input value="1" type="radio" name="{{$UpData->apup_id}}_rad" @if($UpData->evaluation !== NULL AND $UpData->evaluation == 1)checked=""@endif>
+                                  <input value="1" onblur="savDocDet('{{$UpData->apup_id}}', 1, null)" type="radio" name="{{$UpData->apup_id}}_rad" @if($UpData->evaluation !== NULL AND $UpData->evaluation == 1)checked=""@endif>
                                   <div class="control__indicator"></div>
                                   </label>
                                </div> 
@@ -298,14 +298,14 @@
                              <div class="col-6">
                                 <div class="control-group">
                                    <label class="control control--radio">No
-                                     <input value="0" type="radio" name="{{$UpData->apup_id}}_rad" @if($UpData->evaluation !== NULL AND $UpData->evaluation == 0)checked=""@endif>
+                                     <input onblur="savDocDet('{{$UpData->apup_id}}', 0, null)" value="0" type="radio" name="{{$UpData->apup_id}}_rad" @if($UpData->evaluation !== NULL AND $UpData->evaluation == 0)checked=""@endif>
                                      <div class="control__indicator"></div>
                                    </label>
                                  </div> 
                           </div>
                         </div>
                           <p style="text-align: left;">Remarks:</p>
-                          <textarea name="{{$UpData->apup_id}}_txt" class="form-control" rows="5">@if($UpData->evaluation !== NULL){{$UpData->remarks}}@endif</textarea>
+                          <textarea onblur="savDocDet('{{$UpData->apup_id}}', null, this.value)" name="{{$UpData->apup_id}}_txt" class="form-control" rows="5">{{$UpData->remarks}} </textarea>
                           <br>
                           {{-- <button type="button" title="Save" onclick="saveEvals()" class="btn btn-success" @if($UpData->evaluation === NULL)style="display: none"@endif><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
                           <button type="button" title="Cancel Edit" onclick="$('.{{$UpData->apup_id}}_span_edit').toggle()" class="btn btn-danger" @if($UpData->evaluation === NULL)style="display: none"@endif><i class="fa fa-times" aria-hidden="true"></i></button> --}}
@@ -619,7 +619,7 @@
       </div>
     </div>    
   </div>
-     
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
     <script type="text/javascript">
       let counterForDom = 0;  
       let slug = true;
@@ -634,6 +634,39 @@
     	 		$('[data-toggle="tooltip"]').tooltip();
     	 		
     	 	});
+         const base_url = '{{URL::to('/')}}';
+         function callApi(url, data, method) {
+              const config = {
+                  method: method,
+                  url: `${base_url}${url}`,
+                  headers: { 
+                    'Content-Type': 'application/json'
+                  },
+                  data : data
+              };
+              return axios(config)
+          };
+
+         function savDocDet(id,check, remarks){
+          const data = {
+            id: id,
+            check: check,
+            remarks: remarks
+          } 
+
+          console.log(data)
+
+          callApi('/api/doc/eval/save', data, 'POST').then(d => {
+            console.log(d.data.msg)
+
+          }
+          ).then(error => {
+
+
+              console.log(error);
+          })
+
+          }
 
        function toggleButtons(){
          let checkForNo = Array(); 

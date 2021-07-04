@@ -36,6 +36,7 @@
             propcode.value = proparc
         }
 
+        var con_number ='{!!((count($fAddress) > 0) ? $fAddress[0]->con_number: "")!!}';
         var ocid ='{!!((count($fAddress) > 0) ? $fAddress[0]->ocid: "")!!}';
         var subclassid ='{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}';
         var classid ='{!!((count($fAddress) > 0) ? $fAddress[0]->classid: "")!!}';
@@ -49,6 +50,100 @@
         var approvingauthoritypos ='{!!((count($fAddress) > 0) ? $fAddress[0]->approvingauthoritypos: "")!!}';
         var approvingauthority ='{!!((count($fAddress) > 0) ? $fAddress[0]->approvingauthority: "")!!}'; 
         var hfep ='{!!((count($fAddress) > 0) ? $fAddress[0]->hfep_funded: "")!!}';
+
+
+        // setTimeout(function(){  
+  var ocidInpt = document.getElementById("ocid");
+  ocidInpt.value = ocid;
+        // ocidInpt.setAttribute("disabled", "disabled")
+        //  }, 1000);
+if(ocid){
+     setTimeout(function(){  
+        
+        fetchClassification1()
+     }, 1000);
+
+     setTimeout(function(){ 
+
+        document.getElementById("classification").value=classid;
+        // document.getElementById("subclass").value=subclassid;
+        
+ }, 2000);
+ setTimeout(function(){ 
+    fetchSubClass1()
+// console.log(classid)
+// console.log(subclassid)
+        // document.getElementById("classification").value=classid;
+       
+ }, 3000);
+ setTimeout(function(){ 
+    document.getElementById("subclass").value=subclassid;
+// console.log(classid)
+// console.log(subclassid)
+        // document.getElementById("classification").value=classid;
+       
+ }, 4000);
+}
+
+const fetchClassification1 = async (e) => {
+    const ocid = $("#ocid").val();
+    console.log('EYYY, ', ocid);
+    if( ocid ) {
+        const data = { 'ocid' : ocid }
+        callApi('/api/classification/fetch', data, 'POST').then(classification => {
+            $("#classification").empty();
+            $("#classification").append(`<option value=''>Please select</option>`);
+
+            @if(app('request')->input('cont') != 'yes')
+               $("#classification").removeAttr('disabled');
+            @endif
+
+            classification.data.map(c => {
+                $("#classification").append(`<option value='${c.classid}'>${c.classname}</option>`);
+            })
+            // $("#classification").selectpicker('refresh')
+        })
+
+        
+
+    }
+    else {
+        $("#classification").addAttr('disabled')
+    }
+
+    
+}
+
+const fetchSubClass1 = async (e) => {
+    console.log("received")
+    const ocido = $("#ocid").val();
+    const classido = $("#classification").val();
+    console.log("classid")
+    console.log(classido)
+    if(ocido ) {
+        const data = { 'ocid' : ocid, 'classid' : classid }
+        callApi('/api/classification/fetch', data, 'POST').then(classification => {
+            $("#subclass").empty();
+            $("#subclass").append(`<option value=''>Please select</option>`);
+            
+            @if(app('request')->input('cont') != 'yes')
+                 $("#subclass").removeAttr('disabled');
+            @endif
+            classification.data.map(c => {
+                $("#subclass").append(`<option value='${c.classid}'>${c.classname}</option>`);
+            })
+            // $("#subclass").selectpicker('refresh')
+        })
+    }
+    else {
+        $("#subclass").addAttr('disabled')
+    }
+}
+
+
+
+
+
         console.log("hfep")
         console.log(hfep)
         setTimeout(function(){
@@ -58,6 +153,7 @@
         }, 2000);
 
         document.getElementsByName('funcid')[0].value = funcid;
+        document.getElementById("connumber").value = con_number;
         document.getElementById("facmode").value = facmode;
         document.getElementById("owner").value = owner;
         document.getElementById("prop_mobile").value = ownerMobile;
@@ -70,7 +166,7 @@
 
         var ocidInpt = document.getElementById("ocid");
         ocidInpt.value = ocid;
-        ocidInpt.setAttribute("disabled", "disabled")
+        // ocidInpt.setAttribute("disabled", "disabled")
 
         console.log("subclassid")
         console.log(subclassid)

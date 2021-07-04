@@ -77,6 +77,7 @@ class AtoAppController extends Controller
         $appform->savingStat            = $request->saveas;
         $appform->aptid                 = $request->aptid;
         $appform->hgpid                 = $request->hgpid;//6-22-2021
+        $appform->appComment                 = $request->remarks;
         // $appform->savingStat            = $request->saveas;
 
         if($request->saveas == 'final'){
