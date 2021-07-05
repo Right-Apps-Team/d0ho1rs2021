@@ -6,64 +6,83 @@
 		ol,li{
 			list-style: none;
 		}
+		.leftHeader{
+			font-family: Cambria, Georgia, serif;
+			font-size: 12;
+		}
+		.rightHeader{
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 12;
+		}
+		li{
+			padding-top: 20px;
+		}
 	</style>
 	<div class="container mt-5">
 		<div class="card">
 			<div class="card-header">
 				<div class="row">
-					<div class="col-md-2 hide-div">
-						<img src="{{asset('ra-idlis/public/img/doh2.png')}}" style="float: right; max-height: 118px; padding-left: 20px;">
+					<div class="col-md-3 hide-div">
+						<img src="{{asset('ra-idlis/public/img/doh2.png')}}" style="float: left; max-height: 118px; padding-left: 20px;"><br/><br/><br/><br/><br/><br/>
+						<p>Revised 2018changed signatoy</p>
 					</div>
-					<div class="col-md-10">
+					
+					<!-- <div class="col-md-9"> -->
+<center>
 						<h5 class="card-title text-center font-weight-bold">Republic of the Philippines</h5>
 						<h4 class="card-title text-uppercase text-center font-weight-bold">Department of Health</h4>
 						<h3 class="card-title text-uppercase text-center font-weight-bold">{{((isset($director->certificateName)) ? $director->certificateName : 'REGION')}}</h3>
-					</div>
+					</center>
+					<!-- </div> -->
+					
+					
 				</div>
 			</div>
 			<div class="card-body">
 				<br>
 				<h1 class="text-center">PERMIT TO CONSTRUCT</h1><br>
 				<div class="row">
-					<div class="col-md-4">
-						<p style="float: left;">Owner </p><span style="float: right">:</span>
+					<div class="col-md-2">
+						<p style="float: left;" class="leftHeader">Owner </p><span style="float: right">:</span>
 					</div>
 					<div class="col-md-8">
-						<p><strong>{{((isset($retTable[0]->owner)) ? $retTable[0]->owner : 'No owner')}}</strong></p>
+						<p  class="rightHeader"><strong>{{((isset($retTable[0]->owner)) ? $retTable[0]->owner : 'No owner')}}</strong></p>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-4">
-						<p style="float: left;">Name of Facility </p><span style="float: right">:</span>
+					<div class="col-md-2">
+						<p style="float: left;" class="leftHeader">Name of Facility </p><span style="float: right">:</span>
 					</div>
 					<div class="col-md-8">
-						<p><strong>{{((isset($retTable[0]->facilityname)) ? $retTable[0]->facilityname : 'No facility name')}}</strong></p>
+						<p  class="rightHeader"><strong>{{((isset($retTable[0]->facilityname)) ? $retTable[0]->facilityname : 'No facility name')}}</strong></p>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-4">
-						<p style="float: left;">Location </p><span style="float: right">:</span>
+					<div class="col-md-2">
+						<p style="float: left;" class="leftHeader">Location </p><span style="float: right">:</span>
 					</div>
 					<div class="col-md-8">
-						<p><strong>{{((isset($retTable[0])) ? ($retTable[0]->rgn_desc.', '.$retTable[0]->provname.', '.$retTable[0]->cmname.', '.$retTable[0]->brgyname.', '.$retTable[0]->street_name.' '.$retTable[0]->street_number) : 'No Location.')}}</strong></p>
+						<p class="rightHeader"><strong>{{((isset($retTable[0])) ? ($retTable[0]->street_name.', '.$retTable[0]->street_number.', '.$retTable[0]->brgyname.', '.$retTable[0]->cmname.', '.$retTable[0]->provname.' '.$retTable[0]->rgn_desc) : 'No Location.')}}</strong></p>
+						<!-- <p class="rightHeader"><strong>{{((isset($retTable[0])) ? ($retTable[0]->rgn_desc.', '.$retTable[0]->provname.', '.$retTable[0]->cmname.', '.$retTable[0]->brgyname.', '.$retTable[0]->street_name.' '.$retTable[0]->street_number) : 'No Location.')}}</strong></p> -->
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-4">
-						<p style="float: left;">Scope of Work </p><span style="float: right">:</span>
+					<div class="col-md-2">
+						<p style="float: left;" class="leftHeader">Scope of Work </p><span style="float: right">:</span>
 					</div>
 					<div class="col-md-8">
-						<p><strong>
+						<p  class="rightHeader"><strong>
 						{{((isset($otherDetails->HFERC_comments)) ? $otherDetails->HFERC_comments : 'Not Specified')}}</strong></p>
 					</div>
 				</div>
 				<br><br>
-				<h5>Terms and Conditions of the DOH-PTC</h5>
+				<h5>Terms and Conditions</h5>
+				<!-- <h5>Terms and Conditions of the DOH-PTC</h5> -->
 				<div class="container">
 					<ol>
 						<li>1. &nbsp;&nbsp;That the construction, alteration, expansion or renovation of a hospital or other health facility is implemented in accordance with:
 						<ol>
-							<li>1.1&nbsp;&nbsp; Floor Plans prepared by a duy licensed Architect and/or Civil Engineer and approved by the Health Facilities and Services Regulatory Bureau</li>
+							<li >1.1&nbsp;&nbsp; Floor Plans prepared by a duy licensed Architect and/or Civil Engineer and approved by the Health Facilities and Services Regulatory Bureau</li>
 							<li>1.2&nbsp;&nbsp; Architectural and engineering drawings (based on approved floor plans by the Regional Office), specifications, building permit and fire safety permit prepared by a duly licensed Architect and/or Civil Engineer and approved by the Office of the Building Official and the Bureau of Fire Protection in the locality;</li>
 						</ol>
 						</li>

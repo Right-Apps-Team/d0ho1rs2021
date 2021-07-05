@@ -1,7 +1,7 @@
 <script>
 var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
-// console.log("mserv_cap")
-// console.log(mserv_cap)
+console.log("mserv_cap")
+console.log(mserv_cap)
 // START OF DATA INITIALIZATION FOR VIEWING EXISTING APPLICATION
 
 
@@ -340,10 +340,14 @@ console.log("hello")
      var facids = getCheckedValue('facid') 
      var anxsel = getCheckedValue('anxsel') 
     
+    
    
         
         var arrCol = facids;
         var arrCol2 = anxsel;
+
+        console.log("arrCol2")
+        console.log(arrCol2)
 
         let serv_chg = document.getElementById('serv_chg');
 				if(arrCol.length > 0){
@@ -392,7 +396,8 @@ console.log("hello")
                   
                     // console.log("thisFacid")
                     // console.log(thisFacid)
-
+                    console.log("sArr")
+                    console.log(sArr)
                 setTimeout(function(){ 
 					sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getServiceCharge')}}", "POST", true, {
 						functionProcess: function(arr) {
@@ -425,6 +430,7 @@ console.log("hello")
                             // console.log(owns)
                             // console.log("owns")
                              //appchargetemp
+                             console.log("arr New")
                              console.log(arr)
                              const distinctArr = Array.from(new Set(arr.map(s => s.facname))).map(facname => {
                             
@@ -511,12 +517,12 @@ const unique =  arr.map(e => e[comp])
 return unique;
 }
 
-    function getCheckedValue( groupName ) {
+    function getCheckedValue(groupName) {
         var radios;
         if(groupName == "anxsel"){
-             radios = document.getElementsByClassName( groupName );
+             radios = document.getElementsByClassName(groupName);
         }else{
-             radios = document.getElementsByName( groupName );
+             radios = document.getElementsByName(groupName);
         }
         
 
@@ -832,6 +838,7 @@ return unique;
                inpt[i].checked = true;
             }
         } else if (selected == "H3") {
+            ifAmbuSurg("show")
             document.getElementsByClassName("hl1")[0].setAttribute("hidden", "hidden")
             document.getElementsByClassName("hl2")[0].setAttribute("hidden", "hidden")
             document.getElementsByClassName("hl3")[0].removeAttribute("hidden")
@@ -855,10 +862,13 @@ return unique;
         var ar0 = arr[0].filter(function(v) {//get the services of hospital type
                 return v.hgpid == 6;
         })
+console.log(selected)
 
         var ar1 = arr[1].filter(function(v) {
                 return v.facid == selected;//get the Id of selected hospital level
         })
+        console.log("ar1")
+      
         
         var h1Facid = arr[1].filter(function(v) {//get the Id of hospital level1
                 return v.facid == "H";
@@ -880,6 +890,9 @@ return unique;
                 return v.servtype_id == ar1[0].servtype_id;
         })
 
+      
+       
+
         filtDupsArr = [...new Set(filtDupsArr)] // jeust get single groupname remove pair of duplicates
 
      
@@ -889,12 +902,14 @@ return unique;
         return filtDupsArr.indexOf(o.grphrz_name) == -1;
         });
 
+      
+
        
 
         var specservs = special.filter(function(v) {
                 return v.servtype_id == ar1[0].servtype_id;
         })
-     
+       
       
 
         //  var servs = ar0.filter(function(v) {
@@ -914,11 +929,13 @@ return unique;
       
 
         var h1mt = servs.filter(function( o){
-        return allH1GroupName.indexOf(o.grphrz_name) > 0;
+        return allH1GroupName.indexOf(o.grphrz_name) >= 0;
         });
+          console.log(h1mt)
         // h1mt = h1mt.filter(function(v) {
         //         return v.servtype_id == ar1[0].servtype_id;
         // })
+       
 
       
 
@@ -946,7 +963,7 @@ return unique;
 
         document.getElementById("anxservcont"+selected).innerHTML = " ";
        var  asc =document.getElementById("anxservcont"+selected)
-
+      
         if(asc != undefined || asc != null) {
             sortedh1mt.map((l1) => {
             createAnxRadio(l1,selected)
@@ -1032,7 +1049,7 @@ return unique;
         var nas;
         sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getGoAncillary')}}", "POST", true, {
 					functionProcess: function(arr) {
-                       console.log("arr")
+                       console.log("arrgggg")
                        console.log(arr)
                         show_hosplevel_anx(selected, arr, hgpid)
                     }
@@ -1322,7 +1339,8 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
         var subclassid ='{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}';
         var facmode ='{!!((count($fAddress) > 0) ? $fAddress[0]->facmode: "")!!}';
         var funcid ='{!!((count($fAddress) > 0) ? $fAddress[0]->funcid: "")!!}';
-        var owner ='{!!((count($fAddress) > 0) ? $fAddress[0]->owner: "")!!}';
+        var owner ="{!!((count($fAddress) > 0) ? $fAddress[0]->owner: '')!!}";
+        // var owner ='{!!((count($fAddress) > 0) ? $fAddress[0]->owner: "")!!}';
         var ownerMobile ='{!!((count($fAddress) > 0) ? $fAddress[0]->ownerMobile: "")!!}';
         var ownerLandline ='{!!((count($fAddress) > 0) ? $fAddress[0]->ownerLandline: "")!!}';
         var ownerEmail ='{!!((count($fAddress) > 0) ? $fAddress[0]->ownerEmail: "")!!}';
@@ -1340,7 +1358,8 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
         var cmid ='{!!((count($fAddress) > 0) ? $fAddress[0]->cmid: "")!!}';
         var brgyid ='{!!((count($fAddress) > 0) ? $fAddress[0]->brgyid: "")!!}';
         var noofdialysis ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofdialysis: "")!!}';
-
+console.log("Appid")
+console.log(appid)
 
         // setTimeout(function(){  
         var ocidInpt = document.getElementById("ocid");
@@ -1435,7 +1454,7 @@ const fetchSubClass1 = async (e) => {
          console.log(ocidInpt)
          console.log(ocid)
 
-    //   document.getElementById("appid").value = appid;
+      document.getElementById("appid").value = appid;
 
       document.getElementById("aptidnew").value = aptidnew;
       document.getElementById("facmode").value = facmode;

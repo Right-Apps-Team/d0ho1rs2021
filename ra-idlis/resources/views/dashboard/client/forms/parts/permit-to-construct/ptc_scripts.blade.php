@@ -33,15 +33,15 @@
         document.getElementById("appid").value = appid;
         }
 
-        console.log("typee")
+        console.log("typeehhhh")
         console.log('{!! $apptypenew !!}')
 
         // console.log("data from db")
 
         var ptcorg =JSON.parse('{!!((count($ptc) > 0) ? addslashes($ptc): "")!!}');
-        ptc = ptcorg[0]
+      var  ptc = ptcorg[0]
         // console.log("ptc")
-        // console.log(ptc)
+        console.log(ptc)
 
         var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "")!!}');
     

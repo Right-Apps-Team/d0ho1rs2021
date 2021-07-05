@@ -167,11 +167,14 @@ class PtcAppController extends Controller
         $appform->noofsatellite         = $conapp->noofsatellite;
         $appform->aptid                 = $conapp->aptid;
         $appform->con_number            = $conapp->hfser_id.'R'.$conapp->rgnid.'-'.$conapp->appid;
+        $appform->savingStat            = "partial";
         
 
 
 
         $appform->save();
+
+        DB::insert('insert into ptc (appid) values (?)',[$appform->appid]);
 
         return redirect('client1/apply/app/PTC/'.$appform->appid.'?cont=yes');
 

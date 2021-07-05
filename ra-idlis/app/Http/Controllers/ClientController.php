@@ -883,10 +883,23 @@ class ClientController extends Controller {
 					$facilityType = DB::select("SELECT hgpdesc FROM hfaci_grp LEFT JOIN facilitytyp ON hfaci_grp.hgpid = facilitytyp.hgpid WHERE facilitytyp.facid IN (SELECT facid FROM x08_ft WHERE appid = '$appid')");
 					if(count($facilityType)) {
 						$impArr = [];
+						$i = 0;
+						$facname = "No Health Facility";
 						foreach($facilityType AS $facilityTypeRow) {
+
 							array_push($impArr, $facilityTypeRow->hgpdesc);
+							if($i == 0 ){
+								$facname = 	$facilityTypeRow->hgpdesc;
+							}
+							$i++;
 						}
 						$facilityTypeId = implode(', ', $impArr);
+						
+						// $impArr = [];
+						// foreach($facilityType AS $facilityTypeRow) {
+						// 	array_push($impArr, $facilityTypeRow->hgpdesc);
+						// }
+						// $facilityTypeId = implode(', ', $impArr);
 					}
 					$serviceType = DB::select("SELECT facname FROM facilitytyp WHERE facilitytyp.facid IN (SELECT facid FROM x08_ft WHERE appid = '$appid')");
 					if(count($serviceType)) {
@@ -900,7 +913,7 @@ class ClientController extends Controller {
 				if($hfser == "CON") {
 					$hfser = "CON1";
 				}
-				return view('client.certificates.'.$hfser, ['curUser'=>$uData, 'forCurUser_'=>DB::select($subUserSql), 'forCurUserFac_'=>DB::select($subFacSql), 'facid_cur'=>static::$facid_cur, 'retTable'=>$retTable, 'facilityTypeId'=>$facilityTypeId, 'serviceId'=>$serviceId]);
+				return view('client.certificates.'.$hfser, ['curUser'=>$uData,'facname'=>$facname, 'forCurUser_'=>DB::select($subUserSql), 'forCurUserFac_'=>DB::select($subFacSql), 'facid_cur'=>static::$facid_cur, 'retTable'=>$retTable, 'facilityTypeId'=>$facilityTypeId, 'serviceId'=>$serviceId]);
 			} else {
 				return redirect()->route('client.home');
 			}

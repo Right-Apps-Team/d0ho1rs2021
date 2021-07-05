@@ -394,7 +394,13 @@ class NewClientController extends Controller {
 
 
 			$user_data = session()->get('uData');
-			$nameofcomp = DB::table('x08')->where([['uid', $user_data->uid]])->first()->nameofcompany;
+			if($user_data){
+				$nameofcomp = DB::table('x08')->where([['uid', $user_data->uid]])->first()->nameofcompany;
+			}else{
+				$nameofcomp = null;
+			}
+			
+			
 
 			$hfLocs = 
 				[
@@ -409,12 +415,14 @@ class NewClientController extends Controller {
 					'client1/apply/employeeOverride/app/LTO/'.$appid.'/fda'
 				];
 			}
+
 			if(! isset($hideExtensions)) {
 				$cSes = FunctionsClientController::checkSession(true);
 				if(count($cSes) > 0) {
 					return redirect($cSes[0])->with($cSes[1], $cSes[2]);
 				}
 			}
+			
 			$appGet = FunctionsClientController::getUserDetailsByAppform($appid, $hideExtensions);
 			// dd($appGet);
 			if(count($appGet) < 1) {
@@ -450,7 +458,7 @@ class NewClientController extends Controller {
 							}
 					$arrRet = [
 						// 'grpid' =>  $grpid,
-						'nameofcomp' =>  $nameofcomp,
+						// 'nameofcomp' =>  $nameofcomp,
 						'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
 						'nameofcomp' =>  $nameofcomp,
 						'hfser' =>  $hfser_id,
@@ -893,7 +901,7 @@ class NewClientController extends Controller {
 			return redirect('client1/apply')->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Error on Opening payment module. Contact the admin.']);
 		}
 	}
-	public function __byHfser(Request $request, $hfser, $appid) {
+	public function __byHfser(Request $request, $hfser, $appid, $viewFor = 'client') {
 		try {
 			if(DB::table('appform')->join('licensed','licensed.appid','appform.appid')->where([['appform.appid',$appid],['appform.isApprove',1]])->doesntExist()){
 				return redirect('client1/home')->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Application Does not Exist']);
@@ -941,10 +949,24 @@ class NewClientController extends Controller {
 			}
 			if(count($sData[3])) {
 				$impArr = [];
+				$i = 0;
+				$facname = "No Health Facility";
+
 				foreach($sData[3] AS $facilityTypeRow) {
-					array_push($impArr, $facilityTypeRow->hgpdesc);
+
+							array_push($impArr, $facilityTypeRow->hgpdesc);
+							if($i == 0 ){
+								$facname = 	$facilityTypeRow->hgpdesc;
+							}
+							$i++;
 				}
 				$facilityTypeId = implode(', ', $impArr);
+				
+				// foreach($sData[3] AS $facilityTypeRow) {
+					
+				// 	array_push($impArr, $facilityTypeRow->hgpdesc);
+				// }
+				// $facilityTypeId = implode(', ', $impArr);
 			}
 			if(count($sData[2])) {
 				$impArr1 = [];
@@ -963,6 +985,7 @@ class NewClientController extends Controller {
 			$rgn = FunctionsClientController::isFacilityFor($appid);
 			$hfser .= '1';
 			$arrData = [
+				'facname'=>$facname,
 				'userInf'=>FunctionsClientController::getUserDetails(),
 				'director'=>DB::table('branch')->where('regionid',$rgn)->first(),
 				'm99'=>DB::table('m99')->first(),
@@ -971,7 +994,8 @@ class NewClientController extends Controller {
 				'serviceId'=>$serviceId,
 				'addons' => $arrayFaci,
 				'services' => AjaxController::getHighestApplicationFromX08FT($appid),
-				'otherDetails' => $otherDetails
+				'otherDetails' => $otherDetails,
+				'viewFor' => (session()->has('employee_login') && $viewFor == 'employee' ? 'employee' : 'client')
 			];
 			return view('client1.certificates.'.$hfser, $arrData);
 		} catch(Exception $e) {

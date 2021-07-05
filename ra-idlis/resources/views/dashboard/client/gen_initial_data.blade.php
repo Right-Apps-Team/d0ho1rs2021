@@ -42,7 +42,8 @@
         var classid ='{!!((count($fAddress) > 0) ? $fAddress[0]->classid: "")!!}';
         var facmode ='{!!((count($fAddress) > 0) ? $fAddress[0]->facmode: "")!!}';
         var funcid ='{!!((count($fAddress) > 0) ? $fAddress[0]->funcid: "")!!}';
-        var owner ='{!!((count($fAddress) > 0) ? $fAddress[0]->owner: "")!!}';
+        var owner ="{!!((count($fAddress) > 0) ? $fAddress[0]->owner: '')!!}";
+        // var owner ='{!!((count($fAddress) > 0) ? $fAddress[0]->owner: "")!!}';
         var ownerMobile ='{!!((count($fAddress) > 0) ? $fAddress[0]->ownerMobile: "")!!}';
         var ownerLandline ='{!!((count($fAddress) > 0) ? $fAddress[0]->ownerLandline: "")!!}';
         var ownerEmail ='{!!((count($fAddress) > 0) ? $fAddress[0]->ownerEmail: "")!!}';

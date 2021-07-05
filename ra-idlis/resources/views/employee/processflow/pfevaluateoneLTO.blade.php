@@ -158,7 +158,8 @@
               <input type="text" id="NumberOfRejected" value="@isset ($numOfX) {{$numOfX}} @endisset" hidden>
               <input type="" id="token" value="{{ Session::token() }}" hidden>
                Evaluation 
-               <button class="btn btn-primary" onclick="window.history.back();">Back</button>
+               <a href="{{asset('/employee/dashboard/processflow/evaluate/technical')}}">    <button class="btn btn-primary" >Back</button></a>
+               <!-- <button class="btn btn-primary" onclick="window.history.back();">Back</button> -->
             </div>
             <div class="card-body">
               <div class="col-sm-12">
@@ -334,7 +335,10 @@
                 @isset($AppData)
                   @if ($triggerThis)
                   {{-- @if ($AppData->isrecommended == 2 || $AppData->isrecommended == null) --}}
-                  @if(count($requirements) != $forNosent)
+                  @if(count($requirements) != $forNosent || $office == 'pharma')
+
+                 
+                         
                  <button type="button" id="approveButton" class="btn btn-success" onclick="Recommended4Inspection('ApproveApplication');">Approve</button>
                   <!-- 7-1-2021 <button type="button" id="approveButton" class="btn btn-success" onclick="Recommended4Inspection('ApproveApplication');">Approve</button> -->
                   <!-- <button type="button" id="approveButton" class="btn btn-success" onclick="Recommended4Inspection('ApproveApplication');">Approve</button> -->

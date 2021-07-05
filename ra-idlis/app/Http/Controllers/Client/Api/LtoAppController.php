@@ -137,7 +137,7 @@ class LtoAppController extends Controller
         $appform->assignedRgn           = $request->assignedRgn;
         $appform->aptid                 = $request->aptid;
         $appform->hgpid                 = $request->hgpid;//6-22-2021
-        $appform->appComment                 = $request->remarks;
+        $appform->appComment            = $request->remarks;
   
         if($request->saveas == 'final'){
             $appform->draft = null;
@@ -266,7 +266,7 @@ class LtoAppController extends Controller
         $appform->email                 = $ptcapp->email;
         $appform->cap_inv               = $ptcapp->cap_inv;
         $appform->lot_area              = $ptcapp->lot_area;
-        $appform->noofbed               = $ponly->propbedcap;
+        $appform->noofbed               = (int)$ponly->propbedcap;
         // $appform->noofbed               = $ptcapp->noofbed;
         $appform->uid                   = $ptcapp->uid;
         $appform->ocid                  = $ptcapp->ocid;

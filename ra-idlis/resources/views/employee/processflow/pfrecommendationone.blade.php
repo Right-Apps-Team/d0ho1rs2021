@@ -504,7 +504,7 @@
                         <tbody>
                           <tr>
                             <th scope="row">Status :</th>
-                            <td>@isset($AppData) @if($AppData->isApproveFDA == null) <span style="color:blue;font-weight: bolder">Not Inspected</span> @elseif($AppData->isApproveFDA == 1)<span style="color:green;font-weight: bolder">Approve</span>@else<span style="color:red;font-weight: bolder">COC Denied</span>@endif @endisset</td>
+                            <td>@isset($AppData) @if($AppData->isApproveFDA == null) <span style="color:blue;font-weight: bolder">Not Inspected</span> @elseif($AppData->isApproveFDA == 1)<span style="color:green;font-weight: bolder">Approved</span>@else<span style="color:red;font-weight: bolder">COC Denied</span>@endif @endisset</td>
                           </tr>
                           <tr>
                             <th scope="row">Date :</th>

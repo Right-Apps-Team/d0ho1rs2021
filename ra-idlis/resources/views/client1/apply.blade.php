@@ -120,8 +120,8 @@
 						<td style="background-color : {{$each[0]->dohcolor}}">{{$each[0]->trns_desc}}</td>
 						
 						
-						<td>{!! $each[0]->hfser_id == 'LTO' && $each[0]->hfser_id == 'COA' ? (isset($each[0]->FDAStatMach) ? $each[0]->FDAStatMach : 'Evaluation In Process') : 'Not Applicable'!!}</td>
-						<td>{!! $each[0]->hfser_id == 'LTO' && $each[0]->hfser_id == 'COA' ? (isset($each[0]->FDAStatPhar) ? $each[0]->FDAStatPhar : 'Evaluation In Process') : 'Not Applicable'!!}</td>
+						<td>{!! $each[0]->hfser_id == 'LTO' || $each[0]->hfser_id == 'COA' ? (isset($each[0]->FDAStatMach) ? $each[0]->FDAStatMach : 'Evaluation In Process') : 'Not Applicable'!!}</td>
+						<td>{!! $each[0]->hfser_id == 'LTO' || $each[0]->hfser_id == 'COA' ? (isset($each[0]->FDAStatPhar) ? $each[0]->FDAStatPhar : 'Evaluation In Process') : 'Not Applicable'!!}</td>
 						
 						<!-- <td>{!!($each[0]->noofsatellite > 0 ? (isset($each[0]->FDAStatMach) ? $each[0]->FDAStatMach : 'Evaluation In Process') : '<span class="font-weight-bold">Not Applicable</span>')!!}</td>
 						<td>{!!($each[0]->noofsatellite > 0 ? (isset($each[0]->FDAStatPhar) ? $each[0]->FDAStatPhar : 'Evaluation In Process') : '<span class="font-weight-bold">Not Applicable</span>')!!}</td>

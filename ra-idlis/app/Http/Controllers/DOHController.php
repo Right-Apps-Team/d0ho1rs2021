@@ -7394,7 +7394,9 @@ use FunctionsClientController;
 						 			'approvedIpAdd' => $Cur_useData['ip'],
 						 			'approvedRemark' => $request->desc,
 						 			'status' => $status,
-						 			'licenseNo' => $license
+						 			'licenseNo' => $license,
+						 			'FDAstatus' => $status
+
 	 					 		);
 						 	(!empty($request->validity) ? $data['validDate'] = Carbon::parse($request->validity)->toDateString() : "");
 						 	(!empty($request->validityDateFrom) ? $data['validDateFrom'] = Carbon::parse($request->validityDateFrom)->toDateString() : "");
@@ -7489,7 +7491,8 @@ use FunctionsClientController;
 					if ($ChckPassword == true) 
 					{
 						$pharCOCUP = $xrayCOCUP = null;
-						$status = ($request->isOk == '1') ? 'A' : 'RA';
+						$status = ($request->isOk == '1') ? 'FA' : 'RA';
+						// $status = ($request->isOk == '1') ? 'A' : 'RA';
 						if($reqType == 'machines'){
 							$data = array(
 					 			'isRecoFDA' => $request->isOk,

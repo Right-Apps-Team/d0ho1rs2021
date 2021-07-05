@@ -370,6 +370,7 @@
                           <p class="text-center mt-3">Evaluation of: <span class="font-weight-bold">{{ucfirst($mem->fname . ' ' . $mem->lname)}}</span>
 
                               @if($currentUser->uid != $mem->uid)
+                              
                                   <a target="_blank" class="btn btn-primary" href="{{url('employee/dashboard/processflow/floorPlan/parts/'.$AppData->appid.'/'.$revisionCountCurent.'/'.$mem->uid)}}"><i class="fa fa-clone" aria-hidden="true"></i> Copy Result</a>
                               @endif
                             

@@ -43,6 +43,7 @@
         </div>
     </div>
     <!-- Modals -->
+    @include('dashboard.client.gen_initial_data')
     
     @include('dashboard.client.modal.confirm-submit')
     @include('dashboard.client.forms.parts.permit-to-construct.ptc_scripts')
@@ -59,6 +60,6 @@
     </script>
     <script src="{{asset('ra-idlis/public/js/clients/application-form.js')}}"></script>
     @include('client1.cmp.footer')
-    @include('dashboard.client.gen_initial_data')
+   
 </body>
 @endsection

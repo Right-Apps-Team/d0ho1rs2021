@@ -120,7 +120,7 @@
 				@endif
 			</tbody>
 		</table>
-		<div class="container mt-5 text-danger">
+		<!-- <div class="container mt-5 text-danger">
 			{{-- <p class="text-danger">Note:</p> --}}
 			<ul class = "list-unstyled">
 				<li><span class="text-danger">REFERENCE AND GUIDANCE: </span><br> Incomplete Attachment shall be a ground for the denial of this application</li>
@@ -135,9 +135,9 @@
 				</li>
 				@endif
 			</ul>
-		</div>
+		</div> -->
 		@if(strtolower($appform->hfser_id) == 'ptc' && $office == 'hfsrb')
-		<div class="container mt-5">
+		<!-- <div class="container mt-5">
 			<ul class = "list-unstyled">
 				<li><span class="text-danger">REFERENCE AND GUIDANCE:</span> For your guidance, checklist can be downloaded below</li>
 			</ul>
@@ -159,7 +159,7 @@
 					</tbody>
 				</table>
 			</div>
-		</div>
+		</div> -->
 		@endif
 		<br>
 

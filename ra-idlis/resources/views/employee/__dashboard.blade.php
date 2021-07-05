@@ -474,7 +474,34 @@
         <!-- /.box-footer -->
       </div>
     </div>
+   
+    <div id="getData88" class="getDataClass">
+      <!-- <div class="box box-solid bg-teal-gradient"> -->
+        <!-- <div class="box-header">
+          <i class="fa fa-th"></i>
 
+        
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i>
+            </button>
+            
+          </div>
+        </div>
+        <div class="box-body border-radius-none">
+          <div class="chart" id="line-chart" style="height: 250px;">
+           </div>
+        </div> -->
+        <!-- width="640" -->
+        <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSBOSAYVhQpfIkWVjkU5JCx2ZodBRqRAL3tLUsHQQ9hO63xg-5ObkL_r_a1OQOAaG2-I1AFovgWJoqf/embed?start=false&loop=false&delayms=3000" 
+        frameborder="0" width="580" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+         
+        <!-- /.box-body -->
+      <!-- </div> -->
+      <!-- /.nav-tabs-custom -->
+    </div> 
     <div id="getData1" class="getDataClass">
       <div class="box box-solid bg-teal-gradient">
         <div class="box-header">
@@ -700,7 +727,7 @@
         "pageLength": 5
       });
     })
-    var defaultData = { defaultLeft: ["getData1", "getData3", "getData5"], defaultRight: ["getData2", "getData4", "getData6"] }, dataSet = ['setDataLeft', 'setDataRight'], dataCount = ['defaultLeft', 'defaultRight'], setData = { setDataLeft: [], setDataRight: [] }, setDataCount = ['setDataLeft', 'setDataRight'], grpid = JSON.stringify({!!$r_grpid[0]->w_json!!}), n_grpid = JSON.stringify({!!$n_grpid[0]->w_custom_json!!});
+    var defaultData = { defaultLeft: ["getData88","getData1", "getData3", "getData5"], defaultRight: ["getData2", "getData4", "getData6"] }, dataSet = ['setDataLeft', 'setDataRight'], dataCount = ['defaultLeft', 'defaultRight'], setData = { setDataLeft: [], setDataRight: [] }, setDataCount = ['setDataLeft', 'setDataRight'], grpid = JSON.stringify({!!$r_grpid[0]->w_json!!}), n_grpid = JSON.stringify({!!$n_grpid[0]->w_custom_json!!});
     if(grpid != undefined || grpid != null) { defaultData = JSON.parse(grpid); } if(n_grpid != undefined || n_grpid != null) { defaultData = JSON.parse(n_grpid); }
     for(let j = 0; j < dataSet.length; j++) { if(defaultData != undefined) { if(defaultData[dataCount[j]] != undefined) { if(defaultData[dataCount[j]].length > 0) { for(let i = 0; i < defaultData[dataCount[j]].length; i++) { let setDataLeft = document.getElementById(dataSet[j]), insData = document.getElementById(defaultData[dataCount[j]][i]); if(setDataLeft != undefined || setDataLeft != null) { if(insData != undefined || insData != null) {
       setDataLeft.appendChild(insData);

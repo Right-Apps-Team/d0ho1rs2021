@@ -11,6 +11,25 @@
 			font-family: ArialUnicodeMs;
 			src: url({{ asset('ra-idlis/public/fonts/ARIALUNI.TTF') }});
 		}
+		.watermarked {
+			position: relative;
+		}
+		.watermarked:after {
+			content: "";
+			display: block;
+			width: 90%;
+			height: 100%;
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			background-image: url("{{asset('ra-idlis/public/img/watermark/hfsrb.png')}}");
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			opacity: 0.25;
+			z-index: 0;
+			-webkit-print-color-adjust: exact;
+		}
 	</style>
 	<div class="container mt-5">
 		<div class="card">
@@ -32,7 +51,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="card-body">
+			<div class="card-body watermarked">
 				<br>
 				<span class="card-title text-center" style="font-family: ArialUnicodeMs;font-size: 42pt"><center><strong>LICENSE TO OPERATE</strong></center></span><br>
 				<br>
@@ -82,7 +101,8 @@
 					<div class="col-md-1" style="display: inline">
 						:</div>
 					<div class="col-md-5" style="float:left;display: inline;font-family: Century Gothic; font-size: 13">
-						{{((isset($facilityTypeId)) ? $facilityTypeId : "No Health Service")}}
+						{{((isset($facname)) ? $facname : "No Health Service")}}
+						<!-- {{((isset($facilityTypeId)) ? $facilityTypeId : "No Health Service")}} -->
 					</div>
 					<div class="col-md-1" style="display: inline">
 						&nbsp;</div>
@@ -121,7 +141,8 @@
 					<div class="col-md-1" style="display: inline">
 						:</div>
 					<div class="col-md-5" style="float:left;display: inline;font-family: Century Gothic; font-size: 13">
-						{{ucwords(((isset($retTable[0])) ? ($retTable[0]->rgn_desc.', '.$retTable[0]->provname.', '.$retTable[0]->cmname.', '.$retTable[0]->brgyname.', '. $retTable[0]->street_number. $retTable[0]->street_name.' '.$retTable[0]->street_number) : "CURRENT_LOCATION"))}}
+					{{((isset($retTable[0])) ? ($retTable[0]->street_name.', '.$retTable[0]->street_number.', '.$retTable[0]->brgyname.', '.$retTable[0]->cmname.', '.$retTable[0]->provname.' '.$retTable[0]->rgn_desc) : 'No Location.')}}
+						<!-- {{ucwords(((isset($retTable[0])) ? ($retTable[0]->rgn_desc.', '.$retTable[0]->provname.', '.$retTable[0]->cmname.', '.$retTable[0]->brgyname.', '. $retTable[0]->street_number. $retTable[0]->street_name.' '.$retTable[0]->street_number) : "CURRENT_LOCATION"))}} -->
 					</div>
 					<div class="col-md-1" style="display: inline">
 						&nbsp;</div>
@@ -299,6 +320,10 @@
 
 			</div>
 			<div class="card-footer">
+			
+			<center><i><b>This license isrenewable annually andsubject to suspension orrevocation ifthe hospital isfound violating RA 4226 and related
+issuances.</b></i></center>
+<br/><br/>
 				<p class="text-muted text-small" style="float: right; padding: 0; margin: 0;">© All Rights Reserved {{date('Y')}}</p>
 			</div>
 		</div><br>

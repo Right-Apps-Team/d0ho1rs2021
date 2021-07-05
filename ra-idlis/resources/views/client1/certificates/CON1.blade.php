@@ -11,6 +11,14 @@
 			font-family: ArialUnicodeMs;
 			src: url({{ asset('ra-idlis/public/fonts/ARIALUNI.TTF') }});
 		}
+		.headDetL{
+			font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+			font-size: 12px;
+		}
+		.headDetR{
+			font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+			font-size: 13px;
+		}
 	</style>
 	<div class="container mt-5">
 		<div class="card">
@@ -43,38 +51,39 @@
 				<h5 class="text-center">is herby granted to</h5><br>
 				<h3 class="text-center text-uppercase"><strong>{{((isset($retTable[0]->facilityname)) ? $retTable[0]->facilityname : "CURRENT_FACILITY")}}</strong></h3><br>
 				<h5 class="text-center">located at</h5><br>
-				<h4 class="text-center"><strong>{{((isset($retTable[0])) ? ($retTable[0]->rgn_desc.', '.$retTable[0]->provname.', '.$retTable[0]->cmname.', '.$retTable[0]->brgyname.', '.$retTable[0]->street_name) : "CURRENT_LOCATION")}}</strong></h4><br>
+				<h4 class="text-center"><strong>{{((isset($retTable[0])) ? ($retTable[0]->street_name.', '.$retTable[0]->street_number.', '.$retTable[0]->brgyname.', '.$retTable[0]->cmname.', '.$retTable[0]->provname.' '.$retTable[0]->rgn_desc) : 'No Location.')}}</strong></h4><br>
+				<!-- <h4 class="text-center"><strong>{{((isset($retTable[0])) ? ($retTable[0]->rgn_desc.', '.$retTable[0]->provname.', '.$retTable[0]->cmname.', '.$retTable[0]->brgyname.', '.$retTable[0]->street_name) : "CURRENT_LOCATION")}}</strong></h4><br> -->
 				<br>
 				<div class="row">
 					<div class="col-md-6">
-						<p style="float: right;">Level of Hospital :</p>
+						<p style="float: right;" class="headDetL">Level of Hospital :</p>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-6 headDetR">
 						<p><strong>{{((isset($serviceId)) ? (str_replace(',', ', ', $serviceId)) : 'LEVEL_1')}}</strong></p>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-6">
-						<p style="float: right;">Bed Capacity :</p>
+						<p style="float: right;" class="headDetL">Bed Capacity :</p>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-6 headDetR">
 						<p><strong>{{((isset($otherDetails->ubn)) ? abs($otherDetails->ubn) : (isset($retTable[0]->noofbed) ? abs($retTable[0]->noofbed) : 0) )}} Bed(s)</strong></p>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-6">
-						<p style="float: right;">Date Issued :</p>
+						<p style="float: right;" class="headDetL">Date Issued :</p>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-6 headDetR">
 						<p><strong>{{((isset($retTable[0]->t_date)) ? date("F j, Y", strtotime($retTable[0]->t_date)) : 'DATE_ISSUED')}}</strong></p>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-6">
-						<p style="float: right;">Validity Period :</p>
+						<p style="float: right;" class="headDetL">Validity Period :</p>
 						<!-- <p style="float: right;">Validity Until :</p> -->
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-6 headDetR">
 						<p><strong>{{((isset($retTable[0]->t_date)) ? date("F j, Y", strtotime($retTable[0]->t_date)) : 'DATE_ISSUED')}} to {{((isset($retTable[0]->t_date)) ? date("F j, Y", ((strtotime($retTable[0]->t_date)-(86400*2))+15552000)) : 'DATE_ISSUED')}}</strong></p>
 					</div>
 				</div>
@@ -83,6 +92,10 @@
 				<br><br><br>
 				<h6 class="text-uppercase text-center" style="font-size: 40px;"><strong>{{$director->directorInRegion}}{{-- CORAZON I. FLORES, MD, MPH, CESO IV,Director IV --}}{{-- {{((isset($sec_name)) ? $sec_name->sec_name : 'DIRECTOR')}} --}}</strong></h6>
 				<p class="text-small text-center text-muted">{{$director->pos}}</p>
+				<br/>
+				<br/>
+				<hr/>
+				<i><b>This certificate ofneed is subject to suspension orrevocation ifthe facility isfound vloIating A0 2006-0004 and related issuances.</b></i>
 			</div>
 			<div class="card-footer">
 				<p class="text-muted text-small" style="float: left; padding: 0; margin: 0;">

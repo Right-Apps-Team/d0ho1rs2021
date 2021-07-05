@@ -297,8 +297,11 @@
                     success:function(a){
                     	if(a != ""){
                         	if(a == 'succ'){
-                        		var r = confirm('Data Requirement has been submitted to FDA. Please for wait our notifications while we are processing your request. Would you like to redirect to home page for now?');
-                            	if (r == true) { window.location.href = "{{url('client1/apply')}}" } else { location.reload() };
+                        		var r = confirm('Data Requirement has been submitted to FDA. Please for wait our notifications while we are processing your request. You will be redirected to HFSRB Requirements');
+                        		// var r = confirm('Data Requirement has been submitted to FDA. Please for wait our notifications while we are processing your request. Would you like to redirect to home page for now?');
+                            	// if (r == true) { window.location.href = "asset($addresses[1])" } else { location.reload() };
+                            	if (r == true) { window.location.href = "{{url('client1/apply/app/LTO/')}}/{{$appid}}/hfsrb" } else { location.reload() };
+                            	// if (r == true) { window.location.href = "{{url('client1/apply')}}" } else { location.reload() };
 
                         	} else {
                         		alert(a);

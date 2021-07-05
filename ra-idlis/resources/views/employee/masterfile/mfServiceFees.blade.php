@@ -71,7 +71,7 @@
                                         <!-- <select  class="form-control selectpicker show-menu-arrow " name="servetype" data-style="text-dark form-control custom-selectpicker" data-size="5" data-live-search="true" required> -->
                                             <option>Please select</option>
                                             @foreach($factypes as $key => $value)
-                                            <option value="{{$value->facid}}">{{$value->facname}} {{$value->spec ? '('.$value->spec.')' : '('.$value->hgpdesc.'-'.$value->anc_name.')' }}</option>
+                                            <option value="{{$value->facid}}">{{$value->facname}} {{$value->spec ? '('.$value->spec.')' : '('.$value->hgpdesc.'-'.$value->anc_name.')' }}-{{$value->facid}}</option>
                                             @endforeach
                                         </select>
                                     </td>
