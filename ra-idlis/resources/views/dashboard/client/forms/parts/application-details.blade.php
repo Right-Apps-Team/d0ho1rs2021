@@ -68,3 +68,28 @@
     </div>
 </div>
 
+<script>
+  @if(app('request')->input('cont') == 'yes')
+
+ setTimeout(function(){  
+  document.getElementById("facility_name").disabled = true;
+  document.getElementById("street_num").disabled = true;
+  document.getElementById("street_name").disabled = true;
+  document.getElementById("zip").disabled = true;
+  document.getElementById("noofbed").disabled = true; 
+}, 2000);
+//   $( document ).ready(function() {
+//     console.log("nkkk")
+//      $("#facility_name").attr("disabled", true);
+//      $("#street_num").attr("disabled", true);
+//      $("#street_name").attr("disabled", true);
+//      $("#street_name").attr("disabled", true);
+//      $("#zip").attr("disabled", true);
+//      $("#noofbed").attr("disabled", true);
+// });
+ 
+  @endif
+
+
+</script>
+

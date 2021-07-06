@@ -1,3 +1,7 @@
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTO2cL05UOgGdExGo3BpGSWI7yB7u61GIFql-6auWdPCAebwpUo9RfuM67M3ukrZj7duMMeXp96zFtX/embed?start=true&loop=true&delayms=3000" 
+frameborder="0" width="600" 
+height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
 <table>
     <tr>
         <td>

@@ -304,7 +304,8 @@
 		                   			<div class="col-sm-11">
 		                   				<div class="row">
 		                   					<div class="col-md-10">
-		                   						<select name="prof" id="prof" class="form-control" required="">
+		                   						<!-- <select onchange="setAssignment(this.value)" name="prof"  class="form-control" required=""> -->
+		                   						<select  name="prof" id="prof" class="form-control" required="">
 				                   					<option value="">Please Select</option>
 				                   					@foreach($pos as $p)
 				                   						<option value="{{$p->posid}}" isRequired="{{$p->groupRequired}}">{{$p->posname}}</option>
@@ -326,7 +327,32 @@
 		                   						<input type="checkbox" name="pharmahead"> Make as Head of Chief Pharmacist
 		                   					</div>
 		                   					{{-- @endif --}}
+
+		                   					<!-- {{-- @if($hfsrbannexa[1]) --}}
+		                   					<div class="col-md" >
+		                   						<input type="checkbox" name="head"> Make as Head of Radiology
+		                   					</div>
+		                   					{{-- @endif --}}
+		                   					{{-- @if($hfsrbannexa[2]) --}}
+		                   					<div class="col-md" >
+		                   						<input type="checkbox" name="po"> Make as Radiation protection officer
+		                   					</div>
+		                   					{{-- @endif --}}
+		                   					{{-- @if($hfsrbannexa[3]) --}}
+		                   					<div class="col-md" >
+		                   						<input type="checkbox" name="pharmahead"> Make as Head of Chief Pharmacist
+		                   					</div>
+		                   					{{-- @endif --}} -->
+
+											<div id="mainassignment">
+												<div id="assignment">
+
+											
+												</div>
+											
+											</div>
 		                   					
+											 
 		                   				</div>
 		                   				
 		                   			</div>
@@ -490,7 +516,50 @@
 		<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 		<script src="{{asset('ra-idlis/public/js/forall.js')}}"></script>
 		<script type="text/javascript">
+		function insertAfter(referenceNode, newNode) {
+        referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+  		}
+			function setAssignment(value){
+				console.log()
+				document.getElementById("assignment").remove()
 
+				var x = document.createElement("div");
+                x.setAttribute("id",'assignment');
+                document.createElement("mainassignment").appendChild(x);
+				
+				chceb('head', ' Make as Head of Radiology');
+				chceb('po', ' Make as Radiation protection officer');
+				chceb('pharmahead', ' Make as Head of Chief Pharmacist');
+
+				
+			}
+			function chceb(name, desc){
+				var ass = document.getElementById("assignment");
+			
+				var x = document.createElement("div");
+                x.setAttribute("id",'is'+name);
+                x.setAttribute("class", "col-md");
+                ass.appendChild(x);
+
+
+
+				var ids = name+"inpt";
+				var x = document.createElement("input");
+                x.setAttribute("type", "checkbox");
+                x.setAttribute("id", ids);
+                x.setAttribute("name", name);
+				x.setAttribute("class", "custom-control-input");
+                document.getElementById("is"+name).appendChild(x);
+				
+
+                var label = document.createElement("Label");
+                label.setAttribute("for", ids);
+                label.setAttribute("class", "custom-control-label");
+                label.innerHTML = desc;
+
+                var newInput = document.getElementById(ids)
+                insertAfter(newInput, label);
+			}
 			// $(function(){
 			// 	toReq();
 			// })

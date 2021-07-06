@@ -1,7 +1,7 @@
 <script>
 var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
-console.log("mserv_cap")
-console.log(mserv_cap)
+// console.log("mserv_cap")
+// console.log(mserv_cap)
 // START OF DATA INITIALIZATION FOR VIEWING EXISTING APPLICATION
 
 
@@ -285,7 +285,7 @@ document.getElementsByName('areacode').value = 3;
     }
 
 function getFacServCharge (val = null){
-console.log("hello")
+// console.log("hello")
 
     getChargesPerApplication()
     getChargesPerAmb()
@@ -346,8 +346,8 @@ console.log("hello")
         var arrCol = facids;
         var arrCol2 = anxsel;
 
-        console.log("arrCol2")
-        console.log(arrCol2)
+        // console.log("arrCol2")
+        // console.log(arrCol2)
 
         let serv_chg = document.getElementById('serv_chg');
 				if(arrCol.length > 0){
@@ -396,8 +396,8 @@ console.log("hello")
                   
                     // console.log("thisFacid")
                     // console.log(thisFacid)
-                    console.log("sArr")
-                    console.log(sArr)
+                    // console.log("sArr")
+                    // console.log(sArr)
                 setTimeout(function(){ 
 					sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getServiceCharge')}}", "POST", true, {
 						functionProcess: function(arr) {
@@ -430,8 +430,8 @@ console.log("hello")
                             // console.log(owns)
                             // console.log("owns")
                              //appchargetemp
-                             console.log("arr New")
-                             console.log(arr)
+                            //  console.log("arr New")
+                            //  console.log(arr)
                              const distinctArr = Array.from(new Set(arr.map(s => s.facname))).map(facname => {
                             
                                return {
@@ -445,7 +445,7 @@ console.log("hello")
                                        s.facname === facname).chgapp_id
                               }
                             })
-                            console.log(owns)
+                            // console.log(owns)
 
                          
 							if(serv_chg != undefined || serv_chg != null) {
@@ -460,14 +460,14 @@ console.log("hello")
                                                    amt = 0;
                                                }
 
-                                              console.log(owns)
+                                            //   console.log(owns)
                                                 if(  owns == "G" ){
                                                     if(distinctArr[i]['facid'] == "H" ||distinctArr[i]['facid'] == "H2" || distinctArr[i]['facid'] == "H3" ){
                                                         amt = 0
                                                     }
                                                     
                                                 }
-                                                console.log(amt)
+                                                // console.log(amt)
                                                 //  ta.push({reference : distinctArr[i]['facname'],amount: distinctArr[i]['amt'], chgapp_id:  distinctArr[i]['chgapp_id'] }) //appcharge
                                                 
                                                 if(distinctArr[i]['chgapp_id']){
@@ -805,7 +805,7 @@ return unique;
     }
 
     function show_hosplevel_anx(selected, ancData, hgpid) {
-        console.log("Received")
+        // console.log("Received")
        
         getFacServCharge()
         //  var ancData = getAncillary();
@@ -862,12 +862,12 @@ return unique;
         var ar0 = arr[0].filter(function(v) {//get the services of hospital type
                 return v.hgpid == 6;
         })
-console.log(selected)
+// console.log(selected)
 
         var ar1 = arr[1].filter(function(v) {
                 return v.facid == selected;//get the Id of selected hospital level
         })
-        console.log("ar1")
+        // console.log("ar1")
       
         
         var h1Facid = arr[1].filter(function(v) {//get the Id of hospital level1
@@ -931,7 +931,7 @@ console.log(selected)
         var h1mt = servs.filter(function( o){
         return allH1GroupName.indexOf(o.grphrz_name) >= 0;
         });
-          console.log(h1mt)
+        //   console.log(h1mt)
         // h1mt = h1mt.filter(function(v) {
         //         return v.servtype_id == ar1[0].servtype_id;
         // })
@@ -1040,17 +1040,17 @@ console.log(selected)
 
     function getAncillary(selected, hgpid){
         let sArr = ['_token='+document.getElementsByName('_token')[0].value, 'facid[]=H', 'facid[]=H2', 'facid[]=H3'];
-        console.log("sArr")
-        console.log(sArr)
-        console.log(selected)
-        console.log(hgpid)
-        console.log("hgpid")
+        // console.log("sArr")
+        // console.log(sArr)
+        // console.log(selected)
+        // console.log(hgpid)
+        // console.log("hgpid")
         let resp = []
         var nas;
         sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getGoAncillary')}}", "POST", true, {
 					functionProcess: function(arr) {
-                       console.log("arrgggg")
-                       console.log(arr)
+                    //    console.log("arrgggg")
+                    //    console.log(arr)
                         show_hosplevel_anx(selected, arr, hgpid)
                     }
 				});
@@ -1105,7 +1105,7 @@ console.log(selected)
             // console.log(e.target.className)
 
             if(e.target.className != "custom-control-input exAddRenew"){
-                console.log("WHAAAT")
+                // console.log("WHAAAT")
             renewAddOnSelect(e.target.value)
             }
         }
@@ -1160,12 +1160,12 @@ console.log(selected)
         removeAddOnRows()
         $('.addOnServ').remove()
         $('#addOnServ').remove()
-        console.log("get id")
-        console.log(id)
+        // console.log("get id")
+        // console.log(id)
 
         var newAddOns = getAddonServices(id);
-       console.log("newAddOns")
-       console.log(newAddOns)
+    //    console.log("newAddOns")
+    //    console.log(newAddOns)
 
         var newSel = document.createElement("select");
         newSel.setAttribute("class", "form-control");
@@ -1206,7 +1206,7 @@ console.log(selected)
 
 
     function getAddonServices(theId) {
-        console.log("get add on")
+        // console.log("get add on")
         let arrAddon = [];
         if (typeof(theId) !== 'undefined' && theId.length) {
             // let arrAddon = [];
@@ -1297,9 +1297,9 @@ console.log(selected)
 
 
 if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
-    console.log("typee")
-    console.log('{!! $apptypenew !!}')
-    console.log("typee")
+    // console.log("typee")
+    // console.log('{!! $apptypenew !!}')
+    // console.log("typee")
 
     var apptypenew = '{!! $apptypenew !!}';
 
@@ -1358,8 +1358,8 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
         var cmid ='{!!((count($fAddress) > 0) ? $fAddress[0]->cmid: "")!!}';
         var brgyid ='{!!((count($fAddress) > 0) ? $fAddress[0]->brgyid: "")!!}';
         var noofdialysis ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofdialysis: "")!!}';
-console.log("Appid")
-console.log(appid)
+// console.log("Appid")
+// console.log(appid)
 
         // setTimeout(function(){  
         var ocidInpt = document.getElementById("ocid");
@@ -1396,7 +1396,7 @@ if(ocid){
 
 const fetchClassification1 = async (e) => {
     const ocid = $("#ocid").val();
-    console.log('EYYY, ', ocid);
+    // console.log('EYYY, ', ocid);
     if( ocid ) {
         const data = { 'ocid' : ocid }
         callApi('/api/classification/fetch', data, 'POST').then(classification => {
@@ -1424,11 +1424,11 @@ const fetchClassification1 = async (e) => {
 }
 
 const fetchSubClass1 = async (e) => {
-    console.log("received")
+    // console.log("received")
     const ocido = $("#ocid").val();
     const classido = $("#classification").val();
-    console.log("classid")
-    console.log(classido)
+    // console.log("classid")
+    // console.log(classido)
     if(ocido ) {
         const data = { 'ocid' : ocid, 'classid' : classid }
         callApi('/api/classification/fetch', data, 'POST').then(classification => {
@@ -1450,9 +1450,9 @@ const fetchSubClass1 = async (e) => {
     }
 }
 
-         console.log("ocidInpt")
-         console.log(ocidInpt)
-         console.log(ocid)
+        //  console.log("ocidInpt")
+        //  console.log(ocidInpt)
+        //  console.log(ocid)
 
       document.getElementById("appid").value = appid;
 
@@ -1527,6 +1527,8 @@ const fetchSubClass1 = async (e) => {
 
                                         var getHGPID = servFacArray[0];
                                         var dbhgpid = getHGPID[0].hgpid;
+                                        console.log("servFacArray")
+                                        console.log(servFacArray)
                                         
                                 type_of_fac(dbhgpid) //display facilities
 

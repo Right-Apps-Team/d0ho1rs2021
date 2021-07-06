@@ -677,7 +677,7 @@ class FunctionsClientController extends Controller {
 			$arrRet = [];
 			if(! empty($appid)) {
 				$sql2 = "SELECT DISTINCT facid FROM `x08_ft` WHERE appid = '$appid'";
-				$sql1 = "SELECT DISTINCT hgpid FROM facilitytyp WHERE facid IN ($sql2)";
+				$sql1 = "SELECT DISTINCT hgpid FROM facilitytyp WHERE facid IN ($sql2) ORDER BY hgpid DESC";
 				$sql3 = "SELECT facid, facname FROM facilitytyp WHERE facid IN ($sql2)";
 				$sql4 = "SELECT hgpid, hgpdesc FROM hfaci_grp WHERE hgpid IN ($sql1)";
 				$arrRet = [DB::select($sql1), DB::select($sql2), DB::select($sql3), DB::select($sql4)];
@@ -687,6 +687,21 @@ class FunctionsClientController extends Controller {
 			return $e;
 		}
 	}
+	// public static function getServFaclDetails($appid = "") {
+	// 	try {
+	// 		$arrRet = [];
+	// 		if(! empty($appid)) {
+	// 			$sql2 = "SELECT DISTINCT facid FROM `x08_ft` WHERE appid = '$appid'";
+	// 			$sql1 = "SELECT DISTINCT hgpid FROM facilitytyp WHERE facid IN ($sql2)";
+	// 			$sql3 = "SELECT facid, facname FROM facilitytyp WHERE facid IN ($sql2)";
+	// 			$sql4 = "SELECT hgpid, hgpdesc FROM hfaci_grp WHERE hgpid IN ($sql1)";
+	// 			$arrRet = [DB::select($sql1), DB::select($sql2), DB::select($sql3), DB::select($sql4)];
+	// 		}
+	// 		return $arrRet;
+	// 	} catch(Exception $e) {
+	// 		return $e;
+	// 	}
+	// }
 	public static function getServiceCharge($arrVal = [], $hfser = "", $facmode = "", $extraHgpid = "", $aptid = "") {
 		try {
 			$retArr = [];

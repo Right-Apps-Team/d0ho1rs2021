@@ -215,15 +215,15 @@
                           </tr>
                           <tr>
                             <th scope="row">Time :</th>
-                            <td>@isset($AppData->CashierApproveTime) <span style="color:green;font-weight: bolder">{{$AppData->subClassid != 'ND' ?     $AppData->FCashierApproveTime :  'Not Available'}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
+                            <td>@isset($AppData->CashierApproveTime) <span style="color:green;font-weight: bolder">{{$AppData->subClassid != 'ND' ||  $AppData->hfser_id != 'LTO'?     $AppData->FCashierApproveTime :  'Not Available'}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
                           </tr>
                           <tr>
                             <th scope="row">Date :</th>
-                            <td>@isset($AppData->CashierApproveDate) <span style="color:green;font-weight: bolder">{{$AppData->subClassid != 'ND' ?  $AppData->FCashierApproveDate:  'Not Available' }}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
+                            <td>@isset($AppData->CashierApproveDate) <span style="color:green;font-weight: bolder">{{$AppData->subClassid != 'ND'  ||  $AppData->hfser_id != 'LTO' ?  $AppData->FCashierApproveDate:  'Not Available' }}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
                           </tr>
                           <tr>
                             <th scope="row">Evaluated by:</th>
-                            <td>@isset($AppData->CashierApproveBy) <span style="color:green;font-weight: bolder">{{$AppData->subClassid != 'ND' ? $AppData->CashierEvaluator:  'Not Available'}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
+                            <td>@isset($AppData->CashierApproveBy) <span style="color:green;font-weight: bolder">{{$AppData->subClassid != 'ND'  ||  $AppData->hfser_id != 'LTO' ? $AppData->CashierEvaluator:  'Not Available'}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
                           </tr>
                         </tbody>
                       </table>  
@@ -233,7 +233,7 @@
                     <center>
                       @isset($AppData)
                         @if($AppData->CashierApproveBy != null)
-                          @if($AppData->subClassid != 'ND')
+                          @if($AppData->subClassid != 'ND'  ||  $AppData->hfser_id != 'LTO')
                           <button class="btn btn-primarys" onclick="window.location.href='{{ asset('employee/dashboard/processflow/actions') }}/{{$AppData->appid}}'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Cashier Evaluation</button>
                           @else
                           <button disabled class="btn btn-primarys">No Evaluation Available</button>
