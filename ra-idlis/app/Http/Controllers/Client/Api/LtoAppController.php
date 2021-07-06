@@ -187,6 +187,19 @@ class LtoAppController extends Controller
         if($request->appChargeAmb != ""){
         NewGeneralController::appChargeAmb($request->appChargeAmb, $appform->appid, $request->uid);}
 
+        if($request->subClassid){
+                if($request->subClassid ===  "ND"){
+                
+                            $test = DB::table('chgfil')->insert(['appform_id' => $appform->appid,'paymentMode'=> null, 'attachedFile'=>null, 'draweeBank' => null, 'number' => null, 'userChoosen' => 1, 't_date' => Date('Y-m-d',strtotime('now')) , 't_time' => Date('H:i:s',strtotime('now'))]);
+                            if($test){
+                                DB::table('appform')->where('appid',$appform->appid)->update(['isPayEval' => 1, 't_date' => date('Y-m-d'), 'status' => 'FSR']);//6-1-2021
+
+
+                                DB::table('chgfil')->where([['appform_id',$appform->appid],['chg_num','<>',null],['isPaid',null]])->update(['isPaid'=>1]);
+                                $update = DB::table('appform')->where('appid',$appform->appid)->update(['CashierApproveBy'=>"N/A",'CashierApproveDate' => Date('Y-m-d',strtotime('now')), 'CashierApproveTime' => Date('H:i:s',strtotime('now')), 'CashierApproveIp' => "N/A", 'isCashierApprove' => 1, 'proofpaystat' => 'posted']); 
+                            }
+                }
+        }
             return response()->json(
                 [
                     'id' => $appform->appid,

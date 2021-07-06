@@ -83,7 +83,7 @@
 			</table> --}}
 			@if (session()->exists('uData'))
 			<div class="col-md-12 text-left font-weight-bold text-center">
-				<a href="{{url('client1/apply/app/LTO/'.$appid.'/'.'hfsrb')}}" class="btn btn-primary">Proceed to HFSRB Requirements <i class="fa fa-chevron-right"></i> </a>
+				<a href="{{url('client1/apply/app/LTO/'.$appid.'/'.'hfsrb')}}" class="btn btn-primary">Proceed to DOH Requirements <i class="fa fa-chevron-right"></i> </a>
 			</div>
 			@endif
 			{{-- </div> --}}

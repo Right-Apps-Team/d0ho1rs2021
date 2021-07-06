@@ -24,7 +24,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb d-flex justify-content-center">
                 <li class="breadcrumb-item active text-primary"><a href="{{asset($addresses[0])}}">Application Details</a></li>
-                <li class="breadcrumb-item active"><a href="{{asset($addresses[1])}}">HFSRB Requirements</a></li>
+                <li class="breadcrumb-item active"><a href="{{asset($addresses[1])}}">DOH Requirements</a></li>
                 <li class="breadcrumb-item active"><a href="{{asset($addresses[2])}}">FDA Requirements</a></li>
                 <li class="breadcrumb-item active">Submit Requirements</li>
             </ol>
@@ -386,8 +386,16 @@
                                     data:{_token:$("input[name=_token]").val(),readyNow:true},
                                     success:function(a){
                                         if(a == 'succ'){
+                                            @if($subclass == 'ND')
+                                                 var r = confirm('This applciation is DOH Retained. You will proceed to home.');
+                                                 if (r == true) { window.location.href = "{{url('client1/apply')}}" };
+                                            @else
+
                                             var r = confirm('Requirements submitted. Proceed to Payment Method?');
                                             if (r == true) { window.location.href = "{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$appid)}}" };
+
+                                            @endif
+                                          
                                         }
                                     }
                                 })

@@ -27,6 +27,7 @@
 		      			<tr>
 							<th>Full Name</th>
 							<th>Designation/Position</th>
+							<th>Profession</th>
 							<th>Facility Assignment</th>
 							<th>Qualification</th>
 							<th>PRC License Number</th>
@@ -38,11 +39,13 @@
 						</tr>
 		      		</thead>
 		      		<tbody id="loadHere">
-		      			@foreach($cdrrhrpersonnel as $personnel)
+		      			@foreach($cdrrhrpersonnelnew as $personnel)
+		      		{{-- @foreach($cdrrhrpersonnel as $personnel) --}}	
 							<tr>
 								{{-- <td>{{$personnel->prefix . " " . $personnel->firstname . " " . $personnel->surname . " " . $personnel->suffix}}</td> --}}
 								<td>{{$personnel->name}}</td>
 								<td>{{$personnel->designation}}</td>
+								<td>{{$personnel->posname}}</td>
 								<td>{{$personnel->faciassign}}</td>
 								<td>{{$personnel->qualification}}</td>
 								<td>{{$personnel->prcno}}</td>
@@ -189,7 +192,7 @@
 	                   	<form id="personnelEdit">					
 	                   	</form>
 	                   	<div class="offset-1 col-md">
-	                   		<small class="text-danger mt-3 mb-3">NOTE: Changes and addition of personnel must be done on HFSRB Requirements</small>
+	                   		<small class="text-danger mt-3 mb-3">NOTE: Changes and addition of personnel must be done on DOH Requirements</small>
 	                   	</div>
 	                </div>
 	            </div>

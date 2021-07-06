@@ -1183,10 +1183,20 @@ class NewClientController extends Controller {
 				if(count($appDet) < 1) {
 					return redirect('client1/apply')->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'No application selected.']);
 				}
+
+				
+				// $sb = DB::table('appform')->where('appid', $appid)->first();
+				// $subclass = 'none';
+				// if(!is_null($sb->subclassid)){
+				// 	$subclass =$sb->subclassid;
+				// }
+				
+
 				$arrRet = [
 					'userInf'=>FunctionsClientController::getUserDetails(),
 					'addresses'=>$hfLocs,
 					'fAddress'=>$appDet,
+					'subclass'=> $appDet[0]->subClassid ,
 					'hideExtensions'=>$hideExtensions,
 					'appid'=>$appDet[0]->appid,
 					'hfser_id'=>$appDet[0]->hfser_id,
@@ -1477,6 +1487,10 @@ class NewClientController extends Controller {
 			if($request->isMethod('get')){
 				$inHF = array();
 				$cdrr = DB::table('cdrrpersonnel')->where('appid',$appid)->get();
+				$cdrrnew = DB::table('cdrrpersonnel')->join('hfsrbannexa', 'cdrrpersonnel.hfsrbannexaID', '=', 'hfsrbannexa.id')
+				->leftJoin('position','position.posid','hfsrbannexa.prof')
+				->select('cdrrpersonnel.*', 'position.posname')
+				->where('cdrrpersonnel.appid',$appid)->get();
 				if(count($cdrr) > 0){
 					foreach ($cdrr as $key) {
 						if(!in_array($key->id, $inHF)){
@@ -1487,6 +1501,7 @@ class NewClientController extends Controller {
 				}
 				// dd($inHF);
 				$arrRet = [
+					'cdrrpersonnelnew' => $cdrrnew,
 					'cdrrpersonnel' => $cdrr,
 					'annexa' => DB::table('hfsrbannexa')->where('appid',$appid)->whereNotIn('id',(is_array($inHF) ? [] : [$inHF]) )->get(),
 					'appid' => $appid
@@ -1569,6 +1584,12 @@ class NewClientController extends Controller {
 			if($request->isMethod('get')){
 				$inHF = array();
 				$cdrrhr = DB::table('cdrrhrpersonnel')->where('appid',$appid)->get();
+
+				$cdrrnew = DB::table('cdrrhrpersonnel')->join('hfsrbannexa', 'cdrrhrpersonnel.hfsrbannexaID', '=', 'hfsrbannexa.id')
+				->leftJoin('position','position.posid','hfsrbannexa.prof')
+				->select('cdrrhrpersonnel.*', 'position.posname')
+				->where('cdrrhrpersonnel.appid',$appid)->get();
+
 				if(count($cdrrhr) > 0){
 					foreach ($cdrrhr as $key) {
 						if(!in_array($key->id, $inHF)){
@@ -1578,6 +1599,7 @@ class NewClientController extends Controller {
 					$inHF = implode(',', $inHF);
 				}
 				$arrRet = [
+					'cdrrhrpersonnelnew' => $cdrrnew,
 					'cdrrhrpersonnel' => $cdrrhr,
 					'annexa' => DB::table('hfsrbannexa')->where('appid',$appid)->whereNotIn('id',(is_array($inHF) ? [] : [$inHF]) )->get(),
 					'appid' => $appid

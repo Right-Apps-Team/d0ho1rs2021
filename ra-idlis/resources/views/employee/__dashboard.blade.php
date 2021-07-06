@@ -495,9 +495,12 @@
            </div>
         </div> -->
         <!-- width="640" -->
-        <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSBOSAYVhQpfIkWVjkU5JCx2ZodBRqRAL3tLUsHQQ9hO63xg-5ObkL_r_a1OQOAaG2-I1AFovgWJoqf/embed?start=false&loop=false&delayms=3000" 
+        <!-- <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSBOSAYVhQpfIkWVjkU5JCx2ZodBRqRAL3tLUsHQQ9hO63xg-5ObkL_r_a1OQOAaG2-I1AFovgWJoqf/embed?start=false&loop=false&delayms=3000" 
         frameborder="0" width="580" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-         
+          -->
+          <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQGwCqb08-Q1O47roBEYdCqshGnmUHBXrta7XZ6-6oX_Sp1rUNLxYIvGH8LuGXO0eJMSRltVL4Rv4P5/embed?start=true&loop=true&delayms=3000" frameborder="0" 
+            width="580" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+    
         <!-- /.box-body -->
       <!-- </div> -->
       <!-- /.nav-tabs-custom -->

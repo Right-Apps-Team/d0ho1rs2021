@@ -200,7 +200,7 @@
 		@include('client1.cmp.footer')
 		<script>
 			onStep(3);
-			slider(['hfsrb','annexa',{{$appid}}],['app','LTO',{{$appid}},'hfsrb','Proceed To Submission of HFSRB Requirements']);
+			slider(['hfsrb','annexa',{{$appid}}],['app','LTO',{{$appid}},'hfsrb','Proceed To Submission of DOH Requirements']);
 		</script>
 		<script>
 			$(function(){

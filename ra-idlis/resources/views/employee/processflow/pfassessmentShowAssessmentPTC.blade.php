@@ -308,14 +308,14 @@
 												{{-- end yes --}}
 												{{-- no --}}
 												<div class="custom-control custom-radio">
-												<input type="radio" name="{{$fourthHeader->id}}[comp]" class="custom-control-input" value="false" id="customCheck2{{$fourthHeader->id}}">
-												<label class="custom-control-label text-danger times" for="customCheck2{{$fourthHeader->id}}"><i class="fa fa-times" aria-hidden="true"></i></label>
+												<input type="radio" name="{{$fourthHeader->id}}[comp]" onclick="showRemark(this,{{$fourthHeader->id}})" class="custom-control-input" value="false" id="customCheck2{{$fourthHeader->id}}">
+												<label class="custom-control-label text-danger times"  for="customCheck2{{$fourthHeader->id}}"><i class="fa fa-times" aria-hidden="true"></i></label>
 												</div>&nbsp;&nbsp;
 												{{-- end no --}}
 												{{-- na --}}
 												<div class="custom-control custom-radio">
 												<input type="radio" name="{{$fourthHeader->id}}[comp]" class="custom-control-input" value="NA" id="customCheck3{{$fourthHeader->id}}">
-												<label class="custom-control-label text-danger na" onclick="showRemark(this,{{$fourthHeader->id}})" for="customCheck3{{$fourthHeader->id}}">N/A</label>
+												<label class="custom-control-label text-danger na"  for="customCheck3{{$fourthHeader->id}}">N/A</label>
 												</div>
 												{{-- end na --}}
 												</div>
@@ -360,14 +360,14 @@
 												{{-- end yes --}}
 												{{-- no --}}
 												<div class="custom-control custom-radio">
-												<input type="radio" name="{{$fourthHeader->id}}[comp]" class="custom-control-input" value="false" id="customCheck12{{$fourthHeader->id}}">
+												<input type="radio" name="{{$fourthHeader->id}}[comp]" onclick="showRemark(this,{{$fourthHeader->id}})" class="custom-control-input" value="false" id="customCheck12{{$fourthHeader->id}}">
 												<label class="custom-control-label text-danger times" for="customCheck12{{$fourthHeader->id}}"><i class="fa fa-times" aria-hidden="true"></i></label>
 												</div>&nbsp;&nbsp;
 												{{-- end no --}}
 												{{-- NA --}}
 												<div class="custom-control custom-radio">
 												<input type="radio" name="{{$fourthHeader->id}}[comp]" class="custom-control-input" value="NA" id="customCheck13{{$fourthHeader->id}}">
-												<label class="custom-control-label text-danger na" onclick="showRemark(this,{{$fourthHeader->id}})" for="customCheck13{{$fourthHeader->id}}">N/A</label>
+												<label class="custom-control-label text-danger na"  for="customCheck13{{$fourthHeader->id}}">N/A</label>
 												</div>
 												{{-- end NA --}}
 												</div>

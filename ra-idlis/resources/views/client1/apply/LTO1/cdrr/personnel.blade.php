@@ -26,6 +26,7 @@
 		      		<thead style="background-color: #428bca; color: white" id="theadapp">
 		      			<tr>
 							<th>Name</th>
+							<th>Profession</th>
 							<th>Designation/Position</th>
 							<th>TIN</th>
 							<th>Email</th>
@@ -37,9 +38,12 @@
 						</tr>
 		      		</thead>
 		      		<tbody id="loadHere">
-		      			@foreach($cdrrpersonnel as $personnel)
+		      			@foreach($cdrrpersonnelnew as $personnel)
+		      			{{-- @foreach($cdrrpersonnel as $personnel) --}}
 							<tr>
 								<td>{{$personnel->name}}</td>
+								<td>{{$personnel->posname}}</td>
+							
 								{{-- <td>{{$personnel->pos}}</td> --}}
 								<td>{{$personnel->designation}}</td>
 								<td>{{$personnel->tin}}</td>
@@ -180,7 +184,7 @@
 	                   	<form id="personnelEdit">					
 	                   	</form>
 	                   	<div class="offset-1 col-md">
-	                   		<small class="text-danger mt-3 mb-3">NOTE: Changes and addition on personnel must be done on HFSRB Requirements</small>
+	                   		<small class="text-danger mt-3 mb-3">NOTE: Changes and addition on personnel must be done on DOH Requirements</small>
 	                   	</div>
 	                </div>
 	            </div>

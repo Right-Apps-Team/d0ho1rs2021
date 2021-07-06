@@ -147,7 +147,8 @@
 									
 							  @endif
 									    <div style="margin-left: 10px;margin-right: 10px;">
-									    <a class="dropdown-item  " style="border-radius: 3px;"  href="{{asset('client1/apply/app/'.$each[0]->hfser_id.'/')}}/{{$each[0]->appid}}/hfsrb">HFSRB Requirements</a>
+									    <a class="dropdown-item  " style="border-radius: 3px;"  href="{{asset('client1/apply/app/'.$each[0]->hfser_id.'/')}}/{{$each[0]->appid}}/hfsrb">DOH Requirements</a>
+									    <!-- <a class="dropdown-item  " style="border-radius: 3px;"  href="{{asset('client1/apply/app/'.$each[0]->hfser_id.'/')}}/{{$each[0]->appid}}/hfsrb">HFSRB Requirements</a> -->
 									    </div>	
 							  </div>
 							</div>

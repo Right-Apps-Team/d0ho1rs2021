@@ -138,7 +138,7 @@
 								<td>{{ucfirst($personnel->firstname)}}</td>
 								<td>{{ucfirst($personnel->middlename)}}</td>
 								<td>{{ucfirst($personnel->suffix)}}</td>
-								<td>{{ucfirst($personnel->posname)}}</td>
+								<td>{{ucfirst($personnel->posname)}} </td>
 								<td>{{$personnel->prcno}}</td>
 								{{-- <td>{{$personnel->validityPeriodFrom}}</td> --}}
 								<td>{{$personnel->validityPeriodTo}}</td>

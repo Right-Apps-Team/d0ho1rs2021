@@ -455,10 +455,10 @@
             region = $("#region option:selected").text();
             let errMessage = 'Please fill up the following fields: ';
             let isError = false;
-            if (!street_number) {
-                isError = true;
-                errMessage = errMessage + 'Street Number';
-            }
+            // if (!street_number) {
+            //     isError = true;
+            //     errMessage = errMessage + 'Street Number';
+            // }
             if (!street_name) {
                 if (isError) {
                     errMessage = errMessage + ', Street Name';
