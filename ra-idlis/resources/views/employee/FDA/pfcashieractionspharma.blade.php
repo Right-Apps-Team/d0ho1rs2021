@@ -31,7 +31,7 @@
           <input type="" id="token" value="{{ Session::token() }}" hidden>
            Cashier Evaluation (PHARMACY) <span class="optnTD" style="display: none;">(Overide Payment Mode)</span>&nbsp;
            <button class="btn btn-primary" onclick="window.history.back();">Back</button>
-           <input style="float: right; width: 13%; background-color: {{$AppData->proofpaystatPhar == 'posted' ? '#BDE5F8' : 'orange'}}"  class="form-control" type="text" disabled value="{{$AppData->proofpaystatPhar == 'posting' ? 'For Posting' : ( $AppData->proofpaystatPhar == 'posted' ? 'Posted' : 'Status Not Verified')}}">
+           <input style="float: right; width: 13%; background-color: {{$AppData->proofpaystatPhar == 'posted' ? '#BDE5F8' : 'orange'}}"  class="form-control" type="text" disabled value="{{$AppData->proofpaystatPhar == 'posting' ? 'For Posting' : ( $AppData->proofpaystatPhar == 'posted' ? 'Posted' : 'For Payment')}}">
            <!-- <input style="float: right; width: 10%; background-color: {{$AppData->proofpaystatPhar == 'posted' ? '#BDE5F8' : 'orange'}}"  class="form-control" type="text" disabled value="{{$AppData->proofpaystatPhar == 'posting' ? 'For Posting' : ( $AppData->proofpaystatPhar == 'posted' ? 'Posted' : 'No Proof')}}"> -->
         
         </div>

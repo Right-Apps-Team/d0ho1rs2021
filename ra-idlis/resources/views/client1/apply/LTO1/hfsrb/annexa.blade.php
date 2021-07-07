@@ -305,7 +305,7 @@
 		                   				<div class="row">
 		                   					<div class="col-md-10">
 		                   						<!-- <select onchange="setAssignment(this.value)" name="prof"  class="form-control" required=""> -->
-		                   						<select  name="prof" id="prof" class="form-control" required="">
+		                   						<select onchange="getAss(this.value)"  name="prof" id="prof" class="form-control" required="">
 				                   					<option value="">Please Select</option>
 				                   					@foreach($pos as $p)
 				                   						<option value="{{$p->posid}}" isRequired="{{$p->groupRequired}}">{{$p->posname}}</option>
@@ -313,17 +313,18 @@
 				                   				</select>
 		                   					</div>
 		                   					{{-- @if($hfsrbannexa[1]) --}}
-		                   					<div class="col-md" style="display: none;">
+		                   					<div class="col-md" style="display: none;" id="ishead">
 		                   						<input type="checkbox" name="head"> Make as Head of Radiology
 		                   					</div>
 		                   					{{-- @endif --}}
 		                   					{{-- @if($hfsrbannexa[2]) --}}
-		                   					<div class="col-md" style="display: none;">
+		                   					<div class="col-md" style="display: none;" id="isrpo">
 		                   						<input type="checkbox" name="po"> Make as Radiation protection officer
 		                   					</div>
+											   
 		                   					{{-- @endif --}}
 		                   					{{-- @if($hfsrbannexa[3]) --}}
-		                   					<div class="col-md" style="display: none;">
+		                   					<div class="col-md" style="display: none;" id="isph">
 		                   						<input type="checkbox" name="pharmahead"> Make as Head of Chief Pharmacist
 		                   					</div>
 		                   					{{-- @endif --}}
@@ -354,7 +355,9 @@
 		                   					
 											 
 		                   				</div>
-		                   				
+		                   				<div id="isrpo1" hidden>
+		                   						<input type="checkbox" value="1" name="po1" id="po1" > Make as Radiation protection officer
+		                   					</div>
 		                   			</div>
 								</div>
 								<div class="col-md-4">
@@ -530,6 +533,31 @@
 				chceb('head', ' Make as Head of Radiology');
 				chceb('po', ' Make as Radiation protection officer');
 				chceb('pharmahead', ' Make as Head of Chief Pharmacist');
+
+				
+			}
+			function getAss(value){
+
+				console.log("value")
+				console.log(value)
+
+				if(value == "20"){
+					document.getElementById("isrpo1").removeAttribute("hidden")
+					console.log(document.getElementById("isrpo1"))
+					
+				}else{
+					document.getElementById("isrpo1").setAttribute("hidden", "hidden");
+				}
+				// console.log()
+				// document.getElementById("assignment").remove()
+
+				// var x = document.createElement("div");
+                // x.setAttribute("id",'assignment');
+                // document.createElement("mainassignment").appendChild(x);
+				
+				// chceb('head', ' Make as Head of Radiology');
+				// chceb('po', ' Make as Radiation protection officer');
+				// chceb('pharmahead', ' Make as Head of Chief Pharmacist');
 
 				
 			}

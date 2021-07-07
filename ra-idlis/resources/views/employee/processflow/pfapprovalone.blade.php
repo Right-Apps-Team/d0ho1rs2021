@@ -15,8 +15,11 @@
           <thead>
             <tr>
               <td width="100%">
-                <h2>@isset($AppData) {{$AppData->facilityname}} @endisset</h2>
-                <h5>@isset($AppData) {{strtoupper($AppData->street_name) . ' ' . $AppData->street_number}}, {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>
+                <!-- <h2>@isset($AppData) {{$AppData->facilityname}} @endisset</h2> -->
+                <h2>{{strtoupper($apdat->facilityname)}} </h2>
+                <h4>{{$apdat->hfser_id}}R{{$apdat->rgnid}}-{{$apdat->appid}} </h4>
+                
+                <h5>@isset($AppData) {{strtoupper($AppData->street_name) . ' ' .strtoupper($apdat->street_number)}}, {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>
                 <h6>@isset($AppData) Status: @if ($AppData->isApprove === null) <span style="color:blue">For Approval</span> @elseif($AppData->isApprove == 1)  <span style="color:green">Approve Application</span> @else <span style="color:red">Disapproved Application</span> @endif @endisset</h6>
               </td>
             </tr>

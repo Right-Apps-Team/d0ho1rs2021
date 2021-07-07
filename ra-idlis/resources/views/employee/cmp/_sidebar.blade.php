@@ -1305,7 +1305,8 @@
 
                                 <li>
 
-                                    <a href="{{asset('employee/dashboard/others/surveillance/survact')}}">&nbsp;&nbsp;Surveillance Activity</a>
+                                    <a href="{{asset('employee/dashboard/others/surveillance/survact')}}">&nbsp;&nbsp;Recommendation</a>
+                                    <!-- <a href="{{asset('employee/dashboard/others/surveillance/survact')}}">&nbsp;&nbsp;Surveillance Activity</a> -->
 
                                 </li>
 
@@ -1338,7 +1339,8 @@
 
                                 <li>
 
-                                    <a href="{{asset('employee/dashboard/others/surveillance/recommendation')}}">&nbsp;&nbsp;Recommendation</a>
+                                    <a href="{{asset('employee/dashboard/others/surveillance/recommendation')}}">&nbsp;&nbsp;Verdict</a>
+                                    <!-- <a href="{{asset('employee/dashboard/others/surveillance/recommendation')}}">&nbsp;&nbsp;Recommendation</a> -->
                                     <!-- <a href="{{asset('employee/dashboard/others/surveillance/recommendation')}}">&nbsp;&nbsp;Status Report of Surveyed HF</a> -->
 
                                 </li>

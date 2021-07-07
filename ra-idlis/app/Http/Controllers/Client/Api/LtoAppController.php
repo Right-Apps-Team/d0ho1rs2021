@@ -259,6 +259,7 @@ class LtoAppController extends Controller
     {
 
         $ptcapp = ApplicationForm::where('appid', $appid)->first();
+        $facids =  DB::table('x08_ft')->where([['appid', $appid]])->get();
         $ponly = DB::table('ptc')->where([['appid', $appid]])->first();
        
         $appform = new ApplicationForm;
@@ -303,8 +304,17 @@ class LtoAppController extends Controller
         // $appform->noofsatellite         = $ptcapp->noofsatellite;
         $appform->aptid                 = $ptcapp->aptid;
         $appform->savingStat            = "partial";
+        $appform->hgpid                 = $ptcapp->hgpid;
+
+        
 
         $appform->save();
+
+        // $this->ltoAppDetSave($facids, $appform->appid, $request->uid);
+        foreach($facids as $f){
+            DB::insert('insert into x08_ft (uid, appid, facid) values (?, ?, ?)', [$ptcapp->uid, $appform->appid, $f->facid]);
+        }
+      
 
         return redirect('client1/apply/app/LTO/'.$appform->appid.'?cont=yes');
 

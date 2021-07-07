@@ -60,7 +60,8 @@
 					                     	 @endif
 					                    @endif
 				                  	</td>
-				                  	<td class="font-weight-bold" style="text-align:center">{{isset($value->vdesc) ? $value->vdesc : (isset($value->s_ver_others) ? $value->s_ver_others : 'No Recommendation Yet') }}</td>
+				                  	<td class="font-weight-bold" style="text-align:center">{{isset($value->verdict) ? ucfirst($value->verdict) :  'No Recommendation Yet' }}</td>
+				                  	<!-- <td class="font-weight-bold" style="text-align:center">{{isset($value->vdesc) ? $value->vdesc : (isset($value->s_ver_others) ? $value->s_ver_others : 'No Recommendation Yet') }}</td> -->
         							@if($value->hasViolation != "")
         								<td style="text-align:center">
         									<button type="btn" class="btn btn-danger" data-toggle="modal" data-target="#sMonModal" onclick=" $('#vDetails').empty().append('{{$value->violation}}'); ">
@@ -115,9 +116,12 @@
 						                    @endif --}}
 
 						                    {{-- @if($value->hasLOE != "" && $value->survAct != "CDO") --}}
-	        									<button class="btn btn-outline-success" title="Recommendation" data-toggle="modal" data-target="#recMonModal" @if($value->hfsrbno == "" || $value->recommendation != "") hidden @endif onclick="recommendationModal('{{$value->survid}}', '{{$value->appid}}', '{{$value->date_issued}}', '{{$value->name_of_faci}}', '{{AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc}}', '{{$value->hfsrbno}}')">
+	        									<button class="btn btn-outline-success" title="Recommendation" data-toggle="modal" data-target="#recMonModal" onclick="recommendationModal('{{$value->survid}}', '{{$value->appid}}', '{{$value->date_issued}}', '{{$value->name_of_faci}}', '{{AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc}}', '{{$value->hfsrbno}}')">
 							                		<i class="fa fa-sticky-note" aria-hidden="true"></i>
 							                	</button>
+												<!-- <button class="btn btn-outline-success" title="Recommendation" data-toggle="modal" data-target="#recMonModal" @if($value->hfsrbno == "" || $value->recommendation != "") hidden @endif onclick="recommendationModal('{{$value->survid}}', '{{$value->appid}}', '{{$value->date_issued}}', '{{$value->name_of_faci}}', '{{AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc}}', '{{$value->hfsrbno}}')">
+							                		<i class="fa fa-sticky-note" aria-hidden="true"></i>
+							                	</button> -->
 												@if($value->supportDoc)
 												
 
@@ -331,7 +335,8 @@
 	    	<div class="modal-content " style="border-radius: 0px;border: none;">
 	        	<div class="modal-body text-justify" style=" background-color: #272b30;color: white;">
 		          	<h5 class="modal-title text-center">
-		          		<strong>Recommendation</strong>
+		          		<strong>Verdict</strong>
+		          		<!-- <strong>Recommendation</strong> -->
 		          		<span class="btn button-outline-primary" data-toggle="tooltip" title="" data-html="true" style="cursor: pointer" data-original-title="<b style='color:yellow'>WARNING</b>, submitting recommendation is irreversible.">
 			              <i class="fa fa-question-circle" aria-hidden="true"></i>
 			            </span>
@@ -376,7 +381,7 @@
 			              	<hr>
 
 			              	{{-- recommendation --}}
-			              	<div class="row mb-2">
+			              	<!-- <div class="row mb-2">
 			              		<div class="col-sm-12 w-100 mb-2">
 			              			RECOMMENDATION:
 			              		</div>
@@ -405,7 +410,7 @@
 					            	@endforeach --}}
 					            	<span id="extras"></span>
 					            </div>
-							</div>
+							</div> -->
 
 							<hr>
 
@@ -414,12 +419,14 @@
 									VERDICT:
 								</div>
 								<div class="col-sm-12">
-									<select class="form-control w-100" name="recverdict" onchange="recextrachange(this)" id="recvselect" data-parsley-required-message="<b>*Verdict</b> required" required data-parsley="recrecom" required>
+								<textarea class="form-control w-100" name="recverdict">
+								</textarea>
+									<!-- <select class="form-control w-100" name="recverdict" onchange="recextrachange(this)" id="recvselect" data-parsley-required-message="<b>*Verdict</b> required" required data-parsley="recrecom" required>
 										<option selected disabled hidden value="">Select a verdict</option>
 										@foreach($AllVer as $key => $value)
 											<option value="{{$value->vid}}">{{$value->vdesc}}</option>
 										@endforeach
-									</select>
+									</select> -->
 								</div>
 							</div>
 

@@ -366,11 +366,20 @@
 
 				         	<div class="row mb-3">
 				         		<div class="col-sm-5 w-100">
-				         			Date of Surveillance:
+				         			Surveillance Date (From):
 				         		</div>
 
 				         		<div class="col-sm-7">
-				         			<input class="form-control w-100" type="date" name="date" required data-parsley-required-message="<b>*Date</b> required" data-parsley="">
+				         			<input class="form-control w-100" type="date" name="date" required data-parsley-required-message="<b>*Date From</b> required" data-parsley="">
+				         		</div>
+				         	</div>
+							<div class="row mb-3">
+				         		<div class="col-sm-5 w-100">
+				         			Surveillance Date (To):
+				         		</div>
+
+				         		<div class="col-sm-7">
+				         			<input class="form-control w-100" type="date" name="dateto" required data-parsley-required-message="<b>*Date To </b> required" data-parsley="">
 				         		</div>
 				         	</div>
 

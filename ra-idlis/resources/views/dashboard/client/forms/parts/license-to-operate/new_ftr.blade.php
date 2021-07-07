@@ -1294,7 +1294,38 @@ return unique;
     }
 
 //   INITIAL STATES
+@if(app('request')->input('cont') == 'yes')
 
+  var id =   '{!!((count($fAddress) > 0) ? $fAddress[0]->hgpid: "")!!}';
+
+  
+      document.getElementById('{!!((count($fAddress) > 0) ? $fAddress[0]->hgpid: "")!!}').checked = true
+    
+      var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "[]")!!}');
+        // var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "")!!}');
+
+                console.log("servFac")
+                console.log(servFacArray)
+                // console.log(servFacArray[1].facid)
+
+setTimeout(function(){ 
+    type_of_fac(id)
+    if(id == 6){
+        var func = '{!!((count($fAddress) > 0) ? $fAddress[0]->funcid: "")!!}';
+    document.querySelector('select[data-funcid="duplicate"]').value = func;
+    sel_hosp_class(func)
+}
+}, 2000);
+setTimeout(function(){ 
+    var fc = servFacArray[1]
+    
+    document.getElementById(fc[0].facid).checked = true
+
+}, 3000);
+
+
+    
+@endif
 
 if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
     // console.log("typee")
@@ -1520,8 +1551,8 @@ const fetchSubClass1 = async (e) => {
         var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "[]")!!}');
         // var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "")!!}');
 
-                // console.log("servFac")
-                // console.log(servFacArray)
+                console.log("servFac")
+                console.log(servFacArray)
                 
                 if(servFacArray[0].length > 0){
 
@@ -1789,6 +1820,6 @@ const fetchSubClass1 = async (e) => {
 } 
 //   INITIAL STATES
 
-    
+
 
 </script>

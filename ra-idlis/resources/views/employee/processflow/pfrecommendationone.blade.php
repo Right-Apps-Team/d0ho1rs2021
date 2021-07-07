@@ -16,7 +16,9 @@
             <tr>
               <td width="100%">
            
-                <h2>@isset($AppData) {{$AppData->facilityname}} @endisset</h2>
+                <h2>{{strtoupper($apdat->facilityname)}} </h2>
+                <h4>{{$apdat->hfser_id}}R{{$apdat->rgnid}}-{{$apdat->appid}} </h4>
+                <!-- <h2>@isset($AppData) {{$AppData->facilityname}} @endisset </h2> -->
                 <h5>@isset($AppData) {{strtoupper($AppData->street_name) . ' ' . strtoupper($apdat->street_number)}}, {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>
                 <h6>@isset($AppData) Status: @if ($AppData->isRecoForApproval === null) <span style="color:blue">For Recommendation Evaluation</span> @elseif($AppData->isRecoForApproval == 1)  <span style="color:green">Recommended for Approval</span> @else <span style="color:red">Disapproved for Approval</span> @endif @endisset</h6>
               </td>

@@ -196,6 +196,7 @@
 		        			<input type="hidden" name="part" value="{{$part}}">
 							<input type="hidden" name="hid" value="{{ app('request')->input('hid') }}">
                  		    <input type="hidden" name="xid" value=" {{ app('request')->input('xid') }}">
+                 		    <input type="hidden" name="pid" value=" {{ app('request')->input('pid') }}">
                  		    <input type="hidden" name="monid" value=" {{$isMon}}">
 		        			{!!($isMon ? '<input type="hidden" name="monid" value="'.$isMon.'">' :'')!!}
 		        			<div class="container-fluid divs">

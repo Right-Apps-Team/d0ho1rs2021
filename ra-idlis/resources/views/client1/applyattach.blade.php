@@ -25,6 +25,10 @@
 				</tr>
 			</thead>
 			<tbody>
+
+			@php
+						$findups = 0;
+					@endphp
 				
 				@if(count($appDet) > 0)
 				<form id="upId" method="POST" enctype="multipart/form-data">
@@ -45,6 +49,7 @@
 									@case(0)
 										@php
 											$currentStatus = 0;
+											$findups += 1;
 										@endphp
 										<label class="badge badge-danger">Uploaded file denied.</label>
 										{{-- @if($appform->canapply == 1) --}}
@@ -70,6 +75,7 @@
 								@endisset
 							@else
 								@php
+									$findups += 1;
 									$currentStatus = 5;
 								@endphp
 								<input class="form-control" type="file" name="upload[{{$each->upid}}]" @if($each->isRequired == 1) required @endif>
@@ -163,7 +169,7 @@
 		@endif
 		<br>
 
-	@if(!isset($submitted))	
+	@if(!isset($submitted) || $findups != 0)	
 		<div class="container">
 			<div class="float-right">
 				<a href="{{asset('client1/apply')}}"><button class="btn btn-danger">Back</button></a>

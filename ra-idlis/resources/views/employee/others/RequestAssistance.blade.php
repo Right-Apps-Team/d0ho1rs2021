@@ -914,7 +914,8 @@
 
                             <div class="col-sm-4">
 
-                              Contact No.:<span style="color:red">*</span>
+                              Contact No.:
+                              <!-- Contact No.:<span style="color:red">*</span> -->
 
                             </div>
 
@@ -922,7 +923,7 @@
 
                             <div class="col-sm-8">
 
-                              <input type="text" name="contact_no" class="form-control form-inline" required data-parsley-required-message="<b>*Contact No.</b> required" data-parsley="">
+                              <input type="text" name="contact_no" class="form-control form-inline"  data-parsley-required-message="<b>*Contact No.</b> required" data-parsley="">
 
                             </div>
 

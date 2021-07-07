@@ -927,7 +927,8 @@ class OthersController extends Controller
 				$date_end = date_format($date_end, "Y-m-d");
 				DB::table('surv_form')->where('survid', '=', $request->atmonid)
 				->update(
-					['team'=>$request->team, 'date_surveillance'=>$request->date, 'date_surveillance_end'=>$date_end]
+					['team'=>$request->team, 'date_surveillance'=>$request->date, 'date_surveillance_end'=>$request->dateto]
+					// ['team'=>$request->team, 'date_surveillance'=>$request->date, 'date_surveillance_end'=>$date_end]
 				);
 				return redirect('employee/dashboard/others/surveillance/survact');
 				// return redirect()->back()->with('sucMsg', 'Successfully Added a Monitoring Team');
@@ -1293,10 +1294,56 @@ class OthersController extends Controller
 				// });
 
 				// return view('employee.others.NoticeOfViolation', ['AllData'=>$AllData, 'Nov'=>$nov, 'Request'=>$request->all(), 'Signatures'=>$Signatures]);
-				if(isset($request->novappid)){
-					$uid = AjaxController::getUidFrom($request->novappid);
+				
+				
+				$data = AjaxController::getAllDataEvaluateOneRegFac($request->novappid);
+
+
+					$rgappid = null; 
+					
+					if(!is_null($data->lto_id)){
+						$rgappid = $data->lto_id; 
+					}else{
+						if(!is_null($data->ptc_id)){
+							
+							$rgappid = $data->ptc_id; 
+						}else{
+							if(!is_null($data->con_id)){
+								
+								$rgappid = $data->con_id; 
+							}else{
+								if(!is_null($data->ato_id)){
+									
+									$rgappid = $data->ato_id; 
+								}else{
+									if(!is_null($data->coa_id)){
+										
+										$rgappid = $data->coa_id; 
+									}else{
+										if(!is_null($data->cor_id)){
+											
+											$rgappid = $data->cor_id; 
+										}
+									}
+								}
+								
+							}
+						}
+					}
+				
+				
+				
+				if(isset($rgappid)){
+					$uid = AjaxController::getUidFrom($rgappid);
 					AjaxController::notifyClient($request->novmonid,$uid,45);
 				}
+
+				// if(isset($request->novappid)){
+				// 	$uid = AjaxController::getUidFrom($request->novappid);
+				// 	AjaxController::notifyClient($request->novmonid,$uid,45);
+				// }
+
+
 				return redirect()->back()->with('errRet', ['errAlt'=>'success', 'errMsg'=>'Filed NOV Successfully.']);
 			}
 		}

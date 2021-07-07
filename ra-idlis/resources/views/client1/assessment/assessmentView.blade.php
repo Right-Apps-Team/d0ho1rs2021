@@ -128,7 +128,7 @@
 				
 				
 				@if(isset($headon) && ($value->h1HeadID == 'AOASPT2AT' || $value->h1HeadID == 'AOASPT1AT'))
-
+			
 				
 					@if(!in_array($value->xid, $arrDat))
 					@php 

@@ -1870,7 +1870,28 @@ class NewClientController extends Controller {
 				$customInsertMach = $customInsertPhar = false;
 				$filename = $returnToSender = null;
 				$arrName = $arrFiles = $arrPharma = $arrMach = array();
-				$toInsert = ['surname' => strtolower($request->sur_name), 'firstname' => strtolower($request->fname), 'middlename' => $request->mname, 'prof' => $request->prof, 'prcno' => $request->prcno, /*'validityPeriodFrom' => $request->vfrom,*/ 'validityPeriodTo' => $request->vto ,'speciality' => $request->speciality, 'dob' => $request->dob, 'sex' => $request->sex, 'employement' => $request->employement, 'prefix' => $request->prefix, 'suffix' => $request->suffix, 'pos' => $request->position, 'designation' => $request->designation, 'area' => $request->assignment, 'qual' => $request->qual, 'email' => $request->email,'tin' => $request->tin, 'isMainRadio' => ($request->head == 1 ? $request->head : null), 'isMainRadioPharma' => ($request->pharmahead == 1 ? $request->pharmahead : null), 'ismainpo' => ($request->po == 1 ? $request->po : null), 'appid' => $appid];
+				$toInsert = ['surname' => strtolower($request->sur_name), 
+				'firstname' => strtolower($request->fname), 
+				'middlename' => $request->mname, 
+				'prof' => $request->prof, 
+				'prcno' => $request->prcno,
+				 /*'validityPeriodFrom' => $request->vfrom,*/ 
+				 'validityPeriodTo' => $request->vto ,
+				 'speciality' => $request->speciality,
+				  'dob' => $request->dob,
+				   'sex' => $request->sex, 
+				   'employement' => $request->employement, 
+				   'prefix' => $request->prefix, 
+				   'suffix' => $request->suffix, 
+				   'pos' => $request->position, 
+				   'designation' => $request->designation, 
+				   'area' => $request->assignment, 
+				   'qual' => $request->qual, 
+				   'email' => $request->email,
+				   'tin' => $request->tin, 
+				   'isMainRadio' => ($request->head == 1 ? $request->head : null), 
+				   'isMainRadioPharma' => ($request->pharmahead == 1 ? $request->pharmahead : null), 
+				   'ismainpo' => ($request->po == 1 ? $request->po : ($request->po1 == 1 ? $request->po1 : null)), 'appid' => $appid];
 
 
 				$pharma = ['appid' => $appid, 'name' => strtolower($request->prefix . ' ' . $request->fname . ' ' . $request->mname . ' ' . $request->sur_name . ' ' . $request->suffix ), 'designation' => $request->position, 'tin' => $request->tin, 'email' => $request->email, 'area' => $request->assignment];

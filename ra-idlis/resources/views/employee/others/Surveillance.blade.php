@@ -9,12 +9,12 @@
            {{-- <div class="container"> --}}
              <div class="row mt-3">
 
-              <div class="col-sm-3">
+              <!-- <div class="col-sm-3">
                 <button type="button" class="btn btn-info w-100" data-toggle="modal" data-target="#monModal">
                   <i class="fa fa-plus" aria-hidden="true"></i> &nbsp;
                   Add Licensed Facility
                 </button>
-              </div>
+              </div> -->
                
                <div class="col-sm-3">
                 <button type="button" onclick="backToAdd()" class="btn btn-info w-100" data-toggle="modal" data-target="#unregModal">

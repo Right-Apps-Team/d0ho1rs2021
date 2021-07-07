@@ -5456,40 +5456,53 @@ use FunctionsClientController;
 					$assesed = [];
 					$assesednew = [];
 
+					$appid = null;
 					$head = AjaxController::forAssessmentHeadersRegFac(array(['registered_facility.regfac_id',$regfac_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id'));
 					if(!is_null($data->lto_id)){
+						$appid = $data->lto_id;
   						$appform =  DB::table('appform')->where('appid', $data->lto_id)->first();
-						$head = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->lto_id],['asmt_h1.apptype',$appform->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
+						$head = AjaxController::forAssessmentHeadersDup(array(['appform.appid',$data->lto_id],['asmt_h1.apptype',$appform->hfser_id]),array('assessmentcombinedduplicate.pid','asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
+						// $head = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->lto_id],['asmt_h1.apptype',$appform->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
 						$assesed = AjaxController::assessedDone(3,$data->lto_id,$isMon,$isSelfAssess);
 						$assesednew =  AjaxController::forDoneHeadersNew($data->lto_id,$isMon,$isSelfAssess)['h5'];
 					}else{
 						if(!is_null($data->ptc_id)){
+							$appid = $data->ptc_id;
 							$appform =  DB::table('appform')->where('appid', $data->ptc_id)->first();
-							$head = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->ptc_id],['asmt_h1.apptype',$appform->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
+							$head = AjaxController::forAssessmentHeadersDup(array(['appform.appid',$data->ptc_id],['asmt_h1.apptype',$appform->hfser_id]),array('assessmentcombinedduplicate.pid','asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
+							// $head = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->ptc_id],['asmt_h1.apptype',$appform->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
 							$assesed = AjaxController::assessedDone(3,$data->ptc_id,$isMon,$isSelfAssess);
 							$assesednew =  AjaxController::forDoneHeadersNew($data->ptc_id,$isMon,$isSelfAssess)['h5'];
 						}else{
 							if(!is_null($data->con_id)){
+								$appid = $data->con_id;
 								$appform =  DB::table('appform')->where('appid', $data->con_id)->first();
-								$head = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->con_id],['asmt_h1.apptype',$appform->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
+								$head = AjaxController::forAssessmentHeadersDup(array(['appform.appid',$data->con_id],['asmt_h1.apptype',$appform->hfser_id]),array('assessmentcombinedduplicate.pid','asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
+								// $head = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->con_id],['asmt_h1.apptype',$appform->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
 								$assesed = AjaxController::assessedDone(3,$data->con_id,$isMon,$isSelfAssess);
 								$assesednew =  AjaxController::forDoneHeadersNew($data->con_id,$isMon,$isSelfAssess)['h5'];
 							}else{
 								if(!is_null($data->ato_id)){
+									$appid = $data->ato_id;
 									$appform =  DB::table('appform')->where('appid', $data->ato_id)->first();
-									$head = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->ato_id],['asmt_h1.apptype',$appform->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
+									$head = AjaxController::forAssessmentHeadersDup(array(['appform.appid',$data->ato_id],['asmt_h1.apptype',$appform->hfser_id]),array('assessmentcombinedduplicate.pid','asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
+									// $head = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->ato_id],['asmt_h1.apptype',$appform->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
 									$assesed = AjaxController::assessedDone(3,$data->ato_id,$isMon,$isSelfAssess);
 									$assesednew =  AjaxController::forDoneHeadersNew($data->ato_id,$isMon,$isSelfAssess)['h5'];
 								}else{
 									if(!is_null($data->coa_id)){
+										$appid = $data->coa_id;
 										$appform =  DB::table('appform')->where('appid', $data->coa_id)->first();
-										$head = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->coa_id],['asmt_h1.apptype',$appform->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
+										$head = AjaxController::forAssessmentHeadersDup(array(['appform.appid',$data->coa_id],['asmt_h1.apptype',$appform->hfser_id]),array('assessmentcombinedduplicate.pid','asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
+										// $head = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->coa_id],['asmt_h1.apptype',$appform->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
 										$assesed = AjaxController::assessedDone(3,$data->coa_id,$isMon,$isSelfAssess);
 										$assesednew =  AjaxController::forDoneHeadersNew($data->coa_id,$isMon,$isSelfAssess)['h5'];
 									}else{
 										if(!is_null($data->cor_id)){
+											$appid = $data->cor_id;
 											$appform =  DB::table('appform')->where('appid', $data->cor_id)->first();
-											$head = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->cor_id],['asmt_h1.apptype',$appform->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
+											$head = AjaxController::forAssessmentHeadersDup(array(['appform.appid',$data->cor_id],['asmt_h1.apptype',$appform->hfser_id]),array('assessmentcombinedduplicate.pid','asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
+											// $head = AjaxController::forAssessmentHeaders(array(['appform.appid',$data->cor_id],['asmt_h1.apptype',$appform->hfser_id]),array('asmt_title.title_name as desc','asmt_title.title_code as id', 'x08_ft.id as xid'));
 											$assesed = AjaxController::assessedDone(3,$data->cor_id,$isMon,$isSelfAssess);
 											$assesednew =  AjaxController::forDoneHeadersNew($data->cor_id,$isMon,$isSelfAssess)['h5'];
 										}
@@ -5500,6 +5513,16 @@ use FunctionsClientController;
 						}
 					}
 
+					$dbcheck = [];
+					if($appid){
+					$whereClause = [['assessmentcombinedduplicate.appid',$appid],['monid',$isMon]];
+					$dbcheck = DB::table('assessmentcombinedduplicate')
+					// ->join('asmt_h1', 'asmt_h1.partID', '=', 'assessmentcombinedduplicate.partID')
+					->where($whereClause)
+					->select('assessmentcombinedduplicate.x08_id')
+					->groupBy('assessmentcombinedduplicate.x08_id')
+					->get();
+						}
 
 					$toViewArr = [
 						'data' => $data,
@@ -5509,6 +5532,7 @@ use FunctionsClientController;
 						'isMain' => true,
 						// 'assesed' => [],
 						'assesed' => $assesed,
+						'dbcheck' => $dbcheck,
 						'assesednew' => $assesednew,
 						'isMon' => $isMon,
 						'isSentFromMobile' => [],
@@ -5731,6 +5755,7 @@ use FunctionsClientController;
 						// 'assesed' => AjaxController::forDoneHeaders($appid,$isMon,$isSelfAssess)['h3'],
 						'neededData' => array('level' => 3,'id' => $part),
 						'isMon' => $isMon,
+						'dbcheck' => [],
 						'regfac_id' => $regfac_id,
 						'crumb' => isset($headData[0]->h1HeadID) ? [array('id' => $headData[0]->h1HeadID,'desc' => $headData[0]->h1HeadBack, 'beforeAddress' => 'MAIN')] : null
 					];
@@ -6233,6 +6258,7 @@ use FunctionsClientController;
 								->first();
 
 								$forInsertArray = array(
+									'pid' => $request->pid,
 									'appid' => $appid,
 									'x08_id' => $request->xid,
 									'asmtComb_FK' => $res->asmtComb, 
@@ -7335,6 +7361,7 @@ use FunctionsClientController;
 				{
 					$data = AjaxController::getRecommendationData($appid);
 					// $data1 = AjaxController::getPreAssessment($data->uid);
+					$apdata =DB::table('appform')->where([['appid', $appid]])->first();
 					switch ($data->hfser_id) {
 						case 'PTC':
 							$otherDetails = DB::table('hferc_evaluation')->leftJoin('x08','x08.uid','hferc_evaluation.HFERC_evalBy')->where([['appid',$appid],['HFERC_eval',1]])->first();
@@ -7351,7 +7378,7 @@ use FunctionsClientController;
 					$canView = AjaxController::canViewFDAOOP($appid);
 					$data2 = AjaxController::getAssignedMembersInTeam4Recommendation($appid);
 					// dd($data);
-					return view('employee.processflow.pfapprovalone', ['AppData'=>$data,/*'PreAss'=>$data1, */'APPID' => $appid, 'Teams4theApplication' => $data2, 'otherDetails' => $otherDetails, 'canView' => $canView, 'hfser_id' => $data->hfser_id]);
+					return view('employee.processflow.pfapprovalone', ['AppData'=>$data,'apdat'=>$apdata,/*'PreAss'=>$data1, */'APPID' => $appid, 'Teams4theApplication' => $data2, 'otherDetails' => $otherDetails, 'canView' => $canView, 'hfser_id' => $data->hfser_id]);
 				} 
 				catch (Exception $e) 
 				{
@@ -8460,6 +8487,7 @@ use FunctionsClientController;
 				'issuedDate' => $cUser['date'], 
 				'issuedTime' => $cUser['time'], 
 				'hfsrbno' => $request->novNo, 
+				'otherspec' => $request->other, 
 				'faciEmail' => $request->emailFaci, 
 				'dpo' => $request->dpo];
 				if(trim($request->violation) != ''){

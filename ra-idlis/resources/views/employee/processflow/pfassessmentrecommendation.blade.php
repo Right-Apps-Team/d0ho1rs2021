@@ -16,9 +16,12 @@
 						<option value="compliance">For Compliance</option>
 						<option value="non">For Non Issuance</option>
 						@else
-						<option value="issuance">Acceptable</option>
-						<option value="compliance">Unacceptable Corrective Action</option>
+						<option value="issuance">For Non Issuance of Notice of Violation</option>
+						<option value="compliance">For Issuance of Notice of Violation</option>
 						<option value="non">Others, Please specify</option>
+						<!-- <option value="issuance">Acceptable</option>
+						<option value="compliance">Unacceptable Corrective Action</option>
+						<option value="non">Others, Please specify</option> -->
 						@endif
 					</select>
 					<small style="color:red">*Based on the assessment made on the facility, what would be your recommendation (action) ?</small>

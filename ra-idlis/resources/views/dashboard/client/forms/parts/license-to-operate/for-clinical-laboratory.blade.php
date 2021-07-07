@@ -8,7 +8,7 @@
 			<option value="Not Applicable">Not Applicable</option>
 			<option value="1">Primary</option>
 			<option value="2">Secondary</option>
-			<option value="3">Teritary</option>
+			<option value="3">Tertiary</option>
 		</select>
 	</div>
 </div>

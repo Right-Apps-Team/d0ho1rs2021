@@ -7624,6 +7624,55 @@ public static function getAllUidByRegFac($regfac_id) {
 		}
 		return false;
 	}
+	public static function forAssessmentHeadersDup($whereClause = array(),$select = '*',$case = 'default'){
+		if(session()->has('employee_login') || Agent::isMobile() || session()->has('uData')){
+			switch ($case) {
+
+
+				case(1):
+				return DB::table('x08_ft')->join('appform','appform.appid','x08_ft.appid')->join('facilitytyp','facilitytyp.facid','x08_ft.facid')->join('hfaci_serv_type','hfaci_serv_type.hfser_id','appform.hfser_id')->join('asmt_title','asmt_title.serv','facilitytyp.facid')->join('asmt_h1','asmt_h1.partID','asmt_title.title_code')->join('asmt_h2','asmt_h2.asmtH1ID_FK','asmt_h1.asmtH1ID')->join('asmt_h3','asmt_h3.asmtH2ID_FK','asmt_h2.asmtH2ID')->join('assessmentcombined','assessmentcombined.asmtH3ID_FK','asmt_h3.asmtH3ID')->where($whereClause)->select($select)->distinct()->get();
+					break;
+
+				case(2):
+				return DB::table('x08_ft')->join('appform','appform.appid','x08_ft.appid')->join('facilitytyp','facilitytyp.facid','x08_ft.facid')->join('hfaci_serv_type','hfaci_serv_type.hfser_id','appform.hfser_id')->join('asmt_title','asmt_title.serv','facilitytyp.facid')->join('asmt_h1','asmt_h1.partID','asmt_title.title_code')->join('asmt_h2','asmt_h2.asmtH1ID_FK','asmt_h1.asmtH1ID')->join('asmt_h3','asmt_h3.asmtH2ID_FK','asmt_h2.asmtH2ID')->join('assessmentcombined','assessmentcombined.asmtH3ID_FK','asmt_h3.asmtH3ID')->where($whereClause)->orderBy('assessmentSeq','ASC')->select($select)->distinct()->get();
+					break;
+
+				case(3):
+				return DB::table('asmt_title')->join('facilitytyp','facilitytyp.facid','asmt_title.serv')->join('asmt_h1','asmt_h1.partID','asmt_title.title_code')->join('hfaci_serv_type','hfaci_serv_type.hfser_id','asmt_h1.apptype')->join('asmt_h2','asmt_h2.asmtH1ID_FK','asmt_h1.asmtH1ID')->join('asmt_h3','asmt_h3.asmtH2ID_FK','asmt_h2.asmtH2ID')->join('assessmentcombined','assessmentcombined.asmtH3ID_FK','asmt_h3.asmtH3ID')->where($whereClause)->orderBy('assessmentSeq','ASC')->select($select)->distinct()->get();
+					break;
+
+				
+				default:
+					// return DB::table('x08_ft')
+					// ->join('appform','appform.appid','x08_ft.appid')
+					// ->join('facilitytyp','facilitytyp.facid','x08_ft.facid')
+					// ->join('hfaci_serv_type','hfaci_serv_type.hfser_id','appform.hfser_id')
+					// ->join('asmt_title','asmt_title.serv','facilitytyp.facid')
+					// ->join('asmt_h1','asmt_h1.partID','asmt_title.title_code')
+					// ->join('asmt_h2','asmt_h2.asmtH1ID_FK','asmt_h1.asmtH1ID')
+					// ->join('asmt_h3','asmt_h3.asmtH2ID_FK','asmt_h2.asmtH2ID')
+					// ->where($whereClause)
+					// ->select($select)
+					// // ->groupBy('x08_ft.id')
+					// ->get();
+					return DB::table('x08_ft')
+					->join('appform','appform.appid','x08_ft.appid')
+					->join('facilitytyp','facilitytyp.facid','x08_ft.facid')
+					->join('hfaci_serv_type','hfaci_serv_type.hfser_id','appform.hfser_id')
+					->join('asmt_title','asmt_title.serv','facilitytyp.facid')
+					->join('asmt_h1','asmt_h1.partID','asmt_title.title_code')
+					->join('asmt_h2','asmt_h2.asmtH1ID_FK','asmt_h1.asmtH1ID')
+					->join('asmt_h3','asmt_h3.asmtH2ID_FK','asmt_h2.asmtH2ID')
+					->leftJoin('assessmentcombinedduplicate','appform.appid','assessmentcombinedduplicate.appid')
+					->where($whereClause)
+					->select($select)
+					->distinct()
+					->get();
+					break;
+			}
+		}
+		return false;
+	}
 
 	public static function forAssessmentHeadersRegFac($whereClause = array(),$select = '*',$case = 'default'){
 		if(session()->has('employee_login') || Agent::isMobile() || session()->has('uData')){
@@ -7793,18 +7842,34 @@ public static function forDoneHeadersNew($appid,$monid,$selfAssess,$isPtc = fals
 
 		$whereClause = [['assessmentcombinedduplicate.appid',$appid],['monid',$monid]];
 		$db = DB::table('assessmentcombinedduplicate')
-		->join('asmt_h1', 'asmt_h1.partID', '=', 'assessmentcombinedduplicate.partID')
+		// ->join('asmt_h1', 'asmt_h1.partID', '=', 'assessmentcombinedduplicate.partID')
 		->where($whereClause)
-		->select('asmt_h1.asmtH1ID')
-		->groupBy('asmt_h1.asmtH1ID')
+		->select('assessmentcombinedduplicate.pid')
+		->groupBy('assessmentcombinedduplicate.pid')
 		->get();
 
+		// $whereClause = [['assessmentcombinedduplicate.appid',$appid],['monid',$monid]];
+		// $db = DB::table('assessmentcombinedduplicate')
+		// ->join('asmt_h1', 'asmt_h1.partID', '=', 'assessmentcombinedduplicate.partID')
+		// ->where($whereClause)
+		// ->select('asmt_h1.asmtH1ID')
+		// ->groupBy('asmt_h1.asmtH1ID')
+		// ->get();
+
+		// foreach ($db as $key => $value) {
+		// 	for ($i=0; $i < 4; $i++) { 
+				
+		// 	}
+		// 	if(!in_array($value->asmtH1ID, $h1)){
+		// 		array_push($h1, $value->asmtH1ID);
+		// 	}
+		// }
 		foreach ($db as $key => $value) {
 			for ($i=0; $i < 4; $i++) { 
 				
 			}
-			if(!in_array($value->asmtH1ID, $h1)){
-				array_push($h1, $value->asmtH1ID);
+			if(!in_array($value->pid, $h1)){
+				array_push($h1, $value->pid);
 			}
 		}
 		$retArray = [

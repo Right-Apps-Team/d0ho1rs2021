@@ -125,7 +125,8 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content " style="border-radius: 0px;border: none;">
         <div class="modal-body text-justify" style=" background-color: #272b30;color: white;">
-          <h5 class="modal-title text-center"><strong>Add Surveillance Activity Details</strong></h5>
+          <h5 class="modal-title text-center"><strong>Add Recommendation Details</strong></h5>
+          <!-- <h5 class="modal-title text-center"><strong>Add Surveillance Activity Details</strong></h5> -->
           <hr>
           <form id="bodyToAdd" enctype="multipart/form-data" method="POST">
           	<input type="hidden" name="survid" value="">
@@ -133,7 +134,7 @@
             <div class="container" id="facEmail">
               <div class="col-md-12 lead  text-center">Facility Email</div>
               <div class="container pb-3 pt-3">
-                <input type="email" name="emailFaci" class="form-control" required="">
+                <input type="email" name="emailFaci" class="form-control" >
               </div>
             </div>
             {{-- <div class="container" id="facEmail">
@@ -147,15 +148,24 @@
           		<div class="container pb-3 pt-3">
 	          		<select required="" name="action" class="form-control ">
 	          			<option value="">Please Select</option>
-	          			<option value="NOV">NOV</option>
-	          			<option value="CDO">CDO</option>
+	          			<option value="NOV">NOV/CDO</option>
+	          			<option value="others">Others</option>
+	          			<!-- <option value="NOV">NOV</option> -->
+	          			<!-- <option value="CDO">CDO</option> -->
 	          		</select>
           		</div>
           	</div>
           	<div class="container" id="nov" hidden="">
-          		<div class="col-md-12 lead  text-center">NOV Number</div>
+          		<div class="col-md-12 lead  text-center">NOV/CDO Number</div>
           		<div class="container pb-3 pt-3">
 	          		<input type="number" name="novNo" class="form-control" value="" id="novNo">
+          		</div>
+          	</div>
+            <div class="container" id="others" hidden="">
+          		<div class="col-md-12 lead  text-center">Others, Please specify</div>
+          		<div class="container pb-3 pt-3">
+                  <textarea  class="form-control" name="other"   id="otherspc"></textarea>
+	          		<!-- <input type="text" name="novNo" class="form-control" value="" id="novNo"> -->
           		</div>
           	</div>
           	<div class="container">
@@ -198,6 +208,10 @@
 	      		<div class="container pb-3 pt-3 text-center lead font-weight-bold" id="survAct">
 	          		{{-- survAct --}}
 	      		</div>
+            <center>
+            <p id="viewOther">
+            </p>
+            </center>
 	      	</div>
 	      	<div class="container">
 	      		<div class="col-md-12 lead  text-center">On</div>
@@ -236,8 +250,16 @@
   			$("#nov").removeAttr('hidden');
   			$("input[name=novNo]").attr('required',true);
   		} else {
-  			$("#nov").attr('hidden');
+  			$("#nov").attr('hidden',true);
   			$("input[name=novNo]").removeAttr('required');
+  		}
+
+      if($(this).val() == 'others'){
+  			$("#others").removeAttr('hidden');
+  			$("input[name=other]").attr('required',true);
+  		} else {
+  			$("#others").attr('hidden',true);
+  			$("input[name=other]").removeAttr('required');
   		}
   	});
   	function previewImages() {
@@ -278,6 +300,7 @@
 		if(survid > 0){
 			let sAct = $("#survAct");
 			let sDet = $("#survDet");
+			let viewOther = $("#viewOther");
 			let sView = $("#view");
 			let sFac = $("#fac");
 			let siB = $("#iB");
@@ -289,8 +312,9 @@
 				data: {_token: $('input[name=_token]').val(), survid: survid},
 				success: function(a){
 					let det = JSON.parse(a);
-					sAct.empty().html(det['survAct']);
+					sAct.empty().html(det['survAct'] == 'NOV'? 'NOV/CDO': 'Specified');
 					sFac.empty().html(det['name_of_faci']);
+					viewOther.empty().html(det['otherspec']);
 					siB.empty().html(det['fname'] + ' ' + det['lname']);
 					sDet.empty().html(det['comments']);
 					sView.empty().html('<div class="container text-center font-weight-bold ">No Image Uploaded</div>');

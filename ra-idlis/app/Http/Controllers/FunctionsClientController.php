@@ -215,7 +215,8 @@ class FunctionsClientController extends Controller {
 							addonDesc,
 							savingStat,
 							noofdialysis,
-							con_number
+							con_number,
+							appform.hgpid
 							
 						FROM appform 
 						LEFT JOIN region ON region.rgnid = appform.rgnid 
@@ -334,7 +335,8 @@ class FunctionsClientController extends Controller {
 							addonDesc,
 							savingStat,
 							noofdialysis,
-							con_number
+							con_number,
+							appform.hgpid
 						FROM appform 
 						LEFT JOIN region ON region.rgnid = appform.rgnid 
 						LEFT JOIN class ON class.classid = appform.classid 
