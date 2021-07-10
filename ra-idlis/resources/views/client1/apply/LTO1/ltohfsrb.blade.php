@@ -119,7 +119,7 @@
                     <div class="col-md-6" style="text-align: center;">
                       {{--   onclick="loadData('LIST OF PERSONNEL (Annex A)', '{{asset("client1/apply/app/LTO/48/hfsrb/annexAdd")}}');" data-toggle="modal" data-target="#viewModalA" --}}
                         <div class="col-12 mb-3">
-                            @if(isset($data[0][2][0]->evaluation))
+                            <!-- @if(isset($data[0][2][0]->evaluation))
                                 @if($data[0][2][0]->evaluation == 1)
                                     <i class="fa fa-check text-success"></i>
                                     <button class="btn" onclick="addT('{{$data[0][1]}}','{{$data[0][2][0]->remarks}}')" data-toggle="modal" data-target="#modal">Show Remarks</button>
@@ -127,21 +127,21 @@
                                     <i class="fa fa-times text-danger"></i>
                                     <button class="btn" onclick="addT('{{$data[0][1]}}','{{$data[0][2][0]->remarks}}')" data-toggle="modal" data-target="#modal">Show Remarks</button>
                                 @endif
-                            @endif
+                            @endif -->
                         </div>
                         <button class="btn btn-info" onclick="window.location.href='{{asset('client1/apply/hfsrb/annexa/'.$appid)}}'" style="white-space: normal; width: 100%; height: 90%;" ><i class="fa fa-user-plus"></i> LIST OF PERSONNEL (Annex A)</button>
                     </div>
                     <div class="col-md-6" style="text-align: center;">
                         <div class="col-12 mb-3">
-                            @if(isset($data[1][2][0]->evaluation))
+                            <!-- @if(isset($data[1][2][0]->evaluation))
                                 @if($data[1][2][0]->evaluation == 1)
-                                    <!-- <i class="fa fa-check text-success"></i>
-                                    <button class="btn" onclick="addT('{{$data[1][1]}}','{{$data[1][2][0]->remarks}}')" data-toggle="modal" data-target="#modal">Show Remarks3</button> -->
+                                    <i class="fa fa-check text-success"></i>
+                                    <button class="btn" onclick="addT('{{$data[1][1]}}','{{$data[1][2][0]->remarks}}')" data-toggle="modal" data-target="#modal">Show Remarks3</button>
                                 @elseif($data[1][2][0]->evaluation == 0)
                                     <i class="fa fa-times text-danger"></i>
                                     <button class="btn" onclick="addT('{{$data[1][1]}}','{{$data[1][2][0]->remarks}}')" data-toggle="modal" data-target="#modal">Show Remarks</button>
                                 @endif
-                            @endif
+                            @endif -->
                         </div>
                         <button class="btn btn-info" style="white-space: normal; width: 100%; height: 90%;" onclick="window.location.href='{{asset('client1/apply/hfsrb/annexb/'.$appid)}}'"><i class="fa fa-cog"></i> LIST OF EQUIPMENT/ INSTRUMENT (Annex B)</button>
                     </div>

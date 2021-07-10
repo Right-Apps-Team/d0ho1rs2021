@@ -60,7 +60,8 @@
 					                     	 @endif
 					                    @endif
 				                  	</td>
-				                  	<td class="font-weight-bold" style="text-align:center">{{isset($value->verdict) ? ucfirst($value->verdict) :  'No Recommendation Yet' }}</td>
+				                  	<!-- <td class="font-weight-bold" style="text-align:center">{{isset($value->verdict) ? ucfirst($value->verdict) :  'No Recommendation Yet' }}</td> -->
+				                  	<td class="font-weight-bold" style="text-align:center">{{isset($value->vdesc) ? $value->vdesc : (isset($value->s_ver_others) ? $value->s_ver_others : 'No Recommendation Yet') }}{{(isset($value->s_ver_others) ? $value->s_ver_others : ' ')}}</td>
 				                  	<!-- <td class="font-weight-bold" style="text-align:center">{{isset($value->vdesc) ? $value->vdesc : (isset($value->s_ver_others) ? $value->s_ver_others : 'No Recommendation Yet') }}</td> -->
         							@if($value->hasViolation != "")
         								<td style="text-align:center">
@@ -419,14 +420,14 @@
 									VERDICT:
 								</div>
 								<div class="col-sm-12">
-								<textarea class="form-control w-100" name="recverdict">
-								</textarea>
-									<!-- <select class="form-control w-100" name="recverdict" onchange="recextrachange(this)" id="recvselect" data-parsley-required-message="<b>*Verdict</b> required" required data-parsley="recrecom" required>
+								<!-- <textarea class="form-control w-100" name="recverdict">
+								</textarea> -->
+									<select class="form-control w-100" name="recverdict" onchange="recextrachange(this)" id="recvselect" data-parsley-required-message="<b>*Verdict</b> required" required data-parsley="recrecom" required>
 										<option selected disabled hidden value="">Select a verdict</option>
 										@foreach($AllVer as $key => $value)
 											<option value="{{$value->vid}}">{{$value->vdesc}}</option>
 										@endforeach
-									</select> -->
+									</select>
 								</div>
 							</div>
 
@@ -537,7 +538,7 @@
 	    	<div class="modal-content " style="border-radius: 0px;border: none;">
 	        	<div class="modal-body text-justify" style=" background-color: #272b30;color: white;">
 		          	<h5 class="modal-title text-center">
-		          		<strong>Letter of Explanation</strong>
+		          		<strong>Letter of Explanation </strong>
 		          	</h5>
 			          	
 		          	<hr>

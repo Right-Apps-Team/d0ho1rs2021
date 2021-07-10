@@ -181,11 +181,11 @@
                     <div class="col-md">
                       <button class="btn btn-primary p-3" data-toggle="modal" data-target="#show">Show Requirements</button>
                     </div>
-                    @if(strtolower($choosen) != 'machines')
+                    <!-- @if(strtolower($choosen) != 'machines')
                     <div class="col-md">
                       <a class="btn {{(FunctionsClientController::existOnDB('cdrrpersonnel',[['appid',$appid],['isTag',1]]) ? 'bg-danger': 'btn-primary')}} p-3 text-white" target="_blank" href="{{url('client1/apply/fda/CDRR/view/personnel/').'/'.$appid.'/tag'}}">Tag Pharmacist</a>
                     </div>
-                    @endif
+                    @endif -->
                   </div>
                   
                 </div>

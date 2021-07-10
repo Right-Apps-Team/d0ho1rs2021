@@ -20,20 +20,19 @@
 			</div>
 		</div>
 		<div class="container text-center font-weight-bold mt-5">List of X-Ray machines</div>
-		<div class="container pb-3 table-responsive">
-			@if(!$canAdd)
+		<div style="padding: 2%;" >
+		@if(!$canAdd)
 			<button class="btn btn-primary pl-3 mb-3" data-toggle="modal" data-target="#viewModal">Add</button>
-			@endif
-			<div class="container">
-				<table class="table table-hover" id="tApp">
+		@endif
+		<table class="table table-hover" id="tApp">
 		      		<thead style="background-color: #428bca; color: white" id="theadapp">
-		      			<tr>
+		      			<tr style="font-size: 15px">
 							<th>Type of X-ray Machine</th>
-							<th>Brand Tube Head</th>
-							<th>Brand Control Console</th>
+							<th>Manufacturer Tube housing</th>
+							<th>Manufacturer Control Console</th>
 							<th>Model Tube Head</th>
 							<th>Model Control Console</th>
-							<th>Serial Tube Head</th>
+							<th>Serial Tube Housing</th>
 							<th>Serial Control Console</th>
 							<th>X-ray Machine Max.mA</th>
 							<th>X-ray Machine Max.kVp</th>
@@ -69,6 +68,11 @@
 							@endforeach
 		      		</tbody>
 		      	</table>
+		</div>
+		<div class="container pb-3 table-responsive">
+			
+			<div class="container">
+				
 			</div>
 		</div>
 		@if(!$canAdd)
@@ -93,7 +97,9 @@
 		                   			<div class="col-sm-11">
 		                   				<select name="xray" class="form-control">
 			                   				@foreach($dropdowns[1] as $mach)
+											   @if($mach->xrayid != 15)
 			                   					<option value="{{$mach->xrayid}}">{{$mach->xraydesc}}</option>
+											   @endif
 			                   				@endforeach
 		                   				</select>
 		                   			</div>
@@ -405,3 +411,6 @@
 @else
   <script type="text/javascript">window.location.href= "{{ asset('client1/apply') }}";</script>
 @endif
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.0.3/css/dataTables.dateTime.min.css" />

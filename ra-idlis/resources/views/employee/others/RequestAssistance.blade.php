@@ -392,6 +392,9 @@
               case 2: y = "Evaluated"; break;
               default: y = "On Process"; break;
             }
+
+            console.log("data[i].resolveDate")
+            console.log(data[i].resolveDate)
             t1.row.add(
               [
                 data[i].action.toUpperCase(),
@@ -469,6 +472,8 @@
     function FillFields(data) {
       let d = JSON.parse(data);
       console.log(d)
+      console.log(d.source)
+      document.getElementById("source1").value = d.source;
       // console.log(d);
 
       for(i=0; i<$('input[name="comps[]"]').length; i++) {
@@ -490,6 +495,7 @@
 
       $('input[name="ref_no_new_new"]').val(d.ref_no);
 
+    
       $('input[name="source"]').val(d.source);
       $('input[name="name_of_comp"]').val(d.name_of_comp);
       $('input[name="age"]').val(d.age);
@@ -766,8 +772,13 @@
 
                             <div class="col-sm-8">
 
-                              <input type="text" name="source" class="form-control form-inline" required data-parsley-required-message="<b>*Source</b> required" data-parsley="">
-
+                              <!-- <input type="text" name="source" class="form-control form-inline" required data-parsley-required-message="<b>*Source</b> required" data-parsley=""> -->
+                              <!-- <input type="text" name="source" class="form-control form-inline" required data-parsley-required-message="<b>*Source</b> required" data-parsley=""> -->
+                              <select name="source" id="source1" class="form-control form-inline" required data-parsley-required-message="<b>*Source</b> required" data-parsley="">
+                                    <option value="Email">Email</option>
+                                    <option value="Walk In">Walk In</option>
+                                    <option value="Other Offices">Other Offices</option>
+                              </select>
                             </div>
 
                           </div>
@@ -971,9 +982,11 @@
 
                               var regFacAddr = document.getElementById('facaddr');
 
-
+                             
 
                               var unregInput = document.getElementById('unregxfacName');
+
+                              console.log(unregInput)
 
                               var unregFacType = document.getElementById('unregfactype');
 
@@ -986,6 +999,13 @@
                               switch (togBtn.checked) {
 
                                   case false:
+                                    document.getElementById('facinaturevalue').value="false";
+                                    unregInput.hidden = false;
+
+                                    unregInput.disabled = false;
+
+                                    unregInput.required = true;
+
 
                                     regInput.hidden = true;
 
@@ -1013,12 +1033,7 @@
 
 
 
-                                    unregInput.hidden = false;
-
-                                    unregInput.disabled = false;
-
-                                    unregInput.required = true;
-
+                                  
                                     unregFacType.hidden = false;
 
                                     unregFacType.disabled = false;
@@ -1037,12 +1052,17 @@
 
 
 
-                                    document.getElementById('facinaturevalue').value="false";
+                                   
 
                                     break;
 
                                   case true:
+                                    document.getElementById('facinaturevalue').value="true";
+                                    unregInput.hidden = true;
 
+                                    unregInput.disabled = true;
+
+                                    unregInput.required = false;
                                     regInput.hidden = false;
 
                                     regInput.disabled = false;
@@ -1069,11 +1089,7 @@
 
 
 
-                                    unregInput.hidden = true;
-
-                                    unregInput.disabled = true;
-
-                                    unregInput.required = false;
+                                    
 
                                     unregFacType.hidden = true;
 
@@ -1093,7 +1109,7 @@
 
 
 
-                                    document.getElementById('facinaturevalue').value="true";
+                                  
 
                                     break;
 
@@ -1117,7 +1133,7 @@
 
                             <div class="col-sm-8">
 
-                              <input value="Reg" type="checkbox" name="togglefaci" checked data-toggle="toggle" data-on="Registered Facility&nbsp;{{'<i class="fa fa-caret-right" aria-hidden="true"></i>'}}" data-off="{{'<i class="fa fa-caret-left" aria-hidden="true"></i>'}}&nbsp;Unregistered Facility" data-onstyle="primary" data-offstyle="success" data-width="180" onchange="facinaturechange()" id="facitogBtn">
+                              <input onchange="facinaturechange()" value="Reg" type="checkbox" name="togglefaci" checked data-toggle="toggle" data-on="Registered Facility&nbsp;{{'<i class="fa fa-caret-right" aria-hidden="true"></i>'}}" data-off="{{'<i class="fa fa-caret-left" aria-hidden="true"></i>'}}&nbsp;Unregistered Facility" data-onstyle="primary" data-offstyle="success" data-width="180"  id="facitogBtn">
 
                             </div>
 
@@ -1144,6 +1160,7 @@
                             <div class="col-sm-8">
 
                               <input type="text" class="form-control" name="name_of_faci" data-parsley-required-message="<b>*Name of Facility</b> required" data-parsley=""  hidden disabled id="unregxfacName">
+                              <!-- <input type="text" class="form-control" name="name_of_faci" data-parsley-required-message="<b>*Name of Facility</b> required" data-parsley=""  hidden disabled id="unregxfacName"> -->
 
 
 
@@ -1256,7 +1273,8 @@
 
                               <input type="text"  class="form-control" name="address_of_faci" id="unregfacaddr" data-parsley-required-message="<b>*Address of Facility</b> required" data-parsley="" hidden disabled>
 
-                              <input type="text" id="address_of_faci" name="address_of_faci" class="form-control form-inline" readonly required id="facaddr" data-parsley-required-message="<b>*Address of Facility</b> required" data-parsley="">
+                              <input type="text" id="address_of_faci" name="address_of_faci" class="form-control form-inline"  required id="facaddr" data-parsley-required-message="<b>*Address of Facility</b> required" data-parsley="">
+                              <!-- <input type="text" id="address_of_faci" name="address_of_faci" class="form-control form-inline" readonly required id="facaddr" data-parsley-required-message="<b>*Address of Facility</b> required" data-parsley=""> -->
 
                             </div>
 

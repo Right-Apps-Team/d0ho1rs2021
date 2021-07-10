@@ -18,24 +18,23 @@
 				</div>
 			</div>
 		</div>
-		<div class="container text-center font-weight-bold mt-5">Radiology Personnel</div>
-		<div class="container pb-3">
-			<button class="btn btn-primary pl-3 mb-3" data-toggle="modal" data-target="#viewModal">Add</button>
-			<div class="container">
-				<table class="table table-hover" id="tApp">
+		<div class="container text-center font-weight-bold mt-5">Radiology Personnel </div>
+		<div style="padding: 2%;" >
+		<button class="btn btn-primary pl-3 mb-3" data-toggle="modal" data-target="#viewModal">Add</button>
+		<table class="table table-hover" id="tApp">
 		      		<thead style="background-color: #428bca; color: white" id="theadapp">
-		      			<tr>
-							<th>Full Name</th>
-							<th>Designation/Position</th>
+		      			<tr style="font-size: 15px">
+							<th style="width: 20%">Full Name</th>
+							<th>Designation/<br/>Position</th>
 							<th>Profession</th>
 							<th>Facility Assignment</th>
 							<th>Qualification</th>
-							<th>PRC License Number</th>
-							<th>Validity Period</th>
+							<th style="width: 15%">PRC License Number</th>
+							<th style="width: 10%">Validity Period</th>
 							<th>PRC ID</th>
 							<th>Board Certificate</th>
 							<th>Contract of Employment</th>
-							<th>Option</th>
+							<th style="width: 2%">Option</th>
 						</tr>
 		      		</thead>
 		      		<tbody id="loadHere">
@@ -85,6 +84,11 @@
 							@endforeach
 		      		</tbody>
 		      	</table>
+		</div>
+		<div class="container pb-3" style="width: 100%; padding-right: 100px">
+			
+			<div class="container">
+				
 			</div>
 		</div>
 		<div class="remthis modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
@@ -412,3 +416,6 @@
 @else
   <script type="text/javascript">window.location.href= "{{ asset('client1/apply') }}";</script>
 @endif
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.0.3/css/dataTables.dateTime.min.css" />

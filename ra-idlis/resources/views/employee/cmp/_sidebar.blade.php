@@ -823,7 +823,8 @@
 
                                         <span class="FDAME_allow">
 
-                                            <li><a href="{{asset('/employee/dashboard/processflow/evaluate/FDA')}}">&nbsp;&nbsp;&nbsp;&nbsp;Evaluation</a></li>
+                                            <li><a href="{{asset('/employee/dashboard/processflow/evaluate/FDA')}}">&nbsp;&nbsp;&nbsp;&nbsp;Inspection</a></li>
+                                            <!-- <li><a href="{{asset('/employee/dashboard/processflow/evaluate/FDA')}}">&nbsp;&nbsp;&nbsp;&nbsp;Evaluation</a></li> -->
 
                                         </span>
 
@@ -866,7 +867,8 @@
 
                                         <span class="FDAPF_allow">
 
-                                            <li><a href="{{asset('/employee/dashboard/processflow/evaluate/FDA/pharma')}}">&nbsp;&nbsp;&nbsp;&nbsp;Evaluation</a></li>
+                                            <li><a href="{{asset('/employee/dashboard/processflow/evaluate/FDA/pharma')}}">&nbsp;&nbsp;&nbsp;&nbsp;Inspection</a></li>
+                                            <!-- <li><a href="{{asset('/employee/dashboard/processflow/evaluate/FDA/pharma')}}">&nbsp;&nbsp;&nbsp;&nbsp;Evaluation</a></li> -->
 
                                         </span>
 

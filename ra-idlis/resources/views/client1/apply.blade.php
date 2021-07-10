@@ -237,7 +237,11 @@
 									    <div class="dropdown-divider"></div>
 									    <div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/assessmentReady/')}}/{{$each[0]->appid}}/">Self Assessment</a>
-									    </div>					
+									    </div>
+											<div class="dropdown-divider"></div>
+									    <div style="margin-left: 10px;margin-right: 10px;">
+									    <a  data-toggle="modal" data-target="#chgfilupload-{{$each[0]->appid}}" class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;"  href="#">Upload Proof of payment here</a>
+										</div>					
 									@break
 									@case('COA')
 										<div style="margin-left: 10px;margin-right: 10px;">
@@ -250,7 +254,11 @@
 									    <div class="dropdown-divider"></div>
 									    <div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/assessmentReady/')}}/{{$each[0]->appid}}/">Self Assessment</a>
-									    </div>							
+									    </div>	
+										<div class="dropdown-divider"></div>
+									    <div style="margin-left: 10px;margin-right: 10px;">
+									    <a  data-toggle="modal" data-target="#chgfilupload-{{$each[0]->appid}}" class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;"  href="#">Upload Proof of payment here</a>
+										</div>							
 							    	@break
 									@case('COR')
 										<div style="margin-left: 10px;margin-right: 10px;">
@@ -302,24 +310,13 @@
 										@endif					
 							    	@break
 								@endswitch
-								<div class="dropdown-divider"></div>
+								    @if($each[0]->isRecommended || $each[0]->hfser_id == 'LTO'|| $each[0]->hfser_id == 'COA')
+										<div class="dropdown-divider"></div>
 									    <div style="margin-left: 10px;margin-right: 10px;">
 									    <a  href="{{asset('client1/printPayment')}}/{{FunctionsClientController::getToken()}}/{{$each[0]->appid}}" class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" onclick="remAppHiddenId('chgfil{{$each[0]->appid}}')" href="#">View Order of Payment on DOH</a>
 									    <!-- <a  data-toggle="modal" data-target="#chgfil-{{$each[0]->appid}}" class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" onclick="remAppHiddenId('chgfil{{$each[0]->appid}}')" href="#">View Order of Payment on DOH</a> -->
-								<div class="dropdown-divider"></div>
-									    <div >
-									    <a  data-toggle="modal" data-target="#chgfilupload-{{$each[0]->appid}}" class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;"  href="#">Upload Proof of payment here</a>
-								
-								
-			<!-- Modal -->
-									
-								
-								
-								</div>
-
-
-								
-							  </div>
+									  </div>
+									@endif 
 							</div>
 							<!-- <button style="color: #fff;" class="btn btn-sm {{$_payment}} mb-1" data-toggle="tooltip" data-placement="top" title="View Order of Payment" onclick="remAppHiddenId('chgfil{{$each[0]->appid}}')">{{-- <i class="fa fa-money" aria-hidden="true"></i> --}}<small>View Order of Payment on DOH</small>
 							</button> -->

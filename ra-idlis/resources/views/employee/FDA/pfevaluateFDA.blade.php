@@ -86,16 +86,33 @@
   <script type="text/javascript">
     $(document).ready(function() {$('#example').DataTable();});
     function acceptDocu(id){
-      Swal.fire({
-        title: 'You are about to View this documents and timeclock will start',
-        text: "You won't be able to revert this!",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Confirm!'
-      }).then((result) => {
-         $.ajax({
+      // Swal.fire({
+      //   title: 'You are about to View this documents and timeclock will start',
+      //   text: "You won't be able to revert this!",
+      //   type: 'warning',
+      //   showCancelButton: true,
+      //   confirmButtonColor: '#3085d6',
+      //   cancelButtonColor: '#d33',
+      //   confirmButtonText: 'Confirm!'
+      // }).then((result) => {
+      //    $.ajax({
+      //       url: '{{asset('employee/dashboard/processflow/evaluate/')}}/'+id,
+      //       type: 'POST',
+      //       data: {_token: $('#token').val(),checkFiles: true},
+      //       success: function(){
+      //         Swal.fire({
+      //           type: 'success',
+      //           title: 'Success',
+      //           text: 'Successfully Accepted Documents',
+      //           timer: 2000,
+      //         }).then(() => {
+      //           window.location.href = '{{ asset('/employee/dashboard/processflow/evaluate/FDA') }}/'+id;
+      //         });
+      //       }
+      //     })
+      //  }) 
+       
+      $.ajax({
             url: '{{asset('employee/dashboard/processflow/evaluate/')}}/'+id,
             type: 'POST',
             data: {_token: $('#token').val(),checkFiles: true},
@@ -106,11 +123,14 @@
                 text: 'Successfully Accepted Documents',
                 timer: 2000,
               }).then(() => {
-                window.location.href = '{{ asset('/employee/dashboard/processflow/evaluate/FDA') }}/'+id;
+                window.location.href = '{{ asset('/employee/dashboard/processflow/evaluate/FDA') }}/'+id+ '/{{$request}}';
+                // window.location.href = '{{ asset('/employee/dashboard/processflow/evaluate/FDA') }}/'+id;
               });
             }
           })
-       })
+
+
+
     }
   </script>
   @endsection

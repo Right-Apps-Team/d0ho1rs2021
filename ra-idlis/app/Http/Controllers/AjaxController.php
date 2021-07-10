@@ -5092,6 +5092,10 @@
 				$data0 = DB::table('appform')
 												->join('x08', 'appform.uid', '=', 'x08.uid')
 												->leftJoin('x08 AS comeval', 'appform.concommittee_evalby', '=', 'comeval.uid')
+												->leftJoin('x08 AS cashval', 'appform.CashierApproveByFDA', '=', 'cashval.uid')
+												->leftJoin('x08 AS recfdaval', 'appform.recommendedbyFDA', '=', 'recfdaval.uid')
+												->leftJoin('x08 AS recbyfda', 'appform.RecobyFDA', '=', 'recbyfda.uid')
+												->leftJoin('x08 AS recbyfdaph', 'appform.CashierApproveByPharma', '=', 'recbyfdaph.uid')
 												->leftJoin('x07', 'comeval.grpid', '=', 'x07.grp_id')
 												->join('barangay', 'appform.brgyid', '=', 'barangay.brgyid')
 												->join('city_muni', 'appform.cmid', '=', 'city_muni.cmid')
@@ -5100,7 +5104,44 @@
 												->leftjoin('trans_status', 'appform.status', '=', 'trans_status.trns_id')
 												// ->join('orderofpayment', 'type_facility.oop_id', '=', 'orderofpayment.oop_id')
 												// , 'orderofpayment.*'
-												->select('appform.*', 'appform.street_number',  'x08.*',  'comeval.fname as com_fname',  'comeval.pre as com_pre',  'comeval.suf as com_suf',  'comeval.mname as com_mname',  'comeval.lname as com_lname',  'x07.grp_desc', 'barangay.brgyname', 'city_muni.cmname', 'province.provname', 'trans_status.trns_desc') //, 'type_facility.*'
+												->select('appform.*', 
+												'appform.street_number',  
+												'x08.*',  
+												'comeval.fname as com_fname',  
+												'comeval.pre as com_pre',  
+												'comeval.suf as com_suf',  
+												'comeval.mname as com_mname', 
+												 'comeval.lname as com_lname', 
+
+												 'cashval.fname as cash_fname',  
+												  'cashval.pre as cash_pre',  
+												'cashval.suf as cash_suf',  
+												'cashval.mname as cash_mname', 
+												 'cashval.lname as cash_lname', 
+
+												  'recfdaval.fname as recfdaval_fname',  
+												  'recfdaval.pre as recfdaval_pre',  
+												'recfdaval.suf as recfdaval_suf',  
+												'recfdaval.mname as recfdaval_mname', 
+												 'recfdaval.lname as recfdaval_lname', 
+
+												  'recbyfda.fname as recbyfda_fname',  
+												  'recbyfda.pre as recbyfdal_pre',  
+												'recbyfda.suf as recbyfda_suf',  
+												'recbyfda.mname as recbyfda_mname', 
+												 'recbyfda.lname as recbyfda_lname',  
+
+												  'recbyfdaph.fname as recbyfdaph_fname',  
+												  'recbyfdaph.pre as recbyfdaph_pre',  
+												'recbyfdaph.suf as recbyfdaph_suf',  
+												'recbyfdaph.mname as recbyfdaph_mname', 
+												 'recbyfdaph.lname as recbyfdaph_lname',  
+												 
+												 'x07.grp_desc', 
+												 'barangay.brgyname', 
+												 'city_muni.cmname',
+												  'province.provname',
+												   'trans_status.trns_desc') //, 'type_facility.*'
 												->where('appform.appid', '=', $appid)
 												// , 'type_facility.*', 'orderofpayment.*'
 												// ->where('type_facility.facid', '=', 'appform.facid')
@@ -8140,18 +8181,22 @@ public static function forDoneHeadersNew($appid,$monid,$selfAssess,$isPtc = fals
 			$table = strtolower($request->type) == 'complaints' ? 'complaints_form' : 'req_ast_form';
 			switch ($x_action) {
 				case 'delete':
+					// OthersController::save_to_log($request->ref_noDelete, $table, $x_action);
 					OthersController::save_to_log($request->ref_noDelete, $table, $x_action);
 					if(DB::table($table)->where('ref_no',$request->ref_noDelete)->update(["deleted"=>true])){
 					// if(DB::table($table)->where('ref_no',$request->ref_noDelete)->delete()){
+						
 						return back()->with('errRet', ['errAlt'=>'success', 'errMsg'=>'Deleted Successfully.']);
 					}
 					break;
 
 				case 'resolve':
-					OthersController::save_to_log($request->ref_noResolve, $table, $x_action);
+					// OthersController::save_to_log($request->ref_noResolve, $table, $x_action);
 					if(DB::table($table)->where('ref_no',$request->ref_noResolve)->update(['isResolved' => 1, 'resolveuid' => session()->get('employee_login')->uid, 'resolveDate' => date("Y-m-d H:i:s",strtotime('now')), 'resolveIP' => $request->ip()])){
-						return back()->with('errRet', ['errAlt'=>'success', 'errMsg'=>'Action completed Successfully.']);
+						OthersController::save_to_log($request->ref_noResolve, $table, $x_action);
+						return back()->with('errRet', ['errAlt'=>'success', 'errMsg'=>'Action completed Successfully. ']);
 					}
+				
 					break;
 
 				case 'edit':

@@ -1279,7 +1279,7 @@ class OthersController extends Controller
 				DB::table('mon_form')
 						->where('monid', '=', $currData->monid)
 						->update(
-							['offense'=>$offense->count(), 'novid'=>1, 'date_issued'=>$currData->novdate]
+							['offense'=>$offense->count(), 'novid'=>1, 'date_issued'=>$currData->novdate, 'nov_num'=>$request->nov_num]
 						);
 
 				// mail

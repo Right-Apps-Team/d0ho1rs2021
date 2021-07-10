@@ -85,7 +85,19 @@
       
         if($('input[name="hgpid"]:checked').val() == undefined){errors +=1; ermsg += "Facilities/Type, "}
         
-        
+        if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
+                var noofbed ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofbed: "")!!}';
+                console.log("noofbed")
+                console.log(noofbed)
+                console.log($('#noofbed').val())
+
+                console.log("noerrors")
+                if(parseInt($('#noofbed').val()) > parseInt(noofbed)){
+                    errors +=1; ermsg += "Authorized Bed Capacity should not exceed with the approved ABC";
+                    console.log("errors")
+                    console.log(errors)
+                }
+        }
         // if(errors > 0){
         //     alert("Please fill the following fields properly: " + ermsg)
         // }else{
@@ -93,6 +105,8 @@
         //     console.log(errors)
         //     submitProper(e)
         // }
+
+        
 
         if(e == 'final'){
             if(errors > 0){

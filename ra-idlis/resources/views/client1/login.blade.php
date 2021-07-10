@@ -480,7 +480,7 @@
                   </div>
                   <div class="col-sm">
                     <button class="btn btn-lg btn-facebook btn-block text-uppercase regproc" id="next" type="button">Next</button>
-                    <button class="btn btn-lg btn-google btn-block text-uppercase regproc" id="register" type="button" style="margin-top: -1px;" data-toggle="modal" data-target="#TOC" hidden>Register</button>
+                    <button class="btn btn-lg btn-google btn-block text-uppercase regproc" onclick="unch()" id="register" type="button" style="margin-top: -1px;" data-toggle="modal" data-target="#TOC" hidden>Register</button>
                   </div>
                 </div>
                 <hr class="my-4">
@@ -497,7 +497,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">IDLIS Terms and Condition</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button"  onclick="unch()" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -536,6 +536,10 @@
   <script src="{{asset('ra-idlis/public/js/forall.js')}}"></script>
   <script type="text/javascript">
     "use strict";
+
+    function unch(){
+      document.getElementById("agreed").checked = false;
+    }
 
     $(".required, .req").each(function(index, el) {
       $(el).append('<span class="text-danger" style="font-size: 20px;">*</span>');

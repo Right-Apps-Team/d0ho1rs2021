@@ -76,7 +76,7 @@
   document.getElementById("street_num").disabled = true;
   document.getElementById("street_name").disabled = true;
   document.getElementById("zip").disabled = true;
-  document.getElementById("noofbed").disabled = true; 
+//   document.getElementById("noofbed").disabled = true; 
 }, 2000);
 //   $( document ).ready(function() {
 //     console.log("nkkk")

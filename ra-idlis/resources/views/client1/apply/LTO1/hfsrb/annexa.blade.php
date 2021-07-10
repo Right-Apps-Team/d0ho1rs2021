@@ -102,9 +102,9 @@
 							{{-- <th>Speciality</th> --}}
 							<th>Date of Birth</th>
 							<th>Sex</th>
-							<th>Email</th>
+							<!-- <th>Email</th> -->
 							<th>Employment</th>
-							<th>Position/Designation</th>
+							<th>Position/<br/>Designation</th>
 							{{-- <th>Qualification</th> --}}
 							{{-- <th>Area</th> --}}
 							<th>Work Status</th>
@@ -145,7 +145,7 @@
 								{{-- <td>{{$personnel->speciality}}</td> --}}
 								<td>{{$personnel->dob}}</td>
 								<td>{{$personnel->sex}}</td>
-								<td>{{$personnel->email}}</td>
+								<!-- <td>{{$personnel->email}}</td> -->
 								<td>{{$personnel->pworksname}}</td>
 								<td>{{$personnel->pos}}</td>
 								{{-- <td>{{$personnel->qual}}</td> --}}
@@ -158,8 +158,35 @@
 								<td>
 									<div class="container">
 										<div class="row">
+									
 											<div class="col-md-6">
-												<button class="btn border-dark btn-warning" title="edit" onclick="showData('{{$personnel->id}}','{{$personnel->prefix}}','{{$personnel->surname}}','{{$personnel->firstname}}','{{$personnel->middlename}}','{{$personnel->suffix}}','{{$personnel->prof}}','{{$personnel->prcno}}','{{$personnel->validityPeriodTo}}','{{$personnel->dob}}','{{$personnel->sex}}','{{$personnel->employement}}','{{$personnel->pos}}'/*,'{{$personnel->area}}'*/,'{{$personnel->qual}}','{{$personnel->email}}','{{$personnel->tin}}', '{{$personnel->isMainRadio}}', '{{$personnel->ismainpo}}', '{{$personnel->isMainRadioPharma}}')">
+												<button class="btn border-dark btn-warning" title="edit" onclick="showData(
+													'{{$personnel->id}}',
+												'{{$personnel->prefix}}',
+												'{{$personnel->surname}}',
+												'{{$personnel->firstname}}',
+												'{{$personnel->middlename}}',
+												'{{$personnel->suffix}}',
+												'{{$personnel->prof}}',
+												'{{$personnel->prcno}}',
+												'{{$personnel->validityPeriodTo}}',
+												'{{$personnel->dob}}',
+												'{{$personnel->sex}}',
+												'{{$personnel->employement}}',
+												'{{$personnel->pos}}'
+												/*,'{{$personnel->area}}'*/,
+												'{{$personnel->qual}}',
+												'{{$personnel->email}}',
+												/*'{{$personnel->tin}}',*/ 
+												'{{$personnel->isMainRadio}}',
+												 '{{$personnel->ismainpo}}',
+												  '{{$personnel->isMainRadioPharma}}',
+												  '{{$personnel->isXrayTech}}',
+												  '{{$personnel->isChiefRadTech}}'
+												  
+												  )
+												  
+												  ">
 													<i class="fa fa-edit"></i>
 												</button>
 											</div>
@@ -312,7 +339,9 @@
 				                   					@endforeach
 				                   				</select>
 		                   					</div>
-		                   					{{-- @if($hfsrbannexa[1]) --}}
+
+
+		                   					<!-- {{-- @if($hfsrbannexa[1]) --}}
 		                   					<div class="col-md" style="display: none;" id="ishead">
 		                   						<input type="checkbox" name="head"> Make as Head of Radiology
 		                   					</div>
@@ -327,7 +356,10 @@
 		                   					<div class="col-md" style="display: none;" id="isph">
 		                   						<input type="checkbox" name="pharmahead"> Make as Head of Chief Pharmacist
 		                   					</div>
-		                   					{{-- @endif --}}
+		                   					{{-- @endif --}} -->
+
+
+											   
 
 		                   					<!-- {{-- @if($hfsrbannexa[1]) --}}
 		                   					<div class="col-md" >
@@ -355,9 +387,24 @@
 		                   					
 											 
 		                   				</div>
-		                   				<div id="isrpo1" hidden>
+		                   				<div class="col-md" id="isrpo1" hidden>
 		                   						<input type="checkbox" value="1" name="po1" id="po1" > Make as Radiation protection officer
-		                   					</div>
+		                   				</div>
+										
+										<div class="col-md" id="ishead1" hidden>
+		                   						<input type="checkbox" value="1" name="head1" id="head1" > Make as Head of Radiology
+		                   				</div>
+										
+										<div class="col-md" id="ispharmahead1" hidden>
+		                   						<input type="checkbox" value="1" name="pharmahead1" id="pharmahead1" > Make as Head of Chief Pharmacist
+		                   				</div>
+										<div class="col-md" id="isxtech" hidden>
+		                   						<input type="checkbox" value="1" name="xtech" id="xtech" >  Make as Xray technologist
+		                   				</div>
+										<div class="col-md" id="ischiefrt" hidden>
+		                   						<input type="checkbox" value="1" name="chiefrt" id="chiefrt" >Make as Chief Radiation Technologist
+		                   				</div>
+
 		                   			</div>
 								</div>
 								<div class="col-md-4">
@@ -541,13 +588,39 @@
 				console.log("value")
 				console.log(value)
 
-				if(value == "20"){
+				if(value == "20" || value == "3"|| value == "6"|| value == "12"){
 					document.getElementById("isrpo1").removeAttribute("hidden")
-					console.log(document.getElementById("isrpo1"))
-					
 				}else{
 					document.getElementById("isrpo1").setAttribute("hidden", "hidden");
 				}
+
+				if(value == "3"){
+					document.getElementById("ishead1").removeAttribute("hidden")
+					
+				}else{
+					document.getElementById("ishead1").setAttribute("hidden", "hidden");
+				}
+
+				if(value == "8"){
+					document.getElementById("ispharmahead1").removeAttribute("hidden")
+					
+				}else{
+					document.getElementById("ispharmahead1").setAttribute("hidden", "hidden");
+				}
+
+
+				if(value == "12"){
+					document.getElementById("isxtech").removeAttribute("hidden")
+					document.getElementById("ischiefrt").removeAttribute("hidden")
+					
+				}else{
+					document.getElementById("isxtech").setAttribute("hidden", "hidden");
+					document.getElementById("ischiefrt").setAttribute("hidden", "hidden");
+				}
+
+
+
+
 				// console.log()
 				// document.getElementById("assignment").remove()
 
@@ -706,10 +779,12 @@
 				// 	$(this).attr('required',true);
 				// });
 			}
-			function showData(id,pre,sur,first,mid,suf,prof,prcno,valid,dob,sex,emp,pos/*,des,area*/,qual,email/*,tin*/, head = null, po = null, pharmahead = null){
+			function showData(id,pre,sur,first,mid,suf,prof,prcno,valid,dob,sex,emp,pos/*,des,area*/,qual,email/*,tin*/, head = null, po = null, pharmahead = null, isXrayTech = null, isChiefRadTech = null){
+			console.log("head1")
+			console.log(head)
 				$("#viewModal").modal('toggle');
 				$("#viewModal").on('shown.bs.modal', function(){
-					otherFunction(id,pre,sur,first,mid,suf,prof,prcno,valid,dob,sex,emp,pos/*,des,area*/,qual,email/*,tin*/, head, po, pharmahead);
+					otherFunction(id,pre,sur,first,mid,suf,prof,prcno,valid,dob,sex,emp,pos/*,des,area*/,qual,email/*,tin*/, head, po, pharmahead, isXrayTech, isChiefRadTech);
 				});
 			}
 
@@ -719,26 +794,58 @@
 			// 	});
 			// }
 
-			function otherFunction(id,pre,sur,first,mid,suf,prof,prcno,valid,dob,sex,emp,pos/*,des,area*/,qual,email/*,tin*/,head, po, pharmahead){
+			function otherFunction(id,pre,sur,first,mid,suf,prof,prcno,valid,dob,sex,emp,pos/*,des,area*/,qual,email/*,tin*/,head, po, pharmahead, isXrayTech, isChiefRadTech){
 				$("#actionModalCRUD").empty().html('Edit Personnel');
 				$("#toChange").val('edit');
 				$("#idToAdd").val(id);
 				$("#forCred").empty().append('(You may resubmit or if not, details of credentials will be retained)');
-				if(arguments.length == fieldsForInput.length){
-					if(head != ""){
-						$('[name=head]').show();
-						$('[name=head]').attr('value',1);
-						$('[name=head]').prop('checked',true);
+				console.log(arguments)
+				// if(arguments.length == fieldsForInput.length){
+					// if(head != ""){
+					// 	$('[name=head]').show();
+					// 	$('[name=head]').attr('value',1);
+					// 	$('[name=head]').prop('checked',true);
+					// }
+					// if(po != ""){
+					// 	$('[name=po]').show();
+					// 	$('[name=po]').attr('value',1);
+					// 	$('[name=po]').prop('checked',true);
+					// }
+					// if(pharmahead != ""){
+					// 	$('[name=pharmahead]').show();
+					// 	$('[name=pharmahead]').attr('value',1);
+					// 	$('[name=pharmahead]').prop('checked',true);
+					// }
+console.log("head")
+console.log(isXrayTech)
+console.log(isChiefRadTech)
+					if(head == 1){
+						
+						$('[name=head1]').attr('value',1);
+						$('[name=head1]').prop('checked',true);
+					}
+					if(isXrayTech == "1"){
+						
+						$('[name=xtech]').attr('value',1);
+						$('[name=xtech]').prop('checked',true);
+					}
+					
+					if(isChiefRadTech == "1"){
+						
+						$('[name=chiefrt]').attr('value',1);
+						$('[name=chiefrt]').prop('checked',true);
 					}
 					if(po != ""){
-						$('[name=po]').show();
-						$('[name=po]').attr('value',1);
-						$('[name=po]').prop('checked',true);
+						
+						$('[name=po1]').attr('value',1);
+						$('[name=po1]').prop('checked',true);
 					}
-					if(pharmahead != ""){
-						$('[name=pharmahead]').show();
-						$('[name=pharmahead]').attr('value',1);
-						$('[name=pharmahead]').prop('checked',true);
+					console.log("pharmahead")
+					console.log(pharmahead)
+					if(pharmahead == 1){
+						
+						$('[name=pharmahead1]').attr('value',1);
+						$('[name=pharmahead1]').prop('checked',true);
 					}
 					for(var arg = 0; arg < arguments.length; ++ arg)
 					{
@@ -753,9 +860,9 @@
 						// $(this).parent().prev().find('span').remove()
 						$(this).removeAttr('required');
 					});
-				} else {
-					alert('Arguments are missing! Please contact Admin');
-				}
+				// } else {
+				// 	alert('Arguments are missing! Please contact Admin');
+				// }
 			}
 			function showDelete(id,name,action){
 				let sel;
@@ -876,3 +983,6 @@
 @else
   <script type="text/javascript">window.location.href= "{{ asset('client1/apply') }}";</script>
 @endif
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.0.3/css/dataTables.dateTime.min.css" />

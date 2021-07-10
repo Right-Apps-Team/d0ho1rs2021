@@ -133,7 +133,9 @@
 									(Designation)
 								</div>	
 							</div>
-
+<script>
+	console.log('{!!$AllTeam!!}')
+								</script>
 							@foreach($AllTeam as $k => $v)
 								<div class="row text-left mt-5">
 									<div class="col-sm-2 w-100 text-center">

@@ -112,7 +112,13 @@
                   <div class="row">
                     <div class="col-sm-4">Prefix:</div>
                     <div class="col-sm-8" style="margin:0 0 .8em 0;">
-                    <input type="text" name="pre" class="form-control">
+                    <!-- <input type="text" name="pre" class="form-control"> -->
+                    <select name="pre" class="form-control">
+											<option value="" selected>None</option>
+											<option value="Mr">Mr</option>
+											<option value="Mrs">Mrs</option>
+											<option value="Ms">Ms</option>
+										</select>
                     </div>
                   </div>
 

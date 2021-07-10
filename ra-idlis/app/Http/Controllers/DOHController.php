@@ -6486,7 +6486,36 @@ use FunctionsClientController;
 						array_push($assessor, $key->evaluatedBy);
 					}	
 				}
+
+				$curmon = DB::table('mon_form')->where([['monid', $monid]])->first();
+				$assessorNew = array();
+				$dataFromDBNew = DB::table('mon_team_members')
+				->where('montid', '=', $curmon->team)
+				->get();
+ 
+
+				foreach ($dataFromDBNew as $key) {
+					if(!in_array($key->uid, $assessorNew)){
+						array_push($assessorNew, $key->uid);
+					}	
+				}
+
+			// $dataFromDB = DB::table('assessmentcombinedduplicate')
+			// 	->where([
+			// 		['assessmentcombinedduplicate.regfac_id',$regfac_id],
+			// 		['selfAssess',$isSelfAssess],
+			// 		['monid',$monid]
+			// 	])->orderBy('assessmentSeq','ASC')->get();
+
+			// 	foreach ($dataFromDB as $key) {
+			// 		if(!in_array($key->evaluatedBy, $assessor)){
+			// 			array_push($assessor, $key->evaluatedBy);
+			// 		}	
+			// 	}
+
+
 				$onWhereClause = (count($assessor) > 0 ? $assessor : []);
+				$onWhereClauseNew = (count($assessorNew) > 0 ? $assessorNew : []);
 
 				$arrForImprovement = $arrForCompliance = array();
 
@@ -6514,7 +6543,8 @@ use FunctionsClientController;
 
 				$data = [
 					'reports' => $dataFromDB,
-					'assessor' => DB::table('x08')->whereIn('uid',$onWhereClause)->get(),
+					'assessor' => DB::table('x08')->whereIn('uid',$onWhereClauseNew)->get(),
+					// 'assessor' => DB::table('x08')->whereIn('uid',$onWhereClause)->get(),
 					'reco' => $reco,
 					'uInf' => $uInf,
 					'otherReports' => [$arrForImprovement,$arrForCompliance],
@@ -8307,10 +8337,14 @@ use FunctionsClientController;
 				try {
 					// $AllData = AjaxController::getAllMonitoringForm();
 					// $Nov = AjaxController::getAllNovIssuedByMonid($monid); // collection of array of objects
+					$mondat = DB::table('mon_form')->where([['monid', $novid]])->first();
+
+
 					$NovAll = AjaxController::getAllNovDirections();
 					$Nov = AjaxController::getNovIssuedByNov($novid);
 					$arrNov = (isset($Nov) ? explode(',', $Nov->novdire) : null);
-					$AllTeam = AjaxController::getAllMonTeamMembers($Nov->novteam); // collection of array
+					$AllTeam = AjaxController::getAllMonTeamMembers($mondat->team); // collection of array
+					// $AllTeam = AjaxController::getAllMonTeamMembers($Nov->novteam); // collection of array
 					return view('employee.others.NoticeOfViolation', ['Nov'=>$Nov, 'AllTeam'=>$AllTeam, 'NovAll' => $NovAll, 'arrNov' => $arrNov]);
 
 					return response(view('employee.others.NoticeOfViolation', ['Nov'=>$Nov, 'AllTeam'=>$AllTeam, 'NovAll' => $NovAll, 'arrNov' => $arrNov]), 200, [

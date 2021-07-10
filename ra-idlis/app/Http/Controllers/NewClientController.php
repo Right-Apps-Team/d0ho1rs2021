@@ -1252,9 +1252,11 @@ class NewClientController extends Controller {
 					$toAppform = [];
 					$pharma = FunctionsClientController::hasEmptyDBFields('cdrrpersonnel',['appid' => $appid],['prc','coe']);
 					$mach = FunctionsClientController::hasEmptyDBFields('cdrrhrpersonnel',['appid' => $appid],['prc','bc','coe']);
+					$pharmaattc = DB::table('cdrrattachment')->where([['appid', $appid]])->first();
 					
-					if($pharma[2] == true && $mach[2] == true){
-						if(!$pharma[0] && !$mach[0]){
+					// if($pharma[2] == true && $mach[2] == true){
+					if($pharma[2] == true && $mach[2] == true && !is_null($pharmaattc)){
+						if(!$pharma[0] && !$mach[0]  && !is_null($pharmaattc)){
 							$ret = DB::table('appform')->where('appid',$appid)->update(['isReadyForInspecFDA' => 1]);
 							if($ret){
 								$lrf = $lrfForPharma = 0;
@@ -1337,14 +1339,29 @@ class NewClientController extends Controller {
 							}else{
 								$radMsg = "No personnel yet on Radiology. ";
 							}
+							$attchp = "";
+							if(is_null($pharmaattc)){
+								$attchp = "No phramacy attachment yet. ";
+							}
 
-							$message = $initial.$pharMsg.$radMsg;
+
+
+							$message = $initial.$pharMsg.$radMsg.$attchp;
 
 							return $message ;
 							return back()->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Please provide Personnel on Pharmacy and Radiology.']);
 						}
 					}else{
-						return "Please provide Personnel on Pharmacy and Radiology and make sure to submit all requirements" ;
+						$mssg = "Please provide ";
+						if($pharma[2] != true && $mach[2] != true){
+							$mssg .= " \n - Personnel on Pharmacy and Radiology and make sure to submit all requirements";
+						}
+
+						if(is_null($pharmaattc)){
+							$mssg .= " \n - Pharmacy Attachment";
+						}
+
+						return $mssg ;
 
 					}
 
@@ -1488,9 +1505,12 @@ class NewClientController extends Controller {
 				$inHF = array();
 				$cdrr = DB::table('cdrrpersonnel')->where('appid',$appid)->get();
 				$cdrrnew = DB::table('cdrrpersonnel')->join('hfsrbannexa', 'cdrrpersonnel.hfsrbannexaID', '=', 'hfsrbannexa.id')
-				->leftJoin('position','position.posid','hfsrbannexa.prof')
+				// ->join('cdrrhrpersonnel','hfsrbannexa.id','cdrrhrpersonnel.hfsrbannexaID')
+				->join('position','position.posid','hfsrbannexa.prof')
 				->select('cdrrpersonnel.*', 'position.posname')
+				// ->where('hfsrbannexa.appid',$appid)->get();
 				->where('cdrrpersonnel.appid',$appid)->get();
+
 				if(count($cdrr) > 0){
 					foreach ($cdrr as $key) {
 						if(!in_array($key->id, $inHF)){
@@ -1811,7 +1831,8 @@ class NewClientController extends Controller {
 				// return $request->all();
 				if($request->action == 'add'){
 					$filename = FunctionsClientController::uploadFile($request->add_attachment);
-						$returnToSender = DB::table('cdrrhrotherattachment')->insert(['attachmentdetails' => $request->add_details, 'attachment' => $filename['fileNameToStore'], 'reqID' => $request->req, 'appid' => $appid]);
+						$returnToSender = DB::table('cdrrhrotherattachment')->insert(['attachmentdetails' => $request->add_details, 'attachment' => $filename['fileNameToStore'],  'appid' => $appid]);
+						// $returnToSender = DB::table('cdrrhrotherattachment')->insert(['attachmentdetails' => $request->add_details, 'attachment' => $filename['fileNameToStore'], 'reqID' => $request->req, 'appid' => $appid]);
 				} else if($request->action == 'delete'){
 					if(Storage::exists('public/uploaded/'.$request->deleteFile)){
 						unlink(storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'uploaded' . DIRECTORY_SEPARATOR . $request->deleteFile ));
@@ -1859,7 +1880,23 @@ class NewClientController extends Controller {
 				$arrRet = [
 					'workstat' => AjaxController::getAllWorkStatus(),
 					'pos' => $pos,
-					'hfsrbannexa' => [DB::table('hfsrbannexa')->leftJoin('pwork_status','pwork_status.pworksid','hfsrbannexa.employement')->leftJoin('position','position.posid','hfsrbannexa.prof')->where('appid',$appid)->get(),DB::table('hfsrbannexa')->leftJoin('pwork_status','pwork_status.pworksid','hfsrbannexa.employement')->leftJoin('position','position.posid','hfsrbannexa.prof')->where([['appid',$appid],['isMainRadio',1]])->doesntExist(),DB::table('hfsrbannexa')->leftJoin('pwork_status','pwork_status.pworksid','hfsrbannexa.employement')->leftJoin('position','position.posid','hfsrbannexa.prof')->where([['appid',$appid],['isMainRadioPharma',1]])->doesntExist(),DB::table('hfsrbannexa')->leftJoin('pwork_status','pwork_status.pworksid','hfsrbannexa.employement')->leftJoin('position','position.posid','hfsrbannexa.prof')->where([['appid',$appid],['ismainpo',1]])->doesntExist()],
+					'hfsrbannexa' => [DB::table('hfsrbannexa')
+					->leftJoin('pwork_status','pwork_status.pworksid','hfsrbannexa.employement')
+					->leftJoin('position','position.posid','hfsrbannexa.prof')
+					->where('appid',$appid)->get(),
+					
+					DB::table('hfsrbannexa')->leftJoin('pwork_status','pwork_status.pworksid','hfsrbannexa.employement')
+					->leftJoin('position','position.posid','hfsrbannexa.prof')
+					->where([['appid',$appid],['isMainRadio',1]])
+					->doesntExist(),DB::table('hfsrbannexa')
+					->leftJoin('pwork_status','pwork_status.pworksid','hfsrbannexa.employement')
+					->leftJoin('position','position.posid','hfsrbannexa.prof')
+					->where([['appid',$appid],['isMainRadioPharma',1]])
+					->doesntExist(),DB::table('hfsrbannexa')
+					->leftJoin('pwork_status','pwork_status.pworksid','hfsrbannexa.employement')
+					->leftJoin('position','position.posid','hfsrbannexa.prof')
+					->where([['appid',$appid],['ismainpo',1]])
+					->doesntExist()],
 					// 'canAdd' => DB::table('appform')->where([['appid',$appid],['isReadyForInspec',0]])->exists()
 					'canAdd' => true,
 					'appid' =>$appid
@@ -1889,9 +1926,17 @@ class NewClientController extends Controller {
 				   'qual' => $request->qual, 
 				   'email' => $request->email,
 				   'tin' => $request->tin, 
-				   'isMainRadio' => ($request->head == 1 ? $request->head : null), 
-				   'isMainRadioPharma' => ($request->pharmahead == 1 ? $request->pharmahead : null), 
-				   'ismainpo' => ($request->po == 1 ? $request->po : ($request->po1 == 1 ? $request->po1 : null)), 'appid' => $appid];
+				   'isMainRadio' => $request->head1, 
+				   'isMainRadioPharma' => $request->pharmahead1 , 
+				   'ismainpo' => $request->po1,
+				   'isXrayTech' => $request->xtech,
+				   'isChiefRadTech' => $request->chiefrt,
+				   
+				//    'isMainRadio' => ($request->head == 1 ? $request->head : null), 
+				//    'isMainRadioPharma' => ($request->pharmahead == 1 ? $request->pharmahead : null), 
+				//    'ismainpo' => ($request->po == 1 ? $request->po : ($request->po1 == 1 ? $request->po1 : null)), 
+				   
+				   'appid' => $appid];
 
 
 				$pharma = ['appid' => $appid, 'name' => strtolower($request->prefix . ' ' . $request->fname . ' ' . $request->mname . ' ' . $request->sur_name . ' ' . $request->suffix ), 'designation' => $request->position, 'tin' => $request->tin, 'email' => $request->email, 'area' => $request->assignment];

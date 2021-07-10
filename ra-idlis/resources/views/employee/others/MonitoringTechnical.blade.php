@@ -269,24 +269,49 @@
 			                	</div>
 			              	</div>
 
+							<div class="row mb-2">
+			                	<div class="col-sm-4 w-100">
+			                  		NOV Number:
+			                	</div>
+
+			                	<div class="col-sm-8 w-100">
+			                  		<input type="text" name="nov_num" id="nov_num" class="form-control w-100" >
+			                	</div>
+			              	</div>
+
 			              	<hr>
 
 			              	{{-- dire --}}
 			              	<div class="row mb-2">
-			                	<div class="col-sm-4 w-100">
+			                	<!-- <div class="col-sm-4 w-100"> -->
 			                  		Direction:
-			                	</div>
+			                	<!-- </div> -->
 
-			                	<div class="col-sm-8 w-100">
-			                  		<select multiple name="novdire[]" class="form-control w-100" onchange="novextra(this)" data-parsley-required-message="<b>*Direction</b> required" required data-parsley="recrecom" required id="mon_tech_dire">
+			                	<!-- <div class="col-sm-8 w-100"> -->
+			                  		<!-- <select multiple name="novdire[]" class="form-control w-100" onchange="novextra(this)" data-parsley-required-message="<b>*Direction</b> required" required data-parsley="recrecom" required id="mon_tech_dire">
 			                  			<option disabled hidden selected value="">Select an option</option>
 			                  			@isset($AllNov)
 			                  				@foreach($AllNov as $key => $value)
 			                  					<option value="{{$value->novid_directions}}">{{$value->novdesc}}</option>
 			                  				@endforeach)
 			                  			@endisset
-			                  		</select>
-			                	</div>			                	
+			                  		</select> -->
+									  <div class="container">
+										@isset($AllNov)
+			                  				@foreach($AllNov as $key => $value)
+											  <div class="row">
+   											    <div class="col-sm-2">
+													<input type="checkbox" id="{{$value->novid_directions}}" name="novdire[]" class="form-control w-100" 
+													onclick="showextra(this.value)" value="{{$value->novid_directions}}" >
+												</div>
+												<div class="col-sm-10">
+												{{$value->novdesc}} <br/>
+												</div>
+											  </div>
+									@endforeach
+			                  			@endisset
+									  </div>
+								<!-- </div>			                	 -->
 			              	</div>
 
 			              	<div class="row mb-2">
@@ -295,6 +320,8 @@
 			              			<span id="novextras"></span>
 			              		</div>
 				            </div>
+							<textarea name="nov_others" id="nov_others" hidden class="form-control w-100" placeholder="Specify"
+							 data-parsley-required-message="<b>*Specification</b> required" required="" data-parsley="recrecom"></textarea>
 
 			              	<hr>
 
@@ -512,6 +539,17 @@
   	</div>
 
 	<script type="text/javascript">
+		function showextra(value){
+			if($('#3').prop('checked')){
+				document.getElementById('nov_others').removeAttribute("hidden")
+			}else{
+				document.getElementById('nov_others').setAttribute("hidden", true);
+			}
+		}
+
+
+
+
 		let validImageTypes = ["gif", "jpeg", "png", "jpg"];
 		function showData(det,survid,displayImage = false){
 	    	let aString = '<div class="row">';

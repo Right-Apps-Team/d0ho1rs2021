@@ -15,7 +15,7 @@
 				<table class="table table-hover" id="tApp">
 		      		<thead style="background-color: #428bca; color: white" id="theadapp">
 		      			<tr>
-		      				<th>Attachment For</th>
+		      				<!-- <th>Attachment For</th> -->
 							<th>Attachment Details</th>
 							<th>Attachment</th>
 							<th>Option</th>
@@ -24,7 +24,7 @@
 		      		<tbody id="loadHere">
 		      			@foreach($cdrrhrotherattachment as $receipt)
 							<tr>
-								<td>{{$receipt->reqName}}</td>
+								<!-- <td>{{$receipt->reqName}}</td> -->
 								<td>{{$receipt->attachmentdetails}}</td>
 								<td>
 									<a target="_blank" href="{{ route('OpenFile', $receipt->attachment)}}"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
@@ -55,7 +55,7 @@
 	                   	<form id="receiptAdd" enctype="multipart/form-data" method="POST">
 	                   		{{csrf_field()}}
 							<div class="container pl-5">
-								<div class="row mb-2">
+								<!-- <div class="row mb-2">
 		                   			<div class="col-sm req">
 		                   				Attachment For:
 		                   			</div>
@@ -67,7 +67,7 @@
 		                   					@endforeach
 		                   				</select>
 		                   			</div>
-		                   		</div>
+		                   		</div> -->
 		                   		<div class="row mb-2">
 		                   			<div class="col-sm">
 		                   				Attachment Details:

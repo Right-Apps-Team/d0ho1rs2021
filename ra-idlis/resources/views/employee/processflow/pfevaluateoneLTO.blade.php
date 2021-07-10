@@ -154,11 +154,17 @@
             }
       </style>
         <div class="card">
-            <div class="card-header bg-white font-weight-bold">
+            <div class="card-header bg-white font-weight-bold" style="width: 100%;">
               <input type="text" id="NumberOfRejected" value="@isset ($numOfX) {{$numOfX}} @endisset" hidden>
               <input type="" id="token" value="{{ Session::token() }}" hidden>
-               Evaluation 
+              
                <a href="{{asset('/employee/dashboard/processflow/evaluate/technical')}}">    <button class="btn btn-primary" >Back</button></a>
+               Evaluation 
+               @if($office == 'pharma')
+                    <div style="float: right;">
+                      <a class="btn {{(FunctionsClientController::existOnDB('cdrrpersonnel',[['appid',$AppData->appid],['isTag',1]]) ? 'bg-danger': 'btn-primary')}} p-3 text-white" target="_blank" href="{{url('client1/apply/fda/CDRR/view/personnel/').'/'.$AppData->appid.'/tag'}}">Tag Pharmacist</a>
+                    </div>
+               @endif
                <!-- <button class="btn btn-primary" onclick="window.history.back();">Back</button> -->
             </div>
             <div class="card-body">
@@ -185,12 +191,13 @@
                     <h6 class="font-weight-bold"><u>OHSRS Status: <span style="color:blue">Verified</span></u></h6>
                     @endif
               </div>
+             
               {{-- @if(!empty($documentDate)) --}}
             <table class="table" id="example">
               <thead>
                 <tr>
                   <td scope="col" width="60%" >
-                    <strong>Requirements</strong>
+                    <strong>Requirements </strong>
                   </td>
                   <!-- <td scope="col" width="40%">
                     <center><strong>Evaluation</strong></center>

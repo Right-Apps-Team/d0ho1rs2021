@@ -19,15 +19,15 @@
 			</div>
 		</div>
 		<div class="container text-center font-weight-bold mt-5">Pharmacy Personnel</div>
-		<div class="container pb-3">
-			<button class="btn btn-primary pl-3 mb-3" data-toggle="modal" data-target="#viewModal">Add</button>
-			<div class="container">
-				<table class="table table-hover" id="tApp">
+		<div style="padding: 2%;" >
+		<button class="btn btn-primary pl-3 mb-3" data-toggle="modal" data-target="#viewModal">Add</button>
+		<table class="table table-hover" id="tApp">
 		      		<thead style="background-color: #428bca; color: white" id="theadapp">
 		      			<tr>
 							<th>Name</th>
 							<th>Profession</th>
 							<th>Designation/Position</th>
+							<!-- <th>Qualification</th> -->
 							<th>TIN</th>
 							<th>Email</th>
 							<th>Area of Assignment</th>
@@ -46,6 +46,7 @@
 							
 								{{-- <td>{{$personnel->pos}}</td> --}}
 								<td>{{$personnel->designation}}</td>
+								<!-- <td>$personnel->qualification</td> -->
 								<td>{{$personnel->tin}}</td>
 								<td>{{$personnel->email}}</td>
 								<td>{{$personnel->area}}</td>
@@ -80,6 +81,11 @@
 							@endforeach
 		      		</tbody>
 		      	</table>
+		</div>
+		<div class="container pb-3">
+			
+			<div class="container">
+			
 			</div>
 		</div>
 		<div class="remthis modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
@@ -381,3 +387,6 @@
 @else
   <script type="text/javascript">window.location.href= "{{ asset('client1/apply') }}";</script>
 @endif
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.0.3/css/dataTables.dateTime.min.css" />

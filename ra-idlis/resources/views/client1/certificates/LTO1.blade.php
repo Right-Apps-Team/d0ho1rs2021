@@ -321,7 +321,7 @@
 			</div>
 			<div class="card-footer">
 			
-			<center><i><b>This license isrenewable annually andsubject to suspension orrevocation ifthe hospital isfound violating RA 4226 and related
+			<center><i><b>This license is renewable annually and subject to suspension or revocation if the hospital is found violating RA 4226 and related
 issuances.</b></i></center>
 <br/><br/>
 				<p class="text-muted text-small" style="float: right; padding: 0; margin: 0;">© All Rights Reserved {{date('Y')}}</p>

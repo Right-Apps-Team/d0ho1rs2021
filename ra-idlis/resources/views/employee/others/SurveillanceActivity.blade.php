@@ -158,7 +158,8 @@
           	<div class="container" id="nov" hidden="">
           		<div class="col-md-12 lead  text-center">NOV/CDO Number</div>
           		<div class="container pb-3 pt-3">
-	          		<input type="number" name="novNo" class="form-control" value="" id="novNo">
+	          		<input type="text" name="novNo" class="form-control" value="" id="novNo">
+	          		<!-- <input type="number" name="novNo" class="form-control" value="" id="novNo"> -->
           		</div>
           	</div>
             <div class="container" id="others" hidden="">

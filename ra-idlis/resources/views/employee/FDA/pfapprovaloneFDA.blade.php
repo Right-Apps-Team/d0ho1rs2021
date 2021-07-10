@@ -137,7 +137,7 @@
                             {{-- @isset($PreAss)<span style="color:green;font-weight: bolder">Already Taken</span>@else<span style="color:red;font-weight: bolder">Not yet taken</span>@endisset --}}
                             <td>@isset($AppData) @if($reco == null) <span style="color:blue;font-weight: bolder">Not Evaluated</span> @elseif($reco == 1)<span style="color:green;font-weight: bolder">Accepted Evaluation</span>@else<span style="color:red;font-weight: bolder">Disapproved Evaluation</span>@endif @endisset</td>
                           </tr>
-                          {{-- <tr>
+                           <tr>
                             <th scope="row">Date :</th>
                             <td>@isset($AppData->recommendedtimeFDA) <span style="color:green;font-weight: bolder">{{$AppData->recommendedtimeFDA}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
                           </tr>
@@ -147,8 +147,15 @@
                           </tr>
                           <tr>
                             <th scope="row">Evaluated by:</th>
-                            <td>@isset($AppData->recommendedbyFDA) <span style="color:green;font-weight: bolder">{{$AppData->recommendedbyFDA}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
-                          </tr> --}}
+                            <!-- <td>@isset($AppData->recommendedbyFDA) <span style="color:green;font-weight: bolder">{{$AppData->recommendedbyFDA}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td> -->
+                            <td>@isset($AppData->recommendedbyFDA) <span style="color:green;font-weight: bolder">
+                            <!-- {{$AppData->recommendedbyFDA}} -->
+                            {{$AppData->recfdaval_pre}}
+                            {{$AppData->recfdaval_fname}}
+                            {{$AppData->recfdaval_lname}}
+                            {{$AppData->recfdaval_suf}}
+                          </span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
+                          </tr> 
                         </tbody>
                       </table>   
                   </div>
@@ -254,7 +261,18 @@
                           </tr>
                           <tr>
                             <th scope="row">Evaluated by:</th>
-                            <td>@isset($AppData->CashierApproveByFDA) <span style="color:green;font-weight: bolder">{{$AppData->CashierApproveByFDA}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
+                            <td>@isset($AppData->CashierApproveByFDA) <span style="color:green;font-weight: bolder">
+                            <!-- {{$AppData->CashierApproveByFDA}} -->
+                            {{$AppData->cash_pre}}
+                            {{$AppData->cash_fname}}
+                            {{$AppData->cash_lname}}
+                            {{$AppData->cash_suf}}
+                            
+
+
+
+                          </span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
+                            <!-- <td>@isset($AppData->CashierApproveByFDA) <span style="color:green;font-weight: bolder">{{$AppData->CashierApproveByFDA}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td> -->
                           </tr>
                         </tbody>
                       </table>  
@@ -305,7 +323,23 @@
                           </tr>
                           <tr>
                             <th scope="row">Evaluated by:</th>
-                            <td>@isset($recommendationEvalBy) <span style="color:green;font-weight: bolder">{{$recommendationEvalBy}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
+                            <td>@isset($AppData->CashierApproveByFDA) <span style="color:green;font-weight: bolder">
+                            <!-- {{$AppData->CashierApproveByFDA}} -->
+                            {{$AppData->recbyfdal_pre}}
+                            {{$AppData->recbyfda_fname}}
+                            {{$AppData->recbyfda_lname}}
+                            {{$AppData->recbyfda_suf}}
+                            
+
+
+
+                          </span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
+                            <!-- <td>@isset($recommendationEvalBy) <span style="color:green;font-weight: bolder">{{$recommendationEvalBy}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td> -->
+                            
+
+
+
+
                           </tr>
                         </tbody>
                       </table>  
@@ -348,8 +382,29 @@
                           </tr>
                           <tr>
                             <th scope="row">Evaluated by:</th>
-                            <td>@isset($AppData->CashierApproveByPharma) <span style="color:green;font-weight: bolder">{{$AppData->CashierApproveByPharma}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
+                            <!-- <td>@isset($AppData->CashierApproveByPharma) <span style="color:green;font-weight: bolder">{{$AppData->CashierApproveByPharma}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td> -->
+                            <td>@isset($AppData->CashierApproveByFDA) <span style="color:green;font-weight: bolder">
+                            <!-- {{$AppData->CashierApproveByFDA}} -->
+                            {{$AppData->recbyfdaph_pre}}
+                            {{$AppData->recbyfdaph_fname}}
+                            {{$AppData->recbyfdaph_lname}}
+                            {{$AppData->recbyfdaph_suf}}
+                            
+
+
+
+                          </span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
+                            <!-- <td>@isset($recommendationEvalBy) <span style="color:green;font-weight: bolder">{{$recommendationEvalBy}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td> -->
+                            
+
+
+
+
                           </tr>
+                          
+
+
+
                         </tbody>
                       </table>  
                   </div>
