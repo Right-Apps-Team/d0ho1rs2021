@@ -21,6 +21,7 @@
                 <!-- <h2>@isset($AppData) {{$AppData->facilityname}} @endisset </h2> -->
                 <h5>@isset($AppData) {{strtoupper($AppData->street_name) . ' ' . strtoupper($apdat->street_number)}}, {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>
                 <h6>@isset($AppData) Status: @if ($AppData->isRecoForApproval === null) <span style="color:blue">For Recommendation Evaluation</span> @elseif($AppData->isRecoForApproval == 1)  <span style="color:green">Recommended for Approval</span> @else <span style="color:red">Disapproved for Approval</span> @endif @endisset</h6>
+              @if($AppData->requestReeval == '1') <h6 style="color:blue">For Re-evaluation</h6> @endif
               </td>
             </tr>
           </thead>
@@ -299,7 +300,8 @@
                     <center>
                       @isset($AppData)
                         @if($AppData->CashierApproveBy != null)
-                          <button class="btn btn-primarys" onclick="window.location.href='{{ asset('employee/dashboard/processflow/view/hfercevaluation/') }}/{{$AppData->appid}}/{{$otherDetails->revision}}'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View HFERC Evaluation</button>
+                          <button class="btn btn-primarys" onclick="window.location.href='{{ asset('employee/dashboard/processflow/view/hfercevaluation/') }}/{{$AppData->appid}}/{{AjaxController::maxRevisionFor($AppData->appid)}}'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View HFERC Evaluation</button>
+                          <!-- <button class="btn btn-primarys" onclick="window.location.href='{{ asset('employee/dashboard/processflow/view/hfercevaluation/') }}/{{$AppData->appid}}/{{$otherDetails->revision}}'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View HFERC Evaluation</button> -->
                         @else
                           &nbsp;
                         @endif

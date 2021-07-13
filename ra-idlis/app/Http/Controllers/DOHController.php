@@ -4542,6 +4542,29 @@ use FunctionsClientController;
 						$membersDoneEv = array();
 						try 
 						{
+
+							// for req eval
+							$checkapp = DB::table('appform')->where([['appid', $appid]])->first();
+
+							if(!is_null($checkapp->requestReeval) && $checkapp->isApprove == 0 ){
+								$checkteam = DB::table('hferc_team')->where([['appid', $appid], ['revision', $revision]])->first();
+
+								if(is_null($checkteam)){
+										$getTeam = DB::table('hferc_team')->where([['appid', $appid], ['revision', $revision - 1]])->get();
+										foreach($getTeam as $gt){
+											DB::table('hferc_team')->insert(['appid' => $appid, 'uid' => $gt->uid, 'pos' => $gt->pos, 'revision' => $revision, 'permittedtoInspect' => 1]);
+											// DB::table('hferc_team')->insert(['appid' => $appid, 'uid' => $gt['uid'], 'pos' => $gt['pos'], 'revision' => $revision, 'permittedtoInspect' => 1]);
+											AjaxController::notifyClient($appid,$gt->uid,41);
+										}
+
+								}
+
+							}
+
+
+
+
+
 							$count = $canViewOthers = 0;
 							$data = AjaxController::getAllDataEvaluateOne($appid);
 							// $evaluationResult = [];
@@ -4564,6 +4587,13 @@ use FunctionsClientController;
 							$membersDoneEv = (DB::table('x08')->whereIn('uid',$membersDoneEv)->get() ?? []);
 							$currentLoggedIn = (session()->has('employee_login') ? session()->get('employee_login') :null);
 							// dd($members);
+
+
+							
+
+
+
+
 							$arrRet = [
 								'AppData' => $data,
 								'hferc' => $members, 
@@ -5513,6 +5543,54 @@ use FunctionsClientController;
 						}
 					}
 
+					// $cheking = DB::table('x08_ft')
+					// ->join('appform','appform.appid','x08_ft.appid')
+					// ->join('facilitytyp','facilitytyp.facid','x08_ft.facid')
+					// ->join('hfaci_serv_type','hfaci_serv_type.hfser_id','appform.hfser_id')
+					// ->join('asmt_title','asmt_title.serv','facilitytyp.facid')
+					// ->join('asmt_h1','asmt_h1.partID','asmt_title.title_code')
+					// ->join('asmt_h2','asmt_h2.asmtH1ID_FK','asmt_h1.asmtH1ID')
+					// ->join('asmt_h3','asmt_h3.asmtH2ID_FK','asmt_h2.asmtH2ID')
+					// ->leftJoin('assessmentcombinedduplicate','asmt_title.title_code','assessmentcombinedduplicate.partID')
+					// ->where(array(['appform.appid',$data->ptc_id],['asmt_h1.apptype','PTC']))
+					// ->select(array('asmt_h1.h1name as desc','asmt_h1.asmtH1ID as id','asmt_title.title_name as h1HeadBack','asmt_title.title_code as h1HeadID', 'x08_ft.id as xid', 'assessmentcombinedduplicate.pid', 'assessmentcombinedduplicate.monid'))
+					// // ->groupBy('name')
+					// ->distinct()
+					// ->get();
+
+					$cheking = [];
+					$ap = DB::table('appform')->where([['appid', $appid]])->first();
+
+					$whereClauseNA = array(['appform.appid',$appid],['asmt_h1.apptype',$ap->hfser_id],['assessmentcombinedduplicate.monid',$isMon]);
+					$whereClauseN = array(['appform.appid',$appid],['asmt_h1.apptype',$ap->hfser_id]);
+					// $whereClauseN = array(['appform.appid',$appid],['asmt_h1.apptype',$ap->hfser_id]);
+					$cheking = AjaxController::forAssessmentHeaders($whereClauseN,array('asmt_h1.h1name as desc','asmt_h1.asmtH1ID as id','asmt_title.title_name as h1HeadBack','asmt_title.title_code as h1HeadID', 'x08_ft.id as xid'));
+						
+					// $asd =  AjaxController::forDoneHeadersNewMon($appid,$isMon,$isSelfAssess)['h1'];
+					$whereClauseAS = [['assessmentcombinedduplicate.appid',$appid],['monid',$isMon]];
+					// $asd = DB::table('x08_ft')
+					// ->join('appform','appform.appid','x08_ft.appid')
+					// ->join('facilitytyp','facilitytyp.facid','x08_ft.facid')
+					// ->join('hfaci_serv_type','hfaci_serv_type.hfser_id','appform.hfser_id')
+					// ->join('asmt_title','asmt_title.serv','facilitytyp.facid')
+					// ->join('asmt_h1','asmt_h1.partID','asmt_title.title_code')
+					// ->join('asmt_h2','asmt_h2.asmtH1ID_FK','asmt_h1.asmtH1ID')
+					// ->join('asmt_h3','asmt_h3.asmtH2ID_FK','asmt_h2.asmtH2ID')
+					// ->leftJoin('assessmentcombinedduplicate','assessmentcombinedduplicate.partID','facilitytyp.facid')
+					// ->where($whereClauseNA)
+					// ->select(array('asmt_h1.h1name as desc','asmt_h1.asmtH1ID as id','asmt_title.title_name as h1HeadBack','asmt_title.title_code as h1HeadID', 'x08_ft.id as xid', 'assessmentcombinedduplicate.pid as pid'))
+					// ->distinct()
+					// ->get();
+					
+					$asd = DB::table('assessmentcombinedduplicate')
+					->leftJoin('facilitytyp', 'facilitytyp.facid', '=', 'assessmentcombinedduplicate.partID')
+					->where($whereClauseAS)
+					->select('assessmentcombinedduplicate.pid','assessmentcombinedduplicate.x08_id','assessmentcombinedduplicate.pid')
+					->groupBy('assessmentcombinedduplicate.pid','assessmentcombinedduplicate.x08_id','assessmentcombinedduplicate.pid')
+					->get();
+
+
+
 					$dbcheck = [];
 					if($appid){
 					$whereClause = [['assessmentcombinedduplicate.appid',$appid],['monid',$isMon]];
@@ -5524,6 +5602,8 @@ use FunctionsClientController;
 					->get();
 						}
 
+
+
 					$toViewArr = [
 						'data' => $data,
 						'head' => $head,
@@ -5533,7 +5613,9 @@ use FunctionsClientController;
 						// 'assesed' => [],
 						'assesed' => $assesed,
 						'dbcheck' => $dbcheck,
+						'asd' => $asd,
 						'assesednew' => $assesednew,
+						'cheking' => $cheking,
 						'isMon' => $isMon,
 						'isSentFromMobile' => [],
 						// 'isSentFromMobile' => DB::table('frommobileinspection')->where([['appid',$appid],['monid',($isMon ? $isMon : null)]])->exists(),
@@ -7452,7 +7534,9 @@ use FunctionsClientController;
 						 			'approvedRemark' => $request->desc,
 						 			'status' => $status,
 						 			'licenseNo' => $license,
-						 			'FDAstatus' => $status
+						 			'FDAstatus' => $status,
+						 			'requestReeval' => null
+
 
 	 					 		);
 						 	(!empty($request->validity) ? $data['validDate'] = Carbon::parse($request->validity)->toDateString() : "");
@@ -7597,6 +7681,65 @@ use FunctionsClientController;
 			}
 		}
 
+		 public function createfdacert(Request $request, $appid, $reqType = 'machines')
+		{
+			try 
+			{
+				$this->setCertFDA($request, $appid, $reqType);
+
+				return redirect('client1/fdacertificate/'.$appid.'/'.$reqType);
+
+			} 
+			catch (Exception $e) 
+			{
+				return $e;
+				AjaxController::SystemLogs($e);
+				return 'ERROR';
+			}
+		}
+
+		function setCertFDA($request, $appid, $reqType){
+			$Cur_useData = AjaxController::getCurrentUserAllData();
+			$toQueryValidate = ($reqType == 'machines' ? 'cdrrhr' : 'cdrr');
+			if(DB::table('fdacert')->where([['appid',$appid],['department',$toQueryValidate]])->doesntExist()){
+				if($reqType == 'pharma'){
+					
+						$fieldsToInsert = ['certtype' => 'COC', 
+						'cocNo' => Date('Y-m-d',strtotime('now')).'-'.$appid, 
+						// 'warehouse' => $request->cocWA, 
+						// 'allied' => $request->cocAR, 
+						'estype' => ($reqType == 'machines' ? 'X-Ray' : 'Hospital Pharmacy'), 
+						// 'otherdet' => $request->cocOD, 
+						// 'otherestype' => $request->cocod, 
+						'department' => $toQueryValidate, 
+						'appid' => $appid, 
+						'issueby' => $Cur_useData['cur_user']];
+					
+				}else{
+						$fullName = null;
+						$faciHead = DB::table('hfsrbannexa')->where([['appid',$appid],['isMainRadio',1]])->first();
+						if(isset($faciHead)){
+							$fullName = ucwords($faciHead->prefix . ' ' . $faciHead->firstname) . ' ' . $faciHead->middlename . ' ' .  ucwords($faciHead->surname . ' ' . $faciHead->suffix);
+						}
+
+						$fieldsToInsert = ['certtype' => 'COC',
+							// 'authorizationStatus' => $request->cocMas, 
+							'cocNo' => Date('Y-m-d',strtotime('now')).'-'.$appid, 
+							'estype' => ($reqType == 'machines' ? 'X-Ray' : 'Hospital Pharmacy'), 
+							// 'headFaci' => ($request->cocMhof ?? null), 
+							'chiefRadioTechno' => $fullName, 
+							// 'radProOff' => ($request->cocMrpo ?? null),
+							 'department' => $toQueryValidate,
+							  'appid' => $appid, 
+							  'issueby' => $Cur_useData['cur_user']];
+
+				}
+
+				DB::table('fdacert')->insert($fieldsToInsert);
+
+			}
+		}
+
 
 		public function ApprovalOneProcessFlowFDA(Request $request, $appid, $reqType = 'machines')
 		{
@@ -7605,6 +7748,9 @@ use FunctionsClientController;
 			{
 				try 
 				{
+					$this->setCertFDA($request, $appid, $reqType);
+
+					
 					$data = AjaxController::getRecommendationData($appid);
 					// $data1 = AjaxController::getPreAssessment($data->uid);
 					$data2 = AjaxController::getAssignedMembersInTeam4Recommendation($appid);
@@ -7658,7 +7804,16 @@ use FunctionsClientController;
 							if($request->cert == 'rl'){
 								$fieldsToInsert = ['certtype' => 'RL','rlNo' => $request->pRLNo, 'dtn' => $request->pdtnNo, 'estype' => ($reqType == 'machines' ? 'X-Ray' : 'Hospital Pharmacy'), 'headFaci' => $request->rlMhof, 'chiefRadioTechno' => $fullName, 'radProOff' => $request->rlMrpo, 'department' => $toQueryValidate, 'appid' => $appid, 'issueby' => $Cur_useData['cur_user']];
 							} else if($request->cert == 'coc'){
-								$fieldsToInsert = ['certtype' => 'COC','authorizationStatus' => $request->cocMas, 'cocNo' => Date('Y-m-d',strtotime('now')).'-'.$appid, 'estype' => ($reqType == 'machines' ? 'X-Ray' : 'Hospital Pharmacy'), 'headFaci' => ($request->cocMhof ?? null), 'chiefRadioTechno' => $fullName, 'radProOff' => ($request->cocMrpo ?? null), 'department' => $toQueryValidate, 'appid' => $appid, 'issueby' => $Cur_useData['cur_user']];
+								$fieldsToInsert = ['certtype' => 'COC',
+								'authorizationStatus' => $request->cocMas, 
+								'cocNo' => Date('Y-m-d',strtotime('now')).'-'.$appid, 
+								'estype' => ($reqType == 'machines' ? 'X-Ray' : 'Hospital Pharmacy'), 
+								'headFaci' => ($request->cocMhof ?? null), 
+								'chiefRadioTechno' => $fullName, 
+								'radProOff' => ($request->cocMrpo ?? null),
+								 'department' => $toQueryValidate,
+								  'appid' => $appid, 
+								  'issueby' => $Cur_useData['cur_user']];
 							}
 						}
 						if(DB::table('fdacert')->insert($fieldsToInsert)){

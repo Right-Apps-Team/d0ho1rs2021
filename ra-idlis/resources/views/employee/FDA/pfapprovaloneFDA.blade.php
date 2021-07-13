@@ -553,7 +553,7 @@
               <div class="col-md-2 text-center pt-4">OR</div>
               <div class="col-md-5 text-center">
                 <button class="btn btn-primary p-4" data-toggle="modal" data-target="#cocinput" onclick="$('#showCOCRLoption').modal('hide')">
-                  Issue COC
+                  Issue COC 
                 </button>
               </div>
             </div>

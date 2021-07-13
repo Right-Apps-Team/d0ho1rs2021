@@ -6,7 +6,7 @@
   <div class="content p-4">
     <div class="card">
       <div class="card-header bg-white font-weight-bold">
-             Pre-Assessment
+             Pre-Assessment 
           </div>
           <div class="card-body table-responsive">
             <table class="table table-hover" style="font-size:13px;" id="example">
@@ -55,7 +55,12 @@
                               <td class="text-center">{{(ajaxController::getFacilitytypeFromHighestApplicationFromX08FT($data->appid)->hgpdesc ?? 'NOT FOUND')}}</td>
                               <td class="text-center">{{$data->formattedDate}}</td>
                               <td class="text-center">{{$data->aptdesc}}</td>
-                              <td class="text-center" style="font-weight:bold;">{{(AjaxController::getTransStatusById($data->FDAstatus)[0]->trns_desc ?? '')}}</td>
+                              @php
+                                $status = (strtolower($request) == 'machines' ? $data->FDAStatMach : $data->FDAStatPhar)
+                            @endphp
+                            <td class="text-center" style="font-weight:bold;">{{$status}}</td>
+                              <!-- <td class="text-center" style="font-weight:bold;">{{(AjaxController::getTransStatusById($data->FDAStatMach)[0]->trns_desc ?? '')}}</td> -->
+                              <!-- <td class="text-center" style="font-weight:bold;">{{(AjaxController::getTransStatusById($data->FDAstatus)[0]->trns_desc ?? '')}}</td> -->
                                 <td>
                                   <center>
                                     {{-- @if(!isset($data->documentSent)) --}}

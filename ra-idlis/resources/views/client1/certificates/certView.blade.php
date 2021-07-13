@@ -132,7 +132,7 @@
 				</div>
 				@endif
 
-				@if(strtolower($retTable[0]->hfser_id) == 'ptc')
+				@if(strtolower($retTable[0]->hfser_id) == 'ptc' || strtolower($retTable[0]->hfser_id) == 'lto')
 				<div class="row">	
 					<div class="col-md-2" style="">&nbsp;</div>
 					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">

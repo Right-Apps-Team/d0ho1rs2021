@@ -188,6 +188,15 @@
 							  <div class="dropdown-menu" style=" position: relative; z-index: 1000">
 							  	@switch($each[0]->hfser_id)
 									@case('PTC')
+									
+									@if($each[0]->isApprove === 0 && $each[0]->requestReeval === null)
+									
+											<div style="margin-left: 10px;margin-right: 10px;">
+											<a class="dropdown-item ddi bg-warning" style="border-radius: 3px;" onclick="requestReEval('{!! $each[0]->appid !!}')"  href="#">Request for re-evaluation</a>
+											</div>
+											<div class="dropdown-divider"></div>
+									@endif
+									
 									  	<div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Permit to Construct Details</a>
 									    @if($_percentage == "success")@endif
@@ -196,7 +205,8 @@
 									    <div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/attachment')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Attachments</a>
 									    </div>
-
+									
+									
 										@if($each[0]->isRecommended)
 											<div class="dropdown-divider"></div>
 											<div style="margin-left: 10px;margin-right: 10px;">
@@ -437,6 +447,31 @@
 									</div>
 									
 <script>
+	function requestReEval(appid){
+		console.log(appid)
+		if(confirm('Are you sure you want to request for re-evaluation?')){
+			$.ajax({
+							url: '{{asset('/api/request/reeval')}}',
+							type: 'POST',
+							data:{appid: appid},
+
+							success: function(a){
+								
+								if(a == 'succ'){
+									alert("Request for Re-evaluation sent")
+									location.reload();
+								}else{
+									alert("Request for Re-evaluation failed")
+								}
+
+							}
+				})
+		}
+	}
+
+
+
+
 	$(document).on('submit','#uppp-{{$each[0]->appid}}',function(event){
 		event.preventDefault();
 if(confirm('Are you sure you want to upload proof of payment?')){

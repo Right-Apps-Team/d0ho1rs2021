@@ -42,6 +42,9 @@
                             <script>
                             console.log('{!!strtolower($data->hfser_id)."--". $data->appid. "--" . !FunctionsClientController::existOnDB("hferc_evaluation",[["appid",$data->appid]])."--". $data->trns_desc !!}')
                             </script>
+                            <script>
+                              console.log('{{$data->requestReeval}}')
+                              </script>
                             @php
                             
 
@@ -50,9 +53,11 @@
                             }
                             
                            
-                            if($data->isApprove !== null){
+                            if($data->isApprove !== null && $data->requestReeval != '1'){
                               continue;
                             }
+
+                            
                             
                           
 

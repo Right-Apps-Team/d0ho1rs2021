@@ -36,7 +36,7 @@
 					        <td class="text-center"><strong>{{$data->facilityname}}</strong></td>
 					        <td class="text-center">{{(ajaxController::getFacilitytypeFromHighestApplicationFromX08FT($data->appid)->hgpdesc ?? 'NOT FOUND')}}</td>
 					        <td class="text-center">{{$data->formattedDate}}</td>
-					        <td class="text-center">{{AjaxController::maxRevisionFor($data->appid)}}</td>
+					        <td class="text-center">{{AjaxController::maxRevisionFor($data->appid) + 1}}</td>
 					        <td class="text-center" style="font-weight:bold;">{{$data->trns_desc}}</td>
 				          <td><center>
 				              <button type="button" title="HFERC Actions for {{$data->facilityname}}" class="btn btn-outline-primary" onclick="window.location.href = '{{ asset('employee/dashboard/processflow/assignmentofhferc') }}/{{$data->appid}}/{{AjaxController::maxRevisionFor($data->appid) + 1}}'"><i class="fa fa-fw fa-clipboard-check"></i></button>

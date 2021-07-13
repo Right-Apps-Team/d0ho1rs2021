@@ -1145,6 +1145,26 @@ class NewClientController extends Controller {
 		}
 	}
 
+	public function reqReEval(Request $request) {
+		try {
+		$curapp = 	DB::table('appform')->where([['appid', $request->appid]])->first();
+
+		$newcount = $curapp->reevalcount + 1;
+		
+			DB::table('appform')->where([['appid',  $request->appid]])->update(['requestReeval' => 1, 
+			'reevalcount'=> $newcount, 
+			'status' => 'FREV', 
+			'isRecoForApproval' => null
+		]);
+
+			return 'succ';
+		
+		}
+		catch (Exception $e) {
+			return 'failed';
+		}
+	}
+
 	public function __fdaPaymentCDRR(Request $request, $token, $appid) {
 		if(FunctionsClientController::isExistOnAppform($appid) !== true){
 			return redirect('client1/home');

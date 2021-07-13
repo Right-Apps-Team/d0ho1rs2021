@@ -203,7 +203,7 @@
 	            		</div>
 	            		<div class="row pt-3">
 	            			<div class="col-md-12 text-center" style="font-size: 30px;">
-	            				Upload Evaluation Results of <span class="font-weight-bold">{{$AppData->facilityname}}</span>
+	            			Upload Evaluation Results of <span class="font-weight-bold">{{$AppData->facilityname}}</span>
 	            			</div>
 	            		</div>
 	            		<div class="row pt-5 pb-3">
@@ -224,12 +224,18 @@
 	            				<div class="col-md d-flex justify-content-center">
 	            					<select name="recommendation" class="form-control" required style="width: 30%;">
 	            						<option disabled hidden selected>Please Select</option>
+                        @if($choosen == "machines")
 	            						<option value="Certificate of Compliance  ">Certificate of Compliance  </option>
 	            						<option value="License to Operate for LINAC, Transporatable  X-Ray Facility">License to Operate for LINAC, Transporatable  X-Ray Facility</option>
 	            						<option value="Certificate of Facility Registration (MRI)">Certificate of Facility Registration (MRI)</option>
                           <option value="Notice of Deficiency (30 Days compliance)">Notice of Deficiency (30 Days compliance)</option>
                           <option value="Recommendation for Disapproval including forfeiture of payment">Recommendation for Disapproval including forfeiture of payment</option>
-                          <option value="Recommendation Letter">Recommendation Letter </option>
+                      
+                        @else
+                        <option value="Certificate of Compliance  ">Certificate of Compliance  </option>
+                        <option value="Notice of Deficiency (30 Days compliance)">Notice of Deficiency (30 Days compliance)</option>
+                        <option value="Recommendation Letter">Recommendation Letter </option>
+                        @endif
                           
                           <!-- <option value="COC">COC</option>
 	            						<option value="RL">RL</option>

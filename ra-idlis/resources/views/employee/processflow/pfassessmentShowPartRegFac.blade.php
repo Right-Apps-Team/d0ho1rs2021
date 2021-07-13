@@ -126,11 +126,15 @@
 			
 			<div class="row p-5 text-center main">
 				@php 
+					$arrall = array();
 					$arrDat = array();
 					$arrDat1 = array();
 				@endphp
 				@foreach($head as $key => $value)
 
+				
+
+					
 				
 					<!-- @if(!in_array($value->id, $arrDat))
 					@php 
@@ -146,28 +150,43 @@
 					@if(isset($headon) && ($value->h1HeadID == 'AOASPT2AT' || $value->h1HeadID == 'AOASPT1AT'))
 
 				
-					@if(!in_array((isset($value->xid)? $value->xid : $value->id), $arrDat))
-					@php 
-						array_push($arrDat, (isset($value->xid)? $value->xid : $value->id))
-					@endphp
-					
-					<div class="col-sm-12">
-						<a href="{{$address.'/'.$value->id.'/'.$isMon.($isOtherUid ?? '').'?xid='.(isset($value->xid)? $value->xid : $value->id).'&pid='.$value->id.'&hid='.(app('request')->input('pid')?app('request')->input('pid'): app('request')->input('hid')).'&monid='.$isMon}}" class="button6 btn-block {{(isset($value->xid)? $value->xid : $value->id)}}">{{$value->desc}}</a>
-						<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a> -->
-					</div>
-					@endif 
+							@if(!in_array((isset($value->xid)? $value->xid : $value->id), $arrDat))
+							@php 
+								array_push($arrDat, (isset($value->xid)? $value->xid : $value->id))
+							@endphp
+						
+							<div class="col-sm-12">
+								<a href="{{$address.'/'.$value->id.'/'.$isMon.($isOtherUid ?? '').'?xid='.(isset($value->xid)? $value->xid : $value->id).'&pid='.$value->id.'&hid='.(app('request')->input('pid')?app('request')->input('pid'): app('request')->input('hid')).'&monid='.$isMon}}" class="button6 btn-block {{(isset($value->xid)? $value->xid : $value->id)}}">{{$value->desc}}</a>
+								<!-- <a href="{{$address.'/'.$value->id.'/'.$isMon.'?xid='.$value->xid}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a> -->
+							</div>
+							@endif 
 					@else
 
+						@if($value->id != "AOASPT1AT" && $value->id != "AOASPT2AT")
+							@if(!in_array($value->xid, $arrall))
+							@php 
+								array_push($arrall, $value->xid)
+							@endphp 
+							@endif
+						@else
+							@if(!in_array($value->id, $arrall))
+							@php 
+								array_push($arrall, $value->id)
+							@endphp 
+							@endif
+
+						@endif
 					
-					@if(!in_array($value->id, $arrDat1))
-					@php 
-						array_push($arrDat1, $value->id)
-					@endphp 
-					<div class="col-sm-12">
-						<a href="{{$address.'/'.$value->id.'/'.$isMon.($isOtherUid ?? '').'?xid='.(isset($value->xid)? $value->xid : $value->id).'&pid='.$value->id.'&hid='.(app('request')->input('pid')?app('request')->input('pid'): app('request')->input('hid')).'&monid='.$isMon}}" id="{{$value->xid}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a>
-						
-					</div>
-					@endif
+							@if(!in_array($value->id, $arrDat1))
+							@php 
+								array_push($arrDat1, $value->id)
+							@endphp 
+							
+							<div class="col-sm-12">
+								<a href="{{$address.'/'.$value->id.'/'.$isMon.($isOtherUid ?? '').'?xid='.(isset($value->xid)? $value->xid : $value->id).'&pid='.$value->id.'&hid='.(app('request')->input('pid')?app('request')->input('pid'): app('request')->input('hid')).'&monid='.$isMon}}" id="{{$value->xid}}" class="button6 btn-block {{$value->id}}">{{$value->desc}}</a>
+								
+							</div>
+							@endif
 					@endif
 
 
@@ -252,17 +271,101 @@
 
 				}
 
-
+@if(!isset($headon))
 				var idss =JSON.parse('{!! ((count($dbcheck) > 0) ? $dbcheck: "[]")  !!}');
+				var assesed11 ={!! empty($assesed) ? json_encode('none') : json_encode($assesed) !!};
+				var cheking ={!! empty($cheking) ? json_encode('none') : json_encode($cheking) !!};
+				var head ={!! empty($head) ? json_encode('none') : json_encode($head) !!};
+				var asd ={!! empty($asd) ? json_encode('none') : json_encode($asd) !!};
+				var ad ={!! empty($arrall) ? json_encode('none') : json_encode($arrall) !!};
+				// console.log("assesed11")
+				// console.log(assesed11)
+				console.log("cheking")
+				console.log(cheking)
 
+				console.log("head")
+				console.log(head)
 
-				if(idss.length > 0){
-					for(var i = 0; i < idss.length; i++){
-						console.log(idss[i].x08_id)
-						document.getElementById(idss[i].x08_id).style.backgroundColor  = "#28A745";
-						document.getElementById(idss[i].x08_id).style.color  = "white";
+				console.log("asd")
+				console.log(asd)
+				
+				console.log("Ardat")
+				console.log(ad)
+
+				// if(idss.length > 0){
+				// 	for(var i = 0; i < idss.length; i++){
+				// 		console.log(idss[i].x08_id)
+				// 		document.getElementById(idss[i].x08_id).style.backgroundColor  = "#28A745";
+				// 		document.getElementById(idss[i].x08_id).style.color  = "white";
+				// 	}
+				// }
+
+				// for(var i = 0; i < ad.length; i++){
+				// 	console.log(ad[i])
+				// 	for(var e = 0; e < cheking.length; e++){
+				// 		if(cheking[e].xid == ad[i]){
+
+				// 		}
+				// 	}
+				// }
+				console.log("Start beta")
+				for(var h = 0; h < ad.length; h++){
+					var headid = ad[h];
+					
+
+					var pid = 0;
+					console.log(headid)
+					var subdatcount = 0;
+					var assdatcount = 0;
+
+					 
+					for(var sd = 0; sd < cheking.length; sd++ ){
+						if(headid == 'AOASPT1AT' || headid == 'AOASPT2AT'){
+							if(cheking[sd].h1HeadID == headid){
+								subdatcount += 1;
+								pid = cheking[sd].id;
+								
+							}
+						}else{
+							if(cheking[sd].xid == headid){
+								subdatcount += 1;
+							}
+						}
+
+						
+					}
+
+					for(var ass = 0; ass < asd.length; ass++){
+						if(headid == 'AOASPT1AT' || headid == 'AOASPT2AT'){
+							console.log("pid")
+							console.log(asd[ass].pid)
+							console.log(pid)
+							if(asd[ass].pid == pid){
+								assdatcount += 1;
+							}
+						}else{
+							if(asd[ass].x08_id == headid){
+								assdatcount += 1;
+							}
+						}
+						
+					}
+
+					if(subdatcount == assdatcount){
+						if(headid == 'AOASPT1AT' || headid == 'AOASPT2AT'){
+						
+							document.getElementsByClassName(headid)[0].style.backgroundColor  = "#28A745";
+							document.getElementsByClassName(headid)[0].style.color  = "white";
+						
+						}else{
+							document.getElementById(headid).style.backgroundColor  = "#28A745";
+							document.getElementById(headid).style.color  = "white";
+						}
+
 					}
 				}
+@endif
+			
 
             })
         </script>

@@ -84,7 +84,7 @@
         <div class="card-header bg-white font-weight-bold">
           @isset($APPID)<input type="text" id="APPID" value="{{$APPID}}" hidden>@endisset
           <input type="" id="token" value="{{ Session::token() }}" hidden>
-           Decision of recommendation of Approval dd
+           Decision of recommendation of Approval 
            <button class="btn btn-primary" onclick="window.history.back();">Back</button>
         </div>
         <div class="card-body">
@@ -342,11 +342,18 @@
                 </div>
               </div>
             </div>
+
             {{-- END BODY --}}
           </div>
           @endif
-         
-        </div>
+          <br/>
+          <!-- <a href="{{url('client1/fdacertificate/29/'.$request)}}" target="_blank"> -->
+          <a href="{{url('client1/createfdacert/'.$AppData->appid.'/'.$request)}}" target="_blank">
+           <button style="float: right" class="btn btn-primarys"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Certificate</button>
+          </a>
+           <br/>
+           <br/>
+          </div>
         {{--  --}}
         @isset($AppData)
           @if($AppData->isRecoDecision == 'Return for Correction' || $currentRequest == null)  

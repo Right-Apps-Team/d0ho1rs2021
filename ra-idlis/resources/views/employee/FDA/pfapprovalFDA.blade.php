@@ -6,7 +6,7 @@
   <div class="content p-4">
       <div class="card">
           <div class="card-header bg-white font-weight-bold">
-             Approval/Issuance Certificate (FDA)
+             Approval/Issuance Certificate (FDA) 
           </div>
           <div class="card-body table-responsive">
               <table class="table table-hover" id="example" style="font-size:13px;">
@@ -57,7 +57,11 @@
                             <td class="text-center">{{(ajaxController::getFacilitytypeFromHighestApplicationFromX08FT($data->appid)->hgpdesc ?? 'NOT FOUND')}}</td>
                             <td class="text-center">{{$data->formattedDate}}</td>
                             <td class="text-center">{{$data->aptdesc}}</td>
-                            <td class="text-center" style="font-weight:bold;">{{(AjaxController::getTransStatusById($data->FDAstatus)[0]->trns_desc ?? '')}}</td>
+                            @php
+                                $status = (strtolower($request) == 'machines' ? $data->FDAStatMach : $data->FDAStatPhar)
+                            @endphp
+                            <td class="text-center" style="font-weight:bold;">{{$status}}</td>
+                            <!-- <td class="text-center" style="font-weight:bold;">{{(AjaxController::getTransStatusById($data->FDAstatus)[0]->trns_desc ?? '')}}</td> -->
                               <td><center>
                                   <button type="button" title="Evaluate Payment for {{$data->facilityname}}" class="btn btn-outline-primary" onclick="window.location.href='{{asset('employee/dashboard/processflow/FDA/approval')}}/{{$data->appid}}/{{$request}}'"  {{$ifdisabled}}><i class="fa fa-fw fa-clipboard-check" {{$ifdisabled}}></i></button>
                               </center></td>

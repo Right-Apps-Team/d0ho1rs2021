@@ -19,7 +19,7 @@
 
          Complaint/Request For Assistance
 
-         <a href="#" title="Add New Request/Complaints" data-toggle="modal" data-target="#reqModal" id="add_new_new"><button class="btn-primarys"><i class="fa fa-plus-circle"></i>&nbsp;Add new</button></a>
+         <a href="#" style="float: right;" title="Add New Request/Complaints" data-toggle="modal" data-target="#reqModal" id="add_new_new"><button class="btn-primarys"><i class="fa fa-plus-circle"></i>&nbsp;Add new</button></a>
 
       </div>
 
@@ -716,7 +716,8 @@
 
                               <div class="col-sm-4">
 
-                                Reference No.:<span style="color:red">*</span>
+                                Reference No.:
+                                <!-- Reference No.:<span style="color:red">*</span> -->
 
                               </div>
 
@@ -724,7 +725,8 @@
 
                               <div class="col-sm-8">
 
-                                <input type="number" name="ref_no" class="form-control" required>
+                                <input type="number" name="ref_no" class="form-control" >
+                                <!-- <input type="number" name="ref_no" class="form-control" required> -->
 
                               </div>
 
@@ -764,7 +766,8 @@
 
                             <div class="col-sm-4">
 
-                              Source:<span style="color:red">*</span>
+                              Source:
+                              <!-- Source:<span style="color:red">*</span> -->
 
                             </div>
 
@@ -774,7 +777,8 @@
 
                               <!-- <input type="text" name="source" class="form-control form-inline" required data-parsley-required-message="<b>*Source</b> required" data-parsley=""> -->
                               <!-- <input type="text" name="source" class="form-control form-inline" required data-parsley-required-message="<b>*Source</b> required" data-parsley=""> -->
-                              <select name="source" id="source1" class="form-control form-inline" required data-parsley-required-message="<b>*Source</b> required" data-parsley="">
+                              <select name="source" id="source1" class="form-control form-inline"  data-parsley="">
+                              <!-- <select name="source" id="source1" class="form-control form-inline" required data-parsley-required-message="<b>*Source</b> required" data-parsley=""> -->
                                     <option value="Email">Email</option>
                                     <option value="Walk In">Walk In</option>
                                     <option value="Other Offices">Other Offices</option>
@@ -791,7 +795,8 @@
 
                             <div class="col-sm-4">
 
-                              Name of Client/Complainant:<span style="color:red">*</span>
+                              Name of Client/Complainant:
+                              <!-- Name of Client/Complainant:<span style="color:red">*</span> -->
 
                             </div>
 
@@ -799,7 +804,8 @@
 
                             <div class="col-sm-8">
 
-                              <input type="text" name="name_of_comp" class="form-control form-inline" required data-parsley-required-message="<b>*Name</b> required" data-parsley="">
+                              <input type="text" name="name_of_comp" class="form-control form-inline"   data-parsley="">
+                              <!-- <input type="text" name="name_of_comp" class="form-control form-inline" required data-parsley-required-message="<b>*Name</b> required" data-parsley=""> -->
 
                             </div>
 
@@ -813,7 +819,8 @@
 
                             <div class="col-sm-4">
 
-                              Age:<span style="color:red">*</span>
+                              Age:
+                              <!-- Age:<span style="color:red">*</span> -->
 
                             </div>
 
@@ -821,7 +828,8 @@
 
                             <div class="col-sm-8">
 
-                              <input type="number" name="age" class="form-control form-inline" required data-parsley-required-message="<b>*Age</b> required" data-parsley="">
+                              <input type="number" name="age" class="form-control form-inline"  data-parsley="">
+                              <!-- <input type="number" name="age" class="form-control form-inline" required data-parsley-required-message="<b>*Age</b> required" data-parsley=""> -->
 
                             </div>
 
@@ -835,7 +843,8 @@
 
                             <div class="col-sm-4">
 
-                              Gender:<span style="color:red">*</span>
+                              Gender:
+                              <!-- Gender:<span style="color:red">*</span> -->
 
                             </div>
 
@@ -843,7 +852,8 @@
 
                             <div class="col-sm-8">
 
-                              <select type="" name="gender" class="form-control" required data-parsley-required-message="<b>*Gender</b> required" data-parsley="" style="width: 100%">
+                              <select type="" name="gender" class="form-control"  data-parsley="" style="width: 100%">
+                              <!-- <select type="" name="gender" class="form-control" required data-parsley-required-message="<b>*Gender</b> required" data-parsley="" style="width: 100%"> -->
 
                                 <option disabled hidden selected value="0"><span class="text-success"><i></i></span></option>
 
@@ -867,7 +877,8 @@
 
                             <div class="col-sm-4">
 
-                              Address:<span style="color:red">*</span>
+                              Address:
+                              <!-- Address:<span style="color:red">*</span> -->
 
                             </div>
 
@@ -875,7 +886,8 @@
 
                             <div class="col-sm-8">
 
-                              <input type="" name="address" class="form-control form-inline" required data-parsley-required-message="<b>*Address</b> required" data-parsley="">
+                              <input type="" name="address" class="form-control form-inline" data-parsley="">
+                              <!-- <input type="" name="address" class="form-control form-inline" required data-parsley-required-message="<b>*Address</b> required" data-parsley=""> -->
 
                             </div>
 
@@ -889,7 +901,8 @@
 
                             <div class="col-sm-4">
 
-                              Civil Status:<span style="color:red">*</span>
+                              Civil Status:
+                              <!-- Civil Status:<span style="color:red">*</span> -->
 
                             </div>
 
@@ -897,7 +910,8 @@
 
                             <div class="col-sm-8">
 
-                              <select type="" name="civ_stat" class="form-control" required data-parsley-required-message="<b>*Civil Status</b> required" data-parsley="" style="width: 100%">
+                              <select type="" name="civ_stat" class="form-control" data-parsley="" style="width: 100%">
+                              <!-- <select type="" name="civ_stat" class="form-control" required data-parsley-required-message="<b>*Civil Status</b> required" data-parsley="" style="width: 100%"> -->
 
                                 <option disabled hidden selected value="0"></option>
 
@@ -1151,7 +1165,8 @@
 
                             <div class="col-sm-4">
 
-                              Name of Facility: <span style="color:red">*</span>
+                              Name of Facility:
+                              <!-- Name of Facility: <span style="color:red">*</span> -->
 
                             </div>
 
@@ -1159,7 +1174,8 @@
 
                             <div class="col-sm-8">
 
-                              <input type="text" class="form-control" name="name_of_faci" data-parsley-required-message="<b>*Name of Facility</b> required" data-parsley=""  hidden disabled id="unregxfacName">
+                              <input type="text" class="form-control" name="name_of_faci" data-parsley=""  hidden disabled id="unregxfacName">
+                              <!-- <input type="text" class="form-control" name="name_of_faci" data-parsley-required-message="<b>*Name of Facility</b> required" data-parsley=""  hidden disabled id="unregxfacName"> -->
                               <!-- <input type="text" class="form-control" name="name_of_faci" data-parsley-required-message="<b>*Name of Facility</b> required" data-parsley=""  hidden disabled id="unregxfacName"> -->
 
 
@@ -1187,7 +1203,8 @@
 
                                 
 
-                              <select type="" style="width: 100%" name="name_of_faci" class="form-control" onchange="changeFacname(this.value)" id="xfacName" required data-parsley-required-message="<b>*Name of Facility</b> required" data-parsley="">
+                              <select type="" style="width: 100%" name="name_of_faci" class="form-control" onchange="changeFacname(this.value)" id="xfacName"  data-parsley="">
+                              <!-- <select type="" style="width: 100%" name="name_of_faci" class="form-control" onchange="changeFacname(this.value)" id="xfacName" required data-parsley-required-message="<b>*Name of Facility</b> required" data-parsley=""> -->
                               <!-- <select type="" style="width: 100%" name="name_of_faci" class="form-control" onchange="changeFaciSelect()" id="xfacName" required data-parsley-required-message="<b>*Name of Facility</b> required" data-parsley=""> -->
 
                                 <option disabled hidden selected value="0"></option>
@@ -1220,7 +1237,8 @@
 
                             <div class="col-sm-4">
 
-                              Type of Facility:<span id="spanwarning" style="color:red">*</span>
+                              Type of Facility:
+                              <!-- Type of Facility:<span id="spanwarning" style="color:red">*</span> -->
 
                             </div>
 
@@ -1230,7 +1248,8 @@
 
                               <input type="text" class="form-control" name="type_of_faci" id="unregfactype" hidden disabled>
 
-                              <select name="type_of_faci" id="type_of_faci" style="width: 100%" class="form-control" id="factype"  required data-parsley-required-message="<b>*Type of Facility</b> required" data-parsley="">
+                              <select name="type_of_faci" id="type_of_faci" style="width: 100%" class="form-control" id="factype" data-parsley="">
+                              <!-- <select name="type_of_faci" id="type_of_faci" style="width: 100%" class="form-control" id="factype"  required data-parsley-required-message="<b>*Type of Facility</b> required" data-parsley=""> -->
                               <!-- <select name="type_of_faci" style="width: 100%" class="form-control" id="factype" onchange="changeFaciType()" required data-parsley-required-message="<b>*Type of Facility</b> required" data-parsley=""> -->
 
                                 <!-- <option diabled hidden selected value="">Type of Facility*</option> -->
@@ -1263,7 +1282,8 @@
 
                             <div class="col-sm-4">
 
-                              Address of Facility:<span style="color:red">*</span>
+                              Address of Facility:
+                              <!-- Address of Facility:<span style="color:red">*</span> -->
 
                             </div>
 
@@ -1273,7 +1293,8 @@
 
                               <input type="text"  class="form-control" name="address_of_faci" id="unregfacaddr" data-parsley-required-message="<b>*Address of Facility</b> required" data-parsley="" hidden disabled>
 
-                              <input type="text" id="address_of_faci" name="address_of_faci" class="form-control form-inline"  required id="facaddr" data-parsley-required-message="<b>*Address of Facility</b> required" data-parsley="">
+                              <input type="text" id="address_of_faci" name="address_of_faci" class="form-control form-inline"   id="facaddr"  data-parsley="">
+                              <!-- <input type="text" id="address_of_faci" name="address_of_faci" class="form-control form-inline"  required id="facaddr" data-parsley-required-message="<b>*Address of Facility</b> required" data-parsley=""> -->
                               <!-- <input type="text" id="address_of_faci" name="address_of_faci" class="form-control form-inline" readonly required id="facaddr" data-parsley-required-message="<b>*Address of Facility</b> required" data-parsley=""> -->
 
                             </div>
@@ -1292,7 +1313,7 @@
 
                             <div class="col-sm-4">
 
-                              Name of Confined Patient: (if applicable)
+                              Name of Confined Patient:<br/> (if applicable)
 
                             </div>
 
@@ -1436,7 +1457,8 @@
 
                           <div class="row">
                             <div class="col-sm-4">
-                              Brief Narration of Facts/Circumstances:ds<span style="color:red">*</span>
+                              Brief Narration of Facts/Circumstances:
+                              <!-- Brief Narration of Facts/Circumstances:ds<span style="color:red">*</span> -->
                             </div>
                             <div class="col-sm-8">
                               <textarea type="text" id="txt_details" name="txt_details" class="form-control" rows="3"></textarea>
@@ -1445,7 +1467,8 @@
                         <br/>
                           <div class="row">
                             <div class="col-sm-4">
-                              Upload attachment:<span style="color:red">*</span>
+                              Upload attachment:
+                              <!-- Upload attachment:<span style="color:red">*</span> -->
                             </div>
                             <div class="col-sm-8">
                            

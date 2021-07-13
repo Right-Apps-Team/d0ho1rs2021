@@ -81,6 +81,7 @@ Route::prefix('cont')->group(function() {
 Route::get('samplefix','DOHController@samplefix');
 Route::prefix('client1')->group(function() {
 	Route::match(['get', 'post'], '/FAQ', 'NewClientController@faq');
+	// Route::match(['get', 'post'], '/request/reeval', 'NewClientController@reqReEval');
 	// Route::match(['get', 'post'], '/sendproofpay', 'NewGeneralController@uploadProofofPay');//6-5-2021
 	// Route::match(['get', 'post'], '/', 'NewClientController@__index')->name('client1.login');
 	Route::match(['get', 'post'], '/register/verify/{token}', 'NewClientController@__rToken')->name('client1.rtoken');
@@ -93,6 +94,7 @@ Route::prefix('client1')->group(function() {
 	Route::match(['get', 'post'], '/printPayment/{token}/{appid}', 'NewClientController@__pgPayment')->name('client1.pgpayment');
 	Route::match(['get', 'post'], '/printPaymentFDA/{token}/{appid}', 'NewClientController@__fdaPayment');
 	Route::match(['get', 'post'], '/fdacertificate/{appid}/{request?}', 'NewClientController@fdacert');
+	Route::match(['get', 'post'], '/createfdacert/{appid}/{request?}', 'DOHController@createfdacert');
 	Route::match(['get', 'post'], '/printPaymentFDACDRR/{token}/{appid}', 'NewClientController@__fdaPaymentCDRR');
 	Route::prefix('apply')->group(function() {
 		// qweqwe

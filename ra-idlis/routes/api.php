@@ -117,6 +117,12 @@ Route::post(
     'Client\Api\MunicipalityApiController@fetch'
 ); //->middleware([APIMiddleware::class]);
 
+
+Route::post(
+    '/request/reeval',
+    'NewClientController@reqReEval'
+); //->middleware([APIMiddleware::class]);
+
 Route::post(
     '/barangay/fetch/',
     'Client\Api\BarangayApiController@fetch'
