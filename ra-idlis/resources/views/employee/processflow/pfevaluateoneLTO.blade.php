@@ -158,7 +158,14 @@
               <input type="text" id="NumberOfRejected" value="@isset ($numOfX) {{$numOfX}} @endisset" hidden>
               <input type="" id="token" value="{{ Session::token() }}" hidden>
               
-               <a href="{{asset('/employee/dashboard/processflow/evaluate/technical')}}">    <button class="btn btn-primary" >Back</button></a>
+              @if($office == 'xray')
+              <a href="{{asset('employee/dashboard/processflow/pre-assessment/FDA/xray')}}">
+              @elseif($office == 'pharma')
+              <a href="{{asset('employee/dashboard/processflow/pre-assessment/FDA/pharma')}}">
+              @else
+               <a href="{{asset('/employee/dashboard/processflow/evaluate/technical')}}">
+               @endif
+                   <button class="btn btn-primary" >Back</button></a>
                Evaluation 
                @if($office == 'pharma')
                     <div style="float: right;">
@@ -636,7 +643,20 @@
                     title: 'Success',
                     text: 'Successfully changed application status to revision.',
                   }).then(() => {
-                    window.location.href = '{{ asset('employee/dashboard/processflow/evaluate') }}';
+
+              @if($office == 'xray')
+                  window.location.href = '{{ asset('employee/dashboard/processflow/pre-assessment/FDA/xray') }}';
+             
+              @elseif($office == 'pharma')
+              window.location.href = '{{ asset('employee/dashboard/processflow/pre-assessment/FDA/pharma') }}';
+             
+              @else
+              window.location.href = '{{ asset('employee/dashboard/processflow/evaluate/technical') }}';
+               
+               @endif
+                 
+
+
                   });
                 } else if (data == 'ERROR'){
                     $('#ERROR_MSG2').show(100);

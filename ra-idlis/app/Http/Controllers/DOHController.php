@@ -3765,12 +3765,18 @@ use FunctionsClientController;
 						$arrRet = [
 							'choosen' => $requestOfClient,
 							'AppData' => AjaxController::getAllDataEvaluateOne($appid),
-							'eval' => DB::table('fdaevaluation')->where([['appid',$appid],['requestFrom',($requestOfClient == 'machines' ? 'machines' : 'pharma')]])->first(),
+							'eval' => DB::table('fdaevaluation')->where([['appid',$appid],['requestFrom',($requestOfClient == 'machines' ? 'machines' : 'pharma')]])->orderBy('evalid', 'DESC')->first(),
+							// 'eval' => DB::table('fdaevaluation')->where([['appid',$appid],['requestFrom',($requestOfClient == 'machines' ? 'machines' : 'pharma')]])->first(),
 							'list' => AjaxController::getRequirementsFDA($appid),
 							'appid' => $appid
 						];
 						// dd($arrRet);
-						return view('employee.FDA.pfevaluateoneFDANew',$arrRet);
+						if($requestOfClient == 'machines'){
+							return view('employee.FDA.pfevaluateoneFDANew',$arrRet);
+						}else if($requestOfClient == 'pharma'){
+							return view('employee.FDA.pfevaluateoneFDANewPharma',$arrRet);
+						}
+
 					} catch (Exception $e) {
 						dd($e);
 					}
@@ -3778,6 +3784,9 @@ use FunctionsClientController;
 				}
 
 				if($request->isMethod('post')){
+
+					$capp = DB::table('appform')->where([['appid', $appid]])->first();
+
 					$uData = AjaxController::getCurrentUserAllData();
 					if($requestOfClient == 'machines'){
 						$forAppform = [
@@ -3786,8 +3795,12 @@ use FunctionsClientController;
 							'recommendedtimeFDA',
 							'recommendeddateFDA',
 							'recommendedippaddrFDA',
-							'FDAStatMach'
+							'FDAStatMach',
+							'corResubmit'
 						];
+						$corm = 1;
+						$corp = $capp->corResubmitPhar;
+
 					} else {
 						$forAppform = [
 							'isrecommendedFDAPharma',
@@ -3795,18 +3808,25 @@ use FunctionsClientController;
 							'recommendedtimeFDAPharma',
 							'recommendeddateFDAPharma',
 							'recommendedippaddrFDAPharma',
-							'FDAStatPhar'
+							'FDAStatPhar',
+							'corResubmitPhar'
 						];
+						$corm =  $capp->corResubmit;
+						$corp = 1;
 					}
 
+					
+
 					$fstat = $requestOfClient == 'machines' ? 'For Recommendation' : 'For Final Decision';
+					$resub = $requestOfClient == 'machines' ? $corm : $corp;
 					$answers = [
 						1,
 						$uData['cur_user'],
 						$uData['time'],
 						$uData['date'],
 						$uData['ip'],
-						$fstat
+						$fstat,
+						$resub
 					];
 					if($request->hasFile('fileUp')){
 						$uploadName = FunctionsClientController::uploadFile($request->fileUp)['fileNameToStore'];
@@ -7603,7 +7623,12 @@ use FunctionsClientController;
 							$canView[0] = false;
 						}
 
+						$chk = DB::table('appform')->where([['appid', $appid]])->first();
+
+						if($chk->isRecoDecision != "Return for Correction"){
+
 						DB::table('appform')->where('appid', '=', $appid)->update(['FDAStatMach'=>'For Final Dicision']);
+						}
 					} else{
 						$typeOfRequest = 'cdrr';
 						if(isset($canView[1])){
@@ -7645,6 +7670,11 @@ use FunctionsClientController;
 					 			'RecoRemarkFDA' => ($request->desc ?? null),
 					 			'FDAstatus' => $status,
  					 		);
+							if($request->recommendation == "Return for Correction"){
+								$data["FDAStatMach"] = "For Inspection";
+								$data["corResubmit"] = 0;
+								
+							}
 						} else {
 							$data = array(
 					 			'isApproveFDAPharma' => $request->isOk,
@@ -9547,7 +9577,8 @@ use FunctionsClientController;
 
 						
 						if($request->typestat == "new"){
-							$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByFDA'=>$cur_user['cur_user'],'CashierApproveDateFDA' => $cur_user['date'], 'CashierApproveTimeFDA' => $cur_user['time'], 'CashierApproveIpFDA' => $cur_user['ip'], 'isCashierApproveFDA' => 1, 'FDAstatus' => 'FI', 'FDAStatMach' => 'For Evaluation', 'proofpaystatMach' => $request->postact]);
+							$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByFDA'=>$cur_user['cur_user'],'CashierApproveDateFDA' => $cur_user['date'], 'CashierApproveTimeFDA' => $cur_user['time'], 'CashierApproveIpFDA' => $cur_user['ip'], 'isCashierApproveFDA' => 1, 'FDAstatus' => 'FI', 'FDAStatMach' => 'For Inspection', 'proofpaystatMach' => $request->postact]);
+							// $update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByFDA'=>$cur_user['cur_user'],'CashierApproveDateFDA' => $cur_user['date'], 'CashierApproveTimeFDA' => $cur_user['time'], 'CashierApproveIpFDA' => $cur_user['ip'], 'isCashierApproveFDA' => 1, 'FDAstatus' => 'FI', 'FDAStatMach' => 'For Evaluation', 'proofpaystatMach' => $request->postact]);
 						}else{
 							$update = DB::table('appform')->where('appid',$request->appid)->update(['proofpaystatMach' => $request->postact]);
 						}
@@ -9633,7 +9664,8 @@ use FunctionsClientController;
 			  		} elseif($request->action == 'evalute') {
 
 						if($request->typestat == "new"){
-							$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByPharma'=>$cur_user['cur_user'],'CashierApproveDatePharma' => $cur_user['date'], 'CashierApproveTimePharma' => $cur_user['time'], 'CashierApproveIpPharma' => $cur_user['ip'], 'isCashierApprovePharma' => 1, 'FDAstatus' => 'FI', 'FDAStatPhar' => 'For Evaluation', 'proofpaystatPhar' =>  $request->postact]);
+							$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByPharma'=>$cur_user['cur_user'],'CashierApproveDatePharma' => $cur_user['date'], 'CashierApproveTimePharma' => $cur_user['time'], 'CashierApproveIpPharma' => $cur_user['ip'], 'isCashierApprovePharma' => 1, 'FDAstatus' => 'FI', 'FDAStatPhar' => 'For Inspection', 'proofpaystatPhar' =>  $request->postact]);
+							// $update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveByPharma'=>$cur_user['cur_user'],'CashierApproveDatePharma' => $cur_user['date'], 'CashierApproveTimePharma' => $cur_user['time'], 'CashierApproveIpPharma' => $cur_user['ip'], 'isCashierApprovePharma' => 1, 'FDAstatus' => 'FI', 'FDAStatPhar' => 'For Evaluation', 'proofpaystatPhar' =>  $request->postact]);
 						}else{
 							$update = DB::table('appform')->where('appid',$request->appid)->update(['proofpaystatPhar' =>  $request->postact]);
 						}

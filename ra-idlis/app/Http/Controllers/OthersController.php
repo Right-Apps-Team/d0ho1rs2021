@@ -177,6 +177,7 @@ class OthersController extends Controller
 					[/*'ref_no'=>$request->ref_no, */
 						'attachment'=>$up,
 						'source'=>$request->source,
+						'sourceOthers'=>$request->sourceOther,
 						'type'=>$request->type, 
 						'name_of_comp'=>$request->name_of_comp, 
 						'age'=>$request->age, 

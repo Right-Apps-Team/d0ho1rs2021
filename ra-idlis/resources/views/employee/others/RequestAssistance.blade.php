@@ -420,7 +420,7 @@
 
 
     $('#add_new_new').on('click', function() {
-      $('#modal_title_new').html('<b>Add new Request/Complaints <b>');
+      $('#modal_title_new').html('<b>Add new Request/Complaints<b>');
 
       for(i=0; i<$('input[name="comps[]"]').length; i++) {
         $('input[name="comps[]"]')[i].removeAttribute('checked');
@@ -469,11 +469,23 @@
       $('#facitogBtn')[0].removeAttribute('disabled');
     });
 
+   function setOthersourc(value){
+    if(value == "Others"){
+      document.getElementById("othersource").removeAttribute("hidden")
+    }else{
+      document.getElementById("othersource").setAttribute("hidden", true)
+    }
+   }
+
     function FillFields(data) {
       let d = JSON.parse(data);
       console.log(d)
       console.log(d.source)
       document.getElementById("source1").value = d.source;
+     
+      setOthersourc(d.source)
+      console.log( d.sourceOthers)
+      document.getElementById("othsrc").value = d.sourceOthers;
       // console.log(d);
 
       for(i=0; i<$('input[name="comps[]"]').length; i++) {
@@ -777,17 +789,30 @@
 
                               <!-- <input type="text" name="source" class="form-control form-inline" required data-parsley-required-message="<b>*Source</b> required" data-parsley=""> -->
                               <!-- <input type="text" name="source" class="form-control form-inline" required data-parsley-required-message="<b>*Source</b> required" data-parsley=""> -->
-                              <select name="source" id="source1" class="form-control form-inline"  data-parsley="">
+                              <select name="source" onchange="setOthersourc(this.value)" id="source1" class="form-control form-inline"  data-parsley="">
                               <!-- <select name="source" id="source1" class="form-control form-inline" required data-parsley-required-message="<b>*Source</b> required" data-parsley=""> -->
                                     <option value="Email">Email</option>
                                     <option value="Walk In">Walk In</option>
-                                    <option value="Other Offices">Other Offices</option>
+                                    <option value="Other Offices">Referred from Other Offices</option>
+                                    <option value="Others">Others please specify</option>
                               </select>
                             </div>
+                            
 
                           </div>
 
+                          <div class="row mb-2" hidden id="othersource">
+                              <div class="col-sm-4">
 
+                              Other Source:
+                              <!-- Source:<span style="color:red">*</span> -->
+
+                              </div>
+                              <div class="col-sm-8">
+                            <input type="text" name="sourceOther" id="othsrc" class="form-control form-inline"  >
+                            </div>
+
+                          </div>
 
                           {{-- name --}}
 

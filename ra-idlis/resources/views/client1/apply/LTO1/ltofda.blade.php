@@ -101,7 +101,7 @@
 				<div class="row marginbottom-md">
 					<div class="col-md-3" style="text-align: center;">
 						<div class="col-12 mb-3">
-							 <!-- @if(!empty($data[0][2][0]))
+							 @if(!empty($data[0][2][0]))
                                 @if($data[0][2][0]->evaluation === 1)
                                     <i class="fa fa-check text-success"></i>
                                     <button class="btn" onclick="addT('{{$data[0][1]}}','{{$data[0][2][0]->remarks}}')" data-toggle="modal" data-target="#modal">Show Remarks</button>
@@ -109,7 +109,7 @@
                                     <i class="fa fa-times text-danger"></i>
                                     <button class="btn" onclick="addT('{{$data[0][1]}}','{{$data[0][2][0]->remarks}}')" data-toggle="modal" data-target="#modal">Show Remarks</button>
                                 @endif
-                            @endif -->
+                            @endif
 						</div>
 						<button class="btn btn-info" style="white-space: normal; width: 100%; height: 100%;" onclick="window.location.href='{{asset('client1/apply/fda/CDRR/personnel/'.$appid)}}'"><i class="fa fa-users"></i> LIST OF PERSONNEL</button>
 					</div>
@@ -118,7 +118,7 @@
 					</div> --}}
 					<div class="col-md-3" style="text-align: center;">
 						<div class="col-12 mb-3">
-							 <!-- @if(!empty($data[4][2][0]))
+							 @if(!empty($data[4][2][0]))
                                 @if($data[4][2][0]->evaluation === 1)
                                     <i class="fa fa-check text-success"></i>
                                     <button class="btn" onclick="addT('{{$data[0][1]}}','{{$data[0][2][0]->remarks}}')" data-toggle="modal" data-target="#modal">Show Remarks</button>
@@ -126,7 +126,7 @@
                                     <i class="fa fa-times text-danger"></i>
                                     <button class="btn" onclick="addT('{{$data[0][1]}}','{{$data[0][2][0]->remarks}}')" data-toggle="modal" data-target="#modal">Show Remarks</button>
                                 @endif
-                            @endif -->
+                            @endif
 						</div>
 						<button class="btn btn-info" style="white-space: normal; width: 100%; height: 100%;" onclick="window.location.href='{{asset('client1/apply/fda/CDRR/attachments/'.$appid)}}'"><i class="fa fa-paperclip"></i> Other Attachments</button>
 					</div>
@@ -156,7 +156,7 @@
 				<div class="row marginbottom-md mt-3">
 					<div class="col-md-4" style="text-align: center;">
 						<div class="col-12 mb-3">
-                            <!-- @if(!empty($data[1][2][0]))
+                            @if(!empty($data[1][2][0]))
                                 @if($data[1][2][0]->evaluation === 1)
 
                                     <i class="fa fa-check text-success"></i>
@@ -165,13 +165,13 @@
                                     <i class="fa fa-times text-danger"></i>
                                     <button class="btn" onclick="addT('{{$data[1][1]}}','{{$data[1][2][0]->remarks}}')" data-toggle="modal" data-target="#modal">Show Remarks</button>
                                 @endif
-                            @endif -->
+                            @endif
                         </div>
 						<button class="btn btn-info" style="white-space: normal; width: 100%; height: 100%;"  onclick="window.location.href='{{asset('client1/apply/fda/CDRRHR/personnel/'.$appid)}}'"><i class="fa fa-users"></i> LIST OF PERSONNEL</button>
 					</div>
 					<div class="col-md-4" style="text-align: center;">
 						<div class="col-12 mb-3">
-                            <!-- @if(!empty($data[2][2][0]))
+                            @if(!empty($data[2][2][0]))
                                 @if($data[2][2][0]->evaluation === 1)
                                     <i class="fa fa-check text-success"></i>
                                     <button class="btn" onclick="addT('{{$data[2][1]}}','{{$data[2][2][0]->remarks}}')" data-toggle="modal" data-target="#modal">Show Remarks</button>
@@ -179,13 +179,13 @@
                                     <i class="fa fa-times text-danger"></i>
                                     <button class="btn" onclick="addT('{{$data[2][1]}}','{{$data[2][2][0]->remarks}}')" data-toggle="modal" data-target="#modal">Show Remarks</button>
                                 @endif
-                            @endif -->
+                            @endif
                         </div>
 						<button class="btn btn-info" style="white-space: normal; width: 100%; height: 100%;" onclick="window.location.href='{{asset('client1/apply/fda/CDRRHR/xrayservcat/'.$appid)}}'"><i class="fa fa-heartbeat"></i> X-RAY SERVICE CATEGORY</button>
 					</div>
 					<div class="col-md-4" style="text-align: center;">
 						<div class="col-12 pb-3">
-                            <!-- @if(!empty($data[3][2][0]))
+                            @if(!empty($data[3][2][0]))
                                 @if($data[3][2][0]->evaluation === 1)
                                     <i class="fa fa-check text-success"></i>
                                     <button class="btn" onclick="addT('{{$data[3][1]}}','{{$data[3][2][0]->remarks}}')" data-toggle="modal" data-target="#modal">Show Remarks</button>
@@ -193,7 +193,7 @@
                                     <i class="fa fa-times text-danger"></i>
                                     <button class="btn" onclick="addT('{{$data[3][1]}}','{{$data[3][2][0]->remarks}}')" data-toggle="modal" data-target="#modal">Show Remarks</button>
                                 @endif
-                            @endif -->
+                            @endif
                         </div>
 						<button class="btn btn-info" style="white-space: normal; width: 100%; height: 100%;" onclick="window.location.href='{{asset('client1/apply/fda/CDRRHR/xraymachines/'.$appid)}}'"><i class="fa fa-fax"></i> LIST OF DIAGNOSTIC RADIATION FACILITY</button>
 						<!-- <button class="btn btn-info" style="white-space: normal; width: 100%; height: 100%;" onclick="window.location.href='{{asset('client1/apply/fda/CDRRHR/xraymachines/'.$appid)}}'"><i class="fa fa-fax"></i> LIST OF DIAGNOSTIC MACHINES</button> -->

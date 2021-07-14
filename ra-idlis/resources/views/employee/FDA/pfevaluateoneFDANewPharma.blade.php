@@ -152,8 +152,8 @@
       </style>
         <div class="card">
             <div class="card-header bg-white font-weight-bold">
+            <button class="btn btn-primary" onclick="window.history.back();">Back</button>
               <input type="" id="token" value="{{ Session::token() }}" hidden>
-              <button class="btn btn-primary" onclick="window.history.back();">Back</button>
                Evaluation 
               
             </div>
@@ -175,8 +175,8 @@
                    
                     @else <span style="color:orange">Evaluated, for Revision</span> @endif @endisset</h6>
 
-                    @if($AppData->isRecoDecision == 'Return for Correction') <span style="color:orange">Retuned for Correction</span> @endif
-                    @if($AppData->isRecoDecision == 'Return for Correction' &&  $AppData->corResubmit == 1) <br/><span style="color:GREEN">Correction Resubmitted</span> @endif
+                    @if($AppData->isRecoDecisionPhar == 'Return for Correction') <span style="color:orange">Retuned for Correction</span> @endif
+                    @if($AppData->isRecoDecisionPhar == 'Return for Correction' && $AppData->corResubmitPhar == 1) <br/><span style="color:GREEN">Correction Resubmitted</span> @endif
               	</div>
                 <div class="d-flex justify-content-end">
                   <div class="row">
@@ -191,8 +191,8 @@
                   </div>
                   
                 </div>
-                
-            	@if(($AppData->isRecoDecision == 'Return for Correction' &&  $AppData->corResubmit == 0) || !isset($eval))
+               
+            	@if(($AppData->isRecoDecisionPhar == 'Return for Correction' &&  $AppData->corResubmitPhar == 0 )|| !isset($eval))
 
             	<div class="container pt-5 pb-3">
 

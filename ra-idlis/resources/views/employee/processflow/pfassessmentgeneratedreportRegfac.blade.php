@@ -227,14 +227,18 @@
 					@break
 				@endswitch
 				@else
+				
 				@switch($reco->choice)
 					@case('issuance')
 						{{-- <div class="container">For Licensing Process:</div> --}}
+				
 						<div class="container">Issuance of Notice of Violation</div>
 					@break
 					@case('compliance')
 						<div class="container" style="font-size: 20px;">
+						
 							Non-Issuance of Notice of Violation
+						
 						</div>
 
 					@case('non')

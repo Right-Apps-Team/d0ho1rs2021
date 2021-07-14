@@ -4413,7 +4413,8 @@
 										'payEvaltime' => $Cur_useData['time'],
 										'payEvalip'=> $Cur_useData['ip'],
 										// 'status' => 'FP'
-										'status' => (strtolower($hfser) == 'lto' || strtolower($hfser) == 'coa' ? 'FI' : 'P')
+										'status' => (strtolower($hfser) == 'lto' || strtolower($hfser) == 'coa' ? 'FI' : 'P'),
+										'isReadyForInspec' => 1
 										// 'status' => (strtolower($hfser) == 'ptc' ? 'FPPR' :  'FP')
 										// 'status' => (strtolower($hfser) == 'ptc' ? 'FPPR' :  'FI')
 										// 'status' => (strtolower($hfser) == 'ptc' ? 'FPPR' : (strtolower($hfser) == 'lto' ? 'FI' :'CE'))
@@ -4460,7 +4461,26 @@
 						);
 						if($request->selected == 2){
 							$updateData['isReadyForInspecFDA'] = 0;
+
+							if(strtolower($request->requestFor) == 'pharma'){
+								$updateData['FDAStatPhar'] = "Evaluated, but for Revision";
+							}else{
+								$updateData['FDAStatMach'] = "Evaluated, but for Revision";
+							}
+
+						}else{
+							$updateData['isReadyForInspecFDA'] = 1;
+
+							if(strtolower($request->requestFor) == 'pharma'){
+								$updateData['FDAStatPhar'] = "For Inspection";
+							}else{
+								$updateData['FDAStatMach'] = "For Inspection";
+							}
 						}
+
+
+
+						
 					}
 					if(isset($request->isCoa) && !isset($appform->coaflag)){
 						$updateData = array(
@@ -4886,7 +4906,7 @@
 				$assignedRgn = (DB::table('appform')->select('assignedRgn')->where('appid',$request->id)->first()->assignedRgn ?? $request->rgn);
 				$query = 	"SELECT x08.uid, x08.fname, x08.mname, x08.lname, x08.position, x08.team, x07.grp_desc
 						  	FROM x08 LEFT JOIN  x07 ON x08.grpid = x07.grp_id 
-							WHERE x08.grpid <> 'C' AND x08.team IS null AND x08.rgnid = '$assignedRgn' AND  x08.uid NOT IN (SELECT uid FROM app_team WHERE appid = '$request->id') AND x08.grpid IN ('LO1','LO2') ";
+							WHERE x08.grpid <> 'C' AND x08.team IS null AND x08.rgnid = '$assignedRgn' AND  x08.uid NOT IN (SELECT uid FROM app_team WHERE appid = '$request->id') AND x08.grpid IN ('LO1','LO2','RLO') ";
 				$data = DB::select($query);			
 					if ($data) {
 						for ($i=0; $i < count($data) ; $i++) { 

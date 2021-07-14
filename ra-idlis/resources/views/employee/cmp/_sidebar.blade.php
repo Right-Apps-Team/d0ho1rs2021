@@ -1175,7 +1175,7 @@
 
                 <span class="MOD04_allow">
 
-                    <li><a href="#MonitorxMenu" data-toggle="collapse"><i class="fa fa-handshake-o" aria-hidden="true"></i> ROA/Complaints</a>
+                    <li><a href="#MonitorxMenu" data-toggle="collapse"><i class="fa fa-handshake-o" aria-hidden="true"></i> RFA/Complaints</a>
 
                         <ul id="MonitorxMenu" class="list-unstyled collapse">
 
@@ -1247,7 +1247,7 @@
 
                             <span class="OT003_allow">
 
-                                <li><a href="{{asset('employee/dashboard/others/roacomplaints/regfac')}}"> ROA/Complaints Entry</a></li>
+                                <li><a href="{{asset('employee/dashboard/others/roacomplaints/regfac')}}"> RFA/Complaints Entry</a></li>
                                 <!-- <li><a href="{{asset('employee/dashboard/others/roacomplaints')}}"> ROA/Complaints Entry</a></li> -->
 
                             </span>

@@ -14,10 +14,11 @@
 	<div class="content p-4">
 	    <div class="card">
 			<div class="card-header bg-white font-weight-bold">
-				Manage Request For Assistance/Complaints
+			
 				<!-- <a href="{{URL::route('others.roacomp')}}"> -->
 				<a href="{{asset('employee/dashboard/others/roacomplaints/regfac')}}">
 				<button type="button" class="btn-primarys"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Back</button></a>
+				Manage Request For Assistance/Complaints
 			</div>
 			<div class="card-body table-responsive">
 				@isset($RequestData)
@@ -129,6 +130,22 @@
 								<span id="manage_type_of_facility">{{$RequestData['type_of_faci']}}</span>
 							</div>
 						</div>
+						@if($RequestData['name_of_conf_pat'])
+						<div class="row text-left mt-3 mb-5">
+							<div class="col-sm-2">
+								<b>Name of Patient:</b>
+							</div>
+							<div class="col-sm-4">
+								<span id="manage_name_of_faci">{{$RequestData['name_of_conf_pat']}}</span> 
+							</div>
+							<div class="col-sm-2">
+								<b>Date Confined  :</b>
+							</div>
+							<div class="col-sm-4">
+								<span id="manage_type_of_facility">{{$RequestData['date_of_conf_pat']}}</span>
+							</div>
+						</div>
+						@endif
 
 						{{-- reqs/comps --}}
 						<div class="row text-left mt-5 mb-5">
