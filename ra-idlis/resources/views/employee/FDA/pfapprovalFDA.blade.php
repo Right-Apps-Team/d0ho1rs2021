@@ -23,13 +23,14 @@
                   </tr>
                   </thead>
                   <tbody id="FilterdBody">
+                    {{--   $reco = (strtolower($request) == 'machines' ? $data->isRecoFDA : 1); --}}
                       @if (isset($BigData))
                         @foreach ($BigData as $data)
                          @php
                           $oop = (strtolower($request) == 'machines' ? $data->isPayEvalFDA : $data->isPayEvalFDAPharma);
                           $eval = (strtolower($request) == 'machines' ? $data->isrecommendedFDA : $data->isrecommendedFDAPharma);
                           $cashier = (strtolower($request) == 'machines' ? $data->isCashierApproveFDA : $data->isCashierApprovePharma);
-                          $reco = (strtolower($request) == 'machines' ? $data->isRecoFDA : 1);
+                          $reco = (strtolower($request) == 'machines' ? $data->isRecoFDA : $data->isRecoFDAPhar);
                           @endphp
                           @if($oop == 1 && $eval == 1 && $cashier == 1 && $reco == 1 && ($request == 'machines' ? $data->isApproveFDA : $data->isApproveFDAPharma) == null)
                           @php

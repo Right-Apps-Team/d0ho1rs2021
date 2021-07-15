@@ -3817,7 +3817,8 @@ use FunctionsClientController;
 
 					
 
-					$fstat = $requestOfClient == 'machines' ? 'For Recommendation' : 'For Final Decision';
+					$fstat = 'For Recommendation' ;
+					// $fstat = $requestOfClient == 'machines' ? 'For Recommendation' : 'For Final Decision';
 					$resub = $requestOfClient == 'machines' ? $corm : $corp;
 					$answers = [
 						1,
@@ -7617,25 +7618,35 @@ use FunctionsClientController;
 					// $data1 = AjaxController::getPreAssessment($data->uid);
 					$data2 = AjaxController::getAssignedMembersInTeam4Recommendation($appid);
 					$canView = AjaxController::canViewFDAOOP($appid);
+					$chk = DB::table('appform')->where([['appid', $appid]])->first();
 					if($reqType == 'machines'){
 						$typeOfRequest = 'cdrrhr';
 						if(isset($canView[0])){
 							$canView[0] = false;
 						}
 
-						$chk = DB::table('appform')->where([['appid', $appid]])->first();
+						
 
 						if($chk->isRecoDecision != "Return for Correction"){
 
 						DB::table('appform')->where('appid', '=', $appid)->update(['FDAStatMach'=>'For Final Dicision']);
 						}
+
+						
+						
 					} else{
 						$typeOfRequest = 'cdrr';
 						if(isset($canView[1])){
 							$canView[1] = false;
 						}
+
+						if($chk->isRecoDecisionPhar != "Return for Correction"){
+
+							DB::table('appform')->where('appid', '=', $appid)->update(['FDAStatPhar'=>'For Final Dicision']);
+							}
 					}
-					$approveForCurrentRequest = ($reqType == 'machines' ? $data->isRecoFDA : 1);
+					$approveForCurrentRequest = ($reqType == 'machines' ? $data->isRecoFDA : $data->isRecoFDAPhar);
+					// $approveForCurrentRequest = ($reqType == 'machines' ? $data->isRecoFDA : 1);
 				
 					$hasJudge = DB::table('fdacert')->where([['appid',$appid],['department',$typeOfRequest]])->exists();
 					return view('employee.FDA.pfreco', ['AppData'=>$data,/*'PreAss'=>$data1, */'APPID' => $appid, 'Teams4theApplication' => $data2, 'canView' => $canView, 'canjudge' => $hasJudge, 'currentRequest' => $approveForCurrentRequest, 'request' => $reqType]);
@@ -7659,9 +7670,17 @@ use FunctionsClientController;
 						$pharCOCUP = $xrayCOCUP = null;
 						$status = ($request->isOk == '1') ? 'FA' : 'RA';
 						// $status = ($request->isOk == '1') ? 'A' : 'RA';
+						$isok = 1;
+						if($request->recommendation == "Return for Correction"){
+							
+							$isok = null;
+						}
 						if($reqType == 'machines'){
+
+							
 							$data = array(
-					 			'isRecoFDA' => $request->isOk,
+					 			'isRecoFDA' => $isok,
+					 			// 'isRecoFDA' => $request->isOk,
 					 			'isRecoDecision' => $request->recommendation,
 					 			'RecobyFDA' => $Cur_useData['cur_user'],
 					 			'RecodateFDA' => $Cur_useData['date'],
@@ -7676,15 +7695,35 @@ use FunctionsClientController;
 								
 							}
 						} else {
+							// $data = array(
+							// 	'isRecoFDAPhar' => $request->isOk,
+					 		// 	'isApproveFDAPharma' => $request->isOk,
+					 		// 	'approvedByFDAPharma' => $Cur_useData['cur_user'],
+					 		// 	'approvedDateFDAPharma' => $Cur_useData['date'],
+					 		// 	'approvedTimeFDAPharma' =>  $Cur_useData['time'],
+					 		// 	'approvedIpAddFDAPharma' => $Cur_useData['ip'],
+					 		// 	'approvedRemarkFDAPharma' => ($request->desc ?? null),
+					 		// 	'FDAstatus' => $status,
+ 					 		// );
+
 							$data = array(
-					 			'isApproveFDAPharma' => $request->isOk,
-					 			'approvedByFDAPharma' => $Cur_useData['cur_user'],
-					 			'approvedDateFDAPharma' => $Cur_useData['date'],
-					 			'approvedTimeFDAPharma' =>  $Cur_useData['time'],
-					 			'approvedIpAddFDAPharma' => $Cur_useData['ip'],
-					 			'approvedRemarkFDAPharma' => ($request->desc ?? null),
+								'isRecoFDAPhar' => $isok,
+								// 'isRecoFDAPhar' => $request->isOk,
+					 			'isRecoDecisionPhar' => $request->recommendation,
+					 			'RecobyFDAPhar' => $Cur_useData['cur_user'],
+					 			'RecodateFDAPhar' => $Cur_useData['date'],
+					 			'RecotimeFDAPhar' =>  $Cur_useData['time'],
+					 			'RecoippaddrFDAPhar' => $Cur_useData['ip'],
+					 			'RecoRemarkFDAPhar' => ($request->desc ?? null),
 					 			'FDAstatus' => $status,
  					 		);
+
+							  if($request->recommendation == "Return for Correction"){
+								$data["FDAStatPhar"] = "For Inspection";
+								$data["corResubmitPhar"] = 0;
+								
+							}
+							
 						}
 					 	
 						$test = DB::table('appform')->where('appid', '=', $request->id)->update($data);
@@ -7791,14 +7830,14 @@ use FunctionsClientController;
 							$canView[0] = false;
 						}
 
-						DB::table('appform')->where('appid', '=', $appid)->update(['FDAStatMach'=>'For Monitoring']);
+						// DB::table('appform')->where('appid', '=', $appid)->update(['FDAStatMach'=>'For Monitoring']);
 					} else{
 						$typeOfRequest = 'cdrr';
 						if(isset($canView[1])){
 							$canView[1] = false;
 						}
 
-						DB::table('appform')->where('appid', '=', $appid)->update(['FDAStatPhar'=>'For Monitoring']);
+						// DB::table('appform')->where('appid', '=', $appid)->update(['FDAStatPhar'=>'For Monitoring']);
 					}
 					$approveForCurrentRequest = ($reqType == 'machines' ? $data->isApproveFDA : $data->isApproveFDAPharma);
 					$hasJudge = DB::table('fdacert')->where([['appid',$appid],['department',$typeOfRequest]])->exists();
@@ -7868,6 +7907,15 @@ use FunctionsClientController;
 							if($request->hasFile('xrayCOCUP')){
 								$xrayCOCUP = FunctionsClientController::uploadFile($request->xrayCOCUP)['fileNameToStore'];
 							}
+
+							$fds = "Disapproved";
+							if($request->isOk == '1'){
+								$fds = "For Approval";
+							}
+
+
+
+
 							if($reqType == 'machines'){
 								$data = array(
 						 			'isApproveFDA' => $request->isOk,
@@ -7877,6 +7925,7 @@ use FunctionsClientController;
 						 			'approvedTimeFDA' =>  $Cur_useData['time'],
 						 			'approvedIpAddFDA' => $Cur_useData['ip'],
 						 			'approvedRemarkFDA' => $request->desc,
+						 			'FDAStatMach' =>$fds,
 						 			'FDAstatus' => $status,
 	 					 		);
 							} else {
@@ -7888,6 +7937,7 @@ use FunctionsClientController;
 						 			'approvedTimeFDAPharma' =>  $Cur_useData['time'],
 						 			'approvedIpAddFDAPharma' => $Cur_useData['ip'],
 						 			'approvedRemarkFDAPharma' => $request->desc,
+						 			'FDAStatPhar' => $fds,
 						 			'FDAstatus' => $status,
 	 					 		);
 							}

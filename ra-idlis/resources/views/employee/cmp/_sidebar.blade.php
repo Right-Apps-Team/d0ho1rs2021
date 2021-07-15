@@ -872,6 +872,12 @@
 
                                         </span>
 
+                                        <span class="FDAPF_allow">
+
+                                            <li><a href="{{asset('employee/dashboard/processflow/FDA/recommendation/pharma')}}">&nbsp;&nbsp;&nbsp;&nbsp;Recommendation</a></li>
+
+                                            </span>
+
                                         <span class="FDAPE_allow">
 
                                             <li><a href="{{asset('employee/dashboard/processflow/FDA/approval/pharma')}}">&nbsp;&nbsp;&nbsp;&nbsp;Final Decision</a></li>

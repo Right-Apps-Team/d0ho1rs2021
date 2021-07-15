@@ -212,8 +212,10 @@
                 </tr>
               </thead>
               <tbody>
-                  @php $counter = $forNosent = 0 ; @endphp
+                  @php $counter = $forNosent = 0 ; $idnt=0;@endphp
                   @foreach($requirements as $req)
+                    @php $idnt+=1; @endphp
+                  
                   <tr>
                     <td>
                       <div class="row">
@@ -227,12 +229,17 @@
                     </td>
                     <td>
                       @if(!empty($req[2][0]))
+                   
+                     <script>
+                       console.log('{!! json_encode($req[2][0]) !!}')
+                       </script>
+                    
                        <span class="{{$req[2][0]->id.$req[2][0]->id}}_span_edit" @if($req[2][0]->evaluation !== NULL)style="display: none"@endif>
                           <div class="row booleans laSelected" apup="{{$req[2][0]->id}}" >
                              <div class="col-6">
                                <div class="control-group">
                                 <label class="control control--radio">Yes
-                                  <input value="1" type="radio" name="{{$req[2][0]->id}}_rad_{{$req[2][0]->id}}" @if($req[2][0]->evaluation !== NULL AND $req[2][0]->evaluation == 1)checked=""@endif>
+                                  <input value="1" type="radio" name="{{$req[2][0]->id}}_rad_{{$req[2][0]->id}}{{$idnt}}" @if($req[2][0]->evaluation !== NULL AND $req[2][0]->evaluation == 1)checked=""@endif>
                                   <div class="control__indicator"></div>
                                   </label>
                                </div> 
@@ -240,14 +247,14 @@
                               <div class="col-6">
                                 <div class="control-group">
                                    <label class="control control--radio">No
-                                     <input value="0" type="radio" name="{{$req[2][0]->id}}_rad_{{$req[2][0]->id}}" @if($req[2][0]->evaluation !== NULL AND $req[2][0]->evaluation == 0)checked=""@endif>
+                                     <input value="0" type="radio" name="{{$req[2][0]->id}}_rad_{{$req[2][0]->id}}{{$idnt}}" @if($req[2][0]->evaluation !== NULL AND $req[2][0]->evaluation == 0)checked=""@endif>
                                      <div class="control__indicator"></div>
                                    </label>
                                  </div> 
                               </div>
                           </div>
                           <p style="text-align: left;">Remarks:</p>
-                          <textarea name="{{$req[2][0]->id}}_txt" class="form-control" rows="5">@if($req[2][0]->evaluation !== NULL){{$req[2][0]->remarks}}@endif</textarea>
+                          <textarea name="{{$idnt}}{{$req[2][0]->id}}_txt" class="form-control" rows="5">@if($req[2][0]->evaluation !== NULL){{$req[2][0]->remarks}}@endif</textarea>
                           <br>
                           <button type="button" title="Save" onclick="saveEvals()" class="btn btn-success" style="display: none"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
                           <button type="button" title="Cancel Edit" onclick="').toggle()" class="btn btn-danger" style="display: none"><i class="fa fa-times" aria-hidden="true"></i></button>
@@ -468,16 +475,20 @@
         var ifCheck = [], chckRmrks = [];
         var x = 0, y = '';
         if(IDs.length > 0) {
+          var inpt = 0;
             for (var i = 0; i < IDs.length; i++) {
-              var sad = (typeof($('input[name="'+IDs[i]+'_rad_'+IDs[i]+'"]:checked').val()) == 'undefined') ? null :  parseInt($('input[name="'+IDs[i]+'_rad_'+IDs[i]+'"]:checked').val());
+              inpt +=1;
+              var sad = (typeof($('input[name="'+IDs[i]+'_rad_'+IDs[i]+inpt+'"]:checked').val()) == 'undefined') ? null :  parseInt($('input[name="'+IDs[i]+'_rad_'+IDs[i]+inpt+'"]:checked').val());
+              // var sad = (typeof($('input[name="'+IDs[i]+'_rad_'+IDs[i]+'"]:checked').val()) == 'undefined') ? null :  parseInt($('input[name="'+IDs[i]+'_rad_'+IDs[i]+'"]:checked').val());
               ifCheck.push(sad);
-              chckRmrks.push($('textarea[name="'+IDs[i]+'_txt"]').val());
-              if ((sad == 0) && ($('textarea[name="'+IDs[i]+'_txt"]').val() == '') ) {
+              chckRmrks.push($('textarea[name="'+inpt+IDs[i]+'_txt"]').val());
+              if ((sad == 0) && ($('textarea[name="'+inpt+IDs[i]+'_txt"]').val() == '') ) {
                  x = 1; y = IDs[i];
                  break;
               }
               
-            }       
+            } 
+
              ifCheck.forEach(function(index, el) {
                if(index == null){
                 flag = 'uncheck';

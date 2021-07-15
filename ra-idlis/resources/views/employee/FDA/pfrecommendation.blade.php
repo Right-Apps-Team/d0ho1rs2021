@@ -6,7 +6,7 @@
   <div class="content p-4">
       <div class="card">
           <div class="card-header bg-white font-weight-bold">
-             Recommendation/Issuance Certificate (FDA)
+             Recommendation/Issuance Certificate (FDA) 
           </div>
           <div class="card-body table-responsive">
               <table class="table table-hover" id="example" style="font-size:13px;">
@@ -23,16 +23,18 @@
                   </tr>
                   </thead>
                   <tbody id="FilterdBody">
+                  {{--     $reco = (strtolower($request) == 'machines' ? $data->isRecoFDA : 1); --}}
                       @if (isset($BigData))
                         @foreach ($BigData as $data)
                          @php
                           $oop = (strtolower($request) == 'machines' ? $data->isPayEvalFDA : $data->isPayEvalFDAPharma);
                           $eval = (strtolower($request) == 'machines' ? $data->isrecommendedFDA : $data->isrecommendedFDAPharma);
                           $cashier = (strtolower($request) == 'machines' ? $data->isCashierApproveFDA : $data->isCashierApprovePharma);
-                          $reco = (strtolower($request) == 'machines' ? $data->isRecoFDA : 1);
+                          $reco = (strtolower($request) == 'machines' ? $data->isRecoFDA : $data->isRecoFDAPhar);
+                
                           @endphp
                           {{-- {{dd([$oop,$eval,$cashier,$reco])}} --}}
-                          @if($data->isRecoDecision == 'Return for Correction' || $oop == 1 && $eval == 1 && $cashier == 1 && $reco == null && ($request == 'machines' ? $data->isApproveFDA : $data->isApproveFDAPharma) == null)
+                          @if(($data->isRecoDecision == 'Return for Correction' || $data->isRecoDecisionPhar == 'Return for Correction') || $oop == 1 && $eval == 1 && $cashier == 1 && $reco == null && ($request == 'machines' ? $data->isApproveFDA : $data->isApproveFDAPharma) == null)
                           @php
                               $toCheck = ($request == 'machines' ? 'cdrrhr' : 'cdrr');
                             @endphp

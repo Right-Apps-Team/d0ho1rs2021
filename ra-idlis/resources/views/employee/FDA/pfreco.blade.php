@@ -356,7 +356,7 @@
           </div>
         {{--  --}}
         @isset($AppData)
-          @if($AppData->isRecoDecision == 'Return for Correction' || $currentRequest == null)  
+          @if(($AppData->isRecoDecision == 'Return for Correction' || $AppData->isRecoDecisionPhar == 'Return for Correction') || $currentRequest == null)  
           <hr>
           <div class="container">
             <center>
@@ -424,7 +424,7 @@
                         <textarea class="form-control" rows="5" id="desc_rmk"></textarea>
                       </div>
                     </div> --}}
-                    @if($request != 'machines')
+                    @if($request != 'machines' && $request != 'pharma')
                     <div class="row">
                         <div class="col-sm-4">Password:<span style="color:red;font-weight: bolder">*</span> </div>
                         <div class="col-sm-8" >

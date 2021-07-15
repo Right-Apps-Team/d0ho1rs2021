@@ -247,7 +247,16 @@ height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscr
                 </tr>
                 <tr>
                     <td>
-                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;"><small><sup>10.2.2</sup></small></span><small>.3</small>&nbsp;&nbsp;</h1>
+                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;"><small><sup>10.2.1</sup></small></span><small>.3</small>&nbsp;&nbsp;</h1>
+                    </td>
+                    <td>  <a href="{{ $grpid == 'NA' || $grpid == 'PO' || $grpid == 'FDA' ? asset('employee/dashboard/processflow/FDA/recommendation/pharma') : '#'}}"> Recommendation </a></td>
+                    @if ($grpid == 'NA' || $grpid == "PO" || $grpid == "FDA")
+                    <!-- <td><a href="{{asset('employee/dashboard/processflow/FDA/recommendation/machines')}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></td> -->
+                    @endif
+                </tr>
+                <tr>
+                    <td>
+                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;"><small><sup>10.2.2</sup></small></span><small>.4</small>&nbsp;&nbsp;</h1>
                     </td>
                     <td>  <a href="{{ $grpid == 'NA' || $grpid == 'PO' || $grpid == 'FDA' ? asset('employee/dashboard/processflow/FDA/approval/pharma') : '#'}}">  Final Decision </a></td>
                     @if ($grpid == 'NA' || $grpid == "PO" || $grpid == "FDA")
@@ -256,7 +265,7 @@ height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscr
                 </tr>
                 <tr>
                     <td>
-                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;"><small><sup>10.2.2</sup></small></span><small>.4</small>&nbsp;&nbsp;</h1>
+                        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;"><small><sup>10.2.2</sup></small></span><small>.5</small>&nbsp;&nbsp;</h1>
                     </td>
                     <td>    <a href="{{ $grpid == 'NA' || $grpid == 'PO' || $grpid == 'FDA' ?  asset('employee/dashboard/processflow/FDA/monitoring/pharma'): '#'}}"> Monitoring Tool </a></td>
                     @if ($grpid == 'NA' || $grpid == "PO" || $grpid == "FDA")

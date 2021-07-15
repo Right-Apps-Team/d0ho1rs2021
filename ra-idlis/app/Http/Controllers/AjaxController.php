@@ -5115,6 +5115,7 @@
 												->leftJoin('x08 AS cashval', 'appform.CashierApproveByFDA', '=', 'cashval.uid')
 												->leftJoin('x08 AS recfdaval', 'appform.recommendedbyFDA', '=', 'recfdaval.uid')
 												->leftJoin('x08 AS recbyfda', 'appform.RecobyFDA', '=', 'recbyfda.uid')
+												->leftJoin('x08 AS recbyfdaphar', 'appform.RecobyFDAPhar', '=', 'recbyfdaphar.uid')
 												->leftJoin('x08 AS recbyfdaph', 'appform.CashierApproveByPharma', '=', 'recbyfdaph.uid')
 												->leftJoin('x07', 'comeval.grpid', '=', 'x07.grp_id')
 												->join('barangay', 'appform.brgyid', '=', 'barangay.brgyid')
@@ -5150,6 +5151,12 @@
 												'recbyfda.suf as recbyfda_suf',  
 												'recbyfda.mname as recbyfda_mname', 
 												 'recbyfda.lname as recbyfda_lname',  
+
+ 												 'recbyfdaphar.fname as recbyfdaphar_fname',  
+												  'recbyfdaphar.pre as recbyfdalphar_pre',  
+												'recbyfdaphar.suf as recbyfdaphar_suf',  
+												'recbyfdaphar.mname as recbyfdaphar_mname', 
+												 'recbyfdaphar.lname as recbyfdaphar_lname',  
 
 												  'recbyfdaph.fname as recbyfdaph_fname',  
 												  'recbyfdaph.pre as recbyfdaph_pre',  

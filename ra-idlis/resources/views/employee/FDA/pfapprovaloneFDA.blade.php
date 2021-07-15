@@ -43,6 +43,8 @@
     $recommendationDate = $AppData->RecodateFDA;
     $recommendationIp = $AppData->RecoippaddrFDA;
 
+ 
+
 
     //approval
     $approve = $AppData->isApproveFDA;
@@ -58,7 +60,12 @@
     $recoDate = $AppData->recommendeddateFDAPharma;
     $recoIp = $AppData->recommendedippaddrFDAPharma;
 
-
+    $recommendationPhar = $AppData->isRecoFDAPhar;
+    $recommendationJudgePhar = $AppData->isRecoDecisionPhar;
+    $recommendationEvalByPhar = $AppData->RecobyFDAPhar;
+    $recommendationTimePhar = $AppData->RecotimeFDAPhar;
+    $recommendationDatePhar = $AppData->RecodateFDAPhar;
+    $recommendationIpPhar = $AppData->RecoippaddrFDAPhar;
 
     //order of payment
     $oop = $AppData->isPayEvalFDAPharma;
@@ -423,6 +430,62 @@
               </div>
             </div>
             {{-- END BODY --}}
+          </div>
+          <div class="card">
+          <div class="card-header @isset($AppData) @if($cashier == null) list-group-item-info @elseif($cashier == 1) list-group-item-success  @else list-group-item-danger @endif @endisset" id="headingOne" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseOne" style="">
+              <div class="mb-0">
+                <button class="btn btn-link @isset($AppData) @if($cashier == null) list-group-item-info @elseif($cashier == 1) list-group-item-success  @else list-group-item-danger @endif @endisset" type="button" style="text-decoration:none">
+                  <h3>Recommendation for Approval (Pharmacy)</h3>
+                </button>
+              </div>
+            </div>
+             {{-- END HEAD --}}
+             {{-- START BODY --}}
+            <div id="collapseThree"  class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-5">
+                      <table class="table table-borderless table-sm">
+                        <thead><tr><th width="40%"></th><th width="60%"></th></tr></thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">Recommendation :</th>
+                            <td>@isset($AppData) @if($recommendationPhar == null) <span style="color:blue;font-weight: bolder">No Recommendation</span> @else<span style="color:green;font-weight: bolder">{{$recommendationJudgePhar}}</span>@endif @endisset</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Time :</th>
+                            <td>@isset($recommendationTimePhar) <span style="color:green;font-weight: bolder">{{Date('g:i A',strtotime($recommendationTimePhar))}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Date :</th>
+                            <td>@isset($recommendationDatePhar) <span style="color:green;font-weight: bolder">{{Date('F d, Y',strtotime($recommendationDatePhar))}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Evaluated by:</th>
+                            <td>@isset($AppData->CashierApproveByFDA) <span style="color:green;font-weight: bolder">
+                            <!-- {{$AppData->CashierApproveByFDA}} -->
+                            {{$AppData->recbyfdalphar_pre}}
+                            {{$AppData->recbyfdaphar_fname}}
+                            {{$AppData->recbyfdaphar_lname}}
+                            {{$AppData->recbyfdaphar_suf}}
+                            
+
+
+
+                          </span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
+                            <!-- <td>@isset($recommendationEvalBy) <span style="color:green;font-weight: bolder">{{$recommendationEvalBy}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td> -->
+                            
+
+
+
+
+                          </tr>
+                        </tbody>
+                      </table>  
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           @endif
          
