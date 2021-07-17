@@ -9,6 +9,21 @@
              Approval/Issuance Certificate  
           </div>
           <div class="card-body table-responsive">
+            @php
+            $lname = preg_replace('/\s*/', '', $uilastname);
+            $lname = strtolower($lname);
+
+            $position = preg_replace('/\s*/', '', $uiposition);
+            $position = strtolower($position);
+
+            
+
+            @endphp
+<!-- 
+            {{$lname}}
+            {{$position}} -->
+          
+            
               <table class="table table-hover" id="example" style="font-size:13px;">
                   <thead>
                   <tr>
@@ -37,7 +52,26 @@
                               }
 
                             @endphp
+
+                            @if(strtolower($uirgnid) == 'hfsrb')
+                              @if($lname == 'eugenio' && ($position == 'directoriii' || $position == 'director3') && $data->hfser_id == 'PTC')
+                                  @if($data->pbedcap >= 100)
+                                      @php continue; @endphp
+                                  @endif
+                              @endif
+                              @if($lname == 'lutero' && ($position == 'directoriv' || $position == 'director4') && $data->hfser_id == 'PTC')
+                                  @if($data->pbedcap <= 99)
+                                      @php continue; @endphp
+                                  @endif
+                              @endif
+                            @endif
+
+
+
+
+
                             <tr>
+                              <!-- <td class="text-center">{{$data->pbedcap}}</td> -->
                               <td class="text-center">{{$data->hfser_id}}</td>
                               <td class="text-center">{{$data->hfser_id}}R{{$data->rgnid}}-{{$data->appid}}</td>
                               <td class="text-center"><strong>{{$data->facilityname}}</strong></td>

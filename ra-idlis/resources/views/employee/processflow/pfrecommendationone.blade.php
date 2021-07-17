@@ -7,7 +7,7 @@
         <div class="card-header bg-white font-weight-bold">
           @isset($APPID)<input type="text" id="APPID" value="{{$APPID}}" hidden>@endisset
           <input type="" id="token" value="{{ Session::token() }}" hidden>
-           Recommendation of Application 
+           Recommendation of Application
            <button class="btn btn-primary" onclick="window.history.back();">Back</button>
         </div>
         <div class="card-body">
@@ -600,7 +600,7 @@
                         <tbody>
                           <tr>
                             <th scope="row">Status :</th>
-                            <td>@isset($AppData) @if($AppData->isApproveFDAPharma == null) <span style="color:blue;font-weight: bolder">Not Inspected</span> @elseif($AppData->isApproveFDAPharma == 1)<span style="color:green;font-weight: bolder">Approve</span>@else<span style="color:red;font-weight: bolder">COC Denied</span>@endif @endisset</td>
+                            <td>@isset($AppData) @if($AppData->isApproveFDAPharma == null) <span style="color:blue;font-weight: bolder">Not Inspected</span> @elseif($AppData->isApproveFDAPharma == 1)<span style="color:green;font-weight: bolder">Approved</span>@else<span style="color:red;font-weight: bolder">COC Denied</span>@endif @endisset</td>
                           </tr>
                           <tr>
                             <th scope="row">Date :</th>

@@ -14,7 +14,7 @@
       {{csrf_field()}}
     <div class="card">
       <div class="card-header bg-white font-weight-bold">
-         Committee Evaluation Tool 
+         Committee Evaluation Tool  
          <button class="btn btn-primary" onclick="window.history.back();">Back</button>
       </div>
       <div class="card-body">
@@ -69,7 +69,7 @@
             </tr>
             <tr>
               <td></td>
-              <td>Existing Hospitals</td>
+              <td>Existing Hospitals </td>
               <td>Location</td>
               <td>ABC</td>
               <td>Level of Hospital</td>
@@ -792,7 +792,7 @@
       processPopulationCountInpt()
       getBPR();
       getPBN();
-      getUBN();
+      // getUBN();
       avepsca();
     })
     $(function(){
@@ -857,6 +857,8 @@
       return totalValue;
     }
     function getABCCount(){
+      console.log("iissss")
+
       addTT(1);
       forPSCA();
       let abcCount = 0;
@@ -878,6 +880,12 @@
         $("input[name=pscaval]").val(avepsca());
         forPSCA();
       }
+
+      setTimeout(function(){ 
+        getUBN();
+ }, 1000);
+
+   
     }
     function forPSCA(){
       let fromMain = $("#mainEl").nextUntil($("#addNewRow1")).clone();
@@ -1072,6 +1080,11 @@
         return parts.join(".");
     }
     function deleteRow(elName) {
+
+      console.log("Hello")
+    
+
+
       let idom = $("."+elName);
       processPopulationCount();
       getBPR();
@@ -1083,6 +1096,11 @@
         $("#pscaAve").html(avepsca() + ' %');
         $("input[name=pscaval]").val((avepsca() == 'Please Input' ? 0 : avepsca()));
       }
+
+      setTimeout(function(){ 
+        getABCCount(); 
+   }, 1000);
+    
     }
     $(document).on('keyup',"input[name='tya[]'], input[name='aya[]']",function(){
       if($(this).val() > 99){

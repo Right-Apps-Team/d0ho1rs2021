@@ -337,7 +337,9 @@ if (arrCol.length > 0) {
                                         return {
                                         facname: facname,
                                         // amt: owns == "G" ? 0 :  arr.find(s =>
-                                        amt: subclass == "ND" ? 0 :  arr.find(s =>
+                                        // amt: subclass == "ND" ? 0 :  arr.find(s =>
+                                        //         s.facname === facname).amt,
+                                         amt: arr.find(s =>
                                                 s.facname === facname).amt,
                                         chgapp_id: arr.find(s =>
                                                 s.facname === facname).chgapp_id
@@ -350,7 +352,8 @@ if (arrCol.length > 0) {
                                                 serv_chg.innerHTML = '';
                                                 for (let i = 0; i < distinctArr.length; i++) {
                                                         ta.push({reference : distinctArr[i]['facname'],amount: distinctArr[i]['amt'], chgapp_id:  distinctArr[i]['chgapp_id'] }) //appcharge
-                                                        serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['facname'] + '</td><td>&#8369;&nbsp;<span>' + numberWithCommas(subclass == "ND" ? 0 : (parseInt(distinctArr[i]['amt'])).toFixed(2)) + '</span></td></tr>';
+                                                        serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['facname'] + '</td><td>&#8369;&nbsp;<span>' + numberWithCommas( (parseInt(distinctArr[i]['amt'])).toFixed(2)) + '</span></td></tr>';
+                                                        // serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['facname'] + '</td><td>&#8369;&nbsp;<span>' + numberWithCommas(subclass == "ND" ? 0 : (parseInt(distinctArr[i]['amt'])).toFixed(2)) + '</span></td></tr>';
                                                         // serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['facname'] + '</td><td>&#8369;&nbsp;<span>' + numberWithCommas((parseInt(distinctArr[i]['amt'])).toFixed(2)) + '</span></td></tr>';
                                                 }
 

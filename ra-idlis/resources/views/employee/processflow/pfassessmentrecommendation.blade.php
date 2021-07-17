@@ -95,8 +95,17 @@
 										'<input name="vto" type="date" class="form-control" required="" placeholder="validity to">'+
 									'</div>'+
 									'<div class="container mt-5 mb-3">'+
-										'<input name="noofbed" type="number" class="form-control" required="" placeholder="Total number of beds/Dialysis Station">'+
-										'<small style="color:red">*Total number of beds/Dialysis Station</small>'+
+										'<input name="noofbed" type="number" class="form-control" placeholder="Total number of beds">'+
+										'<small style="color:red">*Total number of beds</small>'+
+									'</div>'+
+									// '<div class="container mt-5 mb-3">'+
+									// 	'<input name="noofbed" type="number" class="form-control" required="" placeholder="Total number of beds/Dialysis Station">'+
+									// 	'<small style="color:red">*Total number of beds/Dialysis Station</small>'+
+									// '</div>'+
+									
+									'<div class="container mt-5 mb-3">'+
+										'<input name="noofdialysis" type="number" class="form-control" placeholder="Total number of Dialysis Station">'+
+										'<small style="color:red">*Total number of Dialysis Station</small>'+
 									'</div>'+
 								'</div>'
 							);

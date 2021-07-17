@@ -7436,8 +7436,9 @@ use FunctionsClientController;
 		{
 			try 
 			{
+				$Cur_useData = AjaxController::getCurrentUserAllData();
 				$data = AjaxController::getAllApplicantsProcessFlow();
-				return view('employee.processflow.pfapproval', ['BigData'=>$data]);
+				return view('employee.processflow.pfapproval', ['BigData'=>$data,'uilastname'=> $Cur_useData['lastname'],'uiposition'=> $Cur_useData['position'],'uirgnid'=> $Cur_useData['rgnid'] ]);
 			} 
 			catch (Exception $e) 
 			{

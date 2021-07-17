@@ -162,19 +162,35 @@
 						</tr>
 					</thead>
 					<tbody>
-						@if(count($appDet[1]) > 0) @foreach($appDet[1] AS $each)
+						@if(count($appDet[1]) > 0) 
+						@php
+						$total = 0;
+						@endphp
+						@foreach($appDet[1] AS $each)
 							@if($each->m04ID_FK == null)
+							@php
+								$total += $each->amount;
+							@endphp
+
 							<tr>
 								<td>{{date("F j, Y", strtotime($each->t_date))}}</td>
 								<td>{{$each->reference}}</td>
 								<td>&#8369;&nbsp;{{number_format($each->amount, 2)}}</td>
 							</tr>
 							@endif
-						@endforeach @else
+
+						@endforeach
+						<tr>
+							<td></td>
+							<td><b>Total</b></td>
+							<td>&#8369;&nbsp;{{number_format($total, 2)}}</td>
+						</tr>
+						 @else
 						<tr>
 							<td colspan="3">No charge(s).</td>
 						</tr>
 						@endif
+
 					</tbody>
 				</table><br><br><br>
 				@if(!$Notfinal)

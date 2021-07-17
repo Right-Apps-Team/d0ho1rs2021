@@ -1,6 +1,11 @@
 <script>
    
-
+   @if(app('request')->input('cont') == 'yes')
+  
+        setTimeout(function(){ 
+       document.getElementById("type0").checked = true
+        }, 1000);
+    @endif
     
     
     var ghgpid = document.getElementsByName('hgpid')
@@ -13,6 +18,7 @@
     // console.log(mservfac)
 
     createDefaultsNew()
+    
 
     function createDefaultsNew(){
         if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
@@ -215,8 +221,10 @@ console.log(arr)
                                
                                return {
                                 chg_desc: chg_desc,
-                               amt: subclass == "ND" ? 0 :  arr.find(s =>
-                                       s.chg_desc === chg_desc).amt,
+                               amt: arr.find(s =>
+                                       s.chg_desc === chg_desc).amt, 
+                            //  amt: subclass == "ND" ? 0 :  arr.find(s =>
+                            //            s.chg_desc === chg_desc).amt,
                                chgapp_id: arr.find(s =>
                                        s.chg_desc === chg_desc).chgapp_id
                        }
@@ -230,7 +238,8 @@ console.log(arr)
                         for (let i = 0; i < distinctArr.length; i++) {
                             
                             ta.push({reference : distinctArr[i]['chg_desc'],amount: distinctArr[i]['amt'], chgapp_id:  distinctArr[i]['chgapp_id'] }) //appcharge
-                            not_serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['chg_desc'] + '</td><td>&#8369;&nbsp;<span>' + numberWithCommas(subclass == "ND" ? 0 : (parseInt(distinctArr[i]['amt'])).toFixed(2)) + '</span></td></tr>';
+                            not_serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['chg_desc'] + '</td><td>&#8369;&nbsp;<span>' + numberWithCommas( (parseInt(distinctArr[i]['amt'])).toFixed(2)) + '</span></td></tr>';
+                            // not_serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['chg_desc'] + '</td><td>&#8369;&nbsp;<span>' + numberWithCommas(subclass == "ND" ? 0 : (parseInt(distinctArr[i]['amt'])).toFixed(2)) + '</span></td></tr>';
                             // not_serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['chg_desc'] + '</td><td>&#8369;&nbsp;<span>' + numberWithCommas((parseInt(distinctArr[i]['amt'])).toFixed(2)) + '</span></td></tr>';
                         }
                     } else {
@@ -282,7 +291,11 @@ console.log(arr)
             document.getElementById("incstationfrom").value = null;
             document.getElementById("incstationto").value = null;
             document.getElementById("ltonum").value = null;
+
+            var chcoa =  document.getElementById("coanum");
+            if(chcoa){
             document.getElementById("coanum").value = null;
+            }
         }
     }
 
@@ -379,7 +392,8 @@ console.log(arr)
                                
                                             return {
                                             facname: facname,
-                                            amt: subclass == "ND" ? 0 :  arr.find(s =>
+                                            amt: arr.find(s =>
+                                            // amt: subclass == "ND" ? 0 :  arr.find(s =>
                                             // amt: owns == "G" ? 0 :  arr.find(s =>
                                                     s.facname === facname).amt,
                                             chgapp_id: arr.find(s =>
@@ -394,7 +408,8 @@ console.log(arr)
                                                 serv_chg.innerHTML = '';
                                                 for (let i = 0; i < distinctArr.length; i++) {
                                                     ta.push({reference : distinctArr[i]['facname'],amount: distinctArr[i]['amt'], chgapp_id:  distinctArr[i]['chgapp_id'] }) //appcharge
-                                                    serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['facname'] + '</td><td>&#8369;&nbsp;<span>' + numberWithCommas(subclass == "ND" ? 0 : (parseInt(distinctArr[i]['amt'])).toFixed(2)) + '</span></td></tr>';
+                                                    serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['facname'] + '</td><td>&#8369;&nbsp;<span>' + numberWithCommas((parseInt(distinctArr[i]['amt'])).toFixed(2)) + '</span></td></tr>';
+                                                    // serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['facname'] + '</td><td>&#8369;&nbsp;<span>' + numberWithCommas(subclass == "ND" ? 0 : (parseInt(distinctArr[i]['amt'])).toFixed(2)) + '</span></td></tr>';
                                                
                                                         // serv_chg.innerHTML += '<tr><td>' + distinctArr[i]['facname'] + '</td><td>&#8369;&nbsp;<span>' + numberWithCommas((parseInt(distinctArr[i]['amt'])).toFixed(2)) + '</span></td></tr>';
 
@@ -453,5 +468,8 @@ window.addEventListener('change', function(e) {
             }, 1000);
         }
     });
+
+
+   
 
 </script>

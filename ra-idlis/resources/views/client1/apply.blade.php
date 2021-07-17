@@ -201,10 +201,12 @@
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Permit to Construct Details</a>
 									    @if($_percentage == "success")@endif
 									    </div>
+										@if($each[0]->savingStat == "final")
 									    <div class="dropdown-divider"></div>
 									    <div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/attachment')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Attachments</a>
 									    </div>
+										@endif
 									
 									
 										@if($each[0]->isRecommended)
@@ -220,11 +222,13 @@
 									
 										<div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Certificate of Need Details</a>
-									    </div>									    
+									    </div>	
+										@if($each[0]->savingStat == "final")
 									    <div class="dropdown-divider"></div>
 									    <div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/attachment')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Attachments</a>
 									    </div>	
+										@endif
 										@if($each[0]->isRecommended)
 										<div class="dropdown-divider"></div>
 										<div style="margin-left: 10px;margin-right: 10px;">
@@ -256,11 +260,13 @@
 									@case('COA')
 										<div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Continue Application</a>
-									    </div>									    
+									    </div>	
+										@if($each[0]->savingStat == "final")
 									    <div class="dropdown-divider"></div>
 									    <div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/attachment')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Attachments</a>
 									    </div>	
+										@endif
 									    <div class="dropdown-divider"></div>
 									    <div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/assessmentReady/')}}/{{$each[0]->appid}}/">Self Assessment</a>
@@ -273,12 +279,13 @@
 									@case('COR')
 										<div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Continue Application</a>
-									    </div>									    
+									    </div>	
+										@if($each[0]->savingStat == "final")								    
 									    <div class="dropdown-divider"></div>
 									    <div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/attachment')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Attachments</a>
 									    </div>
-
+										@endif
 										@if($each[0]->isRecommended)
 										<div class="dropdown-divider"></div>
 										<div style="margin-left: 10px;margin-right: 10px;">
@@ -290,12 +297,13 @@
 									@case('ATO')
 										<div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Continue Application</a>
-									    </div>									    
+									    </div>		
+										@if($each[0]->savingStat == "final")							    
 									    <div class="dropdown-divider"></div>
 									    <div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/attachment')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Attachments</a>
 									    </div>
-
+										@endif
 										@if($each[0]->isRecommended)
 										<div class="dropdown-divider"></div>		
 										<div style="margin-left: 10px;margin-right: 10px;">
@@ -307,11 +315,13 @@
 									@default
 										<div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Continue Application</a>
-									    </div>									    
+									    </div>	
+										@if($each[0]->savingStat == "final")
 									    <div class="dropdown-divider"></div>
 									    <div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/attachment')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Attachments</a>
 									    </div>	
+										@endif
 										@if($each[0]->isRecommended)
 										<div class="dropdown-divider"></div>
 										<div style="margin-left: 10px;margin-right: 10px;">

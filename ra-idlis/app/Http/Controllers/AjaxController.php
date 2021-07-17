@@ -31,6 +31,7 @@
 			        $employeeData = session('employee_login');
 					$uname  = $employeeData->uid;
 					$data['time'] = $timeNow;
+					$data['lastname'] = $employeeData->lname;
 					$data['date'] = $dateNow;
 					$data['ip'] = $ip;
 					$data['cur_user'] = $uname;
@@ -3986,7 +3987,8 @@
 							->leftJoin('ownership', 'appform.ocid', '=', 'ownership.ocid')
 							->leftJoin('class', 'appform.classid', '=', 'class.classid')
 							->leftJoin('trans_status', 'appform.status', '=', 'trans_status.trns_id')
-							->select('appform.*', 'hfaci_serv_type.*','region.rgn_desc', 'x08.authorizedsignature', 'x08.email', 'x08.streetname', 'x08.barangay', 'x08.city_muni', 'x08.province', 'x08.zipcode', 'x08.rgnid as aprgnid', 'appform.rgnid', 'hfaci_grp.hgpdesc', 'city_muni.cmname', 'apptype.aptdesc', 'province.provname', 'barangay.brgyname', 'ownership.ocdesc', 'class.classname', 'trans_status.trns_desc', 'x08.uid')
+							->leftjoin('ptc','ptc.appid','appform.appid')
+							->select('appform.*', 'hfaci_serv_type.*', 'ptc.propbedcap as pbedcap','region.rgn_desc', 'x08.authorizedsignature', 'x08.email', 'x08.streetname', 'x08.barangay', 'x08.city_muni', 'x08.province', 'x08.zipcode', 'x08.rgnid as aprgnid', 'appform.rgnid', 'hfaci_grp.hgpdesc', 'city_muni.cmname', 'apptype.aptdesc', 'province.provname', 'barangay.brgyname', 'ownership.ocdesc', 'class.classname', 'trans_status.trns_desc', 'x08.uid')
 							->where('appform.draft', '=', null)
 							// ->where('appform.assignedRgn', '=', $Cur_useData['rgnid'])
 							->orderBy('appform.appid','desc')
@@ -4005,7 +4007,8 @@
 							->leftJoin('ownership', 'appform.ocid', '=', 'ownership.ocid')
 							->leftJoin('class', 'appform.classid', '=', 'class.classid')
 							->leftJoin('trans_status', 'appform.FDAstatus', '=', 'trans_status.trns_id')
-							->select('appform.*', 'hfaci_serv_type.*','region.rgn_desc', 'x08.authorizedsignature', 'x08.email', 'x08.streetname', 'x08.barangay', 'x08.city_muni', 'x08.province', 'x08.zipcode', 'x08.rgnid as aprgnid', 'appform.rgnid', 'hfaci_grp.hgpdesc', 'city_muni.cmname', 'apptype.aptdesc', 'province.provname', 'barangay.brgyname', 'ownership.ocdesc', 'class.classname', 'trans_status.trns_desc', 'x08.uid')
+							->leftjoin('ptc','ptc.appid','appform.appid')
+							->select('appform.*', 'hfaci_serv_type.*', 'ptc.propbedcap as pbedcap','region.rgn_desc', 'x08.authorizedsignature', 'x08.email', 'x08.streetname', 'x08.barangay', 'x08.city_muni', 'x08.province', 'x08.zipcode', 'x08.rgnid as aprgnid', 'appform.rgnid', 'hfaci_grp.hgpdesc', 'city_muni.cmname', 'apptype.aptdesc', 'province.provname', 'barangay.brgyname', 'ownership.ocdesc', 'class.classname', 'trans_status.trns_desc', 'x08.uid')
 							// ->where([
 							// 	['appform.status','A'],
 							// 	['appform.hfser_id','LTO'],
@@ -4029,7 +4032,8 @@
 							->leftJoin('ownership', 'appform.ocid', '=', 'ownership.ocid')
 							->leftJoin('class', 'appform.classid', '=', 'class.classid')
 							->leftJoin('trans_status', 'appform.status', '=', 'trans_status.trns_id')
-							->select('appform.*', 'hfaci_serv_type.*','region.rgn_desc', 'x08.authorizedsignature', 'x08.email', 'x08.streetname', 'x08.barangay', 'x08.city_muni', 'x08.province', 'x08.zipcode', 'x08.rgnid as aprgnid', 'appform.rgnid', 'hfaci_grp.hgpdesc', 'city_muni.cmname', 'apptype.aptdesc', 'province.provname', 'barangay.brgyname', 'ownership.ocdesc', 'class.classname', 'trans_status.trns_desc', 'x08.uid')
+							->leftjoin('ptc','ptc.appid','appform.appid')
+							->select('appform.*', 'hfaci_serv_type.*', 'ptc.propbedcap as pbedcap','region.rgn_desc', 'x08.authorizedsignature', 'x08.email', 'x08.streetname', 'x08.barangay', 'x08.city_muni', 'x08.province', 'x08.zipcode', 'x08.rgnid as aprgnid', 'appform.rgnid', 'hfaci_grp.hgpdesc', 'city_muni.cmname', 'apptype.aptdesc', 'province.provname', 'barangay.brgyname', 'ownership.ocdesc', 'class.classname', 'trans_status.trns_desc', 'x08.uid')
 							// ->where('appform.assignedLO', '=', $Cur_useData['cur_user'])
 							->where('appform.assignedRgn', '=', $Cur_useData['rgnid']) //bring back after
 							->orderBy('appform.appid','desc')
@@ -4049,8 +4053,9 @@
 							->leftJoin('class', 'appform.classid', '=', 'class.classid')
 							->leftJoin('trans_status', 'appform.status', '=', 'trans_status.trns_id')
 							->leftjoin('hferc_evaluation','hferc_evaluation.appid','appform.appid')
-							->join('hferc_team', 'appform.appid', '=', 'hferc_team.appid')
-							->select('appform.*', 'hfaci_serv_type.*','region.rgn_desc', 'x08.authorizedsignature', 'x08.email', 'x08.streetname', 'x08.barangay', 'x08.city_muni', 'x08.province', 'x08.zipcode', 'x08.rgnid as aprgnid', 'appform.rgnid', 'hfaci_grp.hgpdesc', 'city_muni.cmname', 'apptype.aptdesc', 'province.provname', 'barangay.brgyname', 'ownership.ocdesc', 'class.classname', 'trans_status.trns_desc', 'x08.uid')
+							->leftjoin('ptc','ptc.appid','appform.appid')
+							->join('hferc_team', 'appform.appid', '=', 'appform.appid')
+							->select('appform.*', 'hfaci_serv_type.*', 'ptc.propbedcap as pbedcap','region.rgn_desc', 'x08.authorizedsignature', 'x08.email', 'x08.streetname', 'x08.barangay', 'x08.city_muni', 'x08.province', 'x08.zipcode', 'x08.rgnid as aprgnid', 'appform.rgnid', 'hfaci_grp.hgpdesc', 'city_muni.cmname', 'apptype.aptdesc', 'province.provname', 'barangay.brgyname', 'ownership.ocdesc', 'class.classname', 'trans_status.trns_desc', 'x08.uid')
 							->orderBy('appform.appid','desc')
 							->distinct()
 							->get();
@@ -4068,7 +4073,8 @@
 							$anotherData->leftJoin('ownership', 'appform.ocid', '=', 'ownership.ocid');
 							$anotherData->leftJoin('class', 'appform.classid', '=', 'class.classid');
 							$anotherData->leftJoin('trans_status', 'appform.status', '=', 'trans_status.trns_id');
-							$anotherData->select('appform.*', 'hfaci_serv_type.*','region.rgn_desc', 'x08.authorizedsignature', 'x08.email', 'x08.streetname', 'x08.barangay', 'x08.city_muni', 'x08.province', 'x08.zipcode', 'x08.rgnid as aprgnid', 'appform.rgnid', 'hfaci_grp.hgpdesc', 'city_muni.cmname', 'apptype.aptdesc', 'province.provname', 'barangay.brgyname', 'ownership.ocdesc', 'class.classname', 'trans_status.trns_desc', 'x08.uid');
+							$anotherData->leftjoin('ptc','ptc.appid','appform.appid');
+							$anotherData->select('appform.*', 'ptc.propbedcap as pbedcap', 'hfaci_serv_type.*','region.rgn_desc', 'x08.authorizedsignature', 'x08.email', 'x08.streetname', 'x08.barangay', 'x08.city_muni', 'x08.province', 'x08.zipcode', 'x08.rgnid as aprgnid', 'appform.rgnid', 'hfaci_grp.hgpdesc', 'city_muni.cmname', 'apptype.aptdesc', 'province.provname', 'barangay.brgyname', 'ownership.ocdesc', 'class.classname', 'trans_status.trns_desc', 'x08.uid');
 							
 							if($Cur_useData['rgnid']){
 								$anotherData->where('appform.assignedRgn', '=', $Cur_useData['rgnid']); //bring back after

@@ -52,6 +52,8 @@
         var approvingauthority ='{!!((count($fAddress) > 0) ? $fAddress[0]->approvingauthority: "")!!}'; 
         var hfep ='{!!((count($fAddress) > 0) ? $fAddress[0]->hfep_funded: "")!!}';
 
+        console.log("classid")
+        console.log(classid)
 
         // setTimeout(function(){  
   var ocidInpt = document.getElementById("ocid");
@@ -64,7 +66,7 @@ if(ocid){
         fetchClassification1()
      }, 1000);
 
-     setTimeout(function(){ 
+    setTimeout(function(){ 
 
         document.getElementById("classification").value=classid;
         // document.getElementById("subclass").value=subclassid;
@@ -154,7 +156,7 @@ const fetchSubClass1 = async (e) => {
         }, 2000);
 
         document.getElementsByName('funcid')[0].value = funcid;
-        document.getElementById("connumber").value = con_number;
+       
         document.getElementById("facmode").value = facmode;
         document.getElementById("owner").value = owner;
         document.getElementById("prop_mobile").value = ownerMobile;
@@ -164,6 +166,11 @@ const fetchSubClass1 = async (e) => {
         document.getElementById("approving_authority_pos").value = approvingauthoritypos;
         document.getElementById("approving_authority_name").value = approvingauthority;
 
+        var checcon = document.getElementById("connumber");
+
+        if(checcon){
+        document.getElementById("connumber").value = con_number;
+        }
 
         var ocidInpt = document.getElementById("ocid");
         ocidInpt.value = ocid;

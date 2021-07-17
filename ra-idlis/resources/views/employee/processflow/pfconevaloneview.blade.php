@@ -459,7 +459,11 @@
     		<u>To <strong>{{($appdata->concommittee_eval == 1 ? 'GRANT' : 'DISAPPROVE')}}</strong> the Certificate of Need to <strong>{{ucwords($appdata->facilityname)}}</strong></u>
     	</div>
        </div>
-
+       <div class="container-fluid mt-1 mb-2">
+        With Approved bed capacity of:
+        <input type="text" style="width: 30%;" disabled value="{{$evalRes->ubn}}" class="form-control" name="ubnval">
+      </div>
+       
        <div class="container-fluid table-responsive border mb-3 pt-3">
       	<p class="font-weight-bold lead pt-2">
         	Committee Members:

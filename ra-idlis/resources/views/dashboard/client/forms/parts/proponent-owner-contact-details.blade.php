@@ -2,7 +2,7 @@
 <div class="col-md-12"><b class="text-primary">Proponent/Owner Contact Details</b></div>
 <div class="col-md-4">
     <label for="prop_mobile">Proponent/Owner Mobile No. 
-    <!-- <span class="text-danger">*</span> -->
+    <span class="text-danger">*</span>
     </label>
     <input 
         type="text" 

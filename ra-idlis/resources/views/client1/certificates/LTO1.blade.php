@@ -30,6 +30,16 @@
 			z-index: 0;
 			-webkit-print-color-adjust: exact;
 		}
+		.heading { font-family: "Arial Unicode MS", "Lucida Sans Unicode", "DejaVu Sans", "Quivira", "Symbola", "Code2000", ;
+			 font-size: 60px;}
+		.auth { font-family: "Arial Unicode MS", "Lucida Sans Unicode", "DejaVu Sans", "Quivira", "Symbola", "Code2000", ;
+			 font-size: 18px;}
+	    .director { font-family: "Arial Unicode MS", "Lucida Sans Unicode", "DejaVu Sans", "Quivira", "Symbola", "Code2000", ;
+			 font-size: 21px;}
+		.pos { font-family: "Arial Unicode MS", "Lucida Sans Unicode", "DejaVu Sans", "Quivira", "Symbola", "Code2000", ;
+			 font-size: 20px;}
+		.contl {font-family: Century Gothic; font-size: 18px}
+		.contr {font-family: Century Gothic; font-size: 20px}
 	</style>
 	<div class="container mt-5">
 		<div class="card">
@@ -51,56 +61,57 @@
 					</div>
 				</div>
 			</div>
-			<div class="card-body watermarked">
+			<div class="card-body " style="width: 100%;">
+			<div class="watermarked">
 				<br>
-				<span class="card-title text-center" style="font-family: ArialUnicodeMs;font-size: 42pt"><center><strong>LICENSE TO OPERATE</strong></center></span><br>
-				<br>
-				<br>
+				<span class="  heading" ><center><strong>LICENSE TO OPERATE</strong></center></span><br>
+				<!-- <span class="card-title text-center" style="font-family: ArialUnicodeMs;font-size: 42pt"><center><strong>LICENSE TO OPERATE</strong></center></span><br> -->
+				
 				<div class="row">	
-					<div class="col-md-2" style="">&nbsp;</div>
-					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+						<div class="col-md-1"  >&nbsp;</div>
+					<div class="col-md-4 contl" >
 						Owner
 					</div>
 					<div class="col-md-1" style="display: inline">
 						:
 					</div>
-					<div class="col-md-6" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
+					<div class="col-md-6 contr" style="float:left;display: inline;">
 						{{((isset($retTable[0]->owner)) ? $retTable[0]->owner : "CURRENT_OWNER")}}
 					</div>	
 				</div>
 				{{-- <div class="row">
-					<div class="col-md-2" style="">&nbsp;</div>
-					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+						<div class="col-md-1"  >&nbsp;</div>
+					<div class="col-md-4 contl" >
 						Operated/Managed <br>
 						   by (if applicable)
 					</div>
 					<div class="col-md-1" style="display: inline">
 						<br><center>:</center></div>
-					<div class="col-md-6" style="float:left;display: inline;font-family: Century Gothic; font-size: 13">
+					<div class="col-md-6 contr" style="float:left;display: inline;">
 						&nbsp;
 					</div>
 				</div> --}}
 				<div class="row">
-					<div class="col-md-2" style="">&nbsp;</div>
-					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+						<div class="col-md-1"  >&nbsp;</div>
+					<div class="col-md-4 contl" >
 						Name of Facility
 					</div>
 					<div class="col-md-1" style="display: inline">
 						:</div>
-					<div class="col-md-5" style="float:left;display: inline;font-family: Century Gothic; font-size: 13">
+					<div class="col-md-5 contr" style="float:left;display: inline;">
 						<strong>{{((isset($retTable[0]->facilityname)) ? $retTable[0]->facilityname : "CURRENT_FACILITY")}}</strong>
 					</div>
 					<div class="col-md-1" style="display: inline">
 						&nbsp;</div>
 				</div>
 				<div class="row">
-					<div class="col-md-2" style="">&nbsp;</div>
-					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+						<div class="col-md-1"  >&nbsp;</div>
+					<div class="col-md-4 contl">
 						Type of Health Facility
 					</div>
 					<div class="col-md-1" style="display: inline">
 						:</div>
-					<div class="col-md-5" style="float:left;display: inline;font-family: Century Gothic; font-size: 13">
+					<div class="col-md-5 contr" style="float:left;display: inline;">
 						{{((isset($facname)) ? $facname : "No Health Service")}}
 						<!-- {{((isset($facilityTypeId)) ? $facilityTypeId : "No Health Service")}} -->
 					</div>
@@ -108,39 +119,49 @@
 						&nbsp;</div>
 				</div>
 				<div class="row">
-					<div class="col-md-2" style="">&nbsp;</div>
-					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+						<div class="col-md-1"  >&nbsp;</div>
+					<div class="col-md-4 contl">
 						Service Capabilities
 					</div>
 					<div class="col-md-1" style="display: inline">
 						:</div>
-					<div class="col-md-5" style="float:left;display: inline;font-family: Century Gothic; font-size: 13">
-						{{((isset($services->facname)) ? $services->facname : "No Health Service")}}
+					<div class="col-md-5 contr" style="float:left;display: inline;">
+					<script>
+						
+						</script>
+						{{--((isset($services->facname)) ? $services->facname : "No Health Service")--}}
+
+						@php
+						$str = $newservices;
+						$pattern = '/hospital/i';
+						
+						@endphp
+						{{  preg_replace($pattern, ' ', $str) }}
 					</div>
 					<div class="col-md-1" style="display: inline">
 						&nbsp;</div>
 				</div>
 				<div class="row">
-					<div class="col-md-2" style="">&nbsp;</div>
-					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+						<div class="col-md-1"  >&nbsp;</div>
+					<div class="col-md-4 contl" >
 						Classification
 					</div>
 					<div class="col-md-1" style="display: inline">
 						:</div>
-					<div class="col-md-5" style="float:left;display: inline;font-family: Century Gothic; font-size: 13">
+					<div class="col-md-5 contr" style="float:left;display: inline;">
 						{{((isset($retTable[0]->classname)) ? $retTable[0]->classname : "NOT DEFINED")}}
 					</div>
 					<div class="col-md-1" style="display: inline">
 						&nbsp;</div>
 				</div>
 				<div class="row">
-					<div class="col-md-2" style="">&nbsp;</div>
-					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+						<div class="col-md-1"  >&nbsp;</div>
+					<div class="col-md-4 contl" >
 						Location
 					</div>
 					<div class="col-md-1" style="display: inline">
 						:</div>
-					<div class="col-md-5" style="float:left;display: inline;font-family: Century Gothic; font-size: 13">
+					<div class="col-md-5 contr" style="float:left;display: inline;">
 					{{((isset($retTable[0])) ? ($retTable[0]->street_name.', '.$retTable[0]->street_number.', '.$retTable[0]->brgyname.', '.$retTable[0]->cmname.', '.$retTable[0]->provname.' '.$retTable[0]->rgn_desc) : 'No Location.')}}
 						<!-- {{ucwords(((isset($retTable[0])) ? ($retTable[0]->rgn_desc.', '.$retTable[0]->provname.', '.$retTable[0]->cmname.', '.$retTable[0]->brgyname.', '. $retTable[0]->street_number. $retTable[0]->street_name.' '.$retTable[0]->street_number) : "CURRENT_LOCATION"))}} -->
 					</div>
@@ -149,13 +170,13 @@
 				</div>
 				@isset($retTable[0]->facmdesc)
 				{{-- <div class="row">
-					<div class="col-md-2" style="">&nbsp;</div>
-					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+						<div class="col-md-1"  >&nbsp;</div>
+					<div class="col-md-4 contl" >
 						Institutional Character
 					</div>
 					<div class="col-md-1" style="display: inline;float: left">
 						:</div>
-					<div class="col-md-5" style="float:left;display: inline;font-family: Century Gothic; font-size: 13">
+					<div class="col-md-5 contr" style="float:left;display: inline;">
 						<strong>{{((isset($retTable[0]->facmdesc)) ? $retTable[0]->facmdesc : "CURRENT_FACILITY")}}</strong>
 					</div>
 					<div class="col-md-1" style="display: inline">
@@ -166,67 +187,121 @@
 				
 				@if(isset($otherDetails[1]) && $otherDetails[1])
 				<div class="row">
-					<div class="col-md-2" style="">&nbsp;</div>
-					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+						<div class="col-md-1"  >&nbsp;</div>
+					<div class="col-md-4 contl" >
 						Authorized Bed Capacity
 					</div>
 					<div class="col-md-1" style="display: inline;float: left">
 						:</div>
-					<div class="col-md-5" style="float:left;display: inline;font-family: Century Gothic; font-size: 13">
-						<strong>{{((isset($otherDetails[0]->noofbed)) ? $otherDetails[0]->noofbed : "CURRENT_FACILITY")}}</strong>
+					<div class="col-md-5 contr" style="float:left;display: inline;">
+						<strong>{{((isset($otherDetails[0]->noofbed)) ? $otherDetails[0]->noofbed : "NA")}}</strong>
+					</div>
+					<div class="col-md-1" style="display: inline">
+						&nbsp;</div>
+				</div>
+				<div class="row">
+						<div class="col-md-1"  >&nbsp;</div>
+					<div class="col-md-4 contl" >
+						Authorized Dialysis Station
+					</div>
+					<div class="col-md-1" style="display: inline;float: left">
+						:</div>
+					<div class="col-md-5 contr" style="float:left;display: inline;">
+					
+						<strong>{{((isset($retTable[0]->noofstation)) ? $retTable[0]->noofstation : "NA")}}</strong>
 					</div>
 					<div class="col-md-1" style="display: inline">
 						&nbsp;</div>
 				</div>
 				@endif
 
-				{{-- <div class="row">
-					<div class="col-md-2" style="">&nbsp;</div>
-					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
-						Authorized Ambulance Units
+				 <div class="row">
+						<div class="col-md-1"  >&nbsp;</div>
+					<div class="col-md-4 contl" >
+						Authorized Ambulance Unit
 					</div>
 					<div class="col-md-1" style="display: inline;float: left">
 						:</div>
-					<div class="col-md-5" style="float:left;display: inline;font-family: Century Gothic; font-size: 13">
-						@if(isset($retTable[0]->plate_number) && isset($retTable[0]->ambtyp))
+					<div class="col-md-5 contr" style="float:left;display: inline;">
+					{{--foreach($amb as $ambServ => $val){
+									if($ambServ == 1){
+										echo '1, '.$val . ' ' . $ambServ;
+									}
+								}--}}
+					
+					@if(isset($retTable[0]->plate_number) && isset($retTable[0]->ambtyp))
 						@php
+							$type = json_decode($retTable[0]->typeamb);
 							$ambType = json_decode($retTable[0]->ambtyp);
 							$plateNum = json_decode($retTable[0]->plate_number);
 							if(count($ambType) == count($plateNum)){
 								$amb = array_combine($ambType, $plateNum);
-								foreach($amb as $ambServ => $val){
-									if($ambServ == 1){
-										echo '1, '.$val . ' ' . $ambServ;
+
+								$ambType = array($ambType);
+								
+
+								$i=0;
+								foreach($ambType as $atval){
+								
+									if($atval[$i] == 1){
+										$a = 0;
+
+										foreach($type as $tp){
+
+											if($a == $i){
+												$v = 0;
+												foreach($plateNum as $pn){
+													if($i == $v){
+														echo ((int)$i + 1).', Type '. $tp[$a].' ,Plate No. ' .  $pn;
+													}
+												$v++;
+												}
+											}
+
+											$a++;
+										}
+
+										$i++;
+
 									}
+
 								}
+								
+
 							}
+
+							
 						@endphp
+
+						<script> 
+							console.log('{{$retTable[0]->ambtyp}}')
+							</script>
 						@endif
 					</div>
 					<div class="col-md-1" style="display: inline">
 						&nbsp;</div>
-				</div>	 --}}
+				</div>	
 				<div class="row">
-					<div class="col-md-2" style="">&nbsp;</div>
-					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+						<div class="col-md-1"  >&nbsp;</div>
+					<div class="col-md-4 contl" >
 						License Number
 					</div>
 					<div class="col-md-1" style="display: inline;float: left">
 						:</div>
-					<div class="col-md-5" style="float:left;display: inline;font-family: Century Gothic; font-size: 13">
+					<div class="col-md-5 contr" style="float:left;display: inline;">
 						{{$retTable[0]->licenseNo}}
 					</div>
 					<div class="col-md-1" style="display: inline">
 						&nbsp;</div>
 				</div>
 				<div class="row">
-					<div class="col-md-2" style="">&nbsp;</div>
-					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+						<div class="col-md-1"  >&nbsp;</div>
+					<div class="col-md-4 contl" >
 						Validity of License
 					</div>
 					<div class="col-md-1" style="display: inline;float: left">
 						:</div>
-					<div class="col-md-5" style="float:left;display: inline;font-family: Century Gothic; font-size: 13">
+					<div class="col-md-5 contr" style="float:left;display: inline;">
 						@if(isset($otherDetails[0]) && isset($otherDetails[0]->valto))
 						{{Date('F j, Y',strtotime($otherDetails[0]->valfrom))}} - {{Date('F j, Y',strtotime($otherDetails[0]->valto))}}
 						@endif
@@ -237,7 +312,7 @@
 
 				{{-- @if($retTable[0]->noofsatellite > 0)
 					<div class="row">
-						<div class="col-md-2" style="">&nbsp;</div>
+							<div class="col-md-1"  >&nbsp;</div>
 						<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
 							FDA Status
 						</div>
@@ -251,13 +326,13 @@
 					</div>
 					@if($retTable[0]->FDAstatus == 'A' && isset($retTable[0]->fdacoc))
 					<div class="row">
-						<div class="col-md-2" style="">&nbsp;</div>
-						<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+							<div class="col-md-1"  >&nbsp;</div>
+						<div class="col-md-3" >
 							COC Number
 						</div>
 						<div class="col-md-1" style="display: inline;float: left">
 							:</div>
-						<div class="col-md-5" style="float:left;display: inline;font-family: Century Gothic; font-size: 13">
+						<div class="col-md-5" style="float:left;display: inline;">
 							{{$retTable[0]->fdacoc}}
 						</div>
 						<div class="col-md-1" style="display: inline">
@@ -267,14 +342,15 @@
 				@endif --}}
 					@if(count($addons) > 0)
 					<div class="row mt-3">
-						<div class="col-md-2" style="">&nbsp;</div>
-						<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+							<div class="col-md-1"  >&nbsp;</div>
+						<div class="col-md-4 contl" >
 							Other Services Offered
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-2" style="">&nbsp;</div>
-						<div class="col-md-3 pl-5 mt-3" style="font-family: Century Gothic; font-size: 11pt">
+							<div class="col-md-1"  >&nbsp;</div>
+						<div class="col-md-5 pl-5 mt-3 contr" >
+						<!-- <div class="col-md-3 pl-5 mt-3 contr" > -->
 							@foreach($addons as $add)
 								{{$add}}
 							@endforeach
@@ -294,19 +370,19 @@
 						<br><br><br>
 						<div class="row">
 							{{-- <div class="col-md-5">&nbsp;</div> --}}
-							<div class="col-md-12" style="font-family: ArialUnicodeMs; font-size:11pt;">
+							<div class="col-md-12 auth" >
 								<strong>By Authority of the Secretary of Health:</strong>
 							</div>
 						</div><br><br>
 						<div class="row">
 							{{-- <div class="col-md-4">&nbsp;</div> --}}
-							<div class="col-md-12" style="font-family: NewGothicCenturySchoolBook; font-size:23pt;">
+							<div class="col-md-12 director" >
 								<strong ><center>{{ucwords($director->directorInRegion)}}</center></strong>
 							</div>
 						</div>
 						<div class="row">
 							{{-- <div class="col-md-4">&nbsp;</div> --}}
-							<div class="col-md-12" style="font-family: NewGothicCenturySchoolBook; font-size:14pt;">
+							<div class="col-md-12 pos">
 								<center><b>{{$director->pos}}</b></center>
 							</div>
 						</div>
@@ -319,9 +395,13 @@
 				<p class="text-small text-center text-muted">Director IV</p> -->
 
 			</div>
+			</div>
 			<div class="card-footer">
 			
-			<center><i><b>This license is renewable annually and subject to suspension or revocation if the hospital is found violating RA 4226 and related
+			<center>
+			<b><hr/></b>
+				<br/>
+			<i><b style="font-family: Cambria, Georgia, serif; font-size: 18px">This license is renewable annually and subject to suspension or revocation if the hospital is found violating RA 4226 and related
 issuances.</b></i></center>
 <br/><br/>
 				<p class="text-muted text-small" style="float: right; padding: 0; margin: 0;">© All Rights Reserved {{date('Y')}}</p>

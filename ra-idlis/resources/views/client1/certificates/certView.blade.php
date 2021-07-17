@@ -101,6 +101,7 @@
 						{{((isset($servCap)) ? implode(', ',$servCap)  : "NOT DEFINED")}}
 					</div>	
 				</div>
+				
 				@if(strtolower($retTable[0]->hfser_id) == 'lto' && isset($retTable[0]->facmdesc))
 				<div class="row">	
 					<div class="col-md-2" style="">&nbsp;</div>
@@ -132,7 +133,8 @@
 				</div>
 				@endif
 
-				@if(strtolower($retTable[0]->hfser_id) == 'ptc' || strtolower($retTable[0]->hfser_id) == 'lto')
+				@if(strtolower($retTable[0]->hfser_id) == 'lto')
+			{{--	@if(strtolower($retTable[0]->hfser_id) == 'ptc' || strtolower($retTable[0]->hfser_id) == 'lto') --}}
 				<div class="row">	
 					<div class="col-md-2" style="">&nbsp;</div>
 					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
@@ -192,6 +194,58 @@
 					</div>
 					@endif
 					@endisset
+
+				@endif
+
+				@if(strtolower($retTable[0]->hfser_id) == 'con')
+					<div class="row">	
+						<div class="col-md-2" style="">&nbsp;</div>
+						<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+							Level of Hospital
+						</div>
+						<div class="col-md-1 hide-div">
+							<center>:</center>
+						</div>
+						<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
+						{{((isset($serviceId)) ? (str_replace(',', ', ', $serviceId)) : 'LEVEL_1')}}
+						</div>	
+					</div>
+					<div class="row">	
+						<div class="col-md-2" style="">&nbsp;</div>
+						<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+							Bed Capacity
+						</div>
+						<div class="col-md-1 hide-div">
+							<center>:</center>
+						</div>
+						<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
+						{{((isset($otherDetails->ubn)) ? abs($otherDetails->ubn) : (isset($retTable[0]->noofbed) ? abs($retTable[0]->noofbed) : 0) )}} Bed(s)
+						</div>	
+					</div>
+					<div class="row">	
+						<div class="col-md-2" style="">&nbsp;</div>
+						<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+							Date Issued
+						</div>
+						<div class="col-md-1 hide-div">
+							<center>:</center>
+						</div>
+						<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
+						{{((isset($retTable[0]->t_date)) ? date("F j, Y", strtotime($retTable[0]->t_date)) : 'DATE_ISSUED')}}
+						</div>	
+					</div>
+					<div class="row">	
+						<div class="col-md-2" style="">&nbsp;</div>
+						<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+							Validity Period
+						</div>
+						<div class="col-md-1 hide-div">
+							<center>:</center>
+						</div>
+						<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
+						{{((isset($retTable[0]->t_date)) ? date("F j, Y", strtotime($retTable[0]->t_date)) : 'DATE_ISSUED')}} to {{((isset($retTable[0]->t_date)) ? date("F j, Y", ((strtotime($retTable[0]->t_date)-(86400*2))+15552000)) : 'DATE_ISSUED')}}
+						</div>	
+					</div>
 
 				@endif
 			</div>

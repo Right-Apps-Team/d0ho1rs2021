@@ -41,7 +41,7 @@
 		      			@foreach($cdrrpersonnelnew as $personnel)
 		      			{{-- @foreach($cdrrpersonnel as $personnel) --}}
 							<tr>
-								<td>{{$personnel->name}}</td>
+								<td>{{ucwords($personnel->name) }}</td>
 								<td>{{$personnel->posname}}</td>
 							
 								{{-- <td>{{$personnel->pos}}</td> --}}

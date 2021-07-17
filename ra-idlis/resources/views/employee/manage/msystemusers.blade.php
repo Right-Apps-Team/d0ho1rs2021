@@ -2,6 +2,7 @@
   @extends('mainEmployee')
   @section('title', 'System Users - Manage')
   @section('content')
+
   <input type="text" id="CurrentPage" hidden="" value="MG002">
   <div class="content p-4">
       <div class="card">
@@ -522,6 +523,7 @@
       </div>
     </div>
   </div>
+ 
   <script type="text/javascript">
   	$(document).ready(function() {
            $('#example').DataTable({

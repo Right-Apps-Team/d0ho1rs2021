@@ -285,7 +285,8 @@
                                       <select name="uid" id="uidadd" class="form-control" required>
                                         @if(count($free) > 0)
                                           @foreach($free as $f)
-                                            <option value="{{$f->uid}}">{{$f->uid}} - {{ucfirst($f->fname.' '.$f->lname)}}</option>
+                                            <option value="{{$f->uid}}">{{$f->pre}}  {{ucfirst($f->fname.' '.$f->lname)}}</option>
+                                            <!-- <option value="{{$f->uid}}">{{$f->uid}} - {{ucfirst($f->fname.' '.$f->lname)}}</option> -->
                                           @endforeach
                                         @else
                                           <option value="">No Available Employee on this Region</option>

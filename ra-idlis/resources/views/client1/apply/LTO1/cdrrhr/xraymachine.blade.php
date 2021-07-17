@@ -106,7 +106,7 @@
 		                   		</div>
 		                   		<div class="row mb-2">
 		                   			<div class="col-sm">
-		                   				Brand Tube Head:
+		                   				Manufacturer Tube Housing:
 		                   			</div>
 		                   			<div class="col-sm-11">
 		                   				<input class="form-control w-100" name="brandTH">
@@ -114,7 +114,7 @@
 		                   		</div>
 		                   		<div class="row mb-2">
 		                   			<div class="col-sm">
-		                   				Brand Control Console:
+									   Manufacturer Control Console:
 		                   			</div>
 		                   			<div class="col-sm-11">
 		                   				<input class="form-control w-100" name="brandCC">
@@ -122,7 +122,7 @@
 		                   		</div>
 		                   		<div class="row mb-2">
 		                   			<div class="col-sm">
-		                   				Model Tube Head:
+		                   				Model Tube Housing:
 		                   			</div>
 		                   			<div class="col-sm-11">
 		                   				<input class="form-control w-100" name="modelTH">
@@ -138,7 +138,7 @@
 		                   		</div>
 		                   		<div class="row mb-2">
 		                   			<div class="col-sm required">
-		                   				Serial Tube Head:
+		                   				Serial Tube Housing:
 		                   			</div>
 		                   			<div class="col-sm-11">
 		                   				<input class="form-control w-100" name="serialTH" required="">

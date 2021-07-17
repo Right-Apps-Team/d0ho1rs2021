@@ -935,7 +935,9 @@ class NewClientController extends Controller {
 			if(count($x08_ft) > 0){
 				foreach($x08_ft as $table){
 					if(!in_array($table->facname, $arrayFaci)){
-						array_push($arrayFaci, $table->facname);
+						if($table->facid != 'AOASPT1' && $table->facid != 'AOASPT2'  ){
+							array_push($arrayFaci, $table->facname);
+						}
 					}
 				}
 			}
@@ -984,6 +986,20 @@ class NewClientController extends Controller {
 			// }
 			$rgn = FunctionsClientController::isFacilityFor($appid);
 			$hfser .= '1';
+
+			$check =  DB::table('x08_ft')
+			->join('facilitytyp','x08_ft.facid','facilitytyp.facid')
+			->join('hfaci_grp','facilitytyp.hgpid','hfaci_grp.hgpid')
+			->where([['x08_ft.appid',$appid],['facilitytyp.hgpid',6] ])
+			->whereNull('facilitytyp.specified')
+			->orderBy('x08_ft.id', 'ASC')
+			->first();
+
+			$servname = '';
+			if(!is_null($check)){
+				$servname = $check->facname;
+			}
+
 			$arrData = [
 				'facname'=>$facname,
 				'userInf'=>FunctionsClientController::getUserDetails(),
@@ -993,7 +1009,9 @@ class NewClientController extends Controller {
 				'facilityTypeId'=>$facilityTypeId, 
 				'serviceId'=>$serviceId,
 				'addons' => $arrayFaci,
+				'x08_ft' => $x08_ft,
 				'services' => AjaxController::getHighestApplicationFromX08FT($appid),
+				'newservices' => $servname,
 				'otherDetails' => $otherDetails,
 				'viewFor' => (session()->has('employee_login') && $viewFor == 'employee' ? 'employee' : 'client')
 			];
@@ -1021,6 +1039,7 @@ class NewClientController extends Controller {
 				}
 			}
 			$ptcdet=[];
+			$serviceId = null;
 			switch ($retTable[0]->hfser_id) {
 				case 'PTC':
 					$ptcdet = DB::table('ptc')->where([['appid',$appid]])->first();
@@ -1033,6 +1052,16 @@ class NewClientController extends Controller {
 
 				case 'CON':
 					$otherDetails = DB::table('con_evaluate')->where('appid',$appid)->first();
+
+					$serviceType = DB::select("SELECT facname FROM facilitytyp WHERE facilitytyp.facid IN (SELECT facid FROM x08_ft WHERE appid = '$appid')");
+					if(count($serviceType)) {
+						$impArr1 = [];
+						foreach($serviceType AS $serviceTypeRow) {
+							array_push($impArr1, $serviceTypeRow->facname);
+						}
+						$serviceId = implode(', ', $impArr1);
+					}
+
 					break;
 				
 				default:
@@ -1043,7 +1072,8 @@ class NewClientController extends Controller {
 				'retTable' => $retTable,
 				'servCap' => $arrayFaci,
 				'ptcdet' => $ptcdet,
-				'otherDetails' => $otherDetails
+				'otherDetails' => $otherDetails,
+				'serviceId'=>$serviceId
 			];
 			// dd($arrData['retTable'][0]->office);
 			return view('client1.certificates.certView', $arrData);
@@ -1627,7 +1657,7 @@ class NewClientController extends Controller {
 
 				$cdrrnew = DB::table('cdrrhrpersonnel')->join('hfsrbannexa', 'cdrrhrpersonnel.hfsrbannexaID', '=', 'hfsrbannexa.id')
 				->leftJoin('position','position.posid','hfsrbannexa.prof')
-				->select('cdrrhrpersonnel.*', 'position.posname')
+				->select('cdrrhrpersonnel.*', 'position.posname', 'hfsrbannexa.isMainRadio', 'hfsrbannexa.ismainpo', 'hfsrbannexa.isMainRadioPharma', 'hfsrbannexa.isChiefRadTech', 'hfsrbannexa.isXrayTech')
 				->where('cdrrhrpersonnel.appid',$appid)->get();
 
 				if(count($cdrrhr) > 0){
@@ -3631,32 +3661,34 @@ class NewClientController extends Controller {
 			$appform = DB::table('appform')->where('appid', $appid)->first();
 			$message = "No data";
 			if(!is_null($appform)){
-				if($appform->hfser_id == "CON"){
-					$retTable = DB::table('appform')->where('appid', $appid)->leftJoin('facmode', 'facmode.facmid', '=', 'appform.facmode')->leftJoin('region', 'region.rgnid', '=', 'appform.rgnid')->leftJoin('province', 'province.provid', '=', 'appform.provid')->leftJoin('city_muni', 'city_muni.cmid', '=', 'appform.cmid')->leftJoin('barangay', 'barangay.brgyid', '=', 'appform.brgyid')->select('appform.appid', 'appform.facilityname', 'appform.owner', 'appform.street_name', 'facmode.facmdesc', 'region.rgn_desc', 'province.provname', 'city_muni.cmname', 'barangay.brgyname', 'appform.hfser_id', 'appform.noofbed', 'appform.t_date')->first(); 
-					$coneval = DB::table('con_evaluate')->where('appid', $appid)->first(); 
+				// if($appform->hfser_id == "CON"){
+				// 	$retTable = DB::table('appform')->where('appid', $appid)->leftJoin('facmode', 'facmode.facmid', '=', 'appform.facmode')->leftJoin('region', 'region.rgnid', '=', 'appform.rgnid')->leftJoin('province', 'province.provid', '=', 'appform.provid')->leftJoin('city_muni', 'city_muni.cmid', '=', 'appform.cmid')->leftJoin('barangay', 'barangay.brgyid', '=', 'appform.brgyid')->select('appform.appid', 'appform.facilityname', 'appform.owner', 'appform.street_name', 'facmode.facmdesc', 'region.rgn_desc', 'province.provname', 'city_muni.cmname', 'barangay.brgyname', 'appform.hfser_id', 'appform.noofbed', 'appform.t_date')->first(); 
+				// 	$coneval = DB::table('con_evaluate')->where('appid', $appid)->first(); 
 					
-					$serviceType = DB::select("SELECT facname FROM facilitytyp WHERE facilitytyp.facid IN (SELECT facid FROM x08_ft WHERE appid = '$appid')");
+				// 	$serviceType = DB::select("SELECT facname FROM facilitytyp WHERE facilitytyp.facid IN (SELECT facid FROM x08_ft WHERE appid = '$appid')");
 					
-					if(count($serviceType)) {
-						$impArr1 = [];
-						foreach($serviceType AS $serviceTypeRow) {
-							array_push($impArr1, $serviceTypeRow->facname);
-						}
-						$serviceId = implode(', ', $impArr1);
-					}
+				// 	if(count($serviceType)) {
+				// 		$impArr1 = [];
+				// 		foreach($serviceType AS $serviceTypeRow) {
+				// 			array_push($impArr1, $serviceTypeRow->facname);
+				// 		}
+				// 		$serviceId = implode(', ', $impArr1);
+				// 	}
 
-					$message = 
-						"\nCON No. ". date('Y') . "-".str_pad(((isset($appid)) ? $appid : '_1'), 3, '0', STR_PAD_LEFT).
-						"\nFacility Name: ". $retTable->facilityname . " \n".
-						"Location: ". $retTable->rgn_desc. ", ". $retTable->provname. ", ". $retTable->cmname. ", ". $retTable->brgyname. ", ". $retTable->street_name . 
-						"\nLevel of Hospital: ". $serviceId.
-						"\nBed Capacity: ". abs($coneval->ubn). " Bed(s)".
-						"\nDate Issued: ". date("F j, Y", strtotime($retTable->t_date)).
-						"\nValidity Period: ". date("F j, Y", strtotime($retTable->t_date)). " to ". ((isset($retTable->t_date)) ? date("F j, Y", ((strtotime($retTable->t_date)-(86400*2))+15552000)) : 'Not Specified')
-					;
-				}else{
+				// 	$message = 
+				// 		"\nCON No. ". date('Y') . "-".str_pad(((isset($appid)) ? $appid : '_1'), 3, '0', STR_PAD_LEFT).
+				// 		"\nFacility Name: ". $retTable->facilityname . " \n".
+				// 		"Location: ". $retTable->rgn_desc. ", ". $retTable->provname. ", ". $retTable->cmname. ", ". $retTable->brgyname. ", ". $retTable->street_name . 
+				// 		"\nLevel of Hospital: ". $serviceId.
+				// 		"\nBed Capacity: ". abs($coneval->ubn). " Bed(s)".
+				// 		"\nDate Issued: ". date("F j, Y", strtotime($retTable->t_date)).
+				// 		"\nValidity Period: ". date("F j, Y", strtotime($retTable->t_date)). " to ". ((isset($retTable->t_date)) ? date("F j, Y", ((strtotime($retTable->t_date)-(86400*2))+15552000)) : 'Not Specified')
+				// 	;
+				// }else{
 					$message = url('client1/certificates/view/external/').'/'.$appid;
-				}
+				// }
+
+				
 			}
 
 

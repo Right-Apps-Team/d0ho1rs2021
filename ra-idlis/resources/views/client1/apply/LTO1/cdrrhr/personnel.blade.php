@@ -42,11 +42,30 @@
 		      		{{-- @foreach($cdrrhrpersonnel as $personnel) --}}	
 							<tr>
 								{{-- <td>{{$personnel->prefix . " " . $personnel->firstname . " " . $personnel->surname . " " . $personnel->suffix}}</td> --}}
-								<td>{{$personnel->name}}</td>
+								<td>{{ucwords($personnel->name)}}</td>
 								<td>{{$personnel->designation}}</td>
 								<td>{{$personnel->posname}}</td>
 								<td>{{$personnel->faciassign}}</td>
-								<td>{{$personnel->qualification}}</td>
+								<td>
+									@if($personnel->isMainRadio == 1)
+									Head of Radiology
+									@endif
+									@if($personnel->ismainpo == 1)
+									Radiation protection officer
+									@endif
+									@if($personnel->isMainRadioPharma == 1)
+										Head of Chief Pharmacist
+									@endif
+									@if($personnel->isXrayTech == 1)
+										Xray technologist
+									@endif
+									@if($personnel->isChiefRadTech == 1)
+									Chief Radiation Technologist
+									@endif
+
+									<!-- {{$personnel->qualification}} -->
+								
+								</td>
 								<td>{{$personnel->prcno}}</td>
 								<td>{{$personnel->validity}}</td>
 								<td class="text-center">
