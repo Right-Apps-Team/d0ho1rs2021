@@ -65,7 +65,7 @@
           @endif
           
           @if($isHead)
-            @if($canEval)
+            @if($canEval && EvaluationController::checkRev($appid,$revisionCountCurent))
               <div class="col-md-2">
                 <button class="btn btn-primary p-2" data-toggle="modal" data-target="#evaluate"><i class="fa fa-file"></i> Recommendation</button>
               </div>
@@ -82,7 +82,8 @@
             <button class="btn btn-primary p-2" onclick="window.location.href='{{asset('employee/dashboard/processflow/view/hfercevaluation/'.$AppData->appid.'/'.$revisionCountCurent)}}'" data-toggle="modal" data-target="#evaluate"><i class="fa fa-file"> </i> View Evaluation</button>
           </div> -->
      {{--   @if($isHead)--}}
-            @if($canEval && count($membDone) != 0)
+         {{--   @if($canEval && count($membDone) != 0) --}}
+            @if($canEval && count($membDone) != 0 && EvaluationController::checkRev($appid,$revisionCountCurent))
             <button class="btn btn-success p-2" data-backdrop="static" data-toggle="modal" data-target="#compareModal" onclick="onClickToIFrame()"><i class="fa fa-files-o" aria-hidden="true"></i> Compare Results </button>
        
             @endif
@@ -173,7 +174,9 @@
                         <i class="fa fa-ban" aria-hidden="true"></i>
                       </button>
                     @else
-                      {!!($members->permittedtoInspect > 0 && $members->hasInspected > 0 ? '<a href="'.asset('employee/dashboard/processflow/floorPlan/GenerateReportAssessments/'.$appid.'/'.$revisionCountCurent.'/'.$members->uid.'/').'" class="text-info"> <i class="fa fa-eye"> View Result</i></a>' : '<button type="button" title="Remove Permit to Inspect" class="btn btn-danger" onclick="promptPermit('.$members->hfercid.',2)">
+                    
+                   
+                      {!!($members->permittedtoInspect > 0 && $members->hasInspected > 0 && EvaluationController::checkuidRev($appid,$revisionCountCurent,$members->uid  ) ? '<a href="'.asset('employee/dashboard/processflow/floorPlan/GenerateReportAssessments/'.$appid.'/'.$revisionCountCurent.'/'.$members->uid.'/').'" class="text-info"> <i class="fa fa-eye"> View Result</i></a>' : '<button type="button" title="Remove Permit to Inspect" class="btn btn-danger" onclick="promptPermit('.$members->hfercid.',2)">
                         <i class=" fa fa-window-close"></i>
                       </button>')!!}
                     @endif

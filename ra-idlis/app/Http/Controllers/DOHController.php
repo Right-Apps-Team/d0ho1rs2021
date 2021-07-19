@@ -4593,6 +4593,7 @@ use FunctionsClientController;
 							// $evaluationResult = AjaxController::maxRevisionFor($appid, (isset($revision) ? ['revision',$revision] : []), 1);
 							$members = AjaxController::getMembersInHFERC($data->appid,$data->rgnid,2,(isset($evaluationResult->revision) ? $evaluationResult->revision : AjaxController::maxRevisionFor($appid)+1));
 							$notin = AjaxController::getMembersInHFERC($data->appid,$data->rgnid,1,(isset($evaluationResult->revision) ? $evaluationResult->revision : AjaxController::maxRevisionFor($appid)+1));
+							
 							if(count($members) > 0){
 								foreach ($members as $key) {
 									if($key->permittedtoInspect > 0 && $key->hasInspected > 0 && !isset($evaluationResult->HFERC_eval)){
@@ -7757,7 +7758,8 @@ use FunctionsClientController;
 			{
 				$this->setCertFDA($request, $appid, $reqType);
 
-				return redirect('client1/fdacertificate/'.$appid.'/'.$reqType);
+				return redirect('client1/fdacertificate/new/'.$appid.'/'.$reqType);
+				// return redirect('client1/fdacertificate/'.$appid.'/'.$reqType);
 
 			} 
 			catch (Exception $e) 

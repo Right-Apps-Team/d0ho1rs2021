@@ -101,7 +101,7 @@
         <div class="card-header bg-white font-weight-bold">
           @isset($APPID)<input type="text" id="APPID" value="{{$APPID}}" hidden>@endisset
           <input type="" id="token" value="{{ Session::token() }}" hidden>
-           Approval/Issuance Certificate 
+           Approval/Issuance Certificate
            <button class="btn btn-primary" onclick="window.history.back();">Back</button>
         </div>
         <div class="card-body">
@@ -739,7 +739,8 @@
                           @else
                           <div class="text-center text-success">
                             <i class="fa fa-check-circle" aria-hidden="true"> Already Issued Certificate</i><br>
-                            <a href="{{url('client1/fdacertificate/'.$AppData->appid.'/'.$request)}}" target="_blank">View Certificate</a>
+                            <a href="{{url('client1/fdacertificate/new/'.$AppData->appid.'/'.$request)}}" target="_blank">View Certificate</a>
+                            <!-- <a href="{{url('client1/fdacertificate/'.$AppData->appid.'/'.$request)}}" target="_blank">View Certificate</a> -->
                           </div>
                           @endif
 

@@ -4448,6 +4448,9 @@
 											'isReadyForInspec' => 0
 											// 'FDAStatMach' => 'Evaluated, but for Revision'
 										);
+
+
+
 					}
 					$userInf = DB::table('appform')->select('hfser_id','uid')->where('appid',$request->apid)->first();
 					$idForNotify = self::getNotificationIDfromCases($userInf->hfser_id,'eval',$updateData['isrecommended']);
@@ -4465,13 +4468,21 @@
 							'ispreassessedip'.$suffix =>$Cur_useData['ip'],
 							'FDAstatus' => $updateData['status']
 						);
+
+						$curappf = DB::table('appform')->where('appid',$request->apid)->first();
+
+
 						if($request->selected == 2){
 							$updateData['isReadyForInspecFDA'] = 0;
 
 							if(strtolower($request->requestFor) == 'pharma'){
 								$updateData['FDAStatPhar'] = "Evaluated, but for Revision";
+								$updateData['pharDocNeedRev'] = 1;
+								$updateData['pharDocRevcount'] = $curappf->pharDocRevcount + 1;
 							}else{
 								$updateData['FDAStatMach'] = "Evaluated, but for Revision";
+								$updateData['machDocNeedRev'] = 1;
+								$updateData['machDocRevcount'] = $curappf->machDocRevcount + 1;
 							}
 
 						}else{

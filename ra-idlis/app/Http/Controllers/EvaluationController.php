@@ -371,7 +371,45 @@ class EvaluationController extends Controller
 		
 	}
 
+	public static function checkuidRev ($appid, $revision, $uid){
+
+		$dataFromDB = DB::table('assessmentcombinedduplicateptc')
+		->where([['assessmentcombinedduplicateptc.appid',$appid],['evaluatedBy',$uid],['revision',$revision]])
+		->orderBy('assessmentSeq','ASC')->first();
+
+		$exist = true;
+
+		if(is_null($dataFromDB)){
+			$exist = false;
+		}
+
+		return $exist;
+
+
+
+	}
+
+	public static function checkRev ($appid, $revision){
+
+		$dataFromDB = DB::table('assessmentcombinedduplicateptc')
+		->where([['assessmentcombinedduplicateptc.appid',$appid],['revision',$revision]])
+		->orderBy('assessmentSeq','ASC')->first();
+
+		$exist = true;
+
+		if(is_null($dataFromDB)){
+			$exist = false;
+		}
+
+		return $exist;
+
+
+
+	}
+
+
 	public function FPGenerateReportAssessment (Request $request, $appid, $revision, $uid, $isSelfAssess = null){
+
 		$monid = null;
 		$arrToSend = array();
 

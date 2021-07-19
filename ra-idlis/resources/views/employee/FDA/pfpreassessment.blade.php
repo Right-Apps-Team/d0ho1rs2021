@@ -56,7 +56,7 @@
                               <td class="text-center">{{$data->formattedDate}}</td>
                               <td class="text-center">{{$data->aptdesc}}</td>
                               @php
-                                $status = (strtolower($request) == 'machines' ? $data->FDAStatMach : $data->FDAStatPhar)
+                                $status = (strtolower($request) == 'machines' ?( $data->FDAStatMach ?  $data->FDAStatMach : 'For Evaluation') :( $data->FDAStatPhar? $data->FDAStatPhar: 'For Evaluation'))
                             @endphp
                             <td class="text-center" style="font-weight:bold;">{{$status}}</td>
                               <!-- <td class="text-center" style="font-weight:bold;">{{(AjaxController::getTransStatusById($data->FDAStatMach)[0]->trns_desc ?? '')}}</td> -->

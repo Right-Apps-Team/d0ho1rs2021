@@ -1154,14 +1154,114 @@ class NewClientController extends Controller {
 
 			if($data){
 				if(AjaxController::isRequestForFDA($requestOfClient) != 'machines'){
+				
 					$view = ($data->certtype == 'COC' ? 'client1.FDA.coc' : 'client1.FDA.rl');
 				} else {
+					// $view = ($data->certtype == 'COC' ? 'client1.FDA.linac' : 'client1.FDA.cdrrhrRL');
 					$view = ($data->certtype == 'COC' ? 'client1.FDA.cdrrhrCOC' : 'client1.FDA.cdrrhrRL');
 					$machineData = DB::table('cdrrhrxraylist')->where('appid',$appid)->get();
 				}
 				$arrRet = [
 					'appform' => DB::table('appform')->where('appid',$appid)->first(),
 					'data' => $data,
+					'machineData' => isset($machineData) ? $machineData : null,
+					'otherDetails' => [DB::table('hfsrbannexa')->where([['appid',$appid],['isMainRadio',1]])->first(),DB::table('hfsrbannexa')->where([['appid',$appid],['isMainRadioPharma',1]])->first(),DB::table('hfsrbannexa')->where([['appid',$appid],['ismainpo',1]])->first()]
+				];
+				return view($view,$arrRet);
+			}
+			return redirect('client1/home')->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'No records Found.']);
+		}
+		catch (Exception $e) {
+			dd($e);
+			return redirect('client1/home')->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Error on Order of Payment Module. Contact the admin.']);
+		}
+	}
+public function fdacertN(Request $request, $appid, $requestOfClient = null) {
+		if(FunctionsClientController::isExistOnAppform($appid) !== true || !FunctionsClientController::existOnDB('fdacert',[['appid',$appid],['department',(AjaxController::isRequestForFDA($requestOfClient) == 'machines' ? 'cdrrhr' : 'cdrr')]]) || !isset($requestOfClient)){
+			return redirect('client1/home')->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'No records Found.']);
+		}
+		try {
+			$selection = (AjaxController::isRequestForFDA($requestOfClient) == 'machines' ? 'cdrrhr' : 'cdrr');
+			
+			$data = DB::table('fdacert')->where([['fdacert.appid',$appid],['fdacert.department',$selection]])->join('appform','appform.appid','fdacert.appid')->leftjoin('x08','x08.uid','appform.uid')->leftjoin('apptype','appform.aptid','apptype.aptid')->select('appform.*','fdacert.*','x08.authorizedsignature','apptype.aptdesc')->first();
+		
+			$chk = DB::table('fdaevaluation')->where([['appid', $appid], ['requestFrom', $requestOfClient == 'machines'? 'machines': 'pharma']])
+			->orderBy('fdaevaluation.evalid','DESC')
+			->first();
+
+			$dets = [];
+			$cheifradt = '';
+			$hfsrbannexb = [];
+			$cdrrhrxraylist = [];
+		
+			if($data){
+
+				$getLevel = 0;
+				if(AjaxController::isRequestForFDA($requestOfClient) != 'machines'){
+
+					if($chk->decision == 'RLN'){
+						$view = 'client1.FDA.newFDARL';
+					}else{
+						$view = 'client1.FDA.coc';
+					}
+				
+					// $view = ($data->certtype == 'COC' ? 'client1.FDA.coc' : 'client1.FDA.rl');
+				} else {
+					// $view = ($data->certtype == 'COC' ? 'client1.FDA.linac' : 'client1.FDA.cdrrhrRL');
+					
+					
+					// $view = ($data->certtype == 'COC' ? 'client1.FDA.cdrrhrCOC' : 'client1.FDA.cdrrhrRL');
+
+					if($chk->decision == 'LINAC'){
+
+						$xrserv = DB::table('cdrrhrxrayservcat')->where([['appid', $appid]])->first();
+						$arrserv = array($xrserv->selected);
+
+						$arrayToCheck = array();
+						foreach ($arrserv as $value) {
+							$ct = DB::table('fda_xrayserv')->where([['servid', $value]])->first();
+							if(!in_array($ct->catid, $arrayToCheck)){
+								array_push($arrayToCheck, $ct->catid);
+							}
+						}
+						
+						$getLevel = max($arrayToCheck);
+
+						$getannexa = DB::table('hfsrbannexa')->where([['appid', $appid]])->get();
+
+						
+						foreach($getannexa as $a){
+							if($a->isChiefRadTech == 1){
+								$mn = $a->middlename;
+								$cheifradt = ucfirst($a->firstname).' '.ucfirst($mn[0]).'. '. ucfirst($a->surname);
+							}
+						}
+						// foreach($getannexa as $a){
+						// 	if($a['isChiefRadTech'] == 1){
+						// 		$mn = $a['middlename'];
+						// 		$cheifradt = ucfirst($a['firstname']).' '.ucfirst($mn).'. '. ucfirst($a['surname']);
+						// 	}
+						// }
+						$hfsrbannexb =  DB::table('hfsrbannexb')->where('appid',$appid)->get();
+						$cdrrhrxraylist = DB::table('cdrrhrxraylist')->join('fda_xraymach','cdrrhrxraylist.machinetype','fda_xraymach.xrayid')/*->leftJoin('fda_xraymach','cdrrhrxraylist.location','fda_xraymach.xrayid')*/->where('appid',$appid)->get();
+
+						$dets = [DB::table('assessmentrecommendation')->where([['appid',$appid],['choice','issuance']])->first(), DB::table('x08_ft')->where('appid',$appid)->whereIn('facid',['H','H2','H3'])->exists()];
+
+						$view = 'client1.FDA.linac';
+					}else{
+						$view = 'client1.FDA.cdrrhrCOC';
+					}
+					
+					$machineData = DB::table('cdrrhrxraylist')->where('appid',$appid)->get();
+				}
+				$arrRet = [
+					'appform' => DB::table('appform')->where('appid',$appid)->first(),
+					'data' => $data,
+					'getLevel' => $getLevel,
+					'hfsrbannexb' => $hfsrbannexb,
+					'cdrrhrxraylist' => $cdrrhrxraylist,
+					'cheifradt' => $cheifradt,
+					'dets' => $dets,
 					'machineData' => isset($machineData) ? $machineData : null,
 					'otherDetails' => [DB::table('hfsrbannexa')->where([['appid',$appid],['isMainRadio',1]])->first(),DB::table('hfsrbannexa')->where([['appid',$appid],['isMainRadioPharma',1]])->first(),DB::table('hfsrbannexa')->where([['appid',$appid],['ismainpo',1]])->first()]
 				];
@@ -1369,6 +1469,19 @@ class NewClientController extends Controller {
 									$toAppform['payEvaltimeFDA'] = Carbon::now()->toTimeString();
 									$toAppform['payEvalipFDA'] = request()->ip();
 								}
+
+							$chapp = DB::table('appform')->where([['appid', $appid]])->first();
+							if($chapp->machDocNeedRev == 1){
+								$toAppform['FDAStatMach'] = 'Resubmitted, for re-evaluation';
+								$toAppform['machDocNeedRev'] = null;
+
+							}
+
+							if($chapp->pharDocNeedRev == 1){
+								$toAppform['FDAStatPhar'] = 'Resubmitted, for re-evaluation';
+								$toAppform['pharDocNeedRev'] = null;
+							}
+
 
 								isset($toAppform) ? DB::table('appform')->where('appid',$appid)->update($toAppform) : '';
 								

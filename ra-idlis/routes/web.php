@@ -94,6 +94,7 @@ Route::prefix('client1')->group(function() {
 	Route::match(['get', 'post'], '/printPayment/{token}/{appid}', 'NewClientController@__pgPayment')->name('client1.pgpayment');
 	Route::match(['get', 'post'], '/printPaymentFDA/{token}/{appid}', 'NewClientController@__fdaPayment');
 	Route::match(['get', 'post'], '/fdacertificate/{appid}/{request?}', 'NewClientController@fdacert');
+	Route::match(['get', 'post'], '/fdacertificate/new/{appid}/{request?}', 'NewClientController@fdacertN');
 	Route::match(['get', 'post'], '/createfdacert/{appid}/{request?}', 'DOHController@createfdacert');
 	Route::match(['get', 'post'], '/printPaymentFDACDRR/{token}/{appid}', 'NewClientController@__fdaPaymentCDRR');
 	Route::prefix('apply')->group(function() {

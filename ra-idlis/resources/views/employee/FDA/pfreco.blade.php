@@ -348,6 +348,7 @@
           @endif
           <br/>
           <!-- <a href="{{url('client1/fdacertificate/29/'.$request)}}" target="_blank"> -->
+          <!-- <a href="{{url('client1/createfdacert/'.$AppData->appid.'/'.$request)}}" target="_blank"> -->
           <a href="{{url('client1/createfdacert/'.$AppData->appid.'/'.$request)}}" target="_blank">
            <button style="float: right" class="btn btn-primarys"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Certificate</button>
           </a>

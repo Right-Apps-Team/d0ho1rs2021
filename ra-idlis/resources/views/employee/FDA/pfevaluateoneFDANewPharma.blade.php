@@ -235,9 +235,9 @@
                           <option value="Recommendation for Disapproval including forfeiture of payment">Recommendation for Disapproval including forfeiture of payment</option>
                       
                         @else
-                        <option value="Certificate of Compliance  ">Certificate of Compliance  </option>
-                        <option value="Notice of Deficiency (30 Days compliance)">Notice of Deficiency (30 Days compliance)</option>
-                        <option value="Recommendation Letter">Recommendation Letter </option>
+                        <option value="COCN">Certificate of Compliance  </option>
+                        <option value="NOD">Notice of Deficiency (30 Days compliance)</option>
+                        <option value="RLN">Recommendation Letter </option>
                         @endif
                           
                           <!-- <option value="COC">COC</option>
