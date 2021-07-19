@@ -65,9 +65,9 @@ class EvaluationController extends Controller
 	public function FPShowPart(Request $request, $appid,$revision,$otherUID = null){
 		AjaxController::createMobileSessionIfMobile($request);
 		if(isset($appid) && isset($revision) && FunctionsClientController::isExistOnAppform($appid) && in_array(true, AjaxController::isSessionExist(['employee_login']))){
-			if( $revision > 2 && !FunctionsClientController::existOnDB('chgfil',array(['appform_id',$appid]/*,['uid',session()->get('uData')->uid]*/,['revision',$revision],['isPaid',1])) ){
-				return redirect('employee/dashboard/processflow/evaluation')->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Payment is not settled.']);
-			}
+			// if( $revision > 2 && !FunctionsClientController::existOnDB('chgfil',array(['appform_id',$appid]/*,['uid',session()->get('uData')->uid]*/,['revision',$revision],['isPaid',1])) ){
+			// 	return redirect('employee/dashboard/processflow/evaluation')->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Payment is not settled.']);
+			// }
 			try {
 				$isMon = $isSelfAssess = false;
 				$data = AjaxController::getAllDataEvaluateOne($appid);

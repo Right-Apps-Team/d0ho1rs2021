@@ -1248,7 +1248,11 @@ public function fdacertN(Request $request, $appid, $requestOfClient = null) {
 						$dets = [DB::table('assessmentrecommendation')->where([['appid',$appid],['choice','issuance']])->first(), DB::table('x08_ft')->where('appid',$appid)->whereIn('facid',['H','H2','H3'])->exists()];
 
 						$view = 'client1.FDA.linac';
-					}else{
+					}else if($chk->decision == 'NOD'){
+						$view = 'client1.FDA.machNOD';
+					}
+					else{
+						
 						$view = 'client1.FDA.cdrrhrCOC';
 					}
 					
@@ -1594,7 +1598,7 @@ public function fdacertN(Request $request, $appid, $requestOfClient = null) {
 			return view('client1.apply.LTO1.cdrrhr.xraymachine',$arrRet);
 		} else if($request->isMethod('post')) {
 			if($request->action == 'add'){
-				$returnToSender = DB::table('cdrrhrxraylist')->insert(['machinetype' => $request->xray, 'brandtubehead' => $request->brandTH, 'brandtubeconsole' => $request->brandCC, 'modeltubehead' => $request->modelTH, 'modeltubeconsole' => $request->modelCC, 'serialtubehead' => $request->serialTH, 'serialconsole' => $request->serialCC, 'maxma' => $request->ma , 'maxkvp' => $request->kvp , 'photonmv' => $request->lmv , 'electronsmev' => $request->lmev , 'location' => $request->location, 'appid' => $appid]);
+				$returnToSender = DB::table('cdrrhrxraylist')->insert(['machinetype' => $request->xray, 'appuse' => $request->appuse, 'brandtubehead' => $request->brandTH, 'brandtubeconsole' => $request->brandCC, 'modeltubehead' => $request->modelTH, 'modeltubeconsole' => $request->modelCC, 'serialtubehead' => $request->serialTH, 'serialconsole' => $request->serialCC, 'maxma' => $request->ma , 'maxkvp' => $request->kvp , 'photonmv' => $request->lmv , 'electronsmev' => $request->lmev , 'location' => $request->location, 'appid' => $appid]);
 			} else if($request->action == 'edit'){
 				$returnToSender = DB::table('cdrrhrxraylist')
 				->where('id',$request->id)->update([

@@ -51,7 +51,7 @@
                             <td class="text-center"><strong>{{$data->facilityname}}</strong></td>
                             <td class="text-center">{{(ajaxController::getFacilitytypeFromHighestApplicationFromX08FT($data->appid)->hgpdesc ?? 'NOT FOUND')}}</td>
                             <td class="text-center">{{$data->formattedDate}}</td>
-                            <td class="text-center">{{AjaxController::maxRevisionFor($data->appid)}}</td>
+                            <td class="text-center">{{AjaxController::maxRevisionFor($data->appid) + 1}}</td>
                             {{-- <td class="text-center">{{$data->aptdesc}}</td> --}}
                             <td style="color:{{$color}};font-weight:bold;" class="text-center">{{$data->trns_desc}}</td>
                               <td>

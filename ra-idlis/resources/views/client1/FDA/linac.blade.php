@@ -305,7 +305,7 @@ RL - FDA
                         <td>{{$xraylist->maxkvp}}</td>
                         <td>{{$xraylist->serialconsole}}</td>
                         <td>{{$xraylist->serialtubehead}}</td>
-                        <td></td>
+                        <td>{{$xraylist->appuse}}</td>
                     </tr>
                     @endforeach
                 </table>

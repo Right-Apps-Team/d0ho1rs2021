@@ -20,6 +20,10 @@
 
     #modCont {
       height: 100%;
+      /* height: 100%; */
+      /* max-width: 100%; */
+      max-width: auto;
+      overflow-x: auto;
     }
   </style>
 
@@ -356,7 +360,7 @@
 
     <div class="remthis modal fade" id="compareModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document" id="modDiag">
-            <div class="modal-content" id="modCont">
+            <div class="modal-content" id="modCont" >
                 <div class="modal-header" id="viewHead">
                     <h5 class="modal-title" id="actionModalCRUD">Results</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -367,31 +371,40 @@
                 </object> --}}
                   <div class="row h-100">
                     @isset($membDone)
+                    <table>
+                      <tr>
+
+                    
                       @foreach($membDone as $mem)
                       @isset($currentUser)
-                        
-                        <div class="col-md">
+                        <td>
+                        <div style="display: inline-block;">
+                        <!-- <div class="col-md"> -->
 
                           <p class="text-center mt-3">Evaluation of: <span class="font-weight-bold">{{ucfirst($mem->fname . ' ' . $mem->lname)}}</span>
 
                               @if($currentUser->uid != $mem->uid)
                               
-                                  <a target="_blank" class="btn btn-primary" href="{{url('employee/dashboard/processflow/floorPlan/parts/'.$AppData->appid.'/'.$revisionCountCurent.'/'.$mem->uid)}}"><i class="fa fa-clone" aria-hidden="true"></i> Copy Result</a>
+                                  <a target="_blank" style="float: right;" class="btn btn-primary" href="{{url('employee/dashboard/processflow/floorPlan/parts/'.$AppData->appid.'/'.$revisionCountCurent.'/'.$mem->uid)}}"><i class="fa fa-clone" aria-hidden="true"></i> Copy Result</a>
                               @endif
                             
 
                           </p>
-                          <iframe src="{{asset('employee/dashboard/processflow/floorPlan/GenerateReportAssessments/'.$AppData->appid.'/'.$revisionCountCurent.'/'.$mem->uid.'/')}}"  width="100%" height="100%" >Evaluation Result of {{ucfirst($mem->fname . ' ' . $mem->lname)}}</iframe>
+                          <br>
+                          <iframe src="{{asset('employee/dashboard/processflow/floorPlan/GenerateReportAssessments/'.$AppData->appid.'/'.$revisionCountCurent.'/'.$mem->uid.'/')}}"  width="1000px" height="550px" >Evaluation Result of {{ucfirst($mem->fname . ' ' . $mem->lname)}}</iframe>
+                          <!-- <iframe src="{{asset('employee/dashboard/processflow/floorPlan/GenerateReportAssessments/'.$AppData->appid.'/'.$revisionCountCurent.'/'.$mem->uid.'/')}}"  width="100%" height="100%" >Evaluation Result of {{ucfirst($mem->fname . ' ' . $mem->lname)}}</iframe> -->
                         </div>
-                        
+                        </td>
                       @endisset
                       @endforeach
+                      </tr>
+                    </table>
                     @endisset
                   </div>
 
-                <div class="modal-footer">
+                <!-- <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

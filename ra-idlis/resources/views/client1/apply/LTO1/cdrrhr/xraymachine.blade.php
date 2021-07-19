@@ -39,6 +39,7 @@
 							{{-- <th>Linear Accelerator Photons,MV</th> --}}
 							{{-- <th>Linear Accelerator Electrons,MeV</th> --}}
 							<th>Location</th>
+							<th>Application</th>
 							<th>Option</th>
 						</tr>
 		      		</thead>
@@ -57,6 +58,7 @@
 								{{-- <td>{{$xraylist->photonmv}}</td> --}}
 								{{-- <td>{{$xraylist->electronsmev}}</td> --}}
 								<td>{{$xraylist->location}}</td>
+								<td>{{$xraylist->appuse}}</td>
 								<td>
 									@if(!$canAdd)
 									<button class="btn btn-danger" data-toggle="modal" data-target="#deletePersonnel" onclick="showDelete({{$xraylist->id}})"><i class="fa fa-trash"></i></button>
@@ -195,6 +197,14 @@
 			                   					<option value="{{$loc->locid}}">{{$loc->locdesc}}</option>
 			                   				@endforeach
 		                   				</select> --}}
+		                   			</div>
+		                   		</div>
+								   <div class="row mb-2">
+		                   			<div class="col-sm ">
+		                   			Application Use
+		                   			</div>
+		                   			<div class="col-sm-11">
+		                   				<input type="text" class="form-control w-100" name="appuse" required="">
 		                   			</div>
 		                   		</div>
 		                   			<button class="btn btn-primary pt-1" type="submit" id="getpersonnel">Submit</button>
