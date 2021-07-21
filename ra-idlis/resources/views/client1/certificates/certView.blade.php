@@ -44,7 +44,11 @@
 				<div class="row">	
 						<div class="col-md-2" style="">&nbsp;</div>
 						<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
-							Application Code
+						@if($retTable[0]->hfser_id == 'CON')
+						CON No.
+						@else
+								Application Code
+						@endif
 						</div>
 						<div class="col-md-1 hide-div">
 							<center>:</center>
@@ -92,7 +96,7 @@
 				<div class="row">	
 					<div class="col-md-2" style="">&nbsp;</div>
 					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
-						Service Capabilities
+						Service Capability
 					</div>
 					<div class="col-md-1 hide-div">
 						<center>:</center>

@@ -107,15 +107,15 @@ const setOfficialMailAddressNew = async (e) => {
         //     isError = true;
         //     errMessage = errMessage + 'Street Number';
         // }
-        if(!street_name) {
-            if(isError) {
-                errMessage = errMessage + ', Street Name';
-            }
-            else {
-                isError = true;
-                errMessage = errMessage + ' Street Name';
-            }
-        }
+        // if(!street_name) {
+        //     if(isError) {
+        //         errMessage = errMessage + ', Street Name';
+        //     }
+        //     else {
+        //         isError = true;
+        //         errMessage = errMessage + ' Street Name';
+        //     }
+        // }
         if(!brgy) {
             if(isError) {
                 errMessage = errMessage + ', Barangay';

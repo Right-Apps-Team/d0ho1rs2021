@@ -488,7 +488,16 @@
 
               <tr>
               	<td>{{$mem->fname .' '. ($mem->mname ?? $mem->mname.'.') . ' ' . $mem->lname}}</td>
-              	<td>{{$mem->pos}}</td>
+              	<td>
+                  @if($mem->pos == 'C')
+                    Chief
+                  @elseif($mem->pos == 'LO')
+                    Licensing Officer
+                  @else
+                    MO
+                  @endif
+                
+              </td>
               </tr>
                     @php
                       array_push($pageNos,$pageno);

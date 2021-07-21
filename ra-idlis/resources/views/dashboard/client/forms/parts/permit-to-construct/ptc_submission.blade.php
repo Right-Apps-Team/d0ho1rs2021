@@ -18,7 +18,7 @@ const savePartialPtc = async (e) => {
         if($('#brgy').val() == ""){errorPar +=1; errors +=1; ermsgP+= "Baranggay, "; ermsg += "Baranggay, "}
          // Disregard if update
 
-        if($('#street_name').val() == ""){errors +=1; ermsg += "Street Name, "}
+        // if($('#street_name').val() == ""){errors +=1; ermsg += "Street Name, "}
         if($('#zip').val() == ""){errors +=1; ermsg += "Zip Code, "}
 
         if($('#fac_mobile_number').val() == ""){errors +=1; ermsg += "Facility Mobile No., "}
@@ -46,7 +46,10 @@ const savePartialPtc = async (e) => {
         if($('#approving_authority_pos').val() == ""){errors +=1; ermsg += "Approving Authority Position, "}
         if($('#approving_authority_name').val() == ""){errors +=1; ermsg += "Approving Authority Name, "}
         
-      
+        
+
+
+
         if($('input[name="hgpid"]:checked').val() == undefined){errors +=1; ermsg += "Facilities/Type, "}
         
         if($('#fac_email_address').val() != ""){
@@ -75,6 +78,8 @@ const savePartialPtc = async (e) => {
              invalids +=1;   invmssg += "Invalid Proponent Mobile Number, "
            } 
         }
+
+       
 
         // if(errors > 0){
         //     alert("Please fill the following fields properly: " + ermsg)

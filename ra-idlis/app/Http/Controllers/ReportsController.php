@@ -55,8 +55,19 @@ class ReportsController extends Controller
 				$field = 'isApprove';
 				break;
 		}
-		$dataFromDB = DB::select("SELECT distinct appform.appid, facilityname, appform.hfser_id, appform.rgnid from appform where `$field` IS NOT NULL order by appid DESC");
-		return view('employee.reports.recommended', ['servCap' => $dataFromDB, 'link' => $link]);
+
+		$Cur_useData = AjaxController::getCurrentUserAllData();
+
+		if($Cur_useData['grpid'] == 'RLO'){
+			$urgnid = $Cur_useData['rgnid'];
+			$dataFromDB = DB::select("SELECT distinct appform.appid, facilityname, appform.hfser_id, appform.rgnid from appform where `$field` IS NOT NULL && appform.rgnid = '$urgnid' order by appid DESC");
+	
+		}else{
+			$dataFromDB = DB::select("SELECT distinct appform.appid, facilityname, appform.hfser_id, appform.rgnid from appform where `$field` IS NOT NULL order by appid DESC");
+	
+		}
+
+			return view('employee.reports.recommended', ['servCap' => $dataFromDB, 'link' => $link]);
 	}
 
 	

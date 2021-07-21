@@ -147,7 +147,8 @@
                         @if($AppData->isCashierApprove != 1)
                         <div class="col-md-6">
                           <span class="">
-                            <button type="button" class="btn btn-outline-warning text-center" data-toggle="modal" data-target="#GodModal" onclick="showData('{{$element->id}}','{{$element->ORRef}}'/*,'{{$element->otherRef}}'*/,'{{$element->amount}}')">
+                          
+                            <button type="button" class="btn btn-outline-warning text-center" data-toggle="modal" data-target="#GodModal" onclick="showData('{{$element->id}}','{{$element->ORRef}}'/*,'{{$element->otherRef}}'*/,'{{$element->amount}}', '{{$element->m04IDA}}')">
                               <i class="fa fa-fw fa-edit"></i>
                             </button>
                           </span>
@@ -238,6 +239,17 @@
                 </div>
                 <span id="EditBody">
                 </span>
+               
+                      <div class="col-7 ">Nature of Payment:</div>
+                      <div class="col-sm-12" style="margin:0 0 1em 0;">
+                        <select name="uacs" id="UACS_dataed" class="form-control" required="">
+                          <option value="">Please Select</option>
+                           @foreach($uacs as $uacs_data)
+                              <option value={{$uacs_data->m04IDA}}>{{$uacs_data->m04Desc . "(".$uacs_data->m04ID.")"}}</option>
+                            @endforeach
+                        </select>
+                      </div>
+                   
                 <div class="row">
                   <div class="col-sm-6">
                     <button type="submit" class="btn btn-outline-success form-control" style="border-radius:0;"><span class="fa fa-sign-up"></span>Save</button>
@@ -450,7 +462,7 @@
           <h4 class="modal-title text-center"><strong>Evaluation</strong></h4>
             <hr>
             <span id="evaluatePaymentBody ">
-              Are you sure you want to confirm this payment?
+              Are you sure you want to confirm this payment? 
             </span>
             <hr>            
               <div class="row">
@@ -546,8 +558,9 @@
     
   }
 
-  function showData(id, or/*,ref*/,amt){
+  function showData(id, or/*,ref*/,amt, nat){
     $('#EditBody').empty();
+  
     $('#EditBody').append(
       '<input type="hidden" id="id" class="form-control" ata-parsley-required-message="<strong>*</strong>Description <strong>Required</strong>" value="'+id+'" required>' +
         '<div class="col-sm-7">OR Reference:</div>' +
@@ -564,7 +577,14 @@
            '<input type="text" id="amt" class="form-control" ata-parsley-required-message="<strong>*</strong>Amount <strong>Required</strong>" value="'+amt+'" required>' +
         '</div>'
       );
+
+      console.log("nat")
+  console.log(nat)
+document.getElementById('UACS_dataed').value = nat;
   }
+ 
+ 
+
 
     $('#EditNow').on('submit',function(event){
         event.preventDefault();
@@ -576,10 +596,11 @@
              var z = $('#ref').val();
              var a = $('#amt').val();
              var b = $('#id').val();
+             var nat = $('#UACS_dataed').val();
              $.ajax({
                 url: '{{asset('employee/cashier/actions')}}',
                 method: 'POST',
-                data : {_token:$('#token').val(),or:x,slip:y,ref:z,amt:a,id:b,action:"edit"},
+                data : {_token:$('#token').val(),or:x,slip:y,ref:z,amt:a,id:b,action:"edit",nat:nat},
                 success: function(data){
                     if (data == "SUCCESS") {
                         alert('Successfully Edited Payment');

@@ -520,6 +520,7 @@ Route::match(['get', 'post'], 'employee/dashboard/processflow/assignmentofcommit
 Route::match(['get', 'post'], 'employee/dashboard/processflow/assignmentofcommittee/{appid}', 'DOHController@committeTeamAssignment');
 // committee assignment
 Route::post('employee/dashboard/processflow/get_teams', 'AjaxController@getTeamInRegion'); // Get Team
+Route::post('employee/dashboard/setbanning', 'DOHController@setBanning'); 
 Route::post('employee/dashboard/processflow/get_members', 'AjaxController@getMembersInRegion'); // Get Members
 Route::post('employee/dashboard/processflow/get_memWithoutTeam', 'AjaxController@getMembersInRegionWithoutTeam'); // Get Employee Without Team
 Route::post('employee/dashboard/processflow/get_assignedmembers', 'AjaxController@getAssignedMembersInTeam'); // Get Assigned Members

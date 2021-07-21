@@ -424,7 +424,7 @@
                   <div class="row">
                     <div class="col-sm-12">
                       <div class="form-label-group">
-                        <input style="text-transform: uppercase;" type="text" id="uid" class="form-control" placeholder="Username" required autocomplete="off">
+                        <input onkeyup="this.value = this.value.toUpperCase();" style="text-transform: uppercase;" type="text" id="uid" class="form-control" placeholder="Username" required autocomplete="off">
                         <label for="uid" class="req">Username</label>
                       </div>
                     </div>

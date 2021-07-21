@@ -44,6 +44,11 @@ Route::post(
 ); //->middleware([APIMiddleware::class]);
 
 Route::post(
+    '/user/setbanning',
+    'DOHController@setBanning'
+); //->middleware([APIMiddleware::class]);
+
+Route::post(
     '/application/cor/save',
     'Client\Api\CorAppController@save'
 ); //->middleware([APIMiddleware::class]);

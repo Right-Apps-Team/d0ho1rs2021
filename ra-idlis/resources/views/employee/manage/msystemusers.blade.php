@@ -69,7 +69,7 @@
                           </span>
                         @endif
                         <span class="MG002_update">
-                          <a href="#"><button type="button" data-target="#editMODAL" onclick="ShowEdit('{{$user->uid}}','{{$user->pre}}','{{$user->fname}}','{{$user->mname}}','{{$user->lname}}','{{$user->suf}}','{{$user->contact}}','{{$user->rgnid}}', '{{$user->email}}', '{{$user->grpid}}', '{{$user->position}}', '{{$user->team}}', '{{$user->rgnid}}', '{{$user->grpid}}', '{{($user->teamid ?? null)}}',  '{{($user->facid ?? null)}}')"; data-toggle="modal" class="btn btn-outline-warning" title="Edit Account">&nbsp;<i class="fa fa-edit"></i>&nbsp;</button></a>&nbsp;
+                          <a href="#"><button type="button" data-target="#editMODAL" onclick="ShowEdit('{{$user->uid}}','{{$user->pre}}','{{$user->fname}}','{{$user->mname}}','{{$user->lname}}','{{$user->suf}}','{{$user->contact}}','{{$user->rgnid}}', '{{$user->email}}', '{{$user->grpid}}', '{{$user->position}}', '{{$user->team}}', '{{$user->rgnid}}', '{{$user->grpid}}', '{{($user->teamid ?? null)}}',  '{{($user->facid ?? null)}}',  '{{($user->isTempBanned ?? null)}}')"; data-toggle="modal" class="btn btn-outline-warning" title="Edit Account">&nbsp;<i class="fa fa-edit"></i>&nbsp;</button></a>&nbsp;
                         </span>
                         </div>
                       </center>                    
@@ -96,7 +96,8 @@
           <hr>
           
           <div class="container">
-              <form id="RAdmin" class="" data-parsley-validate>
+              <form id="RAdmin" autocomplete="off" class="" data-parsley-validate>
+              <input autocomplete="false" name="hidden" type="text" style="display:none;">
                   <div class="row">
                     <div class="col-sm-12" id="ACCError"></div>
                   </div>
@@ -136,23 +137,6 @@
                       <option value="Ms">Ms</option>
                       <option value="MSgt">MSgt</option>
 											<option value="Prof">Prof</option>
-											
-                     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 										</select>
                     </div>
                   </div>
@@ -264,7 +248,7 @@
                       Username:<span class="text-danger">*</span>
                     </div>
                     <div class="col-sm-8" style="margin:0 0 .8em 0;">
-                      <input type="text" name="uname" class="form-control" data-parsley-required-message="*<strong>Username</strong> required" required>
+                      <input type="text" autocomplete="off" name="uname" class="form-control" data-parsley-required-message="*<strong>Username</strong> required" required>
                     </div>
                   </div>  
                   
@@ -273,7 +257,7 @@
                       Password:<span class="text-danger">*</span>
                     </div>
                     <div class="col-sm-8" style="margin:0 0 .8em 0;">
-                      <input type="password" name="pass" onkeyup="checkPassword()" id="ThePassWord" class="form-control" data-parsley-required-message="*<strong>Password</strong> required" data-parsley-maxlength="32" data-parsley-maxlength-message="<strong>Password</strong> should be at least 10-32 characters."  data-parsley-minlength="10" data-parsley-minlength-message="<strong>Password</strong> should be at least 10-32 characters." required>
+                      <input type="password" autocomplete="off" name="pass" onkeyup="checkPassword()" id="ThePassWord" class="form-control" data-parsley-required-message="*<strong>Password</strong> required" data-parsley-maxlength="32" data-parsley-maxlength-message="<strong>Password</strong> should be at least 10-32 characters."  data-parsley-minlength="10" data-parsley-minlength-message="<strong>Password</strong> should be at least 10-32 characters." required>
                       <span class="text-warning">Password must <strong>all</strong> have the following:</span>
                       <ul style=" list-style-type: none;padding: 0">
                         <li id="li_lngth" class="text-danger"><i class="fa fa-times" id="chk_lngth" aria-hidden="true"></i> <strong>10 to 32</strong> characters in length</li>
@@ -373,7 +357,8 @@
           <h5 class="modal-title text-center"><strong>Edit System Users Information</strong></h5>
           <hr>
           <div class="container">
-              <form id="EditAdmin" class="" data-parsley-validate>
+              <form id="EditAdmin" autocomplete="off" class="" data-parsley-validate>
+              <input autocomplete="false" name="hidden" type="text" style="display:none;">
                   {{ csrf_field() }}
                   <div class="row">
                     <div class="col-sm-12 alert alert-danger alert-dismissible fade show text-left" style="display:none;margin:5px" id="EditErrorAlert" role="alert">
@@ -384,10 +369,36 @@
                      </div>
                   </div>
                   <input type="text" id="edit_uid" value="" hidden>
-                  
+                  <div class="col-sm-4"> <input type="checkbox" name="banned" id="istempbanned" value="1" onclick="setBanning()" />&nbsp;User Banned</div>
+                 <hr/>
+
+
                     <div class="col-sm-4">Prefix:</div>
                     <div class="col-sm-12" style="margin:0 0 .8em 0;">
-                    <input type="text" id="edit_pre" class="form-control">
+                    <!-- <input type="text" id="edit_pre" class="form-control"> -->
+                    <select name="edit_pre" class="form-control">
+											<option value="" selected>None</option>
+                      <option value="Adm">Adm</option>
+                      <option value="Ar">Ar</option>
+                      <option value="Atty">Atty</option>
+                      <option value="Capt">Capt</option>
+                      <option value="Chief">Chief</option>
+                      <option value="Cmdr">Cmdr</option>
+                      <option value="Col">Col</option>
+                      <option value="Dean">Dean</option>
+                      <option value="Dr">Dr</option>
+                      <option value="Engr">Engr</option>
+                      <option value="Gen">Gen</option>
+                      <option value="Gov">Gov</option>
+                      <option value="Hon">Hon</option>
+                      <option value="Lt Col">Lt Col</option>
+                      <option value="Maj">Maj</option>
+                      <option value="Mr">Mr</option>
+											<option value="Mrs">Mrs</option>
+                      <option value="Ms">Ms</option>
+                      <option value="MSgt">MSgt</option>
+											<option value="Prof">Prof</option>
+										</select>
                     </div>
                   
                   {{-- <div class="row"> --}}
@@ -495,23 +506,30 @@
                     <div class="col-sm-8" style="margin:0 0 .8em 0;">
                       <input type="text" class="form-control" data-parsley-required-message="*<strong>Username</strong> required" required>
                     </div>
-                  </div>  
+                  </div>  --}}
                   
-                  <div class="row">
+                  <!-- <div class="row">
                     <div class="col-sm-4">
                       Password:
                     </div>
-                    <div class="col-sm-8" style="margin:0 0 .8em 0;">
-                      <input type="password" name="pass" onkeyup="checkPassword()" id="ThePassWord" class="form-control" data-parsley-required-message="*<strong>Password</strong> required" required>
+                    <div class="col-sm-10" style="margin:0 0 .8em 0;">
+                      <input type="password" name="editpass" onkeyup="checkPassword()" id="ThePassWord" class="form-control" data-parsley-required-message="*<strong>Password</strong> required" required>
                     </div>
-                  </div>
+                  </div> -->
 
+                  <div class="col-sm-4"> Password:</div>
+                    <div class="col-sm-12" style="margin:0 0 .8em 0;">
+                    <input type="password" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');" name="editpass" onkeyup="checkPassword1()" id="ThePassWord1" class="form-control"  >
+                   
+                    </div>
+
+                  
                   <div class="row">
                     <div class="col-sm-4">
-                      Password Strength: <input type="text" id="passStr" hidden>
+                      Password Strength: <input type="text" id="passStr1" hidden>
                     </div>
-                    <div class="col-sm-8 text-center" style="margin:0 0 .8em 0;text-align: center" ><span id="result">&nbsp;</span></div>
-                  </div> --}}
+                    <div class="col-sm-8 text-center" style="margin:0 0 .8em 0;text-align: center" ><span id="result1">&nbsp;</span></div>
+                  </div> 
                   
                   <div class="col-sm-12">
                     <button type="submit" class="btn btn-outline-warning form-control" style="border-radius:0;"><span class="fa fa-sign-up"></span>Update System User</button>
@@ -557,8 +575,16 @@
       </div>
     </div>
   </div>
- 
+
+
+    
+
+
   <script type="text/javascript">
+
+
+
+
   	$(document).ready(function() {
            $('#example').DataTable({
            	searchDelay: 350
@@ -762,6 +788,117 @@
   	        $('#result').append(resultName);
   	        $('#passStr').attr('value',strength);
           }
+
+ function checkPassword1(){
+          	var password = $('#ThePassWord1').val();
+          	var strength = 0;
+          	var resultName = '';
+          	if (password != "") {
+
+          if (password.length >= 10) strength += 1;
+  			
+  				//If password contains both lower and uppercase characters, increase strength value.
+  				if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/))  strength += 1;
+
+          
+  				//If it has numbers and characters, increase strength value.
+  				if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/))  strength += 1 ;
+  				
+  				//If it has one special character, increase strength value.
+  				if (password.match(/([=,?,<,>,@,#,$,*,!])/))  strength += 1;
+  				
+  				//if it has two special characters, increase strength value.
+  				// if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1;
+  				
+  				
+  				//Calculated strength value, we can return messages
+  				//If value is less than 2
+  				
+          if (password.match(/([a-z])/)) { // Lower Case
+            checkPassWork('lc', 1);
+          } else {
+            checkPassWork('lc', 0);
+          }
+
+          if (password.match(/([A-Z])/))  { // Upper case
+            checkPassWork('up', 1);
+          } else {
+            checkPassWork('up', 0);
+          }
+
+          if (password.match(/([0-9])/)) { // Number
+            checkPassWork('nym', 1);
+          } else {
+            checkPassWork('nym', 0);
+          }
+
+          if (password.match(/([=,?,<,>,@,#,$,*,!])/)){ // Symbols
+              checkPassWork('sy', 1);            
+          } else {
+              checkPassWork('sy', 0);
+          }
+
+          if  ((password.length >= 10) && (password.length <= 32)) { // Length
+            checkPassWork('lngth', 1);
+          } else {
+            checkPassWork('lngth', 0);
+          }
+          
+          if (password == $('input[name="uname"]').val()) {
+            checkPassWork('same', 0);
+          } else { checkPassWork('same', 1);}
+
+  				if (strength < 2 )
+  				{
+  					$('#result1').removeClass();
+  					$('#result1').addClass('weak');
+  					resultName = 'Weak'	;		
+  				}
+  				else if (strength == 2 )
+  				{
+  					$('#result1').removeClass();
+  					$('#result1').addClass('good');
+  					resultName = 'Good'	;	
+  				}
+  				else if (strength == 3) 
+  				{
+  					$('#result1').removeClass();
+  					$('#result1').addClass('strong');
+  					resultName = 'Strong';
+  				} else if (strength > 3) {
+  					$('#result1').removeClass();
+  					$('#result1').addClass('strong');
+  					resultName = 'Very Strong';
+  				}
+
+  				if (password.length < 10) { 
+  					$('#result1').removeClass();
+  					$('#result1').addClass('short');
+  					resultName = 'Too short' ;
+  				}
+
+
+
+          	} else {
+          		$('#result1').removeClass();
+          		resultName = '&nbsp;&nbsp;';
+              checkPassWork('lc', 0);
+                checkPassWork('up', 0);
+                checkPassWork('nym', 0);
+                checkPassWork('sy', 0);
+                checkPassWork('lngth', 0);
+                checkPassWork('same', 0);
+          	}
+          	$('#passStr1').attr('value','');
+  			     $('#result1').empty();
+  	        $('#result1').append(resultName);
+  	        $('#passStr1').attr('value',strength);
+          }
+      
+
+
+
+
       $('#RAdmin').on('submit', function(e){
             e.preventDefault();
                 var form = $(this);
@@ -841,7 +978,15 @@
                 }
             });
           }
-      function ShowEdit(selectedID,pre,fname,mname,lname,suf,cntno,rgndesc,email,grp_desc,position, teamdesc, rgnid, posID, teamid, facidesc){
+      function ShowEdit(selectedID,pre,fname,mname,lname,suf,cntno,rgndesc,email,grp_desc,position, teamdesc, rgnid, posID, teamid, facidesc, isTempBanned){
+
+            console.log("isTempBanned")
+            console.log(isTempBanned)
+
+            if(isTempBanned == "1"){
+              $('#istempbanned').prop('checked', true);
+            }
+
               $('#edit_uid').val(selectedID);
               $('#edit_pre').val(pre);
               $('#edit_fname').val(fname);
@@ -881,6 +1026,84 @@
 
               } 
           }
+        
+        function setBanning(){
+          const cb = document.getElementById('istempbanned');
+          const uid = document.getElementById('edit_uid');
+          console.log("cb")
+          console.log(uid.value)
+          console.log(cb.checked)
+
+          var msg = 'Are you sure you want to ban this user?';
+          var ban = 0;
+          if(!cb.checked ){
+            msg = 'Are you sure you want to unbanned this user?';
+            ban = 1;
+          }
+
+          if(confirm(msg)){
+
+
+            // $.ajax({
+            //         url : '{{ asset('employee/dashboard/setbanning') }}',
+            //         method : 'POST',
+            //         data: {banned: ban , uid:uid },
+            //         success: function(data){
+            //             if (data != 'ERROR') {
+            //               alert(data.banned)
+            //             }
+            //         }
+            //       });
+            // // 
+
+            var data =  {banned: ban , uid:uid.value };
+           console.log(data)
+
+            callApi('/api/user/setbanning', data, 'POST').then(d => {
+                  
+              // alert(d.data.banned)
+         
+                  if(cb.checked ){
+                    alert('User succesfully banned')
+                  $('#istempbanned').prop('checked', true);
+                }else{
+                  alert('User succesfully unbanned')
+                  $('#istempbanned').prop('checked', false);
+                }
+
+              }).then(error => {
+                  console.log(error);
+              })
+
+
+
+          }else{
+
+            if(!cb.checked ){
+              $('#istempbanned').prop('checked', true);
+            }else{
+              $('#istempbanned').prop('checked', false);
+            }
+           
+
+
+          }
+        }
+
+const base_url = '{{URL::to('/')}}';
+
+function callApi(url, data, method) {
+    const config = {
+        method: method,
+        url: `${base_url}${url}`,
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+        data : data
+    };
+    return axios(config)
+};
+
       function getTeams2() {
             var rgn = $('#edit_rgn').val();
             var grp = $('#edit_typ').val();
@@ -938,6 +1161,7 @@
                         contno : $('#edit_contno').val(),
                         id :  $('#edit_uid').val(),
                         deffaci :$('#def_faci2').val(),
+                        editpass :$('#ThePassWord1').val(),
                     },
                     success : function(data){
                       if (data == 'DONE') {
@@ -955,6 +1179,8 @@
               }
           });
   </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
   @endsection
 @else
   <script type="text/javascript">window.location.href= "{{ asset('employee') }}";</script>

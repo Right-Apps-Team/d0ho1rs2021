@@ -11,6 +11,7 @@
 	use DateTime;
 	use DateTimeZone;
 	use FunctionsClientController;
+	// use Hash;
 	// syrel added
 	use Cache;
 	use Agent;
@@ -5987,6 +5988,9 @@
 					}
 					if (isset($request->team)) {
 						$data['team'] = $request->team;
+					}
+					if (isset($request->editpass)) {
+						$data['pwd'] = Hash::make(($request->editpass));
 					}
 					// return $data['rgnid'];
 					$test = DB::table('x08')->where('uid', '=', $request->id)->update($data);

@@ -9255,6 +9255,41 @@ use FunctionsClientController;
 		}
 		////// MODULE
 		////// SYSTEM USERS
+		public function setBanning(Request $request)
+		{
+			try 
+			{
+				$chk = DB::table('x08')->where([['uid', $request->uid]])->first();
+
+				if($request->banned == 1){
+					DB::table('x08')->where([['uid', $request->uid]])->update(['isTempBanned' => null,'tries' => 0,'isBanned' => 0,'lastTry' => null,'token' => null ]);
+				}else{
+					DB::table('x08')->where([['uid', $request->uid]])->update(['isTempBanned' => 1 ]);
+				}
+
+				$chknew = DB::table('x08')->where([['uid', $request->uid]])->first();
+
+				return response()->json(
+					[
+						'banned' => $chknew->isTempBanned,
+					],
+					200
+				);
+
+
+			}
+			catch (Exception $e) 
+			{
+				AjaxController::SystemLogs($e);
+				return $e;
+			}
+
+		}
+
+
+
+
+
 		public function SystemUsersManage(Request $request)
 		{
 			if ($request->isMethod('get')) 
@@ -9345,7 +9380,7 @@ use FunctionsClientController;
 
 							DB::table('x08')->insert(
 				                [
-				                    'uid' => $data['uname'],
+				                    'uid' => strtoupper($data['uname']),
 				                    'pwd' => $data['pass'],
 				                    'rgnid' => $data['rgnid'],
 				                    'contact' => $data['cntno'],
@@ -9547,7 +9582,7 @@ use FunctionsClientController;
 				  		$test2 = DB::table('chg_app')->where('chgapp_id', '=', $request->id)->update($upd);
 			  		} elseif($request->action == 'evalute') {
 			  			DB::table('chgfil')->where([['appform_id',$appid],['chg_num','<>',null],['isPaid',null]])->update(['isPaid'=>1]);
-			  			$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveBy'=>$cur_user['cur_user'],'CashierApproveDate' => Date('Y-m-d',strtotime('now')), 'CashierApproveTime' => Date('H:i:s',strtotime('now')), 'CashierApproveIp' => $request->ip(), 'isCashierApprove' => 1, 'proofpaystat' => 'posted']);
+			  			$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveBy'=>$cur_user['cur_user'],'CashierApproveDate' => Date('Y-m-d',strtotime('now')), 'CashierApproveTime' => Date('H:i:s',strtotime('now')), 'CashierApproveIp' => $request->ip(), 'isCashierApprove' => 1, 'proofpaystat' => 'posted', 't_date' => Date('Y-m-d',strtotime('now'))]);
 			  			if($update){
 			  				$uid = AjaxController::getUidFrom($request->appid);
 			  				AjaxController::notifyClient($request->appid,$uid,31);
@@ -9752,7 +9787,7 @@ use FunctionsClientController;
 				}
 			} else {
 				if($request->action == 'edit'){
-					$update = array("ORRef"=>$request->or, "depositNum"=>$request->slip, "otherRef"=>$request->ref,"amount"=>$request->amt);
+					$update = array("ORRef"=>$request->or, "depositNum"=>$request->slip, "otherRef"=>$request->ref,"amount"=>$request->amt,"m04ID_FK"=>$request->nat);
 					if(DB::table('chgfil')->where('id',$request->id)->update($update)){
 						return "SUCCESS";
 					} else {

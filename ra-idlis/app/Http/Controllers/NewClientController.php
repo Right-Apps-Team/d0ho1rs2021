@@ -873,7 +873,7 @@ class NewClientController extends Controller {
 							'hasAssessment'=>$hasAssessment,
 							'hfser_id'=>$af->hfser_id
 						];
-						return view('client1.payment', $arrRet);
+						// return view('client1.payment', $arrRet);
 					} }
 					return redirect('client1/apply')->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'No payment(s) and/or charges selected.']);
 				}

@@ -89,7 +89,7 @@
                   </td>
                   <td class="toRemove">
                     @if(count($brp[1]) > 0)
-                      <select class="form-control" name="locabc[]" required>
+                      <select class="form-control" onclick="renewLoc()"  class="newloc" name="locabc[]" required>
                         <option value hidden disabled selected></option>
                         @if(count($brp[1]) > 0)
                           @for($i = 0; $i < count($brp[1]); $i++)
@@ -727,7 +727,7 @@
       </div>
       <div class="container-fluid mt-1 mb-2">
         With Approved bed capacity of:
-        <input type="text" class="form-control" name="ubnval">
+        <input type="text" class="form-control" name="ubnval" id="setubnval">
       </div>
 
       <div class="container-fluid mt-1 mb-2">
@@ -771,7 +771,8 @@
     </div>
       <div class="container mt-5">
         <div class="row">
-          <div class="col-md"> <button class="btn btn-primary float-right" style="padding: 10px;" type="submit">Submit</button></div>
+          <!-- <div class="col-md"> <a class="btn btn-primary float-right" style="padding: 10px; color: white" >Submit</a></div> -->
+          <div class="col-md"> <button class="btn btn-primary float-right" onclick="submitButtonClick(event)" style="padding: 10px;" type="submit">Submit</button></div>
           <div class="col-md "> <button class="btn btn-primary " style="padding: 10px;" type="button" id="draft">Save for draft</button> </div>
         </div>
       </div>
@@ -784,8 +785,84 @@
     let counterForMain = 0;  
     $( document ).ready(function() {
       processPopulationCountInpt()
-});  
+}); 
+
+// 
+function submitButtonClick(event) {
+		event.preventDefault();
+    var ubnval = document.getElementById("setubnval").value;
+        if(confirm("Are you sure you want to proceed? The approved bed capacity of this application is "+ ubnval)){
+        	document.getElementById("evalSave").submit();
+        }
+        
+        
+		//other stuff you want to do instead...
+} 
+
    
+function renewLoc(){
+  console.log("reciiiee")
+console.log(document.getElementsByClassName("newloc"))
+
+
+  // $('.newloc').remove()
+
+
+
+  var inpt = document.getElementsByClassName("renewable")
+
+  for (var o = 0; o < inpt.length; o++) {
+  let options = inpt[o].getElementsByTagName('option');
+
+  for (var i=options.length; i--;) {
+      inpt[o].removeChild(options[i]);
+  }
+}
+
+
+  let option = $('[name="addr[]"]').map(function(){return $(this).val()}), toReturn = '';
+console.log(option[0])
+
+  console.log(inpt.length)
+
+  for (var i = 0; i < inpt.length; i++) {
+    for (var o = 0; o < option.length; o++) {
+        var opt = document.createElement("option");
+            opt.value = option[o];
+            opt.textContent = option[o];
+
+         
+            inpt[i].appendChild(opt);
+
+           
+            }
+
+          }
+
+  }
+
+      // for (var i = 0; i < option.length; i++) {
+
+      //   var opt = document.createElement("option");
+      //       opt.value = option[i];
+      //       opt.textContent = option[i];
+
+      //       for (var b = 0; b < inpt.length; b++) {
+      //       inpt[b].appendChild(opt);
+
+      //       console.log(inpt[b])
+      //       }
+
+
+      //   // toReturn += '<option class="newloc" value="'+option[i]+'">'+option[i]+'</option>';
+      // }
+  
+// }
+
+
+
+
+
     $(document).on('keyup keypress change keydown paste',$('[name="est[]"]'),function(){
     // $(document).on('keyup keypress change keydown paste',$('[name="catchment[]"]'),function(){
       processPopulationCount();
@@ -997,7 +1074,7 @@
           '<button class="btn btn-danger" type="button" data-toggle="tooltip" data-placement="top" onclick="deleteRow('+counterForMain+');" title="Remove"><i class="fa fa-times"></i></button>'+
           '</td>'+
           '<td>'+
-            '<select name="type[]" class="form-control">'+
+            '<select  name="type[]" class="form-control">'+
             (nonex == "non" ? '<option value="Primary" selected>Primary</option>' : '')
               
               +
@@ -1005,7 +1082,7 @@
               +
             '</select>'+
           '</td>'+
-          '<td><input type="text" name="addr[]" class="form-control"></td>'+
+          '<td><input type="text" onblur="renewLoc()" name="addr[]" class="form-control"></td>'+
 
           '<td><input type="text" '+ (dis?  'disabled' : ' ')  +' name="catchment[]" class="form-control"></td>' +
 
@@ -1021,7 +1098,7 @@
       
       let option = $('[name="addr[]"]').map(function(){return $(this).val()}), toReturn = '';
       for (var i = 0; i < option.length; i++) {
-        toReturn += '<option value="'+option[i]+'">'+option[i]+'</option>';
+        toReturn += '<option class="newloc" value="'+option[i]+'">'+option[i]+'</option>';
       }
       return toReturn;
     }
@@ -1038,7 +1115,8 @@
         '<tr class="trd'+(!removeX ? (counterForDom + 1001) : '')+'">'+
           toInsertForX+
           '<td><input class="form-control toChange" type="text" name=existHosp'+elToInsName+'[] required></td>'+
-          '<td class = "toRemove"><select class="form-control" name="loc'+elToInsName+'[]" required><option value hidden disabled selected></option>'+
+          '<td class = "toRemove"><select   class="form-control renewable" name="loc'+elToInsName+'[]" required>'+
+          '<option value hidden disabled selected></option>'+
             getAddress()+
           '</select></td>'+
           '<td style="width:200px" class="toRemoveaddTT"><input type="number" class="toRemoveaddTT form-control toTotal toChange" name="'+elToInsName+'[]" required></td>'+
@@ -1080,7 +1158,7 @@
         return parts.join(".");
     }
     function deleteRow(elName) {
-
+      
       console.log("Hello")
     
 
@@ -1099,6 +1177,7 @@
 
       setTimeout(function(){ 
         getABCCount(); 
+        renewLoc()
    }, 1000);
     
     }

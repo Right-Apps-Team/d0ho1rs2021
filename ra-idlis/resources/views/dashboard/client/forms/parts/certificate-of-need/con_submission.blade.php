@@ -22,7 +22,7 @@ const savePartialCon = async (e) => {
         if($('#brgy').val() == ""){errorPar +=1; errors +=1; ermsgP+= "Baranggay, "; ermsg += "Baranggay, "}
          // Disregard if update
 
-        if($('#street_name').val() == ""){errors +=1; ermsg += "Street Name, "}
+        // if($('#street_name').val() == ""){errors +=1; ermsg += "Street Name, "}
         if($('#zip').val() == ""){errors +=1; ermsg += "Zip Code, "}
 
         if($('#fac_mobile_number').val() == ""){errors +=1; ermsg += "Facility Mobile No., "}
@@ -78,6 +78,11 @@ const savePartialCon = async (e) => {
            if(check == false){
              invalids +=1;   invmssg += "Invalid Proponent Mobile Number, "
            } 
+        }
+
+        const types = $("input[name='type[]']");
+        if(types.length <= 0){
+            errors +=1; ermsg += "Please add catchment area,"
         }
 
         // if(errors > 0){
