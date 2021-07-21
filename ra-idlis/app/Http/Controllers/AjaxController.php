@@ -6849,6 +6849,7 @@ public static function getAllUidByRegFac($regfac_id) {
 		public static function getAllVerdict() {
 			try {
 				$data = DB::table('verdict')
+				->orderBy('vid', 'DESC')
 							->get();
 
 				return ($data);

@@ -74,9 +74,12 @@
 
         									@elseif(($value->hasLOE != "" && $value->novid != "" ))
 
-        										<button type="btn" onclick="showData('{{$value->LOE}}','{{$value->monid}}')" class="btn btn-info" data-toggle="modal" data-target="#viewAct">
+											@if($value->explanation != null)
+        										<button type="btn" onclick="showData('{{$value->explanation}}','{{$value->monid}}')" class="btn btn-info" data-toggle="modal" data-target="#viewAct">
+        										<!-- <button type="btn" onclick="showData('{{$value->LOE}}','{{$value->monid}}')" class="btn btn-info" data-toggle="modal" data-target="#viewAct"> -->
         											<i class="fa fa-paperclip" aria-hidden="true"></i> Show LOE
         										</button>	
+												@endif
         										@if($value->attached_filesUser != null)
         										<button type="btn" onclick="showData('{{strip_tags($value->explanation)}}','{{$value->monid}}',true)" class="btn btn-info mt-3" data-toggle="modal" data-target="#viewActWithImage">
         											<i class="fa fa-paperclip" aria-hidden="true"></i> Show Uploads
@@ -156,7 +159,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content " style="border-radius: 0px;border: none;">
         <div class="modal-body text-justify" style=" background-color: #272b30;color: white;">
-          <h5 class="modal-title text-center lead"><strong>Letter of Explanation</strong></h5>
+          <h5 class="modal-title text-center lead"><strong>Letter of Explanation </strong></h5>
           <hr>
           	<div class="container">
           		<div class="col-md-12 lead pb-3 text-center font-weight-bold">Client Action Comment</div>
@@ -239,6 +242,7 @@
 			              	<input type="hidden" name="novmonid" id="novmonid" hidden>
 
 			              	{{-- appid --}}
+			              	<!-- <input type="text" name="novappid" id="novappid" > -->
 			              	<input type="hidden" name="novappid" id="novappid" hidden>
 
 			              	{{-- date --}}
@@ -321,7 +325,7 @@
 			              		</div>
 				            </div>
 							<textarea name="nov_others" id="nov_others" hidden class="form-control w-100" placeholder="Specify"
-							 data-parsley-required-message="<b>*Specification</b> required" required="" data-parsley="recrecom"></textarea>
+							 data-parsley="recrecom"></textarea>
 
 			              	<hr>
 

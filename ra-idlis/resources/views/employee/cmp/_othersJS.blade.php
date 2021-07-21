@@ -1278,6 +1278,7 @@ console.log("Hello")
 
 
    function issueNOV(monid, appid, date, name, type, ast, violation, team, teamname) {
+      console.log("Received")
 
       $('#novsubdesc').summernote('code','<br><br>');    
 

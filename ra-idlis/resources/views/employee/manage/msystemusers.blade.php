@@ -116,9 +116,43 @@
                     <!-- <input type="text" name="pre" class="form-control"> -->
                     <select name="pre" class="form-control">
 											<option value="" selected>None</option>
-											<option value="Mr">Mr</option>
+                      <option value="Adm">Adm</option>
+                      <option value="Ar">Ar</option>
+                      <option value="Atty">Atty</option>
+                      <option value="Capt">Capt</option>
+                      <option value="Chief">Chief</option>
+                      <option value="Cmdr">Cmdr</option>
+                      <option value="Col">Col</option>
+                      <option value="Dean">Dean</option>
+                      <option value="Dr">Dr</option>
+                      <option value="Engr">Engr</option>
+                      <option value="Gen">Gen</option>
+                      <option value="Gov">Gov</option>
+                      <option value="Hon">Hon</option>
+                      <option value="Lt Col">Lt Col</option>
+                      <option value="Maj">Maj</option>
+                      <option value="Mr">Mr</option>
 											<option value="Mrs">Mrs</option>
-											<option value="Ms">Ms</option>
+                      <option value="Ms">Ms</option>
+                      <option value="MSgt">MSgt</option>
+											<option value="Prof">Prof</option>
+											
+                     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 										</select>
                     </div>
                   </div>

@@ -126,11 +126,12 @@
 												@if($value->supportDoc)
 												
 
-												<a target="_blank" href="{{ route('OpenFile', $value->supportDoc) }}" >
-													<button title="Supporting Document" style="float: right;" type="button" class="btn btn-primary p-2 m-1">
+												<!-- <a target="_blank" href="{{ route('OpenFile', $value->supportDoc) }}" > -->
+												
+													<button title="Supporting Document" onclick="getUps('{{$value->supportDoc}}')" data-toggle="modal" data-target="#uploadsmod"  style="float: right;" type="button" class="btn btn-primary p-2 m-1">
 													<i class="fa fa-paperclip" aria-hidden="true"></i>
-													</button>
-													</a>
+													<!-- </button> -->
+													<!-- </a> -->
 												@endif
 												
 												<!-- <button class="btn btn-outline-success" title="Recommendation" data-toggle="modal" data-target="#recMonModal" @if($value->hfsrbno == "" || $value->recommendation != "") hidden @endif onclick="recommendationModal('{{$value->survid}}', '{{$value->appid}}', '{{$value->date_issued}}', '{{$value->name_of_faci}}', 'AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname', '{{$value->hfsrbno}}')">
@@ -330,6 +331,31 @@
 	    </div>
   	</div>
 
+	  <div class="modal fade" id="uploadsmod" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	    <div class="modal-dialog" role="document">
+	    	<div class="modal-content " style="border-radius: 0px;border: none;">
+	        	<div class="modal-body text-justify" style=" background-color: #272b30;color: white;">
+		          	<h5 class="modal-title text-center">
+		          		<strong>Supporting Documents</strong>
+		          		<!-- <strong>Recommendation</strong> -->
+		          		
+		          	</h5>
+					  <center>
+					  <div id="mainappendups">
+							  <div id="appendups">
+
+						    	</div>
+					  </div>  
+					  </center>
+				</div>
+			</div>
+		</div>
+	  </div>
+
+
+
+
+
   	{{-- Recommendation --}}
 	<div class="modal fade" id="recMonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	    <div class="modal-dialog" role="document">
@@ -425,7 +451,9 @@
 									<select class="form-control w-100" name="recverdict" onchange="recextrachange(this)" id="recvselect" data-parsley-required-message="<b>*Verdict</b> required" required data-parsley="recrecom" required>
 										<option selected disabled hidden value="">Select a verdict</option>
 										@foreach($AllVer as $key => $value)
+											@if($value->vdesc != 'Accepted' && $value->vdesc != 'Not Accepted' )
 											<option value="{{$value->vid}}">{{$value->vdesc}}</option>
+											@endif
 										@endforeach
 									</select>
 								</div>
@@ -439,8 +467,10 @@
 
 							<div class="row mb-2">
 								<div class="col-sm-12">
-									<label style="float: left;" for="fileup">Attach supporting documents</label>
-									<input id="fileup" class="form-control"  type="file" name="filesup">
+									<label style="float: left;" for="fileup">Attach supporting documents</label>&nbsp;&nbsp;&nbsp; <a class="btn btn-success" onclick="processImages()" ><i class="fa fa-plus-circle"></i></a>
+									<input id="fileup" class="form-control"  type="file" name="filesup[]">
+									<div id="appendArea"></div>
+									<!-- <input id="fileup" class="form-control"  type="file" name="filesup"> -->
 								</div>
 							</div>
 
@@ -620,7 +650,45 @@
 	    </div>
   	</div>
 
+<script>
+let increment = 1;
+function processImages(e){
+	increment++;
+$("#appendArea").prepend(
+				'<div id="file'+increment+'" ><input  class="form-control" id="mi"  type="file" name="filesup[]"> <a class="btn btn-danger " onclick="removeFile('+"'file"+increment+"'"+')"><i class="fa fa-minus-circle"></i></a></div>'
+				);
 
+				return false;
+}
+
+function removeFile(id){
+	console.log(id)
+	$('#'+id).remove()
+}
+
+function getUps(ups){
+	$('#appendups').remove()
+	var newDiv = document.createElement("div");
+    newDiv.setAttribute("id", "appendups");
+	document.getElementById("mainappendups").appendChild(newDiv);
+
+	console.log(ups)
+	const myArr = ups.split(",");
+
+	console.log('{{URL::to('/')}}')
+	const url ='{{URL::to('/')}}';
+
+	for(var i = myArr.length - 1; i >= 0; i--){
+		$("#appendups").prepend(
+				'<br><a target="_blank" href="'+url+'/file/open/'+myArr[i]+'" >' +
+				'<button class="btn btn-outline-primary "> Document #'+(i +1)+'</button></a><br><br>' 
+				);
+		console.log(myArr[i])
+	}
+}
+
+
+</script>
 	{{-- <script>
 		var data = {!!$AllData[0]->DOHMonitoring!!};
 		console.log(data);

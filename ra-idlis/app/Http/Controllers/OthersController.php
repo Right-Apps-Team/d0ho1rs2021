@@ -1040,13 +1040,23 @@ class OthersController extends Controller
 			if($request->isMethod('post')) {
 				// dd($request->all());
 
-				$fileNameToStore = null;
-				if($request->filesup){
-					$data = $request->input('filesup');
-					$fname = $request->file('filesup')->getClientOriginalName();
-					$fileExtension = $request->file('filesup')->getClientOriginalExtension();
-					$fileNameToStore = (session()->has('employee_login') ? FunctionsClientController::getSessionParamObj("employee_login", "uid") : FunctionsClientController::getSessionParamObj("uData", "uid")).'_'.Str::random(10).'_'.date('Y_m_d_i_s').'.'.$fileExtension;
-					$request->file('filesup')->storeAs('public/uploaded', $fileNameToStore);
+				// $fileNameToStore = null;
+				// if($request->filesup){
+				// 	$data = $request->input('filesup');
+				// 	$fname = $request->file('filesup')->getClientOriginalName();
+				// 	$fileExtension = $request->file('filesup')->getClientOriginalExtension();
+				// 	$fileNameToStore = (session()->has('employee_login') ? FunctionsClientController::getSessionParamObj("employee_login", "uid") : FunctionsClientController::getSessionParamObj("uData", "uid")).'_'.Str::random(10).'_'.date('Y_m_d_i_s').'.'.$fileExtension;
+				// 	$request->file('filesup')->storeAs('public/uploaded', $fileNameToStore);
+				// }
+
+
+				$fl = null;
+				if($request->has('filesup')){
+					$fl = array();
+					foreach ($request->file('filesup') as $key) {
+						$imageRec = FunctionsClientController::uploadFile($key);
+						array_push($fl,$imageRec['fileNameToStore']);
+					}
 				}
 
 				DB::table('surv_form')
@@ -1058,7 +1068,8 @@ class OthersController extends Controller
 					's_rec_others'=>$request->others, 
 					'verdict'=>$request->recverdict, 
 					's_ver_others'=>$request->recothers,
-					'supportDoc'=>$fileNameToStore
+					'supportDoc'=>(is_array($fl) ? implode(',',$fl): null )
+					// 'supportDoc'=>$fileNameToStore
 				]);
 
 				$fromSurv = DB::table('surv_form')->where('survid',$request->recmonid)->select('compid')->first();

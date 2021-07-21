@@ -285,7 +285,7 @@
 
 			@if($needToAdress)
 				<div class="text-center container mt-5 font-weight-bold display-4">{{$message}}</div>
-					
+				
 				
 				@if(!isset($data->$toCheckForData))
 				<div class="container pb-3 pt-3">
@@ -295,6 +295,7 @@
 				</div>	
 				
 				<div class="container pb-3">
+					
 					<textarea name="exp" cols="30" rows="10" class="form-control w-100" required="">{{($data->explanation ?? "")}}</textarea>
 				
 					
@@ -335,7 +336,8 @@
 						@case ('mon')
 							@if($data->$toCheckForData != null)
 							<div class="container pb-3">
-								<textarea name="exp" cols="30" rows="10" class="form-control" required="">{{($data->LOE ?? "")}}</textarea>
+								<textarea name="exp" cols="30" rows="10" class="form-control" required="">{{($data->explanation ?? "")}}</textarea>
+								<!-- <textarea name="exp" cols="30" rows="10" class="form-control" required="">{{($data->LOE ?? "")}}</textarea> -->
 							</div>
 							@if($data->attached_filesUser == null)
 
