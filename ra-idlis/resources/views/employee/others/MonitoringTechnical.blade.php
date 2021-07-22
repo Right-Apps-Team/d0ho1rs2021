@@ -74,9 +74,10 @@
 
         									@elseif(($value->hasLOE != "" && $value->novid != "" ))
 
-											@if($value->explanation != null)
-        										<button type="btn" onclick="showData('{{$value->explanation}}','{{$value->monid}}')" class="btn btn-info" data-toggle="modal" data-target="#viewAct">
-        										<!-- <button type="btn" onclick="showData('{{$value->LOE}}','{{$value->monid}}')" class="btn btn-info" data-toggle="modal" data-target="#viewAct"> -->
+											@if($value->LOE != null)
+											<!-- if($value->explanation != null) -->
+        										<!-- <button type="btn" onclick="showData('{{$value->explanation}}','{{$value->monid}}')" class="btn btn-info" data-toggle="modal" data-target="#viewAct"> -->
+        										<button type="btn" onclick="showData('{{$value->LOE}}','{{$value->monid}}')" class="btn btn-info" data-toggle="modal" data-target="#viewAct">
         											<i class="fa fa-paperclip" aria-hidden="true"></i> Show LOE
         										</button>	
 												@endif

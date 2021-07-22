@@ -907,11 +907,11 @@ class OthersController extends Controller
 					$fromComplaints = DB::table('complaints_form')->where('ref_no',$r->compid)->first();
 					if(isset($fromComplaints->compEmail)){
 						$toData = array('name' => $fromComplaints->name_of_comp, 'faciname' => $fromComplaints->name_of_faci);
-						Mail::send('employee.others.mailForComplaints', $toData, function($msg) use ($fromComplaints) {
-							$msg->to($fromComplaints->compEmail);
-							$msg->subject('DOHOLRS Surveillance Team');
-							$msg->from('doholrs@gmail.com','DOH Surveillance Team');
-						});
+						// Mail::send('employee.others.mailForComplaints', $toData, function($msg) use ($fromComplaints) {
+						// 	$msg->to($fromComplaints->compEmail);
+						// 	$msg->subject('DOHOLRS Surveillance Team');
+						// 	$msg->from('doholrs@gmail.com','DOH Surveillance Team');
+						// });
 						DB::table('complaints_form')->where('ref_no',$r->compid)->update(['isChecked' => 1]);
 					}
 				}

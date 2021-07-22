@@ -171,7 +171,8 @@
       function getComplaintsDet(who){
 
          if($(who).val() != ""){
-
+            console.log("Check")
+console.log($(who).val())
             $.ajax({
 
                url: '{{asset('employee/dashboard/others/surveillance/getComplaint')}}',

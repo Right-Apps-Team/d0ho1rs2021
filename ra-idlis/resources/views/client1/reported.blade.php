@@ -287,7 +287,9 @@
 				<div class="text-center container mt-5 font-weight-bold display-4">{{$message}}</div>
 				
 				
-				@if(!isset($data->$toCheckForData))
+				@if(!isset($data->LOE))
+				
+				<!-- if(!isset($data->$toCheckForData)) -->
 				<div class="container pb-3 pt-3">
 					<p class="lead">
 						Explanation
@@ -298,7 +300,7 @@
 					
 					<textarea name="exp" cols="30" rows="10" class="form-control w-100" required="">{{($data->explanation ?? "")}}</textarea>
 				
-					
+<!-- 					
 					<div class="row mt-4 removePadding" id="appendArea" @if($hideifMon) hidden="" @endif>
 						
 						<div class="col-md-2 removePadding">
@@ -315,7 +317,7 @@
 							</div>
 						</div>
 
-					</div>
+					</div> -->
 
 				</div>
 				
@@ -336,7 +338,11 @@
 						@case ('mon')
 							@if($data->$toCheckForData != null)
 							<div class="container pb-3">
-								<textarea name="exp" cols="30" rows="10" class="form-control" required="">{{($data->explanation ?? "")}}</textarea>
+							<b>	Explanation </b>
+							<p>{{($data->LOE ?? "")}}</p>
+							<br>
+							<br>
+								<textarea name="exp" id="imgexp" cols="30" rows="10" class="form-control" required="">{{($data->explanation ?? "")}}</textarea>
 								<!-- <textarea name="exp" cols="30" rows="10" class="form-control" required="">{{($data->LOE ?? "")}}</textarea> -->
 							</div>
 							@if($data->attached_filesUser == null)
@@ -354,7 +360,8 @@
 									
 									<div class="col-md-2 removePadding">
 										<div class="d-flex justify-content-center mt-5">
-										  <button type="button" onclick="processImages()" class="customButton">Add More Photos</button>
+										  <button type="button" onclick="processImages()" class="customButton">Add More Attachment</button>
+										  <!-- <button type="button" onclick="processImages()" class="customButton">Add More Photos</button> -->
 										</div>
 									</div>
 
@@ -547,6 +554,14 @@
 					$('.filename.' + id ).text(this.files[0].name);
 				});
 			})
+
+			@if(!isset($data->explanation))
+
+				document.getElementById("imgexp").value = " ";
+			@endif
+
+
+
 		</script>
 		@include('client1.cmp.footer')
 	</body>

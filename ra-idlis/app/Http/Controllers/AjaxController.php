@@ -6588,10 +6588,11 @@
 				$ar = array();
 				$fac = null;
 				$db = DB::table('complaints_form')->where('ref_no',$req->refno)->first();
-
+				$reg1 = null ;
 				if(!is_null($db->regfac_id)){
 					$reg = DB::table('registered_facility')->where('regfac_id',$db->regfac_id)->first();
 					$db->typefacid_id = $reg->facid;
+					$reg1 = 1 ;
 				}
 
 
@@ -6600,7 +6601,21 @@
 					array_push($ar,(!empty(DB::table('complaints')->where('cmp_id',$comp)->first()) ? DB::table('complaints')->where('cmp_id',$comp)->first()->cmp_desc : $comp));
 				}
 				$db->properVio = implode(',', $ar);
-				$fac = DB::table('facilitytyp')->where('facname',$db->type_of_faci)->select('facid')->first()->facid;
+
+
+			
+
+				if($db->type_of_faci == "Hospital"){
+				if($reg1){
+					if(!is_null($reg->lto_id)){
+						$fac = 	DB::table('x08_ft')->where('appid',$reg->lto_id)->orderBy('id', 'ASC')->first()->facid;
+					}
+				}
+				}else{
+					$fac = DB::table('facilitytyp')->where('facname',$db->type_of_faci)->select('facid')->first()->facid;
+				}
+
+
 				$db->facid = $fac;
 				return json_encode($db);
 			}

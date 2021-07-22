@@ -61,7 +61,10 @@
 					                    @endif
 				                  	</td>
 				                  	<!-- <td class="font-weight-bold" style="text-align:center">{{isset($value->verdict) ? ucfirst($value->verdict) :  'No Recommendation Yet' }}</td> -->
-				                  	<td class="font-weight-bold" style="text-align:center">{{isset($value->vdesc) ? $value->vdesc : (isset($value->s_ver_others) ? $value->s_ver_others : 'No Recommendation Yet') }}{{(isset($value->s_ver_others) ? $value->s_ver_others : ' ')}}</td>
+				                  	<td class="font-weight-bold" style="text-align:center">
+									  {{ $value->s_ver_others ?  $value->s_ver_others : $value->vdesc}}
+									  <!-- {{isset($value->vdesc) ? $value->vdesc : (isset($value->s_ver_others) ? $value->s_ver_others : 'No Recommendation Yet') }}{{(isset($value->s_ver_others) ? $value->s_ver_others : ' ')}}</td> -->
+				                  	<!-- <td class="font-weight-bold" style="text-align:center">{{isset($value->vdesc) ? $value->vdesc : (isset($value->s_ver_others) ? $value->s_ver_others : 'No Recommendation Yet') }}{{(isset($value->s_ver_others) ? $value->s_ver_others : ' ')}}</td> -->
 				                  	<!-- <td class="font-weight-bold" style="text-align:center">{{isset($value->vdesc) ? $value->vdesc : (isset($value->s_ver_others) ? $value->s_ver_others : 'No Recommendation Yet') }}</td> -->
         							@if($value->hasViolation != "")
         								<td style="text-align:center">
@@ -467,8 +470,9 @@
 
 							<div class="row mb-2">
 								<div class="col-sm-12">
-									<label style="float: left;" for="fileup">Attach supporting documents</label>&nbsp;&nbsp;&nbsp; <a class="btn btn-success" onclick="processImages()" ><i class="fa fa-plus-circle"></i></a>
-									<input id="fileup" class="form-control"  type="file" name="filesup[]">
+									<label style="float: left;" for="fileup">Attach supporting documents</label>
+								
+									<input id="fileup" class="form-control "  style="width: 90%;" type="file" name="filesup[]">&nbsp;<a class="btn btn-success" onclick="processImages()" ><i class="fa fa-plus-circle"></i></a>
 									<div id="appendArea"></div>
 									<!-- <input id="fileup" class="form-control"  type="file" name="filesup"> -->
 								</div>
@@ -655,7 +659,7 @@ let increment = 1;
 function processImages(e){
 	increment++;
 $("#appendArea").prepend(
-				'<div id="file'+increment+'" ><input  class="form-control" id="mi"  type="file" name="filesup[]"> <a class="btn btn-danger " onclick="removeFile('+"'file"+increment+"'"+')"><i class="fa fa-minus-circle"></i></a></div>'
+				'<div id="file'+increment+'" ><input style="width: 90%; margin-top: 4px;"  class="form-control" id="mi"  type="file" name="filesup[]"> <a class="btn btn-danger " onclick="removeFile('+"'file"+increment+"'"+')"><i class="fa fa-minus-circle"></i></a></div>'
 				);
 
 				return false;

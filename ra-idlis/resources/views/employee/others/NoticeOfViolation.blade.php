@@ -56,7 +56,8 @@
 							</div>
 
 							<div class="row text-left">
-								<div class="col-sm-4"><b>Control No. {{$Nov->novid}}</b></div>
+								<div class="col-sm-4"><b>Control No. {{$Nov->nov_num}}</b></div>
+								<!-- <div class="col-sm-4"><b>Control No. {{$Nov->novid}}</b></div> -->
 								<div class="col-sm-8 w-100">&nbsp;</div>
 							</div>
 
