@@ -1499,7 +1499,7 @@ const fetchSubClass1 = async (e) => {
       document.getElementById("approving_authority_name").value = approvingauthority;
       document.getElementById("ptcCode").value = ptcCode;
       document.getElementById("noofbed").value = noofbed;
-      document.getElementById("noofmain").value = noofmain;
+      document.getElementById("noofmain").value = noofmain ? noofmain : 1;
       document.getElementById("noofsatellite").value = noofsatellite;
       document.getElementById("noofdialysis").value = noofdialysis;
 

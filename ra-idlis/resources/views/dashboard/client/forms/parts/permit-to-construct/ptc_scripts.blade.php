@@ -96,7 +96,7 @@
 
         document.getElementsByName("type")[0].checked = true
         document.getElementsByName("hgpid")[0].checked = true
-
+      
         var ttype = document.getElementsByName("type")[0];
 
         var hgpidSel = document.getElementsByName("hgpid")[0];
@@ -107,9 +107,11 @@
             getPTCtype(ttype.value)
         }, 1000);
 
+       
+
         setTimeout(function(){ 
             getFacServCharge()
-        }, 1000);
+        }, 2000);
 
      
     }
@@ -139,6 +141,17 @@
         getServCap(selected)
         getChargesPerApplication()
         getOptions(selected)
+
+        setTimeout(function(){ 
+            if(document.querySelector('input[name="facid"]:checked') === null){
+            // if(document.getElementsByName("facid")[0].checked != true){
+                document.getElementsByName("facid")[0].checked = true
+           
+            }
+          
+        }, 500);
+
+
     }
 
     function removeOtherServCap() {
