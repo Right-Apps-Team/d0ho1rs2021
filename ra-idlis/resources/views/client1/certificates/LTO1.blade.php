@@ -62,7 +62,7 @@
 				</div>
 			</div>
 			<div class="card-body " style="width: 100%;">
-			<div class="watermarked">
+			<div class="{{$retTable[0]->assignedRgn == 'hfsrb'? 'watermarked': ''}}">
 				<br>
 				<span class="  heading" ><center><strong>LICENSE TO OPERATE</strong></center></span><br>
 				<!-- <span class="card-title text-center" style="font-family: ArialUnicodeMs;font-size: 42pt"><center><strong>LICENSE TO OPERATE</strong></center></span><br> -->
@@ -149,7 +149,15 @@
 					<div class="col-md-1" style="display: inline">
 						:</div>
 					<div class="col-md-5 contr" style="float:left;display: inline;">
-						{{((isset($retTable[0]->classname)) ? $retTable[0]->classname : "NOT DEFINED")}}
+						@if(isset($retTable[0]->funcid))
+							{{$retTable[0]->funcid == 1 ? 'General': 'Special'}}
+						@else
+						"NOT DEFINED"
+						@endif
+
+
+						<!-- {{((isset($retTable[0]->funcid)) ? $retTable[0]->funcid : "NOT DEFINED")}} -->
+						<!-- {{((isset($retTable[0]->classname)) ? $retTable[0]->classname : "NOT DEFINED")}} -->
 					</div>
 					<div class="col-md-1" style="display: inline">
 						&nbsp;</div>
@@ -162,7 +170,7 @@
 					<div class="col-md-1" style="display: inline">
 						:</div>
 					<div class="col-md-5 contr" style="float:left;display: inline;">
-					{{((isset($retTable[0])) ? ($retTable[0]->street_name.', '.$retTable[0]->street_number.', '.$retTable[0]->brgyname.', '.$retTable[0]->cmname.', '.$retTable[0]->provname.' '.$retTable[0]->rgn_desc) : 'No Location.')}}
+					{{((isset($retTable[0])) ? (ucfirst(strtolower($retTable[0]->street_name)).', '.ucfirst(strtolower($retTable[0]->street_number)).', '.ucfirst(strtolower($retTable[0]->brgyname)).', '.ucfirst(strtolower($retTable[0]->cmname)).', '.ucfirst(strtolower($retTable[0]->provname)).' '.ucfirst(strtolower($retTable[0]->rgn_desc))) : 'No Location.')}}
 						<!-- {{ucwords(((isset($retTable[0])) ? ($retTable[0]->rgn_desc.', '.$retTable[0]->provname.', '.$retTable[0]->cmname.', '.$retTable[0]->brgyname.', '. $retTable[0]->street_number. $retTable[0]->street_name.' '.$retTable[0]->street_number) : "CURRENT_LOCATION"))}} -->
 					</div>
 					<div class="col-md-1" style="display: inline">
@@ -233,6 +241,7 @@
 						@php
 							$type = json_decode($retTable[0]->typeamb);
 							$ambType = json_decode($retTable[0]->ambtyp);
+							$ambType1 = json_decode($retTable[0]->ambtyp);
 							$plateNum = json_decode($retTable[0]->plate_number);
 							if(count($ambType) == count($plateNum)){
 								$amb = array_combine($ambType, $plateNum);
@@ -252,7 +261,7 @@
 												$v = 0;
 												foreach($plateNum as $pn){
 													if($i == $v){
-														echo ((int)$i + 1).', Type '. $tp[$a].' ,Plate No. ' .  $pn;
+													//	echo ((int)$i + 1).', Type '. $tp[$a].' ,Plate No. ' .  $pn;
 													}
 												$v++;
 												}
@@ -270,13 +279,25 @@
 
 							}
 
+
+							$i=0;
+							foreach($ambType1 as $atval){
+								
+								if($ambType1[$i] == '1'){
+									echo ((int)$i ).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
+									
+								}
+
+								$i++;
+							}
+
 							
 						@endphp
 
-						<script> 
-							console.log('{{$retTable[0]->ambtyp}}')
-							</script>
+					
 						@endif
+
+						
 					</div>
 					<div class="col-md-1" style="display: inline">
 						&nbsp;</div>

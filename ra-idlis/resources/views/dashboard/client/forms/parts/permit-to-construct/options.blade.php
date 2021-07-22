@@ -16,6 +16,9 @@
 </div>
 
 {{-- Proposed Bed Capacity --}}
+
+
+<!-- <div class="col-md-12"> -->
 <div class="col-md-12" id="NPtc" hidden>
 <br/>
     <label>

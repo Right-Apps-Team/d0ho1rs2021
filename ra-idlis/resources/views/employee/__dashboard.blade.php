@@ -50,7 +50,32 @@
     $surv_count = count($new_data["surv"]);
     $mon_count = count($new_data["mon"]);
   @endphp
+  @php
+  foreach($appcount as $ap => $a) {
+    switch($a->hfser_id){
+									case 'CON' :
+                    $concount = $a->ctr;
+                  break;
+                  	case 'ATO' :
+                    $atocount = $a->ctr;
+                  break	;
+                  case 'COA' :
+                    $coacount = $a->ctr;
+                  break ;
+                  case 'COR' :
+                    $corcount = $a->ctr;
+                  break ;
+                   case 'LTO' :
+                    $ltocount = $a->ctr;
+                  break;
+                   default:
+                    $ptccount = $a->ctr;
+                  break;
+    }
+  }
+  @endphp
 
+  
   <div class="" style="padding: 10px;">
     <div class="row">
       <div class="col-md-3 col-sm-6 col-xs-12">
@@ -60,7 +85,8 @@
 
           <div class="info-box-content">
             <span class="info-box-text">CON Applications</span>
-            <span class="info-box-number">{{$data_count["CON"]}}</span>
+            <span class="info-box-number">{{$concount}}</span>
+            <!-- <span class="info-box-number">{{$data_count["CON"]}}</span> -->
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -74,7 +100,8 @@
 
           <div class="info-box-content">
             <span class="info-box-text">PTC Applications</span>
-            <span class="info-box-number">{{$data_count["PTC"]}}</span>
+            <span class="info-box-number">{{$ptccount}}</span>
+            <!-- <span class="info-box-number">{{$data_count["PTC"]}}</span> -->
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -87,7 +114,8 @@
 
           <div class="info-box-content">
             <span class="info-box-text">LTO Applications</span>
-            <span class="info-box-number">{{$data_count["LTO"]}}</span>
+            <span class="info-box-number">{{$ltocount}}</span>
+            <!-- <span class="info-box-number">{{$data_count["LTO"]}}</span> -->
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -100,7 +128,8 @@
 
           <div class="info-box-content">
             <span class="info-box-text">ATO Applications</span>
-            <span class="info-box-number">{{$data_count["ATO"]}}</span>
+            <span class="info-box-number">{{$atocount}}</span>
+            <!-- <span class="info-box-number">{{$data_count["ATO"]}}</span> -->
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -117,7 +146,8 @@
 
           <div class="info-box-content">
             <span class="info-box-text">COA Applications</span>
-            <span class="info-box-number">{{$data_count["COA"]}}</span>
+            <span class="info-box-number">{{$coacount}}</span>
+            <!-- <span class="info-box-number">{{$data_count["COA"]}}</span> -->
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -130,7 +160,8 @@
 
           <div class="info-box-content">
             <span class="info-box-text">COR Applications</span>
-            <span class="info-box-number">{{$data_count["COR"]}}</span>
+            <span class="info-box-number">{{$coacount}}</span>
+            <!-- <span class="info-box-number">{{$data_count["COR"]}}</span> -->
           </div>
           <!-- /.info-box-content -->
         </div>

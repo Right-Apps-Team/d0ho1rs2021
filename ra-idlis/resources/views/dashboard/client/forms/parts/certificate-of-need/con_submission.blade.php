@@ -80,6 +80,9 @@ const savePartialCon = async (e) => {
            } 
         }
 
+        if($('#noofbed').val() == "" ||  $('#noofbed').val() <= 0 ){errors +=1; ermsg += "Proposed bed capacity must not be 0 or empty,"}
+        
+
         const types = $("input[name='type[]']");
         if(types.length <= 0){
             errors +=1; ermsg += "Please add catchment area,"

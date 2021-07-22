@@ -32,6 +32,11 @@
                       <td scope="col" class="text-center">Options</td>
                   </tr>
                   </thead>
+
+                  <!--{{-- @if(!in_array($data->isrecommended, [2,null]))
+                             continue
+                              @endif --}} -->
+
                   <tbody id="FilterdBody">
                    @if (isset($BigData))
                         @foreach ($BigData as $data)
@@ -44,9 +49,10 @@
                               @endif
 
                             @else
-                              @if(!in_array($data->isrecommended, [2,null]))
-                                <?php continue; ?>
-                              @endif
+
+                            <!-- Place the  data->isrecommended [2,null] here-->
+
+
                             @endif
                             @php
                               $status = '';
@@ -61,6 +67,8 @@
                             <?php continue; ?>
                              @endif
 
+
+                             @if($data->hasAssessors == 'T')
                             <tr @if(!isset($data->documentSent) || $data->isrecommended == 2)style="background-color: #c4c1bb";@endif>
                               <td class="text-center">{{$data->hfser_id}}</td>
                               <td class="text-center">{{$data->hfser_id}}R{{$data->rgnid}}-{{$data->appid}}</td>
@@ -81,6 +89,8 @@
                                 </center>
                               </td>
                             </tr>
+                               @endif
+
                             {{-- @endif --}}
                           @endif
                         @endforeach

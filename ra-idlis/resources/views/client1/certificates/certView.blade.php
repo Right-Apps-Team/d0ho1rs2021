@@ -148,7 +148,8 @@
 						<center>:</center>
 					</div>
 					<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
-						{{((isset($otherDetails->ubn)) ? $otherDetails->ubn : (isset($retTable[0]->noofbed) ? $retTable[0]->noofbed : ''))}}
+						{{((isset($otherDetails->ubn)) ? $otherDetails->ubn : (isset($otherDetails->noofbed) ? $otherDetails->noofbed : ''))}}
+						<!-- {{((isset($otherDetails->ubn)) ? $otherDetails->ubn : (isset($retTable[0]->noofbed) ? $retTable[0]->noofbed : ''))}} -->
 					</div>	
 				</div>
 				@endif

@@ -172,6 +172,8 @@
                       <a class="btn {{(FunctionsClientController::existOnDB('cdrrpersonnel',[['appid',$AppData->appid],['isTag',1]]) ? 'bg-danger': 'btn-primary')}} p-3 text-white" target="_blank" href="{{url('client1/apply/fda/CDRR/view/personnel/').'/'.$AppData->appid.'/tag'}}">Tag Pharmacist</a>
                     </div>
                @endif
+
+               
                <!-- <button class="btn btn-primary" onclick="window.history.back();">Back</button> -->
             </div>
             <div class="card-body">
@@ -190,12 +192,12 @@
                         </a>
                     </h6>
                     @endif
-                    <span>
+                    <!-- <span>
                       <label>Checklist Review Count:&nbsp;</label>
                       <span class="font-weight-bold">@if(isset($AppData)){{$AppData->no_chklist}}@else{{'Not Available'}}@endif</span>
-                    </span>
+                    </span> -->
                     <h6>@isset($AppData) Status: @if ($AppData->isrecommended === null) <span style="color:blue">For Evaluation</span> @elseif($AppData->isrecommended == 1)  <span style="color:green">Accepted Evaluation</span> @elseif($AppData->isrecommended === 0) <span style="color:red">Disapproved Evaluation</span> @else <span style="color:orange">Evaluated, for Revision</span> @endif @endisset</h6>
-                    <h6 class="font-weight-bold"><u>OHSRS Status: <span style="color:blue">Verified</span></u></h6>
+                    <!-- <h6 class="font-weight-bold"><u>OHSRS Status: <span style="color:blue">Verified</span></u></h6> -->
                     @endif
               </div>
              
@@ -233,7 +235,7 @@
                      <script>
                        console.log('{!! json_encode($req[2][0]) !!}')
                        </script>
-                    
+                    @if($office == 'pharma' || $office == 'xray')
                        <span class="{{$req[2][0]->id.$req[2][0]->id}}_span_edit" @if($req[2][0]->evaluation !== NULL)style="display: none"@endif>
                           <div class="row booleans laSelected" apup="{{$req[2][0]->id}}" >
                              <div class="col-6">
@@ -259,6 +261,9 @@
                           <button type="button" title="Save" onclick="saveEvals()" class="btn btn-success" style="display: none"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
                           <button type="button" title="Cancel Edit" onclick="').toggle()" class="btn btn-danger" style="display: none"><i class="fa fa-times" aria-hidden="true"></i></button>
                         </span>
+                  @endif
+
+                        
                         <span class="{{$req[2][0]->id.$req[2][0]->id}}_span_edit" @if($req[2][0]->evaluation === NULL)style="display: none"@else style=""@endif>
                             @if($req[2][0]->evaluation == 1) 
                               <button type="button" title="Evaluation Accepted" class="btn btn-success" disabled>
@@ -352,6 +357,8 @@
             {{-- @endif --}}
             
             <div class="col-sm-12 d-flex justify-content-center">
+
+@if($office == 'pharma' || $office == 'xray')
               @if(!empty($documentDate))
                 @isset($AppData)
                   @if ($triggerThis)
@@ -377,6 +384,8 @@
              <button class="btn btn-block p-4 btn-primary" onclick="acceptDocu()">Accept Documents</button>
               @endif
               </div>
+
+@endif
               &nbsp;
 
           <div class="modal fade" id="ShowDetailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">

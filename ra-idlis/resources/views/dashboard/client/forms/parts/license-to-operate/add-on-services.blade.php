@@ -55,7 +55,8 @@
                     </tr>
                 </thead>
                 <tbody id="body_addOn">
-                    <tr id="tr_addOn">
+                    <tr id="tr_addOn" hidden>
+                    <!-- <tr id="tr_addOn" hidden> -->
                         <!-- preventDef -->
                         <!-- onclick="if(! this.parentNode.parentNode.hasAttribute('id')) { this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); }" -->
                         <!-- onClick="$(this).closest('tr').remove();" -->

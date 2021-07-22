@@ -438,7 +438,9 @@ use FunctionsClientController;
 		        $mon = AjaxController::getAllMonitoringForm();
 		        $new_data = array("surv"=>$surv, "mon"=>$mon);
 
-				return view('employee.dashboard', ['BigData'=> $data, 'grpid' => $Cur_data['grpid'], 'subdesc' => $allID, 'filters' => $filterer, 'n_grpid' => $x08, 'r_grpid' => $grp, 'hfaci_serv_type'=>$hfaci_serv_type, 'new_data'=>$new_data]);
+				$appcount = DB::select("SELECT COUNT(appid) as ctr, hfser_id FROM `appform` WHERE savingStat = 'final' GROUP BY hfser_id");
+
+				return view('employee.dashboard', ['BigData'=> $data, 'grpid' => $Cur_data['grpid'], 'subdesc' => $allID, 'filters' => $filterer, 'n_grpid' => $x08, 'r_grpid' => $grp, 'hfaci_serv_type'=>$hfaci_serv_type, 'new_data'=>$new_data, 'appcount'=>$appcount]);
 			} 
 			catch (Exception $e) 
 			{
@@ -3568,21 +3570,21 @@ use FunctionsClientController;
 					$Cur_useData = AjaxController::getCurrentUserAllData();
 					$checdata = DB::table('appform')->where('appid', '=', $appid)->first();
 					if(is_null($checdata->isrecommended)){
-					$updateData = array(
-						'isrecommended'=>1,
-						'recommendedby' => $Cur_useData['cur_user'],
-						'recommendedtime' => $Cur_useData['time'],
-						'recommendeddate' =>  $Cur_useData['date'],
-						'recommendedippaddr' =>$Cur_useData['ip'],
-						'isPayEval' => 1,
-						'payEvalby' => $Cur_useData['cur_user'],
-						'payEvaldate' => $Cur_useData['date'],
-						'payEvaltime' => $Cur_useData['time'],
-						'payEvalip'=> $Cur_useData['ip'],
-						'status' => 'FI'
-					);
+							$updateData = array(
+								'isrecommended'=>1,
+								'recommendedby' => $Cur_useData['cur_user'],
+								'recommendedtime' => $Cur_useData['time'],
+								'recommendeddate' =>  $Cur_useData['date'],
+								'recommendedippaddr' =>$Cur_useData['ip'],
+								'isPayEval' => 1,
+								'payEvalby' => $Cur_useData['cur_user'],
+								'payEvaldate' => $Cur_useData['date'],
+								'payEvaltime' => $Cur_useData['time'],
+								'payEvalip'=> $Cur_useData['ip'],
+								'status' => 'FI'
+							);
 
-					DB::table('appform')->where('appid', '=', $appid)->update($updateData);
+							DB::table('appform')->where('appid', '=', $appid)->update($updateData);
 					}
 					
 					return view('employee.processflow.pfevaluateoneLTO', ['AppData'=> $data, 'requirements' => $req, 'appID' => $appid, 'documentDate' => $documentDate, 'linkToEdit' => $linkToEdit, 'ActualString' => $data8->toDateString(), 'DateString' => $data8->toFormattedDateString(),'appID' => $appid, 'DateNow' => $data9->toDateString(), 'AfterDay'=> $data10->toDateString(), 'tables' => json_encode($tables), 'forhfsrb' => $forhfsrb, 'office' => $office, 'coaFlag' => $coaFlag, 'redirect' => $boolRedirect]);

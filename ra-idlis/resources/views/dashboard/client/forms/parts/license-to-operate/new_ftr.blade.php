@@ -251,7 +251,8 @@ document.getElementsByName('areacode').value = 3;
      var addons =   document.getElementsByName('addOnServ');
      var getAdd = [];
 
-        for(var i = 0 ; i < addons.length; i++){
+        for(var i = 1 ; i < addons.length; i++){
+        // for(var i = 0 ; i < addons.length; i++){ 
             getAdd.push(addons[i].value);
         }
         // console.log("getAdd")
@@ -1069,6 +1070,7 @@ return unique;
         var itm = document.getElementById("tr_amb");
         var cln = itm.cloneNode(true);
         cln.removeAttribute("id");
+        cln.removeAttribute("hidden");
         cln.setAttribute("class", "tr_amb");
         document.getElementById("body_amb").appendChild(cln);
     });
@@ -1080,6 +1082,7 @@ return unique;
         var itm = document.getElementById("tr_addOn");
         var cln = itm.cloneNode(true);
         cln.removeAttribute("id");
+        cln.removeAttribute("hidden");
         cln.setAttribute("class", "tr_addOn");
         document.getElementById("body_addOn").appendChild(cln);
     });
@@ -1123,15 +1126,13 @@ return unique;
         //  console.log(val)
         // //    document.getElementById()
         // }
+        
+        
     });
 
     
     
-    window.addEventListener('click', function(e) {
-        setTimeout(function(){  
-            // getNoDialysis()
-         }, 1000);
-    });
+ 
 
     function getNoDialysis(){
         var l3 = document.getElementById("H3ADC");
@@ -1314,13 +1315,16 @@ setTimeout(function(){
         var func = '{!!((count($fAddress) > 0) ? $fAddress[0]->funcid: "")!!}';
     document.querySelector('select[data-funcid="duplicate"]').value = func;
     sel_hosp_class(func)
+
+  
 }
 }, 2000);
 setTimeout(function(){ 
     var fc = servFacArray[1]
     
     document.getElementById(fc[0].facid).checked = true
-
+    getAncillary(fc[0].facid, 6)
+     
 }, 3000);
 
 
@@ -1328,6 +1332,38 @@ setTimeout(function(){
 @endif
 
 if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
+    const base_url = '{{URL::to('/')}}';
+    
+    window.addEventListener('click', function(e) {
+        // setTimeout(function(){  
+        //     // getNoDialysis()
+        //  }, 1000);
+            if(document.getElementById("classification").value == ""){
+            @if(app('request')->input('cont') == 'yes')
+            console.log("watch")
+                if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
+                    var ocid ='{!!((count($fAddress) > 0) ? $fAddress[0]->ocid: "")!!}';
+                    var classid ='{!!((count($fAddress) > 0) ? $fAddress[0]->classid: "")!!}';
+
+                    if(ocid){
+                        setTimeout(function(){ 
+                            fetchClassification1()
+                        }, 1000);
+
+                        setTimeout(function(){ 
+                            document.getElementById("classification").value=classid;
+                        }, 2000);
+                        setTimeout(function(){ 
+                            fetchSubClass1() }, 3000);
+
+                        setTimeout(function(){ 
+                            document.getElementById("subclass").value=subclassid;
+                        }, 4000);
+                    }
+                }
+            @endif
+    }
+    });
     // console.log("typee")
     // console.log('{!! $apptypenew !!}')
     // console.log("typee")
@@ -1397,33 +1433,33 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
         ocidInpt.value = ocid;
         // ocidInpt.setAttribute("disabled", "disabled")
         //  }, 1000);
-if(ocid){
-     setTimeout(function(){  
-        
-        fetchClassification1()
-     }, 1000);
+            if(ocid){
+                setTimeout(function(){  
+                    
+                    fetchClassification1()
+                }, 1000);
 
-     setTimeout(function(){ 
+                setTimeout(function(){ 
 
-        document.getElementById("classification").value=classid;
-        // document.getElementById("subclass").value=subclassid;
-        
- }, 2000);
- setTimeout(function(){ 
-    fetchSubClass1()
-// console.log(classid)
-// console.log(subclassid)
-        // document.getElementById("classification").value=classid;
-       
- }, 3000);
- setTimeout(function(){ 
-    document.getElementById("subclass").value=subclassid;
-// console.log(classid)
-// console.log(subclassid)
-        // document.getElementById("classification").value=classid;
-       
- }, 4000);
-}
+                    document.getElementById("classification").value=classid;
+                    // document.getElementById("subclass").value=subclassid;
+                    
+            }, 2000);
+            setTimeout(function(){ 
+                fetchSubClass1()
+            // console.log(classid)
+            // console.log(subclassid)
+                    // document.getElementById("classification").value=classid;
+                
+            }, 3000);
+            setTimeout(function(){ 
+                document.getElementById("subclass").value=subclassid;
+            // console.log(classid)
+            // console.log(subclassid)
+                    // document.getElementById("classification").value=classid;
+                
+            }, 4000);
+            }
 
 const fetchClassification1 = async (e) => {
     const ocid = $("#ocid").val();
@@ -1540,7 +1576,8 @@ const fetchSubClass1 = async (e) => {
 
         var addonDesc ='{!!((count($fAddress) > 0) ? $fAddress[0]->addonDesc: "[]")!!}';
         // var addonDesc ='{!!((count($fAddress) > 0) ? $fAddress[0]->addonDesc: "")!!}';
-        var addonDescArr = JSON.parse(addonDesc);
+        var addonDescArr = JSON.parse(addonDesc.length > 0? addonDesc : '[]');
+        // var addonDescArr = JSON.parse(addonDesc);
 
         // console.log("addonDesc")
         // console.log(addonDesc)
@@ -1709,6 +1746,7 @@ const fetchSubClass1 = async (e) => {
                         var trAdon =   document.getElementById("tr_addOn");
                         var cln = trAdon.cloneNode(true);
                         cln.removeAttribute("id");
+                        cln.removeAttribute("hidden");
                         cln.setAttribute("id","addon"+addonDesc[i].facid );
                         cln.setAttribute("class", "tr_addOn");
                         document.getElementById("body_addOn").appendChild(cln);
@@ -1762,6 +1800,7 @@ const fetchSubClass1 = async (e) => {
                                 var trAdon =   document.getElementById("tr_amb");
                                 var cln = trAdon.cloneNode(true);
                                 cln.removeAttribute("id");
+                                cln.removeAttribute("hidden");
                                 cln.setAttribute("class", "tr_amb");
                                 cln.className += cln.className ? " "+"amb"+ta : "amb"+ta
                                 // cln.setAttribute("id","amb"+ta );

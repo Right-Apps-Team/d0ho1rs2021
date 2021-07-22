@@ -1,11 +1,6 @@
 <script>
    
-   @if(app('request')->input('cont') == 'yes')
   
-        setTimeout(function(){ 
-       document.getElementById("type0").checked = true
-        }, 1000);
-    @endif
     
     
     var ghgpid = document.getElementsByName('hgpid')
@@ -52,8 +47,8 @@
         var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "")!!}');
     
 
-        // console.log("servFacArray")
-        // console.log(servFacArray)
+        console.log("servFacArray")
+        console.log(servFacArray)
 
         if(servFacArray[0].length > 0){
               var getHGPID = servFacArray[0];
@@ -64,11 +59,21 @@
 
             //   console.log("getHGPID")
             //   console.log(getHGPID)
+            console.log("dbhgpid")
+            console.log(dbhgpid)
+            setTimeout(function(){ 
+                typeofFacs(dbhgpid)
+ }, 1000);
+            console.log("theFACID")
+            console.log(theFACID)
+            setTimeout(function(){ 
+                var gefc = document.getElementById(theFACID);
+                if(gefc){
+              document.getElementById(theFACID).checked = true}
+        }, 1000);
+        
+            }
 
-              typeofFacs(dbhgpid)
-
-              document.getElementById(theFACID).checked = true
-        }
         setTimeout(function(){ 
             getFacServCharge()
         }, 1000);
@@ -482,6 +487,17 @@ window.addEventListener('change', function(e) {
         }
     });
 
+
+@if(app('request')->input('cont') == 'yes')
+  
+
+ document.getElementById("type0").checked = true
+
+ document.getElementById("6").checked = true
+//   setTimeout(function(){ 
+//   inputtedDataInitial()
+//    }, 1000);
+@endif
 
    
 

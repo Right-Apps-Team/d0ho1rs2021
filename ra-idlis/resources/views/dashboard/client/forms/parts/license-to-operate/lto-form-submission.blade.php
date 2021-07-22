@@ -81,6 +81,9 @@
         if($('#official_mail_address').val() == ""){errors +=1; ermsg += "Official Mailing Address, "}
         if($('#approving_authority_pos').val() == ""){errors +=1; ermsg += "Approving Authority Position, "}
         if($('#approving_authority_name').val() == ""){errors +=1; ermsg += "Approving Authority Name, "}
+
+        var allFacids = getAllFacids();
+        if(allFacids.length <= 0){errors +=1; ermsg += "No facilities/Services selected, "}
         
       
         if($('input[name="hgpid"]:checked').val() == undefined){errors +=1; ermsg += "Facilities/Type, "}
@@ -91,12 +94,12 @@
                 console.log(noofbed)
                 console.log($('#noofbed').val())
 
-                console.log("noerrors")
-                if(parseInt($('#noofbed').val()) > parseInt(noofbed)){
-                    errors +=1; ermsg += "Authorized Bed Capacity should not exceed with the approved ABC";
-                    console.log("errors")
-                    console.log(errors)
-                }
+                // console.log("noerrors")
+                // if(parseInt($('#noofbed').val()) > parseInt(noofbed)){
+                //     errors +=1; ermsg += "Authorized Bed Capacity should not exceed with the approved ABC";
+                //     console.log("errors")
+                //     console.log(errors)
+                // }
         }
         // if(errors > 0){
         //     alert("Please fill the following fields properly: " + ermsg)
@@ -189,12 +192,15 @@ function submitProper(e){
     var allFacids = getAllFacids();
     var allambdet = getallAmbDetails();
     var alladdondesc = getAddonDesc();
-    console.log("allFacids")
-    console.log(allFacids)
-    console.log("allambdet")
-    console.log(allambdet) 
-    console.log("alladdondesc")
-    console.log(alladdondesc)
+    // console.log("allFacids")
+    // console.log(allFacids)
+    // console.log("allambdet")
+    // console.log(allambdet) 
+    // console.log("alladdondesc")
+    // console.log(alladdondesc)
+
+  console.log("fac counts")
+    console.log(allFacids.length)
 
   
 
@@ -269,18 +275,19 @@ function submitProper(e){
 
         callApi('/api/application/lto/save', data, 'POST').then(d => {
             const id = d.data.id;
-          console.log("id")
-          console.log(id)
+        //   console.log("id")
+        //   console.log(id)
           const payment = d.data.payment;
         const appcharge = d.data.appcharge;
         const ambcharge = d.data.ambcharge;
 
-        console.log("payment")
-        console.log(payment)
-        console.log("appcharge")
-        console.log(appcharge)
-        console.log("ambcharge")
-        console.log(ambcharge)
+        // console.log("payment")
+        // console.log(payment)
+        // console.log("appcharge")
+        // console.log(appcharge)
+        // console.log("ambcharge")
+        // console.log(ambcharge)
+
         // window.location.replace(`${base_url}/client/dashboard/new-application?appid=${id}`);
             if(e == "final"){
                 if(id){

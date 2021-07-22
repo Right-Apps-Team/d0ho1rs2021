@@ -174,7 +174,11 @@ class PtcAppController extends Controller
 
         $appform->save();
 
-        DB::insert('insert into ptc (appid) values (?)',[$appform->appid]);
+        DB::insert('insert into ptc (appid, propbedcap, type) values (?, ?, ?)',[$appform->appid, $conapp->noofbed, 0]);
+
+        $chk =  DB::table('x08_ft')->where([['appid', $appid]])->first();
+
+        DB::insert('insert into x08_ft (uid, appid, facid) values (?, ?, ?)', [$conapp->uid, $appform->appid, $chk->facid]);
 
         return redirect('client1/apply/app/PTC/'.$appform->appid.'?cont=yes');
 

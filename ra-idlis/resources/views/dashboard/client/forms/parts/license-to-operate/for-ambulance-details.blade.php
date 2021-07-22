@@ -77,7 +77,7 @@
 					</tr>
 				</thead>
 				<tbody id="body_amb">
-					<tr id="tr_amb">
+					<tr id="tr_amb" hidden>
 						<!-- preventDef -->
 						<!-- onclick="if(! this.parentNode.parentNode.hasAttribute('id')) { this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); }" -->
 						<!-- onClick="$(this).closest('tr').remove();" -->
