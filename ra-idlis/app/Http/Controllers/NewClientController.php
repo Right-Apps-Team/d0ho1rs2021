@@ -911,7 +911,10 @@ class NewClientController extends Controller {
 			$retTable = FunctionsClientController::getUserDetailsByAppform($appid);
 			switch ($retTable[0]->hfser_id) {
 				case 'PTC':
-					$otherDetails = DB::table('hferc_evaluation')->where([['appid',$appid],['HFERC_eval',1]])->first();
+					$otherDetails = DB::table('hferc_evaluation')->join('hferc_team', 'hferc_evaluation.HFERC_evalBy', '=', 'hferc_team.uid')
+					->where([['hferc_evaluation.appid',$appid],['hferc_evaluation.HFERC_eval',1],['hferc_team.pos','C']])
+					->first();
+					// $otherDetails = DB::table('hferc_evaluation')->where([['appid',$appid],['HFERC_eval',1]])->first();
 					break;
 
 				case 'LTO':

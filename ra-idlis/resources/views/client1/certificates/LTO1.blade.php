@@ -243,42 +243,10 @@
 							$ambType = json_decode($retTable[0]->ambtyp);
 							$ambType1 = json_decode($retTable[0]->ambtyp);
 							$plateNum = json_decode($retTable[0]->plate_number);
-							if(count($ambType) == count($plateNum)){
-								$amb = array_combine($ambType, $plateNum);
 
-								$ambType = array($ambType);
-								
-
-								$i=0;
-								foreach($ambType as $atval){
-								
-									if($atval[$i] == 1){
-										$a = 0;
-
-										foreach($type as $tp){
-
-											if($a == $i){
-												$v = 0;
-												foreach($plateNum as $pn){
-													if($i == $v){
-													//	echo ((int)$i + 1).', Type '. $tp[$a].' ,Plate No. ' .  $pn;
-													}
-												$v++;
-												}
-											}
-
-											$a++;
-										}
-
-										$i++;
-
-									}
-
-								}
-								
-
-							}
-
+							
+							
+							
 
 							$i=0;
 							foreach($ambType1 as $atval){

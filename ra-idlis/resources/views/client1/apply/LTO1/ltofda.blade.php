@@ -51,7 +51,8 @@
 				      			</tr>
 				      			<tr>
 				      				<th style="background-color: #4682B4; color: white;">Date of Application</th>
-				      				<td>{{((count($fAddress) > 0) ? date('M d, Y', strtotime($fAddress[0]->t_date)) : "No Date")}}</td>
+				      				<td>{{((count($fAddress) > 0) ? ($fAddress[0]->t_date ? date('M d, Y', strtotime($fAddress[0]->t_date) ): 'Requirement not yet completed')  : "No Date")}}</td>
+				      				<!-- <td>{{((count($fAddress) > 0) ? date('M d, Y', strtotime($fAddress[0]->t_date)) : "No Date")}}</td> -->
 				      			</tr>
 				      		</tbody>
 				      	</table>

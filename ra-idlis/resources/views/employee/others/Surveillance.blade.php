@@ -99,7 +99,16 @@
                     </td> --}}
                     <td style="text-align:center">{{$value->hfsrbno}}</td>
                     <td style="text-align:center" class="font-weight-bold">{{$value->violation}}</td>
-                    @if($value->isApproved == "1")
+                   
+                    <td style="text-align:center;" class="text-light font-weight-bold">
+                        <span style="color: black">
+                        @if($value->status)
+                        {{ $value->status != 'RS' ? AjaxController::getTransStatusById($value->status)[0]->trns_desc : ( $value->s_ver_others ?  $value->s_ver_others : $value->vdesc) }}
+                        @endif
+                        </span>
+                    </td>
+
+                    <!-- @if($value->isApproved == "1")
                       <td style="text-align:center;" class="bg-success text-light font-weight-bold">
                         <span style="text-shadow: 2px 2px 4px #000000">
                           {{AjaxController::getTransStatusById('A')[0]->trns_desc}}
@@ -135,19 +144,30 @@
                           {{AjaxController::getTransStatusById('NT')[0]->trns_desc}}
                         </span>
                       </td>
-                    @endif
+                    @endif -->
 
                     <td style="text-align:center">
                       <div class="dropup">
+                      
                         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fa fa-align-justify"></i>
                         </button>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="padding-left: 5px">
+                          
+                         
                           <button class="btn btn-outline-info" data-toggle="modal" data-target="#eMonModal" onclick="getEditData(
-                          '{{$value->hfsrbno}}', '{{$value->name_of_faci}}', '{{ AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc }}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}')" title="View {{$value->name_of_faci}}">
+                          '{{$value->hfsrbno}}', '{{$value->name_of_faci}}', '{{AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc }}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}')" title="View {{$value->name_of_faci}}">
                             <i class="fa fa-fw fa-eye"></i>
                           </button>  
+
+  <!-- <button class="btn btn-outline-info" data-toggle="modal" data-target="#eMonModal" onclick="getEditData(
+                          '{{$value->hfsrbno}}', '{{$value->name_of_faci}}', ' AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc ', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}')" title="View {{$value->name_of_faci}}">
+                            <i class="fa fa-fw fa-eye"></i>
+                          </button>  
+ -->
+
+
                            <!-- <button class="btn btn-outline-info" data-toggle="modal" data-target="#eMonModal" onclick="getEditData(
                           '{{$value->hfsrbno}}', '{{$value->name_of_faci}}', ' AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname ', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}')" title="View {{$value->name_of_faci}}">
                             <i class="fa fa-fw fa-eye"></i>
@@ -160,7 +180,7 @@
                               <i class="fa fa-search" aria-hidden="true"></i>
                             </button> --}}
                           @endif
-
+                          
                           @if(strtolower($value->fromWhere) == 'unregistered facility')
                             <button class="btn btn-outline-warning" onclick="editData('{{$value->survid}}')" title="Delete {{$value->name_of_faci}}">
                               <i class="fa fa-fw fa-edit"></i>
@@ -181,7 +201,11 @@
                         <button class="btn btn-outline-info" data-toggle="modal" data-target="#eMonModal" onclick="getEditData(
                           '{{$value->hfsrbno}}', '{{$value->name_of_faci}}', '{{ AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc }}', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}')" title="View {{$value->name_of_faci}}">
                           <i class="fa fa-fw fa-eye"></i>
-                        </button>
+                        </button>  
+                        <!-- <button class="btn btn-outline-info" data-toggle="modal" data-target="#eMonModal" onclick="getEditData(
+                          '{{$value->hfsrbno}}', '{{$value->name_of_faci}}', ' AjaxController::getHgpByFacid($value->type_of_faci)[0]->hgpdesc ', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}')" title="View {{$value->name_of_faci}}">
+                          <i class="fa fa-fw fa-eye"></i>
+                        </button> -->
  <!-- <button class="btn btn-outline-info" data-toggle="modal" data-target="#eMonModal" onclick="getEditData(
                           '{{$value->hfsrbno}}', '{{$value->name_of_faci}}', ' AjaxController::getFacTypeByFacid($value->type_of_faci)[0]->facname ', '{{\Carbon\Carbon::parse($value->date_added)->format('M d, Y')}}')" title="View {{$value->name_of_faci}}">
                           <i class="fa fa-fw fa-eye"></i>
@@ -733,7 +757,7 @@
 
                   <div class="col-sm-8">
                     <select class="form-control w-100" id="u_typeoffaci" name="u_typeoffaci" data-parsley-required-message="<b>*Type of Facility</b> required" required data-parsley="factype">
-                      <option selected disabled hidden>Facility Type</option>
+                      <option selected disabled hidden>Facility Type </option>
                       <!-- @foreach(AjaxController::getAllFacilityType() as $key => $value)
                         @if($value->servtype_id == 1)
                         <option value="{{$value->facid}}">{{$value->facname}}</option>
@@ -1126,6 +1150,11 @@ console.log(result)
           select.removeChild(select.firstChild);
         }
 
+        var option1 = document.createElement('OPTION');
+              option1.innerText='Select';
+
+              select.appendChild(option1);
+
         Array.from(data).forEach(function(v) {
           var option = document.createElement('OPTION');
               option.setAttribute('value', v.provid);
@@ -1174,6 +1203,11 @@ console.log(result)
           select.removeChild(select.firstChild);
         }
 
+        var option1 = document.createElement('OPTION');
+              option1.innerText='Select';
+
+              select.appendChild(option1);
+
         Array.from(data).forEach(function(v) {
           var option = document.createElement('OPTION');
               option.setAttribute('value', v.cmid);
@@ -1214,6 +1248,11 @@ console.log(result)
           select.removeChild(select.firstChild);
         }
 
+        var option1 = document.createElement('OPTION');
+              option1.innerText='Select';
+
+              select.appendChild(option1);
+
         Array.from(data).forEach(function(v) {
           var option = document.createElement('OPTION');
               option.setAttribute('value', v.brgyid);
@@ -1232,9 +1271,16 @@ console.log(result)
         success: function(a){
           let data = JSON.parse(a);
           let addr = JSON.parse(data['compAddress']);
+
+          console.log("type")
+          console.log(data['type_of_faci'])
+
           $("#unreg").removeAttr('action');
           $("#u_nameoffaci").val(data['name_of_faci']);
-          $("#u_typeoffaci").val(data['type_of_faci']);
+          $("#u_typeoffaci").val(data['type_of_faci']).trigger('change');
+
+
+
           $("#u_reg").val(addr['reg']).trigger('change');
           setTimeout(function(){
 

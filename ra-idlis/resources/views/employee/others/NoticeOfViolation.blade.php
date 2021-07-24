@@ -159,7 +159,7 @@
 									<div class="col-sm w-100">
 										<div class="row">
 											<div class="col-sm-12 border-bottom border-dark text-center">
-												<b>{{$Nov->conforme}}</b>
+												<b>{{$Nov->conforme}}</b><br>
 											</div>
 											<div class="col-sm-12 text-center">
 												(Signature over Printed Name)
@@ -175,7 +175,7 @@
 									<div class="col-sm w-100">
 										<div class="row">
 											<div class="col-sm-12 border-bottom border-dark text-center">
-												<b>{{$Nov->conformeDesignation}}</b>
+												<b>{{$Nov->conformeDesignation}}</b><br>
 											</div>
 											<div class="col-sm-12 text-center">
 												(Position/Designation)

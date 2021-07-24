@@ -4634,7 +4634,8 @@ use FunctionsClientController;
 								'currentUser' => $currentLoggedIn,
 								'canProcessAction' => (isset($currentLoggedIn->uid) && $currentLoggedIn->uid == 'ADMIN' ? true : DB::table("hferc_team")->where([['appid',$appid],['uid',$currentLoggedIn->uid]])->whereIn('pos',['C','VC','NA','E'])->exists()),
 								'isHead' => (isset($currentLoggedIn->uid) && $currentLoggedIn->uid == 'ADMIN' ? true : DB::table("hferc_team")->where([['appid',$appid],['uid',$currentLoggedIn->uid]])->whereIn('pos',['C','VC', 'NA'])->exists()),
-								'customRights' => (isset($currentLoggedIn->uid) && $currentLoggedIn->uid == 'ADMIN' ? true :  DB::table("hferc_team")->where([['appid',$appid],['uid',$currentLoggedIn->uid]])->whereIn('pos',['NA','PO'])->exists())
+								'customRights' => (isset($currentLoggedIn->uid) && ($currentLoggedIn->uid == 'ADMIN' || $currentLoggedIn->grpid == 'DC') ? true :  DB::table("hferc_team")->where([['appid',$appid],['uid',$currentLoggedIn->uid]])->whereIn('pos',['NA','PO','C','VC'])->exists())
+								// 'customRights' => (isset($currentLoggedIn->uid) && $currentLoggedIn->uid == 'ADMIN' ? true :  DB::table("hferc_team")->where([['appid',$appid],['uid',$currentLoggedIn->uid]])->whereIn('pos',['NA','PO'])->exists())
 						,'count'=>$count
 							];
 							return view('employee.processflow.pfassignmentofhfercaction', $arrRet);
@@ -8180,6 +8181,17 @@ use FunctionsClientController;
 					try 
 					{
 						$allDataSql = "SELECT * FROM mon_form join registered_facility on registered_facility.regfac_id = mon_form.regfac_id WHERE team IS NULL";
+						
+						
+						$Cur_useData = AjaxController::getCurrentUserAllData();
+
+						if($Cur_useData['grpid'] == 'NA'){
+							$allDataSql = "SELECT * FROM mon_form join registered_facility on registered_facility.regfac_id = mon_form.regfac_id WHERE team IS NULL";
+						}else{
+							$rg = $Cur_useData['rgnid'];
+							$allDataSql = "SELECT * FROM mon_form join registered_facility on registered_facility.regfac_id = mon_form.regfac_id WHERE team IS NULL && registered_facility.rgnid = $rg";
+						}
+						
 						// $allDataSql = "SELECT * FROM mon_form join appform on appform.appid = mon_form.appid WHERE team IS NULL"; 6-21-2021
 						
 						$allData = DB::select($allDataSql);
@@ -8306,8 +8318,26 @@ use FunctionsClientController;
 			{
 				try 
 				{
-					$allDataSql = "SELECT * FROM mon_form /*WHERE assessmentStatus <> 0*/";
+
+					// $allDataSql = AjaxController::getAllMonitoringForm(); // 7/23/2021
+
+				
+					$Cur_useData = AjaxController::getCurrentUserAllData();
+
+						if($Cur_useData['grpid'] == 'NA'){
+							$allDataSql = "SELECT * FROM mon_form /*WHERE assessmentStatus <> 0*/";
+						}else{
+							$rg =  $Cur_useData['rgnid'];
+							$allDataSql = "SELECT mon_form.* FROM mon_form left join registered_facility on mon_form.regfac_id = registered_facility.regfac_id where registered_facility.rgnid = $rg";
+						}
+					
+					// $allDataSql = "SELECT * FROM mon_form /*WHERE assessmentStatus <> 0*/";
+
+				
+				
 					$allData = DB::select($allDataSql);
+
+
 					$allNovDir = AjaxController::getAllNovDirections();
 					$violationKey = 0;
 					$allViolation = array();
@@ -8371,7 +8401,18 @@ use FunctionsClientController;
 					// 	}
  				// 	}
 
- 					$allDataSql = "SELECT * FROM mon_form WHERE hasViolation IS NOT NULL";
+				 if($Cur_useData['grpid'] == 'NA'){
+					$allDataSql = "SELECT * FROM mon_form WHERE hasViolation IS NOT NULL";
+				}else{
+					$rg =  $Cur_useData['rgnid'];
+					$allDataSql = "SELECT mon_form.* FROM mon_form left join registered_facility on mon_form.regfac_id = registered_facility.regfac_id WHERE hasViolation IS NOT NULL && registered_facility.rgnid = $rg";
+				}
+
+ 				
+
+
+
+
  					$allData = DB::select($allDataSql);
 
 
@@ -8763,6 +8804,7 @@ use FunctionsClientController;
 				'hfsrbno' => $request->novNo, 
 				'otherspec' => $request->other, 
 				'faciEmail' => $request->emailFaci, 
+				'status' => 'SWR', 
 				'dpo' => $request->dpo];
 				if(trim($request->violation) != ''){
 					$toUpdate['violation'] = $request->violation;
@@ -8852,7 +8894,19 @@ use FunctionsClientController;
 				{
 					try 
 					{
-						$allDataSql = "SELECT * FROM surv_form LEFT JOIN facilitytyp on facilitytyp.facid = surv_form.type_of_faci  WHERE team IS NULL ";
+
+						$Cur_useData = AjaxController::getCurrentUserAllData();
+
+						if($Cur_useData['grpid'] == 'NA'){
+							$allDataSql = "SELECT * FROM surv_form LEFT JOIN facilitytyp on facilitytyp.facid = surv_form.type_of_faci  WHERE team IS NULL ";
+						}else{
+							$rn = $Cur_useData['rgnid'];
+							$allDataSql = "SELECT * FROM surv_form LEFT JOIN facilitytyp on facilitytyp.facid = surv_form.type_of_faci  WHERE team IS NULL && surv_form.rgnid = $rn ";
+						}
+					
+
+
+
 						$allData = DB::select($allDataSql);
 						$allRec = AjaxController::getAllSurveillanceRecommendation();
 						$allTeam = AjaxController::getAllTeams();
@@ -8901,7 +8955,18 @@ use FunctionsClientController;
 			{
 				try 
 				{
+					$Cur_useData = AjaxController::getCurrentUserAllData();
+
+				if($Cur_useData['grpid'] == 'NA'){
 					$allDataSql = "SELECT * FROM surv_form LEFT JOIN facilitytyp on facilitytyp.facid = surv_form.type_of_faci LEFT JOIN verdict ON surv_form.verdict = verdict.vid";
+					
+				}else{
+					$rn = $Cur_useData['rgnid'];
+					$allDataSql = "SELECT * FROM surv_form LEFT JOIN facilitytyp on facilitytyp.facid = surv_form.type_of_faci LEFT JOIN verdict ON surv_form.verdict = verdict.vid WHERE surv_form.rgnid = $rn";
+					
+				}
+					
+					
 					$allData = DB::select($allDataSql);
 					$allRec = AjaxController::getAllSurveillanceRecommendation();
 					$allNovDir = AjaxController::getAllNovDirections();
@@ -9036,7 +9101,24 @@ use FunctionsClientController;
 			{
 				try 
 				{
-					$allDataSql = "(SELECT * from complaints_form where `type` = 'Complaints') UNION (SELECT * from req_ast_form where `type` = 'Assistance')";
+
+
+					$Cur_useData = AjaxController::getCurrentUserAllData();
+
+					if($Cur_useData['grpid'] == 'NA'){
+
+						$allDataSql = "(SELECT complaints_form.*, registered_facility.rgnid from complaints_form  left join registered_facility on complaints_form.regfac_id = registered_facility.regfac_id where complaints_form.type = 'Complaints') UNION (SELECT req_ast_form.* , registered_facility.rgnid from req_ast_form left join registered_facility on req_ast_form.regfac_id = registered_facility.regfac_id where req_ast_form.type = 'Assistance')";
+				
+					}else{
+
+						$allDataSql = "(SELECT complaints_form.*, registered_facility.rgnid from complaints_form  left join registered_facility on complaints_form.regfac_id = registered_facility.regfac_id where complaints_form.type = 'Complaints' && registered_facility.rgnid = ".$Cur_useData['rgnid'].") UNION (SELECT req_ast_form.* , registered_facility.rgnid from req_ast_form left join registered_facility on req_ast_form.regfac_id = registered_facility.regfac_id where req_ast_form.type = 'Assistance'  && registered_facility.rgnid = ".$Cur_useData['rgnid'].")";
+				
+					}
+				
+				
+					// $allDataSql = "(SELECT * from complaints_form where `type` = 'Complaints') UNION (SELECT * from req_ast_form where `type` = 'Assistance')";
+				
+				
 					$allData = DB::select($allDataSql);
 					// dd($allData);
 					$data = AjaxController::getAllRequestForAssistance();

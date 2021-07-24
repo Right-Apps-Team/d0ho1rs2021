@@ -3,7 +3,54 @@ var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
 // console.log("mserv_cap")
 // console.log(mserv_cap)
 // START OF DATA INITIALIZATION FOR VIEWING EXISTING APPLICATION
+window.addEventListener('click', function(e) {
+        initialCheck()
 
+        
+    });
+    setTimeout(function(){
+        initialCheck()
+    }, 1000);
+    
+
+    function initialCheck(){
+             if(document.querySelector('input[name="hgpid"]:checked') === null){
+                // if(document.getElementsByName("facid")[0].checked != true){
+                    var first = document.getElementsByName("hgpid")[0];
+                    first.checked = true;
+                    first.click();     
+                    // type_of_fac(first.id)
+                    console.log("RecsaPP")
+
+                    // $('#'+first.id).trigger('change');
+
+                    console.log(document.querySelector('input[name="hgpid"]:checked').value)
+                    console.log(document.querySelector('input[name="facid"]:checked'))
+                    getChargesPerApplication()
+                    getFacServCharge()
+            }else{
+            //     if(document.querySelector('input[name="facid"]:checked') === null){
+            //     // if(document.getElementsByName("facid")[0].checked != true){
+            //         var sec = document.getElementsByName("facid")[0];
+            //         sec.checked = true;
+            //         sec.click();     
+            //         console.log("Recs")
+            // }
+
+                console.log(document.querySelector('input[name="hgpid"]:checked').value)
+                console.log(document.querySelector('input[name="facid"]:checked'))
+                getChargesPerApplication()
+                setTimeout(function(){
+                    getFacServCharge()
+                }, 1000);
+              
+
+                
+            }
+
+           
+        
+    }
 
 // END OF DATA INITIALIZATION FOR VIEWING EXISTING APPLICATION
 
@@ -17,7 +64,7 @@ document.getElementsByName('areacode').value = 3;
     var aptid = document.getElementById("aptidnew").value
     
       var  ghgpid = document.getElementsByName('hgpid');
-
+      (function ( $ ) { 
       $(document).on('change','#same', function(event){
 				if($(this).prop('checked') == true){
 					if($("#street_name").val() != null && 
@@ -43,6 +90,8 @@ document.getElementsByName('areacode').value = 3;
 					$('#mailingAddress').val('');
 				}
 			});
+        }( jQuery ));
+
     function offMailDup (){
       var box =  document.getElementById('same');
       var street_name =  document.getElementById('street_name');
@@ -541,7 +590,8 @@ return unique;
 
         if (specs == "show") {
             
-            const show = ["hospClassif", "forHosp", "ambuDetails"];
+            const show = ["hospClassif", "forHosp", "ambuDetails", "addOnServe"];
+            // const show = ["hospClassif", "forHosp", "ambuDetails"]; //7-24/2021
             show.map((h) => {
                 
                 document.getElementsByClassName(h)[0].removeAttribute("hidden")

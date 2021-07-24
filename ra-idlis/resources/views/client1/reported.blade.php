@@ -172,7 +172,7 @@
 								@foreach($images as $image)
 									<div class="col{{$perDiv}} mt-3">
 										{{-- <img onclick="window.open('{{asset('ra-idlis/storage/app/public/uploaded/'.$image)}}')" class="w-100" src="{{asset('ra-idlis/storage/app/public/uploaded/'.$image)}}" style="cursor: pointer;"> --}}
-										<img onclick="window.open('{{asset('ra-idlis/storage/app/public/uploaded/'.$image)}}')" class="w-100" src="{{(is_array(getimagesize(url('ra-idlis/storage/app/public/uploaded/'.$image))) ? asset('ra-idlis/storage/app/public/uploaded/'.$image) : url('ra-idlis/public/img/no-preview-available.png'))}}" style="cursor: pointer;">
+										<img onclick="window.open('{{asset('ra-idlis/storage/app/public/uploaded/'.$image)}}')" class="w-100" src="{{($image ? asset('ra-idlis/storage/app/public/uploaded/'.$image) : url('ra-idlis/public/img/no-preview-available.png'))}}" style="cursor: pointer;">
 									</div>
 								@endforeach
 								</div>
@@ -229,7 +229,7 @@
 											@foreach($images as $image)
 												<div class="col{{$perDiv}} mt-3">
 													{{-- <img onclick="window.open('{{asset('ra-idlis/storage/app/public/uploaded/'.$image)}}')" class="w-100" src="{{asset('ra-idlis/storage/app/public/uploaded/'.$image)}}" style="cursor: pointer;"> --}}
-													<img onclick="window.open('{{asset('ra-idlis/storage/app/public/uploaded/'.$image)}}')" class="w-100" src="{{(is_array(getimagesize(url('ra-idlis/storage/app/public/uploaded/'.$image))) ? asset('ra-idlis/storage/app/public/uploaded/'.$image) : url('ra-idlis/public/img/no-preview-available.png'))}}" style="cursor: pointer;">
+													<img onclick="window.open('{{asset('ra-idlis/storage/app/public/uploaded/'.$image)}}')" class="w-100" src="{{($image ? asset('ra-idlis/storage/app/public/uploaded/'.$image) : url('ra-idlis/public/img/no-preview-available.png'))}}" style="cursor: pointer;">
 												</div>
 											@endforeach
 											</div>
@@ -336,7 +336,7 @@
 
 					@switch($from)
 						@case ('mon')
-							@if($data->$toCheckForData != null)
+							@if($data->$toCheckForData != null || $data->forResubmit == 1)
 							<div class="container pb-3">
 							<b>	Explanation </b>
 							<p>{{($data->LOE ?? "")}}</p>
@@ -345,7 +345,8 @@
 								<textarea name="exp" id="imgexp" cols="30" rows="10" class="form-control" required="">{{($data->explanation ?? "")}}</textarea>
 								<!-- <textarea name="exp" cols="30" rows="10" class="form-control" required="">{{($data->LOE ?? "")}}</textarea> -->
 							</div>
-							@if($data->attached_filesUser == null)
+							
+							@if($data->attached_filesUser == null || $data->forResubmit == 1)
 
 
 								<div class="row mt-4 removePadding" id="appendArea" @if($hideifMon) hidden="" @endif>
@@ -389,9 +390,21 @@
 												</p>
 											</div>
 											<div class="row">
+												@php
+												
+												$arrContextOptions=array(
+													"ssl"=>array(
+														"verify_peer"=>false,
+														"verify_peer_name"=>false,
+													),
+												);
+
+												@endphp
 											@foreach($images as $image)
 												<div class="col{{$perDiv}} mt-3">
-													<img onclick="window.open('{{asset('ra-idlis/storage/app/public/uploaded/'.$image)}}')" class="w-100" src="{{(is_array(getimagesize(url('ra-idlis/storage/app/public/uploaded/'.$image))) ? asset('ra-idlis/storage/app/public/uploaded/'.$image) : url('ra-idlis/public/img/no-preview-available.png'))}}" style="cursor: pointer;">
+													{{--<img onclick="window.open('{{asset('ra-idlis/storage/app/public/uploaded/'.$image, false, stream_context_create($arrContextOptions))}}')" class="w-100" src="{{(is_array(getimagesize(url('ra-idlis/storage/app/public/uploaded/'.$image, false, stream_context_create($arrContextOptions)))) ? asset('ra-idlis/storage/app/public/uploaded/'.$image, false, stream_context_create($arrContextOptions)) : url('ra-idlis/public/img/no-preview-available.png', false, stream_context_create($arrContextOptions)))}}" style="cursor: pointer;"> --}}
+													<img onclick="window.open('{{asset('ra-idlis/storage/app/public/uploaded/'.$image)}}')" class="w-100" src="{{( $image ? asset('ra-idlis/storage/app/public/uploaded/'.$image) : url('ra-idlis/public/img/no-preview-available.png'))}}" style="cursor: pointer;">
+													{{--<!-- <img onclick="window.open('{{asset('ra-idlis/storage/app/public/uploaded/'.$image)}}')" class="w-100" src="{{(is_array(getimagesize(url('ra-idlis/storage/app/public/uploaded/'.$image))) ? asset('ra-idlis/storage/app/public/uploaded/'.$image) : url('ra-idlis/public/img/no-preview-available.png'))}}" style="cursor: pointer;"> --> --}}
 												</div>
 											@endforeach
 											</div>
@@ -425,7 +438,7 @@
 
 											<div class="col{{$perDiv}} mt-3">
 
-												<img onclick="window.open('{{asset('ra-idlis/storage/app/public/uploaded/'.$image)}}')" class="w-100" src="{{(is_array(getimagesize(url('ra-idlis/storage/app/public/uploaded/'.$image))) ? asset('ra-idlis/storage/app/public/uploaded/'.$image) : url('ra-idlis/public/img/no-preview-available.png'))}}" style="cursor: pointer;">
+												<img onclick="window.open('{{asset('ra-idlis/storage/app/public/uploaded/'.$image)}}')" class="w-100" src="{{( $image ? asset('ra-idlis/storage/app/public/uploaded/'.$image) : url('ra-idlis/public/img/no-preview-available.png'))}}" style="cursor: pointer;">
 
 											</div>
 										@endforeach
@@ -458,7 +471,7 @@
 												<div class="col{{$perDiv}} mt-3">
 
 													{{-- <img onclick="window.open('{{asset('ra-idlis/storage/app/public/uploaded/'.$image)}}')" class="w-100" src="{{asset('ra-idlis/storage/app/public/uploaded/'.$image)}}" style="cursor: pointer;"> --}}
-													<img onclick="window.open('{{asset('ra-idlis/storage/app/public/uploaded/'.$image)}}')" class="w-100" src="{{(is_array(getimagesize(url('ra-idlis/storage/app/public/uploaded/'.$image))) ? asset('ra-idlis/storage/app/public/uploaded/'.$image) : url('ra-idlis/public/img/no-preview-available.png'))}}" style="cursor: pointer;">
+													<img onclick="window.open('{{asset('ra-idlis/storage/app/public/uploaded/'.$image)}}')" class="w-100" src="{{($image ? asset('ra-idlis/storage/app/public/uploaded/'.$image) : url('ra-idlis/public/img/no-preview-available.png'))}}" style="cursor: pointer;">
 												</div>
 											@endforeach
 										</div>

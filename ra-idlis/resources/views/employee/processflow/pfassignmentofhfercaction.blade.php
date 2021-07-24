@@ -440,7 +440,7 @@
                     Comments
                   </div>
                   <div class="col-md-12 mt-3">
-                    <textarea name="comments" class="form-control" cols="40" rows="10"></textarea>
+                    <textarea required name="comments" class="form-control" cols="40" rows="10"></textarea>
                   </div>
                   <!-- <button type="submit" class="btn btn-primary btn-block p-2">Save</button> -->
                   <div class="d-flex justify-content-center mt-4">

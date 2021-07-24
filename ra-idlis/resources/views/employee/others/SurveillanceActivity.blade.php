@@ -63,7 +63,19 @@
                     @endif
                   </td>
                   <td style="text-align:center">{{$value->hfsrbno}}</td>
-                  @if($value->isApproved == "1")
+
+                  <td style="text-align:center;" class="text-light font-weight-bold">
+                        <span style="color: black">
+                        
+                        @if($value->survStat)
+                        {{ $value->survStat != 'RS' ? AjaxController::getTransStatusById($value->survStat)[0]->trns_desc : ( $value->s_ver_others ?  $value->s_ver_others : $value->vdesc) }}
+                        
+                        @endif
+                        </span>
+                    </td>
+
+
+                  <!-- @if($value->isApproved == "1")
                     <td style="text-align:center;" class="bg-success text-light font-weight-bold">
                       <span style="text-shadow: 2px 2px 4px #000000">
                         {{AjaxController::getTransStatusById('A')[0]->trns_desc}}
@@ -99,7 +111,7 @@
                         {{AjaxController::getTransStatusById('NT')[0]->trns_desc}}
                       </span>
                     </td>
-                  @endif
+                  @endif -->
 
                   <td style="text-align:center">
                     <center>

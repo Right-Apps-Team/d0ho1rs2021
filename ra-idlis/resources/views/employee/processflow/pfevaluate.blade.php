@@ -6,7 +6,7 @@
   <div class="content p-4">
   	<div class="card">
   		<div class="card-header bg-white font-weight-bold">
-             Evaluate Applicants  
+             Evaluate Applicants  ({{$type == 'technical' ? 'Technical' : 'Documentary'}})
           </div>
           <div class="card-body table-responsive">
           	<table class="table table-hover" style="font-size:13px;" id="example">
@@ -67,8 +67,14 @@
                             <?php continue; ?>
                              @endif
 
+                             @if($data->status == 'A' )
+                                <?php continue; ?>
+                              @endif
 
-                             @if($data->hasAssessors == 'T')
+
+                            @if($data->hasAssessors == 'T' || strtolower($data->hfser_id) != 'lto')
+
+
                             <tr @if(!isset($data->documentSent) || $data->isrecommended == 2)style="background-color: #c4c1bb";@endif>
                               <td class="text-center">{{$data->hfser_id}}</td>
                               <td class="text-center">{{$data->hfser_id}}R{{$data->rgnid}}-{{$data->appid}}</td>
@@ -89,7 +95,9 @@
                                 </center>
                               </td>
                             </tr>
-                               @endif
+
+
+                              @endif
 
                             {{-- @endif --}}
                           @endif

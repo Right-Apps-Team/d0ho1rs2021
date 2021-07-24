@@ -100,20 +100,20 @@
             	<div class="container">
             		<div class="col-md-12 lead pb-3 text-center font-weight-bold">Client Action Comment</div>
             		<div class="container border rounded pt-1" id="cDetails" style="min-height: 100px;">
-            			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt nam sed, accusamus alias incidunt, magnam sint. Expedita corporis officiis amet omnis facere labore alias, odio veniam dicta suscipit ipsum assumenda.
+            			<!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt nam sed, accusamus alias incidunt, magnam sint. Expedita corporis officiis amet omnis facere labore alias, odio veniam dicta suscipit ipsum assumenda. -->
             		</div>
             	</div>
             	<div class="container">
             		<div class="col-md-12 lead  pt-3 pb-3 text-center font-weight-bold">Violation Details</div>
             		<div class="container border rounded pt-1" id="vDetails" style="min-height: 100px;">
-            			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt nam sed, accusamus alias incidunt, magnam sint. Expedita corporis officiis amet omnis facere labore alias, odio veniam dicta suscipit ipsum assumenda.
+            			<!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt nam sed, accusamus alias incidunt, magnam sint. Expedita corporis officiis amet omnis facere labore alias, odio veniam dicta suscipit ipsum assumenda. -->
             		</div>
             	</div>
 
               <div class="container">
                 <div class="col-md-12 lead  pt-3 pb-3 text-center font-weight-bold">Surveillance Committee Comments</div>
                 <div class="container border rounded pt-1" id="survCom" style="min-height: 100px;">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt nam sed, accusamus alias incidunt, magnam sint. Expedita corporis officiis amet omnis facere labore alias, odio veniam dicta suscipit ipsum assumenda.
+                  <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt nam sed, accusamus alias incidunt, magnam sint. Expedita corporis officiis amet omnis facere labore alias, odio veniam dicta suscipit ipsum assumenda. -->
                 </div>
               </div>
             	

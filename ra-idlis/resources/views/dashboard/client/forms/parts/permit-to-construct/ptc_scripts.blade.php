@@ -13,6 +13,22 @@
     // console.log(mservfac)
 
     createDefaultsNew()
+
+
+    window.addEventListener('click', function(e) {
+        initialCheck()
+    });
+    initialCheck()
+    function initialCheck(){
+            if(document.querySelector('input[name="facid"]:checked') === null){
+                // if(document.getElementsByName("facid")[0].checked != true){
+                    var first = document.getElementsByName("facid")[0];
+                    first.checked = true;
+                    first.click();     
+                    console.log("Recs")
+            }
+        
+    }
     
 
     function createDefaultsNew(){

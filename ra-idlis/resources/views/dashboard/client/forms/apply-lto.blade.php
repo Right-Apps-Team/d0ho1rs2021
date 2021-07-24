@@ -238,8 +238,11 @@ var apptypenew = '{!! $apptypenew !!}';
  if(savStat == "final" && apptypenew != "renewal"){
     document.getElementById('submit').setAttribute("hidden", "hidden");
     document.getElementById('save').setAttribute("hidden", "hidden");
-    document.getElementById('update').removeAttribute("hidden");
 
+    var update =  document.getElementById('update');
+    if(update){
+    document.getElementById('update').removeAttribute("hidden");
+}
     @if($grpid == 'RLO')
          document.getElementById('divRem').removeAttribute("hidden");
     @endif
@@ -256,8 +259,17 @@ var apptypenew = '{!! $apptypenew !!}';
 
 
 </script>
+
+
+
+
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 
 <script src="{{asset('ra-idlis/public/js/forall.js')}}"></script>

@@ -6,6 +6,29 @@ var aptid = document.getElementById("aptidnew").value
 console.log(aptid)
 // var aptid = "IN"
 
+window.addEventListener('change', function(e) {
+        if(e.target.name == 'ocid'){
+            setTimeout(function(){  
+                   
+                    getFacServCharge()
+            }, 1000);
+        }
+    });
+    
+window.addEventListener('click', function(e) {
+        initialCheck()
+    });
+initialCheck()
+function initialCheck(){
+        if(document.querySelector('input[name="facid"]:checked') === null){
+            // if(document.getElementsByName("facid")[0].checked != true){
+                var first = document.getElementsByName("facid")[0];
+                first.checked = true;
+                first.click();     
+         }
+      
+}
+
 var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
 
 
@@ -84,24 +107,24 @@ document.getElementById("appid").value = appid;
 
 
 
-        function getCheckedValue(groupName) {
-                var radios;
-                if (groupName == "anxsel") {
-                        radios = document.getElementsByClassName(groupName);
-                } else {
-                        radios = document.getElementsByName(groupName);
-                }
+        // function getCheckedValue(groupName) {
+        //         var radios;
+        //         if (groupName == "anxsel") {
+        //                 radios = document.getElementsByClassName(groupName);
+        //         } else {
+        //                 radios = document.getElementsByName(groupName);
+        //         }
 
 
-                var rad = []
-                for (i = 0; i < radios.length; i++) {
-                        if (radios[i].checked) {
-                        rad.push(radios[i].value);
+        //         var rad = []
+        //         for (i = 0; i < radios.length; i++) {
+        //                 if (radios[i].checked) {
+        //                 rad.push(radios[i].value);
 
-                        }
-                }
-                return rad;
-        }
+        //                 }
+        //         }
+        //         return rad;
+        // }
         
 
       
@@ -292,6 +315,25 @@ function initialProPo(){
 
 }
 
+function getCheckedValue(groupName) {
+                var radios;
+                if (groupName == "anxsel") {
+                        radios = document.getElementsByClassName(groupName);
+                } else {
+                        radios = document.getElementsByName(groupName);
+                }
+
+
+                var rad = []
+                for (i = 0; i < radios.length; i++) {
+                        if (radios[i].checked) {
+                        rad.push(radios[i].value);
+
+                        }
+                }
+                return rad;
+        }
+
 function getFacServCharge(val = null) {
 
 var facids = getCheckedValue('facid')
@@ -421,14 +463,5 @@ function sendRequestRetArr(arr_data, loc, type, bolRet, objFunction) {
 	    	}
 		}
 
-window.addEventListener('change', function(e) {
-        
 
-        if(e.target.name == 'ocid'){
-            setTimeout(function(){  
-                   
-                    getFacServCharge()
-            }, 1000);
-        }
-    });
 </script>

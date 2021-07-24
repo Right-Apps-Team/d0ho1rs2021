@@ -3881,7 +3881,30 @@
 		public static function getAllSurveillanceForm() {
 			///////////////// Lloyd - Dec 7, 2018 ///////////////
 			try {
-				$data = DB::table('surv_form')->leftJoin('appform','appform.appid','surv_form.appid')->leftJoin('facilitytyp','facilitytyp.facid','surv_form.type_of_faci')->get();
+
+				$Cur_useData = AjaxController::getCurrentUserAllData();
+
+				if($Cur_useData['grpid'] == 'NA'){
+					$data = DB::table('surv_form')
+					->leftJoin('appform','appform.appid','surv_form.appid')
+					->leftJoin('facilitytyp','facilitytyp.facid','surv_form.type_of_faci')
+					->leftJoin('verdict','surv_form.verdict','verdict.vid')
+					->select('surv_form.*','surv_form.status as survStat', 'appform.*', 'facilitytyp.*', 'verdict.vdesc')
+					->get();
+				}else{
+
+					$data = DB::table('surv_form')
+					->leftJoin('appform','appform.appid','surv_form.appid')
+					->leftJoin('facilitytyp','facilitytyp.facid','surv_form.type_of_faci')
+					->leftJoin('verdict','surv_form.verdict','verdict.vid')
+					->where('surv_form.rgnid', $Cur_useData['rgnid'])
+					->select('surv_form.*','surv_form.status as survStat', 'appform.*', 'facilitytyp.*', 'verdict.vdesc')
+					->get();
+
+				}
+				
+				
+				
 				return $data;
 			} catch (Exception $e) {
 				AjaxController::SystemLogs($e->getMessage());
@@ -3891,10 +3914,31 @@
 	public static function getAllSurveillanceFormRegFac() {
 			///////////////// jacky - Jun 24, 2021 ///////////////
 			try {
-				$data = DB::table('surv_form')
-				->leftJoin('registered_facility','registered_facility.regfac_id','surv_form.regfac_id')
-				->leftJoin('hfaci_grp','hfaci_grp.hgpid','surv_form.type_of_faci')
-				->get();
+
+
+				$Cur_useData = AjaxController::getCurrentUserAllData();
+
+				if($Cur_useData['grpid'] == 'NA'){
+					$data = DB::table('surv_form')
+					->leftJoin('registered_facility','registered_facility.regfac_id','surv_form.regfac_id')
+					->leftJoin('hfaci_grp','hfaci_grp.hgpid','surv_form.type_of_faci')
+					->leftJoin('verdict','surv_form.verdict','verdict.vid')
+					->get();
+				}else{
+					$data = DB::table('surv_form')
+					->leftJoin('registered_facility','registered_facility.regfac_id','surv_form.regfac_id')
+					->leftJoin('hfaci_grp','hfaci_grp.hgpid','surv_form.type_of_faci')
+					->leftJoin('verdict','surv_form.verdict','verdict.vid')
+					->where('surv_form.rgnid',$Cur_useData['rgnid'] )
+					->get();
+				}
+			
+
+
+				// 	$data = DB::table('surv_form')
+				// ->leftJoin('registered_facility','registered_facility.regfac_id','surv_form.regfac_id')
+				// ->leftJoin('hfaci_grp','hfaci_grp.hgpid','surv_form.type_of_faci')
+				// ->get();
 				
 				return $data;
 			} catch (Exception $e) {
@@ -3908,7 +3952,21 @@
 			///////////////// Lloyd - Dec 12, 2018 ///////////////
 							// Jacky was here 6-21-2021
 			try {
-				$data = DB::table('mon_form')->join('registered_facility','mon_form.regfac_id','registered_facility.regfac_id')->get();
+				$Cur_useData = AjaxController::getCurrentUserAllData();
+
+				if($Cur_useData['grpid'] == 'NA'){
+					$data = DB::table('mon_form')->join('registered_facility','mon_form.regfac_id','registered_facility.regfac_id')->get();
+				}else{
+					$data = DB::table('mon_form')->join('registered_facility','mon_form.regfac_id','registered_facility.regfac_id')
+					->where('registered_facility.rgnid', $Cur_useData['rgnid'])
+					->get();
+				}
+			
+				// $data = DB::table('mon_form')->join('registered_facility','mon_form.regfac_id','registered_facility.regfac_id')->get();
+			
+			
+			
+			
 				// $data = DB::table('mon_form')->join('appform','appform.appid','mon_form.appid')->get(); 6-21-2021
 				return $data;
 			} catch (Exception $e) {

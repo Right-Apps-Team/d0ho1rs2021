@@ -46,7 +46,8 @@ const savePartialPtc = async (e) => {
         if($('#approving_authority_pos').val() == ""){errors +=1; ermsg += "Approving Authority Position, "}
         if($('#approving_authority_name').val() == ""){errors +=1; ermsg += "Approving Authority Name, "}
         
-        
+        var allFacids = getAllFacids();
+        if(allFacids.length <= 0){errors +=1; ermsg += "No facilities/Services selected, "}
 
 
 

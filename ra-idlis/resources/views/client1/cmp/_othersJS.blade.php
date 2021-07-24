@@ -1036,6 +1036,8 @@
 
    function getEditData(hfsrbno, name_of_faci, type_of_faci, date_added) {
 
+      console.log("edit data")
+
       // document.getElementById('edit_ver_others').hidden=true;
 
       // document.getElementById('edit_ver_others').children[0].disabled=true;

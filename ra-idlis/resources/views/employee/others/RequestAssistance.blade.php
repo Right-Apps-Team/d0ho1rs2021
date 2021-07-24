@@ -7,6 +7,18 @@
     width: 100% !important;
   }
 </style>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" /> -->
+
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+
+
 @section('content')
   {{-- {{dd((array) DB::table('req_ast_form')->where('ref_no', '2')->first())}} --}}
 
@@ -33,6 +45,7 @@
 
               <th scope="col" style="text-align: center; width:auto">Case No./<br>Ref No.</th>
 
+              <!-- <th scope="col" style="text-align: center; width:auto">RGNID</th> -->
               <th scope="col" style="text-align: center; width:auto">Type</th>
 
               <th scope="col" style="text-align: center; width:auto">Name of Facility</th>
@@ -114,6 +127,8 @@
 
 
                     <td style="text-align:center">{{$a->ref_no}}</td>
+
+                    <!-- <td style="text-align:center">{{$a->rgnid}}</td> -->
 
                     <td style="text-align:center">{{$a->type}}</td>
 
@@ -1013,6 +1028,7 @@
 
 
 
+                              var rname = document.getElementById('rname');
                               var regInput = document.getElementById('xfacName');
 
                               var regDataList = document.getElementById('xfacName');
@@ -1039,6 +1055,7 @@
 
                                   case false:
                                     document.getElementById('facinaturevalue').value="false";
+                                    rname.setAttribute('hidden', 'hidden')
                                     unregInput.hidden = false;
 
                                     unregInput.disabled = false;
@@ -1072,12 +1089,14 @@
 
 
 
-                                  
+                               
                                     unregFacType.hidden = false;
 
                                     unregFacType.disabled = false;
 
                                     unregFacType.required = true;
+
+
 
                                     unregFacAddr.hidden = false;
 
@@ -1097,6 +1116,7 @@
 
                                   case true:
                                     document.getElementById('facinaturevalue').value="true";
+                                    rname.removeAttribute('hidden')
                                     unregInput.hidden = true;
 
                                     unregInput.disabled = true;
@@ -1114,6 +1134,7 @@
 
                                     regDataList.required = true;
 
+                                    
                                     regFacType.hidden = false;
 
                                     regFacType.disabled = false;
@@ -1227,11 +1248,11 @@
                               --}}
 
                                 
-
-                              <select type="" style="width: 100%" name="name_of_faci" class="form-control" onchange="changeFacname(this.value)" id="xfacName"  data-parsley="">
+                            <p id="rname" >
+                              <select  type="" style="width: 100%" name="name_of_faci" class="form-control selectpicker" onchange="changeFacname(this.value)" id="xfacName"  data-parsley="" data-live-search="true">
                               <!-- <select type="" style="width: 100%" name="name_of_faci" class="form-control" onchange="changeFacname(this.value)" id="xfacName" required data-parsley-required-message="<b>*Name of Facility</b> required" data-parsley=""> -->
                               <!-- <select type="" style="width: 100%" name="name_of_faci" class="form-control" onchange="changeFaciSelect()" id="xfacName" required data-parsley-required-message="<b>*Name of Facility</b> required" data-parsley=""> -->
-
+<!-- HERE -->
                                 <option disabled hidden selected value="0"></option>
 
                                 @isset($FacName)
@@ -1240,7 +1261,7 @@
 
                                     @if($value->facilityname!="")
 
-                                      <option value="{{$value->regfac_id}}">{{$value->facilityname}} </option>
+                                      <option data-tokens="{{$value->regfac_id}}" value="{{$value->regfac_id}}">{{$value->facilityname}} </option>
 
                                     @endif
 
@@ -1249,6 +1270,7 @@
                                 @endisset
 
                               </select>
+                            </p>
 
                             </div>
 
@@ -2061,7 +2083,16 @@ console.log(facnames)
       </div>
     </div>
   </div>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" /> -->
 
+<script>
+$(function() {
+  // $('.selectpicker').selectpicker();
+  $('.selectpicker').selectpicker();
+  // $('select').selectpicker();
+});
+  </script>
   <script>
     $('select[name="actions"]').on('change', function() {
 
@@ -2130,9 +2161,14 @@ console.log(facnames)
   </script>
 
   @include('employee.cmp._othersJS') {{-- Javascript for this Module --}}
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
 @endsection
 
 @else
   <script>window.location.href="{{url('employee')}}"</script>
 @endif
+

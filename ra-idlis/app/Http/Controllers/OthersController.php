@@ -849,18 +849,30 @@ class OthersController extends Controller
 				}
 
 				DB::table('surv_form')->insert(
-					['appid'=>(isset($r->comAppid) ? $r->comAppid : $currData), 'date_added'=>date('Y-m-d'), 'name_of_faci'=>$r->u_nameoffaci, 'address_of_faci'=>(isset($r->address) ? $r->address : AjaxController::getAddressByLocation($r->u_reg,$r->u_prov,$r->u_cm,$r->u_brgy) .' ' .$r->uAddr), 'type_of_faci'=>$r->u_typeoffaci, 'hasViolation' => 1 ,'violation' => $r->complaint, 'faciEmail' => (isset($email) ? $email->email : ($r->fromWhere == 'Complaints' ? DB::table('complaints_form')->where('ref_no',$r->compid)->first()->compEmail : null) ), 'compid' => $r->compid, 'fromWhere' => $r->fromWhere, 'compAddress' => (strtolower($r->fromWhere) == 'unregistered facility' ? json_encode(['reg' => $r->u_reg,'prov' => $r->u_prov, 'cm' => $r->u_cm, 'brgy' => $r->u_brgy]) : '')]
+					['appid'=>(isset($r->comAppid) ? $r->comAppid : $currData), 
+					'date_added'=>date('Y-m-d'), 
+					'name_of_faci'=>$r->u_nameoffaci, 
+					'address_of_faci'=>(isset($r->address) ? $r->address : AjaxController::getAddressByLocation($r->u_reg,$r->u_prov,$r->u_cm,$r->u_brgy) .' ' .$r->uAddr), 
+					'type_of_faci'=>$r->u_typeoffaci, 
+					'hasViolation' => 1 ,
+					'violation' => $r->complaint, 
+					'faciEmail' => (isset($email) ? $email->email : ($r->fromWhere == 'Complaints' ? DB::table('complaints_form')->where('ref_no',$r->compid)->first()->compEmail : null) ), 
+					'compid' => $r->compid, 
+					'fromWhere' => $r->fromWhere, 
+					'rgnid' => $r->u_reg, 
+					'status' => 'SFS', 
+					'compAddress' => (strtolower($r->fromWhere) == 'unregistered facility' ? json_encode(['reg' => $r->u_reg,'prov' => $r->u_prov, 'cm' => $r->u_cm, 'brgy' => $r->u_brgy]) : '')]
 				);
 
 				if(isset($r->compid)){
 					$fromComplaints = DB::table('complaints_form')->where('ref_no',$r->compid)->first();
 					if(isset($fromComplaints->compEmail)){
 						$toData = array('name' => $fromComplaints->name_of_comp, 'faciname' => $fromComplaints->name_of_faci);
-						Mail::send('employee.others.mailForComplaints', $toData, function($msg) use ($fromComplaints) {
-							$msg->to($fromComplaints->compEmail);
-							$msg->subject('DOHOLRS Surveillance Team');
-							$msg->from('doholrs@gmail.com','DOH Surveillance Team');
-						});
+						// Mail::send('employee.others.mailForComplaints', $toData, function($msg) use ($fromComplaints) {
+						// 	$msg->to($fromComplaints->compEmail);
+						// 	$msg->subject('DOHOLRS Surveillance Team');
+						// 	$msg->from('doholrs@gmail.com','DOH Surveillance Team');
+						// });
 						DB::table('complaints_form')->where('ref_no',$r->compid)->update(['isChecked' => 1]);
 					}
 				}
@@ -887,6 +899,12 @@ class OthersController extends Controller
 					$email = DB::table('appform')->where('appid',$r->comAppid)->first();
 				}
 
+				$rn = null;
+				if($r->regfac_idcomp){
+					$rf = DB::table('registered_facility')->where('regfac_id',$r->regfac_idcomp)->first();
+					$rn = $rf->rgnid;
+				}
+
 				DB::table('surv_form')->insert(
 					['appid'=>(isset($r->comAppid) ? $r->comAppid : $currData), 
 					'date_added'=>date('Y-m-d'), 
@@ -898,6 +916,8 @@ class OthersController extends Controller
 					'violation' => $r->complaint, 
 					'faciEmail' => (isset($email) ? $email->email : ($r->fromWhere == 'Complaints' ? DB::table('complaints_form')->where('ref_no',$r->compid)->first()->compEmail : null) ), 
 					'compid' => $r->compid, 
+					'rgnid' => $rn, 
+					'status' => 'SFS', 
 					'fromWhere' => $r->fromWhere, 
 					'compAddress' => (strtolower($r->fromWhere) == 'unregistered facility' ? json_encode(['reg' => $r->u_reg,'prov' => $r->u_prov, 'cm' => $r->u_cm, 'brgy' => $r->u_brgy]) : '')
 					]
@@ -1068,6 +1088,7 @@ class OthersController extends Controller
 					's_rec_others'=>$request->others, 
 					'verdict'=>$request->recverdict, 
 					's_ver_others'=>$request->recothers,
+					'status'=>'RS',
 					'supportDoc'=>(is_array($fl) ? implode(',',$fl): null )
 					// 'supportDoc'=>$fileNameToStore
 				]);
@@ -1142,7 +1163,7 @@ class OthersController extends Controller
 				
 					// Query
 					DB::table('mon_form')->insert(
-						['regfac_id'=>$request->regfac_id, 'date_added'=>$request->e_date, 'name_of_faci'=>$reg->facilityname, 'type_of_faci'=>$reg->facid]
+						['regfac_id'=>$request->regfac_id, 'date_added'=>$request->e_date, 'name_of_faci'=>$reg->facilityname, 'type_of_faci'=>$reg->facid, 'address_of_faci'=> $this->getFacAddrByRegFacId($request->regfac_id)]
 					);
 
 				// DB::table('mon_form')->insert(
@@ -1159,15 +1180,15 @@ class OthersController extends Controller
 			// }
 		}
 
-		function getFacAddrByRegFacId($id) // Get Facility Name
+		public function getFacAddrByRegFacId($id) // Get Facility Name
 		{
 			
 				$data = DB::table('registered_facility')
 						->where('regfac_id', '=', $id)
-						->join('region', 'region.rgnid', '=', 'appform.rgnid')
-						->join('province', 'province.provid', '=', 'appform.provid')
-						->join('city_muni', 'city_muni.cmid', '=', 'appform.cmid')
-						->join('barangay', 'barangay.brgyid', '=', 'appform.brgyid')
+						->join('region', 'region.rgnid', '=', 'registered_facility.rgnid')
+						->join('province', 'province.provid', '=', 'registered_facility.provid')
+						->join('city_muni', 'city_muni.cmid', '=', 'registered_facility.cmid')
+						->join('barangay', 'barangay.brgyid', '=', 'registered_facility.brgyid')
 						->select('rgn_desc', 'provname', 'cmname', 'brgyname')
 						->first();
 

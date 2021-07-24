@@ -218,7 +218,7 @@
       <div class="modal-content " style="border-radius: 0px;border: none;">
         <div class="modal-body text-justify" style=" background-color: #272b30;color: white;">
           <h5 class="modal-title text-center">
-            <strong>Add New Facilities To Monitor</strong> 
+            <strong>Add New Facilities To Monitor </strong> 
             <span class="btn button-outline-primary" data-toggle="tooltip" title="" data-html="true" style="cursor: pointer" data-original-title="<b style='color:yellow'>WARNING</b>, Submitting new facilities is irreversible.">
               <i class="fa fa-question-circle" aria-hidden="true"></i>
             </span>
