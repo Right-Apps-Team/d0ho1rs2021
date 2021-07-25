@@ -62,7 +62,8 @@
                                 <td class="text-center">{{(ajaxController::getFacilitytypeFromHighestApplicationFromX08FT($data->appid)->hgpdesc ?? 'NOT FOUND')}}</td>
                                 <td class="text-center">{{$data->formattedDate}}</td>
                                 <td class="text-center">{{$data->aptdesc}}</td>
-                                <td class="text-center" style="font-weight:bold;">{{$data->isCashierApproveFDA == 1 ? 'Paid' : 'For Payment'}}</td>
+                                <td class="text-center" style="font-weight:bold;">{{$data->proofpaystatMach == 'posting' ? 'For Posting' :($data->proofpaystatMach == 'posted' ? 'Posted' : 'For Payment')}}</td>
+                                <!-- <td class="text-center" style="font-weight:bold;">{{$data->isCashierApproveFDA == 1 ? 'Paid' : 'For Payment'}}</td> -->
                                   <td>
                                     <div class="container">
                                       <div class="row">
@@ -171,6 +172,7 @@
     </div>
 </div>
   <script type="text/javascript">
+  
     $(document).ready(function(){
 
 

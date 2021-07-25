@@ -1163,7 +1163,13 @@ class OthersController extends Controller
 				
 					// Query
 					DB::table('mon_form')->insert(
-						['regfac_id'=>$request->regfac_id, 'date_added'=>$request->e_date, 'name_of_faci'=>$reg->facilityname, 'type_of_faci'=>$reg->facid, 'address_of_faci'=> $this->getFacAddrByRegFacId($request->regfac_id)]
+						['regfac_id'=>$request->regfac_id, 
+						'date_added'=>$request->e_date, 
+						'name_of_faci'=>$reg->facilityname, 
+						'type_of_faci'=>$reg->facid, 
+						'status'=> 'MNT', 
+						'address_of_faci'=> $this->getFacAddrByRegFacId($request->regfac_id)
+						]
 					);
 
 				// DB::table('mon_form')->insert(
@@ -1206,7 +1212,7 @@ class OthersController extends Controller
 
 				DB::table('mon_form')->where('monid', '=', $request->atmonid)
 				->update(
-					['team'=>$request->team, 'date_monitoring'=>$request->date, 'date_monitoring_end'=>$request->date_end]
+					['team'=>$request->team, 'status'=>'MFM', 'date_monitoring'=>$request->date, 'date_monitoring_end'=>$request->date_end]
 				);
 
 				return redirect()->back()->with('errRet', ['errAlt'=>'success', 'errMsg'=>'Added team Successfully.']);
@@ -1312,7 +1318,7 @@ class OthersController extends Controller
 				DB::table('mon_form')
 						->where('monid', '=', $currData->monid)
 						->update(
-							['offense'=>$offense->count(), 'novid'=>1, 'date_issued'=>$currData->novdate, 'nov_num'=>$request->nov_num]
+							['offense'=>$offense->count(), 'novid'=>1, 'status'=>'MA', 'date_issued'=>$currData->novdate, 'nov_num'=>$request->nov_num]
 						);
 
 				// mail

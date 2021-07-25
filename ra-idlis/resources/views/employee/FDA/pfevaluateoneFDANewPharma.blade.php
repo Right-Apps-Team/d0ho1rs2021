@@ -235,7 +235,7 @@
                           <option value="Recommendation for Disapproval including forfeiture of payment">Recommendation for Disapproval including forfeiture of payment</option>
                       
                         @else
-                        <option value="COCN">Certificate of Compliance  </option>
+                        <option value="COCN">Certificate of Compliance</option>
                         <option value="NOD">Notice of Deficiency (30 Days compliance)</option>
                         <option value="RLN">Recommendation Letter </option>
                         @endif
@@ -297,7 +297,35 @@
             					Evaluation Recommendation
             				</div>
             				<div class="col-md d-flex justify-content-center lead" style="font-size: 26px;" >
-            					<u>{{$eval->decision}}</u>
+            					<u>
+                      @switch($eval->decision)
+                        @case('COCN')
+                          Certificate of Compliance
+                        @break 
+                        @case('LINAC')
+                        License to Operate for LINAC, Transporatable  X-Ray Facility
+                        @break 
+                        @case('CFR')
+                        Certificate of Facility Registration (MRI)
+                        @break
+                        @case('NOD')
+                        Notice of Deficiency (30 Days compliance)
+                        @break
+                        @case('RFD')
+                        Recommendation for Disapproval including forfeiture of payment
+                        @break
+
+                        @default
+                            Recommendation Letter
+                        @break
+						       		@endswitch
+                       
+                      
+                      
+                      
+                      </u>
+
+
             				</div>
                     <div class="col-md d-flex justify-content-center lead" style="font-size: 26px;" >
                        @if(strtolower($eval->decision) == 'rfc')

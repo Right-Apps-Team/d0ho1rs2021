@@ -6563,7 +6563,7 @@ use FunctionsClientController;
 
 				if(!FunctionsClientController::existOnDB('mon_form',[['monid',$monid],['assessmentStatus',1]])){
 					// DB::table('mon_form')->where('monid',$monid)->update([['assessmentStatus' => 1], ['hasLOE' => 1]]);
-					DB::table('mon_form')->where('monid',$monid)->update(['assessmentStatus' => 1, 'hasLOE' => 1]);
+					DB::table('mon_form')->where('monid',$monid)->update(['assessmentStatus' => 1, 'hasLOE' => 1, 'status' => 'MFCA']);
 				}
 
 				// if(!isset($isSelfAssess)){
@@ -8454,7 +8454,7 @@ use FunctionsClientController;
 			}	
 			if($request->isMethod('post')){
 				if($request->has('setToRevise') && $request->has('monid')){
-					if(DB::table('mon_form')->where('monid',$request->monid)->update(['hasLOE' => null, 'monitorRemark' => $request->remark, 'forResubmit' => 1])){
+					if(DB::table('mon_form')->where('monid',$request->monid)->update(['hasLOE' => null, 'monitorRemark' => $request->remark, 'forResubmit' => 1, 'status' => 'MNA'])){
 						$monDet = DB::table('mon_form')->where('monid',$request->monid)->first();
 						if(DB::table('technicalfindingshist')->insert(['LOE' => $monDet->LOE, 'attached_filesUser'=> $monDet->attached_filesUser, 'id' => $monDet->monid, 'fromWhere' => 'mon'])){
 							$uid = AjaxController::getUidFrom(DB::table('mon_form')->where('monid',$request->monid)->select('appid')->first()->appid);

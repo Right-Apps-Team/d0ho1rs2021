@@ -31,7 +31,14 @@
 			        					to<b>{{\Carbon\Carbon::parse($value->date_monitoring_end)->format('M d, Y')}}</b>
                   					</td>
 			        				<td style="text-align:center">{{$value->name_of_faci}}</td>
-					                @if($value->isApproved == "1")
+									<td style="text-align:center;" class=" font-weight-bold">
+										<span>
+										
+									{{$value->status ? AjaxController::getTransStatusById($value->status)[0]->trns_desc : ''}}
+										</span>
+										</td>
+
+					                <!-- @if($value->isApproved == "1")
 										<td style="text-align:center;" class="bg-success text-light font-weight-bold">
 											<span style="text-shadow: 2px 2px 4px #000000">
 												{{AjaxController::getTransStatusById('A')[0]->trns_desc}}
@@ -67,7 +74,8 @@
 												{{AjaxController::getTransStatusById('NT')[0]->trns_desc}}
 											</span>
 										</td>
-									@endif
+									@endif -->
+
 			        				<td style="text-align:center">
 			        					@php
 				                          $url = 'employee/dashboard/processflow/parts/new/'.$value->regfac_id.'/'.$value->monid;

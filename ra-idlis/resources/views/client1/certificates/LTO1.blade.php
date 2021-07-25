@@ -121,7 +121,7 @@
 				<div class="row">
 						<div class="col-md-1"  >&nbsp;</div>
 					<div class="col-md-4 contl">
-						Service Capabilities
+						Service Capability
 					</div>
 					<div class="col-md-1" style="display: inline">
 						:</div>
@@ -134,9 +134,12 @@
 						@php
 						$str = $newservices;
 						$pattern = '/hospital/i';
+
+
+						$sc = preg_replace($pattern, ' ', $str);
 						
 						@endphp
-						{{  preg_replace($pattern, ' ', $str) }}
+						{{ $sc  }}
 					</div>
 					<div class="col-md-1" style="display: inline">
 						&nbsp;</div>
@@ -216,7 +219,8 @@
 						:</div>
 					<div class="col-md-5 contr" style="float:left;display: inline;">
 					
-						<strong>{{((isset($retTable[0]->noofstation)) ? $retTable[0]->noofstation : "NA")}}</strong>
+						<strong>{{((isset($otherDetails[0]->noofdialysis)) ? $otherDetails[0]->noofdialysis : "NA")}}</strong>
+						<!-- <strong>{{((isset($retTable[0]->noofstation)) ? $retTable[0]->noofstation : "NA")}}</strong> -->
 					</div>
 					<div class="col-md-1" style="display: inline">
 						&nbsp;</div>
@@ -251,8 +255,9 @@
 							$i=0;
 							foreach($ambType1 as $atval){
 								
-								if($ambType1[$i] == '1'){
-									echo ((int)$i ).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
+								if($ambType1[$i] == '2'){
+									echo ((int)$i + 1 ).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
+									echo "<br>";
 									
 								}
 
@@ -278,7 +283,23 @@
 					<div class="col-md-1" style="display: inline;float: left">
 						:</div>
 					<div class="col-md-5 contr" style="float:left;display: inline;">
-						{{$retTable[0]->licenseNo}}
+						<!-- {{$retTable[0]->licenseNo}} -->
+						@php
+						$pad_length = 4;
+						$pad_char = 0;
+						$str_type = 'd';
+
+						$format = "%{$pad_char}{$pad_length}{$str_type}";
+						$formatted_str = sprintf($format, $retTable[0]->appid);
+
+
+						$sercap = preg_replace('/\s*/', '', $sc);
+         			    $sercap = strtolower($sercap);
+
+						 $disercap = $sercap == 'level1' ? 'H' :  ($sercap == 'level2' ? 'H2' :  ($sercap == 'level3' ? 'H3' : ' '));
+
+						@endphp
+						{{$retTable[0]->rgnid.'-'.$formatted_str.'-'.date('y', strtotime(str_replace('-','/', $retTable[0]->t_date))).'-'. $disercap.'-'.($retTable[0]->ocid == 'G'? '1':'2') }}
 					</div>
 					<div class="col-md-1" style="display: inline">
 						&nbsp;</div>

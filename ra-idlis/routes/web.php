@@ -257,6 +257,7 @@ Route::post('employee/mf/del_test', 'AjaxController@delTeam'); // Delete
 Route::post('employee/mf/delMemberInTeam', 'AjaxController@delMemberInTeam'); // Delete Member
 Route::post('employee/mf/getEmployeeWithoutTeam', 'AjaxController@getEmployeeWithoutTeam'); // Get Employees without team
 Route::post('employee/mf/getMembersInTeam', 'AjaxController@getMembersInTeam'); // Get members using x08
+Route::post('employee/mf/getMembersInTeam/neww', 'AjaxController@getMembersInTeamNew'); // Get members using x08
 Route::match(['get', 'post'], 'employee/dashboard/mf/manage/teams', 'DOHController@MfManageTeam'); // Main, Add
 // Application Type
 Route::match(['get', 'post'], 'employee/dashboard/mf/apptype', 'DOHController@AppType'); // Main, Add

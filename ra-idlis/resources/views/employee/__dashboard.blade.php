@@ -51,6 +51,14 @@
     $mon_count = count($new_data["mon"]);
   @endphp
   @php
+  $concount=0;
+ $atocount=0;
+$coacount=0;
+$corcount=0;
+$ltocount=0;
+$ptccount=0;
+
+
   foreach($appcount as $ap => $a) {
     switch($a->hfser_id){
 									case 'CON' :

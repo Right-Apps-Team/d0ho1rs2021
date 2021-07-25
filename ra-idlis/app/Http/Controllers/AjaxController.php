@@ -870,6 +870,10 @@
 						->join('x07', 'x08.grpid', '=', 'x07.grp_id')
 						->where('x08.grpid', '<>', 'C')
 						->where('x08.team', '=', $request->id)->get();
+
+
+
+
 				if (count($data) != 0) 
 				{
 					for ($i=0; $i < count($data) ; $i++) { 
@@ -891,6 +895,42 @@
 				return 'ERROR';
 			}
 		}
+
+		public static function getMembersInTeamNew(Request $request)
+		{
+			try 
+			{
+				$data = DB::table('surv_team')
+						->join('surv_team_members', 'surv_team.montid', '=', 'surv_team_members.montid')
+						->where('surv_team.montid', '=', $request->id)
+						->get();
+
+
+
+
+				if (count($data) != 0) 
+				{
+					for ($i=0; $i < count($data) ; $i++) { 
+							$x = $data[$i]->mname;
+						      	if ($x != "") {
+							    	$mid = strtoupper($x[0]);
+							    	$mid = $mid.'. ';
+					       		 } else {
+							    	$mid = ' ';
+							 		}
+							$data[$i]->wholename = $data[$i]->fname.' '.$mid.''.$data[$i]->lname;
+						}
+				}
+				return $data;
+			} 
+			catch (Exception $e) 
+			{
+				AjaxController::SystemLogs($e->getMessage());
+				return 'ERROR';
+			}
+		}
+
+
 		public static function getMembersInHFERC($appid,$rgn,$order,$revCount)
 		{
 			$notInclude = array();

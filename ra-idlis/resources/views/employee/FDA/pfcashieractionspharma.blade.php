@@ -100,7 +100,7 @@
               @endif
               <div class="col d-flex justify-content-end">
               <button type="button" class="btn btn-primary p-2 m-1" data-toggle="modal" data-target="#showOP">
-                <i class="fa fa-eye" aria-hidden="true"></i> View Order of Payment  ff
+                <i class="fa fa-eye" aria-hidden="true"></i> View Order of Payment  
               </button>
               </div>
               

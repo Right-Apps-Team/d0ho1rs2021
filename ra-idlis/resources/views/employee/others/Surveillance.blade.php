@@ -67,6 +67,7 @@
                     {{-- <td style="text-align:center">{{ \Carbon\Carbon::parse($value->date_recom)->format('M d, Y') }}</td> --}}
                     <td style="text-align:center">
                       @if($value->team != "")
+                      
                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#sMonModal" onclick="showTeamSurv('{{$value->team}}')">
                           <i class="fa fa-fw fa-eye"></i>
                           Show Team
@@ -572,7 +573,11 @@
                   Members:
                 </div>
                 <div class="col-sm-12">
-                  <select readonly class="form-control w-100" id="smember" multiple rows="5" disabled></select>
+                  <!-- <select readonly class="form-control w-100" id="smember" multiple rows="5" disabled></select> -->
+                  <ul id="myList" style=" text-transform: capitalize;">
+                    <!-- <li>Coffee</li>
+                    <li>Tea</li> -->
+                  </ul>
                 </div>
               </div>
 
@@ -1004,20 +1009,31 @@
       let aString = '';
       if(id != ""){
         $.ajax({
-          url: '{{asset('employee/mf/getMembersInTeam')}}',
+          url: '{{asset('employee/mf/getMembersInTeam/neww')}}',
+          // url: '{{asset('employee/mf/getMembersInTeam')}}',
           method: 'POST',
           data: {_token : $("input[name=_token]").val(), id: id},
           async: false,
           success: function(a){
-            $("#steam").val(id);
-            if(a.length > 0)
-            {
-              $("#smember").empty();
+            console.log(a)
+
+
+            $("#steam").val(a[0].montname);
+            // $("#steam").val(id);
+            // if(a.length > 0)
+            // {
+              $("#myList").empty();
+              // $("#smember").empty();
               for (var i = 0; i < a.length; i++) {
-                aString  += '<option>'+a[i]['wholename']+'</option>';
+                // aString  += '<option>'+a[i].wholename+'</option>';
+                // aString  += '<option>'+a[i]['wholename']+'</option>';
+                var node = document.createElement("LI");
+                var textnode = document.createTextNode(a[i].wholename);
+                node.appendChild(textnode);
+                document.getElementById("myList").appendChild(node);
               }
-              $("#smember").append(aString);
-            }
+              // $("#smember").append(aString);
+            // }
           }
         })
       }

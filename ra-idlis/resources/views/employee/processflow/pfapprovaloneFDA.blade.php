@@ -7,8 +7,10 @@
           @isset($APPID)<input type="text" id="APPID" value="{{$APPID}}" hidden>@endisset
           <input type="" id="token" value="{{ Session::token() }}" hidden>
            Approval/Issuance Certificate
-           <button class="btn btn-primary" onclick="window.history.back();">Back</button>
-        </div>
+           <button class="btn btn-primary" onclick="window.location.reload(history.back())">Back</button>
+           <!-- <button class="btn btn-primary" onclick="GoBackWithRefresh();return false;">Back</button> -->
+           <!-- <button class="btn btn-primary" onclick="window.history.back();">Back</button> -->
+        </div>rrw
         <div class="card-body">
           <table class="table table-borderless">
           <thead>
