@@ -75,7 +75,7 @@
 				<!-- <br> -->
 				<h3 class="text-center text-uppercase font-mong name"><strong>{{((isset($retTable[0]->facilityname)) ? $retTable[0]->facilityname : "CURRENT_FACILITY")}}</strong></h3><br>
 				<!-- <h5 class="text-center font-mong">located at</h5><br> -->
-			<center>	<h4 style="width: 70%;" class="text-center font-mong loc"><strong>{{((isset($retTable[0])) ? ($retTable[0]->street_name.', '.$retTable[0]->street_number.', '.$retTable[0]->brgyname.', '.$retTable[0]->cmname.', '.$retTable[0]->provname.' '.$retTable[0]->rgn_desc) : 'No Location.')}}</strong></h4></center><br>
+			<center>	<h4 style="width: 70%;" class="text-center font-mong loc"><strong>{{((isset($retTable[0])) ? (($retTable[0]->street_name  ? $retTable[0]->street_name.', ' : '').($retTable[0]->street_number ? $retTable[0]->street_number.', ' : '').$retTable[0]->brgyname.', '.$retTable[0]->cmname.', '.$retTable[0]->provname.' '.$retTable[0]->rgn_desc) : 'No Location.')}}</strong></h4></center><br>
 				<!-- <h4 class="text-center"><strong>{{((isset($retTable[0])) ? ($retTable[0]->rgn_desc.', '.$retTable[0]->provname.', '.$retTable[0]->cmname.', '.$retTable[0]->brgyname.', '.$retTable[0]->street_name) : "CURRENT_LOCATION")}}</strong></h4><br> -->
 				<br>
 				<div class="row">

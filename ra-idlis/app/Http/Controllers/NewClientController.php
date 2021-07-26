@@ -835,6 +835,19 @@ class NewClientController extends Controller {
 			return redirect('client1/apply')->with('errRet', ['errAlt'=>'danger', 'errMsg'=>'Error on Processing Payment. Contact the admin.']);
 		}
 	}
+	public static function checkExitPay($appid) {
+		$appform = DB::table('appform')->join('chgfil','chgfil.appform_id','appform.appid')->where([['chgfil.userChoosen',1],['chgfil.appform_id',$appid]])->orWhere([['chgfil.userChoosen',1],['chgfil.appform_id',$appid],['appform.isPayEval',1]])->exists();
+		
+		$ex = "no";
+		if($appform){
+			$ex = "yes";
+		}
+
+		return $ex;
+	}
+
+
+
 	public function __dPayment(Request $request, $token = "", $appid = "") {
 		try {
 			if($request->isMethod('get')){

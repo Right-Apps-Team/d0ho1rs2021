@@ -179,7 +179,7 @@ function initialProPo(){
 
                 var inpt2 = document.createElement("input");
                 inpt2.setAttribute("type", "text");
-                inpt2.setAttribute("class", "form-control");
+                inpt2.setAttribute("class", "form-control locs");
                 inpt2.setAttribute("name", "location[]");
                 inpt2.value = condet[i].location ;
                 document.getElementById("colEntryC-" + i).appendChild(inpt2);
@@ -195,7 +195,7 @@ function initialProPo(){
 
                 var inpt3 = document.createElement("input");
                 inpt3.setAttribute("type", "number");
-                inpt3.setAttribute("class", "form-control");
+                inpt3.setAttribute("class", "form-control pops");
                 inpt3.setAttribute("name", "population[]");
                 inpt3.setAttribute("data-id", i);
                 inpt3.setAttribute("onkeyup", "calculatepop()");

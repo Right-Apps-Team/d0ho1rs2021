@@ -4628,6 +4628,20 @@
 				return 'ERROR';
 			}
 		}
+		public static function checkExitPay($appid) {
+			$appform = DB::table('appform')->join('chgfil','chgfil.appform_id','appform.appid')->where([['chgfil.userChoosen',1],['chgfil.appform_id',$appid]])->orWhere([['chgfil.userChoosen',1],['chgfil.appform_id',$appid],['appform.isPayEval',1]])->exists();
+			
+			$ex = "no";
+			if($appform){
+				$ex = "yes";
+			}
+	
+			return $ex;
+		}
+	
+
+
+
 
 		public static function JudgeApplicationFDA(Request $request)
 		{

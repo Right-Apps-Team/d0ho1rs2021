@@ -586,6 +586,8 @@ function callApi(url, data, method) {
 const removeProjectedPopulationRow = (rowId) => {
     $(`#rowEntry${rowId}`).remove();
     calculateProjectedPopulationCost();
+
+    calculatepop()
 }
 const removeExistingHospitalRow = (rowId) => {
     $(`#rowEntryHospital${rowId}`).remove();
@@ -633,7 +635,7 @@ const addProjectedPopulation = () => {
                 ${typeWords}
                 <input type="hidden" name="type[]" value="${type}">
             </td>
-            <td><input type="text" class="form-control" name="location[]" /></td>
+            <td><input type="text" class="form-control locs" name="location[]" /></td>
             <td class="population_field">
                 <input 
                     type="number" 
@@ -642,6 +644,8 @@ const addProjectedPopulation = () => {
                     class="population populationCount"
                     data-id="${entry}"
                     onkeyup="calculatepop()"
+                    min="1"
+                   
                 />
             </td>
         </tr>

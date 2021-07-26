@@ -80,7 +80,7 @@
      >
 </div>
 <div class="col-md-4">
-    <label for="street_name">Street name <span class="text-danger">*</span></label>
+    <label for="street_name">Street name</label>
     <input type="text" class="form-control" id="street_name" name="street_name" placeholder="STREET NAME"
     value='{{(( isset($fAddress) && count($fAddress) > 0) ? $fAddress[0]->street_name: null)}}'
     >

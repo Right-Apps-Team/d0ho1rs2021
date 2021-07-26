@@ -953,9 +953,14 @@ console.log(option[0])
       // $('[name="catchment[]"]').map(function(index, elem) {
           totalValue += Number($(elem).val());
       })
-      $('.totalEdit').text(totalValue);
+      $('.totalEdit').text(numberWithCommas(totalValue));
+      // $('.totalEdit').text(totalValue);
       return totalValue;
-    } 
+    }
+    
+    function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
     
     function processPopulationCountInpt(){
       let totalValue = 0;
@@ -963,7 +968,8 @@ console.log(option[0])
       $('[name="catchment[]"]').map(function(index, elem) {
           totalValue += Number($(elem).val());
       })
-      $('.totalEditInpt').text(totalValue);
+      $('.totalEditInpt').text(numberWithCommas(totalValue));
+      // $('.totalEditInpt').text(totalValue);
       return totalValue;
     }
     function getABCCount(){
@@ -977,9 +983,12 @@ console.log(option[0])
       });
       $("input[name=ihbval]").val(abcCount);
       $(".IHBTotal").html(numberWithCommas(abcCount));
-      $("#bpr").html(getBPR().toFixed(2) + '('+ getBPR() +')');
-      $("#pbn").html(getPBN() + '&nbsp; say '+ getPBN().toFixed(0));
-      $("#ubn").html(getUBN() + ' bed');
+      $("#bpr").html(numberWithCommas(getBPR().toFixed(2)) + '('+ numberWithCommas(getBPR()) +')');
+      // $("#bpr").html(getBPR().toFixed(2) + '('+ getBPR() +')');
+      $("#pbn").html(numberWithCommas(getPBN()) + '&nbsp; say '+ numberWithCommas(getPBN().toFixed(0)));
+      // $("#pbn").html(getPBN() + '&nbsp; say '+ getPBN().toFixed(0));
+      $("#ubn").html(numberWithCommas(getUBN()) + ' bed');
+      // $("#ubn").html(getUBN() + ' bed');
       if(getBPR().toFixed(2) < 1){
         $("#psc").hide();
         $("input[name=pscaval]").val('');
@@ -1037,7 +1046,8 @@ console.log(option[0])
     function getPBN(){
       let pbn = Number(processPopulationCount()) / {{$bed}};
       $("input[name=pbnval]").val(pbn.toFixed(0));
-      $(".pbn").text(pbn.toFixed(0));
+      $(".pbn").text(numberWithCommas(pbn.toFixed(0)));
+      // $(".pbn").text(pbn.toFixed(0));
       return pbn;
     }
     function getUBN(){
@@ -1074,11 +1084,43 @@ console.log(option[0])
     function addTT(selection){
       if(selection == 1){
         let fromMain = $("#mainEl").nextUntil($("#addNewRow1")).clone();
+
+        console.log("fromMain")
+        console.log(fromMain)
+
+
         fromMain.append( 
          '<td style="width:200px"><input type="text" class="form-control" name=ttph[] required></td>');
+
         $("#pheh").next().html(fromMain).find($('.toRemoveaddTT')).remove();
         $("#pheh").next().find('.toChange').attr('disabled',true).removeAttr('name').removeClass('toTotal');
+
+        var locabc = document.getElementsByName("locabc[]");
+        var locabcnn = document.getElementsByClassName("getter");
+
+        console.log("getter")
+        console.log($("#pheh").next().find('getter').val())
+        // console.log("locabcnn")
+        // console.log(locabcnn)
+        // console.log(locabcnn[1].value)
+        // console.log("locabcbvcbvcbvc")
+
+      
+
+
+        // for(var lc = 0; lc < locabcnn.length ; lc++){
+        //   console.log("lc")
+        //   $("#pheh").next().find('select[name="locabc[]"]').replaceWith('<input class="form-control" disabled value="'+locabcnn[lc].value+'">');
+        // }
+     
+        // $("#pheh").next().find('select[name="locabc[]"]').attr('disabled',true).removeAttr('name');
+       
+        // $("#pheh").next().find('select[name="locabc[]"]').replaceWith('<input class="form-control" disabled value="'+$(this).val()+'">');
+      
+      
+      
         $("#pheh").next().find('select[name="locabc[]"]').replaceWith('<input class="form-control" disabled value="'+$('select[name="locabc[]"]').val()+'">');
+
         // $(".hideOnLess").removeAttr('hidden');
         $("select[name=verd]").val('1').removeAttr('disabled');
       } else {
@@ -1150,7 +1192,8 @@ console.log(option[0])
         '<tr class="trd'+(!removeX ? (counterForDom + 1001) : '')+'">'+
           toInsertForX+
           '<td><input class="form-control toChange" type="text" name=existHosp'+elToInsName+'[] required></td>'+
-          '<td class = "toRemove"><select   class="form-control renewable" name="loc'+elToInsName+'[]" required>'+
+          '<td class = "toRemove"><select   class="form-control renewable '+( elToInsName == 'abc' ? 'getter' : '') +'" name="loc'+elToInsName+'[]" required>'+
+          // '<td class = "toRemove"><select   class="form-control renewable" name="loc'+elToInsName+'[]" required>'+
           '<option value hidden disabled selected></option>'+
             getAddress()+
           '</select></td>'+
@@ -1192,6 +1235,22 @@ console.log(option[0])
         parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         return parts.join(".");
     }
+
+
+    window.addEventListener('click', function(e) {
+      console.log("night")
+      // $("#pscaAve").html(avepsca() + ' %');
+      $("#pscaAve").html(avepsca() + ' %');
+
+        
+    });
+   window.addEventListener('change', function(e) {
+      console.log("morning")
+      // $("#pscaAve").html(avepsca() + ' %');
+      $("#pscaAve").html(avepsca() + ' %');
+
+        
+    });
     function deleteRow(elName) {
       
       console.log("Hello")
