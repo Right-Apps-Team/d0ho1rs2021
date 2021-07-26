@@ -54,7 +54,7 @@
 						<p style="float: left;" class="leftHeader">Name of Facility </p><span style="float: right">:</span>
 					</div>
 					<div class="col-md-8">
-						<p  class="rightHeader"><strong>{{((isset($retTable[0]->facilityname)) ? $retTable[0]->facilityname : 'No facility name')}}</strong></p>
+						<p  class="rightHeader"><strong>{{((isset($retTable[0]->facilityname)) ? strtoupper($retTable[0]->facilityname)  : 'No facility name')}}</strong></p>
 					</div>
 				</div>
 				<div class="row">
@@ -62,7 +62,14 @@
 						<p style="float: left;" class="leftHeader">Location </p><span style="float: right">:</span>
 					</div>
 					<div class="col-md-8">
-						<p class="rightHeader"><strong>{{((isset($retTable[0])) ? ($retTable[0]->street_name.', '.$retTable[0]->street_number.', '.$retTable[0]->brgyname.', '.$retTable[0]->cmname.', '.$retTable[0]->provname.' '.$retTable[0]->rgn_desc) : 'No Location.')}}</strong></p>
+					{{((isset($retTable[0])) ?
+						 (
+							 ($retTable[0]->street_name ? ucwords(strtolower($retTable[0]->street_name)).', ' : ' ')
+						 
+						 .
+						($retTable[0]->street_number ?  ucwords(strtolower($retTable[0]->street_number)).', ' : '' ).ucwords(strtolower($retTable[0]->brgyname)).', '.ucwords(strtolower($retTable[0]->cmname)).', '.ucwords(strtolower($retTable[0]->provname)).' '.ucwords(strtolower($retTable[0]->rgn_desc))) : 'No Location.')}}
+					
+						<!-- <p class="rightHeader"><strong>{{((isset($retTable[0])) ? ($retTable[0]->street_name.', '.$retTable[0]->street_number.', '.$retTable[0]->brgyname.', '.$retTable[0]->cmname.', '.$retTable[0]->provname.' '.$retTable[0]->rgn_desc) : 'No Location.')}}</strong></p> -->
 						<!-- <p class="rightHeader"><strong>{{((isset($retTable[0])) ? ($retTable[0]->rgn_desc.', '.$retTable[0]->provname.', '.$retTable[0]->cmname.', '.$retTable[0]->brgyname.', '.$retTable[0]->street_name.' '.$retTable[0]->street_number) : 'No Location.')}}</strong></p> -->
 					</div>
 				</div>

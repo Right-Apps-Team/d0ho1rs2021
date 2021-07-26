@@ -9675,7 +9675,14 @@ use FunctionsClientController;
 				  		$test2 = DB::table('chg_app')->where('chgapp_id', '=', $request->id)->update($upd);
 			  		} elseif($request->action == 'evalute') {
 			  			DB::table('chgfil')->where([['appform_id',$appid],['chg_num','<>',null],['isPaid',null]])->update(['isPaid'=>1]);
-			  			$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveBy'=>$cur_user['cur_user'],'CashierApproveDate' => Date('Y-m-d',strtotime('now')), 'CashierApproveTime' => Date('H:i:s',strtotime('now')), 'CashierApproveIp' => $request->ip(), 'isCashierApprove' => 1, 'proofpaystat' => 'posted', 't_date' => Date('Y-m-d',strtotime('now'))]);
+			  			$update = DB::table('appform')->where('appid',$request->appid)->update(['CashierApproveBy'=>$cur_user['cur_user'],
+						  'CashierApproveDate' => Date('Y-m-d',strtotime('now')), 
+						  'CashierApproveTime' => Date('H:i:s',strtotime('now')), 
+						  'CashierApproveIp' => $request->ip(), 
+						  'isCashierApprove' => 1, 
+						  'status' => 'FI', 
+						  'proofpaystat' => 'posted', 
+						  't_date' => Date('Y-m-d',strtotime('now'))]);
 			  			if($update){
 			  				$uid = AjaxController::getUidFrom($request->appid);
 			  				AjaxController::notifyClient($request->appid,$uid,31);

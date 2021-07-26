@@ -957,7 +957,13 @@
                 });
           }
           function ApproveApplication(){
+            @if($AppData->hfser_id == 'PTC' && $AppData->isAcceptedFP != 1)
+            alert("Floorplan not yet accepted")
+
+            @else
             getFuncApprvl()
+            @endif
+         
            
           }
 

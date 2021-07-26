@@ -1047,7 +1047,10 @@ class NewClientController extends Controller {
 			switch ($retTable[0]->hfser_id) {
 				case 'PTC':
 					$ptcdet = DB::table('ptc')->where([['appid',$appid]])->first();
-					$otherDetails = DB::table('hferc_evaluation')->where([['appid',$appid],['HFERC_eval',1]])->first();
+					// $otherDetails = DB::table('hferc_evaluation')->where([['appid',$appid],['HFERC_eval',1]])->first();
+					$otherDetails = DB::table('hferc_evaluation')->join('hferc_team', 'hferc_evaluation.HFERC_evalBy', '=', 'hferc_team.uid')
+					->where([['hferc_evaluation.appid',$appid],['hferc_evaluation.HFERC_eval',1],['hferc_team.pos','C']])
+					->first();
 					break;
 
 				case 'LTO':

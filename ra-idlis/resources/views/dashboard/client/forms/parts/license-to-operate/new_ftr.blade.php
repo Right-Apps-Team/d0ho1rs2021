@@ -11,7 +11,14 @@ window.addEventListener('click', function(e) {
     setTimeout(function(){
         initialCheck()
     }, 1000);
+
+
     
+setTimeout(function(){
+    console.log("clickable")
+        var first = document.getElementById("clickable");
+ first.click(); 
+}, 3000);
 
     function initialCheck(){
              if(document.querySelector('input[name="hgpid"]:checked') === null){
@@ -1376,6 +1383,8 @@ setTimeout(function(){
     getAncillary(fc[0].facid, 6)
      
 }, 3000);
+
+
 
 
     

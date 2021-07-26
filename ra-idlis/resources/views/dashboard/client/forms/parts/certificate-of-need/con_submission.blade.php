@@ -84,9 +84,35 @@ const savePartialCon = async (e) => {
         
 
         const types = $("input[name='type[]']");
+        const pops = document.getElementsByClassName("pops") ;
         if(types.length <= 0){
             errors +=1; ermsg += "Please add catchment area,"
         }
+        console.log("pooops")
+        console.log(pops)
+        var nopop = 0;
+        for(var p = 0; p < pops.length; p++ ){
+            console.log("popval")
+                console.log(pops[p].value)
+            if(pops[p].value == null ||pops[p].value == undefined ||pops[p].value == "" || !pops[p].value){
+                nopop += 1;
+                console.log("nopop")
+                console.log(nopop)
+            }
+
+            // if($('.pops').get(p).val() == ""){
+            //     console.log("popval")
+            //     console.log(pops[p].value)
+            //     nopop += 1;
+            //     console.log(nopop)
+            // }
+
+        }
+        console.log(nopop)
+        if(nopop > 0){
+            errors +=1; ermsg += "Incomplete Projected Population"
+        } 
+
 
         // if(errors > 0){
         //     alert("Please fill the following fields properly: " + ermsg)

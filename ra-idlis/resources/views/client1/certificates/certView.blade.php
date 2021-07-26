@@ -78,7 +78,7 @@
 						<center>:</center>
 					</div>
 					<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
-						{{((isset($retTable[0]->facilityname)) ? ucwords($retTable[0]->facilityname) : "NOT DEFINED")}}
+						{{((isset($retTable[0]->facilityname)) ? strtoupper($retTable[0]->facilityname) : "NOT DEFINED")}}
 					</div>	
 				</div>
 				<div class="row">	
@@ -90,7 +90,14 @@
 						<center>:</center>
 					</div>
 					<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
-						{{((isset($retTable[0]->cmname)) ? (ucwords($retTable[0]->street_number . ' ' . $retTable[0]->street_name . ' ' . $retTable[0]->cmname . ' ' . $retTable[0]->provname)) : "NOT DEFINED")}}
+					{{((isset($retTable[0])) ?
+						 (
+							 ($retTable[0]->street_name ? ucwords(strtolower($retTable[0]->street_name)).', ' : ' ')
+						 
+						 .
+						($retTable[0]->street_number ?  ucwords(strtolower($retTable[0]->street_number)).', ' : '' ).ucwords(strtolower($retTable[0]->brgyname)).', '.ucwords(strtolower($retTable[0]->cmname)).', '.ucwords(strtolower($retTable[0]->provname)).' '.ucwords(strtolower($retTable[0]->rgn_desc))) : 'No Location.')}}
+					
+					<!-- {{((isset($retTable[0]->cmname)) ? (ucwords($retTable[0]->street_number . ' ' . $retTable[0]->street_name . ' ' . $retTable[0]->cmname . ' ' . $retTable[0]->provname)) : "NOT DEFINED")}} -->
 					</div>	
 				</div>
 				<div class="row">	
@@ -131,7 +138,9 @@
 						<center>:</center>
 					</div>
 					<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
-						{{((isset($ptcdet)) ? $ptcdet->construction_description : "NOT DEFINED")}}
+					
+						{{((isset($otherDetails->HFERC_comments)) ? $otherDetails->HFERC_comments : 'Not Specified')}}
+					<!-- {{((isset($ptcdet)) ? $ptcdet->construction_description : "NOT DEFINED")}} -->
 					{{--	{{((isset($retTable[0]->HFERC_swork)) ? $retTable[0]->HFERC_swork : "NOT DEFINED")}} --}}
 					</div>	
 				</div>

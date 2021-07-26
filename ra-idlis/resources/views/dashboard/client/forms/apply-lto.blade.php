@@ -194,6 +194,9 @@
                     </div>
                 </div>
             </div>
+        <div id="clickable">
+
+            </div>
             @include('dashboard.client.modal.facilityname-helper')
         </section>
 

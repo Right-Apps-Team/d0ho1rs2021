@@ -47,7 +47,15 @@
       <div class="card-body">
         <div class="col-sm-12">
           <h2>@isset($AppData) {{$AppData->facilityname}} @endisset</h2>
-          <h5>@isset($AppData) {{strtoupper($AppData->streetname)}}, {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>  
+          <h5>@isset($AppData)
+          {{
+                    $AppData->street_number?  strtoupper($AppData->street_number).',' : ' '
+                  }}
+                  {{
+                    $AppData->streetname?  strtoupper($AppData->streetname).',': ' '
+                  }} 
+            
+          {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>  
           @isset($evaluation->HFERC_evalDate)
           <h5 class="font-weight-bold">Date Evaluated: {{Date('F j, Y, g:i A',strtotime($evaluation->HFERC_evalDate))}}</h5>
           @endisset

@@ -637,7 +637,7 @@ const addProjectedPopulation = () => {
             <td class="population_field">
                 <input 
                     type="number" 
-                    class="form-control" 
+                    class="form-control pops" 
                     name="population[]" 
                     class="population populationCount"
                     data-id="${entry}"
