@@ -41,11 +41,27 @@
                             @case('CON')
                               @php
                                 $link = asset('employee/dashboard/processflow/conevalution/'.$data->appid);
+
+                               
+
+
                               @endphp
                             @break
                           @endswitch
+
+                          @if($data->hfser_id == 'CON')
+
+                          @php
+                          if($data->concommittee_eval == 1){
+                                  continue;
+                                }
+                          @endphp
+
+                          @endif
                           <tr>
-                            <td class="text-center">{{$data->hfser_id}}</td>
+                            <td class="text-center">{{$data->hfser_id}}
+                             
+                            </td>
                             <td class="text-center">{{$data->hfser_id}}R{{$data->rgnid}}-{{$data->appid}}</td>
                             <td class="text-center"><strong>{{$data->facilityname}}</strong></td>
                             <td class="text-center">{{(ajaxController::getFacilitytypeFromHighestApplicationFromX08FT($data->appid)->hgpdesc ?? 'NOT FOUND')}}</td>

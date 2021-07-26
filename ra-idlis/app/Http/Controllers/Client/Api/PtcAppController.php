@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Client\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\FunctionsClientController;
 use App\Models\ApplicationForm;
 use App\Models\Barangay;
 use App\Models\Classification;
+use App\Models\FACLGroup;
+use App\Models\HFACIGroup;
 use App\Models\Municipality;
 use App\Models\Province;
 use Carbon\Carbon;
@@ -122,6 +125,57 @@ class PtcAppController extends Controller
         );
 
         
+    }
+
+    public function contfromConTemp(Request $request,  $appid)
+    {
+
+
+        $user_data = session()->get('uData');
+        if($user_data){
+            $nameofcomp = DB::table('x08')->where([['uid', $user_data->uid]])->first()->nameofcompany;
+        }else{
+            $nameofcomp = null;
+        }
+
+        $hfser_id = 'PTC';
+        $faclArr = [];
+        $facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();
+        foreach ($facl_grp as $f) {
+            array_push($faclArr, $f->hgpid);
+        }
+        $hfaci_sql = "SELECT * FROM hfaci_grp WHERE hgpid IN (SELECT hgpid FROM `facl_grp` WHERE hfser_id = '$hfser_id')"; 
+        
+        $arrRet = [
+            // 'grpid' =>  $grpid,
+            'nameofcomp' =>  $nameofcomp,
+            'user'=> $user_data,
+            'hfser' =>  $hfser_id,
+            'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
+            'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),
+            'userInf'=>FunctionsClientController::getUserDetails(),
+            'hfaci_serv_type'=>DB::select($hfaci_sql),
+
+            'serv_cap'=>json_encode(DB::table('facilitytyp')->where([['servtype_id',1]/*,['forSpecialty',0]*/])->get()),
+            'ownership'=>DB::table('ownership')->get(),
+            'class'=>json_encode(DB::select("SELECT * FROM class WHERE (isSub IS NULL OR isSub = '')")),
+            'subclass'=>json_encode(DB::select("SELECT * FROM class WHERE (isSub IS NOT NULL OR isSub != '')")),
+            'function'=>DB::table('funcapf')->get(),
+            'facmode'=>DB::table('facmode')->get(),
+            'fAddress'=>$appGet,
+            'servfac'=>json_encode(FunctionsClientController::getServFaclDetails($appid)),
+            'ptcdet'=>json_encode(FunctionsClientController::getPTCDetails($appid)),
+            'cToken'=>FunctionsClientController::getToken(),
+            'hfer' => $apptype,
+            'hideExtensions'=>$hideExtensions,
+            'aptid'=>$aptid,
+            'ptc'=>$ptc,
+            'apptypenew'=> $request->apptype ? $request->apptype : 'IN'
+        ]; 
+
+
+
+
     }
 
 

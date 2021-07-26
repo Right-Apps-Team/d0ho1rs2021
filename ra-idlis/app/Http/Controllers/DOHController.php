@@ -4773,6 +4773,14 @@ use FunctionsClientController;
 			{
 				try 
 				{
+					$chkev = 0;
+					$datac = AjaxController::getAllDataEvaluateOne($appid);
+					if(!isset($data->concommittee_eval) || DB::table('con_evalsave')->where('appid',$appid)->doesntExist()){
+						$chkev = 1;
+					}
+
+
+					// HERR
 					$count = 0;
 					$data = AjaxController::getAllDataEvaluateOne($appid);
 					$members = AjaxController::getMembersIncommittee($data->appid,$data->rgnid,2);
@@ -4780,7 +4788,8 @@ use FunctionsClientController;
 					// dd([$members,$notin]);
 					$canEvaluate = true;
 					$hfercEvalData = DB::table('hferc_evaluation')->where('appid',$appid)->get();
-					return view('employee.processflow.pfassignmentofcommitteeaction', ['hferc_data' => $hfercEvalData,'AppData' => $data,'hferc' => $members, 'free' => $notin, 'appid'=>$appid, 'apptype' => $data->hfser_id, 'canEval' => $canEvaluate]);
+					$ConEvalData = DB::table('con_evalsave')->where('appid',$appid)->get();
+					return view('employee.processflow.pfassignmentofcommitteeaction', ['hferc_data' => $hfercEvalData,'ConEvalData' => $ConEvalData,'AppData' => $data,'hferc' => $members, 'free' => $notin, 'appid'=>$appid, 'apptype' => $data->hfser_id, 'canEval' => $canEvaluate]);
 				} 
 				catch (Exception $e) 
 				{

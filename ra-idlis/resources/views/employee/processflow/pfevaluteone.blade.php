@@ -164,7 +164,15 @@
             <div class="card-body">
               <div class="col-sm-12">
                   <h2>@isset($AppData) {{$AppData->facilityname}} @endisset</h2>
-                  <h5>@isset($AppData) {{strtoupper($AppData->streetname)}}, {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>
+                  <h5>@isset($AppData)
+                  {{
+                    $AppData->street_number?  strtoupper($AppData->street_number).',' : ' '
+                  }}
+                  {{
+                    $AppData->streetname?  strtoupper($AppData->streetname).',': ' '
+                  }}
+                     {{strtoupper($AppData->brgyname)}}, 
+                     {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>
                   {{-- {{ asset('employee/dashboard/processflow/evaluate')}}/{{$AppData->appid}}/edit --}}
                   @if($forhfsrb)
 
@@ -949,6 +957,11 @@
                 });
           }
           function ApproveApplication(){
+            getFuncApprvl()
+           
+          }
+
+          function getFuncApprvl(){
             let final = Array();
             let answers = $(".laSelected");
             answers.each(function(a,b){
@@ -992,6 +1005,9 @@
                 })
               }
           }
+
+
+
         function chckDate(){
                     var dateVal = $('#propDate').val();
                     var recoDate = "@isset($AfterDay){{$AfterDay}}@else # @endisset";

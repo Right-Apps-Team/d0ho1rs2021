@@ -20,7 +20,16 @@
       <div class="card-body">
         <div class="col-sm-12">
           <h2>@isset($AppData) {{$AppData->facilityname}} @endisset</h2>
-          <h5>@isset($AppData) {{strtoupper($AppData->streetname)}}, {{strtoupper($AppData->street_number)}},  {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>    
+          <!-- <h5>@isset($AppData) {{strtoupper($AppData->streetname)}}, {{strtoupper($AppData->street_number)}},  {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>     -->
+          <h5>@isset($AppData)
+                 {{
+                    $AppData->street_number?  strtoupper($AppData->street_number).',' : ' '
+                  }}
+                  {{
+                    $AppData->streetname?  strtoupper($AppData->streetname).',': ' '
+                  }} 
+             
+             {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>    
         </div>
       </div>
       {{-- 1 --}}
@@ -449,13 +458,13 @@
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="yesa" name="acc" value="1">
+                  <input type="radio" class="custom-control-input" required id="yesa" name="acc" value="1">
                   <label class="custom-control-label" for="yesa">Yes</label>
                 </div>
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="noa" name="acc" value="0">
+                  <input type="radio" required class="custom-control-input" id="noa" name="acc" value="0">
                   <label class="custom-control-label" for="noa">No</label>
                 </div> 
               </td>
@@ -469,13 +478,13 @@
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="yesst" name="st" value="1">
+                  <input type="radio" class="custom-control-input" required id="yesst" name="st" value="1">
                   <label class="custom-control-label" for="yesst">Yes</label>
                 </div>
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="nost" name="st" value="0">
+                  <input type="radio" required class="custom-control-input" id="nost" name="st" value="0">
                   <label class="custom-control-label" for="nost">No</label>
                 </div> 
               </td>
@@ -504,13 +513,13 @@
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="yeshdp" name="hdp" value="1">
+                  <input type="radio" class="custom-control-input" required id="yeshdp" name="hdp" value="1">
                   <label class="custom-control-label" for="yeshdp">Yes</label>
                 </div>
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="nohdp" name="hdp" value="0">
+                  <input type="radio" required class="custom-control-input" id="nohdp" name="hdp" value="0">
                   <label class="custom-control-label" for="nohdp">No</label>
                 </div> 
               </td>
@@ -524,13 +533,13 @@
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="yestph" name="tph" value="1">
+                  <input type="radio" class="custom-control-input" required id="yestph" name="tph" value="1">
                   <label class="custom-control-label" for="yestph">Yes</label>
                 </div>
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="notph" name="tph" value="0">
+                  <input type="radio" required class="custom-control-input" id="notph" name="tph" value="0">
                   <label class="custom-control-label" for="notph">No</label>
                 </div> 
               </td>
@@ -562,25 +571,25 @@
               <td>{{$tracks->location1}}</td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="gclryes{{$tracks->id}}" name="gclr{{$tracks->id}}" value="1">
+                  <input type="radio" required class="custom-control-input" id="gclryes{{$tracks->id}}" name="gclr{{$tracks->id}}" value="1">
                   <label class="custom-control-label" for="gclryes{{$tracks->id}}">Yes</label>
                 </div>
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="gclrno{{$tracks->id}}" name="gclr{{$tracks->id}}" value="0">
+                  <input type="radio" required class="custom-control-input" id="gclrno{{$tracks->id}}" name="gclr{{$tracks->id}}" value="0">
                   <label class="custom-control-label" for="gclrno{{$tracks->id}}">No</label>
                 </div> 
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="fvcyes{{$tracks->id}}" name="fvc{{$tracks->id}}" value="1">
+                  <input type="radio" required class="custom-control-input" id="fvcyes{{$tracks->id}}" name="fvc{{$tracks->id}}" value="1">
                   <label class="custom-control-label" for="fvcyes{{$tracks->id}}">Yes</label>
                 </div>
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="fvcno{{$tracks->id}}" name="fvc{{$tracks->id}}" value="0">
+                  <input type="radio" required class="custom-control-input" id="fvcno{{$tracks->id}}" name="fvc{{$tracks->id}}" value="0">
                   <label class="custom-control-label" for="fvcno{{$tracks->id}}">No</label>
                 </div> 
               </td>
@@ -619,13 +628,13 @@
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="yesbpp" name="bpp" value="1">
+                  <input type="radio" class="custom-control-input" required id="yesbpp" name="bpp" value="1">
                   <label class="custom-control-label" for="yesbpp">Yes</label>
                 </div>
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="nobpp" name="bpp" value="0">
+                  <input type="radio" required class="custom-control-input" id="nobpp" name="bpp" value="0">
                   <label class="custom-control-label" for="nobpp">No</label>
                 </div> 
               </td>
@@ -640,13 +649,13 @@
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="yestt" name="tt" value="1">
+                  <input type="radio" required class="custom-control-input" id="yestt" name="tt" value="1">
                   <label class="custom-control-label" for="yestt">Yes</label>
                 </div>
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="nott" name="tt" value="0">
+                  <input type="radio" required class="custom-control-input" id="nott" name="tt" value="0">
                   <label class="custom-control-label" for="nott">No</label>
                 </div> 
               </td>
@@ -660,13 +669,13 @@
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="yesasl" name="asl" value="1">
+                  <input type="radio" required class="custom-control-input" id="yesasl" name="asl" value="1">
                   <label class="custom-control-label" for="yesasl">Yes</label>
                 </div>
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="noasl" name="asl" value="0">
+                  <input type="radio" required class="custom-control-input" id="noasl" name="asl" value="0">
                   <label class="custom-control-label" for="noasl">No</label>
                 </div> 
               </td>
@@ -680,13 +689,13 @@
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="yesilh" name="ilh" value="1">
+                  <input type="radio" required class="custom-control-input" id="yesilh" name="ilh" value="1">
                   <label class="custom-control-label" for="yesilh">Yes</label>
                 </div>
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="noilh" name="ilh" value="0">
+                  <input type="radio" required class="custom-control-input" id="noilh" name="ilh" value="0">
                   <label class="custom-control-label" for="noilh">No</label>
                 </div> 
               </td>
@@ -700,13 +709,13 @@
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="yesatr" name="atr" value="1">
+                  <input type="radio" required class="custom-control-input" id="yesatr" name="atr" value="1">
                   <label class="custom-control-label" for="yesatr">Yes</label>
                 </div>
               </td>
               <td>
                 <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="noatr" name="atr" value="0">
+                  <input type="radio" required class="custom-control-input" id="noatr" name="atr" value="0">
                   <label class="custom-control-label" for="noatr">No</label>
                 </div> 
               </td>
@@ -759,7 +768,7 @@
                 </td>
                 <td>
                   <div class="custom-control custom-checkbox">
-                    <input checked="" type="checkbox" class="custom-control-input" id="member{{$member->committee}}" name="membersPart[]" value="{{$member->committee}}">
+                    <input checked="" required type="checkbox" class="custom-control-input" id="member{{$member->committee}}" name="membersPart[]" value="{{$member->committee}}">
                     <label class="custom-control-label" for="member{{$member->committee}}">Yes</label>
                   </div> 
                 </td>
@@ -789,10 +798,12 @@
 
 // 
 function submitButtonClick(event) {
-		event.preventDefault();
+	
     var ubnval = document.getElementById("setubnval").value;
         if(confirm("Are you sure you want to proceed? The approved bed capacity of this application is "+ ubnval)){
         	document.getElementById("evalSave").submit();
+        }else{
+          event.preventDefault();
         }
         
         
@@ -801,8 +812,8 @@ function submitButtonClick(event) {
 
    
 function renewLoc(){
-  console.log("reciiiee")
-console.log(document.getElementsByClassName("newloc"))
+  console.log("66")
+// console.log(document.getElementsByClassName("newloc"))
 
 
   // $('.newloc').remove()
@@ -810,6 +821,13 @@ console.log(document.getElementsByClassName("newloc"))
 
 
   var inpt = document.getElementsByClassName("renewable")
+
+  var prevs = [];
+  for (var a = 0; a < inpt.length; a++) {
+    prevs.push(inpt[a].value);
+  }
+
+  
 
   for (var o = 0; o < inpt.length; o++) {
   let options = inpt[o].getElementsByTagName('option');
@@ -839,7 +857,22 @@ console.log(option[0])
 
           }
 
+
+          console.log("prevs")
+          console.log(prevs)
+
+          var curdatloc = document.getElementsByClassName("renewable");
+
+          for(var cd = 0; cd < inpt.length; cd++){
+           
+             curdatloc[cd].value = prevs[cd] ;
+          }
+
+
+
   }
+
+
 
       // for (var i = 0; i < option.length; i++) {
 
@@ -1084,9 +1117,11 @@ console.log(option[0])
           '</td>'+
           '<td><input type="text" onblur="renewLoc()" name="addr[]" class="form-control"></td>'+
 
-          '<td><input type="text" '+ (dis?  'disabled' : ' ')  +' name="catchment[]" class="form-control"></td>' +
+          '<td><input type="text" disabled name="catchment[]" class="form-control"></td>' +
+          // '<td><input type="text" '+ (dis?  'disabled' : ' ')  +' name="catchment[]" class="form-control"></td>' +
 
-          '<td><input type="text" name="est[]" class="form-control"></td>'+
+          '<td><input type="number" name="est[]" class="form-control"></td>'+
+          // '<td><input type="text" name="est[]" class="form-control"></td>'+
         '</tr>'
         $(toInsert).insertBefore($('#mainCatch'));    
         processPopulationCount();

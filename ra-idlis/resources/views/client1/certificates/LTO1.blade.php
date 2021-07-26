@@ -296,7 +296,7 @@
 						$sercap = preg_replace('/\s*/', '', $sc);
          			    $sercap = strtolower($sercap);
 
-						 $disercap = $sercap == 'level1' ? 'H' :  ($sercap == 'level2' ? 'H2' :  ($sercap == 'level3' ? 'H3' : ' '));
+						 $disercap = $sercap == 'level1' ? 'H1' :  ($sercap == 'level2' ? 'H2' :  ($sercap == 'level3' ? 'H3' : ' '));
 
 						@endphp
 						{{$retTable[0]->rgnid.'-'.$formatted_str.'-'.date('y', strtotime(str_replace('-','/', $retTable[0]->t_date))).'-'. $disercap.'-'.($retTable[0]->ocid == 'G'? '1':'2') }}

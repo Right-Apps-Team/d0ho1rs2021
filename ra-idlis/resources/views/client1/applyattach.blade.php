@@ -45,7 +45,8 @@
 						<td><center>
 					
 							@isset($each->filepath)
-								@isset($each->evaluation) @switch($each->evaluation)
+								@isset($each->evaluation) 
+								@switch($each->evaluation)
 									@case(0)
 										@php
 											$currentStatus = 0;
@@ -85,7 +86,13 @@
 							{{$each->remarks}}
 						</td>
 						<td>
+						@isset($each->evaluation) 
+						@if($each->evaluation != 0)
 							{!!(isset($each->filepath) ? '<a target="_blank" class="btn btn-primary text-white" href="'.asset('file/open/'.$each->filepath).'"><i class="fa fa-eye"></i></a>' : '<span class="font-weight-bold">Option Not Yet Available</span>')!!}
+						@endif
+							@endisset
+						
+							<!-- {!!(isset($each->filepath) ? '<a target="_blank" class="btn btn-primary text-white" href="'.asset('file/open/'.$each->filepath).'"><i class="fa fa-eye"></i></a>' : '<span class="font-weight-bold">Option Not Yet Available</span>')!!} -->
 						</td>
 					</tr>
 					@endforeach

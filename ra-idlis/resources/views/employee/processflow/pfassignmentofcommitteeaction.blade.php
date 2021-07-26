@@ -32,7 +32,14 @@
       <div class="card-body">
         <div class="col-sm-12">
           <h2>@isset($AppData) {{$AppData->facilityname}} @endisset</h2>
-          <h5>@isset($AppData) {{strtoupper($AppData->streetname)}}, {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>    
+          <h5>@isset($AppData) 
+          {{
+                    $AppData->street_number?  strtoupper($AppData->street_number).',' : ' '
+                  }}
+                  {{
+                    $AppData->streetname?  strtoupper($AppData->streetname).',': ' '
+                  }}
+            {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>    
         </div>
         <hr>
         @if(count($free) > 0)
@@ -45,12 +52,14 @@
             <button class="btn btn-primary p-2" data-toggle="modal" data-target="#evaluate"><i class="fa fa-file"></i> Evaluate Application</button>
           </div> --}}
         @endif
-        {{-- @if($hferc_data->HFERC_eval == 1) --}}
+         @if(COUNT($ConEvalData) > 0) 
+        <!-- {{-- @if($hferc_data->HFERC_eval == 1) --}} -->
         <br>
           <div class="container-fluid">
             <button class="btn btn-primary p-2" onclick="window.location.href='{{asset('employee/dashboard/processflow/view/conevalution/'.$AppData->appid)}}'"><i class="fa fa-file"> </i> View Evaluation</button>
           </div>
-        {{-- @endif --}}
+        <!-- {{-- @endif --}} -->
+         @endif 
         {{csrf_field()}}
         <div class="table-responsive mt-5">
           <table class="table table-stripped" id="example">

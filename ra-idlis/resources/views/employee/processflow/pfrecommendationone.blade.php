@@ -349,7 +349,7 @@
                           </tr>
                           <tr>
                             <th scope="row">Evaluated by:</th>
-                            <td>@isset($AppData->concommittee_evalby) <span style="color:green;font-weight: bolder">{{$AppData->com_pre}} {{$AppData->com_fname}}, {{$AppData->com_mname}}, {{$AppData->com_lname}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
+                            <td>@isset($AppData->concommittee_evalby) <span style="color:green;font-weight: bolder">{{$AppData->com_pre}} {{$AppData->com_fname}} {{$AppData->com_mname}} {{$AppData->com_lname}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
                             <!-- <td>@isset($AppData->concommittee_evalby) <span style="color:green;font-weight: bolder">{{$AppData->grp_desc}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td> -->
                           </tr>
                         </tbody>

@@ -103,7 +103,7 @@
 					{{--	<th style="white-space: nowrap;" class="text-center">FDA Status</th>--}}
 						{{-- <th>Self-Assement Complied (%)</th> --}}
 						<th style="white-space: nowrap;" class="text-center">Document <br/> Received On</th>
-						<th style="white-space: nowrap;" class="text-center">HFSRB/FDA <br/>Requirements</th>
+						<th style="white-space: nowrap;" class="text-center">DOH/FDA <br/>Requirements</th>
 						<th style="white-space: nowrap;" class="text-center">Options</th>
 					</tr>
 				</thead>
@@ -173,7 +173,18 @@
 								</div>
 							</div> -->
 							@else
-								<span class="font-weight-bold">Not Applicable</span>
+								@if($each[0]->isRecommended == 1)
+								<span class="font-weight-bold">Documents Accepted</span>
+								@elseif($each[0]->isRecommended == 2)
+									<span class="font-weight-bold">Documents for Resubmission</span>
+								@else
+									@if($each[0]->submittedReq ==  1)
+									<span class="font-weight-bold">Documents Submitted</span>
+									@else
+									<span class="font-weight-bold">No Submission</span>
+									@endif
+								
+								@endif
 							@endif
 						</td>
 						<td class="text-center" style="height: auto;">

@@ -177,7 +177,8 @@
             </tr>
             <tr class="bg-info text-white">
               <td class="font-weight-bold">UBN</td>
-              <td>{{$evalRes->ubn}}</td>
+              <td>{{$evalRes->pbn - $evalRes->ihb}}</td>
+              <!-- <td>{{$evalRes->ubn}}</td> -->
             </tr>
           </tbody>
         </table>

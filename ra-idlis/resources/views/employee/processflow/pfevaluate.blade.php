@@ -71,6 +71,12 @@
                                 <?php continue; ?>
                               @endif
 
+                            @if($data->isrecommended == 1 )
+                                <?php continue; ?>
+                              @endif
+
+
+
 
                             @if($data->hasAssessors == 'T' || strtolower($data->hfser_id) != 'lto')
 

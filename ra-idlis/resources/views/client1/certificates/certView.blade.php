@@ -152,6 +152,93 @@
 						<!-- {{((isset($otherDetails->ubn)) ? $otherDetails->ubn : (isset($retTable[0]->noofbed) ? $retTable[0]->noofbed : ''))}} -->
 					</div>	
 				</div>
+				<div class="row">	
+					<div class="col-md-2" style="">&nbsp;</div>
+					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+						Number of Dialysis Station
+					</div>
+					<div class="col-md-1 hide-div">
+						<center>:</center>
+					</div>
+					<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
+					{{((isset($otherDetails->noofdialysis)) ? $otherDetails->noofdialysis : "NA")}}
+						<!-- {{((isset($otherDetails->ubn)) ? $otherDetails->ubn : (isset($retTable[0]->noofbed) ? $retTable[0]->noofbed : ''))}} -->
+					</div>	
+				</div>
+				<div class="row">	
+					<div class="col-md-2" style="">&nbsp;</div>
+					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+						License Number
+					</div>
+					<div class="col-md-1 hide-div">
+						<center>:</center>
+					</div>
+					<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
+
+					@php
+						$str = $newservices;
+						$pattern = '/hospital/i';
+
+
+						$sc = preg_replace($pattern, ' ', $str);
+						
+						$pad_length = 4;
+						$pad_char = 0;
+						$str_type = 'd';
+
+						$format = "%{$pad_char}{$pad_length}{$str_type}";
+						$formatted_str = sprintf($format, $retTable[0]->appid);
+
+
+						$sercap = preg_replace('/\s*/', '', $sc);
+         			    $sercap = strtolower($sercap);
+
+						 $disercap = $sercap == 'level1' ? 'H' :  ($sercap == 'level2' ? 'H2' :  ($sercap == 'level3' ? 'H3' : ' '));
+
+						@endphp
+						{{$retTable[0]->rgnid.'-'.$formatted_str.'-'.date('y', strtotime(str_replace('-','/', $retTable[0]->t_date))).'-'. $disercap.'-'.($retTable[0]->ocid == 'G'? '1':'2') }}
+						<!-- {{((isset($otherDetails->ubn)) ? $otherDetails->ubn : (isset($retTable[0]->noofbed) ? $retTable[0]->noofbed : ''))}} -->
+					</div>	
+				</div>
+				<div class="row">	
+					<div class="col-md-2" style="">&nbsp;</div>
+					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+					Authorized Ambulance Unit
+					</div>
+					<div class="col-md-1 hide-div">
+						<center>:</center>
+					</div>
+					<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
+					@if(isset($retTable[0]->plate_number) && isset($retTable[0]->ambtyp))
+						@php
+							$type = json_decode($retTable[0]->typeamb);
+							$ambType = json_decode($retTable[0]->ambtyp);
+							$ambType1 = json_decode($retTable[0]->ambtyp);
+							$plateNum = json_decode($retTable[0]->plate_number);
+
+							
+							
+							
+
+							$i=0;
+							foreach($ambType1 as $atval){
+								
+								if($ambType1[$i] == '2'){
+									echo ((int)$i + 1 ).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
+									echo "<br>";
+									
+								}
+
+								$i++;
+							}
+
+							
+						@endphp
+
+					
+						@endif
+					</div>	
+				</div>
 				@endif
 
 				@isset($retTable[0]->funcdesc)

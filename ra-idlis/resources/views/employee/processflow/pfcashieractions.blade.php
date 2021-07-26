@@ -37,7 +37,14 @@
             <tr>
               <td width="100%">
                 <h2>@isset($AppData) {{$AppData->facilityname}} @endisset</h2>
-                <h5>@isset($AppData) {{strtoupper($AppData->street_number)}},{{strtoupper($AppData->streetname)}}, {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>
+                <h5>@isset($AppData) 
+                  {{
+                    $AppData->street_number?  strtoupper($AppData->street_number).',' : ' '
+                  }}
+                  {{
+                    $AppData->streetname?  strtoupper($AppData->streetname).',': ' '
+                  }}
+                   {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>
                 <h5>
                   Code: <span class="font-weight-bold">{{$code}}</span>
                 </h5>
