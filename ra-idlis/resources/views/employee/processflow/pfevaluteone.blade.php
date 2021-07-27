@@ -294,7 +294,7 @@
                     
                     <td>
                       <center>
-                        <span class="{{$UpData->apup_id}}_span_edit" @if($UpData->evaluation !== NULL)style="display: none"@endif>
+                        <span class="{{$UpData->apup_id}}_span_edit"{{-- @if($UpData->evaluation !== NULL)style="display: none"@endif --}}>
                           <div class="row booleans laSelected" apup="{{$UpData->apup_id}}" >
                              <div class="col-6">
                                <div class="control-group">
@@ -320,7 +320,8 @@
                           <button type="button" title="Cancel Edit" onclick="$('.{{$UpData->apup_id}}_span_edit').toggle()" class="btn btn-danger" @if($UpData->evaluation === NULL)style="display: none"@endif><i class="fa fa-times" aria-hidden="true"></i></button> --}}
                         </span>
                         {{-- @else --}}
-                         <span class="{{$UpData->apup_id}}_span_edit" @if($UpData->evaluation === NULL)style="display: none"@else style=""@endif>
+
+                         <!-- <span class="{{$UpData->apup_id}}_span_edit" @if($UpData->evaluation === NULL)style="display: none"@else style=""@endif>
                             @if($UpData->evaluation == 1) 
                               <button type="button" title="Evaluation Accepted" class="btn btn-success" disabled>
                                <i class="fa fa-check-circle" aria-hidden="true"></i>
@@ -338,7 +339,7 @@
                                 <button type="button" title="Edit" onclick="$('.{{$UpData->apup_id}}_span_edit').toggle()" class="btn btn-warning"><i class="fa fa-edit" aria-hidden="true"></i></button>
                               @endif
                             @endisset
-                         </span>
+                         </span> -->
                         {{-- @endif --}}
                       </center>
                     </td>
@@ -398,8 +399,8 @@
               @if(!empty($documentDate))
                 @isset($AppData)
                   @if ($triggerThis)
-                  <button type="button" id="approveButton" class="btn btn-success" onclick="Recommended4Inspection('ApproveApplication');">Accepted</button>
-                  <button type="button" id="rejectButton" class="btn btn-danger" onclick="Recommended4Inspection('RejectApplication');">Not Accepted</button>
+                  <button type="button" id="approveButton" class="btn btn-success" onclick="Recommended4Inspection('ApproveApplication');">Accepted</button>&nbsp;&nbsp;
+                  <button type="button" id="rejectButton" class="btn btn-danger" onclick="Recommended4Inspection('RejectApplication');">Not Accepted</button>&nbsp;&nbsp;
                   <button type="button" id="reviseButton" class="btn btn-warning" onclick="Recommended4Inspection('ReviseApplication')">Need for Resubmission</button>
                   {{-- @elseif($AppData->isrecommended == '0') --}}
                   {{-- <span style="color: red;font-weight: bolder">NO </span> --}}

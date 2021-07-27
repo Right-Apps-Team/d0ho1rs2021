@@ -418,21 +418,17 @@
 
        <div class="container-fluid border mb-3 mt-5 font-weight-bold pt-3 hideOnLess" hidden>
         2. Determination of Travel Time from Proposed Hospital To Existing Hospitals in Primary and Secondary Catchment Area
-        <table class="table table-bordered mt-3" id="addNewRow4New">
-          <thead>
-          <!-- <thead id="pheh"> -->
+        <table class="table table-bordered mt-3">
+          <thead id="pheh">
             <tr>
               <td>Existing Hospitals</td>
               <td>Location</td>
               <td class="text-center">Travel Time to Proposed Hospital</td>
             </tr>
           </thead>
-          <tbody id="addNewRow4NewCont">
+          <tbody id="addNewRow4">
 
           </tbody>
-          <!-- <tbody id="addNewRow4">
-
-          </tbody> -->
         </table>
         <table class="table table-bordered mt-3">
           <thead>
@@ -979,7 +975,7 @@ console.log(option[0])
     function getABCCount(){
       console.log("iissss")
 
-      // addTT(1);
+      addTT(1);
       forPSCA();
       let abcCount = 0;
       $('.toTotal').each(function(index, el) {
@@ -1184,74 +1180,6 @@ console.log(option[0])
       return toReturn;
     }
 
-    function getihbloc(){
-      
-      var exs = document.getElementsByClassName("gettera");
-      var locs = document.getElementsByClassName("getter");
-      var ttm = document.getElementsByClassName("ttp");
-
-
-      var tm = []
-      for(var b = 0; b < ttm.length ; b++){
-        var t = ttm[b].value;
-        if( ttm[b].value == null || ttm[b].value == undefined|| ttm[b].value == 'undefined' || ttm[b].value == ' ' || !ttm[b].value ){
-         t= ' ';
-        }
-        tm.push(t)
-      }
-
-      console.log("tm")
-      console.log(tm)
-
-      $('#addNewRow4NewCont').empty()
-
-      var tbodyRef = document.getElementById('addNewRow4New').getElementsByTagName('tbody')[0];
-
-        // Insert a row at the end of table
-       for(var a = 0; a < exs.length ; a++){
-        genihb(exs[a].value, locs[a].value,  tm[a],tbodyRef)
-       }
-
-
-    }
-
-
-    function genihb(ex,loc,tm, tbodyRef){
-                var newRow = tbodyRef.insertRow();
-
-          // Insert a cell at the end of the row
-
-          var newCell = newRow.insertCell();
-          var newCell1 = newRow.insertCell();
-          var newCell2 = newRow.insertCell();
-
-          // Append a text node to the cell
-
-          var newText = document.createElement("input");
-          newText.disabled =true;
-          newText.setAttribute("value", ex);
-          newText.setAttribute("class", "form-control");
-
-          var newText1 = document.createElement("input");
-          newText1.disabled =true;
-          newText1.setAttribute("value", loc);
-          newText1.setAttribute("class", "form-control");
-
-
-          var newText2 = document.createElement("input");
-          newText2.setAttribute("type", 'text');
-          newText2.setAttribute("value", tm);
-          newText2.setAttribute("name", "ttph[]");
-          newText2.setAttribute("class", "form-control ttp");
-
-          // var newText = document.createTextNode('new row');
-          // var newText1 = document.createTextNode('new fgdsrow');
-          // var newText2 = document.createTextNode('new rddfdsow');
-          newCell.appendChild(newText);
-          newCell1.appendChild(newText1);
-          newCell2.appendChild(newText2);
-    }
-
     function addNewRowA(elName, ind, elToInsName, removeX = false) {
       counterForDom +=1; 
       let idom = document.getElementById(elName);
@@ -1263,8 +1191,8 @@ console.log(option[0])
         whatToInsert = [
         '<tr class="trd'+(!removeX ? (counterForDom + 1001) : '')+'">'+
           toInsertForX+
-          '<td><input '+( elToInsName == 'abc' ? 'onblur="getihbloc()"' : '') +' class="form-control toChange '+( elToInsName == 'abc' ? 'gettera' : '') +'  " type="text" name=existHosp'+elToInsName+'[] required></td>'+
-          '<td class = "toRemove"><select  '+( elToInsName == 'abc' ? 'onblur="getihbloc()"' : '') +' class="form-control renewable '+( elToInsName == 'abc' ? 'getter' : '') +'" name="loc'+elToInsName+'[]" required>'+
+          '<td><input class="form-control toChange '+( elToInsName == 'abc' ? 'gettera' : '') +' " type="text"   name=existHosp'+elToInsName+'[] required></td>'+
+          '<td class = "toRemove"><select   class="form-control renewable '+( elToInsName == 'abc' ? 'getter' : '') +'" name="loc'+elToInsName+'[]" required>'+
           // '<td class = "toRemove"><select   class="form-control renewable" name="loc'+elToInsName+'[]" required>'+
           '<option value hidden disabled selected></option>'+
             getAddress()+
@@ -1298,7 +1226,7 @@ console.log(option[0])
           // idom.outerHTML += whatToInsert[ind];
         }
       }
-      // addTT(1);
+      addTT(1);
       forPSCA();
       return counterForDom+1;
     }
@@ -1354,7 +1282,7 @@ console.log(option[0])
       }
     });
     $(document).on('change keyup',"input[name='existHospabc[]'], input[name='locabc[]'], input[name='typeabc[]']",function(){
-      // addTT(1);
+      addTT(1);
       forPSCA();
       // forPSCA();
     });

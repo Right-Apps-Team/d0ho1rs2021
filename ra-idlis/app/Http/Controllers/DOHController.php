@@ -4697,7 +4697,8 @@ use FunctionsClientController;
 								if($request->evaluation == 1){
 									DB::table('appform')->where('appid',$appid)->update(['status' => 'FR']);
 								}else if($request->evaluation == 2){
-									DB::table('appform')->where('appid',$appid)->update(['status' => 'REVF']);
+									DB::table('appform')->where('appid',$appid)->update(['status' => 'RDA']);
+									// DB::table('appform')->where('appid',$appid)->update(['status' => 'REVF']);
 								}
 
 							} else if($request->action == 'FP'){
@@ -4740,7 +4741,10 @@ use FunctionsClientController;
 
 				}
 				$members = AjaxController::getMembersInHFERC($data->appid,$data->rgnid,2,$revision);
-				return AjaxController::sendTo($isSelfAssess,$this->agent,$request->all(),'employee.processflow.hferceval',['appdata'=>$data, 'members'=>$members, 'evaluation' => $evaluation, 'data' => $dataOfEntry]);
+
+				$reco = DB::table('assessmentrecommendation')->where([['appid',$appid],['choice','comment'],['revision',$revision]])->first();
+
+				return AjaxController::sendTo($isSelfAssess,$this->agent,$request->all(),'employee.processflow.hferceval',['appdata'=>$data,'reco' => $reco, 'members'=>$members, 'evaluation' => $evaluation, 'data' => $dataOfEntry]);
 			} catch (Exception $e) {
 				AjaxController::SystemLogs($e);
 				session()->flash('system_error','ERROR');

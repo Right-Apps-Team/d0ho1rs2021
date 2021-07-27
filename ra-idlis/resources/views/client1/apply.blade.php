@@ -209,7 +209,7 @@
 									@endif
 									
 									  	<div style="margin-left: 10px;margin-right: 10px;">
-									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Permit to Construct Details</a>
+									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}?grp=c">Permit to Construct Details</a>
 									    @if($_percentage == "success")@endif
 									    </div>
 										@if($each[0]->savingStat == "final")
@@ -232,7 +232,7 @@
 									@case('CON')
 									
 										<div style="margin-left: 10px;margin-right: 10px;">
-									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Certificate of Need Details</a>
+									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}?grp=c">Certificate of Need Details</a>
 									    </div>	
 										@if($each[0]->savingStat == "final")
 									    <div class="dropdown-divider"></div>
@@ -258,7 +258,7 @@
 									    </div>									    
 									    <div class="dropdown-divider"></div>
 									    <div style="margin-left: 10px;margin-right: 10px;">
-									    <a class="dropdown-item ddi {{$_payment}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">License to Operate Details</a>
+									    <a class="dropdown-item ddi {{$_payment}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}?grp=c">License to Operate Details</a>
 									    </div>									    
 									    <div class="dropdown-divider"></div>
 									    <div style="margin-left: 10px;margin-right: 10px;">
@@ -271,7 +271,7 @@
 									@break
 									@case('COA')
 										<div style="margin-left: 10px;margin-right: 10px;">
-									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Continue Application</a>
+									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}?grp=c">Continue Application</a>
 									    </div>	
 										@if($each[0]->savingStat == "final")
 									    <div class="dropdown-divider"></div>
@@ -290,7 +290,7 @@
 							    	@break
 									@case('COR')
 										<div style="margin-left: 10px;margin-right: 10px;">
-									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Continue Application</a>
+									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}?grp=c">Continue Application</a>
 									    </div>	
 										@if($each[0]->savingStat == "final")								    
 									    <div class="dropdown-divider"></div>
@@ -308,7 +308,7 @@
 							    	@break
 									@case('ATO')
 										<div style="margin-left: 10px;margin-right: 10px;">
-									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Continue Application</a>
+									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}?grp=c">Continue Application</a>
 									    </div>		
 										@if($each[0]->savingStat == "final")							    
 									    <div class="dropdown-divider"></div>
@@ -326,7 +326,7 @@
 							    	@break
 									@default
 										<div style="margin-left: 10px;margin-right: 10px;">
-									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}">Continue Application</a>
+									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{asset('client1/apply/app')}}/{{$each[0]->hfser_id}}/{{$each[0]->appid}}?grp=c">Continue Application</a>
 									    </div>	
 										@if($each[0]->savingStat == "final")
 									    <div class="dropdown-divider"></div>

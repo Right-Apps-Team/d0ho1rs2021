@@ -45,6 +45,9 @@ const savePartialPtc = async (e) => {
         if($('#official_mail_address').val() == ""){errors +=1; ermsg += "Official Mailing Address, "}
         if($('#approving_authority_pos').val() == ""){errors +=1; ermsg += "Approving Authority Position, "}
         if($('#approving_authority_name').val() == ""){errors +=1; ermsg += "Approving Authority Name, "}
+
+        if($('#construction_description').val() == ""){errors +=1; ermsg += "Scope of works, "}
+        if($('#propbedcap').val() == ""){errors +=1; ermsg += "Proposed bed capacity, "}
         
         var allFacids = getAllFacids();
         if(allFacids.length <= 0){errors +=1; ermsg += "No facilities/Services selected, "}

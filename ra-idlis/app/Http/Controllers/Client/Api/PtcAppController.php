@@ -184,6 +184,8 @@ class PtcAppController extends Controller
 
         $conapp = ApplicationForm::where('appid', $appid)->first();
 
+        $ce =  DB::table('con_evaluate')->where([['appid', $appid]])->first();
+
         $appform = new ApplicationForm;
 
         $appform->hfser_id              = 'PTC';
@@ -228,9 +230,12 @@ class PtcAppController extends Controller
 
         $appform->save();
 
-        DB::insert('insert into ptc (appid, propbedcap, type) values (?, ?, ?)',[$appform->appid, $conapp->noofbed, 0]);
+        DB::insert('insert into ptc (appid, propbedcap, type) values (?, ?, ?)',[$appform->appid, $ce->ubn, 0]);
+        // DB::insert('insert into ptc (appid, propbedcap, type) values (?, ?, ?)',[$appform->appid, $conapp->noofbed, 0]);
 
         $chk =  DB::table('x08_ft')->where([['appid', $appid]])->first();
+
+      
 
         DB::insert('insert into x08_ft (uid, appid, facid) values (?, ?, ?)', [$conapp->uid, $appform->appid, $chk->facid]);
 

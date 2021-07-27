@@ -161,7 +161,8 @@
 	      <div class="container w-auto" style="margin-top: 30px; font-size: 20px;">
 	      	<span >Evaluation Result:</span><br><br>
 	      	<div class="container w-auto border border-secondary rounded" style="height: 300px; overflow-y: hidden; ">
-	      		{!!$evaluation->HFERC_comments!!}
+			  {{$reco->details}}
+	      		<!-- {!!$evaluation->HFERC_comments!!} -->
 			</div>
 	      </div>
 	      <div class="container text-center" style="margin-top: 50px; font-size: 20px;">

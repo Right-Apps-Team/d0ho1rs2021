@@ -177,6 +177,7 @@
 		<br>
 
 	@if(!isset($submitted) || $findups != 0)	
+		@if($appform->isrecommended ==  2 || $appform->isrecommended ==  null )
 		<div class="container">
 			<div class="float-right">
 				<a href="{{asset('client1/apply')}}"><button class="btn btn-danger">Back</button></a>
@@ -188,6 +189,7 @@
 				@endif
 			</div>
 		</div>
+		@endif
 	@endif
 	</div>
 	<div class="modal fade" id="orderOfPayment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

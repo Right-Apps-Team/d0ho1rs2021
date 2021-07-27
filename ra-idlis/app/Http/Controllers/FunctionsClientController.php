@@ -218,7 +218,8 @@ class FunctionsClientController extends Controller {
 							con_number,
 							appform.hgpid,
 							appform.noofstation,
-							appform.assignedRgn
+							appform.assignedRgn,
+							appform.appComment
 							
 						FROM appform 
 						LEFT JOIN region ON region.rgnid = appform.rgnid 
@@ -340,7 +341,8 @@ class FunctionsClientController extends Controller {
 							con_number,
 							appform.hgpid,
 							appform.noofstation,
-							appform.assignedRgn
+							appform.assignedRgn,
+							appform.appComment
 						FROM appform 
 						LEFT JOIN region ON region.rgnid = appform.rgnid 
 						LEFT JOIN class ON class.classid = appform.classid 

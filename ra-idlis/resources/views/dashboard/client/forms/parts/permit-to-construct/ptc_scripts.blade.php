@@ -23,9 +23,11 @@
             if(document.querySelector('input[name="facid"]:checked') === null){
                 // if(document.getElementsByName("facid")[0].checked != true){
                     var first = document.getElementsByName("facid")[0];
+                if(first){
                     first.checked = true;
                     first.click();     
                     console.log("Recs")
+                    }
             }
         
     }
@@ -513,7 +515,14 @@ window.addEventListener('change', function(e) {
 //   setTimeout(function(){ 
 //   inputtedDataInitial()
 //    }, 1000);
+  var hg = document.getElementsByName('hgpid');
+
+  for(var h = 0 ; h< hg.length; h++){
+    hg[h].disabled = true;
+  }
 @endif
+
+
 
    
 

@@ -37,17 +37,17 @@
                              continue
                               @endif --}} -->
 
+                              <!-- {{-- if($data->isAcceptedFP == 1 && !in_array($data->isrecommended, [2]))
+                                 continue
+                              endif --}} -->
                   <tbody id="FilterdBody">
                    @if (isset($BigData))
                         @foreach ($BigData as $data)
 
-                        @if( $data->isReadyForInspec == 1 )
+                        @if( $data->isReadyForInspec == 1 || $data->isrecommended == 2  )
                             @if(strtolower($data->hfser_id) == 'ptc')
                               
-                              @if($data->isAcceptedFP == 1 && !in_array($data->isrecommended, [2]))
-                                <?php continue; ?>
-                              @endif
-
+                          
                             @else
 
                             <!-- Place the  data->isrecommended [2,null] here-->

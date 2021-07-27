@@ -41,7 +41,7 @@
   <div class="content p-4">
     <div class="card">
       <div class="card-header bg-white font-weight-bold">
-         HFERC Assignment  
+         HFERC Assignment 
          <button class="btn btn-primary" onclick="window.history.back();">Back</button> 
       </div>
       <div class="card-body">
@@ -67,8 +67,8 @@
         <div class="row">
           @if(count($free) > 0 && in_array($currentUser->grpid, ['PO','NA','PO1','PO2','RLO']))
          
-            <div class="col-md-1">
-              <button class="btn btn-primary p-2" data-toggle="modal" data-target="#viewModal"><i class="fa fa-plus-circle"></i> Add</button>
+            <div class="col-md-2">
+              <button class="btn btn-primary p-2" data-toggle="modal" data-target="#viewModal"><i class="fa fa-plus-circle"></i> Add Member</button>
             </div>
             @else 
             <!-- <div class="col-md-1">
@@ -78,7 +78,7 @@
           
           @if($isHead)
             @if($canEval && EvaluationController::checkRev($appid,$revisionCountCurent))
-              <div class="col-md-2">
+              <div class="col-md-3">
                 <button class="btn btn-primary p-2" data-toggle="modal" data-target="#evaluate"><i class="fa fa-file"></i> Recommendation</button>
               </div>
             @endif
@@ -108,7 +108,8 @@
           </div>
         @endif
         <div class="col-md-3">
-            <select name="revisioncount" class="form-control w-100">
+          <label for="revisioncount">Revision Count</label>
+            <select id="revisioncount" name="revisioncount" class="form-control w-100">
             @php $temprev = $maxRevision; @endphp
             <option value="">Please Select Other Revision</option>
             @for($i = $maxRevision; $i > 0; $i--)
@@ -466,6 +467,15 @@
     @endif
 
     <script type="text/javascript">
+
+setTimeout(function(){  
+
+  document.getElementById("revisioncount").value = '{{$revision}}'
+ }, 1000);
+
+
+
+
  $(document).on('submit','#evaluateSend',function(event){
  
   event.preventDefault();

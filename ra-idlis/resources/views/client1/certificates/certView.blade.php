@@ -45,7 +45,7 @@
 						<div class="col-md-2" style="">&nbsp;</div>
 						<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
 						@if($retTable[0]->hfser_id == 'CON')
-						CON No.
+						Application No.
 						@else
 								Application Code
 						@endif
