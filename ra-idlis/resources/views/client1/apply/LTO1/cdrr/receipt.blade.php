@@ -85,7 +85,7 @@
 		                   		<div class="row mb-2">
 		                   			<div class="col-sm">
 		                   				Receipt Attachment:
-		                   				<p class="text-warning">WARNING! Please upload PDF file only</p>
+		                   				<p class="text-danger">WARNING! Please upload PDF file only</p>
 		                   			</div>
 		                   			<div class="col-sm-11">
 		                   				<input type="file" class="form-control w-100" name="add_attachment" required="">

@@ -11,6 +11,6 @@
   </div>
   <div class="col-md-6">
     <label> No. of Satellites </label>
-    <input class="form-control" type="text" id="noofsatellite" name="noofsatellite" placeholder="No. of Satellites">
+    <input class="form-control" type="number" id="noofsatellite" name="noofsatellite" placeholder="No. of Satellites">
   </div>
 </div>

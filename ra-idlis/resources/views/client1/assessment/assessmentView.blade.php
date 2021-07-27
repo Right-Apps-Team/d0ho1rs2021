@@ -165,9 +165,9 @@
 					<a href="{{url('client1/apply/GenerateReportAssessments/'.$data->appid)}}" class="button6 btn-block ">Generate Report</a>
 				</div>
 				{{-- @if($appform->hfser_id == 'LTO') --}}
-				<div class="col-sm-12">
+				<!-- <div class="col-sm-12">
 					<a href="{{url('client1/apply/app/'.$appform->hfser_id.'/'.$data->appid.'/hfsrb')}}" class="button6 btn-block ">Skip this step for now and proceed to Requirement lists</a>
-				</div>
+				</div> -->
 				{{-- @endif --}}
 				@if($appform->hfser_id == 'COA')
 				<div class="col-sm-12">

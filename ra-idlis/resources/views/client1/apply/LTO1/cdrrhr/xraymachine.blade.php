@@ -159,7 +159,7 @@
 		                   				X-ray Machine Max.mA:
 		                   			</div>
 		                   			<div class="col-sm-11">
-		                   				<input type="number" class="form-control w-100" name="ma" required="">
+		                   				<input type="number" min="0" class="form-control w-100" name="ma" required="">
 		                   			</div>
 		                   		</div>
 		                   		<div class="row mb-2">

@@ -1386,6 +1386,14 @@ setTimeout(function(){
 
 
 
+  var hg = document.getElementsByName('hgpid');
+
+  for(var h = 0 ; h< hg.length; h++){
+    hg[h].disabled = true;
+  }
+
+
+
 
     
 @endif

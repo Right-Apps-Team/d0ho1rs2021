@@ -86,7 +86,7 @@
 		                   			</div>
 		                   			<div class="col-sm-11">
 		                   				<input type="file" class="form-control w-100" name="add_attachment" required="">
-		                   				<p class="text-warning">WARNING! Please upload PDF file only</p>
+		                   				<p class="text-danger">WARNING! Please upload PDF file only</p>
 		                   			</div>
 		                   		</div>
 		                   			<button class="btn btn-primary pt-1" type="submit">Submit</button>
@@ -173,7 +173,7 @@
 	                   		'<div class="row mb-2">'+
 	                   			'<div class="col-sm">'+
 	                   				'Attachment:'+
-	                   				'<p class="text-warning">WARNING! Please upload PDF file only</p>'+
+	                   				'<p class="text-danger">WARNING! Please upload PDF file only</p>'+
 	                   			'</div>'+
 	                   			'<div class="col-sm-11">'+
 	                   				'<input type="file" class="form-control w-100" name="edit_attachment" >'+
