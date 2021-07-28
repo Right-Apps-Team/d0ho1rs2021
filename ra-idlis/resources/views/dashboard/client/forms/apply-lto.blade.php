@@ -131,12 +131,12 @@
                                 <input id="saveasn"  name="saveasn" value="partial" type="hidden" />
                             </div>
                             <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
-                                <button  id="save" class="btn btn-success btn-block" type="button" onClick="savePartialLto('partial')">
+                             {{--   <button  id="save" class="btn btn-success btn-block" type="button" onClick="savePartialLto('partial')">
                                 <!-- <button class="btn btn-success btn-block" type="button" onClick="savePartialLto(this)"> -->
                                     <!-- onClick="savePartial(this)" -->
                                     <i class="fa fa-floppy-o" aria-hidden="true"></i>
                                     Save as Draft
-                                </button>
+                                </button> --}} 
                             </div>
 
                             @if(app('request')->input('grp') == 'c')

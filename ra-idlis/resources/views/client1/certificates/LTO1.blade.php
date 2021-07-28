@@ -173,7 +173,14 @@
 					<div class="col-md-1" style="display: inline">
 						:</div>
 					<div class="col-md-5 contr" style="float:left;display: inline;">
-					{{((isset($retTable[0])) ? (ucfirst(strtolower($retTable[0]->street_name)).', '.ucfirst(strtolower($retTable[0]->street_number)).', '.ucfirst(strtolower($retTable[0]->brgyname)).', '.ucfirst(strtolower($retTable[0]->cmname)).', '.ucfirst(strtolower($retTable[0]->provname)).' '.ucfirst(strtolower($retTable[0]->rgn_desc))) : 'No Location.')}}
+					{{((isset($retTable[0])) ?
+						 (
+							 ($retTable[0]->street_name ? ucwords(strtolower($retTable[0]->street_name)).', ' : ' ')
+						 
+						 .
+						($retTable[0]->street_number ?  ucwords(strtolower($retTable[0]->street_number)).', ' : '' ).ucwords(strtolower($retTable[0]->brgyname)).', '.ucwords(strtolower($retTable[0]->cmname)).', '.ucwords(strtolower($retTable[0]->provname)).' '.ucwords(strtolower($retTable[0]->rgn_desc))) : 'No Location.')}}
+					
+					<!-- {{((isset($retTable[0])) ? (ucfirst(strtolower($retTable[0]->street_name)).', '.ucfirst(strtolower($retTable[0]->street_number)).', '.ucfirst(strtolower($retTable[0]->brgyname)).', '.ucfirst(strtolower($retTable[0]->cmname)).', '.ucfirst(strtolower($retTable[0]->provname)).' '.ucfirst(strtolower($retTable[0]->rgn_desc))) : 'No Location.')}} -->
 						<!-- {{ucwords(((isset($retTable[0])) ? ($retTable[0]->rgn_desc.', '.$retTable[0]->provname.', '.$retTable[0]->cmname.', '.$retTable[0]->brgyname.', '. $retTable[0]->street_number. $retTable[0]->street_name.' '.$retTable[0]->street_number) : "CURRENT_LOCATION"))}} -->
 					</div>
 					<div class="col-md-1" style="display: inline">
@@ -312,9 +319,13 @@
 					<div class="col-md-1" style="display: inline;float: left">
 						:</div>
 					<div class="col-md-5 contr" style="float:left;display: inline;">
-						@if(isset($otherDetails[0]) && isset($otherDetails[0]->valto))
+						<!-- @if(isset($otherDetails[0]) && isset($otherDetails[0]->valto))
 						{{Date('F j, Y',strtotime($otherDetails[0]->valfrom))}} - {{Date('F j, Y',strtotime($otherDetails[0]->valto))}}
-						@endif
+						@endif -->
+						
+					
+						{{Date('F j, Y',strtotime($retTable[0]->approvedDate))}} - {{date('F j, Y', strtotime("Last day of December", strtotime($retTable[0]->approvedDate)))}}
+					
 					</div>
 					<div class="col-md-1" style="display: inline">
 						&nbsp;</div>

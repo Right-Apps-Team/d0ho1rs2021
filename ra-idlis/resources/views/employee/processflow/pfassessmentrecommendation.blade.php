@@ -32,12 +32,19 @@
 					
 					<div class="row">
 						<div class="col-md-6">
+							<div hidden >
 							<small style="color:red">Validity From*</small>
-							<input name="vf" type="date" class="form-control" required="" placeholder="validity from">
+							<input name="vf" type="date" class="form-control"  placeholder="validity from">
+							<!-- <input name="vf" type="date" class="form-control" required="" placeholder="validity from"> -->
+
+							</div>
+							<small style="color:red">If approved, the validity of the application starts on the day of the Director's Approval.</small>
+							
 						</div>
 						<div class="col-md-6">
 							<small style="color:red">Validity To*</small>
-							<input name="vto" type="date" class="form-control" required="" placeholder="validity to">
+							<input name="vto" type="date" class="form-control"  placeholder="validity to">
+							<!-- <input name="vto" type="date" class="form-control" required="" placeholder="validity to"> -->
 						</div>
 						<div class="col-md-12 mt-5 mb-3">
 							<input name="noofbed" type="number" class="form-control" placeholder="Total number of beds">

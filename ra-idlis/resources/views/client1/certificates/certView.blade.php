@@ -274,7 +274,9 @@
 						<center>:</center>
 					</div>
 					<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
-						{{((isset($otherDetails->valto)) ? $otherDetails->valto : "NOT DEFINED")}}
+					{{Date('F j, Y',strtotime($retTable[0]->approvedDate))}} - {{date('F j, Y', strtotime("Last day of December", strtotime($retTable[0]->approvedDate)))}}
+					
+					<!-- {{((isset($otherDetails->valto)) ? $otherDetails->valto : "NOT DEFINED")}} -->
 					</div>	
 				</div>
 					@isset($addons)

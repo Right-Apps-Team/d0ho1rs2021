@@ -8,7 +8,17 @@
 
 	<body>
 		@include('client1.cmp.__wizard')
-		
+		<div class="container-fluid mt-5">
+			<div class="row">
+				<div class="col-md-6 d-flex justify-content-start" id="prevDiv">
+					<a href="#" class="inactiveSlider slider"><button class="btn btn-success pl-3 mb-3">&laquo; Previous</button></a>
+				</div>
+				<div class="col-md-6 d-flex justify-content-end" id="nextDiv">
+				<button class="btn btn-success pl-3 mb-3" style="color: white !important;">	<a href="#" style="color: white !important;" class="activeSlider slider"> &raquo;</a></button>
+				</div>
+			</div>
+		</div>
+		<div class="container text-center font-weight-bold mt-5">Radiation Facility Other Attachments</div>
 		<div class="container pb-3 pt-3">
 			<button class="btn btn-primary pl-3 mb-3" data-toggle="modal" data-target="#viewModal">Add</button>
 			<div class="container">
@@ -132,6 +142,10 @@
 			// }
 		</script>
 		@include('client1.cmp.footer')
+		<script>
+			onStep(3);
+			slider(['fda','CDRRHR/xraymachines',{{$appid}}],[ 'app','LTO',{{$appid}},'fda','Proceed To Submission of FDA Requirements']);
+		</script>
 		<script>
 	
 			function showDelete(id,filename){

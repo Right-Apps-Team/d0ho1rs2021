@@ -1442,10 +1442,11 @@ public function fdacertN(Request $request, $appid, $requestOfClient = null) {
 					$pharma = FunctionsClientController::hasEmptyDBFields('cdrrpersonnel',['appid' => $appid],['prc','coe']);
 					$mach = FunctionsClientController::hasEmptyDBFields('cdrrhrpersonnel',['appid' => $appid],['prc','bc','coe']);
 					$pharmaattc = DB::table('cdrrattachment')->where([['appid', $appid]])->first();
+					$servcat = DB::table('cdrrhrxrayservcat')->where([['appid', $appid]])->first();
 					
 					// if($pharma[2] == true && $mach[2] == true){
-					if($pharma[2] == true && $mach[2] == true && !is_null($pharmaattc)){
-						if(!$pharma[0] && !$mach[0]  && !is_null($pharmaattc)){
+					if($pharma[2] == true && $mach[2] == true && !is_null($pharmaattc)&& !is_null($servcat)){
+						if(!$pharma[0] && !$mach[0]  && !is_null($pharmaattc) && !is_null($servcat)){
 							$ret = DB::table('appform')->where('appid',$appid)->update(['isReadyForInspecFDA' => 1]);
 							if($ret){
 								$lrf = $lrfForPharma = 0;
@@ -1533,17 +1534,23 @@ public function fdacertN(Request $request, $appid, $requestOfClient = null) {
 							if($pharma[2] == true){
 								$pharMsg = $pharma[0] ? "For Pharmacy: " . implode(",",$pharma[1]). ". ": "";
 							}else{
-								$pharMsg = "No personnel yet on Pharmacy. ";
+								$pharMsg = "\n - No personnel yet on Pharmacy. ";
 							}
 
 							if($mach[2] == true){
 								$radMsg = $mach[0] ? "For Radiology: " . implode(",",$mach[1]). ". ": "";
 							}else{
-								$radMsg = "No personnel yet on Radiology. ";
+								$radMsg = "\n - No personnel yet on Radiology. ";
 							}
+
 							$attchp = "";
 							if(is_null($pharmaattc)){
-								$attchp = "No phramacy attachment yet. ";
+								$attchp = "\n - No phramacy attachment yet. ";
+							}
+
+							$sp = "";
+							if(is_null($servcat)){
+								$sp = "\n - No service category yet. ";
 							}
 
 
@@ -1561,6 +1568,10 @@ public function fdacertN(Request $request, $appid, $requestOfClient = null) {
 
 						if(is_null($pharmaattc)){
 							$mssg .= " \n - Pharmacy Attachment";
+						}
+
+						if(is_null($servcat)){
+							$mssg .= " \n - Service Category";
 						}
 
 						return $mssg ;

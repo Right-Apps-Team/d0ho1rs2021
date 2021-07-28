@@ -277,7 +277,8 @@
 		@include('client1.cmp.footer')
 		<script>
 			onStep(3);
-			slider(['fda','CDRRHR/xrayservcat',{{$appid}}],['app','LTO',{{$appid}},'fda','Proceed To Submission of FDA Requirements']);
+			slider(['fda','CDRRHR/xrayservcat',{{$appid}}],['fda','CDRRHR/attachments',{{$appid}}]);
+			// slider(['fda','CDRRHR/xrayservcat',{{$appid}}],['app','LTO',{{$appid}},'fda','Proceed To Submission of FDA Requirements']);
 		</script>
 		<script>
 			$(function(){
