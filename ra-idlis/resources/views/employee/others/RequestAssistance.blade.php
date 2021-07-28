@@ -1021,6 +1021,7 @@
 
 
                           <script>
+                            
 
                             function facinaturechange() {
 
@@ -1056,6 +1057,8 @@
                                   case false:
                                     document.getElementById('facinaturevalue').value="false";
                                     rname.setAttribute('hidden', 'hidden')
+                                    unregInput.setAttribute('required', 'required')
+                                    regInput.removeAttribute('required')
                                     unregInput.hidden = false;
 
                                     unregInput.disabled = false;
@@ -1117,6 +1120,10 @@
                                   case true:
                                     document.getElementById('facinaturevalue').value="true";
                                     rname.removeAttribute('hidden')
+
+                                    regInput.setAttribute('required', 'required')
+                                    unregInput.removeAttribute('required')
+
                                     unregInput.hidden = true;
 
                                     unregInput.disabled = true;
@@ -1220,7 +1227,7 @@
 
                             <div class="col-sm-8">
 
-                              <input type="text" class="form-control" name="name_of_faci" data-parsley=""  hidden disabled id="unregxfacName">
+                              <input type="text" class="form-control" name="name_of_faci" data-parsley=""  hidden disabled id="unregxfacName" required>
                               <!-- <input type="text" class="form-control" name="name_of_faci" data-parsley-required-message="<b>*Name of Facility</b> required" data-parsley=""  hidden disabled id="unregxfacName"> -->
                               <!-- <input type="text" class="form-control" name="name_of_faci" data-parsley-required-message="<b>*Name of Facility</b> required" data-parsley=""  hidden disabled id="unregxfacName"> -->
 
@@ -1249,7 +1256,7 @@
 
                                 
                             <p id="rname" >
-                              <select  type="" style="width: 100%" name="name_of_faci" class="form-control selectpicker" onchange="changeFacname(this.value)" id="xfacName"  data-parsley="" data-live-search="true">
+                              <select  type="" style="width: 100%" name="name_of_faci" class="form-control selectpicker" onchange="changeFacname(this.value)" id="xfacName"  data-parsley="" data-live-search="true" >
                               <!-- <select type="" style="width: 100%" name="name_of_faci" class="form-control" onchange="changeFacname(this.value)" id="xfacName" required data-parsley-required-message="<b>*Name of Facility</b> required" data-parsley=""> -->
                               <!-- <select type="" style="width: 100%" name="name_of_faci" class="form-control" onchange="changeFaciSelect()" id="xfacName" required data-parsley-required-message="<b>*Name of Facility</b> required" data-parsley=""> -->
 <!-- HERE -->
@@ -1553,6 +1560,9 @@
   <script>
 var facnames = JSON.parse('{!!addslashes(json_encode($FacName))!!}')
 console.log(facnames)
+
+var uninpt = document.getElementById('xfacName');
+                             uninpt.setAttribute('required', 'required')
 
   function changeFacname (value){
         console.log(value)

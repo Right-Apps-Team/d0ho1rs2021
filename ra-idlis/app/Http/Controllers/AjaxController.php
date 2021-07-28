@@ -511,6 +511,53 @@
 				return 'ERROR';
 			}
 		}
+		
+		public static function getUidFromRegFac($rid)
+		{
+			try {
+				$data = DB::table('registered_facility')->where('regfac_id', '=', $rid)->first();
+
+				$rgappid = null; 
+					
+					if(!is_null($data->lto_id)){
+						$rgappid = $data->lto_id; 
+					}else{
+						if(!is_null($data->ptc_id)){
+							
+							$rgappid = $data->ptc_id; 
+						}else{
+							if(!is_null($data->con_id)){
+								
+								$rgappid = $data->con_id; 
+							}else{
+								if(!is_null($data->ato_id)){
+									
+									$rgappid = $data->ato_id; 
+								}else{
+									if(!is_null($data->coa_id)){
+										
+										$rgappid = $data->coa_id; 
+									}else{
+										if(!is_null($data->cor_id)){
+											
+											$rgappid = $data->cor_id; 
+										}
+									}
+								}
+								
+							}
+						}
+					}
+
+					$getUid = DB::table('appform')->where('appid', '=', $rgappid)->first();
+				return ($getUid->uid ?? null);
+			} 
+			catch (Exception $e) 
+			{
+				AjaxController::SystemLogs($e->getMessage());
+				return 'ERROR';
+			}
+		}
 		public static function gethfer_id($apid)
 		{
 			try {

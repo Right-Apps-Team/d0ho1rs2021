@@ -512,6 +512,9 @@ window.addEventListener('change', function(e) {
  document.getElementById("type0").checked = true
 
  document.getElementById("6").checked = true
+ document.getElementById("propbedcap").disabled = true
+
+
 //   setTimeout(function(){ 
 //   inputtedDataInitial()
 //    }, 1000);

@@ -1651,9 +1651,14 @@ class OthersController extends Controller
 					->where('monid', '=', $request->monid)
 					->update(['isApproved'=>$request->asd]);
 
-				$appid = DB::table('mon_form')->where('monid',$request->monid)->select('appid')->first()->appid;
 
-				$uid = AjaxController::getUidFrom($appid);
+					// here
+
+				// $appid = DB::table('mon_form')->where('monid',$request->monid)->select('appid')->first()->appid;
+
+				// $uid = AjaxController::getUidFrom($appid);
+				$uid = AjaxController::getUidFromRegFac(DB::table('mon_form')->where('monid',$request->monid)->select('regfac_id')->first()->regfac_id);
+							
 				AjaxController::notifyClient($request->monid,$uid,59);
 
 				return redirect()->back()->with('errRet', ['errAlt'=>'success', 'errMsg'=>'Updated Successfully.']);

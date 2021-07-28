@@ -354,7 +354,7 @@
 		                   					{{-- @endif --}}
 		                   					{{-- @if($hfsrbannexa[3]) --}}
 		                   					<div class="col-md" style="display: none;" id="isph">
-		                   						<input type="checkbox" name="pharmahead"> Make as Head of Chief Pharmacist
+		                   						<input type="checkbox" name="pharmahead"> Make as Chief Pharmacist
 		                   					</div>
 		                   					{{-- @endif --}} -->
 
@@ -373,7 +373,7 @@
 		                   					{{-- @endif --}}
 		                   					{{-- @if($hfsrbannexa[3]) --}}
 		                   					<div class="col-md" >
-		                   						<input type="checkbox" name="pharmahead"> Make as Head of Chief Pharmacist
+		                   						<input type="checkbox" name="pharmahead"> Make as Chief Pharmacist
 		                   					</div>
 		                   					{{-- @endif --}} -->
 
@@ -396,7 +396,7 @@
 		                   				</div>
 										
 										<div class="col-md" id="ispharmahead1" hidden>
-		                   						<input type="checkbox" value="1" name="pharmahead1" id="pharmahead1" > Make as Head of Chief Pharmacist
+		                   						<input type="checkbox" value="1" name="pharmahead1" id="pharmahead1" > Make as  Chief Pharmacist
 		                   				</div>
 										<div class="col-md" id="isxtech" hidden>
 		                   						<input type="checkbox" value="1" name="xtech" id="xtech" >  Make as Xray technologist
@@ -579,7 +579,7 @@
 				
 				chceb('head', ' Make as Head of Radiology');
 				chceb('po', ' Make as Radiation protection officer');
-				chceb('pharmahead', ' Make as Head of Chief Pharmacist');
+				chceb('pharmahead', ' Make as Chief Pharmacist');
 
 				
 			}
@@ -630,7 +630,7 @@
 				
 				// chceb('head', ' Make as Head of Radiology');
 				// chceb('po', ' Make as Radiation protection officer');
-				// chceb('pharmahead', ' Make as Head of Chief Pharmacist');
+				// chceb('pharmahead', ' Make as  Chief Pharmacist');
 
 				
 			}

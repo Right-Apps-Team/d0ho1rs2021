@@ -8470,7 +8470,8 @@ use FunctionsClientController;
 					if(DB::table('mon_form')->where('monid',$request->monid)->update(['hasLOE' => null, 'monitorRemark' => $request->remark, 'forResubmit' => 1, 'status' => 'MNA'])){
 						$monDet = DB::table('mon_form')->where('monid',$request->monid)->first();
 						if(DB::table('technicalfindingshist')->insert(['LOE' => $monDet->LOE, 'attached_filesUser'=> $monDet->attached_filesUser, 'id' => $monDet->monid, 'fromWhere' => 'mon'])){
-							$uid = AjaxController::getUidFrom(DB::table('mon_form')->where('monid',$request->monid)->select('appid')->first()->appid);
+							$uid = AjaxController::getUidFromRegFac(DB::table('mon_form')->where('monid',$request->monid)->select('regfac_id')->first()->regfac_id);
+							// $uid = AjaxController::getUidFrom(DB::table('mon_form')->where('monid',$request->monid)->select('appid')->first()->appid);
 							AjaxController::notifyClient($request->monid,$uid,64);
 							return back()->with('errRet', ['errAlt'=>'success', 'errMsg'=>'Operation Successful.']);
 						}

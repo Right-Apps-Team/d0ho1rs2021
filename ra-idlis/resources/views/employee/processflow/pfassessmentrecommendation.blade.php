@@ -31,20 +31,21 @@
 				<div class="container mt-5 mb-3" id="forDom">
 					
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-12">
 							<div hidden >
 							<small style="color:red">Validity From*</small>
 							<input name="vf" type="date" class="form-control"  placeholder="validity from">
 							<!-- <input name="vf" type="date" class="form-control" required="" placeholder="validity from"> -->
 
 							</div>
-							<small style="color:red">If approved, the validity of the application starts on the day of the Director's Approval.</small>
-							
+							<small style="color:red">Note: If approved, the validity of the application starts on the day of the Director's Approval.</small>
+							<br>
+							<br>
 						</div>
-						<div class="col-md-6">
-							<small style="color:red">Validity To*</small>
-							<input name="vto" type="date" class="form-control"  placeholder="validity to">
-							<!-- <input name="vto" type="date" class="form-control" required="" placeholder="validity to"> -->
+						<div class="col-md-12">
+							<small style="color:red">Validity Until*</small>
+							<input name="vto" type="date" value="{{date('Y-m-d', strtotime('Last day of December', strtotime(date('Y-m-d'))))}}" class="form-control"  placeholder="validity Until">
+							<!-- <input name="vto" type="date" class="form-control" required="" placeholder="validity Until"> -->
 						</div>
 						<div class="col-md-12 mt-5 mb-3">
 							<input name="noofbed" type="number" class="form-control" placeholder="Total number of beds">

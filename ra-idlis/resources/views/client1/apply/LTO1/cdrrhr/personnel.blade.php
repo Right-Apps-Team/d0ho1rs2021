@@ -54,7 +54,7 @@
 									Radiation protection officer
 									@endif
 									@if($personnel->isMainRadioPharma == 1)
-										Head of Chief Pharmacist
+										 Chief Pharmacist
 									@endif
 									@if($personnel->isXrayTech == 1)
 										Xray technologist

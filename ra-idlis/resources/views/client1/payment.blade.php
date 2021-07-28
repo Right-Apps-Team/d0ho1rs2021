@@ -21,17 +21,30 @@
 			</thead>
 			<tbody>
 			
-		     	@if(count($npayment) > 0) @for($i = 0; $i < count($npayment); $i++)
+		     	@if(count($npayment) > 0)
+				 @php
+					$total = 0;
+				 @endphp
+
+				  @for($i = 0; $i < count($npayment); $i++)
 				
 				 @if($npayment[$i]->reference  != 'Payment')
+				 @php
+					$total += $npayment[$i]->amount;
+				 @endphp
 		     	<tr>
 		     		<td>{{$npayment[$i]->reference}}</td>
 		     		<td>&#8369;&nbsp;{{number_format($npayment[$i]->amount, 2)}}</td>
 		     	</tr>
 				 @endif
+				
 
-
-		        @endfor @else
+		        @endfor 
+				<tr>
+		     		<td><b>Total</b></td>
+		     		<td><b>&#8369;&nbsp;{{number_format($total, 2)}}</b></td>
+		     	</tr>
+				@else
 		     	<tr>
 		     		<td colspan="2">No charge(s).</td>
 		     	</tr>

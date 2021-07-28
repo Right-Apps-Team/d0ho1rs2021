@@ -1177,6 +1177,16 @@ return unique;
             }, 1000);
         }
 
+        if(e.target.name == 'addOnServ'){
+            if(e.target.value == 'H3ADC' ){
+            document.getElementById("noDal").removeAttribute("hidden")
+            }else{
+
+                document.getElementById("noDal").setAttribute("hidden", "hidden")
+                document.getElementById("noofdialysis").value = null;
+            }
+        }
+
         // if(e.target.name == 'funcid'){
         //  var val =   document.querySelector('select[data-funcid="main"]').value;
         //  console.log("val")

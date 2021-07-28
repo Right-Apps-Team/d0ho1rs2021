@@ -178,7 +178,7 @@
 							 ($retTable[0]->street_name ? ucwords(strtolower($retTable[0]->street_name)).', ' : ' ')
 						 
 						 .
-						($retTable[0]->street_number ?  ucwords(strtolower($retTable[0]->street_number)).', ' : '' ).ucwords(strtolower($retTable[0]->brgyname)).', '.ucwords(strtolower($retTable[0]->cmname)).', '.ucwords(strtolower($retTable[0]->provname)).' '.ucwords(strtolower($retTable[0]->rgn_desc))) : 'No Location.')}}
+						($retTable[0]->street_number ?  ucwords(strtolower($retTable[0]->street_number)).', ' : '' ).ucwords(strtolower($retTable[0]->brgyname)).', '.ucwords(strtolower($retTable[0]->cmname)).', '.ucwords(strtolower($retTable[0]->provname)).' '.$retTable[0]->rgn_desc) : 'No Location.')}}
 					
 					<!-- {{((isset($retTable[0])) ? (ucfirst(strtolower($retTable[0]->street_name)).', '.ucfirst(strtolower($retTable[0]->street_number)).', '.ucfirst(strtolower($retTable[0]->brgyname)).', '.ucfirst(strtolower($retTable[0]->cmname)).', '.ucfirst(strtolower($retTable[0]->provname)).' '.ucfirst(strtolower($retTable[0]->rgn_desc))) : 'No Location.')}} -->
 						<!-- {{ucwords(((isset($retTable[0])) ? ($retTable[0]->rgn_desc.', '.$retTable[0]->provname.', '.$retTable[0]->cmname.', '.$retTable[0]->brgyname.', '. $retTable[0]->street_number. $retTable[0]->street_name.' '.$retTable[0]->street_number) : "CURRENT_LOCATION"))}} -->
@@ -263,7 +263,7 @@
 							foreach($ambType1 as $atval){
 								
 								if($ambType1[$i] == '2'){
-									echo ((int)$i + 1 ).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
+									echo ((int)$i).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
 									echo "<br>";
 									
 								}

@@ -19,7 +19,18 @@
 
         	<div class="col-sm-12">
             	<h2>@isset($appdata) {{$appdata->facilityname}} @endisset</h2>
-            	<h5>@isset($appdata) {{strtoupper($appdata->streetname)}}, {{strtoupper($appdata->brgyname)}}, {{$appdata->cmname}}, {{$appdata->provname}} @endisset</h5>
+            	<!-- <h5>@isset($appdata) {{strtoupper($appdata->streetname)}}, {{strtoupper($appdata->brgyname)}}, {{$appdata->cmname}}, {{$appdata->provname}} @endisset</h5> -->
+            	<h5>@isset($appdata) 
+              {{
+                    $appdata->street_number?  strtoupper($appdata->street_number).',' : ' '
+                  }}
+                  {{
+                    $appdata->streetname?  strtoupper($appdata->streetname).',': ' '
+                  }}
+                     {{strtoupper($appdata->brgyname)}}, 
+                     {{$appdata->cmname}}, {{$appdata->provname}} 
+                
+              @endisset</h5>
             	<h5>Code: <span class="font-weight-bold">{{$appdata->hfser_id.'R'.$appdata->rgnid.'-'.$appdata->appid}}</span></h5>
                 <h6>Institutional Character: 
                   @if(isset($appdata) && isset($appdata->facmdesc))<strong>{{$appdata->facmdesc}}</strong>@else<span style="color:red">Not Available</span>@endif &nbsp;

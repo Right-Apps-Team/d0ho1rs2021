@@ -1057,6 +1057,7 @@ class NewClientController extends Controller {
 			$ptcdet=[];
 			$serviceId = null;
 			$servname = '';
+			$facname = "No Health Facility";
 			switch ($retTable[0]->hfser_id) {
 				case 'PTC':
 					$ptcdet = DB::table('ptc')->where([['appid',$appid]])->first();
@@ -1079,6 +1080,21 @@ class NewClientController extends Controller {
 					
 					if(!is_null($check)){
 						$servname = $check->facname;
+					}
+
+					$sData = FunctionsClientController::getServFaclDetails($appid);
+					if(count($sData[3])) {
+									$impArr = [];
+									$i = 0;
+									
+									foreach($sData[3] AS $facilityTypeRow) {
+
+												array_push($impArr, $facilityTypeRow->hgpdesc);
+												if($i == 0 ){
+													$facname = 	$facilityTypeRow->hgpdesc;
+												}
+												$i++;
+									}
 					}
 
 					$otherDetails = DB::table('assessmentrecommendation')->where([['appid',$appid],['choice','issuance']])->first();
@@ -1109,6 +1125,7 @@ class NewClientController extends Controller {
 				'otherDetails' => $otherDetails,
 				'serviceId'=>$serviceId,
 				'newservices' => $servname,
+				'facname' => $facname,
 			];
 			// dd($arrData['retTable'][0]->office);
 			return view('client1.certificates.certView', $arrData);

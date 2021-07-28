@@ -81,6 +81,50 @@
 						{{((isset($retTable[0]->facilityname)) ? strtoupper($retTable[0]->facilityname) : "NOT DEFINED")}}
 					</div>	
 				</div>
+				@if(strtolower($retTable[0]->hfser_id) == 'lto')
+				<div class="row">	
+					<div class="col-md-2" style="">&nbsp;</div>
+					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+						Type of Facility
+					</div>
+					<div class="col-md-1 hide-div">
+						<center>:</center>
+					</div>
+					<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
+					{{((isset($facname)) ? $facname : "No Health Service")}}
+					</div>	
+				</div>
+@endif
+
+				<div class="row">	
+					<div class="col-md-2" style="">&nbsp;</div>
+					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+						Service Capability
+					</div>
+					<div class="col-md-1 hide-div">
+						<center>:</center>
+					</div>
+					<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
+						{{((isset($servCap)) ? implode(', ',$servCap)  : "NOT DEFINED")}}
+					</div>	
+				</div>
+
+				@isset($retTable[0]->funcdesc)
+				<div class="row">	
+					<div class="col-md-2" style="">&nbsp;</div>
+					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+						Classification
+					</div>
+					<div class="col-md-1 hide-div">
+						<center>:</center>
+					</div>
+					<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
+						{{$retTable[0]->funcdesc}}
+					</div>	
+				</div>
+				@endisset
+
+
 				<div class="row">	
 					<div class="col-md-2" style="">&nbsp;</div>
 					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
@@ -95,59 +139,11 @@
 							 ($retTable[0]->street_name ? ucwords(strtolower($retTable[0]->street_name)).', ' : ' ')
 						 
 						 .
-						($retTable[0]->street_number ?  ucwords(strtolower($retTable[0]->street_number)).', ' : '' ).ucwords(strtolower($retTable[0]->brgyname)).', '.ucwords(strtolower($retTable[0]->cmname)).', '.ucwords(strtolower($retTable[0]->provname)).' '.ucwords(strtolower($retTable[0]->rgn_desc))) : 'No Location.')}}
+						($retTable[0]->street_number ?  ucwords(strtolower($retTable[0]->street_number)).', ' : '' ).ucwords(strtolower($retTable[0]->brgyname)).', '.ucwords(strtolower($retTable[0]->cmname)).', '.ucwords(strtolower($retTable[0]->provname)).' '.$retTable[0]->rgn_desc ) : 'No Location.')}}
 					
 					<!-- {{((isset($retTable[0]->cmname)) ? (ucwords($retTable[0]->street_number . ' ' . $retTable[0]->street_name . ' ' . $retTable[0]->cmname . ' ' . $retTable[0]->provname)) : "NOT DEFINED")}} -->
 					</div>	
 				</div>
-				<div class="row">	
-					<div class="col-md-2" style="">&nbsp;</div>
-					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
-						Service Capability
-					</div>
-					<div class="col-md-1 hide-div">
-						<center>:</center>
-					</div>
-					<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
-						{{((isset($servCap)) ? implode(', ',$servCap)  : "NOT DEFINED")}}
-					</div>	
-				</div>
-				
-				@if(strtolower($retTable[0]->hfser_id) == 'lto' && isset($retTable[0]->facmdesc))
-				<div class="row">	
-					<div class="col-md-2" style="">&nbsp;</div>
-					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
-						Institutional Character
-					</div>
-					<div class="col-md-1 hide-div">
-						<center>:</center>
-					</div>
-					<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
-						{{((isset($retTable[0]->facmdesc)) ? $retTable[0]->facmdesc : "NOT DEFINED")}}
-					</div>	
-				</div>
-				@endif
-
-				@if(strtolower($retTable[0]->hfser_id) == 'ptc')
-				<div class="row">	
-					<div class="col-md-2" style="">&nbsp;</div>
-					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
-						Scope of Work
-					</div>
-					<div class="col-md-1 hide-div">
-						<center>:</center>
-					</div>
-					<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
-					
-						{{((isset($otherDetails->HFERC_comments)) ? $otherDetails->HFERC_comments : 'Not Specified')}}
-					<!-- {{((isset($ptcdet)) ? $ptcdet->construction_description : "NOT DEFINED")}} -->
-					{{--	{{((isset($retTable[0]->HFERC_swork)) ? $retTable[0]->HFERC_swork : "NOT DEFINED")}} --}}
-					</div>	
-				</div>
-				@endif
-
-				@if(strtolower($retTable[0]->hfser_id) == 'lto')
-			{{--	@if(strtolower($retTable[0]->hfser_id) == 'ptc' || strtolower($retTable[0]->hfser_id) == 'lto') --}}
 				<div class="row">	
 					<div class="col-md-2" style="">&nbsp;</div>
 					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
@@ -174,6 +170,9 @@
 						<!-- {{((isset($otherDetails->ubn)) ? $otherDetails->ubn : (isset($retTable[0]->noofbed) ? $retTable[0]->noofbed : ''))}} -->
 					</div>	
 				</div>
+				@if(strtolower($retTable[0]->hfser_id) == 'lto')
+			{{--	@if(strtolower($retTable[0]->hfser_id) == 'ptc' || strtolower($retTable[0]->hfser_id) == 'lto') --}}
+				<!-- noof bed and dialysis here -->
 				<div class="row">	
 					<div class="col-md-2" style="">&nbsp;</div>
 					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
@@ -233,7 +232,7 @@
 							foreach($ambType1 as $atval){
 								
 								if($ambType1[$i] == '2'){
-									echo ((int)$i + 1 ).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
+									echo ((int)$i ).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
 									echo "<br>";
 									
 								}
@@ -249,8 +248,55 @@
 					</div>	
 				</div>
 				@endif
+				<!-- <div class="row">	
+					<div class="col-md-2" style="">&nbsp;</div>
+					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+						Service Capability
+					</div>
+					<div class="col-md-1 hide-div">
+						<center>:</center>
+					</div>
+					<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
+						{{((isset($servCap)) ? implode(', ',$servCap)  : "NOT DEFINED")}}
+					</div>	
+				</div> -->
+				
+				@if(strtolower($retTable[0]->hfser_id) == 'lto' && isset($retTable[0]->facmdesc))
+				<!-- <div class="row">	
+					<div class="col-md-2" style="">&nbsp;</div>
+					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+						Institutional Character
+					</div>
+					<div class="col-md-1 hide-div">
+						<center>:</center>
+					</div>
+					<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
+						{{((isset($retTable[0]->facmdesc)) ? $retTable[0]->facmdesc : "NOT DEFINED")}}
+					</div>	
+				</div> -->
+				@endif
 
-				@isset($retTable[0]->funcdesc)
+				@if(strtolower($retTable[0]->hfser_id) == 'ptc')
+				<div class="row">	
+					<div class="col-md-2" style="">&nbsp;</div>
+					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+						Scope of Work
+					</div>
+					<div class="col-md-1 hide-div">
+						<center>:</center>
+					</div>
+					<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
+					
+						{{((isset($otherDetails->HFERC_comments)) ? $otherDetails->HFERC_comments : 'Not Specified')}}
+					<!-- {{((isset($ptcdet)) ? $ptcdet->construction_description : "NOT DEFINED")}} -->
+					{{--	{{((isset($retTable[0]->HFERC_swork)) ? $retTable[0]->HFERC_swork : "NOT DEFINED")}} --}}
+					</div>	
+				</div>
+				@endif
+
+				
+
+				<!-- @isset($retTable[0]->funcdesc)
 				<div class="row">	
 					<div class="col-md-2" style="">&nbsp;</div>
 					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
@@ -263,7 +309,7 @@
 						{{$retTable[0]->funcdesc}}
 					</div>	
 				</div>
-				@endisset
+				@endisset -->
 				@if(strtolower($retTable[0]->hfser_id) == 'lto')
 				<div class="row">	
 					<div class="col-md-2" style="">&nbsp;</div>

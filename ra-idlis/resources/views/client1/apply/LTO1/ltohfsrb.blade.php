@@ -250,11 +250,11 @@
                 </div> --}}
                 @if($appform->isReadyForInspec <= 0)
                     <div class="d-flex justify-content-center" style="margin-top: 100px;">
-                    @if($isReadyForInspecFDA == 0 && $hfser_id == 'LTO') 
+                    {{-- @if($isReadyForInspecFDA == 0 && $hfser_id == 'LTO') 
                     <button disabled class="btn btn-warning p-3">FDA requirements not yet finalize</button>
-                    @else
+                    @else --}}
                     <button onclick="readyforInspection()" class="btn btn-primary p-3">Finalize and Submit</button>
-                    @endif
+                   {{-- @endif --}}
                     </div>
 
                 @endif
