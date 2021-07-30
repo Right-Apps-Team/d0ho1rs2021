@@ -34,20 +34,25 @@
                             color-stop(.6,#54DE5D))
         }
 	</style>
-    <div class="container-fluid mt-5 mb-5">
-        <div class="row">
-            <div class="col-md-8">
-                <h2 class=" text-center pt-2"> <img src="{{asset('ra-idlis/public/img/doh2.png')}}" style="width:50px;"/> APPLICATION FORM</h2>
+ @include('dashboard.client.forms.loadertyle')
+    <div id="loader"></div>
+    <div  style="display:none;" id="myDivLo">
+        <div class="container-fluid mt-5 mb-5">
+            <div class="row">
+                <div class="col-md-8">
+                    <h2 class=" text-center pt-2"> <img src="{{asset('ra-idlis/public/img/doh2.png')}}" style="width:50px;"/> APPLICATION FORM</h2>
+                </div>
+                @include('dashboard.client.forms.apply-ato')
             </div>
-            @include('dashboard.client.forms.apply-ato')
         </div>
+        <!-- Modals -->
+        
+        @include('dashboard.client.modal.confirm-submit')
+        @include('dashboard.client.forms.parts.authority-to-operate.ato_scripts')
+        @include('dashboard.client.forms.parts.authority-to-operate.ato_submission')
+        @include('dashboard.client.forms.parts.defVals')
     </div>
-    <!-- Modals -->
-    
-    @include('dashboard.client.modal.confirm-submit')
-    @include('dashboard.client.forms.parts.authority-to-operate.ato_scripts')
-    @include('dashboard.client.forms.parts.authority-to-operate.ato_submission')
-    @include('dashboard.client.forms.parts.defVals')
+    @include('dashboard.client.forms.loaderscript')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>

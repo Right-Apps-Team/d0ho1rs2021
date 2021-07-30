@@ -28,6 +28,57 @@
       <div class="card-header bg-white font-weight-bold">
          Committee Assignment 
          <button class="btn btn-primary" onclick="window.history.back();">Back</button>
+
+         
+
+          <!-- Trigger the modal with a button -->
+  <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#ttmyModal">Open Modal</button> -->
+
+<!-- Modal -->
+<!-- <div class="modal fade" id="ttmyModal" role="dialog">
+  <div class="modal-dialog">
+  
+  
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Headesssr</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
+  </div>
+</div> -->
+
+
+<div class="modal fade"  id="ttmyModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <!-- <div class="modal fade" id="viewModalEdit1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"> -->
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" style="border-radius: 0px;border: none;">
+        <div class="modal-body" style=" background-color: #272b30;color: white;">
+          <h5 class="modal-title text-center">Edit Committee Member</h5>
+          <hr>
+          <div class="col-sm-12">
+            <form id="memberedit">
+              {{csrf_field()}}
+                <input type="hidden" name="action" value="edit">
+                <span id="editBody">
+                  
+                </span>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
       </div>
       <div class="card-body">
         <div class="col-sm-12">
@@ -90,7 +141,8 @@
                   @endswitch
                 </td>
                 <td>
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#viewModalEdit" onclick="showData('{{$members->committee}}','{{ucfirst($members->fname.' '. (!empty($members->mname) ? $members->mname.',' :'').$members->lname)}}','{{$members->pos}}')">
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#ttmyModal" onclick="showData('{{$members->committee}}','{{ucfirst($members->fname.' '. (!empty($members->mname) ? $members->mname.',' :'').$members->lname)}}','{{$members->pos}}')">
+                    <!-- <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#viewModalEdit1" onclick="showData('{{$members->committee}}','{{ucfirst($members->fname.' '. (!empty($members->mname) ? $members->mname.',' :'').$members->lname)}}','{{$members->pos}}')"> -->
                       <i class="fa fa-fw fa-edit"></i>
                     </button>
                     <button type="button" class="btn btn-danger" onclick="showDelete('{{$members->committee}}');">
@@ -236,7 +288,8 @@
   </div>
   @endif
 
-  <div class="modal fade" id="viewModalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal fade" id="viewModalEdit1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <!-- <div class="modal fade" id="viewModalEdit1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"> -->
     <div class="modal-dialog" role="document">
       <div class="modal-content" style="border-radius: 0px;border: none;">
         <div class="modal-body" style=" background-color: #272b30;color: white;">

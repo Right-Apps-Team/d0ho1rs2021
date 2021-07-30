@@ -1,4 +1,7 @@
-<div class="row">
+
+
+<div  class="row">
+
     <div class="col-md-8">
         <?php $_aptid = "IN";
         $_aptdesc = "Initial New";
@@ -297,3 +300,5 @@ var apptypenew = '{!! $apptypenew !!}';
 
 @include('dashboard.client.forms.parts.license-to-operate.new_ftr')
 @include('dashboard.client.forms.parts.license-to-operate.lto-form-submission')
+
+

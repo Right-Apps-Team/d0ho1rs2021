@@ -28,6 +28,7 @@
               <td>Projected Population recommendation</td>
       			</tr>
       		</thead>
+          <!--  $total += $b->population; $totalinpt+= $b->eval_est; -->
       		<tbody>
       			@php $total = 0; $totalinpt= 0; @endphp
             @if(!empty($brp[0]))
@@ -137,7 +138,8 @@
 				</tr>
 				<tr>
 					<td class="font-weight-bold">P</td>
-					<td>{{number_format($total)}}</td>
+					<td>{{number_format($totalinpt)}}</td>
+		{{--			<td>{{number_format($total)}}</td>--}}
 				</tr>
 				<tr class="bg-info font-weight-bold text-white">
 					<td>BPR</td>
@@ -153,7 +155,8 @@
 			<tbody>
 				<tr>
 					<td class="font-weight-bold">P</td>
-					<td>{{number_format($total)}}</td>
+          <td>{{number_format($totalinpt)}}</td>
+					{{--			<td>{{number_format($total)}}</td>--}}
 				</tr>
 				<tr class="bg-info font-weight-bold text-white">
 					<td class="font-weight-bold">PBN</td>

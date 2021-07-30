@@ -211,7 +211,7 @@
 
                         </button>
 
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="padding-left: 5px">
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="padding-left: 5px; z-index: 99999;">
 
                           <button type="button" class="btn btn-light" data-toggle="modal" data-target="#vReqModal" title="View {{$a->type}}" onclick="vReqComp('{{$a->ref_no}}', '{{$a->type}}', '{{$a->name_of_comp}}', '{{$a->appid}}', '{{$a->name_of_faci}}', '{{$a->type_of_faci}}', '{{$a->reqs}}', '{{$a->comps}}')">
                           
@@ -735,6 +735,7 @@
 
                           {{-- ref no --}}
 
+                          <!-- <input type="text" name="ref_no_new_new"> -->
                           <input type="hidden" name="ref_no_new_new">
 
                           @isset($FormData)
@@ -1227,13 +1228,13 @@
 
                             <div class="col-sm-8">
 
-                              <input type="text" class="form-control" name="name_of_faci" data-parsley=""  hidden disabled id="unregxfacName" required>
+                              <input type="text" class="form-control" name="name_of_faci" data-parsley=""  hidden disabled id="unregxfacName" >
                               <!-- <input type="text" class="form-control" name="name_of_faci" data-parsley-required-message="<b>*Name of Facility</b> required" data-parsley=""  hidden disabled id="unregxfacName"> -->
                               <!-- <input type="text" class="form-control" name="name_of_faci" data-parsley-required-message="<b>*Name of Facility</b> required" data-parsley=""  hidden disabled id="unregxfacName"> -->
 
 
 
-                              {{-- <input list="facName" id="xfacName" name="name_of_faci" class="form-control" onchange="changeFaciSelect()" required data-parsley-required-message="<b>*Name of Facility</b> required">
+                              {{-- <input list="facName" id="xfacName" name="name_of_faci" class="form-control" onchange="changeFaciSelect()"  data-parsley-required-message="<b>*Name of Facility</b> required">
 <!-- 
                               <datalist id="facName">
 
@@ -1561,8 +1562,8 @@
 var facnames = JSON.parse('{!!addslashes(json_encode($FacName))!!}')
 console.log(facnames)
 
-var uninpt = document.getElementById('xfacName');
-                             uninpt.setAttribute('required', 'required')
+// var uninpt = document.getElementById('xfacName');
+//             uninpt.setAttribute('required', 'required')
 
   function changeFacname (value){
         console.log(value)

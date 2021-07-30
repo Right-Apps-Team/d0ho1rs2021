@@ -97,7 +97,7 @@
 		                   				Type of X-ray machine:
 		                   			</div>
 		                   			<div class="col-sm-11">
-		                   				<select name="xray" class="form-control">
+		                   				<select name="xray" class="form-control" required>
 			                   				@foreach($dropdowns[1] as $mach)
 											   @if($mach->xrayid != 15)
 			                   					<option value="{{$mach->xrayid}}">{{$mach->xraydesc}}</option>

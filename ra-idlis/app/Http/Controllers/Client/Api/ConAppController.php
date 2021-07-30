@@ -66,6 +66,7 @@ class ConAppController extends Controller
 
 
         $appform->assignedRgn           = $request->rgnid;
+        $appform->appComment                 = $request->remarks;
         // $appform->assignedRgn           = $request->assignedRgn;
 
         // LTO update 5-12-2021

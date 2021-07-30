@@ -167,6 +167,7 @@
 	        		<div class="row">
 	        			<div class="col-sm-8 mb-3 ml-3"> 
 		                	<h2>{{$data->facilityname}}</h2>
+		                <b>	<h5>{{$getFacType}}</h5></b>
 		                	<h5>{{$data->streetname .' '. $data->brgyname . ' ' . $data->cmname . ' ' . $data->provname}}</h5>
 		                	Scope of Work: {{($ptcTable->construction_description ?? 'USER DID NOT SPECIFIED')}}  
 		               	</div>

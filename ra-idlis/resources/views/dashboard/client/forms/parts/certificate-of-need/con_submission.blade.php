@@ -13,81 +13,81 @@ const savePartialCon = async (e) => {
         var invalids = 0;
         var invmssg = " ";
 
-       if($('#facility_name').val() == ""){errorPar +=1;  errors +=1; ermsgP+= "Facility Name, "; ermsg += "Facility Name, "}
+       if($('#facility_name').val() == ""){errorPar +=1;  errors +=1; ermsgP+= "\nFacility Name, "; ermsg += "\nFacility Name, "}
 
         // Disregard if update
-        if($('#region').val() == ""){errorPar +=1; errors +=1; ermsgP += "Region, "; ermsg += "Region, "}
-        if($('#province').val() == ""){errorPar +=1; errors +=1; ermsgP+= "Province, "; ermsg += "Province, "}
-        if($('#city_monicipality').val() == ""){errorPar +=1; errors +=1; ermsgP+= "Municipality, "; ermsg += "Municipality, "}
-        if($('#brgy').val() == ""){errorPar +=1; errors +=1; ermsgP+= "Baranggay, "; ermsg += "Baranggay, "}
+        if($('#region').val() == ""){errorPar +=1; errors +=1; ermsgP += "\nRegion, "; ermsg += "\nRegion, "}
+        if($('#province').val() == ""){errorPar +=1; errors +=1; ermsgP+= "\nProvince, "; ermsg += "\nProvince, "}
+        if($('#city_monicipality').val() == ""){errorPar +=1; errors +=1; ermsgP+= "\nMunicipality, "; ermsg += "\nMunicipality, "}
+        if($('#brgy').val() == ""){errorPar +=1; errors +=1; ermsgP+= "\nBaranggay, "; ermsg += "\nBaranggay, "}
          // Disregard if update
 
         // if($('#street_name').val() == ""){errors +=1; ermsg += "Street Name, "}
-        if($('#zip').val() == ""){errors +=1; ermsg += "Zip Code, "}
+        if($('#zip').val() == ""){errors +=1; ermsg += "\nZip Code, "}
 
-        if($('#fac_mobile_number').val() == ""){errors +=1; ermsg += "Facility Mobile No., "}
+        if($('#fac_mobile_number').val() == ""){errors +=1; ermsg += "\nFacility Mobile No., "}
         // if($('#areacode').val() == ""){errors +=1; ermsg += "Facility Landline Area code, "}
         // if($('#landline').val() == ""){errors +=1; ermsg += "Facility Landline, "}
         // if($('#faxareacode').val() == ""){errors +=1; ermsg += "Fax Area code, "}
         // if($('#faxNumber').val() == ""){errors +=1; ermsg += "Fax Number, "}
-        if($('#fac_email_address').val() == ""){errors +=1; ermsg += "Facility Email, "}
-        if($('#ocid').val() == "Please select"){errors +=1; ermsg += "Ownership, "}
+        if($('#fac_email_address').val() == ""){errors +=1; ermsg += "\nFacility Email, "}
+        if($('#ocid').val() == "Please select"){errors +=1; ermsg += "\nOwnership, "}
 
         // Disregard if update
-        if($('#classification').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "Classification, "; ermsg += "Classification, "}
-        if($('#subclass').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "Sub Classification, "; ermsg += "Sub Classification, "}
+        if($('#classification').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "\nClassification, "; ermsg += "\nClassification, "}
+        if($('#subclass').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "\nSub Classification, "; ermsg += "\nSub Classification, "}
         // Disregard if update
 
-        if($('#facmode').val() == "Please select"){errors +=1; ermsg += "Institutional Character, "}
-        if($('#funcid').val() == "Please select"){errors +=1; ermsg += "Function, "}
+        if($('#facmode').val() == "Please select"){errors +=1; ermsg += "\nInstitutional Character, "}
+        if($('#funcid').val() == "Please select"){errors +=1; ermsg += "\nFunction, "}
       
-        if($('#owner').val() == ""){errors +=1; ermsg += "Owner, "}
-        if($('#prop_mobile').val() == ""){errors +=1; ermsg += "Proponent Mobile, "}
+        if($('#owner').val() == ""){errors +=1; ermsg += "\nOwner, "}
+        if($('#prop_mobile').val() == ""){errors +=1; ermsg += "\nProponent Mobile, "}
         // if($('#prop_landline_areacode').val() == ""){errors +=1; ermsg += "Proponent Landline Areacode, "}
         // if($('#prop_landline').val() == ""){errors +=1; ermsg += "Proponent Landline, "}
-        if($('#prop_email').val() == ""){errors +=1; ermsg += "Proponent Email, "}
-        if($('#official_mail_address').val() == ""){errors +=1; ermsg += "Official Mailing Address, "}
-        if($('#approving_authority_pos').val() == ""){errors +=1; ermsg += "Approving Authority Position, "}
-        if($('#approving_authority_name').val() == ""){errors +=1; ermsg += "Approving Authority Name, "}
+        if($('#prop_email').val() == ""){errors +=1; ermsg += "\nProponent Email, "}
+        if($('#official_mail_address').val() == ""){errors +=1; ermsg += "\nOfficial Mailing Address, "}
+        if($('#approving_authority_pos').val() == ""){errors +=1; ermsg += "\nApproving Authority Position, "}
+        if($('#approving_authority_name').val() == ""){errors +=1; ermsg += "\nApproving Authority Name, "}
         
       
-        if($('input[name="facid"]:checked').val() == undefined){errors +=1; ermsg += "Facilities/Type, "}
+        if($('input[name="facid"]:checked').val() == undefined){errors +=1; ermsg += "\nFacilities/Type, "}
         
         if($('#fac_email_address').val() != ""){
             var check = checkEmailValidity($('#fac_email_address').val()) 
            if(check == false){
-             invalids +=1;   invmssg += "Invalid Facility Email Address, "
+             invalids +=1;   invmssg += "\nInvalid Facility Email Address, "
            } 
         }
         if($('#prop_email').val() != ""){
             var check = checkEmailValidity($('#prop_email').val()) 
            if(check == false){
-             invalids +=1;   invmssg += "Invalid Proponent Email Address, "
+             invalids +=1;   invmssg += "\nInvalid Proponent Email Address, "
            } 
         }
         
         if($('#fac_mobile_number').val() != ""){
             var check = checkNumberlValidity($('#fac_mobile_number').val()) 
            if(check == false){
-             invalids +=1;   invmssg += "Invalid Facility Mobile Number, "
+             invalids +=1;   invmssg += "\nInvalid Facility Mobile Number, "
            } 
         }
 
         if($('#prop_mobile').val() != ""){
             var check = checkNumberlValidity($('#prop_mobile').val()) 
            if(check == false){
-             invalids +=1;   invmssg += "Invalid Proponent Mobile Number, "
+             invalids +=1;   invmssg += "\nInvalid Proponent Mobile Number, "
            } 
         }
 
-        if($('#noofbed').val() == "" ||  $('#noofbed').val() <= 0 ){errors +=1; ermsg += "Proposed bed capacity must not be 0 or empty,"}
+        if($('#noofbed').val() == "" ||  $('#noofbed').val() <= 0 ){errors +=1; ermsg += "\nProposed bed capacity must not be 0 or empty,"}
         
 
         const types = $("input[name='type[]']");
         const pops = document.getElementsByClassName("pops") ;
         const locs = document.getElementsByClassName("locs") ;
         if(types.length <= 0){
-            errors +=1; ermsg += "Please add catchment area,"
+            errors +=1; ermsg += "\nPlease add catchment area,"
         }
         // console.log("pooops")
         // console.log(pops)
@@ -112,7 +112,7 @@ const savePartialCon = async (e) => {
         }
         console.log(nopop)
         if(nopop > 0){
-            errors +=1; ermsg += "Incomplete/Invalid Projected Population,"
+            errors +=1; ermsg += "\nIncomplete/Invalid Projected Population,"
         } 
 
         var nolocs = 0;
@@ -126,8 +126,39 @@ const savePartialCon = async (e) => {
         }
         
         if(nolocs > 0){
-            errors +=1; ermsg += "Incomplete catchment locations,"
+            errors +=1; ermsg += "\nIncomplete catchment locations,"
         } 
+
+        const exlocs = document.getElementsByClassName("itmex") ;
+console.log(exlocs.length)
+        if(exlocs.length > 0){
+            const exfacn = document.getElementsByClassName("exfacn") ;
+            const exloc = document.getElementsByClassName("exloc") ;
+            const exbedcap = document.getElementsByClassName("exbedcap") ;
+            const excat = document.getElementsByClassName("excat") ;
+            const exlic = document.getElementsByClassName("exlic") ;
+            const exval = document.getElementsByClassName("exval") ;
+            const exdatop = document.getElementsByClassName("exdatop") ;
+
+if(exfacn,exloc,exbedcap,excat,exlic,exval,exdatop){
+            for(var xi = 0 ; xi < exlocs.length; xi++){
+
+                if(
+                    (exfacn[xi].value == null || exfacn[xi].value== undefined || exfacn[xi].value == "" || !exfacn[xi].value) ||
+                    (exloc[xi].value == null || exloc[xi].value== undefined || exloc[xi].value == "" || !exloc[xi].value) ||
+                    (exbedcap[xi].value == null || exbedcap[xi].value== undefined || exbedcap[xi].value == "" || !exbedcap[xi].value) ||
+                    (excat[xi].value == null || excat[xi].value== undefined || excat[xi].value == "" || !excat[xi].value) ||
+                    (exlic[xi].value == null || exlic[xi].value== undefined || exlic[xi].value == "" || !exlic[xi].value) ||
+                    (exval[xi].value == null || exval[xi].value== undefined || exval[xi].value == "" || !exval[xi].value) ||
+                    (exdatop[xi].value == null || exdatop[xi].value== undefined || exdatop[xi].value == "" || !exdatop[xi].value) 
+                
+                ){
+                    errors +=1; ermsg += "\nIncomplete existing hospital details,"
+                }
+
+            }
+}
+        }
 
 
         // if(errors > 0){
@@ -253,6 +284,7 @@ function submitProper (e){
         con_catch:               JSON.stringify(con_catch),
         con_hospital:           JSON.stringify(con_hospital),
         facid:                  JSON.stringify(allFacids),
+        remarks:             $('#remarks').val(),
         hgpid:                  6,
         // hgpid:                  $('input[name="hgpid"]:checked').val(),
         assignedRgn:             $('#assignedRgn').val(),//6-3-2021

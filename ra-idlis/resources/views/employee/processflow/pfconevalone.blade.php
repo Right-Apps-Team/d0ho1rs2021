@@ -736,11 +736,11 @@
       </div>
       <div class="container-fluid mt-1 mb-2">
         <span class="lead font-weight-bold mt-3">Recommendation:</span><br>
-          <a>To <span><select style="width:150px;" name="verd" class="form-control d-inline"><option value="1">Grant</option><option value="0">Disapprove</option></select></span> the certificate of Need to <strong>{{$AppData->facilityname}}</strong></a>
+          <a>To <span><select style="width:150px;" required name="verd" class="form-control d-inline"><option value="1">Grant</option><option value="0">Disapprove</option></select></span> the certificate of Need to <strong>{{$AppData->facilityname}}</strong></a>
       </div>
       <div class="container-fluid mt-1 mb-2">
         With Approved bed capacity of:
-        <input type="text" class="form-control" name="ubnval" id="setubnval">
+        <input type="text" required class="form-control" name="ubnval" id="setubnval">
       </div>
 
       <div class="container-fluid mt-1 mb-2">
@@ -1161,12 +1161,12 @@ console.log(option[0])
               +
             '</select>'+
           '</td>'+
-          '<td><input type="text" onblur="renewLoc()" name="addr[]" class="form-control"></td>'+
+          '<td><input type="text" required onblur="renewLoc()" name="addr[]" class="form-control"></td>'+
 
-          '<td><input type="text" disabled name="catchment[]" class="form-control"></td>' +
+          '<td><input type="text" value="0" disabled name="catchment[]" class="form-control"></td>' +
           // '<td><input type="text" '+ (dis?  'disabled' : ' ')  +' name="catchment[]" class="form-control"></td>' +
 
-          '<td><input type="number" name="est[]" class="form-control"></td>'+
+          '<td><input type="number" required name="est[]" class="form-control"></td>'+
           // '<td><input type="text" name="est[]" class="form-control"></td>'+
         '</tr>'
         $(toInsert).insertBefore($('#mainCatch'));    
@@ -1241,6 +1241,7 @@ console.log(option[0])
           var newText2 = document.createElement("input");
           newText2.setAttribute("type", 'text');
           newText2.setAttribute("value", tm);
+          newText2.setAttribute("required", "required");
           newText2.setAttribute("name", "ttph[]");
           newText2.setAttribute("class", "form-control ttp");
 

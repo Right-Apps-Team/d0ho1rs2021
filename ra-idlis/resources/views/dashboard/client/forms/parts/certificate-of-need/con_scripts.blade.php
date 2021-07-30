@@ -222,7 +222,7 @@ function initialProPo(){
                 for(var i = 0; i < exHosp.length ; i++){
                         var newTr = document.createElement("tr");
                         newTr.setAttribute("id", "rowEntryHospital" + i);
-                        newTr.setAttribute("class", "itemRow");
+                        newTr.setAttribute("class", "itemRow ");
                         document.getElementById("existing_hospitals").appendChild(newTr);
 
                         var newTd1 = document.createElement("td");
@@ -268,21 +268,23 @@ function initialProPo(){
                                          inpt2.setAttribute("name", names[n]);
                                         }
                                  }
-                                 if(c == 0){ inpt2.value = exHosp[i].facilityname ;}
-                                 if(c == 1){ inpt2.value = exHosp[i].location1 ;}
-                                 if(c == 2){ inpt2.value = exHosp[i].noofbed1 ;}
+                                 var clas = ' ';
+                                 if(c == 0){ inpt2.value = exHosp[i].facilityname ; clas = 'exfacn'}
+                                 if(c == 1){ inpt2.value = exHosp[i].location1 ;clas = 'exloc'}
+                                 if(c == 2){ inpt2.value = exHosp[i].noofbed1 ;clas = 'exbedcap'}
                                 
-                                 if(c == 4){ inpt2.value = exHosp[i].license ;}
-                                 if(c == 5){ inpt2.value = exHosp[i].validity ;}
-                                 if(c == 6){ inpt2.value = exHosp[i].date_operation ;}
-                                 if(c == 7){ inpt2.value = exHosp[i].remarks ;}
+                                 if(c == 4){ inpt2.value = exHosp[i].license ;clas = 'exlic'}
+                                 if(c == 5){ inpt2.value = exHosp[i].validity ;clas = 'exval'}
+                                 if(c == 6){ inpt2.value = exHosp[i].date_operation ;clas = 'exdatop'}
+                                 if(c == 7){ inpt2.value = exHosp[i].remarks ;clas = 'exrem'}
                                 //  var vals = ["facilityname", "location1", "noofbed1", "cat_hos", "license", "validity", "date_operation"]
                                 //  for(var v = 0 ; v < vals.length; v++){
                                 //         inpt2.value = condet[i].vals[v] ;
                                 //  }
                                
+                                
 
-                                inpt2.setAttribute("class", "form-control");
+                                inpt2.setAttribute("class", "form-control  ");
                                 document.getElementById("colEntryH"+c +"-" + i).appendChild(inpt2);
 
                                

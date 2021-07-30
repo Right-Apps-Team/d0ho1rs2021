@@ -112,12 +112,21 @@
             <select id="revisioncount" name="revisioncount" class="form-control w-100">
             @php $temprev = $maxRevision; @endphp
             <option value="">Please Select Other Revision</option>
+         {{--
             @for($i = $maxRevision; $i > 0; $i--)
             <option value="{{$temprev}}">{{$temprev}}</option>
             @php
             $temprev = $maxRevision - 1;
             @endphp
             @endfor
+--}}
+@php
+$i = $maxRevision;
+while($i>0) {
+  echo '<option value="'.$i.'">'.$i.'</option>';
+  $i--;
+}
+@endphp
             </select>
           </div>
         </div>

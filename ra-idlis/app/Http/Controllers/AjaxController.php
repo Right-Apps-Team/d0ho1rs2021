@@ -820,7 +820,8 @@
 		public static function getConCatchFormatted($appid,$displayDone = null)
 		{
 			$pop = 0;
-			$where = [['appid',$appid],['isfrombackend',$displayDone]];
+			$where = [['appid',$appid]];
+			// $where = [['appid',$appid],['isfrombackend',$displayDone]];
 			$brp = DB::table('con_catch')->where($where)->get();
 			$loc = array();
 			if(count($brp) > 0){
@@ -8641,8 +8642,15 @@ public static function forDoneHeadersNew($appid,$monid,$selfAssess,$isPtc = fals
 				// }
 
 				// dd($arrLvl1Data,$arrLvl2Data);
+				$getFacType = DB::table('appform')
+				->join('hfaci_grp', 'appform.hgpid','=', 'hfaci_grp.hgpid')
+				->select('hfaci_grp.hgpdesc')
+				->where([['appid', $appid]])->first()->hgpdesc;
+
+
 				$toViewArr = [
 					'data' => $data,
+					'getFacType' => $getFacType,
 					'ptcTable' => DB::table('ptc')->where('appid',$appid)->first(),
 					'head' => $headData,
 					'address' => url('employee/dashboard/processflow/HeaderThree/'.$appid.'/'),
@@ -8692,6 +8700,7 @@ public static function forDoneHeadersNew($appid,$monid,$selfAssess,$isPtc = fals
 			  team, 
 			  mon_form.appid, 
 			  name_of_faci,
+			  status,
 			  registered_facility.regfac_id 
 			  
 			  FROM mon_form 

@@ -64,6 +64,7 @@ class PtcAppController extends Controller
         $appform->draft                 = $request->draft;
         $appform->assignedRgn           = $request->assignedRgn;
         $appform->hgpid                 = $request->hgpid;//6-22-2021
+        
 
         // LTO update 5-12-2021
         $appform->ptcCode               = $request->ptcCode;

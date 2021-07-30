@@ -1,6 +1,6 @@
 
 <p>&nbsp;</p>
-<div class="col-md-12"><b class="text-primary">FACILTY CONTACT DETAILS</b></div>
+<div class="col-md-12"><b class="text-primary">FACILITY CONTACT DETAILS</b></div>
 <div class="col-md-3">
     <label for="fac_mobile_number">Facility Mobile No. <span class="text-danger">*</span></label>
     <input 

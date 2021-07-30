@@ -524,7 +524,8 @@ class OthersController extends Controller
 				}
 				else {
 					$name=$name->facilityname;
-					$type=explode("^",$request->type_of_faci)[1];
+					$type=$request->type_of_faci;
+					// $type=explode("^",$request->type_of_faci)[1];
 				}
 
 				$data = [

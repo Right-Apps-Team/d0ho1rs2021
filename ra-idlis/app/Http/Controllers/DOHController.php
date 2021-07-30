@@ -4886,7 +4886,8 @@ use FunctionsClientController;
 							}
 						}
 						// if(isset($request->addr) && isset($request->catchment) && isset($request->type) && count($request->addr) == count($request->catchment)){
-						if(isset($request->addr) && isset($request->catchment)&& isset($request->est) && isset($request->type) && count($request->addr) == count($request->catchment)){
+						if(isset($request->addr) && isset($request->type) && count($request->addr) == count($request->est)){
+						// if(isset($request->addr) && isset($request->catchment)&& isset($request->est) && isset($request->type) && count($request->addr) == count($request->catchment)){
 						
 						$ccatch = 	DB::table('con_catch')->where([['appid', $appid]])->first();//6-12-2021
 						 
@@ -4896,8 +4897,9 @@ use FunctionsClientController;
 							// DB::table('con_catch')->where([['appid', $appid]])->delete();//6-12-2021
 
 							for ($j=0; $j < count($request->addr); $j++) { 
+							// for ($j=0; $j < count($request->addr); $j++) { 
 								// DB::table('con_catch')->insert(['appid' => $appid, 'type' => ($request->type[$j] == strtolower('primary') ? 0 : 1), 'location' => $request->addr[$j], 'population' => $request->catchment[$j], 'isfrombackend' => 1]);
-								DB::table('con_catch')->insert(['appid' => $appid, 'type' => ($request->type[$j] == strtolower('primary') ? 0 : 1), 'location' => $request->addr[$j], 'population' => $request->catchment[$j], 'eval_est' => $request->est[$j], 'isfrombackend' => 1]);
+								DB::table('con_catch')->insert(['appid' => $appid, 'type' => ($request->type[$j] == strtolower('primary') ? 0 : 1), 'location' => $request->addr[$j], 'population' =>  isset($request->catchment[$j]) ? $request->catchment[$j] : null , 'eval_est' => $request->est[$j], 'isfrombackend' => 1]);
 						
 						
 							}
@@ -8202,7 +8204,7 @@ use FunctionsClientController;
 							$allDataSql = "SELECT * FROM mon_form join registered_facility on registered_facility.regfac_id = mon_form.regfac_id WHERE team IS NULL";
 						}else{
 							$rg = $Cur_useData['rgnid'];
-							$allDataSql = "SELECT * FROM mon_form join registered_facility on registered_facility.regfac_id = mon_form.regfac_id WHERE team IS NULL && registered_facility.rgnid = $rg";
+							$allDataSql = "SELECT * FROM mon_form join registered_facility on registered_facility.regfac_id = mon_form.regfac_id WHERE team IS NULL && registered_facility.rgnid = '$rg'";
 						}
 						
 						// $allDataSql = "SELECT * FROM mon_form join appform on appform.appid = mon_form.appid WHERE team IS NULL"; 6-21-2021
@@ -8341,7 +8343,7 @@ use FunctionsClientController;
 							$allDataSql = "SELECT * FROM mon_form /*WHERE assessmentStatus <> 0*/";
 						}else{
 							$rg =  $Cur_useData['rgnid'];
-							$allDataSql = "SELECT mon_form.* FROM mon_form left join registered_facility on mon_form.regfac_id = registered_facility.regfac_id where registered_facility.rgnid = $rg";
+							$allDataSql = "SELECT mon_form.* FROM mon_form left join registered_facility on mon_form.regfac_id = registered_facility.regfac_id where registered_facility.rgnid = '$rg'";
 						}
 					
 					// $allDataSql = "SELECT * FROM mon_form /*WHERE assessmentStatus <> 0*/";
@@ -8418,7 +8420,7 @@ use FunctionsClientController;
 					$allDataSql = "SELECT * FROM mon_form WHERE hasViolation IS NOT NULL";
 				}else{
 					$rg =  $Cur_useData['rgnid'];
-					$allDataSql = "SELECT mon_form.* FROM mon_form left join registered_facility on mon_form.regfac_id = registered_facility.regfac_id WHERE hasViolation IS NOT NULL && registered_facility.rgnid = $rg";
+					$allDataSql = "SELECT mon_form.* FROM mon_form left join registered_facility on mon_form.regfac_id = registered_facility.regfac_id WHERE hasViolation IS NOT NULL && registered_facility.rgnid = '$rg'";
 				}
 
  				
@@ -8456,7 +8458,7 @@ use FunctionsClientController;
 					}
 
  					// dd($allData);
-					return view('employee.others.MonitoringTechnical', ['AllData'=>$allData, 'AllNov'=>$allNovDir, 'AllViolation'=>$allViolation, 'optid' => $optid]);
+					return view('employee.others.MonitoringTechnical', ['AllData'=>$allData, 'AllNov'=>$allNovDir, 'AllViolation'=>$allViolation, 'optid' => $optid, 'region' => []]);
 				} 
 				catch (Exception $e) 
 				{
@@ -8915,7 +8917,7 @@ use FunctionsClientController;
 							$allDataSql = "SELECT * FROM surv_form LEFT JOIN facilitytyp on facilitytyp.facid = surv_form.type_of_faci  WHERE team IS NULL ";
 						}else{
 							$rn = $Cur_useData['rgnid'];
-							$allDataSql = "SELECT * FROM surv_form LEFT JOIN facilitytyp on facilitytyp.facid = surv_form.type_of_faci  WHERE team IS NULL && surv_form.rgnid = $rn ";
+							$allDataSql = "SELECT * FROM surv_form LEFT JOIN facilitytyp on facilitytyp.facid = surv_form.type_of_faci  WHERE team IS NULL && surv_form.rgnid = '$rn' ";
 						}
 					
 
@@ -8976,7 +8978,7 @@ use FunctionsClientController;
 					
 				}else{
 					$rn = $Cur_useData['rgnid'];
-					$allDataSql = "SELECT * FROM surv_form LEFT JOIN facilitytyp on facilitytyp.facid = surv_form.type_of_faci LEFT JOIN verdict ON surv_form.verdict = verdict.vid WHERE surv_form.rgnid = $rn";
+					$allDataSql = "SELECT * FROM surv_form LEFT JOIN facilitytyp on facilitytyp.facid = surv_form.type_of_faci LEFT JOIN verdict ON surv_form.verdict = verdict.vid WHERE surv_form.rgnid = '$rn'";
 					
 				}
 					
@@ -9125,7 +9127,7 @@ use FunctionsClientController;
 				
 					}else{
 
-						$allDataSql = "(SELECT complaints_form.*, registered_facility.rgnid from complaints_form  left join registered_facility on complaints_form.regfac_id = registered_facility.regfac_id where complaints_form.type = 'Complaints' && registered_facility.rgnid = ".$Cur_useData['rgnid'].") UNION (SELECT req_ast_form.* , registered_facility.rgnid from req_ast_form left join registered_facility on req_ast_form.regfac_id = registered_facility.regfac_id where req_ast_form.type = 'Assistance'  && registered_facility.rgnid = ".$Cur_useData['rgnid'].")";
+						$allDataSql = "(SELECT complaints_form.*, registered_facility.rgnid from complaints_form  left join registered_facility on complaints_form.regfac_id = registered_facility.regfac_id where complaints_form.type = 'Complaints' && registered_facility.rgnid = '".$Cur_useData['rgnid']."') UNION (SELECT req_ast_form.* , registered_facility.rgnid from req_ast_form left join registered_facility on req_ast_form.regfac_id = registered_facility.regfac_id where req_ast_form.type = 'Assistance'  && registered_facility.rgnid = '".$Cur_useData['rgnid']."')";
 				
 					}
 				

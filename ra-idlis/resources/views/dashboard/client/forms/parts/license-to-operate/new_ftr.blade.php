@@ -6,6 +6,20 @@ var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
 window.addEventListener('click', function(e) {
         initialCheck()
 
+        if( $('input[name="hgpid"]:checked').val() == 6){
+            document.getElementById("noofmain").value = 1
+        }else{
+            document.getElementById("noofmain").value = null
+        }
+
+        if( $('input[name="hgpid"]:checked').val() == 18 || $('input[name="hgpid"]:checked').val() == 17){
+            document.getElementById("nofpahr").setAttribute('hidden','hidden')
+        }else{
+            document.getElementById("nofpahr").removeAttribute('hidden')
+        }
+
+
+        // 
         
     });
     setTimeout(function(){

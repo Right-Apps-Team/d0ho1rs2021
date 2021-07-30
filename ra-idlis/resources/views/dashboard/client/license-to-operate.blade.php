@@ -31,29 +31,38 @@
                     color-stop(.6, #54DE5D))
         }
     </style>
-@if(isset($fAddress)&&(count($fAddress) > 0))
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb d-flex justify-content-center">
-            <li class="breadcrumb-item active text-primary"><a href="{{asset($addresses[0])}}">Application Details</a></li>
-            <li class="breadcrumb-item active text-primary"><a href="{{asset('client1/apply/assessmentReady/')}}/{{$fAddress[0]->appid}}/">Self Assessment</a></li>
-            <li class="breadcrumb-item active"><a href="{{asset($addresses[1])}}">DOH Requirements</a></li>
-            <li class="breadcrumb-item active"><a href="{{asset($addresses[2])}}">FDA Requirements</a></li>
-            <li class="breadcrumb-item active">Submit Requirements</li>
-        </ol>
-    </nav>
-    @endif
-    <div class="container-fluid mt-5 mb-5">
-        <div class="row">
-            <div class="col-md-8">
-                <h2 class=" text-center pt-2"> <img src="{{asset('ra-idlis/public/img/doh2.png')}}" style="width:50px;"/> APPLICATION FORM</h2>
-            </div>
-            @include('dashboard.client.forms.apply-lto')
-        </div>
-    </div>
-    <!-- Modals -->
+
+    @include('dashboard.client.forms.loadertyle')
+    <div id="loader"></div>
+    <div  style="display:none;" id="myDivLo">
+
+        @if(isset($fAddress)&&(count($fAddress) > 0))
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb d-flex justify-content-center">
+                    <li class="breadcrumb-item active text-primary"><a href="{{asset($addresses[0])}}">Application Details</a></li>
+                    <li class="breadcrumb-item active text-primary"><a href="{{asset('client1/apply/assessmentReady/')}}/{{$fAddress[0]->appid}}/">Self Assessment</a></li>
+                    <li class="breadcrumb-item active"><a href="{{asset($addresses[1])}}">DOH Requirements</a></li>
+                    <li class="breadcrumb-item active"><a href="{{asset($addresses[2])}}">FDA Requirements</a></li>
+                    <li class="breadcrumb-item active">Submit Requirements</li>
+                </ol>
+            </nav>
+            @endif
     
-    @include('dashboard.client.modal.confirm-submit')
-    @include('dashboard.client.forms.parts.defVals')
+        <div class="container-fluid mt-5 mb-5">
+            <div class="row">
+                <div class="col-md-8">
+                    <h2 class=" text-center pt-2"> <img src="{{asset('ra-idlis/public/img/doh2.png')}}" style="width:50px;"/> APPLICATION FORM</h2>
+                </div>
+                @include('dashboard.client.forms.apply-lto')
+            </div>
+        </div>
+        <!-- Modals -->
+        
+        @include('dashboard.client.modal.confirm-submit')
+        @include('dashboard.client.forms.parts.defVals')
+
+    </div>
+    @include('dashboard.client.forms.loaderscript')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>

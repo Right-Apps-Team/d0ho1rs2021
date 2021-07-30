@@ -656,23 +656,23 @@ const addProjectedPopulation = () => {
 const addListOfExistingHospitals = () => {
     const entry = $('#existing_hospitals tr').length;
     const row = `
-        <tr id="rowEntryHospital${entry}" class="itemRow" >
+        <tr id="rowEntryHospital${entry}" class="itemRow itmex" >
             <td>
                 <button class="btn btn-danger btn-xs" onClick="removeExistingHospitalRow(${entry})">
                     <i class="fa fa-times"></i>
                 </button>
             </td>
             <td>
-                <input type="text"  class="form-control" name="facilitynames[]"/>
+                <input type="text"  class="form-control exfacn" name="facilitynames[]"/>
             </td>
             <td>
-                <input type="text"  class="form-control" name="locations[]"/>
+                <input type="text"  class="form-control exloc" name="locations[]"/>
             </td>
             <td>
-                <input type="text"  class="form-control" name="bedcapacities[]"/>
+                <input type="text"  class="form-control exbedcap" name="bedcapacities[]"/>
             </td>
             <td>
-                <select class="form-control" name="cat_hos[]">
+                <select class="form-control excat" name="cat_hos[]">
                     <option value="">Please select</option>
                     <option value="H">Level 1 Hospital</option>  
                     <option value="H2">Level 2 Hospital</option>  
@@ -680,16 +680,16 @@ const addListOfExistingHospitals = () => {
                 </select>
             </td>
             <td>
-                <input type="text" class="form-control" name="license[]" />
+                <input type="text" class="form-control exlic" name="license[]" />
             </td>
             <td>
-                <input type="date" class="form-control" name="validity[]">
+                <input type="date" class="form-control exval" name="validity[]">
             </td>
             <td>
-                <input type="date" class="form-control" name="date_operation[]">
+                <input type="date" class="form-control exdatop" name="date_operation[]">
             </td>
             <td>
-                <textarea cols="4" class="form-control" name="remarks[]"></textarea>
+                <textarea cols="4" class="form-control exrem" name="remarks[]"></textarea>
             </td>
         </tr>
     `;

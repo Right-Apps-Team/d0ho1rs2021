@@ -17,76 +17,76 @@
         var invalids = 0;
         var invmssg = " ";
 
-        if($('#facility_name').val() == ""){errorPar +=1;  errors +=1; ermsgP+= "Facility Name, "; ermsg += "Facility Name, "}
+        if($('#facility_name').val() == ""){errorPar +=1;  errors +=1; ermsgP+= "\nFacility Name, "; ermsg += "\nFacility Name, "}
 
         // Disregard if update
-        if($('#region').val() == ""){errorPar +=1; errors +=1; ermsgP += "Region, "; ermsg += "Region, "}
-        if($('#province').val() == ""){errorPar +=1; errors +=1; ermsgP+= "Province, "; ermsg += "Province, "}
-        if($('#city_monicipality').val() == ""){errorPar +=1; errors +=1; ermsgP+= "Municipality, "; ermsg += "Municipality, "}
-        if($('#brgy').val() == ""){errorPar +=1; errors +=1; ermsgP+= "Baranggay, "; ermsg += "Baranggay, "}
+        if($('#region').val() == ""){errorPar +=1; errors +=1; ermsgP += "\nRegion, "; ermsg += "\nRegion, "}
+        if($('#province').val() == ""){errorPar +=1; errors +=1; ermsgP+= "\nProvince, "; ermsg += "\nProvince, "}
+        if($('#city_monicipality').val() == ""){errorPar +=1; errors +=1; ermsgP+= "\nMunicipality, "; ermsg += "\nMunicipality, "}
+        if($('#brgy').val() == ""){errorPar +=1; errors +=1; ermsgP+= "\nBaranggay, "; ermsg += "\nBaranggay, "}
         // Disregard if update
 
         // if($('#street_name').val() == ""){errors +=1; ermsg += "Street Name, "}
-        if($('#zip').val() == ""){errors +=1; ermsg += "Zip Code, "}
+        if($('#zip').val() == ""){errors +=1; ermsg += "\nZip Code, "}
 
-        if($('#fac_mobile_number').val() == ""){errors +=1; ermsg += "Facility Mobile No., "}
+        if($('#fac_mobile_number').val() == ""){errors +=1; ermsg += "\nFacility Mobile No., "}
         // if($('#areacode').val() == ""){errors +=1; ermsg += "Facility Landline Area code, "}
         // if($('#landline').val() == ""){errors +=1; ermsg += "Facility Landline, "}
         // if($('#faxareacode').val() == ""){errors +=1; ermsg += "Fax Area code, "}
         // if($('#faxNumber').val() == ""){errors +=1; ermsg += "Fax Number, "}
-        if($('#fac_email_address').val() == ""){errors +=1; ermsg += "Facility Email, " }
+        if($('#fac_email_address').val() == ""){errors +=1; ermsg += "\nFacility Email, " }
 
         if($('#fac_email_address').val() != ""){
             var check = checkEmailValidity($('#fac_email_address').val()) 
            if(check == false){
-             invalids +=1;   invmssg += "Invalid Facility Email Address, "
+             invalids +=1;   invmssg += "\nInvalid Facility Email Address, "
            } 
         }
         if($('#prop_email').val() != ""){
             var check = checkEmailValidity($('#prop_email').val()) 
            if(check == false){
-             invalids +=1;   invmssg += "Invalid Proponent Email Address, "
+             invalids +=1;   invmssg += "\nInvalid Proponent Email Address, "
            } 
         }
         
         if($('#fac_mobile_number').val() != ""){
             var check = checkNumberlValidity($('#fac_mobile_number').val()) 
            if(check == false){
-             invalids +=1;   invmssg += "Invalid Facility Mobile Number, "
+             invalids +=1;   invmssg += "\nInvalid Facility Mobile Number, "
            } 
         }
 
         if($('#prop_mobile').val() != ""){
             var check = checkNumberlValidity($('#prop_mobile').val()) 
            if(check == false){
-             invalids +=1;   invmssg += "Invalid Proponent Mobile Number, "
+             invalids +=1;   invmssg += "\nInvalid Proponent Mobile Number, "
            } 
         }
 
-        if($('#ocid').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "Ownership, "; ermsg += "Ownership, "}
+        if($('#ocid').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "\nOwnership, "; ermsg += "\nOwnership, "}
 
         // Disregard if update
-        if($('#classification').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "Classification, "; ermsg += "Classification, "}
-        if($('#subclass').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "Sub Classification, "; ermsg += "Sub Classification, "}
+        if($('#classification').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "\nClassification, "; ermsg += "\nClassification, "}
+        if($('#subclass').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "\nSub Classification, "; ermsg += "\nSub Classification, "}
         // Disregard if update
 
-        if($('#facmode').val() == "Please select"){errors +=1; ermsg += "Institutional Character, "}
-        if($('#funcid').val() == "Please select"){errors +=1; ermsg += "Function, "}
+        if($('#facmode').val() == "Please select"){errors +=1; ermsg += "\nInstitutional Character, "}
+        if($('#funcid').val() == "Please select"){errors +=1; ermsg += "\nFunction, "}
       
-        if($('#owner').val() == ""){errors +=1; ermsg += "Owner, "}
-        if($('#prop_mobile').val() == ""){errors +=1; ermsg += "Proponent Mobile, "}
+        if($('#owner').val() == ""){errors +=1; ermsg += "\nOwner, "}
+        if($('#prop_mobile').val() == ""){errors +=1; ermsg += "\nProponent Mobile, "}
         // if($('#prop_landline_areacode').val() == ""){errors +=1; ermsg += "Proponent Landline Areacode, "}
         // if($('#prop_landline').val() == ""){errors +=1; ermsg += "Proponent Landline, "}
-        if($('#prop_email').val() == ""){errors +=1; ermsg += "Proponent Email, "}
-        if($('#official_mail_address').val() == ""){errors +=1; ermsg += "Official Mailing Address, "}
-        if($('#approving_authority_pos').val() == ""){errors +=1; ermsg += "Approving Authority Position, "}
-        if($('#approving_authority_name').val() == ""){errors +=1; ermsg += "Approving Authority Name, "}
+        if($('#prop_email').val() == ""){errors +=1; ermsg += "\nProponent Email, "}
+        if($('#official_mail_address').val() == ""){errors +=1; ermsg += "\nOfficial Mailing Address, "}
+        if($('#approving_authority_pos').val() == ""){errors +=1; ermsg += "\nApproving Authority Position, "}
+        if($('#approving_authority_name').val() == ""){errors +=1; ermsg += "\nApproving Authority Name, "}
 
         var allFacids = getAllFacids();
-        if(allFacids.length <= 0){errors +=1; ermsg += "No facilities/Services selected, "}
+        if(allFacids.length <= 0){errors +=1; ermsg += "\nNo facilities/Services selected, "}
         
       
-        if($('input[name="hgpid"]:checked').val() == undefined){errors +=1; ermsg += "Facilities/Type, "}
+        if($('input[name="hgpid"]:checked').val() == undefined){errors +=1; ermsg += "\nFacilities/Type,"}
         
         if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
                 var noofbed ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofbed: "")!!}';
@@ -101,6 +101,46 @@
                 //     console.log(errors)
                 // }
         }
+        if( $('input[name="hgpid"]:checked').val() == 6){
+            var tram = document.getElementsByClassName('tr_amb')
+
+            if(tram.length <= 0){
+                errors +=1; ermsg += "\n No ambulance details,"
+            }else{
+            const ctyamb = document.getElementsByClassName("ctyamb") ;
+            const cambt = document.getElementsByClassName("cambt") ;
+            const cpn = document.getElementsByClassName("cpn") ;
+            console.log("ctyamb")
+            console.log(tram.length)
+            console.log("ctyamb[xi].value")
+
+            var haser = 'no';
+            for(var xip = 1 ; xip <( tram.length +1); xip++){
+                console.log("ctyamb[xi].value")
+                console.log(ctyamb[xip].value +"-"+cambt[xip].value+"-"+cpn[xip].value)
+                    if(
+                            (ctyamb[xip].value == null || ctyamb[xip].value== undefined || ctyamb[xip].value == "" || !ctyamb[xip].value) ||
+                            (cambt[xip].value == null || cambt[xip].value== undefined || cambt[xip].value == "" || !cambt[xip].value) ||
+                            (cpn[xip].value == null || cpn[xip].value== undefined || cpn[xip].value == "" || !cpn[xip].value) 
+                        
+                        ){
+
+                            var haser = 'yes';
+                           
+                        }
+        
+            }
+
+            if(haser == 'yes'){
+                errors +=1; ermsg += "\nIncomplete ambulance details,"
+            }
+        }
+
+        }
+
+
+
+
         // if(errors > 0){
         //     alert("Please fill the following fields properly: " + ermsg)
         // }else{

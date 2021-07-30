@@ -126,7 +126,7 @@
 		                   			</div>
 		                   			<div class="col-sm-11">
 		                   				<!-- <input type="date" class="form-control w-100" name="dop" required=""> -->
-		                   				<input type="date" class="form-control w-100" name="dop" required="">
+		                   				<input type="date" max="{{date('Y-m-d')}}" class="form-control w-100" name="dop" required="">
 		                   			</div>
 		                   		</div>
 		                   		<input type="hidden" name="action" value="add">
@@ -263,7 +263,7 @@
 		                   				'Date of Purchase:'+
 		                   			'</div>'+
 		                   			'<div class="col-sm-11">'+
-		                   				'<input type="date" class="form-control w-100" value="'+speciality+'" name="dop" required="">'+
+		                   				'<input type="date" max="{{date("Y-m-d")}}" class="form-control w-100" value="'+speciality+'" name="dop" required="">'+
 		                   			'</div>'+
 		                   		'</div>'+
 		                   		'<input type="hidden" name="action" value="edit">'+

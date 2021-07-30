@@ -40,7 +40,7 @@
 								  <div class="input-group-prepend">
 								    <label class="input-group-text" for="typeamb"><i class="fa fa-info" data-toggle="tooltip" data-placement="top" title="Lorem ipsum dolar"></i></label>
 								  </div>
-								  <select class="form-control" id="typeamb" name="typeamb">
+								  <select class="form-control " id="typeamb" name="typeamb">
 										<option selected value hidden disabled>Please select</option>
 										<option value="1">Type 1 (Basic Life Support)</option>
 										<option value="2">Type 2 (Advance Life Support)</option>
@@ -48,7 +48,7 @@
 								</div>
 								<p>Ambulance Service:</p>
 								<div class="mb-3">
-									<select class="form-control" id="typeamb" name="typeamb">
+									<select class="form-control " id="typeamb" name="typeamb">
 										<option selected value hidden disabled>Please select</option>
 										<option value="1">Type 1 (Basic Life Support)</option>
 										<option value="2">Type 2 (Advance Life Support)</option>
@@ -87,7 +87,7 @@
 								<div class="input-group-prepend">
 									<label class="input-group-text" for="typeamb"><i class="fa fa-info" data-toggle="tooltip" data-placement="top" title="Lorem ipsum dolar"></i></label>
 								</div>
-								<select class="form-control" id="typeamb" name="typeamb">
+								<select class="form-control ctyamb" id="typeamb" name="typeamb">
 									<option selected value hidden disabled>Please select</option>
 									<option value="1">Type 1 (Basic Life Support)</option>
 									<option value="2">Type 2 (Advance Life Support)</option>
@@ -95,7 +95,7 @@
 							</div>
 						</td>
 						<td>
-							<select class="form-control" id="ambtyp" name="ambtyp">
+							<select class="form-control cambt" id="ambtyp" name="ambtyp">
 								<option selected value hidden disabled>Please Select</option>
 								<option value="1">Outsourced</option>
 								<option value="2">Owned</option>
@@ -104,7 +104,7 @@
 						<td>
 							<div class="row">
 								<div class="col-md">
-									<input type="text" class="form-control" id="plate_number" name="plate_number" placeholder="Plate Number/Conduction Sticker">
+									<input type="text" class="form-control cpn" id="plate_number" name="plate_number" placeholder="Plate Number/Conduction Sticker">
 								</div>
 								<div class="col-md" id="ambownerdiv" hidden>
 									<input type="text" class="form-control" id="ambOwner" name="ambOwner" placeholder="Owner">
