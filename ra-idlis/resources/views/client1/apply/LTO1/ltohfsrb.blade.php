@@ -89,9 +89,11 @@
 
             <div class="col-md-8 border">
                 <!-- if($fAddress[0]->noofsatellite > 0) -->
+                @if(intval($appform->noofmain) > 0)
                 <div class="float-right">
                     <button type="button" onclick="window.location.href='{{asset('client1/apply/app/'.($fAddress[0]->hfser_id ?? 'LTO').'/'.$fAddress[0]->appid."/fda")}}'" class="text-white btn btn-primary mt-1">Check FDA Requirements <span><i class="text-white fa fa-arrow-right"></i></span></button>
                 </div>
+                @endif
                 <!-- endif -->
                 <div class="container text-left mt-3 lead">
                     Requirements Status: 
@@ -250,11 +252,22 @@
                 </div> --}}
                 @if($appform->isReadyForInspec <= 0)
                     <div class="d-flex justify-content-center" style="margin-top: 100px;">
-                    {{-- @if($isReadyForInspecFDA == 0 && $hfser_id == 'LTO') 
+                    <!-- {{-- @if($isReadyForInspecFDA == 0 && $hfser_id == 'LTO') 
                     <button disabled class="btn btn-warning p-3">FDA requirements not yet finalize</button>
                     @else --}}
                     <button onclick="readyforInspection()" class="btn btn-primary p-3">Finalize and Submit</button>
-                   {{-- @endif --}}
+                   {{-- @endif --}}    -->
+                   @if(intval($appform->noofmain) > 0)
+                        @if($isReadyForInspecFDA == 0 && $hfser_id == 'LTO') 
+                            <button disabled class="btn btn-warning p-3">FDA requirements not yet finalize</button>
+                            @else
+                            <button onclick="readyforInspection()" class="btn btn-primary p-3">Finalize and Submit</button>
+                            @endif
+                        @else
+                        <button onclick="readyforInspection()" class="btn btn-primary p-3">Finalize and Submit</button>
+                        @endif
+
+
                     </div>
 
                 @endif

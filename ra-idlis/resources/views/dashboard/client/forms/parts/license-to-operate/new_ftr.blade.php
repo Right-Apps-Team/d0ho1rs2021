@@ -6,11 +6,7 @@ var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
 window.addEventListener('click', function(e) {
         initialCheck()
 
-        if( $('input[name="hgpid"]:checked').val() == 6){
-            document.getElementById("noofmain").value = 1
-        }else{
-            document.getElementById("noofmain").value = null
-        }
+        
 
         if( $('input[name="hgpid"]:checked').val() == 18 || $('input[name="hgpid"]:checked').val() == 17){
             document.getElementById("nofpahr").setAttribute('hidden','hidden')
@@ -202,6 +198,19 @@ document.getElementsByName('areacode').value = 3;
     }
    
     function type_of_fac(selected) {
+       
+        if( $('input[name="hgpid"]:checked').val() == 6 ){
+           var nm = document.getElementById("noofmain")
+            if(nm.value == null || nm.value == undefined  || nm.value == " "|| !nm.value){
+            document.getElementById("noofmain").value = 1
+        }
+        }else{
+            document.getElementById("noofmain").value = null
+        }
+
+
+
+
         const data = ["hospClassif", "forHosp", "ambuDetails", "ancillary", "addOnServe", "ambulSurgCli", "clinicLab", "dialysisClinic", "otherClinicService"];
         data.map((h) => {
             document.getElementsByClassName(h)[0].setAttribute("hidden", "hidden")

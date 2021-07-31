@@ -131,7 +131,11 @@ class OthersController extends Controller
 
 				//Gets Faciname
 				$name = DB::table('registered_facility')
-						->select('facilityname')
+						->select('facilityname','rgnid')
+						->where('regfac_id', $request->name_of_faci)
+						->first();
+				$regtab = DB::table('registered_facility')
+						->select('facilityname','rgnid')
 						->where('regfac_id', $request->name_of_faci)
 						->first();
 				
@@ -141,15 +145,19 @@ class OthersController extends Controller
 				// 		->first();
 				
 						
+$employeeData = session('employee_login');
+$grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
 				
 
 				if($request->facinaturevalue == "false") {
 					$name = $request->name_of_faci;
 					$type = $request->type_of_faci;
+					$rgnid = $grpid == 'NA' ? $request->rgnid : $employeeData->rgnid;
 				}
 				else {
 					$name=$name->facilityname;
 					$type=$request->type_of_faci;
+					$rgnid = $regtab->rgnid;
 					// $type=explode("^",$request->type_of_faci)[1];
 				}
 
@@ -170,7 +178,6 @@ class OthersController extends Controller
 					$request->file('reqcompattach')->storeAs('public/uploaded', $fileNameToStore);
 					$up = $fileNameToStore;
 				}
-
 
 
 				$x = DB::table('req_ast_form')->insert(
@@ -197,7 +204,9 @@ class OthersController extends Controller
 						'signature'=>"", 
 						'details'=>$request->txt_details, 
 						'compEmail' => $request->email,
-						"others"=>$request->ot_text]
+						"others"=>$request->ot_text,
+						"rgnid"=>$rgnid
+						]
 				);
 				
 				return redirect()->back()->with('errRet', ['errAlt'=>'success', 'errMsg'=>'Addded new entry Successfully.']);
@@ -640,18 +649,28 @@ class OthersController extends Controller
 				// 		->where('appid', $request->name_of_faci)
 				// 		->first();
 				$name = DB::table('registered_facility')
-				->select('facilityname')
+				->select('facilityname', 'rgnid')
+				->where('regfac_id', $request->name_of_faci)
+				->first();
+
+				$regtab = DB::table('registered_facility')
+				->select('facilityname','rgnid')
 				->where('regfac_id', $request->name_of_faci)
 				->first();
 				// dd($request->all());
 
+				$employeeData = session('employee_login');
+				$grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
+
 				if($request->facinaturevalue == "false") {
 					$name = $request->name_of_faci;
 					$type = $request->type_of_faci;
+					$rgnid = $grpid == 'NA' ? $request->rgnid : $employeeData->rgnid;
 				}
 				else {
 					$name=$name->facilityname;
 					$type=$request->type_of_faci;
+					$rgnid = $regtab->rgnid;
 					// $type=explode("^",$request->type_of_faci)[1];
 				}
 
@@ -668,6 +687,10 @@ class OthersController extends Controller
 
 				// dd(($request->name_of_faci ?? null));
 				// Query.
+			
+
+
+
 				DB::table('complaints_form')->insert(
 					[/*'ref_no'=>$request->ref_no, */
 						'attachment'=>$up,
@@ -691,7 +714,9 @@ class OthersController extends Controller
 						'signature'=>"",
 						'compEmail' => $request->email, 
 						'details'=>$request->txt_details, 
-						"others"=>$request->ot_text]
+						"others"=>$request->ot_text,
+						"rgnid"=>$rgnid
+						]
 				);
 
 				return redirect()->back()->with('errRet', ['errAlt'=>'success', 'errMsg'=>'Added new entry Successfully.']);

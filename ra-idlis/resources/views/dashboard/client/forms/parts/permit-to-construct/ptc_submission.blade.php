@@ -47,7 +47,10 @@ const savePartialPtc = async (e) => {
         if($('#approving_authority_name').val() == ""){errors +=1; ermsg += "Approving Authority Name, "}
 
         if($('#construction_description').val() == ""){errors +=1; ermsg += "Scope of works, "}
+
+        if($('input[name="type"]:checked').val() == 0){
         if($('#propbedcap').val() == ""){errors +=1; ermsg += "Proposed bed capacity, "}
+}
         
         var allFacids = getAllFacids();
         if(allFacids.length <= 0){errors +=1; ermsg += "No facilities/Services selected, "}

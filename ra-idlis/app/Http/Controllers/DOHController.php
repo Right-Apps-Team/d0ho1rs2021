@@ -9127,7 +9127,8 @@ use FunctionsClientController;
 				
 					}else{
 
-						$allDataSql = "(SELECT complaints_form.*, registered_facility.rgnid from complaints_form  left join registered_facility on complaints_form.regfac_id = registered_facility.regfac_id where complaints_form.type = 'Complaints' && registered_facility.rgnid = '".$Cur_useData['rgnid']."') UNION (SELECT req_ast_form.* , registered_facility.rgnid from req_ast_form left join registered_facility on req_ast_form.regfac_id = registered_facility.regfac_id where req_ast_form.type = 'Assistance'  && registered_facility.rgnid = '".$Cur_useData['rgnid']."')";
+						$allDataSql = "(SELECT complaints_form.*, registered_facility.rgnid from complaints_form  left join registered_facility on complaints_form.regfac_id = registered_facility.regfac_id where complaints_form.type = 'Complaints' && complaints_form.rgnid = '".$Cur_useData['rgnid']."') UNION (SELECT req_ast_form.* , registered_facility.rgnid from req_ast_form left join registered_facility on req_ast_form.regfac_id = registered_facility.regfac_id where req_ast_form.type = 'Assistance'  && req_ast_form.rgnid = '".$Cur_useData['rgnid']."')";
+						// $allDataSql = "(SELECT complaints_form.*, registered_facility.rgnid from complaints_form  left join registered_facility on complaints_form.regfac_id = registered_facility.regfac_id where complaints_form.type = 'Complaints' && registered_facility.rgnid = '".$Cur_useData['rgnid']."') UNION (SELECT req_ast_form.* , registered_facility.rgnid from req_ast_form left join registered_facility on req_ast_form.regfac_id = registered_facility.regfac_id where req_ast_form.type = 'Assistance'  && registered_facility.rgnid = '".$Cur_useData['rgnid']."')";
 				
 					}
 				
@@ -9195,7 +9196,7 @@ use FunctionsClientController;
 						$allData[$i]->reqs = $rtemp;
 						$allData[$i]->comps = $ctemp;
 					}
-					return view('employee.others.RequestAssistance', ['ROAData'=>$data,'hgps'=>$hgps, 'CompData'=>$data3, 'FormData'=>$data1, 'FacName'=>$faciName, 'AllData'=>$allData]);
+					return view('employee.others.RequestAssistance', [ 'regions'  => Regions::orderBy('sort')->get(),'ROAData'=>$data,'hgps'=>$hgps, 'CompData'=>$data3, 'FormData'=>$data1, 'FacName'=>$faciName, 'AllData'=>$allData]);
 				} 
 				catch (Exception $e) 
 				{

@@ -17,7 +17,12 @@
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
+@php
+    $employeeData = session('employee_login');
+    $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
 
+    $rgnid = $grpid == 'NA'? null : $employeeData->rgnid;
+@endphp
 
 @section('content')
   {{-- {{dd((array) DB::table('req_ast_form')->where('ref_no', '2')->first())}} --}}
@@ -1046,6 +1051,9 @@
                               console.log(unregInput)
 
                               var unregFacType = document.getElementById('unregfactype');
+                              var region = document.getElementById('region');
+
+                              $("#region").change();
 
                               var unregFacAddr = document.getElementById('unregfacaddr');
 
@@ -1061,6 +1069,7 @@
                                     unregInput.setAttribute('required', 'required')
                                     regInput.removeAttribute('required')
                                     unregInput.hidden = false;
+                                    region.hidden = false;
 
                                     unregInput.disabled = false;
 
@@ -1126,6 +1135,8 @@
                                     unregInput.removeAttribute('required')
 
                                     unregInput.hidden = true;
+                                    region.hidden = true;
+                                    region.value = " ";
 
                                     unregInput.disabled = true;
 
@@ -1328,8 +1339,36 @@
                             </div>
 
                           </div>
+                          
+                      <div {{$grpid == 'NA' ? '': 'hidden'}}>
+                          <div class="row mb-2" id="region" hidden >
+
+                          <div class="col-sm-4">
+
+                            Region Facility:
+                            <!-- Address of Facility:<span style="color:red">*</span> -->
+                          
+                          </div>
+                          <div class="col-sm-8">
+                          <!-- <select value="{{$rgnid}}" name="rgnid" id="rgnid" style="width: 100%" class="form-control" id="rgnid" data-parsley=""> -->
+                          <select {{$grpid != 'NA'? 'disabled' : ''}} value="{{$rgnid}}" name="rgnid" id="rgnid" style="width: 100%" class="form-control" id="rgnid" data-parsley="">
+                         
+                          @foreach( $regions as $region)
+                              @if($region->rgnid != 'HFSRB')
+                                @if($region->rgnid == $rgnid)
+                                <option selected value="{{$region->rgnid}}">{{$region->rgn_desc}}</option>
+                                @else
+                                <option  value="{{$region->rgnid}}">{{$region->rgn_desc}}</option>
+                                @endif
+                              @endif
+                          @endforeach
+                        </select>
 
 
+
+                          </div>
+                          </div>
+                        </div>
 
                           {{-- address of faci --}}
 
