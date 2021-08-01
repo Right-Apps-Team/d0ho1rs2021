@@ -2,12 +2,20 @@
   @extends('mainEmployee')
   @section('title', 'Committee Assignment')
   @section('content')
+  @php 
+    $employeeData = session('employee_login');
+   $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
+    @endphp
   <input type="text" id="CurrentPage" hidden="" value="PF014">
   <div class="content p-4">
       <div class="card">
           <div class="card-header bg-white font-weight-bold">
-             Committee Assignment    
+             Committee Assignment     
+             <div style="float: right;">
+             <!-- <a href="{{asset('/employee/dashboard/processflow/manage/con/team')}}"><button class="btn btn-primary" >Manage Committee</button></a> -->
           </div>
+          </div>
+         
           <div class="card-body table-responsive">
 			<table class="table table-hover" id="example" style="font-size:13px;">
 			  <thead>
@@ -25,6 +33,11 @@
 			  <tbody id="FilterdBody">
 				@if (isset($BigData))
             @foreach ($BigData as $data)
+            @php 
+              if(($grpid != 'NA' && $grpid != 'DC') && AjaxController::checkConmem($data->appid) == 'no'){
+                continue;
+              }
+              @endphp
               @if(strtolower($data->hfser_id) == 'con')
 					  	<tr>
 					        <td class="text-center">{{$data->hfser_id}}</td>

@@ -33,7 +33,8 @@
     <!-- endif -->
 </div>
 <div class="col-md-4">
-    <label for="subclass">Sub Classification <span class="text-danger">*</span></label>
+    <label for="subclass">Sub Classification</label>
+    <!-- <label for="subclass">Sub Classification <span class="text-danger">*</span></label> -->
     <!-- if(isset($fAddress) && count($fAddress) > 0)
     <input class="form-control " name="subClassid" id="subclass"  disabled  />
     else -->

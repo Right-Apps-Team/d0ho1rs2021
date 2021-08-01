@@ -6,6 +6,10 @@
 	      	<div class="card-header bg-white font-weight-bold">
 	           @include('employee.cmp._survHead')
 	      	</div>
+			  @php 
+    $employeeData = session('employee_login');
+   $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
+    @endphp
 	      	<div class="card-body table-responsive">
 	      		<div class="container table-responsive">
 	      		<table class="table table-hover" style="font-size: 13px;" id="example">
@@ -30,6 +34,11 @@
 	        		<tbody>
 	        			@isset($AllData)
 	        				@foreach($AllData as $key => $value)
+							@php 
+								if($grpid != 'NA' && AjaxController::checkSurvTeam($value->team) == 'no'){
+									continue;
+								}
+								@endphp
 	        					<tr>
 	        						<td style="text-align: center;">{{$value->survid}}</td>
 	        						<td style="text-align: center;">{!!(isset($value->regfac_id) ? 'Licensed' : '<span class="font-weight-bold">Unlicensed</span>')!!}</td>

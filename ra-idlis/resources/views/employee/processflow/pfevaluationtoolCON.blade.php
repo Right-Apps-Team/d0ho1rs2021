@@ -2,6 +2,10 @@
   @extends('mainEmployee')
   @section('title', 'Evaluation Process Flow')
   @section('content')
+  @php 
+    $employeeData = session('employee_login');
+   $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
+    @endphp
   <input type="text" id="CurrentPage" hidden="" value="PF015">
   <div class="content p-4">
       <div class="card">
@@ -25,6 +29,14 @@
                   <tbody id="FilterdBody">
                       @if (isset($BigData))
                         @foreach ($BigData as $data)
+                        @php 
+                          if($grpid != 'NA' && AjaxController::checkConmem($data->appid) == 'no'){
+                            continue;
+                          }
+                          @endphp
+
+
+
                           @if($data->isPayEval == 1 && $data->isrecommended == 1 && $data->isCashierApprove == 1 && $data->isInspected == null && strtolower($data->hfser_id) == 'con')
                           @php
                             $status = ''; $link = '';

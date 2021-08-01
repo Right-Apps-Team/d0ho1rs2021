@@ -852,6 +852,114 @@
 				return 'ERROR';	
 			}
 		}
+		public static function getAllTeamsCon() // Get all Teams
+		{	
+			try  
+			{
+				$data = DB::table('team')
+						->join('region', 'team.rgnid', '=', 'region.rgnid')
+						->where('team.type','con')
+						->get();
+				return $data;
+			} 
+			catch (Exception $e) 
+			{	
+				AjaxController::SystemLogs($e->getMessage());
+				return 'ERROR';	
+			}
+		}
+
+		public static function getUsersForCon(Request $request) // Get all Teams
+		{	
+			try  
+			{
+				$data = DB::table('x08')
+						->where('rgnid',$request->rgnid)
+						->where('grpid','!=','C')
+						->get();
+
+				return $data;
+			} 
+			catch (Exception $e) 
+			{	
+				AjaxController::SystemLogs($e->getMessage());
+				return 'ERROR';	
+			}
+		}
+		
+		public static function getUsersConteam(Request $request) // Get all Teams
+		{	
+			try  
+			{
+				$data = DB::table('con_team_members')
+						->join('x08', 'con_team_members.uid', '=', 'x08.uid')
+						->where('con_team_members.team_id',$request->team_id)
+						->get();
+
+				return $data;
+			} 
+			catch (Exception $e) 
+			{	
+				AjaxController::SystemLogs($e->getMessage());
+				return 'ERROR';	
+			}
+		}
+		
+		public static function deleteConTemMem(Request $request) // Get all Teams
+		{	
+			try  
+			{
+				 DB::table('con_team_members')->where('id',$request->id)->delete();
+
+				return "DONE";
+			} 
+			catch (Exception $e) 
+			{	
+				AjaxController::SystemLogs($e->getMessage());
+				return 'ERROR';	
+			}
+		}
+		
+		public static function updateConTemMem(Request $request) // Get all Teams
+		{	
+			try  
+			{
+				 DB::table('con_team_members')->where('id',$request->id)->update(['pos' => $request->pos]);
+
+				return "DONE";
+			} 
+			catch (Exception $e) 
+			{	
+				AjaxController::SystemLogs($e->getMessage());
+				return 'ERROR';	
+			}
+		}
+
+		public static function addconmem(Request $request)
+		{
+			try {
+				
+					$mem = json_decode($request->members, true);
+
+					foreach($mem as $m){
+						DB::table('con_team_members')->insert(['uid' => $m['uid'],'pos' => $m['pos'], 'team_id' => $request->team_id]);
+						
+					}
+
+					
+
+
+
+					return 'DONE';
+				
+			} catch (Exception $e) {
+				return $e;
+				AjaxController::SystemLogs($e);
+				session()->flash('system_error','ERROR');
+				return view('employee.processflow.pfmanageconcomittee');
+			}
+		}
+
 		public static function isExistonDB($table, $fieldToExclude, $idToExclude, $fields = array(), $data = array(),$stat = true)
 		{
 			if(count($fields) == count($data)){
@@ -976,6 +1084,56 @@
 				AjaxController::SystemLogs($e->getMessage());
 				return 'ERROR';
 			}
+		}
+		public static function checkSurvTeam($teamid)
+		{
+			$employeeData = session('employee_login');
+
+		$chktab =	DB::table('surv_team_members')
+			->where('montid',$teamid)
+			->where('uid',$employeeData->uid)
+			->first();
+
+			$chk = "no";
+			if(!is_null($chktab)){
+				$chk = "yes";
+			}
+
+			return $chk;
+
+		}
+
+public static function checkConmem($appid)
+		{
+			$employeeData = session('employee_login');
+
+				$chktab =	DB::table('committee_team')
+			->where('appid',$appid)
+			->where('uid',$employeeData->uid)
+			->first();
+
+			$chk = "no";
+			if(!is_null($chktab)){
+				$chk = "yes";
+			}
+
+			return $chk;
+
+		}
+		
+	public static function checkConmemData($appid)
+		{
+			$employeeData = session('employee_login');
+
+				$chktab =	DB::table('committee_team')
+			->where('appid',$appid)
+			->where('uid',$employeeData->uid)
+			->first();
+
+			
+
+			return $chktab;
+
 		}
 
 

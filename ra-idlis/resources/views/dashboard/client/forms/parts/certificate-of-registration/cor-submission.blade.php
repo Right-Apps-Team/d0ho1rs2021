@@ -31,7 +31,7 @@ const savePartialCor = async (e) => {
 
         // Disregard if update
         if($('#classification').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "Classification, "; ermsg += "Classification, "}
-        if($('#subclass').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "Sub Classification, "; ermsg += "Sub Classification, "}
+        // if($('#subclass').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "Sub Classification, "; ermsg += "Sub Classification, "}
         // Disregard if update
 
         if($('#facmode').val() == "Please select"){errors +=1; ermsg += "Institutional Character, "}

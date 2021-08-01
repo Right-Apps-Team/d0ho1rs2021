@@ -35,7 +35,7 @@ const savePartialCon = async (e) => {
 
         // Disregard if update
         if($('#classification').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "\nClassification, "; ermsg += "\nClassification, "}
-        if($('#subclass').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "\nSub Classification, "; ermsg += "\nSub Classification, "}
+        // if($('#subclass').val() == "Please select"){errorPar +=1; errors +=1; ermsgP+= "\nSub Classification, "; ermsg += "\nSub Classification, "}
         // Disregard if update
 
         if($('#facmode').val() == "Please select"){errors +=1; ermsg += "\nInstitutional Character, "}

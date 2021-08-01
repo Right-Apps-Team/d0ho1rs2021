@@ -19,7 +19,15 @@
                 <h2>{{strtoupper($apdat->facilityname)}} </h2>
                 <h4>{{$apdat->hfser_id}}R{{$apdat->rgnid}}-{{$apdat->appid}} </h4>
                 <!-- <h2>@isset($AppData) {{$AppData->facilityname}} @endisset </h2> -->
-                <h5>@isset($AppData) {{strtoupper($AppData->street_name) . ' ' . strtoupper($apdat->street_number)}}, {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>
+                <h5>@isset($AppData) {{
+                    $AppData->street_number?  strtoupper($AppData->street_number).',' : ' '
+                  }}
+                  {{
+                    $AppData->streetname?  strtoupper($AppData->streetname).',': ' '
+                  }} 
+             
+             {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>
+                <!-- <h5>@isset($AppData) {{strtoupper($AppData->street_name) . ' ' . strtoupper($apdat->street_number)}}, {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5> -->
                 <h6>@isset($AppData) Status: @if ($AppData->isRecoForApproval === null) <span style="color:blue">For Recommendation Evaluation</span> @elseif($AppData->isRecoForApproval == 1)  <span style="color:green">Recommended for Approval</span> @else <span style="color:red">Disapproved for Approval</span> @endif @endisset</h6>
               @if($AppData->requestReeval == '1') <h6 style="color:blue">For Re-evaluation</h6> @endif
               </td>
@@ -114,7 +122,8 @@
                             <td>@isset($AppData->formmatedEvalDate) <span style="color:green;font-weight: bolder">{{$AppData->formmatedEvalDate}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
                           </tr>
                           <tr>
-                            <th scope="row">Evaluated by:</th>
+                            <th scope="row">Encoded by:</th>
+                            <!-- <th scope="row">Evaluated by:</th> -->
                             <td>@isset($AppData->Evaluator) <span style="color:green;font-weight: bolder">{{$AppData->Evaluator}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
                           </tr>
                         </tbody>
@@ -225,7 +234,8 @@
                             <td>@isset($AppData->CashierApproveDate) <span style="color:green;font-weight: bolder">{{$AppData->subClassid != 'ND'  ||  $AppData->hfser_id != 'LTO' ?  $AppData->FCashierApproveDate:  'Not Available' }}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
                           </tr>
                           <tr>
-                            <th scope="row">Evaluated by:</th>
+                            <th scope="row">Encoded by:</th>
+                            <!-- <th scope="row">Evaluated by:</th> -->
                             <td>@isset($AppData->CashierApproveBy) <span style="color:green;font-weight: bolder">{{$AppData->subClassid != 'ND'  ||  $AppData->hfser_id != 'LTO' ? $AppData->CashierEvaluator:  'Not Available'}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
                           </tr>
                         </tbody>
@@ -348,7 +358,8 @@
                             <td>@isset($AppData->concommittee_evaldate) <span style="color:green;font-weight: bolder">{{\Carbon\Carbon::parse($AppData->concommittee_evaldate)->toFormattedDateString()}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
                           </tr>
                           <tr>
-                            <th scope="row">Evaluated by:</th>
+                            <th scope="row">Encoded by:</th>
+                            <!-- <th scope="row">Evaluated by:</th> -->
                             <td>@isset($AppData->concommittee_evalby) <span style="color:green;font-weight: bolder">{{$AppData->com_pre}} {{$AppData->com_fname}} {{$AppData->com_mname}} {{$AppData->com_lname}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td>
                             <!-- <td>@isset($AppData->concommittee_evalby) <span style="color:green;font-weight: bolder">{{$AppData->grp_desc}}</span> @else <span style="color:red;font-weight: bolder">Not Available</span> @endisset</td> -->
                           </tr>

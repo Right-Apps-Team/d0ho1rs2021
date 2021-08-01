@@ -28,9 +28,9 @@
   {{-- {{dd((array) DB::table('req_ast_form')->where('ref_no', '2')->first())}} --}}
 
 
-  <div class="content p-4">
+  <div class="content p-4" >
 
-    <div class="card">
+    <div class="card" style="">
 
       <div class="card-header bg-white font-weight-bold">
 
@@ -42,7 +42,7 @@
 
       <div class="card-body table-responsive">
 
-        <table class="table table-hover" style="font-size:13px;" id="example">
+        <table class="table table-hover" style="font-size:13px;  min-height: 300px; " id="example">
 
           <thead>
 

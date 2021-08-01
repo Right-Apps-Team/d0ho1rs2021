@@ -782,6 +782,7 @@
           </table>
       </div>
     </div>
+    @if(AjaxController::checkConmemData($AppData->appid)->pos == 'C')
       <div class="container mt-5">
         <div class="row">
           <!-- <div class="col-md"> <a class="btn btn-primary float-right" style="padding: 10px; color: white" >Submit</a></div> -->
@@ -789,6 +790,8 @@
           <div class="col-md "> <button class="btn btn-primary " style="padding: 10px;" type="button" id="draft">Save for draft</button> </div>
         </div>
       </div>
+
+    @endif
     </form>
   </div>
 

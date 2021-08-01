@@ -4842,6 +4842,29 @@ use FunctionsClientController;
 			}
 		}
 
+		public static function manageConMem(Request $request)
+		{
+			try {
+				if($request->isMethod('get')){
+					$members = "whtaa";
+					$data = AjaxController::getAllRegion();
+					$data2 = AjaxController::getAllTeamsCon();
+					
+					return view('employee.processflow.pfmanageconcomittee',['region' => $data, 'team' =>$data2]);
+				}else{
+					DB::table('team')->insert(['teamid' => $request->id, 'teamdesc' => $request->name, 'rgnid' => $request->rgn, 'type' => 'con']);
+					return 'DONE';
+				}
+			} catch (Exception $e) {
+				return $e;
+				AjaxController::SystemLogs($e);
+				session()->flash('system_error','ERROR');
+				return view('employee.processflow.pfmanageconcomittee');
+			}
+		}
+		
+		
+
 		public function coneval(Request $request, $appid){
 			$data = AjaxController::getAllDataEvaluateOne($appid);
 			if(isset($data->concommittee_eval)){

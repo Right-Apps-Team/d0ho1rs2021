@@ -11,6 +11,10 @@
         @endforeach
       @endif
     </datalist>
+    @php 
+    $employeeData = session('employee_login');
+   $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
+    @endphp
     <div class="card">
       <div class="card-header bg-white font-weight-bold">
            @include('employee.cmp._survHead')
@@ -34,6 +38,11 @@
           <tbody>
             @isset($AllData)
               @foreach($AllData as $key => $value)
+              @php 
+              if($grpid != 'NA' && AjaxController::checkSurvTeam($value->team) == 'no'){
+                continue;
+              }
+              @endphp
                 <tr>
                   <td style="text-align:center">{{$value->survid}}</td>
                   <td style="text-align:center">{{$value->name_of_faci}}</td>

@@ -466,7 +466,7 @@ function getFacServCharge (val = null){
 							if($.inArray(thisFacid[j], hospitalFaci) < 0){
 								if(document.getElementsByName('ambtyp').length){
 									for(let k = 0; k < document.getElementsByName('ambtyp').length; k++) {
-										document.getElementsByName('ambtyp')[k].value = "";
+										// document.getElementsByName('ambtyp')[k].value = "";
 									} 
 								}
 							}
