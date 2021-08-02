@@ -731,7 +731,7 @@
         </table>
       </div>
       <div class="container-fluid mt-1 mb-2">
-        <span class="lead font-weight-bold">Comments</span>:
+        <span class="lead font-weight-bold">Remarks</span>:
         <textarea name="comments" id="" cols="30" rows="10" class="form-control" required></textarea>
       </div>
       <div class="container-fluid mt-1 mb-2">
@@ -782,7 +782,13 @@
           </table>
       </div>
     </div>
-    @if(AjaxController::checkConmemData($AppData->appid)->pos == 'C')
+    
+    @php
+        $employeeData = session('employee_login');
+        $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
+    @endphp
+    @if( $grpid == 'NA' || ( isset(AjaxController::checkConmemData($AppData->appid)->pos) ?(AjaxController::checkConmemData($AppData->appid)->pos == 'C') : true))
+  {{--  @if(AjaxController::checkConmemData($AppData->appid)->pos == 'C')--}}
       <div class="container mt-5">
         <div class="row">
           <!-- <div class="col-md"> <a class="btn btn-primary float-right" style="padding: 10px; color: white" >Submit</a></div> -->

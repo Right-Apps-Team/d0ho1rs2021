@@ -875,7 +875,11 @@
 			{
 				$data = DB::table('x08')
 						->where('rgnid',$request->rgnid)
-						->where('grpid','!=','C')
+						->whereIn('grpid',['CM','LO','RLO'])
+						// ->where('grpid','!=','C')
+						// ->where('grpid','=','CM')
+						// ->where('grpid','=','LO')
+						// ->where('grpid','=','RLO')
 						->get();
 
 				return $data;
@@ -909,7 +913,23 @@
 		{	
 			try  
 			{
-				 DB::table('con_team_members')->where('id',$request->id)->delete();
+				
+				$getmemT = DB::table('con_team_members')->where('id',$request->id)->first();
+
+				$chk = DB::table('appform')->where('conTeam',$getmemT->team_id)->first();
+					
+				if(!is_null($chk)){
+					$getT =	DB::table('appform')->where('conTeam',$getmemT->team_id)->get();
+					
+					foreach($getT as $g){
+						DB::table('committee_team')->where('appid',$g->appid)->where('uid',$getmemT->uid)->where('pos',$getmemT->pos)->delete();
+					}
+
+
+				}
+				
+				
+				DB::table('con_team_members')->where('id',$request->id)->delete();
 
 				return "DONE";
 			} 
@@ -924,7 +944,30 @@
 		{	
 			try  
 			{
-				 DB::table('con_team_members')->where('id',$request->id)->update(['pos' => $request->pos]);
+
+				$getmemT = DB::table('con_team_members')->where('id',$request->id)->first();
+
+
+				DB::table('con_team_members')->where('id',$request->id)->update(['pos' => $request->pos]);
+
+
+
+
+				//  $getmemT = DB::table('con_team_members')->where('id',$request->id)->first();
+
+				 $chk = DB::table('appform')->where('conTeam',$getmemT->team_id)->first();
+					 
+				 if(!is_null($chk)){
+					 $getT =	DB::table('appform')->where('conTeam',$getmemT->team_id)->get();
+					 
+					 foreach($getT as $g){
+						DB::table('con_team_members')->where('id',$request->id)->update(['pos' => $request->pos]);
+						 DB::table('committee_team')->where('appid',$g->appid)->where('uid',$getmemT->uid)->where('pos',$getmemT->pos)->update(['pos' => $request->pos]);
+					 }
+ 
+ 
+				 }
+
 
 				return "DONE";
 			} 
@@ -935,6 +978,43 @@
 			}
 		}
 
+		public function saveConAppTeam(Request $request)
+		{
+			
+				try 
+				{
+					DB::table('appform')->where('appid',$request->appid)->update(['conTeam' => $request->team_id]);
+
+					$chk = DB::table('committee_team')->where('appid',$request->appid)->first();
+					if(!is_null($chk)){
+						 DB::table('committee_team')->where('appid',$request->appid)->delete();
+					}
+
+					$data = DB::table('con_team_members')
+					// ->join('x08', 'con_team_members.uid', '=', 'x08.uid')
+					->where('con_team_members.team_id',$request->team_id)
+					->get();
+
+
+					foreach($data as $m){
+						DB::table('committee_team')->insert(['appid' => $request->appid,'uid' => $m->uid,'pos' => $m->pos]);
+						AjaxController::notifyClient($request->appid,$m->uid,39);
+					}
+
+
+					// hereme
+					
+					return "DONE";
+				} 
+				catch (Exception $e) 
+				{
+					AjaxController::SystemLogs($e);
+					session()->flash('system_error','ERROR');
+					return "ERROR";
+				}
+			
+		}
+
 		public static function addconmem(Request $request)
 		{
 			try {
@@ -943,6 +1023,19 @@
 
 					foreach($mem as $m){
 						DB::table('con_team_members')->insert(['uid' => $m['uid'],'pos' => $m['pos'], 'team_id' => $request->team_id]);
+
+
+						$chk = DB::table('appform')->where('conTeam',$request->team_id)->first();
+					
+						if(!is_null($chk)){
+							$getT =	DB::table('appform')->where('conTeam',$request->team_id)->get();
+							
+							foreach($getT as $g){
+								DB::table('committee_team')->insert(['appid' => $g->appid, 'uid' => $m['uid'], 'pos' => $m['pos']]);
+							}
+
+
+						}
 						
 					}
 
@@ -2593,6 +2686,25 @@ public static function checkConmem($appid)
 						}
 					}
 				}
+				return $data;	
+			} 
+			catch (Exception $e) {
+				AjaxController::SystemLogs($e->getMessage());
+				return 'ERROR';
+			}
+		}
+		public static function getAllRegionGen($hasConditionFlag = false) // Get all Region
+		{
+			try 
+			{
+				$data = DB::table('region')->get();
+				// if($hasConditionFlag && self::getCurrentUserAllData()['cur_user'] != 'ADMIN' && self::getCurrentUserAllData()['cur_user'] != 'DC'){
+					foreach ($data as $key => $value) {
+						if($value->rgnid != self::getCurrentUserAllData()['rgnid']){
+							unset($data[$key]);
+						}
+					}
+				// }
 				return $data;	
 			} 
 			catch (Exception $e) {

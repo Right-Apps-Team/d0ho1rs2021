@@ -2,7 +2,8 @@
   @extends('mainEmployee')
   @section('title', 'Team Master File')
   @section('content')
-  <input type="text" id="CurrentPage" hidden="" value="TM001">
+  <input type="text" id="CurrentPage" hidden="">
+  <!-- <input type="text" id="CurrentPage" hidden="" value="TM001"> -->
   <div class="content p-4">
       <datalist id="rgn_list">
         @if (isset($team))
@@ -11,10 +12,15 @@
           @endforeach
         @endif
       </datalist>
+      @php
+        $employeeData = session('employee_login');
+        $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
+    @endphp
       <div class="card">
           <div class="card-header bg-white font-weight-bold">
              Committee Team 
-             <span class="TM001_add" style="float: right;" ><a href="#" title="Add New Team" data-toggle="modal" data-target="#myModal"><button class="btn btn-primarys"><i class="fa fa-plus-circle" style="cursor: pointer;"></i>&nbsp;Add new</button></a></span>
+             <span  style="float: right;" ><a href="#" title="Add New Team" data-toggle="modal" data-target="#myModal"><button class="btn btn-primarys"><i class="fa fa-plus-circle" style="cursor: pointer;"></i>&nbsp;Add new</button></a></span>
+             <!-- <span class="TM001_add" style="float: right;" ><a href="#" title="Add New Team" data-toggle="modal" data-target="#myModal"><button class="btn btn-primarys"><i class="fa fa-plus-circle" style="cursor: pointer;"></i>&nbsp;Add new</button></a></span> -->
           </div>
           <div class="card-body">
               <table class="table display" id="example" style="overflow-x: scroll;" >
@@ -38,10 +44,12 @@
                 <span >
   							<button type="button" class="btn btn-outline-primary" onclick="getAvailable('{{$t->rgnid}}', '{{$t->teamid}}')" data-toggle="modal" data-target="#viewModal11"><i class="fa fa-fw fa-users"></i></button>
   							</span>
-  							<span class="TM001_update">
+  							<span>
+  							<!-- <span class="TM001_update"> -->
   							<button type="button" class="btn btn-outline-warning" onclick="showData('{{$t->teamid}}', '{{$t->teamdesc}}', '{{$t->rgn_desc}}', '{{$t->rgnid}}');" data-toggle="modal" data-target="#GodModal"><i class="fa fa-fw fa-edit"></i></button>
   							</span>
-  							<span class="TM001_cancel">
+  							<span >
+  							<!-- <span class="TM001_cancel"> -->
   							<button type="button" class="btn btn-outline-danger" onclick="showDelete('{{$t->teamid}}', '{{$t->teamdesc}}');" data-toggle="modal" data-target="#DelGodModal"><i class="fa fa-fw fa-trash"></i></button>
   							</span>
                 
@@ -82,11 +90,15 @@
                       </div>
                       <div class="col-sm-4">Region</div>
                       <div class="col-sm-8" style="margin:0 0 .8em 0;">
-                        <select id="new_rgn" class="form-control" data-parsley-required-message="*<strong>Region</strong> required" required>
+                        <select {{$grpid != 'NA' ? 'disabled' : ''}} id="new_rgn" class="form-control" data-parsley-required-message="*<strong>Region</strong> required" required>
                           <option value=""></option>
                           @isset($region)
                             @foreach ($region as $r)
-                              <option value="{{$r->rgnid}}">{{$r->rgn_desc}}</option>
+                            @if($grpid != 'NA' && $employeeData->rgnid == $r->rgnid)
+                              <option selected value="{{$r->rgnid}}">{{$r->rgn_desc}}</option>
+                            @else
+                            <option value="{{$r->rgnid}}">{{$r->rgn_desc}}</option>
+                            @endif
                             @endforeach
                           @endisset
                         </select>

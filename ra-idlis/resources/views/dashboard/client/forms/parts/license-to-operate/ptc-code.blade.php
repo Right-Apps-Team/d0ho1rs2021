@@ -1,7 +1,7 @@
 <div class="mb-2 col-md-12">&nbsp;</div>
 
 <div class="col-md-12">
-    <b class="text-primary">PTC Code:
+    <b class="text-primary">PTC No.:
         <!-- <span class="text-danger">*</span> 5-5-2021-->
     </b>
 </div>
@@ -25,7 +25,7 @@ function ptc_na(){
                 <span class="dropdown-item" onclick="ptc_na()" id="ptc_na" style="cursor: pointer;">Not Applicable</span>
             </div>
         </div>
-        <input class="form-control" type="text" name="ptcCode" id="ptcCode" placeholder="PTC Code" />
+        <input class="form-control" type="text" name="ptcCode" id="ptcCode" placeholder="PTC No." />
     </div>
 </div>
 

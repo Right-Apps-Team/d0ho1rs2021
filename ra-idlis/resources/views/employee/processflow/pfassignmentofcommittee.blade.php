@@ -6,14 +6,18 @@
     $employeeData = session('employee_login');
    $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
     @endphp
+
+
   <input type="text" id="CurrentPage" hidden="" value="PF014">
   <div class="content p-4">
       <div class="card">
           <div class="card-header bg-white font-weight-bold">
              Committee Assignment     
              <div style="float: right;">
-             <!-- <a href="{{asset('/employee/dashboard/processflow/manage/con/team')}}"><button class="btn btn-primary" >Manage Committee</button></a> -->
-          </div>
+             @if($grpid == 'NA' || $grpid == 'DC')
+             <a href="{{asset('/employee/dashboard/processflow/manage/con/team')}}"><button class="btn btn-primary" >Manage Committee</button></a>
+          @endif
+            </div>
           </div>
          
           <div class="card-body table-responsive">

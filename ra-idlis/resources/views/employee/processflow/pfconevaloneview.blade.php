@@ -448,7 +448,8 @@
 
       <div class="container-fluid table-responsive border mb-3 pt-3">
       	<p class="font-weight-bold lead pt-2">
-        	Comments
+        	Remarks
+        	<!-- Comments -->
     	</p>
     	<div class="container-fluid border border-secondary rounded input" style="min-width: 300px; min-height: 300px">
     		{{$evalRes->comments}}

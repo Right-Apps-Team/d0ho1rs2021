@@ -73,7 +73,7 @@
 
 
                                 <a style="float: right;" onclick="enabledUpdate()" class="btn btn-warning pt-2" type="submit">Enable Update</a><br><br>
-                                <h4><center>Committe Members</center>   </h4>
+                                <h4><center>Committee Members</center>   </h4>
                                 <table class="table table-bordered" id="addNewRow4New">
                                         <thead>
                                             <tr>

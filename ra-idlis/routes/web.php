@@ -254,6 +254,7 @@ Route::match(['get', 'post'], 'employee/dashboard/mf/team', 'DOHController@MfTea
 Route::post('employee/mf/save_team', 'AjaxController@saveTeam'); // Update
 Route::post('employee/mf/get/users', 'AjaxController@getUsersForCon'); // Update
 Route::post('employee/mf/get/users/team', 'AjaxController@getUsersConteam'); // Update
+Route::post('employee/save/con/team', 'AjaxController@saveConAppTeam'); // Update
 Route::post('employee/mf/add/team/users', 'AjaxController@addconmem'); // Update
 Route::post('employee/mf/delete/team/users', 'AjaxController@deleteConTemMem'); // Update
 Route::post('employee/mf/update/team/users', 'AjaxController@updateConTemMem'); // Update

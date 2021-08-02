@@ -985,7 +985,8 @@
 
                             <div class="col-sm-4">
 
-                              Contact No.:
+                             Mobile Number:
+                              <!-- Contact No.: -->
                               <!-- Contact No.:<span style="color:red">*</span> -->
 
                             </div>

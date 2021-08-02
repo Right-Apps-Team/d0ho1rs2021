@@ -4769,7 +4769,9 @@ use FunctionsClientController;
 					return view('employee.processflow.pfassignmentofcommittee');
 				}
 			}
-		}
+		}	
+		
+		
 
 		public function committeTeamAssignment(Request $request,$appid)
 		{
@@ -4793,7 +4795,16 @@ use FunctionsClientController;
 					$canEvaluate = true;
 					$hfercEvalData = DB::table('hferc_evaluation')->where('appid',$appid)->get();
 					$ConEvalData = DB::table('con_evalsave')->where('appid',$appid)->get();
-					return view('employee.processflow.pfassignmentofcommitteeaction', ['hferc_data' => $hfercEvalData,'ConEvalData' => $ConEvalData,'AppData' => $data,'hferc' => $members, 'free' => $notin, 'appid'=>$appid, 'apptype' => $data->hfser_id, 'canEval' => $canEvaluate]);
+
+					$dataTeam = DB::table('team');
+					$dataTeam->join('region', 'team.rgnid', '=', 'region.rgnid');
+					$dataTeam->where('team.type','con');
+					$dataTeam->where('team.rgnid', $data->rgnid);
+					$dataTeam =	$dataTeam->get();
+
+
+
+					return view('employee.processflow.pfassignmentofcommitteeaction', ['hferc_data' => $hfercEvalData,'dataTeam' => $dataTeam,'ConEvalData' => $ConEvalData,'AppData' => $data,'hferc' => $members, 'free' => $notin, 'appid'=>$appid, 'apptype' => $data->hfser_id, 'canEval' => $canEvaluate]);
 				} 
 				catch (Exception $e) 
 				{
@@ -4846,13 +4857,37 @@ use FunctionsClientController;
 		{
 			try {
 				if($request->isMethod('get')){
-					$members = "whtaa";
-					$data = AjaxController::getAllRegion();
-					$data2 = AjaxController::getAllTeamsCon();
+					
+					// $data = AjaxController::getAllRegion();
+					// $data = AjaxController::getAllRegionGen();
+					$employeeData = session('employee_login');
+					
+
+					
+					$dataTeam = DB::table('team');
+					$dataTeam->join('region', 'team.rgnid', '=', 'region.rgnid');
+					$dataTeam->where('team.type','con');
+
+					if($employeeData->grpid != 'NA'){
+							$dataTeam->where('team.rgnid',$employeeData->rgnid);
+				    }
+					$dataTeam =	$dataTeam->get();
+
+					$rgns = DB::table('region')->get();
+					if($employeeData->grpid != 'NA'){
+						$rgns = DB::table('region')->where('rgnid',$employeeData->rgnid)->get();
+					}
+
+
+					$data = $rgns;
+					$data2 = $dataTeam;
+					// $data2 = AjaxController::getAllTeamsCon();
 					
 					return view('employee.processflow.pfmanageconcomittee',['region' => $data, 'team' =>$data2]);
 				}else{
 					DB::table('team')->insert(['teamid' => $request->id, 'teamdesc' => $request->name, 'rgnid' => $request->rgn, 'type' => 'con']);
+
+					
 					return 'DONE';
 				}
 			} catch (Exception $e) {
