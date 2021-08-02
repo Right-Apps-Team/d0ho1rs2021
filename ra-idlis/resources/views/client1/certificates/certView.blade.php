@@ -157,6 +157,7 @@
 						<!-- {{((isset($otherDetails->ubn)) ? $otherDetails->ubn : (isset($retTable[0]->noofbed) ? $retTable[0]->noofbed : ''))}} -->
 					</div>	
 				</div>
+				@if(strtolower($retTable[0]->hfser_id) != 'con' && strtolower($retTable[0]->hfser_id) != 'ptc')
 				<div class="row">	
 					<div class="col-md-2" style="">&nbsp;</div>
 					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
@@ -170,6 +171,7 @@
 						<!-- {{((isset($otherDetails->ubn)) ? $otherDetails->ubn : (isset($retTable[0]->noofbed) ? $retTable[0]->noofbed : ''))}} -->
 					</div>	
 				</div>
+				@endif
 				@if(strtolower($retTable[0]->hfser_id) == 'lto')
 			{{--	@if(strtolower($retTable[0]->hfser_id) == 'ptc' || strtolower($retTable[0]->hfser_id) == 'lto') --}}
 				<!-- noof bed and dialysis here -->

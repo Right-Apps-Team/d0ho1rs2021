@@ -160,7 +160,7 @@
 
 
                             @if($grpid == 'RLO')
-                                @if(app('request')->input('grp') != 'c')
+                                @if(app('request')->input('grp') != 'c'  && app('request')->input('cont') != 'yes' && app('request')->input('grpn') != 'c')
                                             <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
                                             <div class="col-md-12" id="divRem" hidden>
                                                 <label for="remarks" >Remarks</label>

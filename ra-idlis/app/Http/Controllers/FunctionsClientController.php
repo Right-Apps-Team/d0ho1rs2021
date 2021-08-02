@@ -820,7 +820,8 @@ class FunctionsClientController extends Controller {
 		try {
 			$retArr	= [[], []];
 			if(! empty($appid)) {
-				$retArr	= [DB::table('con_catch')->where([['appid', $appid], ['isfrombackend',NULL]])->get(), DB::table('con_hospital')->where([['appid', $appid]])->get()];
+				$retArr	= [DB::table('con_catch')->where([['appid', $appid]])->get(), DB::table('con_hospital')->where([['appid', $appid]])->get()];
+				// $retArr	= [DB::table('con_catch')->where([['appid', $appid], ['isfrombackend',NULL]])->get(), DB::table('con_hospital')->where([['appid', $appid]])->get()];
 			}
 			return $retArr;
 		} catch(Exception $e) {

@@ -220,7 +220,7 @@
 										@endif
 									
 									
-										@if($each[0]->isRecommended && AjaxController::checkExitPay($each[0]->appid) == "no")
+										@if($each[0]->isRecommended && $each[0]->isRecommended != 2 && AjaxController::checkExitPay($each[0]->appid) == "no")
 											<div class="dropdown-divider"></div>
 											<div style="margin-left: 10px;margin-right: 10px;">
 											<a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;"  href="{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$each[0]->appid)}}">Select Payment Method</a>
@@ -241,7 +241,7 @@
 									    </div>	
 										@endif
 										
-										@if($each[0]->isRecommended && AjaxController::checkExitPay($each[0]->appid) == "no")
+										@if($each[0]->isRecommended && $each[0]->isRecommended != 2 && AjaxController::checkExitPay($each[0]->appid) == "no")
 										<div class="dropdown-divider"></div>
 										<div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$each[0]->appid)}}">Select Payment Method</a>
@@ -342,10 +342,11 @@
 										@endif					
 							    	@break
 								@endswitch
-								    @if($each[0]->isRecommended || $each[0]->hfser_id == 'LTO'|| $each[0]->hfser_id == 'COA')
+								    @if(($each[0]->isRecommended && $each[0]->isRecommended != 2) || $each[0]->hfser_id == 'LTO'|| $each[0]->hfser_id == 'COA')
+								 {{--   @if($each[0]->isRecommended || $each[0]->hfser_id == 'LTO'|| $each[0]->hfser_id == 'COA') --}}
 										<div class="dropdown-divider"></div>
 									    <div style="margin-left: 10px;margin-right: 10px;">
-									    <a  href="{{asset('client1/printPayment')}}/{{FunctionsClientController::getToken()}}/{{$each[0]->appid}}" class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" onclick="remAppHiddenId('chgfil{{$each[0]->appid}}')" href="#">View Order of Payment on DOH</a>
+									    <a  href="{{asset('client1/printPayment')}}/{{FunctionsClientController::getToken()}}/{{$each[0]->appid}}" class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" onclick="remAppHiddenId('chgfil{{$each[0]->appid}}')" href="#">View Order of Payment on DOH </a>
 									    <!-- <a  data-toggle="modal" data-target="#chgfil-{{$each[0]->appid}}" class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" onclick="remAppHiddenId('chgfil{{$each[0]->appid}}')" href="#">View Order of Payment on DOH</a> -->
 									  </div>
 									@endif 

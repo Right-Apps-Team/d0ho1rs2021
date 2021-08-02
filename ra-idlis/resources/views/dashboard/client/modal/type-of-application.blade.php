@@ -12,34 +12,34 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-5 alert alert-info text-center">
-                                <a style="color: #17a2b8" href="{{asset('client/dashboard/application/certificate-of-need')}}">Certificate of Need</a>
+                                <a style="color: #17a2b8" href="{{asset('client/dashboard/application/certificate-of-need')}}?grpn=c">Certificate of Need</a>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-5 alert alert-primary text-center">
-                            <a style="color: #007bff; " href="{{asset('client/dashboard/application/permit-to-construct')}}">Permit to Construct</a>
+                            <a style="color: #007bff; " href="{{asset('client/dashboard/application/permit-to-construct')}}?grpn=c">Permit to Construct</a>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-5 alert alert-success text-center">
-                                <a style="color: #28a745" href="{{asset('client/dashboard/application/authority-to-operate')}}">Authority to Operate</a>
+                                <a style="color: #28a745" href="{{asset('client/dashboard/application/authority-to-operate')}}?grpn=c">Authority to Operate</a>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-5 alert alert-warning text-center">
                                 <!-- <a style="color: #ffc107" href="{{asset('client1/apply/app')}}/COR}}">Certificate of Accreditation</a> -->
-                                <a style="color: #ffc107" href="{{asset('client/dashboard/application/certificate-of-accreditation')}}">Certificate of Accreditation</a>
+                                <a style="color: #ffc107" href="{{asset('client/dashboard/application/certificate-of-accreditation')}}?grpn=c">Certificate of Accreditation</a>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-5 alert alert-danger text-center">
-                                <a style="color: #dc3545" href="{{asset('client/dashboard/application/license-to-operate')}}">License to Operate</a>
+                                <a style="color: #dc3545" href="{{asset('client/dashboard/application/license-to-operate')}}?grpn=c">License to Operate</a>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-5 alert alert-dark text-center">
                                 <!-- <a style="color: #343a40" href="{{asset('client1/apply/app')}}/COR}}">Certificate of Registration</a> -->
-                                <a style="color: #343a40" href="{{asset('client/dashboard/application/certificate-of-registration')}}">Certificate of Registration</a>
+                                <a style="color: #343a40" href="{{asset('client/dashboard/application/certificate-of-registration')}}?grpn=c">Certificate of Registration</a>
                         </div>
                     </div>
                 </div>

@@ -1172,7 +1172,7 @@ console.log(option[0])
           '</td>'+
           '<td><input type="text" required onblur="renewLoc()" name="addr[]" class="form-control"></td>'+
 
-          '<td><input type="text" value="0" disabled name="catchment[]" class="form-control"></td>' +
+          '<td><input type="text" value="0" disabled name="catchment[]" class="form-control h"></td>' +
           // '<td><input type="text" '+ (dis?  'disabled' : ' ')  +' name="catchment[]" class="form-control"></td>' +
 
           '<td><input type="number" required name="est[]" class="form-control"></td>'+

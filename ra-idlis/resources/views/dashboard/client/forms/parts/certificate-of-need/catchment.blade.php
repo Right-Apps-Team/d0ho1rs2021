@@ -5,7 +5,8 @@
         <ul>
             <li><b class="text-danger">Primary Catchment/Area</b> refers to the municipality/urban district for Level 1 Hospitals, rural district/city for Level 2 Hospitals, provice and region for Level 3 Hospitals</li>
             <li><b class="text-danger">Secondary Catchment Area</b> refers to other geographic areas that have access or contigous to the Primary Catchment Area</li>
-            <li><b class="text-danger">Note:</b> Source of Projected Population (5th year) of Catchment Area should be from PSA/NEDA. Refer to this link <a href="https://www.doh.gov.ph/sites/default/files/publications/Philippines%20projected%20pop%20by%20Prov%2CCity%2CBarangay%202018-2022.pdf" target="_blank">here</a></li>
+            <li><b class="text-danger">Note:</b> Source of Projected Population (5th year) of Catchment Area should be from PSA. Refer to this link <a href="https://psa.gov.ph/statistics/census/projected-population" target="_blank">here</a></li>
+            <!-- <li><b class="text-danger">Note:</b> Source of Projected Population (5th year) of Catchment Area should be from PSA/NEDA. Refer to this link <a href="https://www.doh.gov.ph/sites/default/files/publications/Philippines%20projected%20pop%20by%20Prov%2CCity%2CBarangay%202018-2022.pdf" target="_blank">here</a></li> -->
             <li><b class="text-danger">Note:</b> Please Refer to Regional DOH websites on encoding Population Projection</li>
         </ul>
     </div>

@@ -137,7 +137,8 @@
 						:
 					</div>
 					<div class="col-md-6 headDetR contr">
-						<p  class="contr"><strong>{{((isset($retTable[0]->t_date)) ? date("F j, Y", strtotime($retTable[0]->t_date)) : 'DATE_ISSUED')}} to {{((isset($retTable[0]->t_date)) ? date("F j, Y", ((strtotime($retTable[0]->t_date)-(86400*2))+15552000)) : 'DATE_ISSUED')}}</strong></p>
+						<p  class="contr"><strong>{{((isset($retTable[0]->approvedDate)) ? date("F j, Y", strtotime($retTable[0]->approvedDate)) : 'DATE_ISSUED')}} to {{((isset($retTable[0]->approvedDate)) ? date("F j, Y", ((strtotime($retTable[0]->approvedDate)-(86400*2))+15552000)) : 'DATE_ISSUED')}}</strong></p>
+						<!-- <p  class="contr"><strong>{{((isset($retTable[0]->t_date)) ? date("F j, Y", strtotime($retTable[0]->t_date)) : 'DATE_ISSUED')}} to {{((isset($retTable[0]->t_date)) ? date("F j, Y", ((strtotime($retTable[0]->t_date)-(86400*2))+15552000)) : 'DATE_ISSUED')}}</strong></p> -->
 					</div>
 				</div>
 				<div class="row">

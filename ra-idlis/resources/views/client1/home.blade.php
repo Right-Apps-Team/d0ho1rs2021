@@ -139,7 +139,20 @@
 							{{-- <td>{{$_tMsg}}</td> --}}
 							{{-- <td>{{($each[0]->hfser_id == 'LTO' ? (isset($each[0]->FDAstat) ? $each[0]->FDAstat : "Not Applicable"): "Not Available" )}}</td> --}}
 							{{-- <td>{{($each[0]->hfser_id == 'LTO' && (isset($each[0]->pharCOC) || isset($each[0]->xrayCOC)) ? (isset($each[0]->pharCOC) || isset($each[0]->xrayCOC) ? isset($each[0]->pharCOC) : $each[0]->pharCOC) : isset($each[0]->xrayCOC) ? $each[0]->xrayCOC : 'Not Yet Available')}}</td> --}}
+							
+							
+							
+							
+							<!-- <td>{{($each[0]->hfser_id == 'LTO' ? (isset($each[4]->valto) ? Date('F j, Y',strtotime($each[4]->valto)) : "Not Applicable"): "Not Available" )}}</td> -->
+							@if($each[0]->hfser_id == 'CON')
+							<td>{{((isset($each[0]->approvedDate)) ? date("F j, Y", ((strtotime($each[0]->approvedDate)-(86400*2))+15552000)) : 'DATE_ISSUED')}}</td>
+							@elseif($each[0]->hfser_id == 'LTO')
+							<td>{{date('F j, Y', strtotime("Last day of December", strtotime($each[0]->approvedDate)))}}</td>
+							@else 
 							<td>{{($each[0]->hfser_id == 'LTO' ? (isset($each[4]->valto) ? Date('F j, Y',strtotime($each[4]->valto)) : "Not Applicable"): "Not Available" )}}</td>
+							@endif
+							
+							
 							<td>{!!($each[0]->hfser_id == 'LTO' && in_array(AjaxController::getHighestApplicationFromX08FT($each[0]->appid)->facid, ['H','H2','H3','INFSEV','BHSERV']) ? 'No Report Submitted, <br>Please Submit to <a href="https://ohsrs.doh.gov.ph" target="_blank" class="btn btn-info">OHSRS</a>' : "Not Applicable" )!!}</td>
 							{{-- <td>{{($each[0]->hfser_id == 'LTO' ? (isset($each[0]->pharValidity) ? $each[0]->pharValidity : "Not Applicable"): "Not Available" )}}</td> --}}
 							{{-- <td>{{($each[0]->hfser_id == 'LTO' ? (isset($each[0]->xrayVal) ? $each[0]->xrayVal : "Not Applicable"): "Not Available" )}}</td> --}}

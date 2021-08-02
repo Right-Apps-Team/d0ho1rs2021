@@ -45,9 +45,10 @@
                         @foreach ($BigData as $data)
 
                         @if( $data->isReadyForInspec == 1 || $data->isrecommended == 2  )
-                            @if(strtolower($data->hfser_id) == 'ptc')
+                            @if(strtolower($data->hfser_id) == 'ptc' )
                               
-                          
+                           
+                            
                             @else
 
                             <!-- Place the  data->isrecommended [2,null] here-->
@@ -75,6 +76,11 @@
                                 <?php continue; ?>
                               @endif
 
+                              @if(strtolower($data->hfser_id) == 'con' && $data->isrecommended == 2 && $data->status == 'REV')
+                              
+                              <?php continue; ?>
+                              
+                              @endif
 
 
 
