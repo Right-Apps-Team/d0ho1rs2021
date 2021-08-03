@@ -220,7 +220,8 @@
 										@endif
 									
 									
-										@if($each[0]->isRecommended && $each[0]->isRecommended != 2 && AjaxController::checkExitPay($each[0]->appid) == "no")
+										@if($each[0]->isRecommended && $each[0]->isRecommended != 2 && AjaxController::checkExitPay($each[0]->appid) == "no" && AjaxController::getAllDataOrderOfPaymentUploads($each[0]->appid ,4) != 0)
+										{{-- @if($each[0]->isRecommended && $each[0]->isRecommended != 2 && AjaxController::checkExitPay($each[0]->appid) == "no") --}}
 											<div class="dropdown-divider"></div>
 											<div style="margin-left: 10px;margin-right: 10px;">
 											<a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;"  href="{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$each[0]->appid)}}">Select Payment Method</a>
@@ -241,7 +242,8 @@
 									    </div>	
 										@endif
 										
-										@if($each[0]->isRecommended && $each[0]->isRecommended != 2 && AjaxController::checkExitPay($each[0]->appid) == "no")
+										@if($each[0]->isRecommended && $each[0]->isRecommended != 2 && AjaxController::checkExitPay($each[0]->appid) == "no"  && AjaxController::getAllDataOrderOfPaymentUploads($each[0]->appid ,4) != 0)
+									{{--	@if($each[0]->isRecommended && $each[0]->isRecommended != 2 && AjaxController::checkExitPay($each[0]->appid) == "no") --}}
 										<div class="dropdown-divider"></div>
 										<div style="margin-left: 10px;margin-right: 10px;">
 									    <a class="dropdown-item ddi bg-{{$_tColor}}" style="border-radius: 3px;" href="{{url('client1/payment/'.FunctionsClientController::getToken().'/'.$each[0]->appid)}}">Select Payment Method</a>

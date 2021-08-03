@@ -3,12 +3,21 @@
   @section('title', 'HFERC Assignment')
   @section('content')
 
-  
+  @php 
+    $employeeData = session('employee_login');
+   $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
+    @endphp
+
   <input type="text" id="CurrentPage" hidden="" value="PF012">
   <div class="content p-4">
       <div class="card">
           <div class="card-header bg-white font-weight-bold">
              HFERC Assignment
+             <div style="float: right;">
+             @if($grpid == 'NA' || $grpid == 'DC')
+             <!-- <a href="{{asset('/employee/dashboard/processflow/manage/ptc/team')}}"><button class="btn btn-primary" >Manage Team</button></a> -->
+          @endif
+            </div>
           </div>
           <div class="card-body table-responsive">
 			<table class="table table-hover" id="example" style="font-size:13px;">

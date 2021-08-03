@@ -100,6 +100,7 @@
         if(ptcorg.length > 0){
             document.getElementById("construction_description").value = ptc.construction_description;
             document.getElementById("propbedcap").value = ptc.propbedcap;
+            document.getElementById("propbedcapview").innerText  = ptc.propbedcap;
             document.getElementById("renoOption").value = ptc.renoOption;
             document.getElementById("incbedcapfrom").value = ptc.incbedcapfrom;
             document.getElementById("incbedcapto").value = ptc.incbedcapto;
@@ -512,17 +513,26 @@ window.addEventListener('change', function(e) {
  document.getElementById("type0").checked = true
 
  document.getElementById("6").checked = true
- document.getElementById("propbedcap").disabled = true
+//  document.getElementById("propbedcap").disabled = true
+ document.getElementById("propbedcap").setAttribute('hidden', 'hidden')
+ document.getElementById("propbedcapview").removeAttribute('hidden')
 
 
 //   setTimeout(function(){ 
 //   inputtedDataInitial()
 //    }, 1000);
   var hg = document.getElementsByName('hgpid');
+  var fc = document.getElementsByName('facid');
 
   for(var h = 0 ; h< hg.length; h++){
     hg[h].disabled = true;
   }
+  
+   setTimeout(function(){
+  for(var f = 0 ; f< fc.length; f++){
+    fc[f].disabled = true;
+  }
+   }, 1000);
 @endif
 
 

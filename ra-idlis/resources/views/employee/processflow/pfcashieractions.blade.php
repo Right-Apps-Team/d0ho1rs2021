@@ -28,8 +28,9 @@
         <div class="card-header bg-white font-weight-bold">
           @isset($APPID)<input type="text" id="APPID" value="{{$APPID}}" hidden>@endisset
           <input type="" id="token" value="{{ Session::token() }}" hidden>
-           Cashier Evaluation <span class="optnTD" style="display: none;">(Overide Payment Mode)</span>&nbsp;
-           <button class="btn btn-primary" onclick="window.history.back();">Back</button>
+          <button class="btn btn-primary" onclick="window.history.back();">Back</button>&nbsp;
+           Cashier Evaluation <span class="optnTD" style="display: none;">(Overide Payment Mode)</span>
+          
         </div>
         <div class="card-body">
           <table class="table table-borderless">

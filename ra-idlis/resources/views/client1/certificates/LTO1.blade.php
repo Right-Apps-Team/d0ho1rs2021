@@ -247,26 +247,41 @@
 										echo '1, '.$val . ' ' . $ambServ;
 									}
 								}--}}
-					
+								
+						@php
+							//	if($ambType1[$i] == '2'){
+								//	echo ((int)$i + 1).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
+							//		echo ((int)$i + 1).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
+							//		echo "<br>";
+									
+							//	}
+							@endphp
+
 					@if(isset($retTable[0]->plate_number) && isset($retTable[0]->ambtyp))
 						@php
 							$type = json_decode($retTable[0]->typeamb);
 							$ambType = json_decode($retTable[0]->ambtyp);
 							$ambType1 = json_decode($retTable[0]->ambtyp);
 							$plateNum = json_decode($retTable[0]->plate_number);
+							$owner = json_decode($retTable[0]->ambOwner);
 
-							
+						
 							
 							
 
 							$i=0;
 							foreach($ambType1 as $atval){
 								
-								if($ambType1[$i] == '2'){
-									echo ((int)$i).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
+						
+								if($i != 0){
+									if($ambType1[$i] == '2'){
+										echo ((int)$i).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
+										
+									}else{
+										echo ((int)$i).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i].' ,Owner: '.$owner[$i];
+									}
 									echo "<br>";
-									
-								}
+							}
 
 								$i++;
 							}
@@ -370,10 +385,30 @@
 					</div>
 					<div class="row">
 							<div class="col-md-1"  >&nbsp;</div>
+							<script>
+								console.log('{{$retTable[0]->addonDesc}}')
+							</script>
 						<div class="col-md-5 pl-5 mt-3 contr" >
 						<!-- <div class="col-md-3 pl-5 mt-3 contr" > -->
 							@foreach($addons as $add)
-								{{$add}}
+								@php
+								$ons = json_decode($retTable[0]->addonDesc);
+								$exadd = 'no';
+								$aowner = ' ';
+									foreach($ons as $o){
+										if($o->facid_name  == $add && $o->servtyp == 1){
+											$exadd = 'yes';
+											$aowner = $o->servowner;
+										}
+									}
+								@endphp
+										@if($exadd == 'yes')
+										{{$add}} (Owner: {{$aowner}})
+										@else
+										{{$add}}
+										@endif
+										
+									
 							@endforeach
 						</div>
 					</div>

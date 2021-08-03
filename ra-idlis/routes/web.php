@@ -254,10 +254,14 @@ Route::match(['get', 'post'], 'employee/dashboard/mf/team', 'DOHController@MfTea
 Route::post('employee/mf/save_team', 'AjaxController@saveTeam'); // Update
 Route::post('employee/mf/get/users', 'AjaxController@getUsersForCon'); // Update
 Route::post('employee/mf/get/users/team', 'AjaxController@getUsersConteam'); // Update
+Route::post('employee/mf/get/users/team/ptc', 'AjaxController@getUsersPtcteam'); // Update
 Route::post('employee/save/con/team', 'AjaxController@saveConAppTeam'); // Update
 Route::post('employee/mf/add/team/users', 'AjaxController@addconmem'); // Update
+Route::post('employee/mf/add/team/users/ptc', 'AjaxController@addptcmem'); // Update
 Route::post('employee/mf/delete/team/users', 'AjaxController@deleteConTemMem'); // Update
+Route::post('employee/mf/delete/team/users/ptc', 'AjaxController@deletePtcTemMem'); // Update
 Route::post('employee/mf/update/team/users', 'AjaxController@updateConTemMem'); // Update
+Route::post('employee/mf/update/team/users/ptc', 'AjaxController@updatePtcTemMem'); // Update
 Route::post('employee/mf/del_test', 'AjaxController@delTeam'); // Delete
 // Manage Team
 Route::post('employee/mf/delMemberInTeam', 'AjaxController@delMemberInTeam'); // Delete Member
@@ -542,6 +546,7 @@ Route::match(['get', 'post'], 'employee/dashboard/processflow/evaluation/view/{u
 Route::match(['get', 'post'], 'employee/dashboard/processflow/evaluation/compiled/{user}/{appid}/{apptype}', 'DOHController@EvaluationDisplay'); // view evaluation
 Route::match(['get', 'post'], 'employee/dashboard/processflow/conevalution/{appid}', 'DOHController@coneval'); 
 Route::match(['get', 'post'], 'employee/dashboard/processflow/manage/con/team/', 'DOHController@manageConMem'); 
+Route::match(['get', 'post'], 'employee/dashboard/processflow/manage/ptc/team/', 'DOHController@managePtcMem'); 
 Route::match(['get', 'post'], 'employee/dashboard/processflow/view/conevalution/{appid}', 'DOHController@conEvalView'); // evaluation tool
 
 

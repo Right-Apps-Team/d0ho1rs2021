@@ -187,8 +187,12 @@
                       @if(isset($AppData) && isset($AppData->facmdesc))<strong>{{$AppData->facmdesc}}</strong>
                         @else<span style="color:red">Not Available</span>
                         @endif &nbsp;
-                        <a href="{{$linkToEdit}}" target="_blank" class="btn btn-warning">
+                        <a style="float: right;" href="{{$linkToEdit}}" target="_blank" class="btn btn-warning">
                           <i class="fa fa-eye" aria-hidden="true"></i> View Application
+                        </a> 
+                        <span style="float: right;">&nbsp;&nbsp;</span>
+                        <a style="float: right;" href="{{url('client1/apply/GenerateReportAssessments/'.$AppData->appid)}}" target="_blank" class="btn btn-warning">
+                          <i class="fa fa-eye" aria-hidden="true"></i> Client's Self Assessment
                         </a>
                     </h6>
                     @endif

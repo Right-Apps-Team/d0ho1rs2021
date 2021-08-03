@@ -4897,6 +4897,51 @@ use FunctionsClientController;
 				return view('employee.processflow.pfmanageconcomittee');
 			}
 		}
+
+		public static function managePtcMem(Request $request)
+		{
+			try {
+				if($request->isMethod('get')){
+					
+					// $data = AjaxController::getAllRegion();
+					// $data = AjaxController::getAllRegionGen();
+					$employeeData = session('employee_login');
+					
+
+					
+					$dataTeam = DB::table('team');
+					$dataTeam->join('region', 'team.rgnid', '=', 'region.rgnid');
+					$dataTeam->where('team.type','ptc');
+
+					if($employeeData->grpid != 'NA'){
+							$dataTeam->where('team.rgnid',$employeeData->rgnid);
+				    }
+					$dataTeam =	$dataTeam->get();
+
+					$rgns = DB::table('region')->get();
+					if($employeeData->grpid != 'NA'){
+						$rgns = DB::table('region')->where('rgnid',$employeeData->rgnid)->get();
+					}
+
+
+					$data = $rgns;
+					$data2 = $dataTeam;
+					// $data2 = AjaxController::getAllTeamsCon();
+					
+					return view('employee.processflow.pfHfercTeamAss',['region' => $data, 'team' =>$data2]);
+				}else{
+					DB::table('team')->insert(['teamid' => $request->id, 'teamdesc' => $request->name, 'rgnid' => $request->rgn, 'type' => 'ptc']);
+
+					
+					return 'DONE';
+				}
+			} catch (Exception $e) {
+				return $e;
+				AjaxController::SystemLogs($e);
+				session()->flash('system_error','ERROR');
+				return view('employee.processflow.pfHfercTeamAsss');
+			}
+		}
 		
 		
 

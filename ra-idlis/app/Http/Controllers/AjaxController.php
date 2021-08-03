@@ -908,6 +908,24 @@
 				return 'ERROR';	
 			}
 		}
+
+		public static function getUsersPtcteam(Request $request) // Get all Teams
+		{	
+			try  
+			{
+				$data = DB::table('ptc_team_members')
+						->join('x08', 'ptc_team_members.uid', '=', 'x08.uid')
+						->where('ptc_team_members.team_id',$request->team_id)
+						->get();
+
+				return $data;
+			} 
+			catch (Exception $e) 
+			{	
+				AjaxController::SystemLogs($e->getMessage());
+				return 'ERROR';	
+			}
+		}
 		
 		public static function deleteConTemMem(Request $request) // Get all Teams
 		{	
@@ -930,6 +948,42 @@
 				
 				
 				DB::table('con_team_members')->where('id',$request->id)->delete();
+
+				return "DONE";
+			} 
+			catch (Exception $e) 
+			{	
+				AjaxController::SystemLogs($e->getMessage());
+				return 'ERROR';	
+			}
+		}
+
+		public static function deletePtcTemMem(Request $request) // Get all Teams
+		{	
+			try  
+			{
+				
+				$getmemT = DB::table('ptc_team_members')->where('id',$request->id)->first();
+
+				$chk = DB::table('appform')->where('ptcTeam',$getmemT->team_id)->first();
+					
+				if(!is_null($chk)){
+					// $getT =	DB::table('appform')->where('ptcTeam',$getmemT->team_id)->get();
+					$getT =	DB::table('appform')->join('hferc_team', 'appform.appid', '=',  'hferc_team.appid')
+							->where('appform.ptcTeam',$request->team_id)
+							->select('appform.appid','hferc_team.revision')
+							->groupBy('appform.appid','hferc_team.revision')
+							->get();
+					
+					foreach($getT as $g){
+						DB::table('hferc_team')->where('appid',$g->appid)->where('uid',$getmemT->uid)->where('pos',$getmemT->pos)->delete();
+					}
+
+
+				}
+				
+				
+				DB::table('ptc_team_members')->where('id',$request->id)->delete();
 
 				return "DONE";
 			} 
@@ -963,6 +1017,50 @@
 					 foreach($getT as $g){
 						DB::table('con_team_members')->where('id',$request->id)->update(['pos' => $request->pos]);
 						 DB::table('committee_team')->where('appid',$g->appid)->where('uid',$getmemT->uid)->where('pos',$getmemT->pos)->update(['pos' => $request->pos]);
+					 }
+ 
+ 
+				 }
+
+
+				return "DONE";
+			} 
+			catch (Exception $e) 
+			{	
+				AjaxController::SystemLogs($e->getMessage());
+				return 'ERROR';	
+			}
+		}
+
+		public static function updatePtcTemMem(Request $request) // Get all Teams
+		{	
+			try  
+			{
+
+				$getmemT = DB::table('ptc_team_members')->where('id',$request->id)->first();
+
+
+				DB::table('ptc_team_members')->where('id',$request->id)->update(['pos' => $request->pos]);
+
+
+
+
+				//  $getmemT = DB::table('con_team_members')->where('id',$request->id)->first();
+
+				 $chk = DB::table('appform')->where('ptcTeam',$getmemT->team_id)->first();
+					 
+				 if(!is_null($chk)){
+					//  $getT =	DB::table('appform')->where('conTeam',$getmemT->team_id)->get();
+					$getT =	DB::table('appform')->join('hferc_team', 'appform.appid', '=',  'hferc_team.appid')
+					->where('appform.ptcTeam',$request->team_id)
+					->select('appform.appid','hferc_team.revision')
+					->groupBy('appform.appid','hferc_team.revision')
+					->get();
+					
+					 
+					 foreach($getT as $g){
+						DB::table('ptc_team_members')->where('id',$request->id)->update(['pos' => $request->pos]);
+						 DB::table('hferc_team')->where('appid',$g->appid)->where('revision',$g->revision)->where('uid',$getmemT->uid)->where('pos',$getmemT->pos)->update(['pos' => $request->pos]);
 					 }
  
  
@@ -1032,6 +1130,49 @@
 							
 							foreach($getT as $g){
 								DB::table('committee_team')->insert(['appid' => $g->appid, 'uid' => $m['uid'], 'pos' => $m['pos']]);
+							}
+
+
+						}
+						
+					}
+
+					
+
+
+
+					return 'DONE';
+				
+			} catch (Exception $e) {
+				return $e;
+				AjaxController::SystemLogs($e);
+				session()->flash('system_error','ERROR');
+				return view('employee.processflow.pfmanageconcomittee');
+			}
+		}
+
+		public static function addptcmem(Request $request)
+		{
+			try {
+				
+					$mem = json_decode($request->members, true);
+
+					foreach($mem as $m){
+						DB::table('ptc_team_members')->insert(['uid' => $m['uid'],'pos' => $m['pos'], 'team_id' => $request->team_id]);
+
+
+						$chk = DB::table('appform')->where('ptcTeam',$request->team_id)->first();
+					
+						if(!is_null($chk)){
+							// $getT =	DB::table('hferc_team')->where('appid',$chk->appid)->groupBy('appid','revision')->get();
+							$getT =	DB::table('appform')->join('hferc_team', 'appform.appid', '=',  'hferc_team.appid')
+							->where('appform.ptcTeam',$request->team_id)
+							->select('appform.appid','hferc_team.revision')
+							->groupBy('appform.appid','hferc_team.revision')
+							->get();
+							
+							foreach($getT as $g){
+								DB::table('hferc_team')->insert(['revision' => $g->revision,'appid' => $g->appid, 'uid' => $m['uid'], 'pos' => $m['pos']]);
 							}
 
 

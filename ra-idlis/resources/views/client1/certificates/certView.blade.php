@@ -203,7 +203,7 @@
 						$sercap = preg_replace('/\s*/', '', $sc);
          			    $sercap = strtolower($sercap);
 
-						 $disercap = $sercap == 'level1' ? 'H' :  ($sercap == 'level2' ? 'H2' :  ($sercap == 'level3' ? 'H3' : ' '));
+						 $disercap = $sercap == 'level1' ? 'H1' :  ($sercap == 'level2' ? 'H2' :  ($sercap == 'level3' ? 'H3' : ' '));
 
 						@endphp
 						{{$retTable[0]->rgnid.'-'.$formatted_str.'-'.date('y', strtotime(str_replace('-','/', $retTable[0]->t_date))).'-'. $disercap.'-'.($retTable[0]->ocid == 'G'? '1':'2') }}
@@ -225,7 +225,7 @@
 							$ambType = json_decode($retTable[0]->ambtyp);
 							$ambType1 = json_decode($retTable[0]->ambtyp);
 							$plateNum = json_decode($retTable[0]->plate_number);
-
+							$owner = json_decode($retTable[0]->ambOwner);
 							
 							
 							
@@ -233,11 +233,21 @@
 							$i=0;
 							foreach($ambType1 as $atval){
 								
-								if($ambType1[$i] == '2'){
-									echo ((int)$i ).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
-									echo "<br>";
+								//if($ambType1[$i] == '2'){
+								//	echo ((int)$i ).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
+								//	echo "<br>";
 									
-								}
+								//}
+
+								if($i != 0){
+									if($ambType1[$i] == '2'){
+										echo ((int)$i).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
+										
+									}else{
+										echo ((int)$i).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i].' ,Owner: '.$owner[$i];
+									}
+									echo "<br>";
+							}
 
 								$i++;
 							}

@@ -25,6 +25,9 @@
         Proposed Bed Capacity
         <span class="text-danger">*</span>
     </label>
+    <p>
+        <h3  id="propbedcapview" hidden></h3>
+    </p>
     <input class="form-control" type="number" name="propbedcap" id="propbedcap" placeholder="Proposed Bed Capacity" />
 </div>
 <br/>
