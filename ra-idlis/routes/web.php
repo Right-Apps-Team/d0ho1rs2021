@@ -253,9 +253,11 @@ Route::get('employee/getRights', 'DOHController@getGroupRights');
 Route::match(['get', 'post'], 'employee/dashboard/mf/team', 'DOHController@MfTeam'); // Main, Add
 Route::post('employee/mf/save_team', 'AjaxController@saveTeam'); // Update
 Route::post('employee/mf/get/users', 'AjaxController@getUsersForCon'); // Update
+Route::post('employee/mf/get/users/ptc', 'AjaxController@getUsersForPtc'); // Update
 Route::post('employee/mf/get/users/team', 'AjaxController@getUsersConteam'); // Update
 Route::post('employee/mf/get/users/team/ptc', 'AjaxController@getUsersPtcteam'); // Update
 Route::post('employee/save/con/team', 'AjaxController@saveConAppTeam'); // Update
+Route::post('employee/save/ptc/team', 'AjaxController@savePtcAppTeam'); // Update
 Route::post('employee/mf/add/team/users', 'AjaxController@addconmem'); // Update
 Route::post('employee/mf/add/team/users/ptc', 'AjaxController@addptcmem'); // Update
 Route::post('employee/mf/delete/team/users', 'AjaxController@deleteConTemMem'); // Update

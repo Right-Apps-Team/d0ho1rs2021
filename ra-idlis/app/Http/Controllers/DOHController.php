@@ -4613,7 +4613,11 @@ use FunctionsClientController;
 							// dd($members);
 
 
-							
+							$dataTeam = DB::table('team');
+							$dataTeam->join('region', 'team.rgnid', '=', 'region.rgnid');
+							$dataTeam->where('team.type','ptc');
+							$dataTeam->where('team.rgnid', $data->rgnid);
+							$dataTeam =	$dataTeam->get();
 
 
 
@@ -4623,6 +4627,7 @@ use FunctionsClientController;
 								'hferc' => $members, 
 								'free' => $notin, 
 								'appid'=>$appid, 
+								'dataTeam' => $dataTeam,
 								'apptype' => $data->hfser_id, 
 								'canEval' => $canEvaluate, 
 								'membDone' => $membersDoneEv, 

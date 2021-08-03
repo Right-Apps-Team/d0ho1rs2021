@@ -160,19 +160,32 @@
 
 
                             @if($grpid == 'RLO')
-                                @if(app('request')->input('grp') != 'c'  && app('request')->input('cont') != 'yes' && app('request')->input('grpn') != 'c')
-                                            <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
-                                            <div class="col-md-12" id="divRem" hidden>
+                                @if(app('request')->input('grp') != 'c'  && app('request')->input('cont') != 'yes' && app('request')->input('grpn') != 'c' )
+                                            <!-- <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
+                                            <div class="col-md-12" id="divRem" >
                                                 <label for="remarks" >Remarks</label>
                                                 <textarea class="form-control" name="remarks" id="remarks" >
                                                 
                                                 </textarea>
                                             </div>
-                                                <button id="update" hidden class="btn btn-primary btn-block" type="button" onClick="savePartialLto('update')">
+                                                <button id="update"  class="btn btn-primary btn-block" type="button" onClick="savePartialLto('update')">
                                                     <i class="fa fa-floppy-o" aria-hidden="true"></i>
                                                     Update
                                                 </button>
-                                            </div>
+                                            </div> -->
+                                            <div class="col-md-12" id="divRem" >
+                                                    <label for="remarks" >Remarks</label>
+                                                    <textarea class="form-control" name="remarks" id="remarks" >
+                                                    
+                                                    </textarea>
+                                                </div>
+                                                <div class="col-md-12"> &nbsp;</div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
+                                                        <button id="update"  class="btn btn-primary btn-block" type="button" onClick="savePartialPtc('update')">
+                                                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                                                            Update 
+                                                        </button>
+                                                </div>
                                     @endif
                              @endif
 

@@ -53,9 +53,9 @@
                                                 </td>
                                                 <td>
                                                 <select   name="pos" id="pos" class="form-control" required>
-                                                    <option value="C">Chief</option>
-                                                    <option value="MO">MO</option>
-                                                    <option value="LO">Licensing Officer</option>
+                                                    <option value="C">Chairperson</option>
+                                                    <option value="VC">Vice ChairPerson</option>
+                                                    <option value="E">Member</option>
                                                 </select>
                                                 </td>
                                                 
@@ -155,7 +155,7 @@
        $('.tr_addOn').remove();
        $('.optsusers').remove();
        $.ajax({
-                  url: "{{ asset('employee/mf/get/users') }}",
+                  url: "{{ asset('employee/mf/get/users/ptc') }}",
                   method: 'POST',
                   data : {  _token : $('#token').val(),rgnid : rgnid},
                   success: function(data){
@@ -316,8 +316,8 @@ console.log(data)
        
 
         //Create array of options to be added
-        var array = ["C","MO","LO"];
-        var array1 = ["Chief","MO","Lincensing Officer"];
+        var array = ["C","VC","E"];
+        var array1 = ["Chairperson","Vice ChairPerson","Member"];
 
         //Create and append select list
         var selectList = document.createElement("select");

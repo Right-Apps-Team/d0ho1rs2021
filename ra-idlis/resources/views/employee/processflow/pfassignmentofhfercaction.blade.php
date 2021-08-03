@@ -41,8 +41,9 @@
   <div class="content p-4">
     <div class="card">
       <div class="card-header bg-white font-weight-bold">
+      <button class="btn btn-primary" onclick="window.history.back();">Back</button> 
          HFERC Assignment 
-         <button class="btn btn-primary" onclick="window.history.back();">Back</button> 
+      
       </div>
       <div class="card-body">
         <div class="col-sm-12">
@@ -65,11 +66,16 @@
         @if(isset($AppData->isAcceptedFP))
         
         <div class="row">
+        <div class="col-sm">
+            <div class="container-fluid">
+              <button class="btn btn-primary " data-toggle="modal" data-target="#viewModalteam"><i class="fa fa-plus-circle"></i> Select Team</button>
+          </div>
+          </div>
           @if(count($free) > 0 && in_array($currentUser->grpid, ['PO','NA','PO1','PO2','RLO']))
          
-            <div class="col-md-2">
+            <!-- <div class="col-md-2">
               <button class="btn btn-primary p-2" data-toggle="modal" data-target="#viewModal"><i class="fa fa-plus-circle"></i> Add Member</button>
-            </div>
+            </div> -->
             @else 
             <!-- <div class="col-md-1">
               <button class="btn btn-warning p-2" disable>No availbale evaluator for this region/office</button>
@@ -84,7 +90,7 @@
             @endif
           @endif
 
-
+ 
 
         <!-- if(isset($membDone) && $canViewOthers) -->
         <div class="col-md-2" id="toFrame">
@@ -192,9 +198,9 @@ while($i>0) {
                       <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#viewModalEdit" onclick="showData('{{$members->hfercid}}','{{ucfirst($members->fname.' '. (!empty($members->mname) ? $members->mname.',' :'').$members->lname)}}','{{$members->pos}}')">
                         <i class="fa fa-fw fa-edit"></i>
                       </button>
-                      <button type="button" class="btn btn-danger" onclick="showDelete('{{$members->hfercid}}');">
+                      <!-- <button type="button" class="btn btn-danger" onclick="showDelete('{{$members->hfercid}}');">
                         <i class="fa fa-ban" aria-hidden="true"></i>
-                      </button>
+                      </button> -->
                     @else
                     
                    
@@ -303,9 +309,9 @@ while($i>0) {
                                   <td>
 
                                    <div class="row mb-2">
-                                    <div class="col-sm">
+                                    <!-- <div class="col-sm">
                                       Member Name:
-                                    </div>
+                                    </div> -->
                                     <div class="col-sm-11">
                                       <select name="uid" id="uidadd" class="form-control" required>
                                         @if(count($free) > 0)
@@ -323,9 +329,9 @@ while($i>0) {
                                   </td>
                                   <td>
                                 
-                                      <div class="col-sm">
+                                      <!-- <div class="col-sm">
                                         Commitee Position:
-                                      </div>
+                                      </div> -->
                                       <div class="col-sm-11">
                                         <select name="pos" id="pos" class="form-control" required>
                                           <option value="E">Member</option>
@@ -475,6 +481,72 @@ while($i>0) {
       @endif
     @endif
 
+    <div class="modal fade" id="viewModalteam" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog  modal-md" role="document">
+      <div class="modal-content" style="border-radius: 0px;border: none;">
+        <div class="modal-body" style=" background-color: #272b30;color: white;">
+          <h5 class="modal-title text-center">Select Team</h5>
+          <hr>
+          <div class="col-sm-12">
+            <form id="memberaddTeam">
+              {{csrf_field()}}
+                <div class="container pl-5">
+                  <div class="row mb-2">
+                    <!-- <div class="col-sm">
+                      Member Name:
+                    </div> -->
+              <div class="col-sm-11">
+
+              Region Teams
+              <select id="team" class="form-control" onchange="getteammem(this.value)" required>
+                          <option value="">Select</option>
+                          @isset($dataTeam)
+                            @foreach ($dataTeam as $r)
+                           
+                            <option value="{{$r->teamid}}">{{$r->teamdesc}}</option>
+                            
+                            @endforeach
+                          @endisset
+              </select>
+              <br>
+              <h5><center>Committee Members</center>   </h5>
+                                <table class="table table-bordered" id="addNewRow4New">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <center>Member Name</center>
+                                                </th>  
+                                                <th>
+                                                    <center>Position</center>
+                                                </th>
+                                              
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody  id="addNewRow4NewCont">
+                                            
+                                        </tbody>
+                                </table>
+              <br> <br>
+
+
+
+
+
+             
+                  
+                  <input type="hidden" name="action" value="add">
+                  <button class="btn btn-primary pt-2" type="submit">Submit</button>
+              </div>
+
+              
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
     <script type="text/javascript">
 
 setTimeout(function(){  
@@ -482,7 +554,105 @@ setTimeout(function(){
   document.getElementById("revisioncount").value = '{{$revision}}'
  }, 1000);
 
+ function getteammem(team_id){
+  console.log("team_id")
+  console.log(team_id)
+       
+       $.ajax({
+                  url: "{{ asset('employee/mf/get/users/team/ptc') }}",
+                  method: 'POST',
+                  data : {  _token : $('#token').val(),team_id : team_id},
+                  success: function(data){
+                      
 
+console.log("team")
+console.log(data)
+
+                $('#addNewRow4NewCont').empty()
+
+                var tbodyRef = document.getElementById('addNewRow4New').getElementsByTagName('tbody')[0];
+
+                // Insert a row at the end of table
+               data.map((h) => {
+                genihb(h.id,h.uid, (h.fname+' '+h.lname), h.pos,tbodyRef)
+                });
+
+
+                  }, error : function(XMLHttpRequest, textStatus, errorThrown){
+                      console.log(errorThrown);
+                      $('#EditErrorAlert').show(100);
+                  },
+               });
+    }
+
+    function genihb(id,uid,name,pos, tbodyRef){
+                var newRow = tbodyRef.insertRow();
+
+          // Insert a cell at the end of the row
+
+          var newCell = newRow.insertCell();
+          var newCell1 = newRow.insertCell();
+          // var newCell2 = newRow.insertCell();
+
+          // Append a text node to the cell
+
+        
+
+          var newText = document.createTextNode(name);
+          var newText1 = document.createTextNode(pos == 'C'? 'Chairperson' : (pos == 'VC'? 'Vice ChairPerson' :'Member'));
+        //   var newText2 = document.createTextNode('new rddfdsow');
+        // <i class="fa fa-minus-circle" onclick="return preventDef()"></i>
+        //   var newText2 = document.createElement("i");
+        //   newText2.setAttribute("class", "fa fa-pencil-square-o");
+        //   newText2.setAttribute("style", "float:left; cursor: pointer;");
+
+         var newText3 = document.createElement("i");
+          newText3.setAttribute("onclick", "deleteMember("+id+")");
+          newText3.setAttribute("class", "fa fa-minus-circle");
+          newText3.setAttribute("style", "float:right; cursor: pointer;");
+        
+        
+          var space = document.createTextNode('   ');
+
+          newCell.appendChild(newText);
+          newCell1.appendChild(newText1);
+        //   newCell2.appendChild(newText2);
+        //   newCell2.appendChild(space);
+          // newCell2.appendChild(newText3);
+          // createSelect(newCell1, pos, id)
+    }
+
+    $("#memberaddTeam").submit(function(e){
+      e.preventDefault();
+   
+        // getAddedmem()
+       var sArr = {
+     
+        _token: $("input[name=_token]").val(), 
+        appid:'{{ $AppData->appid }}',
+        revision:'{{$revision}}',
+        team_id: $('#team').val(),
+       }
+
+       console.log("sArr")
+       console.log(sArr)
+        
+       if(confirm("Are you sure you want to assign this team?")){
+         $.ajax({
+          url: "{{ asset('employee/save/ptc/team') }}",
+          method: "post",
+          data: sArr,
+          success:function(a){
+            if(a == 'DONE'){
+              alert('Team selected successfully');
+              location.reload();
+            }
+          }
+        })
+}
+
+     
+    })
 
 
  $(document).on('submit','#evaluateSend',function(event){

@@ -147,7 +147,8 @@
 				<div class="row">	
 					<div class="col-md-2" style="">&nbsp;</div>
 					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
-						Number of Beds
+					Authorized Bed Capacity
+						<!-- Number of Beds -->
 					</div>
 					<div class="col-md-1 hide-div">
 						<center>:</center>
@@ -161,7 +162,8 @@
 				<div class="row">	
 					<div class="col-md-2" style="">&nbsp;</div>
 					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
-						Number of Dialysis Station
+					Authorized Dialysis Station
+						<!-- Number of Dialysis Station -->
 					</div>
 					<div class="col-md-1 hide-div">
 						<center>:</center>
