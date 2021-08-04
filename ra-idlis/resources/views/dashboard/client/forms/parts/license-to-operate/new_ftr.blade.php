@@ -370,10 +370,26 @@ function getFacServCharge (val = null){
     getChargesPerApplication()
     getChargesPerAmb()
 
+    
     setTimeout(function(){  
+        var adser = document.getElementsByName("addOnServ");
+
+        var chkad = 'no';
+        console.log("adser.length")
+        console.log(adser.length)
+        for(var ad = 0; ad < adser.length ; ad++){
+            console.log("adser[ad].value")
+            console.log(adser[ad].value)
+            if(adser[ad].value == 'H3ADC'){
+                chkad = 'yes';
+            }
+        }
+
     var l3 = document.getElementById("H3ADC");
-        if(l3){
-            if(l3.checked == true ){
+    console.log("chkad")
+    console.log(chkad)
+        if(l3 || chkad == 'yes'){
+            if(l3.checked == true || chkad == 'yes'){
             document.getElementById("noDal").removeAttribute("hidden")
             }else{
                 document.getElementById("noDal").setAttribute("hidden", "hidden")
@@ -383,6 +399,20 @@ function getFacServCharge (val = null){
                 document.getElementById("noDal").setAttribute("hidden", "hidden")
                 document.getElementById("noofdialysis").value = null;
         }
+        
+        // if(l3){
+        //     if(l3.checked == true ){
+        //     document.getElementById("noDal").removeAttribute("hidden")
+        //     }else{
+        //         document.getElementById("noDal").setAttribute("hidden", "hidden")
+        //         document.getElementById("noofdialysis").value = null;
+        //     }
+        // }else{
+        //         document.getElementById("noDal").setAttribute("hidden", "hidden")
+        //         document.getElementById("noofdialysis").value = null;
+        // }
+
+
    }, 2000);
 
         // console.log("received fees")
@@ -1203,7 +1233,8 @@ return unique;
         if(e.target.name == 'addOnServ'){
             if(e.target.value == 'H3ADC' ){
             document.getElementById("noDal").removeAttribute("hidden")
-            }else{
+            }
+            else{
 
                 document.getElementById("noDal").setAttribute("hidden", "hidden")
                 document.getElementById("noofdialysis").value = null;
@@ -1499,6 +1530,7 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
     }
 
     
+        var uid ='{!!((count($fAddress) > 0) ? $fAddress[0]->uid: "")!!}';
         var aptidnew ='{!!((count($fAddress) > 0) ? $fAddress[0]->aptid: "")!!}';
         var appid ='{!!((count($fAddress) > 0) ? $fAddress[0]->appid: "")!!}';
         var ocid ='{!!((count($fAddress) > 0) ? $fAddress[0]->ocid: "")!!}';
@@ -1525,6 +1557,7 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
         var cmid ='{!!((count($fAddress) > 0) ? $fAddress[0]->cmid: "")!!}';
         var brgyid ='{!!((count($fAddress) > 0) ? $fAddress[0]->brgyid: "")!!}';
         var noofdialysis ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofdialysis: "")!!}';
+        var comments ='{!!((count($fAddress) > 0) ? $fAddress[0]->appComment: "")!!}';
 // console.log("Appid")
 // console.log(appid)
 
@@ -1621,6 +1654,7 @@ const fetchSubClass1 = async (e) => {
         //  console.log(ocidInpt)
         //  console.log(ocid)
 
+      document.getElementById("uid").value = uid;
       document.getElementById("appid").value = appid;
 
       document.getElementById("aptidnew").value = aptidnew;
@@ -1638,6 +1672,12 @@ const fetchSubClass1 = async (e) => {
       document.getElementById("noofmain").value = noofmain ? noofmain : 1;
       document.getElementById("noofsatellite").value = noofsatellite;
       document.getElementById("noofdialysis").value = noofdialysis;
+
+    var cmmt =  document.getElementById("remarks")
+
+    if(cmmt){
+        cmmt.value = comments;
+    }
 
       if(hfep === '0'){
         document.getElementById("hfep").checked = true;

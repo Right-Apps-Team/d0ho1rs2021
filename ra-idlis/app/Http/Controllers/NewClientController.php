@@ -2173,9 +2173,19 @@ public function fdacertN(Request $request, $appid, $requestOfClient = null) {
 				$mach = ['appid' => $appid, 'name' => strtolower($request->prefix . ' ' . $request->fname . ' ' . $request->mname . ' ' . $request->sur_name . ' ' . $request->suffix ), 'designation' => $request->position, 'qualification' => $request->qual, 'prcno' => $request->prcno, 'faciassign' => $request->assignment, 'validity' => $request->vto];
 
 				// for custom addition to FDA
-				if($request->po == 1 || $request->head == 1){
+				// if($request->po == 1 || $request->head == 1){
+				// 	$customInsertMach = true;
+				// }
+
+				if($request->po1 == 1 || $request->head1 == 1 || $request->xtech == 1 || $request->chiefrt == 1){
 					$customInsertMach = true;
 				}
+
+				if($request->pharmahead1 == 1 ){
+					$customInsertPhar = true;
+				}
+
+
 				if(count($pos) > 0){
 					foreach ($pos as $position) {
 						if($position->fda_type == 'cdrr'){

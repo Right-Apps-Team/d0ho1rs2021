@@ -33,6 +33,7 @@
               <th scope="col" style="text-align: center; width:auto;">NOV <br>Reference<br> number</th>
               <th scope="col" style="text-align: center; width:auto">Status</th>
               <th scope="col" style="text-align: center; width:auto">Options</th>
+              <th scope="col" style="text-align: center; width:auto">Team <br> Assignment</th>
             </tr>
           </thead>
           <tbody>
@@ -82,6 +83,8 @@
                         @endif
                         </span>
                     </td>
+                   
+
 
 
                   <!-- @if($value->isApproved == "1")
@@ -133,6 +136,12 @@
                       @endif
                     </center>
                   </td>
+                  <td style="text-align:center">
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#sMonModalTeam" onclick="showTeamSurv('{{$value->team}}')">
+                          <i class="fa fa-fw fa-eye"></i>
+                           Team
+                        </button>
+                  </td>
                 </tr>
               @endforeach
             @endisset
@@ -141,7 +150,52 @@
       </div>
     </div>
   </div>  
+  <div class="modal fade" id="sMonModalTeam" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content " style="border-radius: 0px;border: none;">
+        <div class="modal-body text-justify" style=" background-color: #272b30;color: white;">
+          <h5 class="modal-title text-center"><strong>View Team</strong></h5>
+          <hr>
+          <div class="input-group form-inline mb-1 mt-2">
+            <form class="container" method="POST" action="">
+              
+              <div class="row mt-3">
+                <div class="col-sm-5">
+                  Teams:
+                </div>
+                <div class="col-sm-7">
+                  <input readonly id="steam" class="form-control w-100">
+                </div>
+              </div>
 
+              <div class="row mt-3">
+                <div class="col-sm-12">
+                  Members:
+                </div>
+                <div class="col-sm-12">
+                  <!-- <select readonly class="form-control w-100" id="smember" multiple rows="5" disabled></select> -->
+                  <ul id="myList" style=" text-transform: capitalize;">
+                    <!-- <li>Coffee</li>
+                    <li>Tea</li> -->
+                  </ul>
+                </div>
+              </div>
+
+              {{-- submit btn --}}
+              <div class="row mt-3">
+                <div class="col-sm-6">
+                  {{-- <button type="button" class="btn btn-outline-success w-100"><center>Save</center></button> --}}
+                </div>
+                <div class="col-sm-6">
+                  <button type="button" data-dismiss="modal" class="btn btn-outline-danger w-100"><center>Close</center></button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
    <div class="modal fade" id="sMonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content " style="border-radius: 0px;border: none;">
@@ -266,6 +320,41 @@
 
 
   <script type="text/javascript">
+
+function showTeamSurv(id){
+      let aString = '';
+      if(id != ""){
+        $.ajax({
+          url: '{{asset('employee/mf/getMembersInTeam/neww')}}',
+          // url: '{{asset('employee/mf/getMembersInTeam')}}',
+          method: 'POST',
+          data: {_token : $("input[name=_token]").val(), id: id},
+          async: false,
+          success: function(a){
+            console.log(a)
+
+
+            $("#steam").val(a[0].montname);
+            // $("#steam").val(id);
+            // if(a.length > 0)
+            // {
+              $("#myList").empty();
+              // $("#smember").empty();
+              for (var i = 0; i < a.length; i++) {
+                // aString  += '<option>'+a[i].wholename+'</option>';
+                // aString  += '<option>'+a[i]['wholename']+'</option>';
+                var node = document.createElement("LI");
+                var textnode = document.createTextNode(a[i].wholename);
+                node.appendChild(textnode);
+                document.getElementById("myList").appendChild(node);
+              }
+              // $("#smember").append(aString);
+            // }
+          }
+        })
+      }
+    }
+
 
   	$("select[name=action]").change(function(event) {
   		if($(this).val() == 'NOV'){

@@ -732,7 +732,7 @@
       </div>
       <div class="container-fluid mt-1 mb-2">
         <span class="lead font-weight-bold">Remarks</span>:
-        <textarea name="comments" id="" cols="30" rows="10" class="form-control" required></textarea>
+        <textarea name="comments" id="comments" cols="30" rows="10" class="form-control" required></textarea>
       </div>
       <div class="container-fluid mt-1 mb-2">
         <span class="lead font-weight-bold mt-3">Recommendation:</span><br>
@@ -811,10 +811,19 @@
 
 // 
 function submitButtonClick(event) {
-	
+  var com = document.getElementById("comments");
+	console.log("com.value")
+	console.log(com.value)
     var ubnval = document.getElementById("setubnval").value;
         if(confirm("Are you sure you want to proceed? The approved bed capacity of this application is "+ ubnval)){
-        	document.getElementById("evalSave").submit();
+       
+            if(com.value == null || com.value == undefined || com.value == " " || !com.value ){
+              event.preventDefault();
+              alert("Please add remrks")
+            }else{
+              // event.preventDefault();
+              document.getElementById("evalSave").submit();
+            }
         }else{
           event.preventDefault();
         }

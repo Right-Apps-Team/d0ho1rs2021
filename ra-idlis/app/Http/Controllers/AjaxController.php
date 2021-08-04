@@ -8843,7 +8843,10 @@ public static function forDoneHeadersNew($appid,$monid,$selfAssess,$isPtc = fals
 	public static function getHighestApplicationFromX08FT($appid){
 		if(!empty($appid)){
 
-			$check =  DB::table('x08_ft')->join('facilitytyp','x08_ft.facid','facilitytyp.facid')->join('hfaci_grp','facilitytyp.hgpid','hfaci_grp.hgpid')->where([['x08_ft.appid',$appid]])->get();
+			$check =  DB::table('x08_ft')->join('facilitytyp','x08_ft.facid','facilitytyp.facid')->join('hfaci_grp','facilitytyp.hgpid','hfaci_grp.hgpid')
+			->where([['x08_ft.appid',$appid]])
+			->orderBy('x08_ft.id', 'ASC')
+			->get();
 
 			$st = 1;
 			foreach($check as $c){
@@ -8853,7 +8856,10 @@ public static function forDoneHeadersNew($appid,$monid,$selfAssess,$isPtc = fals
 			}
 			
 			
-			return DB::table('x08_ft')->join('facilitytyp','x08_ft.facid','facilitytyp.facid')->join('hfaci_grp','facilitytyp.hgpid','hfaci_grp.hgpid')->where([['x08_ft.appid',$appid],['facilitytyp.servtype_id',$st]])->first();
+			return DB::table('x08_ft')->join('facilitytyp','x08_ft.facid','facilitytyp.facid')->join('hfaci_grp','facilitytyp.hgpid','hfaci_grp.hgpid')
+			->where([['x08_ft.appid',$appid],['facilitytyp.servtype_id',$st]])
+			->orderBy('x08_ft.id', 'ASC')
+			->first();
 			// return DB::table('x08_ft')->join('facilitytyp','x08_ft.facid','facilitytyp.facid')->join('hfaci_grp','facilitytyp.hgpid','hfaci_grp.hgpid')->where([['x08_ft.appid',$appid],['facilitytyp.servtype_id',1]])->first();
 		}
 	}

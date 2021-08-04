@@ -72,7 +72,8 @@
                                 <?php continue; ?>
                               @endif
 
-                            @if($data->isrecommended == 1 )
+                            @if($data->isrecommended == 1 && strtolower($data->hfser_id) != 'lto')
+                          {{--  @if($data->isrecommended == 1 ) --}}
                                 <?php continue; ?>
                               @endif
 
@@ -85,7 +86,7 @@
 
 
                             @if($data->hasAssessors == 'T' || strtolower($data->hfser_id) != 'lto')
-
+                          {{--  @if($data->hasAssessors == 'T' || strtolower($data->hfser_id) != 'lto') --}}
 
                             <tr @if(!isset($data->documentSent) || $data->isrecommended == 2)style="background-color: #c4c1bb";@endif>
                               <td class="text-center">{{$data->hfser_id}}</td>

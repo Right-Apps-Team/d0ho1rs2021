@@ -70,7 +70,13 @@
                                 Save as Draft
                             </button>
                         </div> -->
-                        @if(app('request')->input('grp') == 'c')
+
+                        @php
+                            $employeeData = session('employee_login');
+                            $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
+                        @endphp
+
+                        @if(app('request')->input('grp') == 'c' ||  $grpid == 'DC')
                         <div class="col-md-12">
                         Remarks: <br> {{$fAddress[0]->appComment}}
                         {!!((count($fAddress) > 0) ? $fAddress[0]->appComment: "No Remarks")!!}
@@ -79,10 +85,7 @@
                         @endif
                         
                        
-                        @php
-                            $employeeData = session('employee_login');
-                            $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
-                        @endphp
+                       
 
 
                         @if($grpid === 'RLO')

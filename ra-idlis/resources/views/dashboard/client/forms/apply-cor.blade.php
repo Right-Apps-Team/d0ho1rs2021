@@ -76,13 +76,15 @@
                             Submit Form
                         </button>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
+                    <!-- <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
                         <button  id="save" class="btn btn-success btn-block" type="button" onClick="savePartialCor('partial')">
                             <i class="fa fa-floppy-o" aria-hidden="true"></i>
                             Save as Draft
                         </button>
-                    </div>
-                    @php
+                    </div> -->
+
+
+                 {{--   @php
                         $employeeData = session('employee_login');
                         $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
                     @endphp
@@ -97,6 +99,44 @@
                         </button>
                     </div>
                     @endif
+--}}
+
+@php
+                            $employeeData = session('employee_login');
+                            $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
+                        @endphp
+
+                        @if(app('request')->input('grp') == 'c' ||  $grpid == 'DC')
+                        <div class="col-md-12">
+                        Remarks: <br> {{$fAddress[0]->appComment}}
+                        {!!((count($fAddress) > 0) ? $fAddress[0]->appComment: "No Remarks")!!}
+                        </div>
+                    
+                        @endif
+                        
+                       
+                       
+
+
+                        @if($grpid === 'RLO')
+                        
+                           @if(app('request')->input('grp') != 'c' && app('request')->input('grpn') != 'c')
+                           <div class="col-md-12" id="divRem" >
+                            <label for="remarks" >Remarks</label>
+                            <textarea class="form-control" name="remarks" id="remarks" >
+                            
+                            </textarea>
+                        </div>
+                        <div class="col-md-12"> &nbsp;</div>
+                                            <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
+                                            <button id="update"  class="btn btn-primary btn-block" type="button" onClick="savePartialCor('update')">
+                                                <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                                                Update 
+                                            </button>
+                                        </div>
+                           @endif
+                         @endif
+
 
                 </div>
                

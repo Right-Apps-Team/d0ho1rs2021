@@ -36,6 +36,7 @@
             propcode.value = proparc
         }
 
+        var uid ='{!!((count($fAddress) > 0) ? $fAddress[0]->uid: "")!!}';
         var con_number ='{!!((count($fAddress) > 0) ? $fAddress[0]->con_number: "")!!}';
         var ocid ='{!!((count($fAddress) > 0) ? $fAddress[0]->ocid: "")!!}';
         var subclassid ='{!!((count($fAddress) > 0) ? $fAddress[0]->subClassid: "")!!}';
@@ -51,6 +52,7 @@
         var approvingauthoritypos ='{!!((count($fAddress) > 0) ? $fAddress[0]->approvingauthoritypos: "")!!}';
         var approvingauthority ='{!!((count($fAddress) > 0) ? $fAddress[0]->approvingauthority: "")!!}'; 
         var hfep ='{!!((count($fAddress) > 0) ? $fAddress[0]->hfep_funded: "")!!}';
+        var comments ='{!!((count($fAddress) > 0) ? $fAddress[0]->appComment: "")!!}';
 
         console.log("classid")
         console.log(classid)
@@ -157,6 +159,7 @@ const fetchSubClass1 = async (e) => {
 
         document.getElementsByName('funcid')[0].value = funcid;
        
+        document.getElementById("uid").value = uid;
         document.getElementById("facmode").value = facmode;
         document.getElementById("owner").value = owner;
         document.getElementById("prop_mobile").value = ownerMobile;
@@ -165,7 +168,11 @@ const fetchSubClass1 = async (e) => {
         document.getElementById("official_mail_address").value = mailingAddress;
         document.getElementById("approving_authority_pos").value = approvingauthoritypos;
         document.getElementById("approving_authority_name").value = approvingauthority;
+        var cmmt =  document.getElementById("remarks")
 
+        if(cmmt){
+            cmmt.value = comments;
+        }
         var checcon = document.getElementById("connumber");
 
         if(checcon){

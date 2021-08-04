@@ -141,8 +141,13 @@
                                     Save as Draft
                                 </button> --}} 
                             </div>
+                            @php
+                                $employeeData = session('employee_login');
+                                $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
+                            @endphp
 
-                            @if(app('request')->input('grp') == 'c')
+
+                            @if(app('request')->input('grp') == 'c'  ||  $grpid == 'DC')
                 <div class="col-md-12">
                 Remarks: <br>
                 {!!((count($fAddress) > 0) ? $fAddress[0]->appComment: "")!!}
@@ -153,10 +158,7 @@
                 
                 <div class="col-md-12"> &nbsp;</div>
 
-                            @php
-                                $employeeData = session('employee_login');
-                                $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
-                            @endphp
+                          
 
 
                             @if($grpid == 'RLO')
@@ -181,7 +183,7 @@
                                                 </div>
                                                 <div class="col-md-12"> &nbsp;</div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12 mb-5">
-                                                        <button id="update"  class="btn btn-primary btn-block" type="button" onClick="savePartialPtc('update')">
+                                                        <button id="update"  class="btn btn-primary btn-block" type="button" onClick="savePartialLto('update')">
                                                             <i class="fa fa-floppy-o" aria-hidden="true"></i>
                                                             Update 
                                                         </button>
