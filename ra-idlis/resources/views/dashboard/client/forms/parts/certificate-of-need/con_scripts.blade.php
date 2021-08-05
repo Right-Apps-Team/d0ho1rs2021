@@ -227,6 +227,7 @@ function initialProPo(){
 
                         var newTd1 = document.createElement("td");
                         newTd1.setAttribute("id", "colEntryHA-" + i);
+                       
                         document.getElementById("rowEntryHospital" + i).appendChild(newTd1);
 
                         var xbtn = document.createElement("button");
@@ -269,14 +270,28 @@ function initialProPo(){
                                         }
                                  }
                                  var clas = ' ';
-                                 if(c == 0){ inpt2.value = exHosp[i].facilityname ; clas = 'exfacn'}
-                                 if(c == 1){ inpt2.value = exHosp[i].location1 ;clas = 'exloc'}
-                                 if(c == 2){ inpt2.value = exHosp[i].noofbed1 ;clas = 'exbedcap'}
+                                 if(c == 0){ inpt2.value = exHosp[i].facilityname ; clas = 'exfacn'
+                                        inpt2.setAttribute("style", "width: 200px !important;");
+                                }
+                                 if(c == 1){ inpt2.value = exHosp[i].location1 ;clas = 'exloc'
+                                        inpt2.setAttribute("style", "width: 250px !important;");
+                                }
+                                 if(c == 2){ inpt2.value = exHosp[i].noofbed1 ;clas = 'exbedcap'
+                                        inpt2.setAttribute("style", "width: 100px !important;");
+                                }
                                 
-                                 if(c == 4){ inpt2.value = exHosp[i].license ;clas = 'exlic'}
-                                 if(c == 5){ inpt2.value = exHosp[i].validity ;clas = 'exval'}
-                                 if(c == 6){ inpt2.value = exHosp[i].date_operation ;clas = 'exdatop'}
-                                 if(c == 7){ inpt2.value = exHosp[i].remarks ;clas = 'exrem'}
+                                 if(c == 4){ inpt2.value = exHosp[i].license ;clas = 'exlic'
+                                        inpt2.setAttribute("style", "width: 150px !important;");
+                                }
+                                 if(c == 5){ inpt2.value = exHosp[i].validity ;clas = 'exval'
+                                
+                                }
+                                 if(c == 6){ inpt2.value = exHosp[i].date_operation ;clas = 'exdatop'
+                                
+                                }
+                                 if(c == 7){ inpt2.value = exHosp[i].remarks ;clas = 'exrem'
+                                        inpt2.setAttribute("style", "width: 100px !important;");
+                                }
                                 //  var vals = ["facilityname", "location1", "noofbed1", "cat_hos", "license", "validity", "date_operation"]
                                 //  for(var v = 0 ; v < vals.length; v++){
                                 //         inpt2.value = condet[i].vals[v] ;
@@ -284,7 +299,7 @@ function initialProPo(){
                                
                                 
 
-                                inpt2.setAttribute("class", "form-control  ");
+                                inpt2.setAttribute("class", "form-control ");
                                 document.getElementById("colEntryH"+c +"-" + i).appendChild(inpt2);
 
                                

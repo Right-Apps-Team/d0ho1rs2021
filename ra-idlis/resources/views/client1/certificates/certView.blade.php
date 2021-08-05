@@ -95,7 +95,7 @@
 					</div>	
 				</div>
 @endif
-@if(strtolower($retTable[0]->hfser_id) != 'con')
+@if(strtolower($retTable[0]->hfser_id) != 'con' && strtolower($retTable[0]->hfser_id) != 'ptc')
 				<div class="row">	
 					<div class="col-md-2" style="">&nbsp;</div>
 					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
@@ -110,6 +110,7 @@
 				</div>
 @endif
 				@isset($retTable[0]->funcdesc)
+				@if(strtolower($retTable[0]->hfser_id) != 'ptc')
 				<div class="row">	
 					<div class="col-md-2" style="">&nbsp;</div>
 					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
@@ -122,6 +123,7 @@
 						{{$retTable[0]->funcdesc}}
 					</div>	
 				</div>
+				@endif
 				@endisset
 
 
@@ -243,10 +245,12 @@
 
 								if($i != 0){
 									if($ambType1[$i] == '2'){
-										echo ((int)$i).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
+										echo ' Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
+									//	echo ((int)$i).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
 										
 									}else{
-										echo ((int)$i).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i].' ,Owner: '.$owner[$i];
+										echo 'Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i].' ,Owner: '.$owner[$i];
+									//	echo ((int)$i).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i].' ,Owner: '.$owner[$i];
 									}
 									echo "<br>";
 							}

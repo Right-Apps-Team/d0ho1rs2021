@@ -208,7 +208,7 @@
 
                       @if($a->deleted == null)
 
-                      <div class="dropdown">
+                      <div class="dropdown" style="z-index: 99999 !important; position: absolute">
 
                         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
@@ -216,7 +216,7 @@
 
                         </button>
 
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="padding-left: 5px; z-index: 99999;">
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="padding-left: 5px; z-index: 99999 !important; position: absolute">
 
                           <button type="button" class="btn btn-light" data-toggle="modal" data-target="#vReqModal" title="View {{$a->type}}" onclick="vReqComp('{{$a->ref_no}}', '{{$a->type}}', '{{$a->name_of_comp}}', '{{$a->appid}}', '{{$a->name_of_faci}}', '{{$a->type_of_faci}}', '{{$a->reqs}}', '{{$a->comps}}')">
                           

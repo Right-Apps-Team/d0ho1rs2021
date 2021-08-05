@@ -4623,6 +4623,7 @@ public static function checkConmem($appid)
 							->where('appform.draft', '=', null)
 							// ->where('appform.assignedRgn', '=', $Cur_useData['rgnid'])
 							->orderBy('appform.appid','desc')
+							->orderBy('appform.t_date','desc')
 							->get();
 						break;
 					case 'FDA':
@@ -4648,6 +4649,7 @@ public static function checkConmem($appid)
 							->where([['appform.hfser_id','LTO']])
 							// ->where([['appform.hfser_id','LTO'],['appform.noofsatellite', '>', 0]]) 7-2-2021
 							->orderBy('appform.appid','desc')
+							->orderBy('appform.t_date','desc')
 							->get();
 							break;
 					case 'LO':
@@ -4668,6 +4670,8 @@ public static function checkConmem($appid)
 							// ->where('appform.assignedLO', '=', $Cur_useData['cur_user'])
 							->where('appform.assignedRgn', '=', $Cur_useData['rgnid']) //bring back after
 							->orderBy('appform.appid','desc')
+							->orderBy('appform.t_date','desc')
+						
 							->get();
 							break;
 					case 'HFERC':
@@ -4688,6 +4692,8 @@ public static function checkConmem($appid)
 							->join('hferc_team', 'appform.appid', '=', 'appform.appid')
 							->select('appform.*', 'hfaci_serv_type.*', 'ptc.propbedcap as pbedcap','region.rgn_desc', 'x08.authorizedsignature', 'x08.email', 'x08.streetname', 'x08.barangay', 'x08.city_muni', 'x08.province', 'x08.zipcode', 'x08.rgnid as aprgnid', 'appform.rgnid', 'hfaci_grp.hgpdesc', 'city_muni.cmname', 'apptype.aptdesc', 'province.provname', 'barangay.brgyname', 'ownership.ocdesc', 'class.classname', 'trans_status.trns_desc', 'x08.uid')
 							->orderBy('appform.appid','desc')
+							->orderBy('appform.t_date','desc')
+							
 							->distinct()
 							->get();
 							break;
@@ -4712,6 +4718,7 @@ public static function checkConmem($appid)
 							}
 
 							$anotherData->orderBy('appform.appid','desc');
+							$anotherData->orderBy('appform.t_date','desc');
 							$anotherData = $anotherData->get();
 						break;
 				}

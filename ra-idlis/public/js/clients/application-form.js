@@ -662,17 +662,17 @@ const addListOfExistingHospitals = () => {
                     <i class="fa fa-times"></i>
                 </button>
             </td>
-            <td>
-                <input type="text"  class="form-control exfacn" name="facilitynames[]"/>
+            <td >
+                <input type="text" style="width: 200px !important;" class="form-control exfacn " name="facilitynames[]"/>
             </td>
             <td>
-                <input type="text"  class="form-control exloc" name="locations[]"/>
+                <input type="text" style="width: 250px !important;"   class="form-control exloc" name="locations[]"/>
             </td>
             <td>
-                <input type="text"  class="form-control exbedcap" name="bedcapacities[]"/>
+                <input type="text" style="width: 100px !important;"   class="form-control exbedcap" name="bedcapacities[]"/>
             </td>
             <td>
-                <select class="form-control excat" name="cat_hos[]">
+                <select style="width: 250px !important;"  class="form-control excat" name="cat_hos[]">
                     <option value="">Please select</option>
                     <option value="H">Level 1 Hospital</option>  
                     <option value="H2">Level 2 Hospital</option>  
@@ -680,7 +680,7 @@ const addListOfExistingHospitals = () => {
                 </select>
             </td>
             <td>
-                <input type="text" class="form-control exlic" name="license[]" />
+                <input type="text" style="width: 150px !important;" class="form-control exlic" name="license[]" />
             </td>
             <td>
                 <input type="date" class="form-control exval" name="validity[]">
@@ -689,7 +689,7 @@ const addListOfExistingHospitals = () => {
                 <input type="date" class="form-control exdatop" name="date_operation[]">
             </td>
             <td>
-                <textarea cols="4" class="form-control exrem" name="remarks[]"></textarea>
+                <textarea cols="2"  style="width: 100px !important;" class="form-control exrem" name="remarks[]"></textarea>
             </td>
         </tr>
     `;

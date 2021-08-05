@@ -187,7 +187,7 @@
                       @if(isset($AppData) && isset($AppData->facmdesc))<strong>{{$AppData->facmdesc}}</strong>
                         @else<span style="color:red">Not Available</span>
                         @endif &nbsp;
-                        <a style="float: right;" href="{{$linkToEdit}}" target="_blank" class="btn btn-warning">
+                        <a style="float: right;" href="{{$linkToEdit}}?grplo=rlo" target="_blank" class="btn btn-warning">
                           <i class="fa fa-eye" aria-hidden="true"></i> View Application
                         </a> 
                         <span style="float: right;">&nbsp;&nbsp;</span>

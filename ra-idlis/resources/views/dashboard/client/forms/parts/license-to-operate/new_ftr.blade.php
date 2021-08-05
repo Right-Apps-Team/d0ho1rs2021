@@ -198,14 +198,19 @@ document.getElementsByName('areacode').value = 3;
     }
    
     function type_of_fac(selected) {
-       
+        var nm = document.getElementById("noofmain")
         if( $('input[name="hgpid"]:checked').val() == 6 ){
-           var nm = document.getElementById("noofmain")
-            if(nm.value == null || nm.value == undefined  || nm.value == " "|| !nm.value){
-            document.getElementById("noofmain").value = 1
-        }
+            // var nm = document.getElementById("noofmain")
+                if(nm.value == null || nm.value == undefined  || nm.value == " "|| !nm.value){
+                document.getElementById("noofmain").value = 1
+                }
         }else{
-            document.getElementById("noofmain").value = null
+            if(nm.value == null || nm.value == undefined  || nm.value == " "|| !nm.value || '{!!isset($fAddress)&&(count($fAddress) == 0)!!}'){
+                document.getElementById("noofmain").value = null
+            }
+
+            
+           
         }
 
 
@@ -1654,6 +1659,9 @@ const fetchSubClass1 = async (e) => {
         //  console.log(ocidInpt)
         //  console.log(ocid)
 
+        console.log("noofmain")
+        console.log(noofmain)
+
       document.getElementById("uid").value = uid;
       document.getElementById("appid").value = appid;
 
@@ -1670,6 +1678,7 @@ const fetchSubClass1 = async (e) => {
       document.getElementById("ptcCode").value = ptcCode;
       document.getElementById("noofbed").value = noofbed;
       document.getElementById("noofmain").value = noofmain ? noofmain : 1;
+    //   document.getElementById("noofmain").value = noofmain ? noofmain : 1;
       document.getElementById("noofsatellite").value = noofsatellite;
       document.getElementById("noofdialysis").value = noofdialysis;
 
@@ -1999,6 +2008,33 @@ const fetchSubClass1 = async (e) => {
 } 
 //   INITIAL STATES
 
+@if(app('request')->input('grplo') == 'rlo')
+document.getElementById("ocid").setAttribute("disabled", "disabled")
+document.getElementById("facmode").setAttribute("disabled", "disabled")
+document.getElementById("funcid").setAttribute("disabled", "disabled")
+setTimeout(function(){  
+    document.getElementById("classification").setAttribute("disabled", "disabled")
+    setTimeout(function(){ 
+        document.getElementById("subclass").setAttribute("disabled", "disabled")
+ }, 3000);
 
+ }, 3000);
+setTimeout(function(){  
+ var ffc = document.getElementsByName("facid")
+ var hhg = document.getElementsByName("hgpid")
+
+ if(ffc){
+     for(var fc = 0; fc < ffc.length; fc++){
+         ffc[fc].disabled = true;
+     }
+ }
+
+if(hhg){
+     for(var hh = 0; hh < ffc.length; hh++){
+        hhg[hh].disabled = true;
+     }
+ }
+}, 3000);
+@endif
 
 </script>

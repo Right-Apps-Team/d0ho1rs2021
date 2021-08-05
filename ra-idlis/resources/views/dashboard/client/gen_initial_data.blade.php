@@ -1,5 +1,6 @@
 <script>
- 
+
+    
     if ('{!!isset($fAddress)&&(count($fAddress) > 0)!!}') {
       console.log("typee")
       console.log('{!! $apptypenew !!}')
@@ -223,5 +224,33 @@ function checkNumberlValidity(number)
     return (false)
 }
 
-    
+@if(app('request')->input('grplo') == 'rlo')
+document.getElementById("ocid").setAttribute("disabled", "disabled")
+document.getElementById("facmode").setAttribute("disabled", "disabled")
+document.getElementById("funcid").setAttribute("disabled", "disabled")
+setTimeout(function(){  
+    document.getElementById("classification").setAttribute("disabled", "disabled")
+    setTimeout(function(){ 
+        document.getElementById("subclass").setAttribute("disabled", "disabled")
+ }, 3000);
+
+ }, 3000);
+setTimeout(function(){  
+ var ffc = document.getElementsByName("facid")
+ var hhg = document.getElementsByName("hgpid")
+
+ if(ffc){
+     for(var fc = 0; fc < ffc.length; fc++){
+         ffc[fc].disabled = true;
+     }
+ }
+
+if(hhg){
+     for(var hh = 0; hh < ffc.length; hh++){
+        hhg[hh].disabled = true;
+     }
+ }
+}, 3000);
+@endif
+
 </script>

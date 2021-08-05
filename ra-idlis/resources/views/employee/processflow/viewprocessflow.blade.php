@@ -10,7 +10,7 @@
   <div class="content p-4">
   	<div class="card" style="width: 165vh;" >
   		<div class="card-header bg-white font-weight-bold">
-             Application Status  
+             Application Status 
           </div>
           <div class="card-body table-responsive">
           <!-- <table border="0" cellspacing="5" cellpadding="5">

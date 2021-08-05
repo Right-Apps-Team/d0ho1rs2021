@@ -112,7 +112,7 @@
 					<div class="col-md-1" style="display: inline">
 						:</div>
 					<div class="col-md-5 contr" style="float:left;display: inline;">
-						{{((isset($facname)) ? $facname : "No Health Service")}}
+						{{((isset($facname)) ? strtoupper($facname)  : "No Health Service")}}
 						<!-- {{((isset($facilityTypeId)) ? $facilityTypeId : "No Health Service")}} -->
 					</div>
 					<div class="col-md-1" style="display: inline">
@@ -275,10 +275,12 @@
 						
 								if($i != 0){
 									if($ambType1[$i] == '2'){
-										echo ((int)$i).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
+										echo ' Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
+									//	echo ((int)$i).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i];
 										
 									}else{
-										echo ((int)$i).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i].' ,Owner: '.$owner[$i];
+										echo ' Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i].' ,Owner: '.$owner[$i];
+									//	echo ((int)$i).', Type '. $type[$i].' ,Plate No. ' .  $plateNum[$i].' ,Owner: '.$owner[$i];
 									}
 									echo "<br>";
 							}

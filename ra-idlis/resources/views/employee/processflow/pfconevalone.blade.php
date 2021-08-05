@@ -731,7 +731,7 @@
         </table>
       </div>
       <div class="container-fluid mt-1 mb-2">
-        <span class="lead font-weight-bold">Remarks</span>:
+        <span class="lead font-weight-bold">Remarks</span> <span class="text-danger">*</span>:
         <textarea name="comments" id="comments" cols="30" rows="10" class="form-control" required></textarea>
       </div>
       <div class="container-fluid mt-1 mb-2">

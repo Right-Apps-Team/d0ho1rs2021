@@ -70,7 +70,7 @@
                                       <div class="row">
                                         {{-- {{dd($data->appid)}} --}}
                                         <div class="col-6">
-                                          <button type="button"  onclick="window.location.href = '{{ asset('/employee/dashboard/processflow/actions') }}/{{$data->appid}}/{{$data->aptid}}'" class="btn btn-outline-primary" ><i class="fa fa-credit-card"></i></button>
+                                          <button type="button"  onclick="window.location.href = '{{ asset('/employee/dashboard/processflow/actions') }}/{{$data->appid}}/{{$data->aptid}}?from=main'" class="btn btn-outline-primary" ><i class="fa fa-credit-card"></i></button>
                                           <!-- <button type="button"  onclick="window.location.href = '{{ asset('/employee/dashboard/processflow/actions') }}/{{$data->appid}}/{{$data->aptid}}'" {{$ifdisabled}} class="btn btn-outline-primary" ><i class="fa fa-credit-card"></i></button> -->
                                         </div>
                                         {{-- <div class="col-6">
@@ -203,6 +203,16 @@
     function insert(id) {
       $('input[name=appid]').empty().val(id);
     }
+
+
+   
+  </script>
+
+<script lang="javascript">
+    const reloadUsingLocationHash = () => {
+      window.location.hash = "reload";
+    }
+    window.onload = reloadUsingLocationHash();
   </script>
   @endsection
 @else

@@ -204,7 +204,7 @@
                 </div>
                 @endif
                 <div class="col-md-2 d-flex justify-content-end">
-                  <a href="{{$linkToEdit}}" target="_blank" class="font-weight-bold text-white btn btn-warning btn btn-primary ml-3 pb-2 pt-2 mt-2 mb-2"><i class="fa fa-eye" aria-hidden="true"></i> View Application</a>
+                  <a href="{{$linkToEdit}}?grplo=rlo" target="_blank" class="font-weight-bold text-white btn btn-warning btn btn-primary ml-3 pb-2 pt-2 mt-2 mb-2"><i class="fa fa-eye" aria-hidden="true"></i> View Application</a>
                 </div>
                 @endif
                  

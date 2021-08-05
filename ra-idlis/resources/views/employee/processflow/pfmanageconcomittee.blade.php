@@ -18,6 +18,7 @@
     @endphp
       <div class="card">
           <div class="card-header bg-white font-weight-bold">
+          <button class="btn btn-primary" onclick="window.history.back();">Back</button>
              Committee Team 
              <span  style="float: right;" ><a href="#" title="Add New Team" data-toggle="modal" data-target="#myModal"><button class="btn btn-primarys"><i class="fa fa-plus-circle" style="cursor: pointer;"></i>&nbsp;Add new</button></a></span>
              <!-- <span class="TM001_add" style="float: right;" ><a href="#" title="Add New Team" data-toggle="modal" data-target="#myModal"><button class="btn btn-primarys"><i class="fa fa-plus-circle" style="cursor: pointer;"></i>&nbsp;Add new</button></a></span> -->

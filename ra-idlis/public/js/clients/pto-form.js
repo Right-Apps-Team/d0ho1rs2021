@@ -622,7 +622,7 @@ const addListOfExistingHospitals = () => {
     const row = `
         <tr id="rowEntryHospital${entry}" class="itemRow" >
             <td>
-                <button class="btn btn-danger btn-xs" onClick="removeExistingHospitalRow(${entry})">
+                <button class="btn btn-danger btn-xs " onClick="removeExistingHospitalRow(${entry})">
                     <i class="fa fa-times"></i>
                 </button>
             </td>

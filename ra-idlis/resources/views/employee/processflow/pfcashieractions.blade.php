@@ -28,7 +28,17 @@
         <div class="card-header bg-white font-weight-bold">
           @isset($APPID)<input type="text" id="APPID" value="{{$APPID}}" hidden>@endisset
           <input type="" id="token" value="{{ Session::token() }}" hidden>
-          <button class="btn btn-primary" onclick="window.history.back();">Back</button>&nbsp;
+          <script>
+
+          </script>
+
+          <!-- <button class="btn btn-primary" onclick="location.replace(document.referrer);">Back</button>&nbsp; -->
+          @if(app('request')->input('from') == 'main')
+          <a href="{{asset('/employee/dashboard/processflow/cashier')}}" class="btn btn-primary" >Back1 </a>
+        @else
+        <button class="btn btn-primary" onclick="window.history.back();">Back2</button>&nbsp;
+          @endif
+         
            Cashier Evaluation <span class="optnTD" style="display: none;">(Overide Payment Mode)</span>
           
         </div>
@@ -148,7 +158,8 @@
                       </td>
                       {{-- <td class="text-center">@isset($element->cat_type)@if($element->cat_type == "P") {{date("F j, Y", strtotime($element->paymentDate))}}@endif @endisset</td> --}}
                       {{-- <td class="text-center">@isset($element->cat_type)@if($element->cat_type == "P") {{$element->chg_desc}} @endif @endisset</td> --}}
-                      <td style="text-align:left">{!!($element->reference != 'Payment'? 'PHP '.number_format(abs($element->amount)) : '<strong>-PHP '.number_format(abs($element->amount))."</strong")!!}</td>
+                      <td style="text-align:left">{!!($element->reference != 'Payment'? 'PHP '.number_format(abs($element->amount)) : '<strong>PHP ('.number_format(abs($element->amount)).")</strong")!!}</td>
+                      <!-- <td style="text-align:left">{!!($element->reference != 'Payment'? 'PHP '.number_format(abs($element->amount)) : '<strong>-PHP '.number_format(abs($element->amount))."</strong")!!}</td> -->
                       {{-- <td class="optnTD" style="display:none"><center><button style="background-color: #d40000" class="btn btn-primarys" onclick="showDelete({{$element->id}}, '{{$element->chg_code}} - {{$element->reference}}')"><i class="fa fa-trash" aria-hidden="true"></i></button></center></td> --}}
                       <td>
                         <div class="row">
