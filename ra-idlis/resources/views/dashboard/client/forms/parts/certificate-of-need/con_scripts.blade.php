@@ -41,8 +41,8 @@ console.log('{!! $apptypenew !!}')
 
 
     var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "")!!}');
-//     console.log("servFacArray")
-//     console.log(servFacArray)
+    console.log("servFacArray")
+    console.log(servFacArray)
 
     var appid ='{!!((count($fAddress) > 0) ? $fAddress[0]->appid: "")!!}';
     var cap_inv ='{!!((count($fAddress) > 0) ? $fAddress[0]->cap_inv: "")!!}';

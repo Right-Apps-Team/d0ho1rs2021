@@ -29,8 +29,15 @@
         <div class="card-header bg-white font-weight-bold">
           @isset($appid)<input type="text" id="APPID" value="{{$appid}}" hidden>@endisset
           <input type="" id="token" value="{{ Session::token() }}" hidden>
-           Cashier Evaluation (RADIATION FACILITY) <span class="optnTD" style="display: none;">(Overide Payment Mode)</span>&nbsp;
-           <button class="btn btn-primary" onclick="window.history.back();">Back</button> 
+        
+           <!-- <button class="btn btn-primary" onclick="window.history.back();">Back</button>  -->
+           @if(app('request')->input('from') == 'rec')
+          <button class="btn btn-primary" onclick="window.history.back();">Back</button>&nbsp;
+          @else
+          <a class="btn btn-primary" href="{{asset('employee/dashboard/processflow/FDA/cashier')}}">Back</a>
+          @endif
+          Cashier Evaluation (RADIATION FACILITY) <span class="optnTD" style="display: none;">(Overide Payment Mode)</span>&nbsp;
+           <!-- <a href="{{asset('employee/dashboard/processflow/FDA/cashier')}}"> -->
            <input style="float: right; width: 13%; background-color: {{$AppData->proofpaystatMach == 'posted' ? '#BDE5F8' : 'orange'}}"  class="form-control" type="text" disabled value="{{$AppData->proofpaystatMach == 'posting' ? 'For Posting' : ( $AppData->proofpaystatMach == 'posted' ? 'Posted' : 'For Payment')}}">
            <!-- <input style="float: right; width: 10%; background-color: {{$AppData->proofpaystatMach == 'posted' ? '#BDE5F8' : 'orange'}}"  class="form-control" type="text" disabled value="{{$AppData->proofpaystatMach == 'posting' ? 'For Posting' : ( $AppData->proofpaystatMach == 'posted' ? 'Posted' : 'No Proof')}}"> -->
         

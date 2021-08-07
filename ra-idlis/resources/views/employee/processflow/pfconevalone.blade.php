@@ -14,8 +14,8 @@
       {{csrf_field()}}
     <div class="card">
       <div class="card-header bg-white font-weight-bold">
-         Committee Evaluation Tool  
-         <button class="btn btn-primary" onclick="window.history.back();">Back</button>
+         
+         <a class="btn btn-primary" style="color: white" onclick="window.history.back();">Back</a> Committee Evaluation Tool  
       </div>
       <div class="card-body">
         <div class="col-sm-12">
@@ -31,6 +31,7 @@
              
              {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>    
         </div>
+      
       </div>
       {{-- 1 --}}
       <div class="container-fluid border mb-3 pt-3">
@@ -1033,7 +1034,7 @@ console.log(option[0])
       fromMain.append( 
         '<td>'+
           '<div class="input-group mb-3">'+
-            '<input class="form-control" type="number" name=tya[] min="1" max="100" required>'+
+            '<input class="form-control cl_tya" type="number" name=tya[] min="1" max="100" required>'+
             '<div class="input-group-append">'+
               '<span class="input-group-text">%</span>'+
             '</div>'+
@@ -1041,7 +1042,7 @@ console.log(option[0])
         '</td>'+
         '<td>'+
           '<div class="input-group mb-3">'+
-            '<input class="form-control" type="number" name=aya[] min="1" max="100" required>'+
+            '<input class="form-control cl_aya" type="number" name=aya[] min="1" max="100" required>'+
             '<div class="input-group-append">'+
               '<span class="input-group-text">%</span>'+
             '</div>'+
@@ -1049,7 +1050,7 @@ console.log(option[0])
         '</td>'+
         '<td class="avepsca">'+
           '<div class="input-group mb-3">'+
-            '<input type="text" class="form-control" name=apty[] required readonly>'+
+            '<input type="text" class="form-control cl_apty" name=apty[] required readonly>'+
             '<div class="input-group-append">'+
               '<span class="input-group-text">%</span>'+
             '</div>'+
@@ -1208,6 +1209,8 @@ console.log(option[0])
       var locs = document.getElementsByClassName("getter");
       var ttm = document.getElementsByClassName("ttp");
 
+      
+
 
       var tm = []
       for(var b = 0; b < ttm.length ; b++){
@@ -1225,10 +1228,26 @@ console.log(option[0])
 
       var tbodyRef = document.getElementById('addNewRow4New').getElementsByTagName('tbody')[0];
 
+      console.log("exs.length")
+       console.log(locs.length)
         // Insert a row at the end of table
-       for(var a = 0; a < exs.length ; a++){
-        genihb(exs[a].value, locs[a].value,  tm[a],tbodyRef)
+       for(var a = 0; a < locs.length ; a++){
+      //  for(var a = 0; a < exs.length ; a++){
+
+        var loch = " ";
+
+        if (locs[a].value) {
+          loch = locs[a].value;
+          }
+        // if(locs){
+        //   loch = locs[a].value;
+        // }
+        // console.log('loch')
+        // console.log(loch)
+
+        genihb(exs[a].value,loch ,  tm[a],tbodyRef)
        }
+
 
 
     }
@@ -1253,7 +1272,7 @@ console.log(option[0])
           var newText1 = document.createElement("input");
           newText1.disabled =true;
           newText1.setAttribute("value", loc);
-          newText1.setAttribute("class", "form-control");
+          newText1.setAttribute("class", "form-control g");
 
 
           var newText2 = document.createElement("input");
@@ -1399,6 +1418,14 @@ console.log(option[0])
     @isset($savedData)
     $(document).ready(function(){
       let draftData = JSON.parse('{!!$savedData!!}');
+      let savedDataEval = JSON.parse('{!!$savedDataEval!!}');
+      let savedDataCHosp = JSON.parse('{!!$savedDataCHosp!!}');
+      console.log("draftData")
+      console.log(draftData)
+      console.log(savedDataEval)
+      console.log("savedDataCHosp")
+      console.log(savedDataCHosp)
+
       if(draftData.length){
         alert('Your saved data is being re-inputted');
         let name, loc, abc, lvl = '';
@@ -1424,6 +1451,59 @@ console.log(option[0])
           $(".trd"+(counterForDom + 1001)+":eq(0)").find('[name="'+abc+'"]').val(el['noofbed']).trigger('keyup').trigger('change');
           $(".trd"+(counterForDom + 1001)+":eq(0)").find('[name="'+lvl+'"]').val(el['cat_hos']).trigger('keyup').trigger('change');
         })
+
+        var arr_tya = [];
+        var arr_aya = [];
+        var arr_ttph = [];
+        draftData.map((sd, index) => {
+          if(sd.fromWhere == 'dib'){
+            arr_tya.push(sd.tya)
+            arr_aya.push(sd.aya)
+            arr_ttph.push(sd.ttph)
+          }
+        })
+
+     
+
+      
+            var tya = document.getElementsByClassName("cl_tya");
+            var aya = document.getElementsByClassName("cl_aya");
+         
+                for(var ty = 0; ty < tya.length; ty++){
+                  tya[ty].value = arr_tya[ty];
+                  aya[ty].value = arr_aya[ty];
+                  tya[ty].click()
+                
+
+                
+                }
+
+        
+  // setTimeout(function(){  
+        getihbloc()
+// }, 2000);
+        var ttp = document.getElementsByClassName("ttp");
+        console.log("ttp")
+        console.log(ttp)
+
+      
+
+        for(var ty = 0; ty < tya.length; ty++){
+                  ttp[ty].value = arr_ttph[ty];
+                }
+                
+                if(savedDataEval.length > 0){
+                  evalInitial(savedDataEval[0])
+
+                }
+
+              if(savedDataCHosp.length > 0){
+                  conHospInitial(savedDataCHosp)
+
+                }
+      
+          
+
       } else {
         $(document).ready(function(){
           setTimeout(function() {
@@ -1431,7 +1511,48 @@ console.log(option[0])
           }, 100);
         })
       }
-    })   
+    }) 
+    
+   
+
+function evalInitial(data){
+ if(data.acc == 1) {document.getElementById('yesa').checked = true}else{document.getElementById('noa').checked = true}
+ if(data.st == 1) {document.getElementById('yesst').checked = true}else{document.getElementById('nost').checked = true}
+ if(data.hdp == 1) {document.getElementById('yeshdp').checked = true}else{document.getElementById('nohdp').checked = true}
+ if(data.tph == 1) {document.getElementById('yestph').checked = true}else{document.getElementById('notph').checked = true}
+ if(data.bpp == 1) {document.getElementById('yesbpp').checked = true}else{document.getElementById('nobpp').checked = true}
+ if(data.tt == 1) {document.getElementById('yestt').checked = true}else{document.getElementById('nott').checked = true}
+ if(data.asl == 1) {document.getElementById('yesasl').checked = true}else{document.getElementById('noasl').checked = true}
+ if(data.ilh == 1) {document.getElementById('yesilh').checked = true}else{document.getElementById('noilh').checked = true}
+ if(data.atr == 1) {document.getElementById('yesatr').checked = true}else{document.getElementById('noatr').checked = true}
+
+
+
+ document.getElementsByName("remarksacc")[0].value = data.remarksacc
+ document.getElementsByName("remarksst")[0].value = data.remarksst
+ document.getElementsByName("remarkshdp")[0].value = data.remarkshdp
+ document.getElementsByName("remarkstph")[0].value = data.remarkstph
+ document.getElementsByName("remarksbpp")[0].value = data.remarksbpp
+ document.getElementsByName("remarkstt")[0].value = data.remarkstt
+ document.getElementsByName("remarksasl")[0].value = data.remarksasl
+ document.getElementsByName("remarksilh")[0].value = data.remarksilh
+ document.getElementsByName("remarksatr")[0].value = data.remarksatr
+
+ document.getElementById('comments').value = data.comments;
+ setTimeout(function() {
+  document.getElementById('setubnval').value = data.ubn;
+  }, 2000);
+ 
+}
+
+function conHospInitial(data){
+  data.map((sd, index) => {
+    if(sd.compliance == 1) {document.getElementById('gclryes'+sd.id).checked = true}else{document.getElementById('gclrno'+sd.id).checked = true}
+    if(sd.complaints == 1) {document.getElementById('fvcyes'+sd.id).checked = true}else{document.getElementById('fvcno'+sd.id).checked = true}
+    document.getElementsByName("remarks"+sd.id)[0].value = sd.evalRemarks
+  })
+}
+
     @endisset
   </script>
   @endsection

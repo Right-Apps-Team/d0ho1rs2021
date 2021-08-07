@@ -33,10 +33,11 @@
           </script>
 
           <!-- <button class="btn btn-primary" onclick="location.replace(document.referrer);">Back</button>&nbsp; -->
-          @if(app('request')->input('from') == 'main')
-          <a href="{{asset('/employee/dashboard/processflow/cashier')}}" class="btn btn-primary" >Back1 </a>
+          @if(app('request')->input('from') == 'rec')
+          <button class="btn btn-primary" onclick="window.history.back();">Back</button>&nbsp;
         @else
-        <button class="btn btn-primary" onclick="window.history.back();">Back2</button>&nbsp;
+        <a href="{{asset('/employee/dashboard/processflow/cashier')}}" class="btn btn-primary" >Back </a>
+     
           @endif
          
            Cashier Evaluation <span class="optnTD" style="display: none;">(Overide Payment Mode)</span>

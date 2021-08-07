@@ -84,8 +84,9 @@
         <div class="card-header bg-white font-weight-bold">
           @isset($APPID)<input type="text" id="APPID" value="{{$APPID}}" hidden>@endisset
           <input type="" id="token" value="{{ Session::token() }}" hidden>
-           Decision of recommendation of Approval 
-           <button class="btn btn-primary" onclick="window.history.back();">Back</button>
+          <button class="btn btn-primary" onclick="window.history.back();">Back</button>
+          Decision of recommendation of Approval 
+          
         </div>
         <div class="card-body">
           <table class="table table-borderless">
@@ -93,7 +94,17 @@
             <tr>
               <td width="100%">
                 <h2>@isset($AppData) {{$AppData->facilityname}} @endisset</h2>
-                <h5>@isset($AppData) {{strtoupper($AppData->streetname)}}, {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} @endisset</h5>
+                <h5>@isset($AppData) 
+                {{
+                    $AppData->street_number?  strtoupper($AppData->street_number).',' : ' '
+                  }}
+                  {{
+                    $AppData->streetname?  strtoupper($AppData->streetname).',': ' '
+                  }} 
+             
+             {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}}
+                 {{-- {{strtoupper($AppData->streetname)}}, {{strtoupper($AppData->brgyname)}}, {{$AppData->cmname}}, {{$AppData->provname}} --}}
+                   @endisset</h5>
                 <h6>@isset($AppData) Status: @if ($currentRequest === null) <span style="color:blue">For Approval</span> @elseif($currentRequest == 1)  <span style="color:green">Approve Application</span> @else <span style="color:red">Disapproved Application</span> @endif @endisset</h6>
               </td>
             </tr>
@@ -160,7 +171,7 @@
                     <center>
                       @isset($AppData)
                         @if($reco != null)
-                        <button class="btn btn-primarys" onclick="window.location.href='{{ asset('employee/dashboard/processflow/evaluate/FDA/') }}/{{$AppData->appid}}/{{$request}}'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Evaluation</button>
+                        <button class="btn btn-primarys" onclick="window.location.href='{{ asset('employee/dashboard/processflow/evaluate/FDA/') }}/{{$AppData->appid}}/{{$request}}?from=rec'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Evaluation</button>
                         @else
                         &nbsp;
                         @endif
@@ -277,7 +288,7 @@
                     <center>
                       @isset($AppData)
                         @if($oop != null)
-                          <button class="btn btn-primarys" onclick="window.location.href='{{ asset('employee/dashboard/processflow/FDA/actions') }}/{{$AppData->appid}}'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Cashier Evaluation</button>
+                          <button class="btn btn-primarys" onclick="window.location.href='{{ asset('employee/dashboard/processflow/FDA/actions') }}/{{$AppData->appid}}?from=rec'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Cashier Evaluation</button>
                         @else
                           &nbsp;
                         @endif
@@ -332,7 +343,7 @@
                     <center>
                       @isset($AppData)
                         @if($AppData->isCashierApprovePharma != null)
-                          <button class="btn btn-primarys" onclick="window.location.href='{{ asset('employee/dashboard/processflow/FDA/pharma/actions') }}/{{$AppData->appid}}'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Cashier Evaluation</button>
+                          <button class="btn btn-primarys" onclick="window.location.href='{{ asset('employee/dashboard/processflow/FDA/pharma/actions') }}/{{$AppData->appid}}?from=rec'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Cashier Evaluation</button>
                         @else
                           &nbsp;
                         @endif

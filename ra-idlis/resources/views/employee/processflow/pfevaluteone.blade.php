@@ -157,9 +157,15 @@
             <div class="card-header bg-white font-weight-bold">
               <input type="text" id="NumberOfRejected" value="@isset ($numOfX) {{$numOfX}} @endisset" hidden>
               <input type="" id="token" value="{{ Session::token() }}" hidden>
-               Evaluation 
+             
                <!-- <a href="{{asset('/employee/dashboard/processflow/evaluate')}}"><button class="btn btn-primary" >Back</button></a> -->
-               <button class="btn btn-primary" onclick="window.history.back();">Back</button>
+               <!-- <button class="btn btn-primary" onclick="window.history.back();">Back</button> -->
+               @if(app('request')->input('from') == 'rec')
+          <button class="btn btn-primary" onclick="window.history.back();">Back</button>&nbsp;
+        @else
+        <a href="{{asset('/employee/dashboard/processflow/evaluate')}}"><button class="btn btn-primary" >Back</button></a>
+  @endif
+  Evaluation 
             </div>
             <div class="card-body">
               <div class="col-sm-12">

@@ -10,7 +10,9 @@
     // var aptid = "IN"
 
     var mservfac = JSON.parse('{!!addslashes($serv_cap)!!}')
-    // console.log(mservfac)
+   
+    console.log('1111')
+   
 
     createDefaultsNew()
 
@@ -57,10 +59,13 @@
 
         // console.log("data from db")
 
-        var ptcorg =JSON.parse('{!!((count($ptc) > 0) ? addslashes($ptc): "")!!}');
+        // var ptcorg =JSON.parse('!!((count(ptc) > 0) ? ptc : "")!!');
+        var ptcorg = JSON.parse('{!!((count($fAddress) > 0) ? addslashes($ptc): "")!!}');
       var  ptc = ptcorg[0]
         // console.log("ptc")
-        console.log(ptc)
+        console.log("ptc")
+     
+       
 
         var servFacArray =JSON.parse('{!!((count($fAddress) > 0) ? $servfac: "")!!}');
     

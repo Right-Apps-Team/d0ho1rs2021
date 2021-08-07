@@ -164,7 +164,7 @@
 										<!-- <button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Continue Application" onclick="window.location.href='{{asset('client1/apply/app/updApp')}}/{{$each[0]->appid}}'"><i class="fa fa-copy"></i></button> -->
 										@if($each[0]->hfser_id == 'CON' || $each[0]->hfser_id == 'PTC')
 											@if($each[0]->hfser_id == 'CON')
-											<button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Continue Application" onclick="window.location.href='{{asset('/cont/ptc')}}/{{$each[0]->appid}}'"><i class="fa fa-arrow-right"></i></button>
+											<button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Continue Application" onclick="window.location.href='{{asset('/cont/ptc')}}/{{$each[0]->appid}}?cont=yes'"><i class="fa fa-arrow-right"></i></button>
 											@elseif($each[0]->hfser_id == 'PTC')
 											<button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Continue Application" onclick="window.location.href='{{asset('/cont/lto')}}/{{$each[0]->appid}}'"><i class="fa fa-arrow-right"></i></button>
 											@endif

@@ -4965,7 +4965,9 @@ use FunctionsClientController;
 					$brp = AjaxController::getConCatchFormatted($appid);
 					$track = DB::table('con_hospital')->where('appid',$appid)->select('id','facilityname','location1')->get();
 					$savedData = DB::table('con_evalsave')->where([['appid',$appid],['draft',1]])->get();
-					return view('employee.processflow.pfconevalone',['brp' => $brp, 'AppData' => $data, 'track' => $track, 'members' => $members, 'bed' => $bed, 'savedData' => json_encode($savedData)]);
+					$savedDataEval = DB::table('con_evaluate')->where([['appid',$appid]])->get();
+					$savedDataCHosp = DB::table('con_hospital')->where([['appid',$appid]])->get();
+					return view('employee.processflow.pfconevalone',['brp' => $brp, 'AppData' => $data, 'track' => $track, 'members' => $members, 'bed' => $bed, 'savedData' => json_encode($savedData), 'savedDataEval' => json_encode($savedDataEval), 'savedDataCHosp' => json_encode($savedDataCHosp)]);
 				}
 				else if($request->isMethod('POST')){
 					$cUser = AjaxController::getCurrentUserAllData();
@@ -5022,11 +5024,7 @@ use FunctionsClientController;
 
 						}
 
-						if($request->has('draft')){
-							return 'DONE';
-						}
-
-						if(!$request->has('draft')){
+							 DB::table('con_evaluate')->where([['appid', $appid]])->delete(); 
 
 							DB::table('con_evaluate')->insert(['appid' => $appid, 'acc' => $request->acc, 'remarksacc' => $request->remarksacc, 'st' => $request->st, 'remarksst' => $request->remarksst, 'hdp' => $request->hdp, 'remarkshdp' => $request->remarkshdp, 'tph' => $request->tph, 'remarkstph' => $request->remarkstph ,'ihb' => $request->ihbval, 'bpr' => $request->bprval, 'pbn' => $request->pbnval, 'ubn' => $request->ubnval, 'psc' => $request->pscaval, 'bpp' => $request->bpp, 'remarksbpp' => $request->remarksbpp, 'tt' => $request->tt, 'remarkstt' => $request->remarkstt, 'asl' => $request->asl, 'remarksasl' => $request->remarksasl, 'ilh' => $request->ilh, 'remarksilh' => $request->remarksilh, 'atr' => $request->atr, 'remarksatr' => $request->remarksatr, 'comments' => $request->comments,'membersPart' => (isset($request->membersPart) ? implode(',',$request->membersPart) : null) ]);
 
@@ -5038,9 +5036,31 @@ use FunctionsClientController;
 									DB::table('con_hospital')->where('id',$request->id[$j])->update(['compliance' => $request->$compliance,'complaints' => $request->$complaints, 'evalRemarks' => $request->$remarks]);
 								}
 							}
+
+						if($request->has('draft')){
+							return 'DONE';
+						}
+						
+						if(!$request->has('draft')){
 							DB::table('appform')->where('appid',$appid)->update(['concommittee_eval' => $request->verd, 'concommittee_evaltime' => $cUser['time'], 'concommittee_evaldate' => $cUser['date'], 'concommittee_evalby' => $cUser['cur_user']]);
 
 						}
+						
+						// if(!$request->has('draft')){
+
+						// 	DB::table('con_evaluate')->insert(['appid' => $appid, 'acc' => $request->acc, 'remarksacc' => $request->remarksacc, 'st' => $request->st, 'remarksst' => $request->remarksst, 'hdp' => $request->hdp, 'remarkshdp' => $request->remarkshdp, 'tph' => $request->tph, 'remarkstph' => $request->remarkstph ,'ihb' => $request->ihbval, 'bpr' => $request->bprval, 'pbn' => $request->pbnval, 'ubn' => $request->ubnval, 'psc' => $request->pscaval, 'bpp' => $request->bpp, 'remarksbpp' => $request->remarksbpp, 'tt' => $request->tt, 'remarkstt' => $request->remarkstt, 'asl' => $request->asl, 'remarksasl' => $request->remarksasl, 'ilh' => $request->ilh, 'remarksilh' => $request->remarksilh, 'atr' => $request->atr, 'remarksatr' => $request->remarksatr, 'comments' => $request->comments,'membersPart' => (isset($request->membersPart) ? implode(',',$request->membersPart) : null) ]);
+
+						// 	if($request->has('id')){
+						// 		for ($j=0; $j < count($request->id) ; $j++) { 
+						// 			$complaints = 'fvc'.$request->id[$j];
+						// 			$compliance = 'gclr'.$request->id[$j];
+						// 			$remarks = 'remarks'.$request->id[$j];
+						// 			DB::table('con_hospital')->where('id',$request->id[$j])->update(['compliance' => $request->$compliance,'complaints' => $request->$complaints, 'evalRemarks' => $request->$remarks]);
+						// 		}
+						// 	}
+						// 	DB::table('appform')->where('appid',$appid)->update(['concommittee_eval' => $request->verd, 'concommittee_evaltime' => $cUser['time'], 'concommittee_evaldate' => $cUser['date'], 'concommittee_evalby' => $cUser['cur_user']]);
+
+						// }
 
 					}
 					return redirect('employee/dashboard/processflow/view/conevalution/'.$appid);

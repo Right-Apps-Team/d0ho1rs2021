@@ -76,7 +76,7 @@
                   <div class="col-sm-7">
                     <center>
                       @if(isset($PreAss) && isset($AppData))
-                      <button class="btn btn-primarys" onclick="window.location.href='{{asset('/employee/dashboard/lps/preassessment/')}}/{{$AppData->uid}}'"><i class="fa fa-eye" aria-hidden="true"></i><span>&nbsp;View Pre-Assessment</span></button>
+                      <button class="btn btn-primarys" onclick="window.location.href='{{asset('/employee/dashboard/lps/preassessment/')}}/{{$AppData->uid}}?from=rec'"><i class="fa fa-eye" aria-hidden="true"></i><span>&nbsp;View Pre-Assessment</span></button>
                       @else
                       &nbsp;
                       @endif($PreAss)
@@ -133,7 +133,7 @@
                     <center>
                       @isset($AppData)
                         @if($AppData->isrecommended != null)
-                        <button class="btn btn-primarys" onclick="window.location.href='{{ asset('/employee/dashboard/processflow/evaluate') }}/{{$AppData->appid}}'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Evaluation</button>
+                        <button class="btn btn-primarys" onclick="window.location.href='{{ asset('/employee/dashboard/processflow/evaluate') }}/{{$AppData->appid}}?from=rec'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Evaluation</button>
                         @else
                         &nbsp;
                         @endif
@@ -247,7 +247,7 @@
                       @isset($AppData)
                         @if($AppData->CashierApproveBy != null)
                           @if($AppData->subClassid != 'ND'  ||  $AppData->hfser_id != 'LTO')
-                          <button class="btn btn-primarys" onclick="window.location.href='{{ asset('employee/dashboard/processflow/actions') }}/{{$AppData->appid}}'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Cashier Evaluation</button>
+                          <button class="btn btn-primarys" onclick="window.location.href='{{ asset('employee/dashboard/processflow/actions') }}/{{$AppData->appid}}?from=rec'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Cashier Evaluation</button>
                           @else
                           <button disabled class="btn btn-primarys">No Evaluation Available</button>
                           @endif
@@ -310,7 +310,7 @@
                     <center>
                       @isset($AppData)
                         @if($AppData->CashierApproveBy != null)
-                          <button class="btn btn-primarys" onclick="window.location.href='{{ asset('employee/dashboard/processflow/view/hfercevaluation/') }}/{{$AppData->appid}}/{{AjaxController::maxRevisionFor($AppData->appid)}}'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View HFERC Evaluation</button>
+                          <button class="btn btn-primarys" onclick="window.location.href='{{ asset('employee/dashboard/processflow/view/hfercevaluation/') }}/{{$AppData->appid}}/{{AjaxController::maxRevisionFor($AppData->appid)}}?from=rec'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View HFERC Evaluation</button>
                           <!-- <button class="btn btn-primarys" onclick="window.location.href='{{ asset('employee/dashboard/processflow/view/hfercevaluation/') }}/{{$AppData->appid}}/{{$otherDetails->revision}}'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View HFERC Evaluation</button> -->
                         @else
                           &nbsp;
@@ -370,7 +370,7 @@
                     <center>
                       @isset($AppData)
                         @if($AppData->concommittee_eval != null)
-                          <button class="btn btn-primarys" onclick="window.location.href='{{ asset('employee/dashboard/processflow/view/conevalution/') }}/{{$AppData->appid}}'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View CON Committee Evaluation</button>
+                          <button class="btn btn-primarys" onclick="window.location.href='{{ asset('employee/dashboard/processflow/view/conevalution/') }}/{{$AppData->appid}}?from=rec'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View CON Committee Evaluation</button>
                         @else
                           &nbsp;
                         @endif
@@ -452,7 +452,7 @@
                     <center>
                       @isset($AppData)
                         @if($AppData->isInspected != null)
-                          <button class="btn btn-primarys" onclick="window.location.href='{{asset('employee/dashboard/processflow/parts')}}/{{$AppData->appid}}'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Assessment</button>
+                          <button class="btn btn-primarys" onclick="window.location.href='{{asset('employee/dashboard/processflow/parts')}}/{{$AppData->appid}}?from=rec'"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Assessment</button>
                           @else
                           &nbsp;
                         @endif

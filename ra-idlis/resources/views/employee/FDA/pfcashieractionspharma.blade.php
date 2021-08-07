@@ -29,8 +29,15 @@
         <div class="card-header bg-white font-weight-bold">
           @isset($appid)<input type="text" id="APPID" value="{{$appid}}" hidden>@endisset
           <input type="" id="token" value="{{ Session::token() }}" hidden>
+         
+           <!-- <button class="btn btn-primary" onclick="window.history.back();">Back</button> -->
+           @if(app('request')->input('from') == 'rec')
+          <button class="btn btn-primary" onclick="window.history.back();">Back</button>&nbsp;
+          @else
+          <a  class="btn btn-primary" href="{{asset('employee/dashboard/processflow/FDA/pharma/cashier')}}">Back</a>
+ @endif
+
            Cashier Evaluation (PHARMACY) <span class="optnTD" style="display: none;">(Overide Payment Mode)</span>&nbsp;
-           <button class="btn btn-primary" onclick="window.history.back();">Back</button>
            <input style="float: right; width: 13%; background-color: {{$AppData->proofpaystatPhar == 'posted' ? '#BDE5F8' : 'orange'}}"  class="form-control" type="text" disabled value="{{$AppData->proofpaystatPhar == 'posting' ? 'For Posting' : ( $AppData->proofpaystatPhar == 'posted' ? 'Posted' : 'For Payment')}}">
            <!-- <input style="float: right; width: 10%; background-color: {{$AppData->proofpaystatPhar == 'posted' ? '#BDE5F8' : 'orange'}}"  class="form-control" type="text" disabled value="{{$AppData->proofpaystatPhar == 'posting' ? 'For Posting' : ( $AppData->proofpaystatPhar == 'posted' ? 'Posted' : 'No Proof')}}"> -->
         

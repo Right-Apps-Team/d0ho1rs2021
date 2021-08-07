@@ -12,8 +12,10 @@ use App\Models\FACLGroup;
 use App\Models\HFACIGroup;
 use App\Models\Municipality;
 use App\Models\Province;
+use App\Models\Regions;
 use Carbon\Carbon;
 use DB;
+use stdClass;
 
 class PtcAppController extends Controller
 {
@@ -146,7 +148,107 @@ class PtcAppController extends Controller
             array_push($faclArr, $f->hgpid);
         }
         $hfaci_sql = "SELECT * FROM hfaci_grp WHERE hgpid IN (SELECT hgpid FROM `facl_grp` WHERE hfser_id = '$hfser_id')"; 
+
+
+      
+
+        $conapp = ApplicationForm::where('appid', $appid)->first();
+        $appform = new stdClass();
+      
+        $appform->hfser_id              = 'PTC';
+        $appform->facilityname          = $conapp->facilityname;
+        $appform->rgnid                 = $conapp->rgnid;
+        $appform->provid                = $conapp->provid;
+        $appform->cmid                  = $conapp->cmid;
+        $appform->brgyid                = $conapp->brgyid;
+        $appform->street_number         = $conapp->street_number;
+        $appform->street_name           = $conapp->street_name;
+        $appform->zipcode               = $conapp->zipcode;
+        $appform->contact               = $conapp->contact;
+        $appform->areacode              = $conapp->areacode;
+        $appform->landline              = $conapp->landline;
+        $appform->faxnumber             = $conapp->faxnumber;
+        $appform->email                 = $conapp->email;
+        $appform->cap_inv               = $conapp->cap_inv;
+        $appform->lot_area              = $conapp->lot_area;
+        $appform->noofbed               = $conapp->noofbed;
+        $appform->uid                   = $conapp->uid;
+        $appform->ocid                  = $conapp->ocid;
+        $appform->classid               = $conapp->classid;
+        $appform->subClassid            = $conapp->subClassid;
+        $appform->facmode               = $conapp->facmode;
+        $appform->funcid                = $conapp->funcid;
+        $appform->owner                 = $conapp->owner;
+        $appform->ownerMobile           = $conapp->ownerMobile;
+        $appform->ownerLandline         = $conapp->ownerLandline;
+        $appform->ownerEmail            = $conapp->ownerEmail;
+        $appform->mailingAddress        = $conapp->mailingAddress;
+        $appform->approvingauthoritypos = $conapp->approvingauthoritypos;
+        $appform->approvingauthority    = $conapp->approvingauthority;
+        $appform->hfep_funded           = $conapp->hfep_funded;
+        $appform->noofmain              = $conapp->noofmain;
+        $appform->noofsatellite         = $conapp->noofsatellite;
+        $appform->aptid                 = $conapp->aptid;
+        $appform->con_number            = $conapp->hfser_id.'R'.$conapp->rgnid.'-'.$conapp->appid;
+        $appform->savingStat            = "partial";
+        $appform->rgn_desc             =  DB::table('region')->where([['rgnid', $conapp->rgnid]])->first()->rgn_desc;
+        $appform->provname              =  DB::table('province')->where([['provid', $conapp->provid]])->first()->provname;
+        $appform->cmname               =  DB::table('city_muni')->where([['cmid', $conapp->cmid]])->first()->cmname;
+        $appform->brgyname                = DB::table('barangay')->where([['brgyid', $conapp->brgyid]])->first()->brgyname;
+        $appform->faxNumber                 = $conapp->faxNumber;
+        $appform->appid                  = null;
+        $appform->appComment                   = null;
+        $appform->noofdialysis                    = null;
         
+        $chk =  DB::table('x08_ft')->where([['appid', $appid]])->first();
+
+        $chkFacid = new stdClass();
+        $chkFacid->facid = $chk->facid;
+
+
+        $arrRet1 = [];
+        if(! empty($appid)) {
+            $sql2 =array($chk->facid);
+            // $sql2 = "SELECT DISTINCT facid FROM `x08_ft` WHERE appid = '$appid'";
+            // $sql1 = "SELECT DISTINCT hgpid FROM facilitytyp WHERE facid IN ($sql2) ORDER BY hgpid DESC";
+            // $sql3 = "SELECT facid, facname FROM facilitytyp WHERE facid IN ($sql2)";
+            // $sql4 = "SELECT hgpid, hgpdesc FROM hfaci_grp WHERE hgpid IN ($sql1)";
+            
+            $sql1 = "SELECT DISTINCT hgpid FROM facilitytyp WHERE facid = '$chk->facid' ORDER BY hgpid DESC";
+            $sql3 = "SELECT facid, facname FROM facilitytyp WHERE facid = '$chk->facid'";
+            $sql4 = "SELECT hgpid, hgpdesc FROM hfaci_grp WHERE hgpid IN ($sql1)";
+
+            $arrRet1 = [DB::select($sql1), [$chkFacid], DB::select($sql3), DB::select($sql4)];
+            // $arrRet = [DB::select($sql1), DB::select($sql2), DB::select($sql3), DB::select($sql4)];
+        }
+
+        $ce =  DB::table('con_evaluate')->where([['appid', $appid]])->first();
+
+        $ptc = new stdClass();
+        $ptc->type = 0;
+        $ptc->others = null;
+        $ptc->propbedcap = $ce->ubn;
+        $ptc->conCode = null;
+        $ptc->ltoCode = null;
+        $ptc->propstation = null;
+        $ptc->incbedcapfrom =null;
+        $ptc->incbedcapto =null;
+        $ptc->incstationfrom = null;
+        $ptc->incstationto =null;
+        $ptc->construction_description = null;
+        $ptc->renoOption = null;
+
+        $appformConv = array();
+        $appformConv[] = $appform;
+        
+       
+       
+
+
+        $ptcConv = array();
+        $ptcConv[] = $ptc;
+        
+
         $arrRet = [
             // 'grpid' =>  $grpid,
             'nameofcomp' =>  $nameofcomp,
@@ -156,30 +258,41 @@ class PtcAppController extends Controller
             'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),
             'userInf'=>FunctionsClientController::getUserDetails(),
             'hfaci_serv_type'=>DB::select($hfaci_sql),
-
             'serv_cap'=>json_encode(DB::table('facilitytyp')->where([['servtype_id',1]/*,['forSpecialty',0]*/])->get()),
             'ownership'=>DB::table('ownership')->get(),
             'class'=>json_encode(DB::select("SELECT * FROM class WHERE (isSub IS NULL OR isSub = '')")),
             'subclass'=>json_encode(DB::select("SELECT * FROM class WHERE (isSub IS NOT NULL OR isSub != '')")),
             'function'=>DB::table('funcapf')->get(),
             'facmode'=>DB::table('facmode')->get(),
-            'fAddress'=>$appGet,
-            'servfac'=>json_encode(FunctionsClientController::getServFaclDetails($appid)),
-            'ptcdet'=>json_encode(FunctionsClientController::getPTCDetails($appid)),
+            // 'fAddress'=> [],
+            'fAddress'=> $appformConv,
+            // 'fAddress'=>json_encode([$appform]),
+            // 'servfac'=>json_encode(FunctionsClientController::getServFaclDetails($appid)),
+            'servfac'=>json_encode($arrRet1),
+
+            // 'ptcdet'=>json_encode(FunctionsClientController::getPTCDetails($appid)),
             'cToken'=>FunctionsClientController::getToken(),
-            'hfer' => $apptype,
-            'hideExtensions'=>$hideExtensions,
-            'aptid'=>$aptid,
-            'ptc'=>$ptc,
-            'apptypenew'=> $request->apptype ? $request->apptype : 'IN'
+            'hfer' => 'PTC',
+            'hideExtensions'=>null,
+            'aptid'=>null,
+            'ptc'=>json_encode($ptcConv),
+            // 'ptc'=>(array)$ptc,
+            'regions'               => Regions::orderBy('sort')->get(),
+            'apptypenew'=> $conapp->aptid ? $conapp->aptid : 'IN'
         ]; 
 
-
-
+        $locRet = "dashboard.client.permit-to-construct";
+        return view($locRet, $arrRet);
 
     }
 
-
+    function objectToArray ($object) {
+        if(!is_object($object) && !is_array($object)){
+            return $object;
+        }
+        return array_map('objectToArray', (array) $object);
+    }
+    
     public function contfromCon(Request $request,  $appid)
     {
 
