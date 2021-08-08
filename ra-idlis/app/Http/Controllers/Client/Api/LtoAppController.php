@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Client\Api;
 
+use App\Http\Controllers\AjaxController;
 use Session;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\DOHController;
@@ -16,10 +17,13 @@ use App\Models\CONCatchment;
 use App\Models\CONHospital;
 use App\Models\Classification;
 use App\Models\FacIds;
+use App\Models\FACLGroup;
+use App\Models\HFACIGroup;
 use App\Models\x08Ft;
 use DB;
 use Illuminate\Support\Facades\DB as FacadesDB;
 use Illuminate\Support\Facades\Redirect;
+use stdClass;
 
 class LtoAppController extends Controller
 {
@@ -224,6 +228,178 @@ class LtoAppController extends Controller
 
 
     }
+
+
+    public function contfromPtcTemp(Request $request,  $appid)
+    {
+
+        $user_data = session()->get('uData');
+        if($user_data){
+            $nameofcomp = DB::table('x08')->where([['uid', $user_data->uid]])->first()->nameofcompany;
+        }else{
+            $nameofcomp = null;
+        }
+
+        $hfser_id = 'LTO';
+        $faclArr = [];
+        $facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();
+        foreach ($facl_grp as $f) {
+            array_push($faclArr, $f->hgpid);
+        }
+        $hfaci_sql = "SELECT * FROM hfaci_grp WHERE hgpid IN (SELECT hgpid FROM `facl_grp` WHERE hfser_id = '$hfser_id')"; 
+
+     
+        $ptcapp = ApplicationForm::where('appid', $appid)->first();
+        $ponly = DB::table('ptc')->where([['appid', $appid]])->first();
+
+        $appform = new stdClass();
+
+         $appform->facilityname          = $ptcapp->facilityname;
+               $appform->rgnid                 = $ptcapp->rgnid;
+               $appform->provid                = $ptcapp->provid;
+               $appform->cmid                  = $ptcapp->cmid;
+               $appform->brgyid                = $ptcapp->brgyid;
+               $appform->street_number         = $ptcapp->street_number;
+               $appform->street_name           = $ptcapp->street_name;
+               $appform->zipcode               = $ptcapp->zipcode;
+               $appform->contact               = $ptcapp->contact;
+               $appform->areacode              = $ptcapp->areacode;
+               $appform->landline              = $ptcapp->landline;
+               $appform->faxnumber             = $ptcapp->faxnumber;
+               $appform->email                 = $ptcapp->email;
+               $appform->cap_inv               = $ptcapp->cap_inv;
+               $appform->lot_area              = $ptcapp->lot_area;
+               $appform->noofbed               = (int)$ponly->propbedcap;
+               // $appform->noofbed               = $ptcapp->noofbed;
+               $appform->uid                   = $ptcapp->uid;
+               $appform->ocid                  = $ptcapp->ocid;
+               $appform->classid               = $ptcapp->classid;
+               $appform->subClassid            = $ptcapp->subClassid;
+               $appform->facmode               = $ptcapp->facmode;
+               $appform->funcid                = $ptcapp->funcid;
+               $appform->owner                 = $ptcapp->owner;
+               $appform->ownerMobile           = $ptcapp->ownerMobile;
+               $appform->ownerLandline         = $ptcapp->ownerLandline;
+               $appform->ownerEmail            = $ptcapp->ownerEmail;
+               $appform->mailingAddress        = $ptcapp->mailingAddress;
+               $appform->approvingauthoritypos = $ptcapp->approvingauthoritypos;
+               $appform->approvingauthority    = $ptcapp->approvingauthority;
+               $appform->hfep_funded           = $ptcapp->hfep_funded;
+               $appform->assignedRgn           = $ptcapp->assignedRgn;
+               $appform->ptcCode               = $ptcapp->hfser_id.'R'.$ptcapp->rgnid.'-'.$ptcapp->appid;
+               // $appform->ptcCode               = $ptcapp->ptcCode;
+               $appform->noofmain              = $ptcapp->noofmain;
+               $appform->noofdialysis          = $ptcapp->noofdialysis;
+               // $appform->noofsatellite         = $ptcapp->noofsatellite;
+               $appform->aptid                 = $ptcapp->aptid;
+               $appform->savingStat            = "partial";
+               $appform->hgpid                 = $ptcapp->hgpid;
+               $appform->rgn_desc             =  DB::table('region')->where([['rgnid', $ptcapp->rgnid]])->first()->rgn_desc;
+               $appform->provname              =  DB::table('province')->where([['provid', $ptcapp->provid]])->first()->provname;
+               $appform->cmname               =  DB::table('city_muni')->where([['cmid', $ptcapp->cmid]])->first()->cmname;
+               $appform->brgyname                = DB::table('barangay')->where([['brgyid', $ptcapp->brgyid]])->first()->brgyname;
+               $appform->faxNumber                 = $ptcapp->faxNumber;
+               $appform->appid                  = null;
+               $appform->appComment                   = null;
+               $appform->noofdialysis                    = null;
+               $appform->noofsatellite                     = null;
+               $appform->typeamb                      = null;
+               $appform->ambtyp                       = null;
+               $appform->plate_number                        = null;
+               $appform->ambOwner                         = null;
+               $appform->addonDesc                          = null;
+       
+               $appformConv = array();
+             $appformConv[] = $appform;
+
+        
+        
+        $chk =  DB::table('x08_ft')->where([['appid', $appid]])->first();
+
+        $chkFacid = new stdClass();
+        $chkFacid->facid = $chk->facid;
+
+        $amb = new stdClass();
+        $amb->amt = 0;
+
+        $ambConv = array();
+        $ambConv[] = $amb;
+        $ambConv[] = $amb;
+
+        $arrRet1 = [];
+        if(! empty($appid)) {
+            $sql2 =array($chk->facid);
+            // $sql2 = "SELECT DISTINCT facid FROM `x08_ft` WHERE appid = '$appid'";
+            // $sql1 = "SELECT DISTINCT hgpid FROM facilitytyp WHERE facid IN ($sql2) ORDER BY hgpid DESC";
+            // $sql3 = "SELECT facid, facname FROM facilitytyp WHERE facid IN ($sql2)";
+            // $sql4 = "SELECT hgpid, hgpdesc FROM hfaci_grp WHERE hgpid IN ($sql1)";
+            
+            $sql1 = "SELECT DISTINCT hgpid FROM facilitytyp WHERE facid = '$chk->facid' ORDER BY hgpid DESC";
+            $sql3 = "SELECT facid, facname FROM facilitytyp WHERE facid = '$chk->facid'";
+            $sql4 = "SELECT hgpid, hgpdesc FROM hfaci_grp WHERE hgpid IN ($sql1)";
+
+            $arrRet1 = [DB::select($sql1), [$chkFacid], DB::select($sql3), DB::select($sql4)];
+            // $arrRet = [DB::select($sql1), DB::select($sql2), DB::select($sql3), DB::select($sql4)];
+        }
+
+        $proceesedAmb = [];
+					foreach (AjaxController::getForAmbulanceList(false,'forAmbulance.hgpid') as $key => $value) {
+						array_push($proceesedAmb, $value->hgpid);
+					}
+
+         $hfLocs = 
+                    [
+                        'client1/apply/app/LTO/'.$appid, 
+                        'client1/apply/app/LTO/'.$appid.'/hfsrb', 
+                        'client1/apply/app/LTO/'.$appid.'/fda'
+                    ];
+        if(isset($hideExtensions)) {
+            $hfLocs = [
+                'client1/apply/employeeOverride/app/LTO/'.$appid, 
+                'client1/apply/employeeOverride/app/LTO/'.$appid.'/hfsrb', 
+                'client1/apply/employeeOverride/app/LTO/'.$appid.'/fda'
+            ];
+        }
+
+        $arrRet = [
+            // 'grpid' =>  $grpid,
+            'nameofcomp' =>  $nameofcomp,
+
+            'hfser' =>  $hfser_id,
+            'user'=> $user_data,
+            'regions' => Regions::orderBy('sort')->get(),
+            'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(),
+            'appFacName'            => FunctionsClientController::getDistinctByFacilityName(),
+            'userInf'=>FunctionsClientController::getUserDetails(),
+            'hfaci_serv_type'=>DB::select($hfaci_sql),
+            'serv_cap'=>json_encode(DB::table('facilitytyp')->where('servtype_id',1)->get()),
+            'apptype'=>DB::table('apptype')->get(),
+            'ownership'=>DB::table('ownership')->get(),
+            'class'=>json_encode(DB::select("SELECT * FROM class WHERE (isSub IS NULL OR isSub = '')")),
+            'subclass'=>json_encode(DB::select("SELECT * FROM class WHERE (isSub IS NOT NULL OR isSub != '')")),
+            'function'=>DB::table('funcapf')->get(),
+            'facmode'=>DB::table('facmode')->get(),
+            'fAddress'=>$appformConv,
+            'servfac'=>json_encode($arrRet1),
+            'ptcdet'=>[],
+            'cToken'=>FunctionsClientController::getToken(),
+            'addresses'=>$hfLocs,
+            'hfer' => $hfser_id,
+            'hideExtensions'=>null,
+            'ambcharges'=>$ambConv,
+            'aptid'=>null,
+            'group' => json_encode(DB::table('facilitytyp')->where('servtype_id','>',1)->whereNotNull('grphrz_name')->get()),
+            'forAmbulance' => json_encode($proceesedAmb),
+            'apptypenew'=> $ptcapp->aptid ?  $ptcapp->aptid : 'IN'
+        ];
+
+
+        $locRet = "dashboard.client.license-to-operate";
+        return view($locRet, $arrRet);
+
+    }
+
+
     public function assessmentReady(Request $request, $appid)
 	{
 		$curForm = FunctionsClientController::getUserDetailsByAppform($appid);

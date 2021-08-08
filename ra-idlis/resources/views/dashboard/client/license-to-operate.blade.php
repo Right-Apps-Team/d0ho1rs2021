@@ -51,6 +51,7 @@
         <div class="container-fluid mt-5 mb-5">
             <div class="row">
                 <div class="col-md-8">
+                @include('dashboard.client.forms.parts.printButton')
                     <h2 class=" text-center pt-2"> <img src="{{asset('ra-idlis/public/img/doh2.png')}}" style="width:50px;"/> APPLICATION FORM</h2>
                 </div>
                 @include('dashboard.client.forms.apply-lto')

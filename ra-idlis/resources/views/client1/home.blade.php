@@ -166,7 +166,7 @@
 											@if($each[0]->hfser_id == 'CON')
 											<button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Continue Application" onclick="window.location.href='{{asset('/cont/ptc')}}/{{$each[0]->appid}}?cont=yes'"><i class="fa fa-arrow-right"></i></button>
 											@elseif($each[0]->hfser_id == 'PTC')
-											<button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Continue Application" onclick="window.location.href='{{asset('/cont/lto')}}/{{$each[0]->appid}}'"><i class="fa fa-arrow-right"></i></button>
+											<button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Continue Application" onclick="window.location.href='{{asset('/cont/lto')}}/{{$each[0]->appid}}?cont=yes'"><i class="fa fa-arrow-right"></i></button>
 											@endif
 										@endif
 										<button style="margin-top: 10px;" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Print" onclick="window.location.href='{{asset('client1/certificates')}}/{{strtoupper($each[0]->hfser_id)}}/{{$each[0]->appid}}'"><i class="fa fa-print"></i></button>
