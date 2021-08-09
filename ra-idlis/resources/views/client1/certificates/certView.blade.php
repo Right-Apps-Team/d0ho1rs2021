@@ -146,6 +146,7 @@
 					<!-- {{((isset($retTable[0]->cmname)) ? (ucwords($retTable[0]->street_number . ' ' . $retTable[0]->street_name . ' ' . $retTable[0]->cmname . ' ' . $retTable[0]->provname)) : "NOT DEFINED")}} -->
 					</div>	
 				</div>
+				@if(strtolower($retTable[0]->hfser_id) != 'con')
 				<div class="row">	
 					<div class="col-md-2" style="">&nbsp;</div>
 					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
@@ -160,6 +161,7 @@
 						<!-- {{((isset($otherDetails->ubn)) ? $otherDetails->ubn : (isset($retTable[0]->noofbed) ? $retTable[0]->noofbed : ''))}} -->
 					</div>	
 				</div>
+				@endif
 				@if(strtolower($retTable[0]->hfser_id) != 'con' && strtolower($retTable[0]->hfser_id) != 'ptc')
 				<div class="row">	
 					<div class="col-md-2" style="">&nbsp;</div>
@@ -365,6 +367,20 @@
 				@endif
 
 				@if(strtolower($retTable[0]->hfser_id) == 'con')
+				<div class="row">	
+					<div class="col-md-2" style="">&nbsp;</div>
+					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
+					Proposed number of beds
+						<!-- Number of Beds -->
+					</div>
+					<div class="col-md-1 hide-div">
+						<center>:</center>
+					</div>
+					<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
+						{{((isset($otherDetails->ubn)) ? $otherDetails->ubn : (isset($otherDetails->noofbed) ? $otherDetails->noofbed : ''))}}
+						<!-- {{((isset($otherDetails->ubn)) ? $otherDetails->ubn : (isset($retTable[0]->noofbed) ? $retTable[0]->noofbed : ''))}} -->
+					</div>	
+				</div>
 					<div class="row">	
 						<div class="col-md-2" style="">&nbsp;</div>
 						<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
@@ -377,7 +393,8 @@
 						{{((isset($serviceId)) ? (str_replace(',', ', ', $serviceId)) : 'LEVEL_1')}}
 						</div>	
 					</div>
-					<div class="row">	
+
+					<!-- <div class="row">	
 						<div class="col-md-2" style="">&nbsp;</div>
 						<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">
 							Bed Capacity
@@ -388,7 +405,8 @@
 						<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
 						{{((isset($otherDetails->ubn)) ? abs($otherDetails->ubn) : (isset($retTable[0]->noofbed) ? abs($retTable[0]->noofbed) : 0) )}} Bed(s)
 						</div>	
-					</div>
+					</div> -->
+
 					<div class="row">	
 						<div class="col-md-2" style="">&nbsp;</div>
 						<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">

@@ -95,7 +95,7 @@
                     <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Remove" onclick="deleteRow('trd100{{$count}}');"><i class="fa fa-times"></i></button>
                   </td>
                   <td>
-                    <input class="form-control toChange" type="text" name="existHospabc[]" required="" value="{{$hosp->facilityname}}">
+                    <input class="form-control toChange exhop" type="text" name="existHospabc[]" required="" value="{{$hosp->facilityname}}">
                   </td>
                   <td class="toRemove">
                     @if(count($brp[1]) > 0)
@@ -812,10 +812,33 @@
 
 // 
 function submitButtonClick(event) {
+
+  event.preventDefault();
+
+
   var com = document.getElementById("comments");
 	console.log("com.value")
 	console.log(com.value)
     var ubnval = document.getElementById("setubnval").value;
+
+    let allAreFilled = true;
+      document.getElementById("evalSave").querySelectorAll("[required]").forEach(function(i) {
+        if (!allAreFilled) return;
+        if (!i.value) allAreFilled = false;
+        if (i.type === "radio") {
+          let radioValueCheck = false;
+          document.getElementById("evalSave").querySelectorAll(`[name=${i.name}]`).forEach(function(r) {
+            if (r.checked) radioValueCheck = true;
+          })
+          allAreFilled = radioValueCheck;
+        }
+      })
+      if (!allAreFilled) {
+        alert('Some fields are empty.');
+      }
+
+if(allAreFilled){
+
         if(confirm("Are you sure you want to proceed? The approved bed capacity of this application is "+ ubnval)){
        
             if(com.value == null || com.value == undefined || com.value == " " || !com.value ){
@@ -828,7 +851,7 @@ function submitButtonClick(event) {
         }else{
           event.preventDefault();
         }
-        
+        }
         
 		//other stuff you want to do instead...
 } 

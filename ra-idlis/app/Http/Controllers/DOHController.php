@@ -666,8 +666,9 @@ use FunctionsClientController;
 					->join('region', 'region.rgnid', '=', 'registered_facility.rgnid')
 					->join('province', 'province.provid', '=', 'registered_facility.provid')
 					->join('barangay', 'barangay.brgyid', '=', 'registered_facility.brgyid')
+					->join('city_muni', 'city_muni.cmid', '=', 'registered_facility.cmid')
 					->leftJoin('hfaci_grp', 'registered_facility.facid', '=', 'hfaci_grp.hgpid')
-					->select('registered_facility.*','region.rgn_desc', 'barangay.brgyname', 'province.provname', 'hfaci_grp.hgpdesc')
+					->select('registered_facility.*','region.rgn_desc', 'barangay.brgyname', 'province.provname', 'hfaci_grp.hgpdesc', 'city_muni.cmname')
 					->get();
 
 					$factype =  DB::table('hfaci_grp')->select('hfaci_grp.*')

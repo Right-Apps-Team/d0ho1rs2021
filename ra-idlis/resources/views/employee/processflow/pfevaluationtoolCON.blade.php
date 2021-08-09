@@ -64,9 +64,9 @@
                           @if($data->hfser_id == 'CON')
 
                           @php
-                          if($data->concommittee_eval == 1){
-                                  continue;
-                                }
+                        //  if($data->concommittee_eval == 1){
+                         //         continue;
+                          //      }
                           @endphp
 
                           @endif

@@ -83,6 +83,12 @@
                               
                               @endif
 
+                           @if(strtolower($data->hfser_id) == 'ptc' && $data->isReadyForInspec == 0 && $data->status == 'REV')
+                              
+                              <?php  continue; ?>
+                              
+                              @endif 
+
 
 
                             @if($data->hasAssessors == 'T' || strtolower($data->hfser_id) != 'lto')
