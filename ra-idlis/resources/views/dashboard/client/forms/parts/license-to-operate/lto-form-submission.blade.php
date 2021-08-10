@@ -139,7 +139,13 @@
         }
 
 
+        var os_list = document.getElementsByClassName('os_list')
 
+        if(os_list.length > 0){
+            if($('.os_list:checked').val() == undefined ){
+                errors +=1; ermsg += "\nOther Clinical Services,"
+            }
+        }
 
         // if(errors > 0){
         //     alert("Please fill the following fields properly: " + ermsg)

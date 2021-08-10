@@ -178,17 +178,20 @@
 
 	@if(!isset($submitted) || $findups != 0)	
 		@if($appform->isrecommended ==  2 || $appform->isrecommended ==  null )
-		<div class="container">
-			<div class="float-right">
-				<a href="{{asset('client1/apply')}}"><button class="btn btn-danger">Back</button></a>
-				@if($canSubmit)
-				<button id="submit" class="btn btn-success" @if($appform->isReadyForInspec == 0) data-toggle="modal" data-target="#confirmModal" @else form="upId" @endif>Submit Requirements</button>
-				@endif
-				@if(strtolower($appform->hfser_id) == 'con' && !$isReadyToInspect && $office == 'hfsrb')
-					<button id="submit" class="btn btn-success" @if($appform->isReadyForInspec == 0) data-toggle="modal" data-target="#confirmModalCON" @else form="upIdCON" @endif>Send Request to Process Owners</button>
-				@endif
-			</div>
-		</div>
+			@if($appform->isReadyForInspec == 0 )
+				<div class="container">
+					<div class="float-right">
+						<a href="{{asset('client1/apply')}}"><button class="btn btn-danger">Back</button></a>
+						@if($canSubmit)
+						<button id="submit" class="btn btn-success" @if($appform->isReadyForInspec == 0) data-toggle="modal" data-target="#confirmModal" @else form="upId" @endif>Submit Requirements</button>
+						@endif
+						@if(strtolower($appform->hfser_id) == 'con' && !$isReadyToInspect && $office == 'hfsrb')
+							<button id="submit" class="btn btn-success" @if($appform->isReadyForInspec == 0) data-toggle="modal" data-target="#confirmModalCON" @else form="upIdCON" @endif>Send Request to Process Owners</button>
+						@endif
+					</div>
+				</div>
+			@endif
+
 		@endif
 	@endif
 	</div>

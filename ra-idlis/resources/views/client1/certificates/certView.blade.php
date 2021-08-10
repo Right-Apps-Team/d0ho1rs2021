@@ -146,7 +146,7 @@
 					<!-- {{((isset($retTable[0]->cmname)) ? (ucwords($retTable[0]->street_number . ' ' . $retTable[0]->street_name . ' ' . $retTable[0]->cmname . ' ' . $retTable[0]->provname)) : "NOT DEFINED")}} -->
 					</div>	
 				</div>
-				@if(strtolower($retTable[0]->hfser_id) != 'con')
+				@if(strtolower($retTable[0]->hfser_id) != 'con' && strtolower($retTable[0]->hfser_id) != 'ptc')
 				<div class="row">	
 					<div class="col-md-2" style="">&nbsp;</div>
 					<div class="col-md-3" style="font-family: Century Gothic; font-size: 11pt">

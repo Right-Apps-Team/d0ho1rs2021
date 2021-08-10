@@ -905,7 +905,7 @@ return unique;
                 x.setAttribute("type", "radio");
                 x.setAttribute("value", it.facid);
                 x.setAttribute("name", "facid");
-                x.setAttribute("class", "custom-control-input");
+                x.setAttribute("class", "custom-control-input os_list");
                 document.getElementById("otherServe-" + it.facid).appendChild(x);
 
                 var label = document.createElement("Label");
@@ -1563,6 +1563,7 @@ if('{!!isset($fAddress)&&(count($fAddress) > 0)!!}'){
         var brgyid ='{!!((count($fAddress) > 0) ? $fAddress[0]->brgyid: "")!!}';
         var noofdialysis ='{!!((count($fAddress) > 0) ? $fAddress[0]->noofdialysis: "")!!}';
         var comments ='{!!((count($fAddress) > 0) ? $fAddress[0]->appComment: "")!!}';
+        var hgpid_in ='{!!((count($fAddress) > 0) ? $fAddress[0]->hgpid: "")!!}';
 // console.log("Appid")
 // console.log(appid)
 
@@ -1677,7 +1678,7 @@ const fetchSubClass1 = async (e) => {
       document.getElementById("approving_authority_name").value = approvingauthority;
       document.getElementById("ptcCode").value = ptcCode;
       document.getElementById("noofbed").value = noofbed;
-      document.getElementById("noofmain").value = noofmain ? noofmain : 1;
+      document.getElementById("noofmain").value = noofmain ? noofmain : (hgpid_in == 6 ? 1 : null);
     //   document.getElementById("noofmain").value = noofmain ? noofmain : 1;
       document.getElementById("noofsatellite").value = noofsatellite;
       document.getElementById("noofdialysis").value = noofdialysis;

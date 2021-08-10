@@ -1,7 +1,7 @@
 
 <div class="clinicLab" style="width: 100%;" hidden>
 <div class="mb-2 col-md-12">&nbsp;</div>
-	<div class="col-md-12 col-border-right hideMeIfHospital"><b class="text-primary">For Clinical Laboratory</b></div>
+	<!-- <div class="col-md-12 col-border-right hideMeIfHospital"><b class="text-primary">For Clinical Laboratory</b></div>
 
 	<div class="col-md-12 hideMeIfHospital">
 		<select class="form-control" name="clab" id="clab">
@@ -10,7 +10,7 @@
 			<option value="2">Secondary</option>
 			<option value="3">Tertiary</option>
 		</select>
-	</div>
+	</div> -->
 </div>
 <!-- <div class="row col-border-right hideMeIfHospital" >
 							<div class="col">

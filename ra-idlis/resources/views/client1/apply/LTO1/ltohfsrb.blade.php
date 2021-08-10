@@ -263,7 +263,7 @@
                             @else
                             <button onclick="readyforInspection()" class="btn btn-primary p-3">Finalize and Submit</button>
                             @endif
-                        @else
+                 @else
                         <button onclick="readyforInspection()" class="btn btn-primary p-3">Finalize and Submit</button>
                         @endif
 
