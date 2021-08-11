@@ -686,6 +686,11 @@ console.log("regfac")
       </div>
     </div>
   </div>
+
+  @php
+      $employeeData = session('employee_login');
+      $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
+  @endphp
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js" integrity="sha512-yDlE7vpGDP7o2eftkCiPZ+yuUyEcaBwoJoIhdXv71KZWugFqEphIS3PU60lEkFaz8RxaVsMpSvQxMBaKVwA5xg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
   <script>
@@ -830,6 +835,15 @@ const fetchFacNames = async (e) => {
       $('#cmid').change(function(event) {
         $("#cmidVal").val($(this).val());
       });
+
+
+      @if(isset($employeeData->rgnid))
+
+        document.getElementById('rgnid').value = '{{$employeeData->rgnid}}'
+      @endif
+
+
+
   </script>
 
   @include('employee.cmp._othersJS')
