@@ -277,7 +277,7 @@
                     <div class="row mb-1">
                       <div class="col-sm-6">
                         Region: <br>
-                        <select class="form-control" style="width: 100%" id="rgnid" name="rgnid" autocomplete="off" required>
+                        <select class="form-control" onchange="changeRegion()" style="width: 100%" id="rgnid" name="rgnid" autocomplete="off" required>
                           <option selected disabled value hidden>Please select</option>
                           @if(count($region) > 0) @foreach($region AS $each)
                           <option value="{{$each->rgnid}}">{{$each->rgn_desc}}</option>
@@ -287,7 +287,7 @@
 
                       <div class="col-sm-6">
                        Province: <br>
-                        <select class="form-control" style="width: 100%" id="provid" name="provid" autocomplete="off" required>
+                        <select class="form-control" onchange="changeRegion()" style="width: 100%" id="provid" name="provid" autocomplete="off" required>
                           <option selected disabled value hidden>Please select</option>
                         </select>
                       </div>
@@ -296,14 +296,14 @@
                     <div class="row mb-1">
                       <div class="col-sm-12">
                         City/Municipality: <br>
-                        <select style="width: 100%" class="form-control" id="cmid" name="cmid" autocomplete="off" required>
+                        <select style="width: 100%" onchange="changeRegion()" class="form-control" id="cmid" name="cmid" autocomplete="off" required>
                           <option selected disabled value hidden>Please select</option>
                         </select>
                       </div>
 
                       <div class="col-sm-6" hidden>
                         Barangay: <br>
-                        <select style="width: 100%" class="form-control" id="brgyid" name="brgyid" autocomplete="off" required>
+                        <select style="width: 100%" onchange="changeRegion()" class="form-control" id="brgyid" name="brgyid" autocomplete="off" required>
                           <option selected disabled value hidden>Please select</option>
                         </select>
                       </div>
@@ -362,7 +362,8 @@
                       {{-- <option diabled hidden selected value=""></option> --}}
                     </select> -->
                     <select name="type_of_faci" class="form-control w-100" id="facName"  onchange="changeFaciType()">
-                      {{-- <option diabled hidden selected value=""></option> --}}
+                     <option diabled hidden selected value=""></option> 
+                      <!-- {{-- <option diabled hidden selected value=""></option> --}} -->
                     </select>
                   </div>
                 </div>
@@ -381,6 +382,15 @@
   </div>
 
   <script type="text/javascript">
+
+function changeRegion(){
+  document.getElementById("factype").value = null
+  document.getElementById("facName").value = null
+}
+
+
+
+
     function submitprompt(children) {
       console.log("what")
       console.log(document.getElementById('facName').children[0])
@@ -735,12 +745,14 @@ const fetchFacNames = async (e) => {
                 $("#facName").empty();
                 // $("#facName").append(`<option value=''>Please select</option>`);
                 $("#facName").removeAttr('disabled');
+                // $("#facName").append(`<option value='' >Select</option>`);
                 facs.data.map(facName => {
 
                     $("#facName").append(`<option value='${facName.regfac_id}' >${facName.facilityname}</option>`);
                 })
                 
-                $("#facName").selectpicker('refresh')
+                // $("#facName").selectpicker('refresh')
+
             }).catch(err => {
                 console.log(err);
             })
