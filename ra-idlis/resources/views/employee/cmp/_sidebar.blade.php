@@ -1391,6 +1391,11 @@
 
                     <ul id="ReportMenu" class="list-unstyled collapse">
 
+                    <li><a  href="{{ asset('employee/dashboard/applist') }}" >&nbsp;&nbsp;&nbsp;Application List</a>
+
+                        </li>
+                  
+                    <!-- employee/dashboard/applist -->
                         <li><a href="#ReportApplication" data-toggle="collapse">&nbsp;&nbsp;&nbsp;HHRDB</a>
 
                             <ul id="ReportApplication" class="list-unstyled collapse">

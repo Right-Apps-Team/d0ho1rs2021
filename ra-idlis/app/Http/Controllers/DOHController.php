@@ -3296,6 +3296,33 @@ use FunctionsClientController;
 			}
 		}
 
+		public function Applist(Request $request, $filter = false)
+		{
+			if ($request->isMethod('get')) 
+			{
+				try 
+				{
+					$arrType = array();
+					$data = AjaxController::getAllApplicantsProcessFlow();
+					if(!$filter){
+						$allType = DB::table('hfaci_serv_type')->select('hfser_id')->get();
+						foreach ($allType as $key) {
+							array_push($arrType, $key->hfser_id);
+						}
+					} else {
+						array_push($arrType, strtoupper($filter));
+					}
+					return view('employee.reports.application_list', ['LotsOfDatas' => $data, 'serv' => $arrType]);
+				} 
+				catch (Exception $e) 
+				{
+					AjaxController::SystemLogs($e);
+					session()->flash('system_error','ERROR');
+					return view('employee.processflow.viewprocessflow');
+				}
+			}
+		}
+
 		public function listofpersonnel(Request $request)
 		{
 			if ($request->isMethod('get')) 
@@ -7522,7 +7549,8 @@ use FunctionsClientController;
 					$canView = AjaxController::canViewFDAOOP($appid);
 					switch ($data->hfser_id) {
 						case 'PTC':
-							$otherDetails = DB::table('hferc_evaluation')->leftJoin('x08','x08.uid','hferc_evaluation.HFERC_evalBy')->where([['appid',$appid]])->first();
+							$otherDetails = DB::table('hferc_evaluation')->leftJoin('x08','x08.uid','hferc_evaluation.HFERC_evalBy')->where([['appid',$appid]])->orderBy('hferc_evaluation.revision', 'desc')->first();
+							// $otherDetails = DB::table('hferc_evaluation')->leftJoin('x08','x08.uid','hferc_evaluation.HFERC_evalBy')->where([['appid',$appid]])->first();
 							break;
 						case 'COA':
 						case 'LTO':

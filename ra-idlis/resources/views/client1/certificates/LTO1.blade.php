@@ -217,21 +217,23 @@
 					<div class="col-md-1" style="display: inline">
 						&nbsp;</div>
 				</div>
-				<div class="row">
-						<div class="col-md-1"  >&nbsp;</div>
-					<div class="col-md-4 contl" >
-						Authorized Dialysis Station
-					</div>
-					<div class="col-md-1" style="display: inline;float: left">
-						:</div>
-					<div class="col-md-5 contr" style="float:left;display: inline;">
-					
-						<strong>{{((isset($otherDetails[0]->noofdialysis)) ? $otherDetails[0]->noofdialysis : "NA")}}</strong>
-						<!-- <strong>{{((isset($retTable[0]->noofstation)) ? $retTable[0]->noofstation : "NA")}}</strong> -->
-					</div>
-					<div class="col-md-1" style="display: inline">
-						&nbsp;</div>
-				</div>
+					@if(isset($otherDetails[0]->noofdialysis) && $otherDetails[0]->noofdialysis > 0)
+						<div class="row">
+								<div class="col-md-1"  >&nbsp;</div>
+							<div class="col-md-4 contl" >
+								Authorized Dialysis Station
+							</div>
+							<div class="col-md-1" style="display: inline;float: left">
+								:</div>
+							<div class="col-md-5 contr" style="float:left;display: inline;">
+							
+								<strong>{{((isset($otherDetails[0]->noofdialysis)) ? $otherDetails[0]->noofdialysis : "NA")}}</strong>
+								<!-- <strong>{{((isset($retTable[0]->noofstation)) ? $retTable[0]->noofstation : "NA")}}</strong> -->
+							</div>
+							<div class="col-md-1" style="display: inline">
+								&nbsp;</div>
+						</div>
+					@endif
 				@endif
 
 				 <div class="row">

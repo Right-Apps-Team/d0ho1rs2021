@@ -486,6 +486,7 @@ Route::match(['get', 'post'], 'employee/dashboard/mf/settings', 'DOHController@S
 ///// PROCESS FLOW ---------------------------------------------------------------------------
 // View All Application
 Route::match(['get', 'post'], 'employee/dashboard/processflow/view/{filter?}', 'DOHController@ViewProcessFlow'); // View All
+Route::match(['get', 'post'], 'employee/dashboard/applist/{filter?}', 'DOHController@Applist'); // View All
 Route::match(['get', 'post'], 'employee/hhrdb/applist', 'DOHController@listofpersonnel'); // View All
 // Evaluate
 Route::match(['get', 'post'],  'employee/dashboard/mf/FDA/pharma_charges', 'DOHController@fdapharma'); // Main, Add
