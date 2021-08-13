@@ -4373,6 +4373,24 @@ public static function checkConmem($appid)
 				return null;
 			}
 		}
+		
+		public static function checkmonid($id) // 
+		{
+			try 
+			{
+
+				$data = DB::table('mon_form')->where('monid', $id)->first();
+
+
+				return !is_null($data) ? 'yes' : 'no';
+			} 
+			catch (Exception $e) 
+			{
+				AjaxController::SystemLogs($e->getMessage());
+				return null;
+			}
+		}
+
 		public static function getAllRequestForAssistanceForm() // Get All Request For Assistance Form
 		{
 			///////////////// Lloyd - Nov 21, 2018 ///////////////

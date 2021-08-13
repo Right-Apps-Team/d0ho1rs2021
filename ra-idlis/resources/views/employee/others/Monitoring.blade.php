@@ -808,6 +808,7 @@ const fetchFacNames = async (e) => {
       }
 
       function procAfter(tName) {
+        console.log("this is")
         if(tName in _arrName) {
           let curDom = document.getElementsByName(_arrName[tName])[0], curInOf = _allObj.indexOf(tName);
           curDom.classList.add('loading');
@@ -835,11 +836,21 @@ const fetchFacNames = async (e) => {
       $('#cmid').change(function(event) {
         $("#cmidVal").val($(this).val());
       });
-
-
+      var rg =  document.getElementById('rgnid');
+      rg.value = '01';
       @if(isset($employeeData->rgnid))
 
-        document.getElementById('rgnid').value = '{{$employeeData->rgnid}}'
+     
+       rg.value = '{{$employeeData->rgnid}}';
+
+       setTimeout(function(){ 
+        procAfter('rgnid');
+        //  console.log("change")
+        // $("#rgnid").trigger("change");
+        // $("#provid").trigger("change");
+      }, 2000);
+      
+
       @endif
 
 

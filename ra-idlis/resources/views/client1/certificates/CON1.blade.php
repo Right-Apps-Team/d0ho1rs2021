@@ -71,7 +71,7 @@
 				<p class="headDetR" style="float: left; font-size: 20px; padding-left: 30px"><strong>CON No. {{date('Y')}}-{{str_pad(((isset($retTable[0]->appid)) ? $retTable[0]->appid : '_1'), 3, '0', STR_PAD_LEFT)}}</strong></p><br><br>
 				<p class="text-center font-mong tit">CERTIFICATE OF NEED</p>
 				<!-- <br> -->
-				<h5 class="text-center font-mong here">is herby granted to</h5>
+				<h5 class="text-center font-mong here">is hereby granted to</h5>
 				<!-- <br> -->
 				<h3 class="text-center text-uppercase font-mong name"><strong>{{((isset($retTable[0]->facilityname)) ? $retTable[0]->facilityname : "CURRENT_FACILITY")}}</strong></h3><br>
 				<!-- <h5 class="text-center font-mong">located at</h5><br> -->

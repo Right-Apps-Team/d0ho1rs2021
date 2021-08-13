@@ -309,6 +309,7 @@
 
   <script>
     function sendRequestRetArr(arr_data, loc, type, bolRet, objFunction) {
+      console.log("this is")
       try {
         type = type.toUpperCase();
         var xhttp = new XMLHttpRequest();
@@ -346,6 +347,7 @@
       }
 
       function procAfter(tName) {
+   
         if(tName in _arrName) {
           let curDom = document.getElementsByName(_arrName[tName])[0], curInOf = _allObj.indexOf(tName);
           curDom.classList.add('loading');
@@ -373,6 +375,7 @@
 
 
       $('#cmid').change(function(event) {
+        console.log("this is")
         $("#facilityOnArea").empty();
         var el = new Option('', '');
         $(el).html('Please Select');

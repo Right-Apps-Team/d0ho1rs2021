@@ -212,7 +212,7 @@ console.log(data)
 
                 // Insert a row at the end of table
                data.map((h) => {
-                genihb(h.id,h.uid, (h.fname+' '+h.lname), h.pos,tbodyRef)
+                genihb(h.id,h.uid, (h.fname+' '+h.lname), h.pos,tbodyRef, h.grpid)
                 });
 
 
@@ -275,7 +275,7 @@ console.log(data)
             }
     }
 
-    function genihb(id,uid,name,pos, tbodyRef){
+    function genihb(id,uid,name,pos, tbodyRef, grpid){
                 var newRow = tbodyRef.insertRow();
 
           // Insert a cell at the end of the row
@@ -308,7 +308,10 @@ console.log(data)
         //   newCell1.appendChild(newText1);
         //   newCell2.appendChild(newText2);
         //   newCell2.appendChild(space);
+if(grpid != 'DC'){
           newCell2.appendChild(newText3);
+}
+
           createSelect(newCell1, pos, id)
     }
 

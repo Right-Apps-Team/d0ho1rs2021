@@ -4919,8 +4919,12 @@ use FunctionsClientController;
 					return view('employee.processflow.pfmanageconcomittee',['region' => $data, 'team' =>$data2]);
 				}else{
 					DB::table('team')->insert(['teamid' => $request->id, 'teamdesc' => $request->name, 'rgnid' => $request->rgn, 'type' => 'con']);
-
-					
+// here
+					$chk = DB::table('x08')->where([['rgnid',$request->rgn],['grpid','DC']])->first();
+					if(!is_null($chk)){
+						DB::table('con_team_members')->insert(['uid' => $chk->uid,'pos' => 'C', 'team_id' =>$request->id]);
+					}
+				
 					return 'DONE';
 				}
 			} catch (Exception $e) {
@@ -4964,7 +4968,13 @@ use FunctionsClientController;
 					return view('employee.processflow.pfHfercTeamAss',['region' => $data, 'team' =>$data2]);
 				}else{
 					DB::table('team')->insert(['teamid' => $request->id, 'teamdesc' => $request->name, 'rgnid' => $request->rgn, 'type' => 'ptc']);
-
+				
+				
+					$chk = DB::table('x08')->where([['rgnid',$request->rgn],['grpid','DC']])->first();
+					if(!is_null($chk)){
+						DB::table('ptc_team_members')->insert(['uid' => $chk->uid,'pos' => 'C', 'team_id' =>$request->id]);
+					}
+				
 					
 					return 'DONE';
 				}
@@ -8748,7 +8758,20 @@ use FunctionsClientController;
 			{
 				try 
 				{
+
+
 					$allDataSql = "SELECT * FROM mon_form join registered_facility on registered_facility.regfac_id = mon_form.regfac_id WHERE hasLOE IS NOT NULL";
+
+					$Cur_useData = AjaxController::getCurrentUserAllData();
+
+					if($Cur_useData['grpid'] == 'NA'){
+						$allDataSql = "SELECT * FROM mon_form join registered_facility on registered_facility.regfac_id = mon_form.regfac_id WHERE hasLOE IS NOT NULL";
+					}else{
+						$rg = $Cur_useData['rgnid'];
+						$allDataSql = "SELECT * FROM mon_form join registered_facility on registered_facility.regfac_id = mon_form.regfac_id WHERE hasLOE IS NOT NULL && registered_facility.rgnid = '$rg'";
+					}
+
+
 					// $allDataSql = "SELECT * FROM mon_form join appform on appform.appid = mon_form.appid WHERE hasLOE IS NOT NULL";
 					$allData = DB::select($allDataSql);
 					$allRec = AjaxController::getAllSurveillanceRecommendation();

@@ -515,27 +515,27 @@ $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
 				// dd($x);
 				OthersController::save_to_log($request->ref_no_new_new, 'req_ast_form', 'edit');
 			} else {
-				//Gets Facitype
-				$type = DB::table('appform')
-						->join('x08_ft', 'appform.appid', '=', 'x08_ft.appid')
-						->join('facilitytyp', 'x08_ft.facid', '=', 'facilitytyp.facid')
-						->select('facilitytyp.facname')
-						->first();
+				// //Gets Facitype
+				// $type = DB::table('appform')
+				// 		->join('x08_ft', 'appform.appid', '=', 'x08_ft.appid')
+				// 		->join('facilitytyp', 'x08_ft.facid', '=', 'facilitytyp.facid')
+				// 		->select('facilitytyp.facname')
+				// 		->first();
 
-				$name = DB::table('appform')
-						->select('facilityname')
-						->where('appid', $request->name_of_faci)
-						->first();
+				// $name = DB::table('appform')
+				// 		->select('facilityname')
+				// 		->where('appid', $request->name_of_faci)
+				// 		->first();
 
-				if($request->facinaturevalue == "false") {
-					$name = $request->name_of_faci;
-					$type = $request->type_of_faci;
-				}
-				else {
-					$name=$name->facilityname;
-					$type=$request->type_of_faci;
-					// $type=explode("^",$request->type_of_faci)[1];
-				}
+				// if($request->facinaturevalue == "false") {
+				// 	$name = $request->name_of_faci;
+				// 	$type = $request->type_of_faci;
+				// }
+				// else {
+				// 	$name=$name->facilityname;
+				// 	$type=$request->type_of_faci;
+				// 	// $type=explode("^",$request->type_of_faci)[1];
+				// }
 
 				$data = [
 					"source" => $request->source,
@@ -1094,11 +1094,23 @@ $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
 				// 	$fileNameToStore = (session()->has('employee_login') ? FunctionsClientController::getSessionParamObj("employee_login", "uid") : FunctionsClientController::getSessionParamObj("uData", "uid")).'_'.Str::random(10).'_'.date('Y_m_d_i_s').'.'.$fileExtension;
 				// 	$request->file('filesup')->storeAs('public/uploaded', $fileNameToStore);
 				// }
-
+				$chksf = DB::table('surv_form')->where('survid',$request->recmonid)->first();
 
 				$fl = null;
 				if($request->has('filesup')){
 					$fl = array();
+
+					if(!is_null($chksf)){
+						if(!is_null($chksf->supportDoc)){
+							$xpd = explode(",",$chksf->supportDoc);
+							foreach ($xpd as $fb) {
+								array_push($fl,$fb);
+							}
+						}
+					}
+
+
+
 					foreach ($request->file('filesup') as $key) {
 						$imageRec = FunctionsClientController::uploadFile($key);
 						array_push($fl,$imageRec['fileNameToStore']);

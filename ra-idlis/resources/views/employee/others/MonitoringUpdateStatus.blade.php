@@ -22,6 +22,9 @@
 	        		<tbody>
 	        			@isset($AllData)
 	        				@foreach($AllData as $key => $value)
+							@if(AjaxController::checkmonid($value->monid) == 'no')
+									<?php  continue; ?>
+							@endif
 	        					<tr>
 	        						<td style="text-align: center;">{{$value->monid}}</td>
 	        						<td style="text-align: center;">@if($value->novid != "") {{ AjaxController::getNovidById($value->monid, "M")->novid }} @endif</td>

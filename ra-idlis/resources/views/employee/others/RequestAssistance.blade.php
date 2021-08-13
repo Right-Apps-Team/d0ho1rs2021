@@ -208,7 +208,8 @@
 
                       @if($a->deleted == null)
 
-                      <div class="dropdown" style="z-index: 99999 !important; position: absolute">
+                      <div class="dropdown">
+                      <!-- <div class="dropdown" style="z-index: 99999 !important; position: absolute"> -->
 
                         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
@@ -349,7 +350,7 @@
                     <th>Type of Facility</th>
                     <th>Date Received</th>
                     <th>Nature of Complaints/<br>Request of Assistance</th>
-                    <th>Status</th>
+                    <!-- <th>Status</th> -->
                     <th>Date Resolved</th>
                   </tr>
                 </thead>
@@ -423,8 +424,9 @@
                 data[i].type_of_faci,
                 data[i].req_date,
                 data[i].comps+data[i].reqs,
-                y,
                 data[i].resolveDate,
+                // y,
+               
               ]
             ).draw();
           }

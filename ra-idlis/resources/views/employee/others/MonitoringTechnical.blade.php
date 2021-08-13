@@ -29,6 +29,10 @@
 	        			@isset($AllData)
 	        			{{-- {{dd($AllData)}} --}}
 	        				@foreach($AllData as $key => $value)
+							<!-- checkmonid($id) -->
+							@if(AjaxController::checkmonid($value->monid) == 'no')
+									<?php  continue; ?>
+							@endif
 	        					<tr>
 	        						<td style="text-align: center;">{{$value->monid}}</td>
 	        						<td style="text-align: center;">
@@ -280,7 +284,7 @@
 			                	</div>
 
 			                	<div class="col-sm-8 w-100">
-			                  		<input type="text" name="nov_num" id="nov_num" class="form-control w-100" >
+			                  		<input type="text" name="nov_num" id="nov_num" class="form-control w-100" required>
 			                	</div>
 			              	</div>
 
