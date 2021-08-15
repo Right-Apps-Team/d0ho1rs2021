@@ -719,8 +719,10 @@ Route::post('employee/dashboard/manage/delmodule', 'AjaxController@delModuleMang
 Route::match(['get', 'post'], 'employee/dashboard/manage/modules', 'DOHController@ModuleManage'); // View All, Add
 // System Users
 Route::post('employee/dashboard/manage/saveUser', 'AjaxController@SaveUserManage'); // Update All information
+Route::post('employee/dashboard/manage/saveUser/pass', 'AjaxController@SaveUserManagePass'); // Update All information
 Route::post('employee/dashboard/manage/saveIfActive', 'AjaxController@SaveIFActive'); // Update Change State
 Route::match(['get', 'post'], 'employee/dashboard/manage/system_users', 'DOHController@SystemUsersManage'); // View All
+Route::match(['get', 'post'], 'employee/dashboard/manage/client_users', 'DOHController@ClientUsersManage'); // View All
 // Applicant Accounts
 Route::match(['get', 'post'], 'employee/dashboard/manage/applicants', 'DOHController@ApplicantAccountsManage');
 // System Logs

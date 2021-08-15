@@ -1494,6 +1494,11 @@
 
                                     <li><a href="{{ asset('/employee/dashboard/manage/system_users') }}"><i class="fa fa-user-circle"></i> System Users</a></li>
 
+                                </span> 
+   <span class="MG002_allow">
+
+                                    <li><a href="{{ asset('/employee/dashboard/manage/client_users') }}"><i class="fa fa-user-circle"></i> Client Users</a></li>
+
                                 </span>
 
                                 <span class="MG003_allow">

@@ -6589,6 +6589,66 @@ public static function checkConmem($appid)
 				return null;
 			}
 		}
+
+		public static function getFilteredUsersClient()
+		{
+			try 
+			{
+				$Cur_useData = AjaxController::getCurrentUserAllData();
+				// if ($Cur_useData['grpid'] == 'NA') 
+				// {
+					$data1 = DB::table('x08')
+						// ->join('region', 'x08.rgnid', '=', 'region.rgnid')
+						->join('x07', 'x08.grpid', '=', 'x07.grp_id')
+						->where([ ['x08.grpid', '=', 'C']])
+						->get();
+				// }
+				// else
+				// {
+				// 	$data1 = DB::table('x08')
+				// 		->join('region', 'x08.rgnid', '=', 'region.rgnid')
+				// 		->join('x07', 'x08.grpid', '=', 'x07.grp_id')
+				// 		->where([['x08.grpid', '<>', 'NA'], ['x08.grpid', '<>', 'C'], ['region.rgnid', '=', $Cur_useData['rgnid']]])
+				// 		->get();
+				// }
+				if (isset($data1)) {
+						for ($i=0; $i < count($data1); $i++) { 
+							if (isset($data1[$i]->team)) {
+									$test = DB::table('team')->where('teamid', '=', $data1[$i]->team)->first();
+									if (isset($test)) {
+										$data1[$i]->teamid = $test->teamid;
+										$data1[$i]->teamdesc = $test->teamdesc;
+									}else {
+										$data1[$i]->teamdesc = 'NONE';
+										$data1[$i]->teamid = null;
+									}
+							} else {
+									$data1[$i]->teamdesc = 'NONE';
+							}
+							if (isset($data1[$i]->def_faci)) {
+									$test2 = DB::table('facilitytyp')->where('facid', '=', $data1[$i]->def_faci)->first();
+									if (isset($test2)) {
+										$data1[$i]->facid = $test2->facid;
+										$data1[$i]->facidesc = $test2->facname;
+									} else {
+										$data1[$i]->facidesc = 'NONE';
+										$data1[$i]->facid = null;
+									}
+							} else {
+								$data1[$i]->facidesc = 'NONE';
+							}
+						}
+					}
+				return $data1;
+			} 
+			catch (Exception $e) 
+			{
+				AjaxController::SystemLogs($e->getMessage);
+				return null;
+			}
+		}
+
+
 		public static function getFilteredTypes()
 		{
 			try 
@@ -6663,6 +6723,33 @@ public static function checkConmem($appid)
 					}
 					// return $data['rgnid'];
 					$test = DB::table('x08')->where('uid', '=', $request->id)->update($data);
+					// email, rgnid, grpid, fname, mname, lname,contact, position 
+					if ($test) {
+						return 'DONE';
+					} else {
+						AjaxController::SystemLogs('No data has been updated in x08 table. (SaveUserManage)');
+						return 'ERROR';
+					}
+			} 
+			catch (Exception $e) 
+			{
+				AjaxController::SystemLogs($e->getMessage());
+				return 'ERROR';	
+			}
+		}
+
+		public static function SaveUserManagePass(Request $request)
+		{
+			try 
+			{
+				// $data = array ();
+				
+				// 	if (isset($request->editpass)) {
+				// 		$data['pwd'] = Hash::make(($request->editpass));
+				// 	}
+					$update = array('pwd'=>Hash::make(($request->editpass)));
+					// return $data['rgnid'];
+					$test = DB::table('x08')->where('uid', '=', $request->id)->update($update);
 					// email, rgnid, grpid, fname, mname, lname,contact, position 
 					if ($test) {
 						return 'DONE';

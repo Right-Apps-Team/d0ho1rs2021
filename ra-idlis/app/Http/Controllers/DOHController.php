@@ -9576,7 +9576,30 @@ use FunctionsClientController;
 		}
 
 
-
+		public function ClientUsersManage(Request $request)
+		{
+			if ($request->isMethod('get')) 
+			{
+				try 
+				
+				{
+					$data = AjaxController::getFilteredUsersClient();
+					$data1 = AjaxController::getFilteredTypes();
+					$data2 = AjaxController::getAllRegion();
+					$data3 = AjaxController::getAllFacilityGroup();
+					$data4 = AjaxController::getAllTeams();
+					// return dd($data);
+					return view('employee.manage.mclientuser', ['users'=>$data, 'types'=>$data1, 'region'=>$data2, 'facilitys' => $data3, 'team' => $data4]);
+				} 
+				catch (Exception $e) 
+				{
+					AjaxController::SystemLogs($e);
+					session()->flash('system_error','ERROR');
+					return view('employee.manage.mclientuser');
+					return $e;
+				}
+			}
+		}
 
 
 		public function SystemUsersManage(Request $request)

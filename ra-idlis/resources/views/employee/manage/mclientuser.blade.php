@@ -8,7 +8,7 @@
       <div class="card">
         
           <div class="card-header bg-white font-weight-bold">
-             System Users <span class="MG002_add"><a href="#" title="Add New Region" data-toggle="modal" data-target="#myModal"><button class="btn-primarys"><i class="fa fa-plus-circle"></i>&nbsp;Add new</button></a></span>
+             Client Users 
              {{-- <span style="float:right">Filter : 
                 <select class="form-control" id="filterer" onchange="filterGroup()">
                   <option value="">Select Region ...</option>
@@ -29,10 +29,11 @@
                   <tr>
                     <th >User ID</th>
                     <th >Name</th>
-                    <th >Type</th>
+                    <!-- <th >Type</th> -->
                     <th  class="text-center">Position</th>
-                    <th ><center>Region</center></th>
-                    <th ><center>Status</center></th>
+                    <th  class="text-center">Company</th>
+                    <!-- <th ><center>Region</center></th>
+                    <th ><center>Status</center></th> -->
                     <th ><center>Options</center></th>
                   </tr>
                 </thead>
@@ -41,12 +42,14 @@
                 @foreach ($users as $user)
                   <tr>
                     <td>{{$user->uid}}</td>
-                    <td style="font-weight: bold">{{$user->fname}} @if ($user->mname != "") {{substr($user->mname,0,1)}}. @endif {{$user->lname}}
+                    <td style="font-weight: bold">{{$user->authorizedsignature}}
+                    <!-- <td style="font-weight: bold">{{$user->fname}} @if ($user->mname != "") {{substr($user->mname,0,1)}}. @endif {{$user->lname}} -->
                     </td>
-                    <td>{{$user->grp_desc}}</td>
-                    <td style="text-align: center">@if($user->position != ''){{$user->position}} @else NONE @endif</td>
-                    <td><center>{{$user->rgn_desc}}</center></td>
-                    <td>
+                    <!-- <td>{{$user->grp_desc}}</td> -->
+                    <td style="text-align: center">@if($user->assign != ''){{$user->assign}} @else NONE @endif</td>
+                    <td style="text-align: center">@if($user->nameofcompany  != ''){{$user->nameofcompany }} @else NONE @endif</td>
+                 
+                    <!-- <td>
                       <center>
                         @if ($user->isActive == 1)
                           <font style="color:green">Active</font>
@@ -54,23 +57,23 @@
                           <font style="color:red">Deactived</font>
                         @endif
                       </center>
-                    </td>
+                    </td> -->
                   <td>
                       <center>
                           <div class="btn-group" role="group" aria-label="Basic example">
-                          <a href="#" ><button type="button" data-toggle="modal" data-target="#ViewModal" onclick="showData('{{$user->uid}}','{{$user->fname}}','{{$user->mname}}','{{$user->lname}}','{{$user->contact}}','{{$user->rgn_desc}}', '{{$user->email}}', '{{$user->grp_desc}}', '{{$user->position}}', '{{$user->teamdesc}}', '{{$user->facidesc}}')" class="btn btn-outline-primary" title="View Account">&nbsp;<i class="fa fa-eye"></i>&nbsp;</button></a>
+                          <a href="#" ><button type="button" data-toggle="modal" data-target="#ViewModal" onclick="showData('{{$user->uid}}','{{$user->fname}}','{{$user->mname}}','{{$user->lname}}','{{$user->contact}}',' ', '{{$user->email}}', '{{$user->grp_desc}}', '{{$user->position}}', '{{$user->teamdesc}}', '{{$user->facidesc}}',  '{{($user->isTempBanned ?? null)}}')" class="btn btn-outline-primary" title="View Account">&nbsp;<i class="fa fa-eye"></i>&nbsp;</button></a>
                           @if ($user->isActive == 1)
                           <span class="MG002_update">
-                            <a href="#"><button data-toggle="modal" onclick="showIfActive({{$user->isActive}},'{{$user->uid}}','{{$user->fname}}','{{$user->mname}}','{{$user->lname}}',  '{{($user->isTempBanned ?? null)}}')" data-target="#IfActiveModal" class="btn btn-outline-danger" title="Deactivate Account">&nbsp;<i class="fa fa-toggle-off"></i>&nbsp;</button></a>
+                            <a href="#"><button data-toggle="modal" onclick="showIfActive({{$user->isActive}},'{{$user->uid}}','{{$user->fname}}','{{$user->mname}}','{{$user->lname}}')" data-target="#IfActiveModal" class="btn btn-outline-danger" title="Deactivate Account">&nbsp;<i class="fa fa-toggle-off"></i>&nbsp;</button></a>
                           </span>
                           @else
                           <span class="MG002_update">
                             <a href="#"><button type="button" data-toggle="modal" onclick="showIfActive({{$user->isActive}},'{{$user->uid}}','{{$user->fname}}','{{$user->mname}}','{{$user->lname}}')" data-target="#IfActiveModal" class="btn btn-outline-success" title="Reactivate Account">&nbsp;<i class="fa fa-toggle-on"></i>&nbsp;</button></a>
                           </span>
                         @endif
-                        <span class="MG002_update">
+                        <!-- <span class="MG002_update">
                           <a href="#"><button type="button" data-target="#editMODAL" onclick="ShowEdit('{{$user->uid}}','{{$user->pre}}','{{$user->fname}}','{{$user->mname}}','{{$user->lname}}','{{$user->suf}}','{{$user->contact}}','{{$user->rgnid}}', '{{$user->email}}', '{{$user->grpid}}', '{{$user->position}}', '{{$user->team}}', '{{$user->rgnid}}', '{{$user->grpid}}', '{{($user->teamid ?? null)}}',  '{{($user->facid ?? null)}}',  '{{($user->isTempBanned ?? null)}}')"; data-toggle="modal" class="btn btn-outline-warning" title="Edit Account">&nbsp;<i class="fa fa-edit"></i>&nbsp;</button></a>&nbsp;
-                        </span>
+                        </span> -->
                         </div>
                       </center>                    
                     </td>
@@ -294,44 +297,48 @@
           <h5 class="modal-title text-center"><strong>System User Information</strong></h5>
           <hr>
           <div class="container">
-            <form  class="row" >
+            <form id="EditClient" class="row" >
+            <input type="text" id="edit_uid" value="" hidden>
               <div class="col-sm-12" id="Error">
               </div>
-              <div class="col-sm-4">First Name:</div>
+              <!-- <div class="col-sm-4">First Name:</div>
               <div class="col-sm-8" style="margin:0 0 .8em 0;">
                 <span id="ViewFname" style="font-weight: bold"></span>
-              </div>
-              <div class="col-sm-4">Middle Name:</div>
+              </div> -->
+              <!-- <div class="col-sm-4">Middle Name:</div>
               <div class="col-sm-8" style="margin:0 0 .8em 0;">
                 <span id="ViewMname" style="font-weight: bold">&nbsp;</span>
-              </div>
-              <div class="col-sm-4">Last Name:</div>
+              </div> -->
+              <!-- <div class="col-sm-4">Last Name:</div>
               <div class="col-sm-8" style="margin:0 0 .8em 0;">
                 <span id="ViewLname" style="font-weight: bold"></span>
-              </div>
-              <div class="col-sm-4">Region:</div>
+              </div> -->
+              <!-- <div class="col-sm-4">Region:</div>
               <div class="col-sm-8" style="margin:0 0 .8em 0;">
                 <span id="ViewRegion" style="font-weight: bold"></span>
-              </div>
-              <div class="col-sm-4">Type:</div>
+              </div> -->
+              <!-- <div class="col-sm-4">Type:</div>
               <div class="col-sm-8" style="margin:0 0 .8em 0;">
                 <span id="ViewType" style="font-weight: bold"></span>
-              </div>
-              <div class="col-sm-4">Position:</div>
+              </div> -->
+              <!-- <div class="col-sm-4">Position:</div>
               <div class="col-sm-8" style="margin:0 0 .8em 0;">
                 <span id="ViewPosi" style="font-weight: bold"></span>
-              </div>
+              </div> -->
 
-              <div class="col-sm-4">Team:</div>
+              <!-- <div class="col-sm-4">Team:</div>
               <div class="col-sm-8" style="margin:0 0 .8em 0;">
                 <span id="ViewTeam" style="font-weight: bold"></span>
-              </div>
+              </div> -->
               
-              <div class="col-sm-4" style="margin:0 0 .8em 0;;text-align: left">Default Facility Assignment:</div>
+              <!-- <div class="col-sm-4" style="margin:0 0 .8em 0;;text-align: left">Default Facility Assignment:</div>
               <div class="col-sm-8" style="margin:0 0 .8em 0;">
                 <span id="ViewDefFaci" style="font-weight: bold"></span>
-              </div>
+              </div> -->
 
+              <div class="col-sm-12"> <input type="checkbox" name="banned" id="istempbanned" value="1" onclick="setBanning()" />&nbsp;User Banned</div>
+              <br>
+              <br>
               <div class="col-sm-4">Email Address:</div>
               <div class="col-sm-8" style="margin:0 0 .8em 0;">
                 <span id="ViewEmail" style="font-weight: bold"></span>
@@ -340,6 +347,27 @@
               <div class="col-sm-8" style="margin:0 0 .8em 0;">
                 <span id="ViewCntNo" style="font-weight: bold"</span>
               </div>
+
+
+              <div class="col-sm-4"> Password:</div>
+                    <div class="col-sm-12" style="margin:0 0 .8em 0;">
+                    <input type="password" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');" name="editpass" onkeyup="checkPassword1()" id="ThePassWord16" class="form-control"  >
+                   
+                    </div>
+
+                  
+                  <div class="col-sm-12">
+                    <div class="col-sm-4">
+                      Password Strength: <input type="text" id="passStr1" hidden>
+                    </div>
+                    <div class="col-sm-8 text-center" style="margin:0 0 .8em 0;text-align: center" ><span id="result1">&nbsp;</span></div>
+                  </div> 
+                  
+                  <div class="col-sm-12">
+                    <button type="submit" class="btn btn-outline-warning form-control" style="border-radius:0;"><span class="fa fa-sign-up"></span>Update System User</button>
+                  </div>
+
+
               <div class="col-sm-12">
                 <hr>
                 <button type="button" data-dismiss="modal" class="btn btn-outline-danger form-control" style="border-radius:0;"><span class="fa fa-sign-up"></span>Close</button>
@@ -616,7 +644,11 @@
                 '</center>'
             );
           }
-      function showData(id,fname,mname,lname,cntno,rgn,email,accType,posi, team, defaci){
+      function showData(id,fname,mname,lname,cntno,rgn,email,accType,posi, team, defaci,isTempBanned){
+        if(isTempBanned == "1"){
+              $('#istempbanned').prop('checked', true);
+            }
+        $('#edit_uid').val(id);
             $('#ViewFname').text(fname.toUpperCase());
             var MnameText = (mname == '') ? '' : mname;
             $('#ViewMname').append(MnameText.toUpperCase());
@@ -630,12 +662,8 @@
             var AccPosi = (posi == '') ? 'NONE' : posi;
             $('#ViewPosi').text(AccPosi);
           }
-      function showIfActive(state,id,fname,mname,lname, isTempBanned){
-        if(isTempBanned == "1"){
-              $('#istempbanned').prop('checked', true);
-            }
-
-
+      function showIfActive(state,id,fname,mname,lname){
+            $('#edit_uid').val(id);
             var title,name,message;
             if (mname != "") {
                 mname = mname.charAt(0)+'.';
@@ -1167,6 +1195,34 @@ function callApi(url, data, method) {
                         id :  $('#edit_uid').val(),
                         deffaci :$('#def_faci2').val(),
                         editpass :$('#ThePassWord1').val(),
+                    },
+                    success : function(data){
+                      if (data == 'DONE') {
+                          alert('Successfully Modified a User');
+                          location.reload();
+                      } else if (data == 'ERROR'){
+                          $('#EditErrorAlert').show(100);
+                      }
+                    },
+                    error : function(a,b,c){
+                        console.log(c);
+                        $('#EditErrorAlert').show(100);
+                    }
+                  });
+              }
+          });
+          $('#EditClient').on('submit', function(event){
+              event.preventDefault();
+              var form = $(this);
+              form.parsley().validate();
+              if (form.parsley().isValid()){
+                  $.ajax({
+                    url : '{{asset('employee/dashboard/manage/saveUser/pass')}}',
+                    method : 'POST',
+                    data : {
+                        _token:$('input[name="_token"]').val(),
+                        editpass :$('#ThePassWord16').val(),
+                        id :  $('#edit_uid').val(),
                     },
                     success : function(data){
                       if (data == 'DONE') {
