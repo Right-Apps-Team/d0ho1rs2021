@@ -27,7 +27,7 @@
     <div class="card">
       <div class="card-header bg-white font-weight-bold">
       <button class="btn btn-primary" onclick="window.history.back();">Back</button>
-         Committee Assignment 
+         Committee Assignment
       
 
          

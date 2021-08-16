@@ -4920,10 +4920,10 @@ use FunctionsClientController;
 				}else{
 					DB::table('team')->insert(['teamid' => $request->id, 'teamdesc' => $request->name, 'rgnid' => $request->rgn, 'type' => 'con']);
 // here
-					$chk = DB::table('x08')->where([['rgnid',$request->rgn],['grpid','DC']])->first();
-					if(!is_null($chk)){
-						DB::table('con_team_members')->insert(['uid' => $chk->uid,'pos' => 'C', 'team_id' =>$request->id]);
-					}
+					// $chk = DB::table('x08')->where([['rgnid',$request->rgn],['grpid','DC']])->first();
+					// if(!is_null($chk)){
+					// 	DB::table('con_team_members')->insert(['uid' => $chk->uid,'pos' => 'C', 'team_id' =>$request->id]);
+					// }
 				
 					return 'DONE';
 				}
@@ -4970,10 +4970,10 @@ use FunctionsClientController;
 					DB::table('team')->insert(['teamid' => $request->id, 'teamdesc' => $request->name, 'rgnid' => $request->rgn, 'type' => 'ptc']);
 				
 				
-					$chk = DB::table('x08')->where([['rgnid',$request->rgn],['grpid','DC']])->first();
-					if(!is_null($chk)){
-						DB::table('ptc_team_members')->insert(['uid' => $chk->uid,'pos' => 'C', 'team_id' =>$request->id]);
-					}
+					// $chk = DB::table('x08')->where([['rgnid',$request->rgn],['grpid','DC']])->first();
+					// if(!is_null($chk)){
+					// 	DB::table('ptc_team_members')->insert(['uid' => $chk->uid,'pos' => 'C', 'team_id' =>$request->id]);
+					// }
 				
 					
 					return 'DONE';

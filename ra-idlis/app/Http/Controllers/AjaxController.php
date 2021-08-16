@@ -875,7 +875,7 @@
 			{
 				$data = DB::table('x08')
 						->where('rgnid',$request->rgnid)
-						->whereIn('grpid',['CM','LO','RLO'])
+						->whereIn('grpid',['CM','LO','RLO','DC'])
 						// ->where('grpid','!=','C')
 						// ->where('grpid','=','CM')
 						// ->where('grpid','=','LO')
@@ -936,7 +936,7 @@
 			{
 				$data = DB::table('x08')
 						->where('rgnid',$request->rgnid)
-						->whereIn('grpid',['LO1','LO2','LO4','RLO','NA'])
+						->whereIn('grpid',['LO1','LO2','LO4','RLO','NA','DC'])
 						// ->whereIn('grpid',['CM','LO','RLO'])
 						// ->where('grpid','!=','C')
 						// ->where('grpid','=','CM')
@@ -1500,6 +1500,7 @@ public static function checkConmem($appid)
 							->where([['x08.grpid', 'CM'],['x08.isBanned',0],['x08.rgnid',$rgn]])
 							->orWhere([['x08.grpid', 'LO'],['x08.isBanned',0],['x08.rgnid',$rgn]])
 							->orWhere([['x08.grpid', 'RLO'],['x08.isBanned',0],['x08.rgnid',$rgn]])
+							->orWhere([['x08.grpid', 'DC'],['x08.isBanned',0],['x08.rgnid',$rgn]])
 							->whereNotIn('x08.uid',$notInclude)
 							->get();
 					break;
@@ -1510,6 +1511,7 @@ public static function checkConmem($appid)
 							->where([['x08.grpid', 'CM'],['x08.isBanned',0],['x08.rgnid',$rgn], ['committee_team.appid',$appid]])
 							->orWhere([['x08.grpid', 'LO'],['x08.isBanned',0],['x08.rgnid',$rgn], ['committee_team.appid',$appid]])
 							->orWhere([['x08.grpid', 'RLO'],['x08.isBanned',0],['x08.rgnid',$rgn], ['committee_team.appid',$appid]])
+							->orWhere([['x08.grpid', 'DC'],['x08.isBanned',0],['x08.rgnid',$rgn], ['committee_team.appid',$appid]])
 							->whereIn('x08.uid',$notInclude)
 							->get();
 					break;
