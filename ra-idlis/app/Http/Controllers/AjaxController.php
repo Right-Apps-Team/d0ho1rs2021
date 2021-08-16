@@ -1463,7 +1463,7 @@ public static function checkConmem($appid)
 					$data = DB::table('x08')
 							->join('x07', 'x08.grpid', '=', 'x07.grp_id')
 							->where([['x08.isBanned',0],['x08.rgnid',$rgn]])
-							->whereIn('x08.grpid',['LO1','LO2','LO4','RLO','NA'])
+							->whereIn('x08.grpid',['LO1','LO2','LO4','RLO','NA','DC'])
 							->whereNotIn('x08.uid',$notInclude)
 							->get();
 					break;
@@ -1473,7 +1473,7 @@ public static function checkConmem($appid)
 							->leftjoin('x07', 'x08.grpid', '=', 'x07.grp_id')
 							->leftjoin('hferc_team','x08.uid','hferc_team.uid')
 							->where([['x08.isBanned',0],['x08.rgnid',$rgn], ['hferc_team.appid',$appid],['hferc_team.revision',$revCount]])
-							->whereIn('x08.grpid',['LO1','LO2','LO4','RLO','NA'])
+							->whereIn('x08.grpid',['LO1','LO2','LO4','RLO','NA','DC'])
 							->whereIn('x08.uid',$notInclude)
 							->get();
 					break;

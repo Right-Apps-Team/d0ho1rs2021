@@ -980,14 +980,16 @@ console.log(option[0])
       });
       $(document).on('keyup',"input[name='tya[]'],input[name='aya[]'],input[name='apty[]']",function(){
         processPopulationCount();
-        if(getBPR().toFixed(2) < 1){
-          $("#psc").hide();
-          $("input[name=pscaval]").val('');
-        } else {
+
+        // if(getBPR().toFixed(2) < 1){
+        //   $("#psc").hide();
+        //   $("input[name=pscaval]").val('');
+        // } else {
           $("#psc").show();
           $("#pscaAve").html(avepsca() + ' %');
           $("input[name=pscaval]").val(avepsca());
-      }
+      // }
+
       });
       $(document).on('change','select[name="loc[]"]',function(){
         $('select[name="loc[]"]').attr('value',$(this).val());
@@ -1035,16 +1037,21 @@ console.log(option[0])
       // $("#pbn").html(getPBN() + '&nbsp; say '+ getPBN().toFixed(0));
       $("#ubn").html(numberWithCommas(getUBN()) + ' bed');
       // $("#ubn").html(getUBN() + ' bed');
-      if(getBPR().toFixed(2) < 1){
-        $("#psc").hide();
-        $("input[name=pscaval]").val('');
-        // $("#pscaHead").next().html('');
-      } else {
+
+
+      // if(getBPR().toFixed(2) < 1){
+      //   $("#psc").hide();
+      //   $("input[name=pscaval]").val('');
+      //   // $("#pscaHead").next().html('');
+      // } else {
         $("#psc").show();
         $("#pscaAve").html(avepsca() + ' %');
         $("input[name=pscaval]").val(avepsca());
         forPSCA();
-      }
+      // }
+
+
+
 
       setTimeout(function(){ 
         getUBN();
