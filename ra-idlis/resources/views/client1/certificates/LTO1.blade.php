@@ -173,13 +173,38 @@
 					<div class="col-md-1" style="display: inline">
 						:</div>
 					<div class="col-md-5 contr" style="float:left;display: inline;">
-					{{((isset($retTable[0])) ?
+
+				{{--	{{((isset($retTable[0])) ?
 						 (
 							 ($retTable[0]->street_name ? ucwords(strtolower($retTable[0]->street_name)).', ' : ' ')
 						 
 						 .
 						($retTable[0]->street_number ?  ucwords(strtolower($retTable[0]->street_number)).', ' : '' ).ucwords(strtolower($retTable[0]->brgyname)).', '.ucwords(strtolower($retTable[0]->cmname)).', '.ucwords(strtolower($retTable[0]->provname)).' '.$retTable[0]->rgn_desc) : 'No Location.')}}
 					
+						--}}
+
+						@php
+$loc =
+(
+							 ($retTable[0]->street_name ? ucwords(strtolower($retTable[0]->street_name)).', ' : ' ')
+						 
+						 .
+						($retTable[0]->street_number ?  ucwords(strtolower($retTable[0]->street_number)).', ' : '' ).ucwords(strtolower($retTable[0]->brgyname)).', '.ucwords(strtolower($retTable[0]->cmname)).', '.ucwords(strtolower($retTable[0]->provname)).' '.strtoupper($retTable[0]->rgn_desc));
+
+$stringloc = preg_replace_callback('/\b(?=[LXIVCDM]+\b)([a-z]+)\b/i', 
+function($matches) {
+    return strtoupper($matches[0]);
+}, $loc);	
+
+@endphp
+
+
+
+
+					{{((isset($retTable[0])) ?
+						$stringloc
+						
+						: 'No Location.')}}
 					<!-- {{((isset($retTable[0])) ? (ucfirst(strtolower($retTable[0]->street_name)).', '.ucfirst(strtolower($retTable[0]->street_number)).', '.ucfirst(strtolower($retTable[0]->brgyname)).', '.ucfirst(strtolower($retTable[0]->cmname)).', '.ucfirst(strtolower($retTable[0]->provname)).' '.ucfirst(strtolower($retTable[0]->rgn_desc))) : 'No Location.')}} -->
 						<!-- {{ucwords(((isset($retTable[0])) ? ($retTable[0]->rgn_desc.', '.$retTable[0]->provname.', '.$retTable[0]->cmname.', '.$retTable[0]->brgyname.', '. $retTable[0]->street_number. $retTable[0]->street_name.' '.$retTable[0]->street_number) : "CURRENT_LOCATION"))}} -->
 					</div>

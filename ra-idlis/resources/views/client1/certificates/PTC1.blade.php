@@ -2,6 +2,30 @@
 @section('content')
 @include('client1.cmp.__issuance')
 <body>
+<?php
+
+function xucwords($string)
+{
+	$words = split(" ", $string);
+	$newString = array();
+
+	foreach ($words as $word)
+	{
+		if(!preg_match("/^m{0,4}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$/", $word)) {
+			$word = ucfirst($word);
+		} else {
+			$word = strtoupper($word);
+		}
+
+		array_push($newString, $word);
+	}
+
+	return join(" ", $newString);  
+}
+
+
+
+?>
 	<style>
 		ol,li{
 			list-style: none;
@@ -62,12 +86,29 @@
 						<p style="float: left;" class="leftHeader">Location </p><span style="float: right">:</span>
 					</div>
 					<div class="col-md-8">
-					{{((isset($retTable[0])) ?
-						 (
+
+@php
+$loc =
+(
 							 ($retTable[0]->street_name ? ucwords(strtolower($retTable[0]->street_name)).', ' : ' ')
 						 
 						 .
-						($retTable[0]->street_number ?  ucwords(strtolower($retTable[0]->street_number)).', ' : '' ).ucwords(strtolower($retTable[0]->brgyname)).', '.ucwords(strtolower($retTable[0]->cmname)).', '.ucwords(strtolower($retTable[0]->provname)).' '.ucwords(strtolower($retTable[0]->rgn_desc))) : 'No Location.')}}
+						($retTable[0]->street_number ?  ucwords(strtolower($retTable[0]->street_number)).', ' : '' ).ucwords(strtolower($retTable[0]->brgyname)).', '.ucwords(strtolower($retTable[0]->cmname)).', '.ucwords(strtolower($retTable[0]->provname)).' '.strtoupper($retTable[0]->rgn_desc));
+
+$stringloc = preg_replace_callback('/\b(?=[LXIVCDM]+\b)([a-z]+)\b/i', 
+function($matches) {
+    return strtoupper($matches[0]);
+}, $loc);	
+
+@endphp
+
+
+
+
+					{{((isset($retTable[0])) ?
+						$stringloc
+						
+						: 'No Location.')}}
 					
 						<!-- <p class="rightHeader"><strong>{{((isset($retTable[0])) ? ($retTable[0]->street_name.', '.$retTable[0]->street_number.', '.$retTable[0]->brgyname.', '.$retTable[0]->cmname.', '.$retTable[0]->provname.' '.$retTable[0]->rgn_desc) : 'No Location.')}}</strong></p> -->
 						<!-- <p class="rightHeader"><strong>{{((isset($retTable[0])) ? ($retTable[0]->rgn_desc.', '.$retTable[0]->provname.', '.$retTable[0]->cmname.', '.$retTable[0]->brgyname.', '.$retTable[0]->street_name.' '.$retTable[0]->street_number) : 'No Location.')}}</strong></p> -->

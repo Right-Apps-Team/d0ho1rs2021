@@ -1416,10 +1416,10 @@ console.log(option[0])
     
     }
     $(document).on('keyup',"input[name='tya[]'], input[name='aya[]']",function(){
-      if($(this).val() > 99){
-        alert('Please provide percentage less than 100!');
-        $(this).val('').focus();
-      }
+      // if($(this).val() > 99){
+      //   alert('Please provide percentage less than 100!');
+      //   $(this).val('').focus();
+      // }
     });
     $(document).on('change keyup',"input[name='existHospabc[]'], input[name='locabc[]'], input[name='typeabc[]']",function(){
       // addTT(1);

@@ -136,13 +136,35 @@
 						<center>:</center>
 					</div>
 					<div class="col-md-6 font-weight-bold" style="float:left;display: inline;font-family: Century Gothic; font-size: 13pt">
-					{{((isset($retTable[0])) ?
+				{{--	{{((isset($retTable[0])) ?
 						 (
 							 ($retTable[0]->street_name ? ucwords(strtolower($retTable[0]->street_name)).', ' : ' ')
 						 
 						 .
 						($retTable[0]->street_number ?  ucwords(strtolower($retTable[0]->street_number)).', ' : '' ).ucwords(strtolower($retTable[0]->brgyname)).', '.ucwords(strtolower($retTable[0]->cmname)).', '.ucwords(strtolower($retTable[0]->provname)).' '.$retTable[0]->rgn_desc ) : 'No Location.')}}
-					
+					--}}
+					@php
+$loc =
+(
+							 ($retTable[0]->street_name ? ucwords(strtolower($retTable[0]->street_name)).', ' : ' ')
+						 
+						 .
+						($retTable[0]->street_number ?  ucwords(strtolower($retTable[0]->street_number)).', ' : '' ).ucwords(strtolower($retTable[0]->brgyname)).', '.ucwords(strtolower($retTable[0]->cmname)).', '.ucwords(strtolower($retTable[0]->provname)).' '.strtoupper($retTable[0]->rgn_desc));
+
+$stringloc = preg_replace_callback('/\b(?=[LXIVCDM]+\b)([a-z]+)\b/i', 
+function($matches) {
+    return strtoupper($matches[0]);
+}, $loc);	
+
+@endphp
+
+
+
+
+					{{((isset($retTable[0])) ?
+						$stringloc
+						
+						: 'No Location.')}}
 					<!-- {{((isset($retTable[0]->cmname)) ? (ucwords($retTable[0]->street_number . ' ' . $retTable[0]->street_name . ' ' . $retTable[0]->cmname . ' ' . $retTable[0]->provname)) : "NOT DEFINED")}} -->
 					</div>	
 				</div>
