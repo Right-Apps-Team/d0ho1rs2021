@@ -310,9 +310,9 @@ console.log(data)
         //   newCell1.appendChild(newText1);
         //   newCell2.appendChild(newText2);
         //   newCell2.appendChild(space);
-if(grpid != 'DC'){
+// if(grpid != 'DC'){
           newCell2.appendChild(newText3);
-}
+// }
 
           createSelect(newCell1, pos, id)
     }

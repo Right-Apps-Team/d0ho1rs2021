@@ -808,6 +808,8 @@
     let counterForMain = 0;  
     $( document ).ready(function() {
       processPopulationCountInpt()
+      checkBPR()
+
 }); 
 
 // 
@@ -1064,7 +1066,8 @@ console.log(option[0])
       fromMain.append( 
         '<td>'+
           '<div class="input-group mb-3">'+
-            '<input class="form-control cl_tya" type="number" name=tya[] min="1" max="100" required>'+
+            '<input class="form-control cl_tya" type="number" name=tya[] min="1" max="100" >'+
+            // '<input class="form-control cl_tya" type="number" name=tya[] min="1" max="100" required>'+
             '<div class="input-group-append">'+
               '<span class="input-group-text">%</span>'+
             '</div>'+
@@ -1072,7 +1075,8 @@ console.log(option[0])
         '</td>'+
         '<td>'+
           '<div class="input-group mb-3">'+
-            '<input class="form-control cl_aya" type="number" name=aya[] min="1" max="100" required>'+
+            '<input class="form-control cl_aya" type="number" name=aya[] min="1" max="100" >'+
+            // '<input class="form-control cl_aya" type="number" name=aya[] min="1" max="100" required>'+
             '<div class="input-group-append">'+
               '<span class="input-group-text">%</span>'+
             '</div>'+
@@ -1080,7 +1084,8 @@ console.log(option[0])
         '</td>'+
         '<td class="avepsca">'+
           '<div class="input-group mb-3">'+
-            '<input type="text" class="form-control cl_apty" name=apty[] required readonly>'+
+            '<input type="text" class="form-control cl_apty" name=apty[]  readonly>'+
+            // '<input type="text" class="form-control cl_apty" name=apty[] required readonly>'+
             '<div class="input-group-append">'+
               '<span class="input-group-text">%</span>'+
             '</div>'+
@@ -1421,6 +1426,34 @@ console.log(option[0])
       //   $(this).val('').focus();
       // }
     });
+    $(document).on('change',"input[name='cde[]'], input[name='abc[]'], input[name='est[]']",function(){
+      checkBPR()
+
+    });
+   
+    function checkBPR(){
+      console.log("bpr")
+     console.log(parseFloat(getBPR()))
+
+     var tya = document.getElementsByClassName('cl_tya')
+     var aya = document.getElementsByClassName('cl_aya')
+     if(isNaN(parseFloat(getBPR()) ) || parseFloat(getBPR()) <= 0|| parseFloat(getBPR()) == NaN){
+      for(var t =0 ; t < tya.length; t++){
+        tya[t].setAttribute("disabled", "disabled")
+        tya[t].removeAttribute('required')
+        aya[t].setAttribute("disabled", "disabled")
+        aya[t].removeAttribute('required')
+      }
+      
+     }else{
+      for(var t =0 ; t < tya.length; t++){
+        tya[t].setAttribute("required", "required")
+        tya[t].removeAttribute('disabled')
+        aya[t].setAttribute("required", "required")
+        aya[t].removeAttribute('disabled')
+      }
+     }
+    }
     $(document).on('change keyup',"input[name='existHospabc[]'], input[name='locabc[]'], input[name='typeabc[]']",function(){
       // addTT(1);
       forPSCA();

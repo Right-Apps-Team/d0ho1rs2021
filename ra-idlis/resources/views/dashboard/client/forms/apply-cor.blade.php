@@ -108,7 +108,8 @@
 
                         @if(app('request')->input('grp') == 'c' ||  $grpid == 'DC')
                         <div class="col-md-12">
-                        Remarks: <br> {{$fAddress[0]->appComment}}
+                        Remarks: <br>
+                         <!-- {{$fAddress[0]->appComment}} -->
                         {!!((count($fAddress) > 0) ? $fAddress[0]->appComment: "No Remarks")!!}
                         </div>
                     
