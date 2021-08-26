@@ -245,7 +245,7 @@
 																		<div class="control-group">
 																			<label class="control control--radio">
 																				<i class="fa fa-check text-success"></i>
-							                                                    <input value="true" type="radio" name="{{$head[$j]->id}}[comp]" checked=""/>
+							                                                    <input value="true" type="radio" onclick="toggleRemarks(document.getElementById('{{$head[$j]->id}}showrem'), 'check')"  name="{{$head[$j]->id}}[comp]" checked=""/>
 							                                                    <div class="control__indicator"></div>
 							                                                </label>
 																		</div>
@@ -254,7 +254,7 @@
 																		<div class="control-group">
 																			<label class="control control--radio">
 																				<i class="fa fa-times text-danger"></i>
-							                                                    <input value="false" type="radio" name="{{$head[$j]->id}}[comp]" />
+							                                                    <input value="false"  onclick="toggleRemarks(document.getElementById('{{$head[$j]->id}}showrem'), 'wrong')" type="radio" name="{{$head[$j]->id}}[comp]" />
 							                                                    <div class="control__indicator"></div>
 							                                                </label>
 																		</div>
@@ -263,7 +263,7 @@
 																		<div class="control-group">
 																			<label class="control control--radio">
 																				<span class="text-danger">N/A</span>
-							                                                    <input value="NA" type="radio" name="{{$head[$j]->id}}[comp]" />
+							                                                    <input value="NA" onclick="toggleRemarks(document.getElementById('{{$head[$j]->id}}showrem'), 'na')"  type="radio" name="{{$head[$j]->id}}[comp]" />
 							                                                    <div class="control__indicator"></div>
 							                                                </label>
 																		</div>
@@ -275,7 +275,7 @@
 																					<div class="">
 																						<span class="text-danger" style="display: none;">*Remarks Available*</span>
 																					</div>
-																					<button type="button" onclick="toggleRemarks(this)" class=" btn btn-primary">Add Remarks</button>
+																					<button type="button" onclick="toggleRemarks(this)" id="{{$head[$j]->id}}showrem" class=" btn btn-primary">Add Remarks</button>
 																				</div>
 																				<label for="comp{{$head[$j]->id}}"></label>
 									                                        	<textarea class="form-control z-depth-1" name="{{$head[$j]->id}}[remarks]" id="comp{{$head[$j]->id}}" rows="{{$rowSize}}" placeholder="" style="display: none;"></textarea>
@@ -525,10 +525,19 @@
 		      },'slow');
 		    }
 
-		    function toggleRemarks(element){
+		    function toggleRemarks(element, type = 'but'){
 		    	if($(element).length > 0 && $(element).parent().next().next().length > 0){
 		    		let currentRemark = $(element).parent().next().next();
-		    		currentRemark.toggle();
+
+					if(type == 'wrong'){
+						currentRemark.toggle(true);
+					}else if(type == 'check' || type == 'na'){
+						currentRemark.toggle(false);
+					}else{
+						currentRemark.toggle();
+					}
+		    		
+
 		    		if($(currentRemark).is(":visible")){
 		    			$(element).text('Hide Remarks');
 		    		} else {

@@ -48,7 +48,7 @@ function xucwords($string)
 				<div class="row">
 					<div class="col-md-3 hide-div">
 						<img src="{{asset('ra-idlis/public/img/doh2.png')}}" style="float: left; max-height: 118px; padding-left: 20px;"><br/><br/><br/><br/><br/><br/>
-						<p>Revised 2018changed signatory</p>
+						<p>Revised 2018 changed signatory</p>
 					</div>
 					
 					<!-- <div class="col-md-9"> -->

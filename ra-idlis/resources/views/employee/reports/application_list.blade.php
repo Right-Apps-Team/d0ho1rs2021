@@ -10,22 +10,12 @@
   <div class="content p-4">
   	<div class="card" style="width: 165vh;" >
   		<div class="card-header bg-white font-weight-bold">
-             Application List Report
+             Application List Report  @include('employee.tableDateSearch')
           </div>
           <div class="card-body table-responsive">
        
     <div style="zoom: 87% ;" >
-    <table border="0" cellspacing="5" cellpadding="5">
-        <tbody><tr>
-            <td>Date From:</td>
-            <td><input type="text" id="min" name="min"></td>
-            <td>Date To:</td>
-            <td><input type="text" id="max" name="max"></td>
-        </tr>
-        
-    </tbody></table>
-    <br/>
-    <br/>
+   
           	<table class="table table-hover" style="font-size:13px;  table-layout: auto" id="example">
           	<!-- <table class="table table-hover" style="font-size:13px; zoom: 87% ;width: 5vh" id="example"> -->
                   <thead>

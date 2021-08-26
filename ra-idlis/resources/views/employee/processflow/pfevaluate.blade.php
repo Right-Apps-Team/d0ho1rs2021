@@ -6,9 +6,10 @@
   <div class="content p-4">
   	<div class="card">
   		<div class="card-header bg-white font-weight-bold">
-             Evaluate Applicants  ({{$type == 'technical' ? 'Technical' : 'Documentary'}})
+             Evaluate Applicants  ({{$type == 'technical' ? 'Technical' : 'Documentary'}})  @include('employee.tableDateSearch')
           </div>
           <div class="card-body table-responsive">
+         
           	<table class="table table-hover" style="font-size:13px;" id="example">
                   <thead>
                   <tr>
@@ -129,6 +130,25 @@
   </div>
   <script type="text/javascript">
     $(document).ready(function() {
+
+      $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var min = $('#min').datepicker('getDate');
+            var max = $('#max').datepicker('getDate');
+            var startDate = new Date(data[4]);
+            if (min == null && max == null) return true;
+            if (min == null && startDate <= max) return true;
+            if (max == null && startDate >= min) return true;
+            if (startDate <= max && startDate >= min) return true;
+            return false;
+        }
+    );
+
+    $('#min').datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+    $('#max').datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+
+
+
       
       var table = $('#example').DataTable();
     
@@ -150,7 +170,10 @@
 
     } );
 
-    
+    $('#min, #max').change(function () {
+        table.draw();
+    });
+
     });
    
 

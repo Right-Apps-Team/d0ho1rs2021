@@ -7,9 +7,10 @@
   <div class="content p-4">
       <div class="card">
           <div class="card-header bg-white font-weight-bold">
-             Cashiering (Pharmacy) 
+             Cashiering (Pharmacy)   @include('employee.tableDateSearch')
           </div>
           <div class="card-body table-responsive">
+        
               <table class="table table-hover" id="example" style="font-size:13px;">
                   <thead>
                   <tr>
@@ -173,6 +174,24 @@
 </div>
   <script type="text/javascript">
     $(document).ready(function(){
+
+      $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var min = $('#min').datepicker('getDate');
+            var max = $('#max').datepicker('getDate');
+            var startDate = new Date(data[5]);
+            if (min == null && max == null) return true;
+            if (min == null && startDate <= max) return true;
+            if (max == null && startDate >= min) return true;
+            if (startDate <= max && startDate >= min) return true;
+            return false;
+        }
+    );
+
+    $('#min').datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+    $('#max').datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+
+
       var table = $('#example').DataTable();
 
       $("#example thead .select-filter").each( function ( i ) {
@@ -190,6 +209,11 @@
             select.append( '<option value="'+d+'">'+d+'</option>' )
         } );
     });
+
+    $('#min, #max').change(function () {
+        table.draw();
+    });
+
 
   });
 

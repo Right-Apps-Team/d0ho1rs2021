@@ -44,6 +44,11 @@ Route::post(
 ); //->middleware([APIMiddleware::class]);
 
 Route::post(
+    '/servicefee/save',
+    'DOHController@insertServiceFee'
+); //->middleware([APIMiddleware::class]);
+
+Route::post(
     '/user/setbanning',
     'DOHController@setBanning'
 ); //->middleware([APIMiddleware::class]);

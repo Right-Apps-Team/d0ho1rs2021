@@ -8,9 +8,9 @@
   }
 </style>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
+<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" /> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" /> -->
 
 
@@ -30,7 +30,7 @@
 
   <div class="content p-4" >
 
-    <div class="card" style="">
+    <div class="card" >
 
       <div class="card-header bg-white font-weight-bold">
 
@@ -40,9 +40,12 @@
 
       </div>
 
-      <div class="card-body table-responsive">
+      <!-- <div class="card-body " style="font-size:13px;  min-height: 300px; "> -->
+      <div class="card-body table-responsive" >
+      <!-- <div class="card-body table-responsive"> -->
 
-        <table class="table table-hover" style="font-size:13px;  min-height: 300px; " id="example">
+        <table class="table table-hover table-responsive" style="font-size:13px;  min-height: 450px; " id="myTable">
+        <!-- <table class="table table-hover" style="font-size:13px;  min-height: 450px; " id="example"> -->
 
           <thead>
 
@@ -77,7 +80,7 @@
 
               @foreach($AllData as $all => $a)
 
-                <tr>
+                <tr style="z-index: 99999 !important;">
 
                   <form method="POST" action="{{asset('employee/dashboard/others/roacomplaints/manage')}}">
 
@@ -217,7 +220,10 @@
 
                         </button>
 
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="padding-left: 5px; z-index: 99999 !important; position: absolute">
+                        <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style=" position: fixed; z-index: 1000"> -->
+                        <!-- <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton" style="padding-left: 5px; z-index: 10 !important; position: relative"> -->
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"  style="padding-left: 5px; margin-right:30px; position: relative; z-index: 1000" >
+                        <!-- <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton" > -->
 
                           <button type="button" class="btn btn-light" data-toggle="modal" data-target="#vReqModal" title="View {{$a->type}}" onclick="vReqComp('{{$a->ref_no}}', '{{$a->type}}', '{{$a->name_of_comp}}', '{{$a->appid}}', '{{$a->name_of_faci}}', '{{$a->type_of_faci}}', '{{$a->reqs}}', '{{$a->comps}}')">
                           
@@ -2212,6 +2218,11 @@ $(function() {
     }
 
   </script>
+<script>
+			$(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+	</script>
 
   @include('employee.cmp._othersJS') {{-- Javascript for this Module --}}
 <!-- Latest compiled and minified JavaScript -->
@@ -2219,6 +2230,9 @@ $(function() {
 
 <!-- (Optional) Latest compiled and minified JavaScript translation files -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+
+
+
 @endsection
 
 @else

@@ -12,7 +12,7 @@
     @endphp
 	      	<div class="card-body table-responsive">
 	      		<div class="container table-responsive">
-	      		<table class="table table-hover" style="font-size: 13px;" id="example">
+	      		<table class="table table-hover" style="font-size: 13px; width:100%" id="myTable">
 	        		<thead>
 	        			<tr>
 	        				<th scope="col" style="text-align: center; width:auto;">ID</th>
@@ -702,6 +702,11 @@ function getUps(ups){
 
 
 </script>
+<script>
+			$(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+	</script>
 	{{-- <script>
 		var data = {!!$AllData[0]->DOHMonitoring!!};
 		console.log(data);
@@ -717,6 +722,8 @@ function getUps(ups){
 			document.getElementById('aatt').innerHTML=att.split("/")[2].replace(monid, '');
 		}
 	</script>
+
+	
 
 	@include('employee.cmp._othersJS')
 @endsection

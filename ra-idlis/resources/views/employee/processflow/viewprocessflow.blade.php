@@ -9,8 +9,9 @@
   <input type="text" id="CurrentPage" hidden="" value="PF001">
   <div class="content p-4">
   	<div class="card" style="width: 165vh;" >
+   
   		<div class="card-header bg-white font-weight-bold">
-             Application Status 
+             Application Status  @include('employee.tableDateSearch')
           </div>
           <div class="card-body table-responsive">
           <!-- <table border="0" cellspacing="5" cellpadding="5">
@@ -24,6 +25,7 @@
         </tr>
     </tbody></table> -->
     <div  >
+   
     
           	<table class="table table-hover" style="font-size:13px; zoom: 87% ;width: 5vh" id="example">
                   <thead>
@@ -252,7 +254,22 @@ var minDate, maxDate;
 //         format: 'MMMM Do YYYY'
 //     });
 
- 
+$.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var min = $('#min').datepicker('getDate');
+            var max = $('#max').datepicker('getDate');
+            var startDate = new Date(data[6]);
+            if (min == null && max == null) return true;
+            if (min == null && startDate <= max) return true;
+            if (max == null && startDate >= min) return true;
+            if (startDate <= max && startDate >= min) return true;
+            return false;
+        }
+    );
+
+    $('#min').datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+    $('#max').datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+
 
 
 
@@ -279,7 +296,9 @@ var minDate, maxDate;
     //  $('#min, #max').on('change', function () {
     //     table.draw();
     // });
-
+    $('#min, #max').change(function () {
+        table.draw();
+    });
 
     });
 

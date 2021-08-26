@@ -2666,7 +2666,22 @@ use FunctionsClientController;
 					->select('facilitytyp.*', 'specified.facname as spec', 'hfaci_grp.hgpdesc', 'serv_type.anc_name')
 					->orderBy('facilitytyp.facname')
 					->get();
-					return view('employee.masterfile.mfServiceFees', ['factypes' =>$allfactypes]);
+
+
+					$data = DB::table('service_fees')
+					->leftJoin('facilitytyp', 'service_fees.service_id', '=', 'facilitytyp.facid' )
+					->leftJoin('facilitytyp as specified', 'specified.facid', '=', 'facilitytyp.specified' )
+					->leftJoin('serv_type', 'facilitytyp.servtype_id', '=', 'serv_type.servtype_id' )
+					->leftJoin('hfaci_grp', 'facilitytyp.hgpid', '=', 'hfaci_grp.hgpid')
+					->leftJoin('facmode', 'service_fees.facmode', '=', 'facmode.facmid')
+					->leftJoin('funcapf', 'service_fees.funcid', '=', 'funcapf.funcdesc')
+					->select('service_fees.*', 'facilitytyp.*', 
+					'specified.facname as spec', 'hfaci_grp.hgpdesc', 'serv_type.anc_name','facmode.facmdesc', 'funcapf.funcdesc')
+					->get();
+
+
+
+					return view('employee.masterfile.mfServiceFees', ['factypes' =>$allfactypes,'data' =>$data]);
 				} 
 				catch (Exception $e) 
 				{
@@ -9299,6 +9314,33 @@ use FunctionsClientController;
 			}
 		}
 
+
+
+		public function insertServiceFee(Request $request)
+		{
+			
+			$itmObj = json_decode($request->items, true);
+
+			foreach($itmObj as $itm){
+			DB::table('service_fees')->insert([
+				'service_id' =>$itm['servetype'], 
+				'ocid' => $itm['ocid'],
+				'facmode' => $itm['facmode'],
+				'funcid' => $itm['funcid'],
+				'initial_new_amount' => $itm['innamount'],
+				'renewal_amount' => $itm['reamount'],
+				'initial_change_amount' => $itm['icamount'],
+				'isPenalties' =>$itm['fpenalty'],
+				'renewal_period' => $itm['reperiod'],
+				'remarks' => $itm['remarks']
+			]);
+			}
+
+			return 'DONE';
+		
+		}
+		
+		
 		public function RequestAssistanceOthersRegFac(Request $request)
 		{
 			if ($request->isMethod('get')) 

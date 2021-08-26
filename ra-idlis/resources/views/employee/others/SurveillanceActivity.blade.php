@@ -20,7 +20,7 @@
            @include('employee.cmp._survHead')
       </div>
       <div class="card-body table-responsive">
-        <table class="table table-hover" style="font-size: 13px;" id="example">
+        <table class="table table-hover" style="font-size: 13px;" id="myTable">
           <thead>
             <tr>
               <th scope="col" style="text-align: center; width:auto;">ID</th>
@@ -469,6 +469,10 @@ function showTeamSurv(id){
     }
   });
   </script>
-
+<script>
+			$(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+	</script>
   @include('employee.cmp._othersJS')
 @endsection

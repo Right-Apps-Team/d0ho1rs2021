@@ -22,6 +22,16 @@
               <table class="table table-hover" id="example" style="font-size:13px;">
                   <thead>
                   <tr>
+                      <th ></th>
+                      <th></th>
+                      <th ></th>
+                     
+                      <th ></th>
+                      <th class="select-filter" ></th>
+                      <th ></th>
+                     
+                  </tr>
+                  <tr>
                       <th scope="col" width="auto" style="text-align:center">Type</th>
                       <th scope="col" width="auto" style="text-align:center">Application Code</th>
                       <th scope="col" width="auto" style="text-align:center">Name of Facility</th>
@@ -326,7 +336,26 @@
         </div>
         
   <script type="text/javascript">
-    $(document).ready(function() {$('#example').DataTable();});
+    $(document).ready(function() {
+      var table = $('#example').DataTable();
+      $("#example thead .select-filter").each( function ( i ) {
+      var e = 4;
+        var select = $('<select><option value=""></option></select>')
+            .appendTo( $(this).empty() )
+            // .appendTo( $(this).empty() )
+            .on( 'change', function () {
+                table.column( e )
+                    .search( $(this).val() )
+                    .draw();
+            } );
+ 
+        table.column(e).data().unique().sort().each( function ( d, j ) {
+            select.append( '<option value="'+d+'">'+d+'</option>' )
+        } );
+
+
+    } );
+    });
     // var ToBeAddedMembers = [];
     $(function () {
       $('[data-toggle="popover"]').popover();

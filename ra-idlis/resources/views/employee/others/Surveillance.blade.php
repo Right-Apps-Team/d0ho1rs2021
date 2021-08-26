@@ -29,12 +29,16 @@
                   Add From Complaints
                 </button>
               </div>
+              
              </div>
            {{-- </div> --}}
       </div>
       <div class="card-body">
-        <div class="container table-responsive">
-          <table class="table table-hover" style="font-size: 13px;" id="example">
+        <div class=" table-responsive">
+        <!-- <div class="container table-responsive"> -->
+          <table class="table table-hover" style="font-size: 13px; width: 100%" id="myTable">
+          <!-- <table class="table table-hover" style="font-size: 13px; width: 100%" id="exampleSurv"> -->
+          <!-- <table class="table table-hover" style="font-size: 13px;" id="example"> -->
             <thead>
               <tr>
                 <th scope="col" style="text-align: center; width:auto;">ID</th>
@@ -1341,6 +1345,11 @@ console.log(result)
 
     $('select').select2({ width: '100%' })
   </script>
+  <script>
+			$(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+	</script>
 
   @include('employee.cmp._othersJS')
 @endsection

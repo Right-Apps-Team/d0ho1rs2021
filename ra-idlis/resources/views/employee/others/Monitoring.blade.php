@@ -14,9 +14,10 @@
     <div class="card">
       <div class="card-header bg-white font-weight-bold">
            Monitoring Entry / <a href="{{asset('employee/dashboard/others/monitoring/inspection')}}">Monitoring Tool </a> / <a href="{{asset('employee/dashboard/others/monitoring/technical')}}">Technical Findings</a> / <a href="{{asset('employee/dashboard/others/monitoring/updatestatus')}}">Update Status of CA</a>
-           <br>
-           <a title="Add New Monitoring" data-toggle="modal" data-target="#monModal"><button class="btn-primarys"><i class="fa fa-plus-circle"></i>&nbsp;Add new</button></a>
-      </div>
+          
+           <a title="Add New Monitoring" style="float: right;" data-toggle="modal" data-target="#monModal">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<button class="btn-primarys"><i class="fa fa-plus-circle"></i>&nbsp;Add new</button></a>
+           @include('employee.tableDateSearch')
+          </div>
       <div class="card-body table-responsive">
         <table class="table table-hover" style="font-size: 13px;" id="example">
           <thead>

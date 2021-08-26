@@ -8,7 +8,7 @@
 	           <a href="{{asset('employee/dashboard/others/monitoring')}}">Monitoring Entry</a> / <a href="{{asset('employee/dashboard/others/monitoring/inspection')}}">Monitoring Tool </a> / <a href="{{asset('employee/dashboard/others/monitoring/technical')}}">Technical Findings</a> / Update Status of CA
 	      	</div>
 	      	<div class="card-body table-responsive">
-	      		<table class="table table-hover" style="font-size: 13px;" id="example">
+	      		<table class="table table-hover" style="font-size: 13px;" id="myTable">
 	        		<thead>
 	        			<tr>
 	        				<th scope="col" style="text-align: center; width:auto;">ID</th>
@@ -116,7 +116,11 @@
 	      	</div>
 	    </div>
   	</div>
-
+	  <script>
+			$(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+	</script>
 	@include('employee.cmp._othersJS')
 @endsection
 @else
