@@ -19,6 +19,8 @@ namespace App\Http\Controllers;
 	use Cache;
 	use Agent;
 use App\Http\Controllers\Client\Api\NewGeneralController;
+use App\Models\FACLGroup;
+use App\Models\HFACIGroup;
 use App\Models\Regions;
 use App\Models\RegisteredFacility;
 use FunctionsClientController;
@@ -438,7 +440,15 @@ use FunctionsClientController;
 		        $mon = AjaxController::getAllMonitoringForm();
 		        $new_data = array("surv"=>$surv, "mon"=>$mon);
 
-				$appcount = DB::select("SELECT COUNT(appid) as ctr, hfser_id FROM `appform` WHERE savingStat = 'final' GROUP BY hfser_id");
+				$employeeData = session('employee_login');
+                $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
+
+				if($grpid == 'NA'){
+					$appcount = DB::select("SELECT COUNT(appid) as ctr, hfser_id FROM `appform` WHERE savingStat = 'final' GROUP BY hfser_id");
+				}else{
+					$appcount = DB::select("SELECT COUNT(appid) as ctr, hfser_id FROM `appform` WHERE savingStat = 'final' AND rgnid = ".$employeeData->rgnid." GROUP BY hfser_id");
+				}
+				
 
 				return view('employee.dashboard', ['BigData'=> $data, 'grpid' => $Cur_data['grpid'], 'subdesc' => $allID, 'filters' => $filterer, 'n_grpid' => $x08, 'r_grpid' => $grp, 'hfaci_serv_type'=>$hfaci_serv_type, 'new_data'=>$new_data, 'appcount'=>$appcount]);
 			} 
@@ -674,9 +684,25 @@ use FunctionsClientController;
 					$factype =  DB::table('hfaci_grp')->select('hfaci_grp.*')
 					->get();
 					
+					$hfser_id = 'LTO';
+
+					$faclArr = [];
+					$facl_grp = FACLGroup::where('hfser_id', $hfser_id)->select('hgpid')->get();
+					foreach ($facl_grp as $f) {
+						array_push($faclArr, $f->hgpid);
+					}
+			
+			
 
 					// return view('employee.masterfile.registeredfacility',['data'=>$data]);	
-					return view('employee.masterfile.registeredfacility',['data'=>$data, 'regions'   => Regions::orderBy('sort')->get(),'factype' =>$factype ]);	
+					return view('employee.masterfile.registeredfacility',['data'=>$data,
+					 'regions'   => Regions::orderBy('sort')->get(),
+					 'factype' =>$factype,   
+					  'hfaci_service_type'    => HFACIGroup::whereIn('hgpid', $faclArr)->get(), 
+					  'function' => DB::table('funcapf')->get(),
+					  '_aptid' => ' ',
+					  'serv_cap' => json_encode(DB::table('facilitytyp')->where('servtype_id', 1)->get()),
+					]);	
 				} 
 				catch (Exception $e) 
 				{
@@ -9337,6 +9363,44 @@ use FunctionsClientController;
 			}
 
 			return 'DONE';
+		
+		}
+
+		public function removeServiceFee(Request $request)
+		{
+			
+			if( DB::table('service_fees')->where('id',$request->id)->delete()){
+				return 'DONE';
+			}else{
+				return 'FAILED';
+			}
+
+			
+		
+		}
+
+		public function updateServiceFee(Request $request)
+		{
+			
+			try{
+			
+			DB::table('service_fees')->where([['id', $request->id]])->update([
+				'ocid' =>  $request->ocid,
+				'facmode' =>  $request->facmode,
+				'funcid' =>  $request->funcid,
+				'initial_new_amount' =>  $request->innamount,
+				'renewal_amount' =>  $request->icamount,
+				'initial_change_amount' =>  $request->reamount,
+				'renewal_period' =>  $request->reperiod,
+				'remarks' =>  $request->remarks,
+				'isPenalties' =>  $request->fpenalty 
+			]);
+				return 'DONE';
+			}catch (Exception $e) {
+				return 'FAILED';
+			}
+
+			
 		
 		}
 		

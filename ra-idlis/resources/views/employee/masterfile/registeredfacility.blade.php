@@ -48,6 +48,11 @@
 								'{{$d->approvingauthoritypos}}',
 								'{{$d->facmode}}',
 								'{{$d->funcid}}',
+								'{{$d->provid}}',
+								'{{$d->cmid}}',
+								'{{$d->brgyid}}',
+								'{{$d->classid}}',
+								'{{$d->subClassid}}',
 
 							)" data-toggle="modal" data-target="#myModal"><i class="fas fa-eye"></i></button></td>
 						</tr>
@@ -78,6 +83,11 @@ approving_authority_name,
 approving_authority_pos,
 facmode,
 funcid,
+provid,
+cmid,
+brgyid,
+classid,
+subClassid,
 	){
 		$("#facility_name").val(facname);
 		$("#facilitytype").val(facid);
@@ -97,8 +107,121 @@ funcid,
 
 		
 		$("#mainbtn").val(funcid);
+
+		fetchProvinceIN(rgind, provid)
+		fetchMonicipalityIN(provid,cmid)
+		fetchBaranggayIN(cmid, brgyid)
+		fetchSubClassIN(ocid,classid, subClassid)
+		fetchClassificationIN(ocid,classid)
+		
 }
 
+const fetchSubClassIN = async (ocid,classid, subClassid) => {
+     
+            const data = {
+                'ocid': ocid,
+                'classid': classid
+            }
+            callApi('/api/classification/fetch', data, 'POST').then(classification => {
+                $("#subclass").empty();
+                $("#subclass").append(`<option value=''>Please select</option>`);
+                $("#subclass").removeAttr('disabled');
+                classification.data.map(c => {
+                    $("#subclass").append(`<option value='${c.classid}' `+(subClassid == c.classid ? `selected="selected"` : ``) +`>${c.classname}</option>`);
+                })
+                $("#subclass").selectpicker('refresh')
+            })
+       
+    }
+
+	const fetchClassificationIN = async (ocid,classid) => {
+      
+            const data = {
+                'ocid': ocid
+            }
+            callApi('/api/classification/fetch', data, 'POST').then(classification => {
+                $("#classification").empty();
+                $("#classification").append(`<option value=''>Please select</option>`);
+                $("#classification").removeAttr('disabled');
+                classification.data.map(c => {
+                    $("#classification").append(`<option value='${c.classid}' `+(classid == c.classid ? `selected="selected"` : ``) +`>${c.classname}</option>`);
+                })
+                $("#classification").selectpicker('refresh')
+            })
+
+
+
+        
+
+
+    }
+
+const fetchProvinceIN = async (rgnid, provid) => {
+       
+	   const data = {
+		   'rgnid': rgnid
+	   }
+	   callApi('/api/province/fetch', data, 'POST').then(provinces => {
+		 
+		   $("#province").empty();
+		   $("#province").append(`<option value=''>Please select</option>`);
+		   $("#province").removeAttr('disabled');
+		   provinces.data.map(province => {
+
+				
+				$("#province").append(`<option  value='${province.provid}' `+(provid == province.provid ? `selected="selected"` : ``) +` >${province.provname}</option>`);
+				
+			
+			})
+		   
+		   $("#province").selectpicker('refresh')
+	   }).catch(err => {
+		   console.log(err);
+	   })
+   
+}
+
+
+const fetchBaranggayIN = async (cmid, brgyid) => {
+       
+      
+            const data = {
+                'cmid': cmid
+            }
+            callApi('/api/barangay/fetch', data, 'POST').then(barangay => {
+                $("#brgy").empty();
+                $("#brgy").append(`<option value=''>Please select</option>`);
+                $("#brgy").removeAttr('disabled');
+                barangay.data.map(c => {
+
+                    $("#brgy").append(`<option value='${c.brgyid}' `+(brgyid == c.brgyid ? `selected="selected"` : ``) +`>${c.brgyname}</option>`);
+                })
+                $("#brgy").selectpicker('refresh')
+            }).catch(err => {
+                console.log(err);
+            })
+       
+    }
+
+const fetchMonicipalityIN = async (provid,cmid) => {
+        
+       
+            const data = {
+                'provid': provid
+            }
+            callApi('/api/municipality/fetch', data, 'POST').then(city => {
+                $("#city_monicipality").empty();
+                $("#city_monicipality").append(`<option value=''>Please select</option>`);
+                $("#city_monicipality").removeAttr('disabled');
+                city.data.map(c => {
+                    $("#city_monicipality").append(`<option value='${c.cmid}'  `+(cmid == c.cmid ? `selected="selected"` : ``) +` >${c.cmname}</option>`);
+                })
+                $("#city_monicipality").selectpicker('refresh')
+            }).catch(err => {
+                console.log(err);
+            });
+       
+    }
 
 
 </script>

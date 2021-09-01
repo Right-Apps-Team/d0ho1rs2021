@@ -255,6 +255,8 @@ Route::get('employee/getRights', 'DOHController@getGroupRights');
 Route::match(['get', 'post'], 'employee/dashboard/mf/team', 'DOHController@MfTeam'); // Main, Add
 Route::post('employee/mf/save_team', 'AjaxController@saveTeam'); // Update
 Route::match(['get', 'post'],'servicefee/save', 'DOHController@insertServiceFee'); // Update
+Route::match(['get', 'post'],'servicefee/remove', 'DOHController@removeServiceFee'); // Update
+Route::match(['get', 'post'],'servicefee/update', 'DOHController@updateServiceFee'); // Update
 Route::post('employee/mf/get/users', 'AjaxController@getUsersForCon'); // Update
 Route::post('employee/mf/get/users/ptc', 'AjaxController@getUsersForPtc'); // Update
 Route::post('employee/mf/get/users/team', 'AjaxController@getUsersConteam'); // Update

@@ -200,6 +200,23 @@
 
                             </div>
                         </div>
+                        
+                        {{-- LTO Type of Facility --}}
+                        @include('dashboard.client.forms.parts.license-to-operate.type-of-facility')
+
+                        {{-- LTO Class of Hospitals --}}
+                        @include('dashboard.client.forms.parts.license-to-operate.classification-of-hospital')
+
+                        {{-- LTO For Ambulatory Surgical Clinic --}}
+                        @include('dashboard.client.forms.parts.license-to-operate.for-ambulatory-surgical-clinic')
+
+                        {{-- LTO Other Clinical Service(s) --}}
+                        @include('dashboard.client.forms.parts.license-to-operate.other-clinic-services')
+
+                        
+                        {{-- LTO For Dialysis Clinic --}}
+                        @include('dashboard.client.forms.parts.license-to-operate.for-dialysis-clinic')
+
                         <button id="mainbtn" class="btn btn-primary p-2 m-1" onClick="submtForm('update')">Submit</button>
 
                     </form>
@@ -210,6 +227,7 @@
 </div>
 
 <script>
+    var mserv_cap = JSON.parse('{!!addslashes($serv_cap)!!}')
     function callApi(url, data, method) {
         const config = {
             method: method,
@@ -509,6 +527,216 @@
         } else {
             $("#official_mail_address").val('')
         }
+
+    }
+
+    function type_of_fac(selected) {
+        removeOtherServCont();
+        console.log(selected)
+        selected == '6' ? ifHospital("show") :ifHospital("hide");
+        selected == '1' ? ifAmbuSurg("show") : ifAmbuSurg("hide");
+        selected == '2' || selected == '7'|| selected == '17'|| selected == '18' || selected == '4' || selected == '28' || selected == '5' ? clinicServAndLab("show", selected) :clinicServAndLab("hide", selected);
+        // selected == '5' ? ifHemoClinic("show") :ifHemoClinic("hide");
+    }
+
+     function ifHospital(specs) {
+
+        if (specs == "show") {
+            
+            const show = ["hospClassif"];
+            // const show = ["hospClassif", "forHosp", "ambuDetails", "addOnServe"];
+            // const show = ["hospClassif", "forHosp", "ambuDetails"]; //7-24/2021
+            show.map((h) => {
+                
+                document.getElementsByClassName(h)[0].removeAttribute("hidden")
+            });
+            
+            
+        } else {
+            const hide = ["hospClassif"];
+            // const hide = ["hospClassif", "forHosp", "ambuDetails", "ancillary", "addOnServe"];
+            hide.map((h) => {
+                document.getElementsByClassName(h)[0].setAttribute("hidden", "hidden")
+            });
+        }
+
+    }
+
+    
+    function ifHemoClinic(specs) {
+
+        // const data = ["dialysisClinic", "clinicLab"];
+        const data = ["dialysisClinic"];
+        // const data = ["dialysisClinic", "addOnServe", "clinicLab"];
+        //place also getting add on service data here
+        $('#hgpid5').remove()
+        // removeAddOnRows()
+        // renewAddOnSelect("HDS")
+        if (specs == "show") {
+            data.map((h) => {
+                document.getElementsByClassName(h)[0].removeAttribute("hidden")
+            });
+
+            var newDiv = document.createElement("div");
+        
+            newDiv.setAttribute("id", "hgpid5");
+            document.getElementById("hgpid5-cont").appendChild(newDiv);
+
+        var result = mserv_cap.filter(function(v) {
+                return v.hgpid == 5;
+            })
+            console.log(result)
+
+            result.map((it) => {
+                var x = document.createElement("INPUT");
+                // x.setAttribute("id", it.facid);
+                x.setAttribute("type", "radio");
+                x.setAttribute("value", it.facid);
+                x.setAttribute("name", "facid");
+                x.setAttribute("onclick", "getFacServCharge()");
+                // x.setAttribute("checked", "checked");
+                x.setAttribute("class", "custom-control-input");
+                document.getElementById("hgpid5").appendChild(x);
+
+
+                var label = document.createElement("Label");
+                label.setAttribute("for", it.facid);
+                label.setAttribute("class", "custom-control-label");
+                label.innerHTML = it.facname;
+
+                var newInput = document.getElementById(it.facid)
+                insertAfter(newInput, label);
+            })
+        } else {
+            data.map((h) => {
+                document.getElementsByClassName(h)[0].setAttribute("hidden", "hidden")
+            });
+        }
+
+        }
+
+    function clinicServAndLab(specs, selected) {
+
+    const data = ["otherClinicService"];
+
+    if (specs == "show") {
+        data.map((h) => {
+            document.getElementsByClassName(h)[0].removeAttribute("hidden")
+
+        });
+    } else {
+        data.map((h) => {
+            document.getElementsByClassName(h)[0].setAttribute("hidden", "hidden")
+        });
+    }
+
+
+    getOtherServices(selected)
+    }
+
+    function removeOtherServCont() {
+        var myobj = document.getElementById("otherServCont");
+        if (myobj) {
+            myobj.remove();
+        }
+
+        var newDiv = document.createElement("div");
+        newDiv.setAttribute("id", "otherServCont");
+        document.getElementById("mainOsc").appendChild(newDiv);
+    }
+
+    function getOtherServices(id) {
+       
+
+
+       mserv_cap.map((it) => {
+           if (it.hgpid == id) {
+               var newDiv = document.createElement("div");
+               newDiv.setAttribute("class", "custom-control custom-radio mr-sm-2");
+               newDiv.setAttribute("id", "otherServe-" + it.facid);
+               document.getElementById("otherServCont").appendChild(newDiv);
+
+               var x = document.createElement("INPUT");
+               x.setAttribute("id", it.facid);
+               x.setAttribute("onclick", "getFacServCharge()");
+               x.setAttribute("type", "radio");
+               x.setAttribute("value", it.facid);
+               x.setAttribute("name", "facid");
+               x.setAttribute("class", "custom-control-input os_list");
+               document.getElementById("otherServe-" + it.facid).appendChild(x);
+
+               var label = document.createElement("Label");
+               label.setAttribute("for", it.facid);
+               label.setAttribute("class", "custom-control-label");
+               label.innerHTML = it.facname;
+
+               var newInput = document.getElementById(it.facid)
+               insertAfter(newInput, label);
+
+           }
+       })
+   }
+
+
+    function insertAfter(referenceNode, newNode) {
+        referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    }
+
+    function ifAmbuSurg(specs) {
+        const data = ["ambulSurgCli"];
+        // const data = ["ambulSurgCli", "ambuDetails", "clinicLab"];
+        if (specs == "show") {
+            ASCfacilities ()
+            data.map((h) => {
+                document.getElementsByClassName(h)[0].removeAttribute("hidden")
+            });
+        } else {
+            data.map((h) => {
+                document.getElementsByClassName(h)[0].setAttribute("hidden", "hidden")
+            });
+        }
+
+    }
+
+    function ASCfacilities (){
+        $('#hgpid1').remove()
+
+            var newDiv = document.createElement("div");
+            newDiv.setAttribute("id", "hgpid1");
+            newDiv.setAttribute("class", "custom-control");
+            document.getElementById("forAmb").appendChild(newDiv);
+
+            var result = mserv_cap.filter(function(v) {
+                return v.hgpid == 1;
+            })
+
+            result.map((it) => {
+                var newDiv = document.createElement("div");
+                newDiv.setAttribute("class", "row custom-control  mr-sm-2");
+                // newDiv.setAttribute("class", "col-md-4");
+                newDiv.setAttribute("id", "hgpid1-" + it.facid);
+                document.getElementById("hgpid1").appendChild(newDiv);
+
+                var x = document.createElement("INPUT");
+                x.setAttribute("id", it.facid);
+                x.setAttribute("type", "checkbox");
+                x.setAttribute("value", it.facid);
+                x.setAttribute("name", "facid");
+                x.setAttribute("onclick", "getFacServCharge()");
+                x.setAttribute("class", "custom-control-input exAddRenew");
+                document.getElementById("hgpid1-" + it.facid).appendChild(x);
+
+                var label = document.createElement("Label");
+                label.setAttribute("for", it.facid);
+                label.setAttribute("class", "custom-control-label");
+                label.innerHTML = it.facname;
+
+                var newInput = document.getElementById(it.facid)
+                insertAfter(newInput, label);
+
+            
+        })
+
 
     }
 </script>

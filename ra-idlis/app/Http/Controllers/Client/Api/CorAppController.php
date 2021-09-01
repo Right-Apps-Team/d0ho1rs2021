@@ -15,21 +15,26 @@ class CorAppController extends Controller
 {
     public function save(Request $request)
     {
+         $stat = 'new'; 
         if (isset($request->appid)) {
             $appform = ApplicationForm::where('appid', $request->appid)->first();
-
+                $stat = 'exist';
             // DB::insert('insert into x08_ft (uid, appid, facid) values (?, ?, ?)', ['fds', 'ff', 'fds']);
         } else {
             $appform = new ApplicationForm;
         }
 
+        if($stat == 'new'){
+            $appform->rgnid                 = $request->rgnid;
+            $appform->provid                = $request->provid;
+            $appform->cmid                  = $request->cmid;
+            $appform->brgyid                = $request->brgyid;
+            $appform->uid                   = $request->uid;
+        }
 
         $appform->hfser_id              = $request->hfser_id;
         $appform->facilityname          = $request->facilityname;
-        $appform->rgnid                 = $request->rgnid;
-        $appform->provid                = $request->provid;
-        $appform->cmid                  = $request->cmid;
-        $appform->brgyid                = $request->brgyid;
+        
         $appform->street_number         = $request->street_number;
         $appform->street_name           = $request->street_name;
         $appform->zipcode               = $request->zipcode;
@@ -42,7 +47,7 @@ class CorAppController extends Controller
         $appform->cap_inv               = $request->cap_inv;
         $appform->lot_area              = $request->lot_area;
         $appform->noofbed               = $request->noofbed;
-        $appform->uid                   = $request->uid;
+       
         $appform->ocid                  = $request->ocid;
         $appform->classid               = $request->classid;
         $appform->subClassid            = $request->subClassid;
