@@ -377,6 +377,10 @@
                                             <li><a href="{{ asset('/employee/dashboard/mf/service_fees') }}">&nbsp;&nbsp;&nbsp;&nbsp;Service Fees</a></li>
 
                                         </span>
+                                         <span class="PY008_allow">
+                                            <li><a href="{{ asset('/employee/dashboard/mf/category_fees') }}">&nbsp;&nbsp;&nbsp;&nbsp;Category Fees</a></li>
+
+                                        </span>
 
                                     </ul>                           
 

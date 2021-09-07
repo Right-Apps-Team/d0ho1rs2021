@@ -1,3 +1,8 @@
+@php
+                                $employeeData = session('employee_login');
+                                $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
+                            @endphp
+
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="border-radius: 0px;border: none;">
@@ -217,7 +222,28 @@
                         {{-- LTO For Dialysis Clinic --}}
                         @include('dashboard.client.forms.parts.license-to-operate.for-dialysis-clinic')
 
-                        <button id="mainbtn" class="btn btn-primary p-2 m-1" onClick="submtForm('update')">Submit</button>
+
+                        <div class="mb-2 col-md-12">&nbsp;</div>
+                            <div class="showifHospital-class" hidden>
+                                <div class="col-md-12">
+                                    <b class="text-primary">For Hospital
+                                    </b>
+                                </div>
+
+                                {{-- Hospital --}}
+                                <div class="col-md-4">
+                                    <label>
+                                        <!-- <input type="radio" name="facid" checked value="HSTC"/> Trauma Center -->
+                                        <!-- <div class="addCLick " id="hgpid6"></div> -->
+                                        <div class="addCLick mb-3" id="hgpid6"></div>
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        @include('dashboard.client.forms.parts.license-to-operate.ancillary-clinical-services')
+                   <center>   <button id="mainbtn" style="width: 20%;" class="btn btn-primary p-2 m-1" onClick="submtForm('update')">Submit</button></center>  
 
                     </form>
                 </div>
@@ -239,65 +265,67 @@
         };
         return axios(config)
     };
-    $("#regform").submit(function(e) {
-        e.preventDefault();
-    });
 
     const submtForm = async (e) => {
-
-        const data = {
-
-
-
-            hfser_id: $('#typeOfApplication').val(),
-            facilityname: $('#facility_name').val(),
-            rgnid: $('#region').val(),
-            provid: $('#province').val(),
-            cmid: $('#city_monicipality').val(),
-            brgyid: $('#brgy').val(),
-            street_number: $('#street_num').val(),
-            street_name: $('#street_name').val(),
-            zipcode: $('#zip').val(),
-            contact: $('#fac_mobile_number').val(),
-            areacode: `["${$('#areacode').val()}", "${$('#faxareacode').val()}", "${$('#prop_landline_areacode').val()}"]`,
-            landline: $('#landline').val(),
-            faxnumber: $('#faxNumber').val(),
-            email: $('#fac_email_address').val(),
+       
+const data = {
 
 
 
-            ocid: $('#ocid').val(),
-            classid: $('#classification').val(),
-            subClassid: $('#subclass').val(),
-            facmode: $('#facmode').val(),
-            funcid: $('#funcid').val(),
-            // facid:                  facid,
-            owner: $('#owner').val(),
-            ownerMobile: $('#prop_mobile').val(),
-            ownerLandline: $('#prop_landline').val(),
-            ownerEmail: $('#prop_email').val(),
-            mailingAddress: $('#official_mail_address').val(),
-            approvingauthoritypos: $('#approving_authority_pos').val(),
-            approvingauthority: $('#approving_authority_name').val(),
-            // hfep_funded: ($('#hfep').prop('checked') ? 0 : null),
-            hfep_funded: "",
-            facid: $('#facilitytype').val(),
-
-        }
-        console.log(data)
-
-        callApi('/api/registered/facility/save', data, 'POST').then(d => {
-
-            document.getElementById("regform").reset();
-            alert("Success");
-            // alert(d.data.mssg);
-
-        }).then(error => {
-            console.log(error);
-        })
+    uid: '{{$employeeData->uid}}',
+    hfser_id: $('#typeOfApplication').val(),
+    facilityname: $('#facility_name').val(),
+    rgnid: $('#region').val(),
+    provid: $('#province').val(),
+    cmid: $('#city_monicipality').val(),
+    brgyid: $('#brgy').val(),
+    street_number: $('#street_num').val(),
+    street_name: $('#street_name').val(),
+    zipcode: $('#zip').val(),
+    contact: $('#fac_mobile_number').val(),
+    areacode: `["${$('#areacode').val()}", "${$('#faxareacode').val()}", "${$('#prop_landline_areacode').val()}"]`,
+    landline: $('#landline').val(),
+    faxnumber: $('#faxNumber').val(),
+    email: $('#fac_email_address').val(),
 
 
-    };
+
+    ocid: $('#ocid').val(),
+    classid: $('#classification').val(),
+    subClassid: $('#subclass').val(),
+    facmode: $('#facmode').val(),
+    funcid: $('#funcid').val(),
+    facid_arr:                  JSON.stringify( getAllFacids()),
+    // facid:                  facid,
+    owner: $('#owner').val(),
+    ownerMobile: $('#prop_mobile').val(),
+    ownerLandline: $('#prop_landline').val(),
+    ownerEmail: $('#prop_email').val(),
+    mailingAddress: $('#official_mail_address').val(),
+    approvingauthoritypos: $('#approving_authority_pos').val(),
+    approvingauthority: $('#approving_authority_name').val(),
+    // hfep_funded: ($('#hfep').prop('checked') ? 0 : null),
+    hfep_funded: "",
+    facid: $('#facilitytype').val(),
+
+}
+console.log(data)
+
+callApi('/api/registered/facility/save', data, 'POST').then(d => {
+
+    document.getElementById("regform").reset();
+    alert("Success");
+    console.log("d.datafac")
+    console.log(d.datafac)
+    // alert(d.data.mssg);
+
+}).then(error => {
+    console.log(error);
+})
+
+
+};
+
     const checkFacilityName = async (e) => {
         const facilityname = $('#facility_name').val()
         console.log('EYYY, ', facilityname);
@@ -530,7 +558,92 @@
 
     }
 
+
+
+
+
+
+
+    $("#regform").submit(function(e) {
+        e.preventDefault();
+    });
+
+    // var allFacids = getAllFacids();
+
+  
+
+    function getCheckedValue(groupName) {
+        var radios;
+        if(groupName == "anxsel"){
+             radios = document.getElementsByClassName(groupName);
+        }else{
+             radios = document.getElementsByName(groupName);
+        }
+        
+
+        var rad = []
+        for( i = 0; i < radios.length; i++ ) {
+            if( radios[i].checked ) {
+                rad.push(radios[i].value);
+                
+            }
+        }
+        return rad;
+    }
+
+    function getAllFacids (){
+    // var addons =  getaddonsValues()
+    var listAncs = getCheckedValue('anxsel')
+
+    var listfacids = getCheckedValue('facid') 
+
+    let thisFacid = []
+
+    if(listfacids.length > 0){
+        if(Array.isArray(listfacids)) {
+						for(let i = 0; i < listfacids.length; i++) {
+					  		// sArr.push('facid[]='+listfacids[i]); 
+                            if(listfacids[i] != ""){
+					  		thisFacid.push(listfacids[i]);
+                            }
+						} 
+					}
+    }
+    if(listAncs.length > 0){
+            if(Array.isArray(listAncs)) {
+                for(let i = 0; i < listAncs.length; i++) {
+                    // sArr.push('facid[]='+listAncs[i]); 
+                    if(listAncs[i] != ""){
+                    thisFacid.push(listAncs[i]);}
+                } 
+            }
+    }
+
+    // if(addons.length > 0){
+    //     if(Array.isArray(addons)) {
+    //             for(let i = 0; i < addons.length; i++) {
+    //                 // sArr.push('facid[]='+addons[i]); 
+    //                 if(addons[i] != ""){
+    //                 thisFacid.push(addons[i]);
+    //                }
+    //             } 
+    //         }
+    // }
+
+    return thisFacid
+   
+}
+   
+
+   
     function type_of_fac(selected) {
+      
+        const data = ["showifHospital-class","hospClassif", "forHosp", "ambuDetails", "ancillary", "addOnServe", "ambulSurgCli", "clinicLab", "dialysisClinic", "otherClinicService"];
+        data.map((h) => {
+            
+            if(document.getElementsByClassName(h)[0]){
+            document.getElementsByClassName(h)[0].setAttribute("hidden", "hidden")}
+        });
         removeOtherServCont();
         console.log(selected)
         selected == '6' ? ifHospital("show") :ifHospital("hide");
@@ -543,7 +656,7 @@
 
         if (specs == "show") {
             
-            const show = ["hospClassif"];
+            const show = ["hospClassif", "forHosp"];
             // const show = ["hospClassif", "forHosp", "ambuDetails", "addOnServe"];
             // const show = ["hospClassif", "forHosp", "ambuDetails"]; //7-24/2021
             show.map((h) => {
@@ -739,6 +852,360 @@
 
 
     }
-</script>
 
+    function sel_hosp_class(selected) {
+        var myobj = document.getElementById("hgpid6-cont");
+        if (myobj) {
+            myobj.remove();
+        }
+
+        document.getElementsByClassName("showifHospital-class")[0].removeAttribute("hidden");
+        var e = document.getElementById("funcid");
+        var funcid = e.value;
+        var result = [];
+        var radio = " ";
+
+        // delete hgpid6-cont first here
+
+        var newDiv = document.createElement("div");
+        newDiv.setAttribute("id", "hgpid6-cont");
+        document.getElementById("hgpid6").appendChild(newDiv);
+
+
+        if (selected == 2) {
+            document.getElementsByClassName("ancillary")[0].setAttribute("hidden","hidden")
+            var newDiv = document.createElement("div");
+            newDiv.setAttribute("class", "custom-control custom-radio mr-sm-2");
+            newDiv.setAttribute("id", "hgpid6-new");
+            document.getElementById("hgpid6-cont").appendChild(newDiv);
+
+            result = mserv_cap.filter(function(v) {
+                return v.hgpid == 6 && v.forSpecialty == 1;
+            })
+            result.map((it) => {
+                var x = document.createElement("INPUT");
+                x.setAttribute("id", it.facid);
+                x.setAttribute("type", "radio");
+                x.setAttribute("value", it.facid);
+                x.setAttribute("name", "facid");
+                x.setAttribute("onclick", "getFacServCharge()");
+                // x.setAttribute("checked", "checked");
+                x.setAttribute("class", "custom-control-input");
+                document.getElementById("hgpid6-new").appendChild(x);
+
+
+                var label = document.createElement("Label");
+                label.setAttribute("for", it.facid);
+                label.setAttribute("class", "custom-control-label");
+                label.innerHTML = it.facname;
+
+                var newInput = document.getElementById(it.facid)
+                insertAfter(newInput, label);
+            })
+
+        } else {
+            var hlevel = [{
+                id: "H"
+            }, {
+                id: "H2"
+            }, {
+                id: "H3"
+            }];
+          
+
+            mserv_cap.map((it) => {
+                hlevel.map((hl) => {
+                    if (it.facid == hl.id) {
+                        var newDiv = document.createElement("div");
+                        newDiv.setAttribute("class", "custom-control custom-radio mr-sm-2");
+                        newDiv.setAttribute("id", "hgpid6-" + hl.id);
+                        document.getElementById("hgpid6-cont").appendChild(newDiv);
+
+                        var x = document.createElement("INPUT");
+                        x.setAttribute("id", it.facid);
+                        x.setAttribute("type", "radio");
+                        x.setAttribute("value", it.facid);
+                        x.setAttribute("name", "facid");
+                        x.setAttribute("onclick", "getAncillary(this.id, 6)");
+                        // x.setAttribute("onclick", "show_hosplevel_anx(this.id)");
+                        x.setAttribute("class", "custom-control-input");
+                        document.getElementById("hgpid6-" + hl.id).appendChild(x);
+
+
+                        var label = document.createElement("Label");
+                        label.setAttribute("for", it.facid);
+                        label.setAttribute("class", "custom-control-label");
+                        label.innerHTML = it.facname;
+
+                        var newInput = document.getElementById(it.facid)
+                        insertAfter(newInput, label);
+                    }
+                })
+            })
+
+        }
+
+       
+
+
+    }
+
+    function getAncillary(selected, hgpid){
+        let sArr = ['_token='+document.getElementsByName('_token')[0].value, 'facid[]=H', 'facid[]=H2', 'facid[]=H3'];
+        // console.log("sArr")
+        // console.log(sArr)
+        // console.log(selected)
+        // console.log(hgpid)
+        // console.log("hgpid")
+        let resp = []
+        var nas;
+        sendRequestRetArr(sArr, "{{asset('client1/request/customQuery/getGoAncillary')}}", "POST", true, {
+					functionProcess: function(arr) {
+                    //    console.log("arrgggg")
+                    //    console.log(arr)
+                        show_hosplevel_anx(selected, arr, hgpid)
+                    }
+				});
+
+               
+                // return resp[0];
+       
+    }
+
+    function show_hosplevel_anx(selected, ancData, hgpid) {
+        // console.log("Received")
+       
+        // getFacServCharge()
+        //  var ancData = getAncillary();
+  
+        // document.getElementsByClassName("addOnServe")[0].removeAttribute("hidden")
+        document.getElementsByClassName("ancillary")[0].removeAttribute("hidden")
+        if (selected == "H") {
+            document.getElementsByClassName("hl1")[0].removeAttribute("hidden")
+            getJospLevelServices(ancData, "H", hgpid);
+            document.getElementsByClassName("hl2")[0].removeAttribute("hidden")
+            getJospLevelServices(ancData, "H2", hgpid);
+            document.getElementsByClassName("hl3")[0].removeAttribute("hidden")
+            getJospLevelServices(ancData, "H3", hgpid);
+
+           const inpt =  document.getElementById("anxservcontH").querySelectorAll('input[type="radio"]');
+            for(var i = 0; i < inpt.length; i++){
+               inpt[i].checked = true;
+            }
+           
+            // getJospLevelServices(ancData);
+        } else if (selected == "H2") {
+            document.getElementsByClassName("hl1")[0].setAttribute("hidden", "hidden")
+            document.getElementsByClassName("hl2")[0].removeAttribute("hidden")
+            getJospLevelServices(ancData, "H2", hgpid);
+            document.getElementsByClassName("hl3")[0].removeAttribute("hidden")
+            getJospLevelServices(ancData, "H3", hgpid);
+            // getJospLevelServices(ancData);
+            const inpt =  document.getElementById("anxservcontH2").querySelectorAll('input[type="radio"]');
+            for(var i = 0; i < inpt.length; i++){
+               inpt[i].checked = true;
+            }
+        } else if (selected == "H3") {
+            ifAmbuSurg("show")
+            document.getElementsByClassName("hl1")[0].setAttribute("hidden", "hidden")
+            document.getElementsByClassName("hl2")[0].setAttribute("hidden", "hidden")
+            document.getElementsByClassName("hl3")[0].removeAttribute("hidden")
+            getJospLevelServices(ancData, "H3", hgpid);
+            // getJospLevelServices(ancData);
+
+            const inpt =  document.getElementById("anxservcontH3").querySelectorAll('input[type="radio"]');
+            const chk =  document.getElementById("anxservcontH3").querySelectorAll('input[type="checkbox"]');
+            for(var i = 0; i < inpt.length; i++){
+               inpt[i].checked = true;
+            }
+            for(var i = 0; i < chk.length; i++){
+                chk[i].checked = true;
+            }
+        }
+    }
+
+    function getJospLevelServices (arr,selected, hgpid){
+        
+
+        var ar0 = arr[0].filter(function(v) {//get the services of hospital type
+                return v.hgpid == 6;
+        })
+// console.log(selected)
+
+        var ar1 = arr[1].filter(function(v) {
+                return v.facid == selected;//get the Id of selected hospital level
+        })
+        // console.log("ar1")
+      
+        
+        var h1Facid = arr[1].filter(function(v) {//get the Id of hospital level1
+                return v.facid == "H";
+        })
+
+
+
+        const duplicats = ar0.reduce((a, e) => {//find the Dupluicates of services groupname or remove the single group name
+          a[e.grphrz_name] = ++a[e.grphrz_name] || 0;
+         return a;
+        }, {});
+
+        var filtDups = ar0.filter(e => duplicats[e.grphrz_name])//get only the objects with duplicates
+      
+        var filtDupsArr = []
+
+        var servs = filtDups.filter(function(v) {//filter the duplicates base on selected level
+                filtDupsArr.push(v.grphrz_name) //store the groupname of duplicates
+                return v.servtype_id == ar1[0].servtype_id;
+        })
+
+      
+       
+
+        filtDupsArr = [...new Set(filtDupsArr)] // jeust get single groupname remove pair of duplicates
+
+     
+
+
+        var special = ar0.filter(function( o){//remove all duplicates from all services, all single groupname must be stores here
+        return filtDupsArr.indexOf(o.grphrz_name) == -1;
+        });
+
+      
+
+       
+
+        var specservs = special.filter(function(v) {
+                return v.servtype_id == ar1[0].servtype_id;
+        })
+       
+      
+
+        //  var servs = ar0.filter(function(v) {
+        //                 return v.servtype_id == ar1[0].servtype_id;
+        //         })
+
+       
+       
+        var allH1GroupName =[]
+        var h1gn = filtDups.filter(function(v) {//filter the duplicates base on selected level
+                    if( v.servtype_id == h1Facid[0].servtype_id) { 
+                    allH1GroupName.push(v.grphrz_name) //store the groupname of duplicates
+                    }
+                return v.servtype_id == h1Facid[0].servtype_id;
+        })
+
+      
+
+        var h1mt = servs.filter(function( o){
+        return allH1GroupName.indexOf(o.grphrz_name) >= 0;
+        });
+        //   console.log(h1mt)
+        // h1mt = h1mt.filter(function(v) {
+        //         return v.servtype_id == ar1[0].servtype_id;
+        // })
+       
+
+      
+
+        var h1nmatch = servs.filter(function( o){
+        return allH1GroupName.indexOf(o.grphrz_name) == -1;
+        });
+        // h1nmatch = h1nmatch.filter(function(v) {
+        //         return v.servtype_id == ar1[0].servtype_id;
+        // })
+        
+
+        var sortedh1nmatch = h1nmatch.sort(function (a, b) {
+        return a.grphrz_name.localeCompare(b.grphrz_name);
+         });
+
+         var sortedh1mt = h1mt.sort(function (a, b) {
+             return a.grphrz_name.localeCompare(b.grphrz_name);
+         });
+         
+        //  var sorted = servs.sort(function (a, b) {
+        // return b.grphrz_name.localeCompare(b.grphrz_name);
+        //  });
+
+
+
+        document.getElementById("anxservcont"+selected).innerHTML = " ";
+       var  asc =document.getElementById("anxservcont"+selected)
+      
+        if(asc != undefined || asc != null) {
+            sortedh1mt.map((l1) => {
+            createAnxRadio(l1,selected)
+            })
+         
+
+          
+            sortedh1nmatch.map((l2) => {
+            createAnxRadio(l2,selected)
+            })
+
+           
+
+           
+        }
+
+        if(specservs.length > 0){
+            specservs.map((l1) => {
+                createAnxCheckBox (l1,selected)
+             })
+            
+        }
+
+      
+    }
+
+    function createAnxRadio (l1, selected){
+        var newDiv = document.createElement("div");
+                newDiv.setAttribute("id", "asc-" + l1.facid);
+                newDiv.setAttribute("class", "row custom-control custom-radio mr-sm-2");
+                document.getElementById("anxservcont"+selected).appendChild(newDiv);
+
+                var x = document.createElement("INPUT");
+                x.setAttribute("id", l1.facid);
+                x.setAttribute("onclick", "getFacServCharge()");
+                x.setAttribute("type", "radio");
+                x.setAttribute("value", l1.facid);
+                x.setAttribute("name", l1.grphrz_name);
+                x.setAttribute("class", "custom-control-input anxsel");
+                document.getElementById("asc-" + l1.facid).appendChild(x);
+
+                var label = document.createElement("Label");
+                label.setAttribute("for", l1.facid);
+                label.setAttribute("class", "custom-control-label");
+                label.innerHTML = l1.facname;
+
+                var newInput = document.getElementById(l1.facid)
+                insertAfter(newInput, label);
+    }
+
+    function createAnxCheckBox (l1,selected){
+        var newDiv = document.createElement("div");
+                newDiv.setAttribute("id", "asc-" + l1.facid);
+                newDiv.setAttribute("class", "row custom-control custom-radio mr-sm-2");
+                document.getElementById("anxservcont"+selected).appendChild(newDiv);
+
+                var x = document.createElement("INPUT");
+                x.setAttribute("id", l1.facid);
+                x.setAttribute("onclick", "getFacServCharge()");
+                x.setAttribute("type", "checkbox");
+                x.setAttribute("value", l1.facid);
+                x.setAttribute("name", l1.grphrz_name);
+                x.setAttribute("class", "custom-control-input anxsel");
+                document.getElementById("asc-" + l1.facid).appendChild(x);
+
+                var label = document.createElement("Label");
+                label.setAttribute("for", l1.facid);
+                label.setAttribute("class", "custom-control-label");
+                label.innerHTML = l1.facname;
+
+                var newInput = document.getElementById(l1.facid)
+                insertAfter(newInput, label);
+    }
+
+</script>
+<script src="{{asset('ra-idlis/public/js/forall.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>

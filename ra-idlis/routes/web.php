@@ -25,6 +25,7 @@ Route::prefix('client')->group(__DIR__ . '/clients/dashboard.php');
 // OLD CLIENT-SIDE
 Route::match(['get', 'post'], '/qrcode/{appid}', 'NewClientController@generateForCertificate');
 Route::match(['get', 'post'], '/sampleprint', 'AjaxController@tryprint');
+
 Route::match(['get', 'post'], '/', 'NewClientController@__index')->name('client.login');
 Route::match(['get', 'post'], '/login_user', 'ClientController@__login');
 Route::match(['get', 'post'], '/logout_user', 'ClientController@__logout');
@@ -54,6 +55,12 @@ Route::prefix('client')->group(function() {
 
 Route::get('/user/verify/{token}', 'Auth\RegisterController@verifyUser'); // MY CHANGES
 
+
+Route::post('/service/fees', 'DOHController@getFees'); // MY CHANGES
+
+
+
+// Route::match(['get', 'post'], '/service/fees', 'AjaxController@tryprint');
 // ------------------------------------------------------------------------
 Route::get('samplereport',function(){
 	return view('client1.FDA.cdrrhrCOC');
@@ -425,6 +432,7 @@ Route::match(['get', 'post'], 'employee/dashboard/mf/defaultpayment', 'DOHContro
 // Service Charges
 Route::match(['get', 'post'], 'employee/dashboard/mf/service_charges', 'DOHController@ServiceCharges'); // Main, Add
 Route::match(['get', 'post'], 'employee/dashboard/mf/service_fees', 'DOHController@ServiceFees'); // Main, Add
+Route::match(['get', 'post'], 'employee/dashboard/mf/category_fees', 'DOHController@CategoryFees'); // Main, Add
 Route::get('employee/mf/assessment/get_ServiceCharges', 'AjaxController@getServiceCharges'); // Get
 Route::post('employee/mf/assessment/del_ServiceCharges', 'AjaxController@delServiceCharges'); // Del
 // Assessment Category

@@ -118,6 +118,8 @@
                         @include('dashboard.client.forms.parts.license-to-operate.for-pharmacy')
 
                      
+
+                      
                        
                         <div class="form-group row col-md-12 mt-5">
                             <div class="col-lg-3 col-md-3 col-xs-12"></div>
@@ -145,7 +147,6 @@
                                 $employeeData = session('employee_login');
                                 $grpid = isset($employeeData->grpid) ? $employeeData->grpid : 'NONE';
                             @endphp
-
 
                             @if(app('request')->input('grp') == 'c'  ||  $grpid == 'DC')
                 <div class="col-md-12">
@@ -315,5 +316,5 @@ var apptypenew = '{!! $apptypenew !!}';
 
 @include('dashboard.client.forms.parts.license-to-operate.new_ftr')
 @include('dashboard.client.forms.parts.license-to-operate.lto-form-submission')
-
+@include('dashboard.client.get_fees')
 

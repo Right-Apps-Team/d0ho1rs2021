@@ -80,6 +80,11 @@ Route::post(
 ); //->middleware([APIMiddleware::class]);
 
 Route::post(
+    '/service/fees',
+    'DOHController@getFees'
+); //->middleware([APIMiddleware::class]);
+
+Route::post(
     '/application/con/save',
     'Client\Api\ConAppController@save'
 ); //->middleware([APIMiddleware::class]);

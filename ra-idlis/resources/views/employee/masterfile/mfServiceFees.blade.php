@@ -65,7 +65,12 @@
             <tbody>
                 @foreach($data as $d => $value)
                 <tr>
-                    <td>{{$value->facname}} {{$value->spec ? '('.$value->spec.')' : '('.$value->hgpdesc.'-'.$value->anc_name.')' }}</td>
+                @if($type == 'service')
+                <td>{{$value->facname}} {{$value->spec ? '('.$value->spec.')' : '('.$value->hgpdesc.'-'.$value->anc_name.')' }}</td>
+                @else
+                <td>{{$value->fee_name}}</td>
+                @endif
+                 
                     <td>{{$value->ocid == 'G' ? 'Government':( $value->ocid == 'P' ? 'Private' : '')}}</td>
                     <td>{{$value->facmdesc}}</td>
                     <td>{{$value->funcid == 1 ? 'General' : ($value->funcid == 2 ? 'Specialty' : 'NA')}}</td>
@@ -176,9 +181,15 @@
                                             <select class="form-control  show-menu-arrow " name="servetype" data-style="text-dark form-control custom-selectpicker" data-size="5" data-live-search="true" required>
                                                 <!-- <select  class="form-control selectpicker show-menu-arrow " name="servetype" data-style="text-dark form-control custom-selectpicker" data-size="5" data-live-search="true" required> -->
                                                 <option>Please select</option>
+                                            @if($type == 'service')
                                                 @foreach($factypes as $key => $value)
                                                 <option value="{{$value->facid}}">{{$value->facname}} {{$value->spec ? '('.$value->spec.')' : '('.$value->hgpdesc.'-'.$value->anc_name.')' }}-{{$value->facid}}</option>
                                                 @endforeach
+                                            @else
+                                                @foreach($allcat as $key => $ac)
+                                                <option value="{{$ac->cat_id}}">{{$ac->cat_desc}}</option>
+                                                @endforeach
+                                            @endif
                                             </select>
                                         </td>
                                         <td width="120">
@@ -277,7 +288,8 @@
                         reamount: reamount[i].value,
                         reperiod: reperiod[i].value,
                         remarks: remarks[i].value,
-                        fpenalty: fpenalty[i].value
+                        fpenalty: fpenalty[i].value,
+                        type: '{{$type}}'
                     }
                     fees.push(data)
                 }

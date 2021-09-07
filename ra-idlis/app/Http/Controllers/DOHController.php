@@ -765,7 +765,7 @@ use FunctionsClientController;
 		public function submitRegFacilities(Request $request){
 
 				try 
-					{
+				{
 						// .((RegisteredFacility::orderBy('regfac_id', 'desc')->first()->regfac_id ? RegisteredFacility::orderBy('regfac_id', 'desc')->first()->regfac_id : 0) + 1)
 				$zr = 1;
 				if(!is_null($ch = RegisteredFacility::orderBy('regfac_id', 'desc')->first())){
@@ -775,7 +775,7 @@ use FunctionsClientController;
 						$code = date('Y').date('d').'-'.rand(111, 999).'-'. $zr;
 					
 						
-					DB::insert('insert into registered_facility (
+				DB::insert('insert into registered_facility (
 				nhfcode, 
 				facilityname, 
 				facid, 
@@ -806,23 +806,53 @@ use FunctionsClientController;
 				hfep_funded
 				) values (?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
 				[$code, $request->facilityname, $request->facid, $request->rgnid, $request->provid, $request->cmid, $request->brgyid, $request->street_number, $request->street_name, $request->zipcode, $request->contact, $request->areacode, $request->landline, $request->faxnumber, $request->email, $request->ocid, $request->classid, $request->subClassid, $request->facmode, $request->funcid, $request->owner, $request->ownerMobile, $request->ownerLandline, $request->ownerEmail, $request->mailingAddress, $request->approvingauthoritypos, $request->approvingauthority, $request->hfep_funded ]);
+				$regfacid = DB::getPdo()->lastInsertId();
 
+				
+				// DB::insert('insert into x08_ft (uid, reg_facid, facid) values (?, ?, ?)', [$request->uid, $regfacid, "facid[i]"]);
+				
+				// // $regfacid = DB::getPdo()->lastInsertId();
+				$facid = json_decode($request->facid_arr, true);
+
+				
+      
+				if(count($facid) > 0){
+				   $this->ltoAppDetSave($request->facid_arr, $regfacid, $request->uid);
+				}
+		
 
 						return response()->json(
 							[
 								'mssg' =>"hello",
+								'datafac' =>"wwwww",
 							],
 							200
 						);
-					} 
+			} 
 				catch (Exception $e) 
-					{
-						
-						return 'ERROR';
-					}
+			{
+				
+				return 'ERROR';
+			}
 
 			
 
+		}
+
+		function ltoAppDetSave($reqfacid, $reg_facid, $uid)
+		{
+		
+			$facs =  DB::table('x08_ft')->where('reg_facid', $reg_facid)->first();
+		 
+			if (!is_null($facs)) {
+				DB::table('x08_ft')->where('reg_facid', $reg_facid)->delete();
+			}
+	
+			$facid = json_decode($reqfacid, true);
+	
+			for ($i = 0; $i < count($facid); $i++) {
+				DB::insert('insert into x08_ft (uid, reg_facid, facid) values (?, ?, ?)', [$uid, $reg_facid, $facid[$i]]);
+			}
 		}
 
 		// other ancillary
@@ -2679,6 +2709,31 @@ use FunctionsClientController;
 			// }
 		}
 
+		public static function getFees(Request $request){
+			try 
+			{
+
+				$facids = json_decode($request->facids, true);
+
+				$fees = DB::table('service_fees')
+				->where('ocid',$request->ocid)
+				->where('facmode',$request->facmode)
+				->where('funcid',$request->funcid)
+				->whereIn('service_id', $facids)
+				->get();
+				// ->where('isPenalties',$request->isPenalties?$request->isPenalties: 0)
+				
+				
+				// ->whereIn('service_id', $request->facid)->get();
+
+				return $fees;
+			} 
+			catch (Exception $e) 
+			{
+
+			}
+		}
+
 		public static function ServiceFees(Request $request)
 		{
 			// if ($request->isMethod('get')) 
@@ -2693,6 +2748,8 @@ use FunctionsClientController;
 					->orderBy('facilitytyp.facname')
 					->get();
 
+					$allcat = DB::table('category')->select('category.*')->get();
+
 
 					$data = DB::table('service_fees')
 					->leftJoin('facilitytyp', 'service_fees.service_id', '=', 'facilitytyp.facid' )
@@ -2701,13 +2758,59 @@ use FunctionsClientController;
 					->leftJoin('hfaci_grp', 'facilitytyp.hgpid', '=', 'hfaci_grp.hgpid')
 					->leftJoin('facmode', 'service_fees.facmode', '=', 'facmode.facmid')
 					->leftJoin('funcapf', 'service_fees.funcid', '=', 'funcapf.funcdesc')
+					->where('service_fees.type', 'service')
 					->select('service_fees.*', 'facilitytyp.*', 
-					'specified.facname as spec', 'hfaci_grp.hgpdesc', 'serv_type.anc_name','facmode.facmdesc', 'funcapf.funcdesc')
+					'specified.facname as spec', 'hfaci_grp.hgpdesc', 'serv_type.anc_name','facmode.facmdesc', 'funcapf.funcdesc',
+					)
+					
+					// ->select('service_fees.*', 'facilitytyp.*', 
+					// 'specified.facname as spec', 'hfaci_grp.hgpdesc', 'serv_type.anc_name','facmode.facmdesc', 'funcapf.funcdesc',
+					// DB::raw('CONCAT(user_details.first_name," " , user_details.last_name) as prepare')
+					// )
+					->get();
+
+// hew
+
+					return view('employee.masterfile.mfServiceFees', ['factypes' =>$allfactypes,'data' =>$data,'allcat' =>$allcat,'type' =>"service"]);
+				} 
+				catch (Exception $e) 
+				{
+					dd($e);
+					AjaxController::SystemLogs($e);
+					session()->flash('system_error','ERROR');
+					return view('employee.masterfile.mfServiceCharges');
+				}
+			// }
+		}
+
+		public static function CategoryFees(Request $request)
+		{
+			// if ($request->isMethod('get')) 
+			// {
+				try  // mfServiceCharges
+				{
+					$allfactypes = DB::table('facilitytyp')
+					->leftJoin('facilitytyp as specified', 'specified.facid', '=', 'facilitytyp.specified' )
+					->leftJoin('serv_type', 'facilitytyp.servtype_id', '=', 'serv_type.servtype_id' )
+					->leftJoin('hfaci_grp', 'facilitytyp.hgpid', '=', 'hfaci_grp.hgpid' )
+					->select('facilitytyp.*', 'specified.facname as spec', 'hfaci_grp.hgpdesc', 'serv_type.anc_name')
+					->orderBy('facilitytyp.facname')
+					->get();
+
+					$allcat = DB::table('category')->select('category.*')->get();
+
+
+					$data = DB::table('service_fees')
+					->leftJoin('category', 'service_fees.service_id', '=', 'category.cat_id' )
+					->leftJoin('facmode', 'service_fees.facmode', '=', 'facmode.facmid')
+					->leftJoin('funcapf', 'service_fees.funcid', '=', 'funcapf.funcdesc')
+					->where('service_fees.type', 'category')
+					->select('service_fees.*', 'category.*', 'category.cat_desc as fee_name','facmode.facmdesc', 'funcapf.funcdesc')
 					->get();
 
 
 
-					return view('employee.masterfile.mfServiceFees', ['factypes' =>$allfactypes,'data' =>$data]);
+					return view('employee.masterfile.mfCategoryFees', ['factypes' =>$allfactypes,'data' =>$data,'allcat' =>$allcat,'type' =>"category"]);
 				} 
 				catch (Exception $e) 
 				{
@@ -9358,7 +9461,8 @@ use FunctionsClientController;
 				'initial_change_amount' => $itm['icamount'],
 				'isPenalties' =>$itm['fpenalty'],
 				'renewal_period' => $itm['reperiod'],
-				'remarks' => $itm['remarks']
+				'remarks' => $itm['remarks'],
+				'type' => $itm['type']
 			]);
 			}
 
